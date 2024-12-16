@@ -104,8 +104,15 @@ Public Module GCMSDeconv
     End Function
 End Module
 
+''' <summary>
+''' A gcms peak feature
+''' </summary>
 Public Class GCMSPeak : Inherits PeakFeature
 
+    ''' <summary>
+    ''' the average spectrum of current GCMS peak ROI
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Spectrum As ms2()
 
     Sub New()
@@ -114,5 +121,45 @@ Public Class GCMSPeak : Inherits PeakFeature
     Sub New(peakdata As PeakFeature)
         Call MyBase.New(peakdata)
     End Sub
+
+    Public Shared Function CreateFeature(raw As IEnumerable(Of PeakMs2), peak As xcms2, Optional rtwin As Double = 1.5) As GCMSPeak
+        Dim rtmin = peak.rtmin
+        Dim rtmax = peak.rtmax
+
+        If rtmin = 0.0 AndAlso rtmax = 0.0 Then
+            rtmin = peak.rt - rtwin
+            rtmax = peak.rt + rtwin
+        End If
+
+        Dim rt_filter = raw _
+            .Where(Function(p) p.rt >= rtmin AndAlso p.rt <= rtmax) _
+            .ToArray
+        Dim mean = SpectraEncoder.SpectrumSum(rt_filter, average:=True)
+        Dim spectrum As ms2()
+
+        ' 20241208 mean may be nothing if there is no spectrum matched in current sample
+        If mean Is Nothing Then
+            spectrum = {}
+        Else
+            spectrum = mean.Array
+        End If
+
+        Return New GCMSPeak With {
+            .rt = peak.rt,
+            .area = peak.Properties.Values.Sum,
+            .baseline = 1,
+            .integration = 1,
+            .maxInto = peak.Properties.Values.Max,
+            .mz = peak.mz,
+            .noise = 1,
+            .nticks = 1,
+            .rawfile = "",
+            .RI = peak.RI,
+            .rtmax = rtmax,
+            .rtmin = rtmin,
+            .Spectrum = spectrum,
+            .xcms_id = peak.ID
+        }
+    End Function
 
 End Class

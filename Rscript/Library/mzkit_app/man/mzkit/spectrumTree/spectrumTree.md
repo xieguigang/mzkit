@@ -12,6 +12,8 @@ the spectrum tree reference library tools
 + [dotcutoff](spectrumTree/dotcutoff.1) set dot cutoff parameter for the cos score similarity algorithm
 + [parallel](spectrumTree/parallel.1) enable internal parallel for the spectrum alignment search?
 + [jaccardSet](spectrumTree/jaccardSet.1) construct a fragment set library for run spectrum search in jaccard index matches method
++ [top_candidates](spectrumTree/top_candidates.1) 
++ [candidate_ids](spectrumTree/candidate_ids.1) 
 + [query](spectrumTree/query.1) do spectrum family alignment via cos similarity
 + [addBucket](spectrumTree/addBucket.1) push the reference spectrum data into the spectrum reference tree library
 + [compress](spectrumTree/compress.1) Compress and make cleanup of the spectrum library

@@ -188,11 +188,13 @@ declare namespace mzDeco {
      * + default value Is ``false``.
      * @param max_intensity_ion 
      * + default value Is ``false``.
+     * @param cow_alignment 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function peak_alignment(samples: any, mzdiff?: number, ri_win?: number, norm?: boolean, ri_alignment?: boolean, max_intensity_ion?: boolean, env?: object): object;
+   function peak_alignment(samples: any, mzdiff?: number, ri_win?: number, norm?: boolean, ri_alignment?: boolean, max_intensity_ion?: boolean, cow_alignment?: boolean, env?: object): object;
    /**
     * make sample column projection
     * 

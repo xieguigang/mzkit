@@ -26,6 +26,13 @@ declare namespace SMILES {
       /**
       */
       function graph(smiles: object): object;
+      /**
+       * cast the smiles graph as chemical markup language data
+       * 
+       * 
+        * @param graph -
+      */
+      function markup(graph: object): object;
    }
    /**
     * get atoms table from the SMILES structure data

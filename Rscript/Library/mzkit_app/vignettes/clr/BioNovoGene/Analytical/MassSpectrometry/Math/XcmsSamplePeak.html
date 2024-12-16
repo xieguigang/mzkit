@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        <p>cast <code>findPeaks</code> result to dataframe</p>
 
         <h3>Declare</h3>        
 
@@ -30,17 +30,30 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math
 export class XcmsSamplePeak {
+   # 峰的索引或标识符。
    ID: string;
+   # 峰的峰下面积（峰的积分面积）。
    intb: double;
+   # 峰的总强度（积分强度）。
    into: double;
+   # 峰的最大过滤强度值。
+   maxf: double;
+   # 峰的最大原始强度值。
    maxo: double;
+   # 峰的中心质荷比（m/z）值。
    mz: double;
+   # 峰的最高质荷比（m/z）值。
    mzmax: double;
+   # 峰的最低质荷比（m/z）值。
    mzmin: double;
+   # 峰的中心保留时间（Retention Time，RT）。
    rt: double;
+   # 峰的结束保留时间。
    rtmax: double;
+   # 峰的起始保留时间。
    rtmin: double;
    sample: string;
+   # 峰的信噪比（Signal-to-Noise ratio）。
    sn: double;
 }
 </code>

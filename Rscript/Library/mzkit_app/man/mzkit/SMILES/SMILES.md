@@ -11,6 +11,7 @@
  modified And extended. In 2007, an open standard called OpenSMILES was developed In
  the open source chemistry community.
 
++ [as.markup](SMILES/as.markup.1) cast the smiles graph as chemical markup language data
 + [parse](SMILES/parse.1) Parse the SMILES molecule structre string
 + [as.formula](SMILES/as.formula.1) 
 + [as.graph](SMILES/as.graph.1) 

@@ -97,6 +97,11 @@ declare namespace mzkit {
    */
    function loadTree(files: string): object;
    /**
+     * @param max_rtwin default value Is ``15``.
+     * @param mzdiff default value Is ``0.01``.
+   */
+   function make_peak_alignment(peakfiles: any, max_rtwin?: any, mzdiff?: any): object;
+   /**
      * @param topics default value Is ``null``.
    */
    function mesh_model(topics?: any): object;
@@ -154,6 +159,11 @@ declare namespace mzkit {
    /**
    */
    function pubchem_meta(term: any): object;
+   module read {
+      /**
+      */
+      function cfmid_3_EI(file: any): object;
+   }
    module run {
       /**
         * @param outputdir default value Is ``./``.

@@ -115,16 +115,23 @@ Public Module XcmsTable
     <Extension>
     Public Iterator Function XicTable(samples As IEnumerable(Of NamedCollection(Of PeakFeature)),
                                       Optional rtwin As Double = 20,
-                                      Optional rt_shifts As List(Of RtShift) = Nothing) As IEnumerable(Of xcms2)
+                                      Optional rt_shifts As List(Of RtShift) = Nothing,
+                                      Optional assign_samples As Boolean = True) As IEnumerable(Of xcms2)
 
         Dim pool As New List(Of PeakFeature)
 
-        For Each sample As NamedCollection(Of PeakFeature) In samples
-            For Each peak As PeakFeature In sample
-                peak.rawfile = sample.name
-                pool.Add(peak)
+        If assign_samples Then
+            For Each sample As NamedCollection(Of PeakFeature) In samples
+                For Each peak As PeakFeature In sample
+                    peak.rawfile = sample.name
+                    pool.Add(peak)
+                Next
             Next
-        Next
+        Else
+            For Each sample As NamedCollection(Of PeakFeature) In samples
+                Call pool.AddRange(sample.AsEnumerable)
+            Next
+        End If
 
         ' group by rt
         Dim rt_groups = pool.GroupBy(Function(a) a.rt, offsets:=rtwin).ToArray
@@ -164,8 +171,16 @@ Public Module XcmsTable
         Next
     End Function
 
+    ''' <summary>
+    ''' Extract of the scatter data
+    ''' </summary>
+    ''' <param name="peakset"></param>
+    ''' <param name="dimension"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Iterator Function Ms1Scatter(peakset As PeakSet, Optional dimension As String = "default|sum|mean|max|npeaks|<sample_name>") As IEnumerable(Of ms1_scan)
+    Public Iterator Function Ms1Scatter(peakset As PeakSet,
+                                        Optional dimension As String = "default|sum|mean|max|npeaks|<sample_name>") As IEnumerable(Of ms1_scan)
+
         Dim getter As Func(Of xcms2, Double) = Nothing
         Dim dimName As String = Strings.Trim(dimension).Split("|"c).FirstOrDefault
 

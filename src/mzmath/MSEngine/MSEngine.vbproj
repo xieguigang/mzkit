@@ -16,6 +16,8 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>mzkit</PackageTags>
 	  <OutputPath>../../../Rscript\Library\mzkit_app\assembly\</OutputPath>
+	  <UseApplicationFramework>True</UseApplicationFramework>
+	  <Title>Reference spectrum search</Title>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -215,6 +217,12 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Composition" Version="8.0.0" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.6.0" />
+    <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

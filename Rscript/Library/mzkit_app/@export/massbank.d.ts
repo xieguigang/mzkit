@@ -207,12 +207,14 @@ declare namespace massbank {
        * 
         * @param rawfile a vector of the mona database file, could be a set of multiple mona database file.
         *  the database reader is switched automatically based on this file path its 
-        *  extension name.
+        *  extension name. currently supported data file formats: ``sdf`` and ``msp``.
         * @param skipSpectraInfo 
         * + default value Is ``false``.
-        * @param is_gcms 
+        * @param is_gcms Load gcms reference dataset?
+        * 
         * + default value Is ``false``.
-        * @param lazy 
+        * @param lazy Create a lazy data populator or load all data in memory and returns a vector of the spectral data
+        * 
         * + default value Is ``true``.
         * @param verbose 
         * + default value Is ``true``.

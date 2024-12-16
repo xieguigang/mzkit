@@ -41,7 +41,15 @@
 <dt>rawfile</dt>
 <dd><p>a vector of the mona database file, could be a set of multiple mona database file.
  the database reader is switched automatically based on this file path its 
- extension name. [as string]</p></dd>
+ extension name. currently supported data file formats: <code>sdf</code> and <code>msp</code>. [as string]</p></dd>
+
+
+<dt>is.gcms</dt>
+<dd><p>Load gcms reference dataset?. [as boolean]</p></dd>
+
+
+<dt>lazy</dt>
+<dd><p>Create a lazy data populator or load all data in memory and returns a vector of the spectral data. [as boolean]</p></dd>
 
 
 <dt>env</dt>

@@ -99,6 +99,14 @@ Public Class ParseChain
             .JoinBy("")
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="SMILES"></param>
+    ''' <param name="strict"></param>
+    ''' <returns>
+    ''' this function may returns nothing if the given smiles string is invalid and case the parser error when strict is false.
+    ''' </returns>
     Public Shared Function ParseGraph(SMILES As String, Optional strict As Boolean = True) As ChemicalFormula
         Dim tokens As New List(Of Token())
 

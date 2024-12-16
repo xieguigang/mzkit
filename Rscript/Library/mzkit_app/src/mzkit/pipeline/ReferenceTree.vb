@@ -61,10 +61,12 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
@@ -323,6 +325,40 @@ Module ReferenceTreePkg
         Call println($"Do jaccard match with cutoff value: {cutoff}!")
 
         Return New JaccardSearch(dataset, cutoff, filter_complex_adducts)
+    End Function
+
+    <ExportAPI("top_candidates")>
+    <RApiReturn(GetType(AlignmentOutput))>
+    Public Function top_candidates(libs As Library(Of MetaLib), x As Object, Optional top As Integer = 9) As Object
+        If x Is Nothing Then
+            Return Nothing
+        End If
+        If TypeOf x Is GCMSPeak Then
+            Dim peak As GCMSPeak = DirectCast(x, GCMSPeak)
+
+            x = New PeakMs2(peak.xcms_id, peak.Spectrum) With {
+                .mz = peak.mz,
+                .rt = peak.rt,
+                .intensity = peak.maxInto,
+                .file = peak.rawfile,
+                .scan = peak.xcms_id
+            }
+        End If
+
+        Return libs.SearchCandidates(x).Take(top)
+    End Function
+
+    <ExportAPI("candidate_ids")>
+    Public Function candidateIds(<RRawVectorArgument> result As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of AlignmentOutput)(result, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+        Return pull.populates(Of AlignmentOutput)(env) _
+            .Select(Function(a) a.reference.id) _
+            .ToArray
     End Function
 
     ''' <summary>

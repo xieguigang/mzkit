@@ -116,6 +116,12 @@ Public Class PeakAnnotation
             .ToArray
     End Sub
 
+    ''' <summary>
+    ''' Filter and get a peak list that with <see cref="ms2.Annotation"/> not empty.
+    ''' </summary>
+    ''' <returns>
+    ''' a collection of the peaks data with annotation data
+    ''' </returns>
     Public Function GetAnnotatedPeaks() As ms2()
         Return products _
             .Where(Function(i) Not i.Annotation.StringEmpty(, True)) _

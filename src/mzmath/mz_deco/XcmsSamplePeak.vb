@@ -62,19 +62,71 @@ Imports System.IO
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 
+''' <summary>
+''' cast ``findPeaks`` result to dataframe
+''' </summary>
 Public Class XcmsSamplePeak
 
+    ''' <summary>
+    ''' 峰的中心质荷比（m/z）值。
+    ''' </summary>
+    ''' <returns></returns>
     Public Property mz As Double
+    ''' <summary>
+    ''' 峰的最低质荷比（m/z）值。
+    ''' </summary>
+    ''' <returns></returns>
     Public Property mzmin As Double
+    ''' <summary>
+    ''' 峰的最高质荷比（m/z）值。
+    ''' </summary>
+    ''' <returns></returns>
     Public Property mzmax As Double
+    ''' <summary>
+    ''' 峰的中心保留时间（Retention Time，RT）。
+    ''' </summary>
+    ''' <returns></returns>
     Public Property rt As Double
+    ''' <summary>
+    ''' 峰的起始保留时间。
+    ''' </summary>
+    ''' <returns></returns>
     Public Property rtmin As Double
+    ''' <summary>
+    ''' 峰的结束保留时间。
+    ''' </summary>
+    ''' <returns></returns>
     Public Property rtmax As Double
+    ''' <summary>
+    ''' 峰的总强度（积分强度）。
+    ''' </summary>
+    ''' <returns></returns>
     Public Property into As Double
+    ''' <summary>
+    ''' 峰的峰下面积（峰的积分面积）。
+    ''' </summary>
+    ''' <returns></returns>
     Public Property intb As Double
+    ''' <summary>
+    ''' 峰的最大原始强度值。
+    ''' </summary>
+    ''' <returns></returns>
     Public Property maxo As Double
+    ''' <summary>
+    ''' 峰的最大过滤强度值。
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property maxf As Double
+    ''' <summary>
+    ''' 峰的信噪比（Signal-to-Noise ratio）。
+    ''' </summary>
+    ''' <returns></returns>
     Public Property sn As Double
     Public Property sample As String
+    ''' <summary>
+    ''' 峰的索引或标识符。
+    ''' </summary>
+    ''' <returns></returns>
     Public Property ID As String
 
     Public Shared Iterator Function ParseCsv(file As Stream) As IEnumerable(Of XcmsSamplePeak)

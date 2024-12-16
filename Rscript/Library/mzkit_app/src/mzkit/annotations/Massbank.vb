@@ -293,7 +293,13 @@ Module Massbank
     ''' <param name="rawfile">
     ''' a vector of the mona database file, could be a set of multiple mona database file.
     ''' the database reader is switched automatically based on this file path its 
-    ''' extension name.
+    ''' extension name. currently supported data file formats: ``sdf`` and ``msp``.
+    ''' </param>
+    ''' <param name="is_gcms">
+    ''' Load gcms reference dataset?
+    ''' </param>
+    ''' <param name="lazy">
+    ''' Create a lazy data populator or load all data in memory and returns a vector of the spectral data
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns>

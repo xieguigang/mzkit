@@ -40,8 +40,24 @@ export class MetaInfo {
    formula: string;
    # 该物质在整合库之中的唯一标识符
    ID: string;
+   # IUPAC name refers to the systematic name given to a chemical compound according to the rules and 
+   #  guidelines established by the International Union of Pure and Applied Chemistry (IUPAC). IUPAC is 
+   #  an international organization that aims to advance the field of chemistry by developing standards
+   #  and nomenclature for chemicals.
+   #  
+   #  The IUPAC name of a compound provides a unique and unambiguous identifier for that compound, which
+   #  is essential for clear communication among chemists and other scientists. These names are based 
+   #  on a set of systematic rules that take into account the structure and composition of the compound.
+   #  
+   #  For example, the IUPAC name for the common sugar glucose is (2R,3S,4R,5R)-2,3,4,5,6-pentahydroxyhexanal.
+   #  This name describes the specific arrangement of atoms and functional groups in the glucose molecule.
+   #  
+   #  IUPAC names are particularly important for complex organic compounds, where common names can be 
+   #  confusing or non-existent. They are widely used in scientific literature, patents, and other 
+   #  technical documents related to chemistry.
    IUPACName: string;
    name: string;
+   # the synonym of current metabolite, multiple names in different languages maybe contains inside this data names pool
    synonym: string;
    # The database cross reference of current metabolite and the molecule structure data.
    xref: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a>;

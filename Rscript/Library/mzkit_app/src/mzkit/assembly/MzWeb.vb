@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::7934f659641510e71951dcec8210aac0, Rscript\Library\mzkit_app\src\mzkit\assembly\MzWeb.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1157
-    '    Code Lines: 728 (62.92%)
-    ' Comment Lines: 282 (24.37%)
-    '    - Xml Docs: 92.20%
-    ' 
-    '   Blank Lines: 147 (12.71%)
-    '     File Size: 47.01 KB
+' Summaries:
 
 
-    ' Module MzWeb
-    ' 
-    '     Function: BPC, GetChromatogram, getMs1PointTable, loadStream, loadXcmsRData
-    '               MassCalibration, Ms1Peaks, Ms1ScanPoints, Ms2ScanPeaks, Open
-    '               openFile, openFromFile, parse_base64, parseScanMsBuffer, readCache
-    '               setMzpackThumbnail, TIC, ToMzPack, uniqueReference, writeCache
-    '               writeMzpack, writeStream, writeToCDF
-    ' 
-    '     Sub: Main, WriteCache
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1157
+'    Code Lines: 728 (62.92%)
+' Comment Lines: 282 (24.37%)
+'    - Xml Docs: 92.20%
+' 
+'   Blank Lines: 147 (12.71%)
+'     File Size: 47.01 KB
+
+
+' Module MzWeb
+' 
+'     Function: BPC, GetChromatogram, getMs1PointTable, loadStream, loadXcmsRData
+'               MassCalibration, Ms1Peaks, Ms1ScanPoints, Ms2ScanPeaks, Open
+'               openFile, openFromFile, parse_base64, parseScanMsBuffer, readCache
+'               setMzpackThumbnail, TIC, ToMzPack, uniqueReference, writeCache
+'               writeMzpack, writeStream, writeToCDF
+' 
+'     Sub: Main, WriteCache
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -81,6 +81,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.Emit.Delegates
@@ -88,7 +89,9 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Components.Interface
@@ -96,13 +99,9 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
-Imports SIMDAdd = Microsoft.VisualBasic.Math.SIMD.Add
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
-Imports Microsoft.VisualBasic.MIME.application.json
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-
-
+Imports SIMDAdd = Microsoft.VisualBasic.Math.SIMD.Add
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 
 
 #If NET48 Then
@@ -129,10 +128,6 @@ Imports Image = Microsoft.VisualBasic.Imaging.Image
 Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
 Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
-#End If
-
-#If NET48 Then
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 #End If
 
 ''' <summary>
@@ -397,7 +392,7 @@ Module MzWeb
     ''' <summary>
     ''' write ASCII text format of mzweb stream
     ''' </summary>
-    ''' <param name="scans"></param>
+    ''' <param name="x"></param>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
     ''' <remarks>
@@ -412,22 +407,30 @@ Module MzWeb
     ''' write.text_cache(ms1, file = "./msdata.txt");
     ''' </example>
     <ExportAPI("write.text_cache")>
-    Public Function writeStream(scans As pipeline,
+    Public Function writeStream(<RRawVectorArgument> x As Object,
                                 Optional file As Object = Nothing,
+                                Optional tabular As Boolean = False,
                                 Optional env As Environment = Nothing) As Object
         Dim stream As Stream
+        Dim scans As pipeline = pipeline.TryCreatePipeline(Of ScanMS1)(x, env)
 
-        If file Is Nothing Then
-            stream = Console.OpenStandardOutput
-        ElseIf TypeOf file Is String Then
-            stream = DirectCast(file, String).Open(doClear:=True)
-        ElseIf TypeOf file Is Stream Then
-            stream = DirectCast(file, Stream)
+        If scans.isError Then
+            Return scans.getError
         Else
-            Return Message.InCompatibleType(GetType(Stream), file.GetType, env)
+            Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+
+            If buf Like GetType(Message) Then
+                Return buf.TryCast(Of Message)
+            Else
+                stream = buf.TryCast(Of Stream)
+            End If
         End If
 
-        Call scans.populates(Of ScanMS1)(env).Write(stream)
+        If tabular Then
+            Call scans.populates(Of ScanMS1)(env).WriteTabularCache(stream)
+        Else
+            Call scans.populates(Of ScanMS1)(env).Write(stream)
+        End If
 
         Return True
     End Function
@@ -704,12 +707,12 @@ Module MzWeb
             )
         ElseIf file.ExtensionSuffix("mgf", "msp") Then
             Return Converter.LoadAsciiFileAuto(file)
-#If NET48 Then
+
         ElseIf file.ExtensionSuffix("raw") Then
             Using msRaw As New MSFileReader(file)
                 Return msRaw.LoadFromXRaw
             End Using
-#End If
+
         ElseIf file.ExtensionSuffix("cdf") Then
             Using cdf As New netCDFReader(file)
                 If cdf.IsLecoGCMS Then

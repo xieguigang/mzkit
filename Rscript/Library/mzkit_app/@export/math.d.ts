@@ -458,6 +458,15 @@ declare namespace math {
       function cluster(ms2list: any, compares?: object, tolerance?: any, intocutoff?: number, showReport?: boolean, env?: object): object;
    }
    /**
+    * convert a single spectrum alignment details as dataframe
+    * 
+    * 
+     * @param align -
+     * @param args -
+     * @param env -
+   */
+   function summary_result(align: object, args: object, env: object): any;
+   /**
     * Create tolerance object
     * 
     * 

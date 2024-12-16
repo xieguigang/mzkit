@@ -113,5 +113,26 @@ Namespace MetaLib
                 Return Nothing
             End If
         End Function
+
+        <Extension>
+        Public Iterator Function ProcessingNaturalLanguageName(synonym As IEnumerable(Of String)) As IEnumerable(Of String)
+            For Each name As String In synonym.Distinct
+                Yield name
+
+                If name.StartsWith("L-") OrElse name.StartsWith("D-") Then
+                    Dim short$ = name.Substring(2)
+
+                    Yield [short]
+
+                    If [short].EndsWith("ate") Then
+                        Yield [short].Substring(0, [short].Length - 3) & " acid"
+                    End If
+                End If
+
+                If name.EndsWith("ate") Then
+                    Yield name.Substring(0, name.Length - 3) & " acid"
+                End If
+            Next
+        End Function
     End Module
 End Namespace

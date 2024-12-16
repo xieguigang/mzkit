@@ -73,8 +73,8 @@ Namespace Massbank
 
     Public Module RecordIO
 
-        Public Function ScanLoad(DIR$) As Record()
-            Dim out As New List(Of Record)
+        Public Function ScanLoad(DIR$) As DATA.Record()
+            Dim out As New List(Of DATA.Record)
 
             For Each record$ In ls - l - r - "*.txt" <= DIR
                 out += RecordIO.LoadFile(txt:=record)
@@ -83,26 +83,26 @@ Namespace Massbank
             Return out
         End Function
 
-        Public Iterator Function LoadFile(txt As String) As IEnumerable(Of Record)
+        Public Iterator Function LoadFile(txt As String) As IEnumerable(Of DATA.Record)
             For Each data As String() In txt.ReadAllLines.Split("//")
                 Dim annotationHeaders$() = Nothing
                 Dim nodes As Dictionary(Of String, Node) = data.__loadSection(annotationHeaders)
                 ' 文件区段读取完毕，开始生成数据对象
-                Dim r As Record = nodes.__createObject(annotationHeaders)
+                Dim r As DATA.Record = nodes.__createObject(annotationHeaders)
 
                 Yield r
             Next
         End Function
 
         <Extension>
-        Private Function __createObject(nodes As Dictionary(Of String, Node), annotationHeaders$()) As Record
-            Dim out As Record = DirectCast(GetType(Record).__createObject(nodes("$_")), Record)
+        Private Function __createObject(nodes As Dictionary(Of String, Node), annotationHeaders$()) As DATA.Record
+            Dim out As DATA.Record = DirectCast(GetType(DATA.Record).__createObject(nodes("$_")), DATA.Record)
 
-            out.AC = DirectCast(GetType(AC).__createObject(nodes(NameOf(Record.AC))), AC)
-            out.CH = DirectCast(GetType(CH).__createObject(nodes(NameOf(Record.CH))), CH)
-            out.MS = DirectCast(GetType(DATA.MS).__createObject(nodes(NameOf(Record.MS))), DATA.MS)
-            out.SP = DirectCast(GetType(SP).__createObject(nodes.TryGetValue(NameOf(Record.SP))), SP)
-            out.PK = nodes(NameOf(Record.PK)).__createPeaksData(annotationHeaders)
+            out.AC = DirectCast(GetType(AC).__createObject(nodes(NameOf(DATA.Record.AC))), AC)
+            out.CH = DirectCast(GetType(CH).__createObject(nodes(NameOf(DATA.Record.CH))), CH)
+            out.MS = DirectCast(GetType(DATA.MS).__createObject(nodes(NameOf(DATA.Record.MS))), DATA.MS)
+            out.SP = DirectCast(GetType(SP).__createObject(nodes.TryGetValue(NameOf(DATA.Record.SP))), SP)
+            out.PK = nodes(NameOf(DATA.Record.PK)).__createPeaksData(annotationHeaders)
 
             Return out
         End Function
