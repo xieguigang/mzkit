@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::f6e6766c256c145aa2d651ef82ee2d86, Rscript\Library\mzkit_app\src\mzkit\pipeline\library.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 965
-    '    Code Lines: 475 (49.22%)
-    ' Comment Lines: 403 (41.76%)
-    '    - Xml Docs: 93.80%
-    ' 
-    '   Blank Lines: 87 (9.02%)
-    '     File Size: 49.92 KB
+' Summaries:
 
 
-    ' Module library
-    ' 
-    '     Function: assertAdducts, checkInSourceFragments, create_table, create_workspace, createAnnotation
-    '               filter_unique, ionsFromPeaktable, loadAll, loadPeaktable, loadWorkspace
-    '               OpenResultPack, PopulateIonData, readResultPack, set_xicCache, tohtmlString
-    '               writeResultPack, writeWorkspace, xref
-    ' 
-    '     Sub: commit, Main, peak_assign, push_temp, saveAnnotation
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 965
+'    Code Lines: 475 (49.22%)
+' Comment Lines: 403 (41.76%)
+'    - Xml Docs: 93.80%
+' 
+'   Blank Lines: 87 (9.02%)
+'     File Size: 49.92 KB
+
+
+' Module library
+' 
+'     Function: assertAdducts, checkInSourceFragments, create_table, create_workspace, createAnnotation
+'               filter_unique, ionsFromPeaktable, loadAll, loadPeaktable, loadWorkspace
+'               OpenResultPack, PopulateIonData, readResultPack, set_xicCache, tohtmlString
+'               writeResultPack, writeWorkspace, xref
+' 
+'     Sub: commit, Main, peak_assign, push_temp, saveAnnotation
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -68,8 +68,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
-Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports BioNovoGene.BioDeep.Chemistry
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
@@ -779,6 +779,25 @@ Module library
         Next
 
         Return flags
+    End Function
+
+    ''' <summary>
+    ''' open the annotation database file
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' 
+    <ExportAPI("open_repository")>
+    <RApiReturn(GetType(LocalRepository))>
+    Public Function openRepository(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+        Return New LocalRepository(buf.TryCast(Of Stream))
     End Function
 
     ''' <summary>
