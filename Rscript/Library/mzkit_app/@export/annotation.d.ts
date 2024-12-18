@@ -87,6 +87,9 @@ declare namespace annotation {
    function library_from_mona(mona: any, libtype?: object, env?: object): object;
    /**
    */
+   function load_local(metadb: object, refSpec: object): object;
+   /**
+   */
    function load_metadata(libs: object, id: any): object;
    module make {
       /**
