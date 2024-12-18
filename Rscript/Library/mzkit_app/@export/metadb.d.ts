@@ -54,13 +54,13 @@ declare namespace metadb {
     * get metabolite annotation metadata by a set of given unique reference id
     * 
     * 
-     * @param engine -
-     * @param uniqueId -
+     * @param engine A local annotation repository object that should implements of the @``T:BioNovoGene.BioDeep.MSEngine.IMetaDb`` interface.
+     * @param uniqueId a set of the unique reference id
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function getMetadata(engine: any, uniqueId: object, env?: object): any;
+   function getMetadata(engine: any, uniqueId: any, env?: object): any;
    module has {
       /**
        * Check the formula string has metal ion inside?

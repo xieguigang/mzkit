@@ -9,6 +9,7 @@ the metabolite annotation toolkit
 + [populateIonData](annotation/populateIonData.1) a shortcut method for populate the peak ms2 data from a mzpack raw data file
 + [make.annotation](annotation/make.annotation.1) create a new metabolite annotation information
 + [checkInSourceFragments](annotation/checkInSourceFragments.1) Check the ms1 parent ion is generated via the in-source fragment or not
++ [open_repository](annotation/open_repository.1) open the annotation database file
 + [open.annotation_workspace](annotation/open.annotation_workspace.1) 
 + [read.annotationPack](annotation/read.annotationPack.1) 
 + [filter](annotation/filter.1) 

@@ -6,7 +6,6 @@ Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
-Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports metadata = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
@@ -34,13 +33,7 @@ Public Class LocalRepository : Implements IDisposable, IMetaDb
     End Sub
 
     Private Sub LoadOffset()
-        Dim offsetFiles = DirectCast(s.GetObject("/offset/"), StreamGroup) _
-            .ListFiles _
-            .OfType(Of StreamBlock)() _
-            .Where(Function(file)
-                       Return file.fileName.ExtensionSuffix("msgpack")
-                   End Function) _
-            .ToArray
+        Dim offsetFiles = RepositoryWriter.OffsetFiles(s).ToArray
 
         For Each indexfile As StreamBlock In offsetFiles
             Dim file As MemoryStream = s.OpenBlock(indexfile, loadMemory:=True)
