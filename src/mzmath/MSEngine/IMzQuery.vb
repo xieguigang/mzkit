@@ -83,10 +83,24 @@ Public Interface IMzQuery : Inherits IMetaDb
 
 End Interface
 
+''' <summary>
+''' annotation data getter
+''' </summary>
+''' <remarks>
+''' get by unique reference id
+''' </remarks>
 Public Interface IMetaDb
+
     Function GetAnnotation(uniqueId As String) As (name As String, formula As String)
+
+    ''' <summary>
+    ''' get the general annotation metadata object by its unique reference id
+    ''' </summary>
+    ''' <param name="uniqueId"></param>
+    ''' <returns></returns>
     Function GetMetadata(uniqueId As String) As Object
     Function GetDbXref(uniqueId As String) As Dictionary(Of String, String)
+
 End Interface
 
 Public Module MetalIons
