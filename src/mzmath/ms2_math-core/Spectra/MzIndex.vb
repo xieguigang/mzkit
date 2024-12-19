@@ -106,6 +106,17 @@ Namespace Spectra
         End Operator
 
         ''' <summary>
+        ''' extract of the index offset data
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(index As MzIndex) As Integer
+            Return index.index
+        End Operator
+
+        ''' <summary>
         ''' calculate the binary data file offset
         ''' </summary>
         ''' <param name="sizeof"></param>
