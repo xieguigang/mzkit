@@ -67,6 +67,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 
 Namespace File
 
+    ''' <summary>
+    ''' Helper for write a spot into binary data file
+    ''' </summary>
     Public Class SpotWriter
 
         ReadOnly bin As BinaryWriter
