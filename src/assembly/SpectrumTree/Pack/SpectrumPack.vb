@@ -119,6 +119,10 @@ Namespace PackLib
                 })
             End If
 
+            If spectrum.lib_guid Is Nothing Then
+                Throw New NullReferenceException($"no unique reference id(PeakMs2.lib_guid) of your reference spectrum data: {uuid} ({formula})!")
+            End If
+
             index = massSet(uuid)
             index.spectrum.Add(treePack.Append(spectrum, isMember:=False))
         End Sub

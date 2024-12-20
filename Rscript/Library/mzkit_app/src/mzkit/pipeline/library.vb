@@ -68,6 +68,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
@@ -557,6 +558,12 @@ Module library
         Dim libs As New Library(Of MetaLib)(fetch())
 
         Return libs
+    End Function
+
+    <ExportAPI("load_local")>
+    <RApiReturn(GetType(Library(Of MetaLib)))>
+    Public Function LoadLocalDatabase(metadb As IMetaDb, refSpec As PackAlignment) As Object
+        Return New Library(Of MetaLib)(metadb, refSpec.GetReferenceSpectrum)
     End Function
 
     <ExportAPI("load_metadata")>

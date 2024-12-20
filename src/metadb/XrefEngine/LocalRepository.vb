@@ -13,6 +13,9 @@ Imports metadata = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
 ''' <summary>
 ''' read only metabolite annotation information data repository
 ''' </summary>
+''' <remarks>
+''' implements of <see cref="IMetaDb"/>
+''' </remarks>
 Public Class LocalRepository : Implements IDisposable, IMetaDb
 
     ''' <summary>
