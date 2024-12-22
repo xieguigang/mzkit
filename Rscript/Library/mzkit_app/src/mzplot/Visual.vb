@@ -303,7 +303,7 @@ Module Visual
             }
         End If
 
-        Return app.Plot()
+        Return app.Plot(driver:=env.getDriver)
     End Function
 
     <RGenericOverloads("plot")>
