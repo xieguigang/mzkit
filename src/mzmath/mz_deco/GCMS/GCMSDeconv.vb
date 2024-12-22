@@ -122,6 +122,13 @@ Public Class GCMSPeak : Inherits PeakFeature
         Call MyBase.New(peakdata)
     End Sub
 
+    ''' <summary>
+    ''' Create peak for a single peak feature data
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="peak"></param>
+    ''' <param name="rtwin"></param>
+    ''' <returns></returns>
     Public Shared Function CreateFeature(raw As IEnumerable(Of PeakMs2), peak As xcms2, Optional rtwin As Double = 1.5) As GCMSPeak
         Dim rtmin = peak.rtmin
         Dim rtmax = peak.rtmax
