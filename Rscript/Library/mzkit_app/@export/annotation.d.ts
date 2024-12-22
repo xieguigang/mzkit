@@ -86,8 +86,15 @@ declare namespace annotation {
    */
    function library_from_mona(mona: any, libtype?: object, env?: object): object;
    /**
+    * Construct of the local reference library for gcms data
+    * 
+    * 
+     * @param metadb -
+     * @param refSpec -
+     * @param tqdm_verbose 
+     * + default value Is ``true``.
    */
-   function load_local(metadb: object, refSpec: object): object;
+   function load_local(metadb: object, refSpec: object, tqdm_verbose?: boolean): object;
    /**
    */
    function load_metadata(libs: object, id: any): object;
