@@ -536,6 +536,7 @@ Module library
     Public Function MakeMoNALibrary(<RRawVectorArgument>
                                     mona As Object,
                                     Optional libtype As IonModes = IonModes.Positive,
+                                    Optional tqdm_verbose As Boolean = True,
                                     Optional env As Environment = Nothing) As Object
 
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of SpectraSection)(mona, env)
@@ -551,7 +552,15 @@ Module library
 
         Dim fetch As Func(Of IEnumerable(Of (MetaLib, PeakMs2))) =
             Iterator Function() As IEnumerable(Of (MetaLib, PeakMs2))
-                For Each ref As SpectraSection In TqdmWrapper.Wrap(pullSpec)
+                Dim source As IEnumerable(Of SpectraSection)
+
+                If tqdm_verbose Then
+                    source = TqdmWrapper.Wrap(pullSpec)
+                Else
+                    source = pullSpec
+                End If
+
+                For Each ref As SpectraSection In source
                     Yield (ref.GetMetabolite, ref.GetSpectrumPeaks)
                 Next
             End Function
