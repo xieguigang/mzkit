@@ -81,10 +81,12 @@ declare namespace annotation {
     * 
      * @param libtype 
      * + default value Is ``null``.
+     * @param tqdm_verbose 
+     * + default value Is ``true``.
      * @param env 
      * + default value Is ``null``.
    */
-   function library_from_mona(mona: any, libtype?: object, env?: object): object;
+   function library_from_mona(mona: any, libtype?: object, tqdm_verbose?: boolean, env?: object): object;
    /**
     * Construct of the local reference library for gcms data
     * 
