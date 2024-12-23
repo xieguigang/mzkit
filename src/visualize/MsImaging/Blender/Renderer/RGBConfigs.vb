@@ -62,6 +62,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Blender
 
+    ''' <summary>
+    ''' config for the rgb ions
+    ''' </summary>
     Public Class RGBConfigs
 
         Public Property R As NamedValue(Of Double)
