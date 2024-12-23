@@ -66,24 +66,18 @@ Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace Blender
 
-    Public Class RenderRGB
-
-        ReadOnly defaultBackground As Color
-        ReadOnly heatmapMode As Boolean
-
-        Public Property dimension As Size
+    Public Class RenderRGB : Inherits CompositionBlender
 
         Public Property Rchannel As Func(Of Integer, Integer, Byte)
         Public Property Gchannel As Func(Of Integer, Integer, Byte)
         Public Property Bchannel As Func(Of Integer, Integer, Byte)
 
         Sub New(defaultBackground As Color, Optional heatmapMode As Boolean = False)
-            Me.heatmapMode = heatmapMode
-            Me.defaultBackground = defaultBackground
+            Call MyBase.New(defaultBackground, heatmapMode)
         End Sub
 
-        Public Sub Render(ByRef gr As IGraphics, region As GraphicsRegion)
-            Dim css As CSSEnvirnment = gr.LoadEnvironment
+        Public Overrides Sub Render(ByRef g As IGraphics, region As GraphicsRegion)
+            Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim plotOffset As Point = region.PlotRegion(css).Location
             Dim pos As PointF
             Dim rect As RectangleF
@@ -131,7 +125,7 @@ Namespace Blender
 
                     ' imzXML里面的坐标是从1开始的
                     ' 需要减一转换为.NET中从零开始的位置
-                    Call gr.FillRectangle(New SolidBrush(color), rect)
+                    Call g.FillRectangle(New SolidBrush(color), rect)
                 Next
             Next
         End Sub
