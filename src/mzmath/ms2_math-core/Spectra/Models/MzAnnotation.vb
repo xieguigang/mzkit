@@ -67,6 +67,9 @@ Imports System.Xml.Serialization
 
 Namespace Spectra
 
+    ''' <summary>
+    ''' annotation of the m/z value
+    ''' </summary>
     Public Class MzAnnotation : Implements IMzAnnotation
 
         ''' <summary>
