@@ -12,6 +12,30 @@ Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 Module MsSpectrumData
 
+    Public Function GetPeakAnnotation(x As Object, env As Environment) As [Variant](Of Message, MzAnnotation)
+        Dim strs As String() = CLRVector.asCharacter(x)
+
+        If strs.IsNullOrEmpty OrElse (strs.Length = 1 AndAlso strs(0).StringEmpty(, True)) Then
+            Return RInternal.debug.stop("no ion peak annotation data!", env)
+        End If
+
+        If strs.Length = 1 Then
+            If strs(0).IsSimpleNumber Then
+                Return New MzAnnotation With {.productMz = Val(strs(0))}
+            Else
+                Return RInternal.debug.stop($"the input data '{strs(0)}' should be a numeric value!", env)
+            End If
+        End If
+
+        If strs(0).IsSimpleNumber Then
+            Return New MzAnnotation With {.productMz = Val(strs(0)), .annotation = strs(1)}
+        ElseIf strs(1).IsSimpleNumber Then
+            Return New MzAnnotation With {.productMz = Val(strs(1)), .annotation = strs(0)}
+        Else
+            Return RInternal.debug.stop("no ion peaks m/z value could be measured from the given data input!", env)
+        End If
+    End Function
+
     ''' <summary>
     ''' A unify method for extract the <see cref="LibraryMatrix"/> spectrum 
     ''' data from various mzkit data object model.
