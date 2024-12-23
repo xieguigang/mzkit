@@ -59,7 +59,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Blender
@@ -76,11 +75,19 @@ Namespace Blender
         Public Function GetJSON() As String
             Dim json As New Dictionary(Of String, Dictionary(Of String, String))
 
-            json!r = New Dictionary(Of String, String) From {{"m/z", R.productMz}, {"annotation", R.annotation}}
-            json!g = New Dictionary(Of String, String) From {{"m/z", G.productMz}, {"annotation", G.annotation}}
-            json!b = New Dictionary(Of String, String) From {{"m/z", B.productMz}, {"annotation", B.annotation}}
+            json!mode = New Dictionary(Of String, String) From {{"blender", "rgb"}}
+            json!r = ToJson(R)
+            json!g = ToJson(G)
+            json!b = ToJson(B)
 
             Return json.GetJson
+        End Function
+
+        Public Shared Function ToJson(m As MzAnnotation) As Dictionary(Of String, String)
+            Return New Dictionary(Of String, String) From {
+                {"m/z", m.productMz},
+                {"annotation", m.annotation}
+            }
         End Function
 
         Public Shared Function ParseJSON(jsonstr As String) As RGBConfigs
@@ -95,7 +102,7 @@ Namespace Blender
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Function ParseVal(val As Dictionary(Of String, String)) As MzAnnotation
+        Friend Shared Function ParseVal(val As Dictionary(Of String, String)) As MzAnnotation
             Return New MzAnnotation With {
                 .annotation = val!annotation,
                 .productMz = Double.Parse(val("m/z"))
