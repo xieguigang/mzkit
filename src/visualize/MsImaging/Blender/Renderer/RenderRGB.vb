@@ -59,6 +59,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.MIME.Html.CSS
@@ -99,21 +100,9 @@ Namespace Blender
                     If bR = 0 AndAlso bG = 0 AndAlso bB = 0 Then
                         ' missing a pixel at here?
                         If heatmapMode Then
-                            bR = CByte(New Integer() {
-                                Rchannel(x - 1, y - 1), Rchannel(x, y - 1), Rchannel(x + 1, y - 1),
-                                Rchannel(x - 1, y), Rchannel(x, y), Rchannel(x + 1, y),
-                                Rchannel(x - 1, y + 1), Rchannel(x, y + 1), Rchannel(x + 1, y + 1)
-                            }.Average)
-                            bB = CByte(New Integer() {
-                                Bchannel(x - 1, y - 1), Bchannel(x, y - 1), Bchannel(x + 1, y - 1),
-                                Bchannel(x - 1, y), Bchannel(x, y), Bchannel(x + 1, y),
-                                Bchannel(x - 1, y + 1), Bchannel(x, y + 1), Bchannel(x + 1, y + 1)
-                            }.Average)
-                            bG = CByte(New Integer() {
-                                Gchannel(x - 1, y - 1), Gchannel(x, y - 1), Gchannel(x + 1, y - 1),
-                                Gchannel(x - 1, y), Gchannel(x, y), Gchannel(x + 1, y),
-                                Gchannel(x - 1, y + 1), Gchannel(x, y + 1), Gchannel(x + 1, y + 1)
-                            }.Average)
+                            bR = HeatmapBlending(Rchannel, x, y)
+                            bB = HeatmapBlending(Bchannel, x, y)
+                            bG = HeatmapBlending(Gchannel, x, y)
 
                             color = Color.FromArgb(bR, bG, bB)
                         Else
