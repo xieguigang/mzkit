@@ -21,7 +21,10 @@ Module MsSpectrumData
 
         If strs.Length = 1 Then
             If strs(0).IsSimpleNumber Then
-                Return New MzAnnotation With {.productMz = Val(strs(0))}
+                Return New MzAnnotation With {
+                    .productMz = Val(strs(0)),
+                    .annotation = .productMz.ToString("F4")
+                }
             Else
                 Return RInternal.debug.stop($"the input data '{strs(0)}' should be a numeric value!", env)
             End If

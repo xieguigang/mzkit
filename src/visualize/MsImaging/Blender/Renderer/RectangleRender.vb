@@ -126,6 +126,51 @@ Namespace Blender
             Call rgb.Render(gr, region)
         End Sub
 
+        Public Overloads Sub ChannelCompositions(g As IGraphics, region As GraphicsRegion,
+                                                 C() As PixelData, M() As PixelData, Y() As PixelData, K() As PixelData,
+                                                 dimension As Size,
+                                                 Optional background As String = "black")
+
+            Dim defaultBackground As Color = background.TranslateColor
+            Dim cmyk As New RenderCMYK(defaultBackground, heatmapMode) With {
+                .Cchannel = GetPixelChannelReader(C),
+                .Mchannel = GetPixelChannelReader(M),
+                .Ychannel = GetPixelChannelReader(Y),
+                .Kchannel = GetPixelChannelReader(K),
+                .dimension = dimension
+            }
+
+            Call cmyk.Render(g, region)
+        End Sub
+
+        Public Overrides Function ChannelCompositions(C() As PixelData, M() As PixelData, Y() As PixelData, K() As PixelData,
+                                                      dimension As Size,
+                                                      Optional background As String = "black") As GraphicsData
+
+            Dim defaultBackground As Color = background.TranslateColor
+            Dim Cchannel = GetPixelChannelReader(C)
+            Dim Mchannel = GetPixelChannelReader(M)
+            Dim Ychannel = GetPixelChannelReader(Y)
+            Dim Kchannel = GetPixelChannelReader(K)
+            Dim w As Integer = dimension.Width
+            Dim h As Integer = dimension.Height
+            Dim rgb As New RenderCMYK(defaultBackground, heatmapMode) With {
+                .Cchannel = Cchannel,
+                .dimension = dimension,
+                .Mchannel = Mchannel,
+                .Ychannel = Ychannel,
+                .Kchannel = Kchannel
+            }
+
+            Return Drawing2D.g.GraphicsPlots(
+                size:=New Size(w, h),
+                padding:=New Padding,
+                bg:=NameOf(Color.Transparent),
+                driver:=driver,
+                plotAPI:=AddressOf rgb.Render
+            )
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
