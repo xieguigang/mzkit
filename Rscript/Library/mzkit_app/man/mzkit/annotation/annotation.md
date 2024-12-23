@@ -4,7 +4,7 @@ the metabolite annotation toolkit
 
 + [xref](annotation/xref.1) Create the database cross reference links
 + [library_from_mona](annotation/library_from_mona.1) Create spectrum reference library from mona msp file
-+ [load_local](annotation/load_local.1) 
++ [load_local](annotation/load_local.1) Construct of the local reference library for gcms data
 + [load_metadata](annotation/load_metadata.1) 
 + [assert.adducts](annotation/assert.adducts.1) Check of the valid adducts
 + [populateIonData](annotation/populateIonData.1) a shortcut method for populate the peak ms2 data from a mzpack raw data file

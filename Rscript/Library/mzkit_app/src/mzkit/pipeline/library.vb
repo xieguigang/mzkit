@@ -536,6 +536,7 @@ Module library
     Public Function MakeMoNALibrary(<RRawVectorArgument>
                                     mona As Object,
                                     Optional libtype As IonModes = IonModes.Positive,
+                                    Optional tqdm_verbose As Boolean = True,
                                     Optional env As Environment = Nothing) As Object
 
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of SpectraSection)(mona, env)
@@ -551,7 +552,15 @@ Module library
 
         Dim fetch As Func(Of IEnumerable(Of (MetaLib, PeakMs2))) =
             Iterator Function() As IEnumerable(Of (MetaLib, PeakMs2))
-                For Each ref As SpectraSection In TqdmWrapper.Wrap(pullSpec)
+                Dim source As IEnumerable(Of SpectraSection)
+
+                If tqdm_verbose Then
+                    source = TqdmWrapper.Wrap(pullSpec)
+                Else
+                    source = pullSpec
+                End If
+
+                For Each ref As SpectraSection In source
                     Yield (ref.GetMetabolite, ref.GetSpectrumPeaks)
                 Next
             End Function
@@ -560,10 +569,16 @@ Module library
         Return libs
     End Function
 
+    ''' <summary>
+    ''' Construct of the local reference library for gcms data
+    ''' </summary>
+    ''' <param name="metadb"></param>
+    ''' <param name="refSpec"></param>
+    ''' <returns></returns>
     <ExportAPI("load_local")>
     <RApiReturn(GetType(Library(Of MetaLib)))>
-    Public Function LoadLocalDatabase(metadb As IMetaDb, refSpec As PackAlignment) As Object
-        Return New Library(Of MetaLib)(metadb, refSpec.GetReferenceSpectrum)
+    Public Function LoadLocalDatabase(metadb As IMetaDb, refSpec As PackAlignment, Optional tqdm_verbose As Boolean = True) As Object
+        Return New Library(Of MetaLib)(metadb, refSpec.GetReferenceSpectrum(tqdm_verbose))
     End Function
 
     <ExportAPI("load_metadata")>
@@ -798,10 +813,13 @@ Module library
     <ExportAPI("open_repository")>
     <RApiReturn(GetType(LocalRepository))>
     Public Function openRepository(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
-        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+        Dim is_filepath As Boolean
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env, is_filepath:=is_filepath)
 
         If buf Like GetType(Message) Then
             Return buf.TryCast(Of Message)
+        ElseIf is_filepath Then
+            Call VBDebugger.EchoLine($"open the local annotation database file: {CLRVector.asCharacter(file).First}")
         End If
 
         Return New LocalRepository(buf.TryCast(Of Stream))

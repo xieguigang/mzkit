@@ -101,7 +101,7 @@ Namespace Spectra
                 Return Nothing
             End If
 
-            Dim mzIndex As MzPool = peaks.CreateCentroidFragmentSet(centroid)
+            Dim mzIndex As MzPool = peaks.CreateCentroidFragmentSet(centroid, verbose:=False)
             Dim v As Double() = New Double(mzIndex.size - 1) {}
             Dim size As Integer = mzIndex.size
             Dim fragments As ms2()

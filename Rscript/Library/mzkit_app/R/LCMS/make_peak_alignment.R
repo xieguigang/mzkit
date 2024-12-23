@@ -6,6 +6,8 @@
 const make_peak_alignment = function(peakfiles, max_rtwin = 15,mzdiff = 0.01) {
     imports "xcms" from "mz_quantify";
 
+    print("read sample peaks data:");
+
     let peaksdata = as.list(peakfiles, names = basename(peakfiles)) 
     |> tqdm() 
     |> lapply(function(path) {
@@ -18,7 +20,9 @@ const make_peak_alignment = function(peakfiles, max_rtwin = 15,mzdiff = 0.01) {
     })
     ;
 
-    peaksdata |> peak_alignment( 
+    print(names(peaksdata));
+
+    peaksdata |> mzDeco::peak_alignment( 
         mzdiff = mzdiff,
         ri_win = max_rtwin);
 }
