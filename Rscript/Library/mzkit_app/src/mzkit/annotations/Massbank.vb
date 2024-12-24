@@ -172,11 +172,11 @@ Module Massbank
         Dim odors As New Rdataframe With {
             .columns = New Dictionary(Of String, Array)
         }
-        Dim type As New List(Of String)
-        Dim odor As New List(Of String)
+        Dim terms As NamedValue(Of String)() = meta.chemical.EnumerateOdorTerms.ToArray
 
-        Call odors.add("category", type)
-        Call odors.add("odor", odor)
+        Call odors.add("category", From i In terms Select i.Name)
+        Call odors.add("odor", From i In terms Select i.Value)
+        Call odors.add("text", From i In terms Select i.Description)
 
         Return odors
     End Function
