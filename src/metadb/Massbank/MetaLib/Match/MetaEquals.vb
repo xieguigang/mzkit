@@ -63,7 +63,7 @@ Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace MetaLib
 
@@ -124,7 +124,7 @@ Namespace MetaLib
                       End Sub
             Dim no = Sub() total += 1
 
-            If stdNum.Abs(meta.exact_mass - other.exact_mass) > 0.3 Then
+            If std.Abs(meta.exact_mass - other.exact_mass) > 0.3 Then
                 no()
             End If
 
