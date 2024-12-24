@@ -57,6 +57,10 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
+Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.NLP
+Imports Microsoft.VisualBasic.Linq
 
 Namespace MetaLib
 
@@ -68,6 +72,7 @@ Namespace MetaLib
         Public Const OligopeptideName$ = "[A-Z][a-z]{2}"
 
         ReadOnly oligopeptidePattern As New Regex(OligopeptideName, RegexOptions.Singleline)
+        ReadOnly stopWords As New StopWords
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
@@ -132,6 +137,31 @@ Namespace MetaLib
                 If name.EndsWith("ate") Then
                     Yield name.Substring(0, name.Length - 3) & " acid"
                 End If
+            Next
+        End Function
+
+        <Extension>
+        Public Iterator Function EnumerateOdorTerms(info As ChemicalDescriptor) As IEnumerable(Of NamedValue(Of String))
+            For Each odor As UnitValue In info.Odor.SafeQuery
+                Dim terms As String() = Strings.Trim(odor.condition.TrimNewLine).ToLower.Words
+
+                For Each term As String In stopWords.Removes(terms)
+                    Yield New NamedValue(Of String)("odor", term, odor.condition)
+                Next
+            Next
+            For Each odor As UnitValue In info.Taste.SafeQuery
+                Dim terms As String() = Strings.Trim(odor.condition.TrimNewLine).ToLower.Words
+
+                For Each term As String In stopWords.Removes(terms)
+                    Yield New NamedValue(Of String)("taste", term, odor.condition)
+                Next
+            Next
+            For Each odor As UnitValue In info.Color.SafeQuery
+                Dim terms As String() = Strings.Trim(odor.condition.TrimNewLine).ToLower.Words
+
+                For Each term As String In stopWords.Removes(terms)
+                    Yield New NamedValue(Of String)("color", term, odor.condition)
+                Next
             Next
         End Function
     End Module
