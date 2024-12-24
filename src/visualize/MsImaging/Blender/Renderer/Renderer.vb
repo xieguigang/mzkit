@@ -138,6 +138,15 @@ Namespace Blender
                                                          Optional background As String = "black") As GraphicsData
 
         ''' <summary>
+        ''' 最多只支持四种离子（C,M,Y,K）
+        ''' </summary>
+        ''' <param name="dimension"></param>
+        ''' <returns></returns>
+        Public MustOverride Function ChannelCompositions(C As PixelData(), M As PixelData(), Y As PixelData(), K As PixelData(),
+                                                         dimension As Size,
+                                                         Optional background As String = "black") As GraphicsData
+
+        ''' <summary>
         ''' 将所有的离子混合叠加再一个图层中可视化
         ''' </summary>
         ''' <param name="pixels"></param>
