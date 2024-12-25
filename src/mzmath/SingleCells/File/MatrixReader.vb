@@ -332,11 +332,11 @@ Namespace File
         ''' load all spots data from file into memory
         ''' </summary>
         ''' <returns></returns>
-        Public Iterator Function LoadSpots() As IEnumerable(Of PixelData)
+        Public Iterator Function LoadSpots(Optional wrap_tqdm As Boolean = True) As IEnumerable(Of PixelData)
             Call bin.BaseStream.Seek(scan0, SeekOrigin.Begin)
             Call VBDebugger.EchoLine("load all spots data from file into memory...")
 
-            For Each i As Integer In Tqdm.Range(0, spots)
+            For Each i As Integer In Tqdm.Range(0, spots, wrap_console:=wrap_tqdm)
                 Yield LoadCurrentSpot()
             Next
         End Function
@@ -378,11 +378,11 @@ Namespace File
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function LoadMemory() As MzMatrix
+        Public Function LoadMemory(Optional wrap_tqdm As Boolean = True) As MzMatrix
             Return New MzMatrix With {
                 .mz = ionSet,
                 .tolerance = tolerance,
-                .matrix = LoadSpots.ToArray,
+                .matrix = LoadSpots(wrap_tqdm:=wrap_tqdm).ToArray,
                 .matrixType = matrixType,
                 .mzmin = mzwindows.Select(Function(a) a.mzmin).ToArray,
                 .mzmax = mzwindows.Select(Function(a) a.mzmax).ToArray
