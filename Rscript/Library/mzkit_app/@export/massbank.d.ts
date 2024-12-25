@@ -155,6 +155,14 @@ declare namespace massbank {
       */
       function msp_metadata(msp: object): object;
    }
+   /**
+    * Extract odors information from the metabolite data
+    * 
+    * 
+     * @param meta -
+     * @param env -
+   */
+   function odors(meta: object, env: object): object;
    module parse {
       /**
       */

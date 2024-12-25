@@ -2,6 +2,7 @@
 
 Metabolite annotation database toolkit
 
++ [odors](massbank/odors.1) Extract odors information from the metabolite data
 + [write.metalib](massbank/write.metalib.1) write the metabolite annotation data collection as messagepack
 + [mona.msp_metadata](massbank/mona.msp_metadata.1) Extract the annotation metadata from the MONA comment data
 + [read.RefMet](massbank/read.RefMet.1) read the csv table of refmet

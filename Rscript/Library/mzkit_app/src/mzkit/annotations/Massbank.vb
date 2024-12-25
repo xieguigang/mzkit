@@ -161,6 +161,26 @@ Module Massbank
         Return df
     End Function
 
+    ''' <summary>
+    ''' Extract odors information from the metabolite data
+    ''' </summary>
+    ''' <param name="meta"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("odors")>
+    Public Function makeOdorDataframe(meta As MetaLib, env As Environment) As Rdataframe
+        Dim odors As New Rdataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+        Dim terms As NamedValue(Of String)() = meta.chemical.EnumerateOdorTerms.ToArray
+
+        Call odors.add("category", From i In terms Select i.Name)
+        Call odors.add("odor", From i In terms Select i.Value)
+        Call odors.add("text", From i In terms Select i.Description)
+
+        Return odors
+    End Function
+
     <RGenericOverloads("as.data.frame")>
     Private Function refMetTable(refmet As RefMet(), args As list, env As Environment) As Object
         Dim df As New Rdataframe With {.columns = New Dictionary(Of String, Array)}
