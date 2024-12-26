@@ -129,14 +129,21 @@ Public Module MergeLayoutSliders
 
                     left += padding.Width * 2 + rect.Width
 
-                    With sample.MS _
-                        .Select(Function(i) i.mz) _
-                        .IteratesALL _
-                        .ToArray
+                    ' 20241226 mass data count may exceeded 2gb size
+                    ' .net clr array can not contains data with these
+                    ' size
+                    ' use a helper function for avoid such error
 
-                        If .Length > 0 Then
-                            mzmin.Add(.Min)
-                            mzmax.Add(.Max)
+                    ' System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation.
+                    ' System.OutOfMemoryException: Array dimensions exceeded supported range.
+                    '
+                    '    at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+                    '    at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+                    '
+                    With sample.MassRange
+                        If .hasdata Then
+                            mzmin.Add(.min)
+                            mzmax.Add(.max)
                         End If
                     End With
 
@@ -179,5 +186,30 @@ Public Module MergeLayoutSliders
             .source = raw.Keys.JoinBy("+"),
             .metadata = metadata.GetMetadata
         }
+    End Function
+
+    <Extension>
+    Private Function MassRange(sample As mzPack) As (hasdata As Boolean, min As Double, max As Double)
+        Dim min As Double = Double.MaxValue
+        Dim max As Double = Double.MinValue
+
+        If sample.MS.TryCount = 0 Then
+            Return (False, -1, -1)
+        End If
+
+        Dim range As DoubleRange
+
+        For Each ms As ScanMS1 In sample.MS
+            range = ms.mz.Range
+
+            If range.Min < min Then
+                min = range.Min
+            End If
+            If range.Max > max Then
+                max = range.Max
+            End If
+        Next
+
+        Return (True, min, max)
     End Function
 End Module
