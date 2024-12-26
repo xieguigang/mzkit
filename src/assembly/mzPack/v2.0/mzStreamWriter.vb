@@ -95,7 +95,7 @@ Public Module mzStreamWriter
 
         Dim metadata As New Dictionary(Of String, String)
 
-        Using pack As New StreamPack(file)
+        Using pack As New StreamPack(file, meta_size:=meta_size)
             Dim summary As New Dictionary(Of String, Double)
 
             Call pack.Clear(meta_size)
