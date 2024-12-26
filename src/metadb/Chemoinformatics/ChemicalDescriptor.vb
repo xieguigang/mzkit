@@ -84,6 +84,9 @@ Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 
+''' <summary>
+''' value with reference source
+''' </summary>
 Public Class Value
 
     Public Property value As Double
@@ -91,8 +94,15 @@ Public Class Value
 
 End Class
 
+''' <summary>
+''' value with data unit tagged
+''' </summary>
 Public Class UnitValue : Inherits Value
 
+    ''' <summary>
+    ''' the data unit of the <see cref="value"/>.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property unit As String
     Public Property condition As String
 

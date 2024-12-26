@@ -222,10 +222,18 @@ Namespace PackLib
         ''' pull all reference spectrum inside current library object
         ''' </summary>
         ''' <returns></returns>
-        Public Iterator Function GetReferenceSpectrum() As IEnumerable(Of PeakMs2)
+        Public Iterator Function GetReferenceSpectrum(Optional tqdm_verbose As Boolean = True) As IEnumerable(Of PeakMs2)
+            Dim offsets As IEnumerable(Of MassIndex)
+
+            If tqdm_verbose Then
+                offsets = Tqdm.Wrap(spectrum.LoadMass().ToArray)
+            Else
+                offsets = spectrum.LoadMass
+            End If
+
             ' load mass returns mass set which already been filter 
             ' by the given target reference id set
-            For Each meta As MassIndex In Tqdm.Wrap(spectrum.LoadMass().ToArray)
+            For Each meta As MassIndex In offsets
                 For Each spec As PeakMs2 In spectrum.GetSpectrum(meta)
                     Yield spec
                 Next

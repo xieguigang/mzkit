@@ -67,6 +67,9 @@ Imports System.Xml.Serialization
 
 Namespace Spectra
 
+    ''' <summary>
+    ''' annotation of the m/z value
+    ''' </summary>
     Public Class MzAnnotation : Implements IMzAnnotation
 
         ''' <summary>
@@ -81,13 +84,32 @@ Namespace Spectra
         ''' <returns></returns>
         <XmlAttribute> Public Property annotation As String Implements IMzAnnotation.annotation
 
+        Sub New()
+        End Sub
+
+        Sub New(annotation As String, mz As Double)
+            Me.productMz = mz
+            Me.annotation = annotation
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"{productMz.ToString("F4")} [{annotation}]"
         End Function
 
+        ''' <summary>
+        ''' make evaluation of the mass delta
+        ''' </summary>
+        ''' <param name="anno"></param>
+        ''' <param name="mass"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(anno As MzAnnotation, mass As Double) As Double
             Return anno.productMz - mass
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(mz As MzAnnotation) As Double
+            Return mz.productMz
         End Operator
 
     End Class

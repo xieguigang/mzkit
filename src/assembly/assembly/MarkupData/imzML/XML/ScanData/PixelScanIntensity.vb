@@ -119,6 +119,11 @@ Namespace MarkupData.imzML
         End Function
 
         Public Shared Function Parse(buffer As Byte()) As PixelScanIntensity()
+            If buffer.IsNullOrEmpty Then
+                Call "the given buffer package is empty, no pixels intensity data could be parsed.".Warning
+                Return {}
+            End If
+
             Using file As New BinaryDataReader(New MemoryStream(buffer))
                 Dim size As Integer = file.ReadInt32
                 Dim x As Integer() = file.ReadInt32s(size)

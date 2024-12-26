@@ -63,9 +63,16 @@ Namespace Blender
 
     Public Enum RenderingModes
 
+        ''' <summary>
+        ''' supports 3 ion channels: rgb
+        ''' </summary>
         RGBComposition
         MixIons
         LayerOverlaps
+        ''' <summary>
+        ''' supports 4 ion channels: cmyk
+        ''' </summary>
+        CMYKComposition
 
     End Enum
 End Namespace

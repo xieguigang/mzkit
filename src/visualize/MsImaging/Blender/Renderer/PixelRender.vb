@@ -138,6 +138,50 @@ Namespace Blender
             Return New ImageData(raw)
         End Function
 
+        Public Overrides Function ChannelCompositions(Cdata() As PixelData, Mdata() As PixelData, Ydata() As PixelData, Kdata() As PixelData,
+                                                      dimension As Size,
+                                                      Optional background As String = "black") As GraphicsData
+
+            Dim defaultBackground As Color = background.TranslateColor
+            ' rendering via raw dimesnion size
+            Dim raw As Bitmap = DrawBackground(dimension, defaultBackground)
+            Dim Cchannel = GetPixelChannelReader(Cdata)
+            Dim Mchannel = GetPixelChannelReader(Mdata)
+            Dim Ychannel = GetPixelChannelReader(Ydata)
+            Dim Kchannel = GetPixelChannelReader(Kdata)
+            Dim skipTransparent As Boolean = Not overlaps Is Nothing
+
+            Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw)
+                For x As Integer = 1 To dimension.Width
+                    For y As Integer = 1 To dimension.Height
+                        Dim bC As Byte = Cchannel(x, y)
+                        Dim bM As Byte = Mchannel(x, y)
+                        Dim bY As Byte = Ychannel(x, y)
+                        Dim bK As Byte = Kchannel(x, y)
+                        Dim color As Color
+
+                        If bC < transparentCutoff AndAlso bM < transparentCutoff AndAlso bY < transparentCutoff AndAlso bK < transparentCutoff Then
+                            color = defaultBackground
+
+                            If skipTransparent Then
+                                Continue For
+                            End If
+                        Else
+                            color = New CMYKColor(bC, bM, bY, bK).ToRGB
+                        End If
+
+                        ' imzXML里面的坐标是从1开始的
+                        ' 需要减一转换为.NET中从零开始的位置
+                        ' 但是经过scale之后，已经变换为0为底的结果了
+                        Call buffer.SetPixel(x - 1, y - 1, color)
+                    Next
+                Next
+            End Using
+
+            ' no scale
+            Return New ImageData(raw)
+        End Function
+
         ''' <summary>
         ''' draw background
         ''' </summary>
