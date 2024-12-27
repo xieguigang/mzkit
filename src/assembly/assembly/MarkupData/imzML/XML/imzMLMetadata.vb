@@ -175,10 +175,17 @@ Namespace MarkupData.imzML
                                          <Out> ByRef analyzer As String,
                                          <Out> ByRef detector As String)
             If Not ms Is Nothing Then
-                instrument = ms.cvParams.First.name
-                source = ms.componentList.source.cvParams.First.name
-                analyzer = ms.componentList.analyzer.First.cvParams.First.name
-                detector = ms.componentList.detector.First.cvParams.First.name
+                If ms.cvParams.IsNullOrEmpty Then
+                    instrument = "Unknown"
+                Else
+                    instrument = ms.cvParams.First.name
+                End If
+
+                If Not ms.componentList Is Nothing Then
+                    source = ms.componentList.source.cvParams.First.name
+                    analyzer = ms.componentList.analyzer.First.cvParams.First.name
+                    detector = ms.componentList.detector.First.cvParams.First.name
+                End If
             End If
         End Sub
 

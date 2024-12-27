@@ -72,6 +72,9 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
+''' <summary>
+''' helper module for write <see cref="mzPack"/> 
+''' </summary>
 Public Module mzStreamWriter
 
     Public Const metadata_json As String = ".etc/metadata.json"
@@ -205,6 +208,7 @@ Public Module mzStreamWriter
                 Call ms1Metadata.Add(tag.Key, tag.Value)
             Next
 
+            ' save all ms2 level spectrum in current ms1 spectrum node into file
             For Each product As ScanMS2 In ms1.products.SafeQuery
                 Using blockStream As Stream = pack.OpenBlock($"{dir}/{product.scan_id.MD5}.mz")
                     If TypeOf blockStream Is SubStream Then
@@ -231,6 +235,22 @@ Public Module mzStreamWriter
                     End If
                 End Using
 
+                ' 20241227 mzpack v2.1 upgrade
+                ' save ms2 spectrum peak annotation data file
+                If Not product.metadata.IsNullOrEmpty Then
+                    ' has peak annotation metadata
+                    ' save to a file aside the ms2 product file
+                    Using blockStream As Stream = pack.OpenBlock($"{dir}/{product.scan_id.MD5}.txt")
+                        Using str As New StreamWriter(blockStream)
+                            For Each line As String In product.metadata
+                                Call str.WriteLine(line)
+                            Next
+
+                            Call str.Flush()
+                        End Using
+                    End Using
+                End If
+
                 If product.rt > rtmax Then
                     rtmax = product.rt
                 End If
@@ -255,6 +275,12 @@ Public Module mzStreamWriter
         Call index.Add(NameOf(rtmax), rtmax)
     End Sub
 
+    ''' <summary>
+    ''' write the spectrum and scanner data stream
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="pack"></param>
+    ''' <param name="index"></param>
     <Extension>
     Private Sub WriteStream(mzpack As mzPack, pack As StreamPack, ByRef index As Dictionary(Of String, Double))
         Dim samples As New List(Of String)

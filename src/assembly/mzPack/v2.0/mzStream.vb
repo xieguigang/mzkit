@@ -262,6 +262,11 @@ Public Class mzStream : Implements IMzPackReader
         End If
     End Function
 
+    ''' <summary>
+    ''' just read the ms1 scan data
+    ''' </summary>
+    ''' <param name="scan_id"></param>
+    ''' <returns></returns>
     Public Function ReadMS1(scan_id As String) As ScanMS1
         Dim refer As String = $"{findScan1Name(scan_id)}/Scan1.mz"
         Dim buffer As Stream = pack.OpenBlock(refer)
@@ -332,6 +337,12 @@ Public Class mzStream : Implements IMzPackReader
         Return meta
     End Function
 
+    ''' <summary>
+    ''' read ms1 scan data and corresponding msn product scan data
+    ''' </summary>
+    ''' <param name="scan_id"></param>
+    ''' <param name="skipProducts"></param>
+    ''' <returns></returns>
     Public Function ReadScan(scan_id As String, Optional skipProducts As Boolean = False) As ScanMS1 Implements IMzPackReader.ReadScan
         Dim ms1 As ScanMS1 = ReadMS1(scan_id)
         Dim refer As String = findScan1Name(scan_id)
@@ -348,8 +359,16 @@ Public Class mzStream : Implements IMzPackReader
                 Dim reader As New BinaryDataReader(buffer) With {
                     .ByteOrder = ByteOrder.LittleEndian
                 }
+                Dim msnProduct As ScanMS2 = Serialization.ReadScanMs2(reader)
+                ' 20241227 v2.1 format updates
+                ' read peak list annotation metadata
+                Dim metadata As String = $"{refer}/{id2(i).MD5}.txt"
 
-                ms1.products(i) = Serialization.ReadScanMs2(reader)
+                If pack.FileExists(metadata, ZERO_Nonexists:=True) Then
+                    msnProduct.metadata = pack.ReadText(metadata).LineTokens
+                End If
+
+                ms1.products(i) = msnProduct
             Next
         Else
             ms1.products = {}

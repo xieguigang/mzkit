@@ -76,6 +76,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -143,16 +144,27 @@ Namespace File
             End Get
         End Property
 
-    ''' <summary>
-    ''' parse the file header of this matrix file
-    ''' </summary>
-    ''' <param name="s"></param>
+        ''' <summary>
+        ''' parse the file header of this matrix file
+        ''' </summary>
+        ''' <param name="s"></param>
         Sub New(s As Stream)
-            Me.bin = New BinaryReader(s, Encoding.ASCII)
+            Me.bin = New BinaryReader(s, Encoding.ASCII, leaveOpen:=False)
             Me.bin.BaseStream.Seek(0, SeekOrigin.Begin)
             Me.scan0 = loadHeaders()
             Me.mzIndex = New MzPool(ionSet)
             Me.mzdiff = Val(tolerance)
+        End Sub
+
+        ''' <summary>
+        ''' Create matrix reader from a specific data file path
+        ''' </summary>
+        ''' <param name="filepath">
+        ''' should be a file path to the ``*.mzImage`` matrix file.
+        ''' </param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(filepath As String)
+            Call Me.New(s:=filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True))
         End Sub
 
         Private Function loadHeaders() As Long
@@ -298,6 +310,41 @@ Namespace File
             Return bin.ReadDouble
         End Function
 
+        ''' <summary>
+        ''' get 2d raster layer data
+        ''' </summary>
+        ''' <param name="mz"></param>
+        ''' <param name="dims"></param>
+        ''' <returns>
+        ''' this function will returns a empty collection if the target ion is not found
+        ''' </returns>
+        Public Iterator Function GetLayer(Of P As {New, Pixel})(mz As Double, Optional dims As (x As Integer, y As Integer) = Nothing) As IEnumerable(Of P)
+            Dim raster = GetRaster(mz, (dims.x, dims.y, 1)).FirstOrDefault
+
+            If raster Is Nothing Then
+                Return
+            End If
+
+            Dim dim1 = raster.Length
+            Dim dim2 = raster(0).Length
+
+            For x As Integer = 0 To dim2 - 1
+                For y As Integer = 0 To dim1 - 1
+                    Yield New P With {
+                        .X = x + 1,
+                        .Y = y + 1,
+                        .Scale = raster(y)(x)
+                    }
+                Next
+            Next
+        End Function
+
+        ''' <summary>
+        ''' could be apply for get 3D volume raster data
+        ''' </summary>
+        ''' <param name="mz"></param>
+        ''' <param name="dims"></param>
+        ''' <returns></returns>
         Public Iterator Function GetRaster(mz As Double, Optional dims As (x As Integer, y As Integer, z As Integer) = Nothing) As IEnumerable(Of Double()())
             Dim s As Stream = bin.BaseStream
             Dim offset As Long
@@ -312,6 +359,7 @@ Namespace File
                 dims = spot_index.GetDimensions
             End If
 
+            ' for each layers across the z-axis
             For Each layer As Grid(Of SpatialIndex) In spot_index.ZLayers
                 Dim buf As Double()() = RectangularArray.Matrix(Of Double)(dims.y, dims.x)
                 Dim v As Double
