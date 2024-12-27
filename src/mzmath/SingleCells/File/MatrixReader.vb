@@ -148,11 +148,16 @@ Namespace File
     ''' </summary>
     ''' <param name="s"></param>
         Sub New(s As Stream)
-            Me.bin = New BinaryReader(s, Encoding.ASCII)
+            Me.bin = New BinaryReader(s, Encoding.ASCII, leaveOpen:=False)
             Me.bin.BaseStream.Seek(0, SeekOrigin.Begin)
             Me.scan0 = loadHeaders()
             Me.mzIndex = New MzPool(ionSet)
             Me.mzdiff = Val(tolerance)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(filepath As String)
+            Call Me.New(s:=filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True))
         End Sub
 
         Private Function loadHeaders() As Long
