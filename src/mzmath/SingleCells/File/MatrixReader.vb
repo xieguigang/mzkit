@@ -155,6 +155,12 @@ Namespace File
             Me.mzdiff = Val(tolerance)
         End Sub
 
+        ''' <summary>
+        ''' Create matrix reader from a specific data file path
+        ''' </summary>
+        ''' <param name="filepath">
+        ''' should be a file path to the ``*.mzImage`` matrix file.
+        ''' </param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(filepath As String)
             Call Me.New(s:=filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True))
