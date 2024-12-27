@@ -98,6 +98,15 @@ Namespace Spectra
         ''' <returns></returns>
         Public Property into As Double() Implements ISpectrumVector.PeaksIntensity
 
+        ''' <summary>
+        ''' the peak annotation of the corresponding ion peak data
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this property should be on size equals to the spectrum peak set: <see cref="mz"/> or just leaves nothing.
+        ''' </remarks>
+        Public Property metadata As String()
+
         Public Property MRM As MRM()
 
         ''' <summary>
