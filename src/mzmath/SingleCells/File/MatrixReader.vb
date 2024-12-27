@@ -315,9 +315,16 @@ Namespace File
         ''' </summary>
         ''' <param name="mz"></param>
         ''' <param name="dims"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function will returns a empty collection if the target ion is not found
+        ''' </returns>
         Public Iterator Function GetLayer(Of P As {New, Pixel})(mz As Double, Optional dims As (x As Integer, y As Integer) = Nothing) As IEnumerable(Of P)
-            Dim raster = GetRaster(mz, (dims.x, dims.y, 1)).First
+            Dim raster = GetRaster(mz, (dims.x, dims.y, 1)).FirstOrDefault
+
+            If raster Is Nothing Then
+                Return
+            End If
+
             Dim dim1 = raster.Length
             Dim dim2 = raster(0).Length
 
