@@ -237,7 +237,7 @@ Public Module mzStreamWriter
 
                 ' 20241227 mzpack v2.1 upgrade
                 ' save ms2 spectrum peak annotation data file
-                If product.metadata.Any Then
+                If Not product.metadata.IsNullOrEmpty Then
                     ' has peak annotation metadata
                     ' save to a file aside the ms2 product file
                     Using blockStream As Stream = pack.OpenBlock($"{dir}/{product.scan_id.MD5}.txt")

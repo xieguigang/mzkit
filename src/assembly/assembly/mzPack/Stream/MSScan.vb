@@ -142,12 +142,22 @@ Namespace mzData.mzWebCache
                 Return
             End If
 
-            For i As Integer = 0 To mz.Length - 1
-                Yield New ms2 With {
-                    .mz = mz(i),
-                    .intensity = into(i)
-                }
-            Next
+            If metadata.IsNullOrEmpty Then
+                For i As Integer = 0 To mz.Length - 1
+                    Yield New ms2 With {
+                        .mz = mz(i),
+                        .intensity = into(i)
+                    }
+                Next
+            Else
+                For i As Integer = 0 To mz.Length - 1
+                    Yield New ms2 With {
+                        .mz = mz(i),
+                        .intensity = into(i),
+                        .Annotation = metadata(i)
+                    }
+                Next
+            End If
         End Function
     End Class
 End Namespace

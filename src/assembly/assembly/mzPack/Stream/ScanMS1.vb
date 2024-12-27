@@ -74,6 +74,10 @@ Namespace mzData.mzWebCache
         Public Overrides Property rt As Double Implements ITimeSignal.time, IRetentionTime.rt
         Public Property TIC As Double Implements ITimeSignal.intensity
         Public Property BPC As Double
+        ''' <summary>
+        ''' the msn products scan data
+        ''' </summary>
+        ''' <returns></returns>
         Public Property products As ScanMS2()
 
         ''' <summary>
