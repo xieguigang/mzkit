@@ -80,6 +80,7 @@ Namespace MarkupData.mzML
         Public Function ToArray() As NamedValue(Of String)()
             Return softwares _
                 .SafeQuery _
+                .Where(Function(si) Not si.cvParams.IsNullOrEmpty) _
                 .Select(Function(si)
                             Return New NamedValue(Of String)(si.cvParams.First.name, si.version, si.id)
                         End Function) _
