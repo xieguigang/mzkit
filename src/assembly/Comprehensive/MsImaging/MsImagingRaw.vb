@@ -140,12 +140,13 @@ Namespace MsImaging
             Dim scans As New List(Of ScanMS1)
             Dim pos As Point
             Dim meta As Dictionary(Of String, String)
+            Dim layout As PaddingLayout = PaddingLayout.ParsePixels(padding)
 
             For Each scan As ScanMS1 In raw.MS
                 pos = scan.GetMSIPixel
                 pos = New Point With {
-                    .X = pos.X - rect.Left + padding.Left,
-                    .Y = pos.Y - rect.Top + padding.Top
+                    .X = pos.X - rect.Left + layout.Left,
+                    .Y = pos.Y - rect.Top + layout.Top
                 }
                 meta = New Dictionary(Of String, String)(scan.meta)
                 meta("x") = pos.X.ToString
@@ -164,8 +165,8 @@ Namespace MsImaging
             Next
 
             meta = raw.metadata
-            meta("width") = rect.Width + padding.Left + padding.Right
-            meta("height") = rect.Height + padding.Top + padding.Bottom
+            meta("width") = rect.Width + layout.Left + layout.Right
+            meta("height") = rect.Height + layout.Top + layout.Bottom
 
             Return New mzPack With {
                 .Application = FileApplicationClass.MSImaging,
