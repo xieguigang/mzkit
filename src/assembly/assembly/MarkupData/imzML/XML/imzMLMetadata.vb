@@ -182,9 +182,9 @@ Namespace MarkupData.imzML
                 End If
 
                 If Not ms.componentList Is Nothing Then
-                    source = ms.componentList.source.cvParams.First.name
-                    analyzer = ms.componentList.analyzer.First.cvParams.First.name
-                    detector = ms.componentList.detector.First.cvParams.First.name
+                    source = ms.componentList.source?.cvParams.First.name
+                    analyzer = ms.componentList.analyzer?.First.cvParams.First.name
+                    detector = ms.componentList.detector?.First.cvParams.First.name
                 End If
             End If
         End Sub
