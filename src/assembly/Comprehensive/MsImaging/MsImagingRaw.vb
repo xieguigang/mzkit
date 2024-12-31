@@ -94,11 +94,11 @@ Namespace MsImaging
             Dim dimensionSize As Size = GetDimensionSize(raw)
             Dim evalIndex As Func(Of Point, Integer) = Function(i) BitmapBuffer.GetIndex(i.X, i.Y, dimensionSize.Width, channels:=1)
             Dim regions As Dictionary(Of String, Point()) = index _
-            .GroupBy(Function(i) i.Name) _
-            .ToDictionary(Function(region) region.Key,
-                          Function(region)
-                              Return region.Select(Function(i) i.Value).ToArray
-                          End Function)
+                .GroupBy(Function(i) i.Name) _
+                .ToDictionary(Function(region) region.Key,
+                              Function(region)
+                                  Return region.Select(Function(i) i.Value).ToArray
+                              End Function)
 
             Throw New NotImplementedException
         End Function
