@@ -68,8 +68,10 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.GCxGC
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
@@ -104,10 +106,6 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Chromatogram = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.Chromatogram
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
-Imports BioNovoGene.Analytical.MassSpectrometry.GCxGC
-
-
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -505,6 +503,13 @@ Module Visual
         Return PlotUVSignals(x, env:=env)
     End Function
 
+    ''' <summary>
+    ''' plot spectrum
+    ''' </summary>
+    ''' <param name="spectrum"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <RGenericOverloads("plot")>
     Private Function plotMS(spectrum As Object, args As list, env As Environment) As Object
         Dim title As String = args.getValue(Of String)("title", env, Nothing)
