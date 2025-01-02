@@ -114,7 +114,16 @@ Namespace MarkupData.imzML
         ''' <param name="imzml">the file path to the target imzml file</param>
         ''' <returns></returns>
         Public Shared Function ReadHeaders(imzml As String) As imzMLMetadata
-            Dim cv As cvList = LoadUltraLargeXMLDataSet(Of cvList)(imzml, typeName:=NameOf(cvList)).FirstOrDefault
+            Dim cv As cvList = LoadUltraLargeXMLDataSet(Of cvList)(imzml,
+                typeName:=NameOf(cvList),
+                preprocess:=Function(str)
+                                If str Is Nothing Then
+                                    Return ""
+                                Else
+                                    ' 20250102 duplicated value attribute may occurs?
+                                    Return str.Replace("value=""""", "")
+                                End If
+                            End Function).FirstOrDefault
             Dim desc As fileDescription = LoadUltraLargeXMLDataSet(Of fileDescription)(imzml, typeName:=NameOf(fileDescription)).FirstOrDefault
             Dim softwares As softwareList = LoadUltraLargeXMLDataSet(Of softwareList)(imzml, typeName:=NameOf(mzML.softwareList)).FirstOrDefault
             Dim scanMeta As scanSettingsList = LoadUltraLargeXMLDataSet(Of scanSettingsList)(imzml, typeName:=NameOf(scanSettingsList)).FirstOrDefault
