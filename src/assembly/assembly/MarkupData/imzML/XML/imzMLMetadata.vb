@@ -67,6 +67,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 Namespace MarkupData.imzML
@@ -135,7 +136,7 @@ Namespace MarkupData.imzML
 
             Call GetFileContents(desc?.fileContent, guid, format, checksum)
 
-            Dim softwareList As NamedValue(Of String)() = softwares.ToArray
+            Dim softwareList As NamedValue(Of String)() = softwares.AsEnumerable.ToArray
             Dim instrumentName As String = Nothing
             Dim source As String = Nothing
             Dim analyzer As String = Nothing

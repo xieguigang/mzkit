@@ -72,25 +72,28 @@ Imports Microsoft.VisualBasic.Linq
 Namespace MarkupData.mzML
 
     Public Class softwareList : Inherits List
+        Implements Enumeration(Of NamedValue(Of String))
 
         <XmlElement("software")>
         Public Property softwares As software()
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ToArray() As NamedValue(Of String)()
-            Return softwares _
-                .SafeQuery _
-                .Where(Function(si) Not si.cvParams.IsNullOrEmpty) _
-                .Select(Function(si)
-                            Return New NamedValue(Of String)(si.cvParams.First.name, si.version, si.id)
-                        End Function) _
-                .ToArray
+            Return Me.AsEnumerable.ToArray
         End Function
 
         Public Overrides Function ToString() As String
             Return softwares.JoinBy("; ")
         End Function
 
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of NamedValue(Of String)) Implements Enumeration(Of NamedValue(Of String)).GenericEnumerator
+            For Each si As software In softwares _
+                .SafeQuery _
+                .Where(Function(s) Not s.cvParams.IsNullOrEmpty)
+
+                Yield New NamedValue(Of String)(si.cvParams.First.name, si.version, si.id)
+            Next
+        End Function
     End Class
 
     Public Class software : Inherits Params
