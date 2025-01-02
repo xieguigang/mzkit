@@ -142,9 +142,9 @@ Namespace MarkupData.imzML
             Dim analyzer As String = Nothing
             Dim detector As String = Nothing
 
-            Call GetInstrument(instrument.instrumentConfiguration.FirstOrDefault, instrumentName, source, analyzer, detector)
+            Call GetInstrument(instrument?.instrumentConfiguration.FirstOrDefault, instrumentName, source, analyzer, detector)
 
-            Dim settings = scanMeta.scanSettings.First
+            Dim settings As scanSettings = scanMeta?.scanSettings.FirstOrDefault
             Dim dir1 As String = settings.FindVocabulary("IMS:1000401")?.name
             Dim dir2 As String = settings.FindVocabulary("IMS:1000490")?.name
             Dim dim1 As Integer = settings.FindVocabulary("IMS:1000042")?.value
