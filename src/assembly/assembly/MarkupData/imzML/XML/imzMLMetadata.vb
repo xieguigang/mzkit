@@ -67,6 +67,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 Namespace MarkupData.imzML
@@ -114,7 +115,16 @@ Namespace MarkupData.imzML
         ''' <param name="imzml">the file path to the target imzml file</param>
         ''' <returns></returns>
         Public Shared Function ReadHeaders(imzml As String) As imzMLMetadata
-            Dim cv As cvList = LoadUltraLargeXMLDataSet(Of cvList)(imzml, typeName:=NameOf(cvList)).FirstOrDefault
+            Dim cv As cvList = LoadUltraLargeXMLDataSet(Of cvList)(imzml,
+                typeName:=NameOf(cvList),
+                preprocess:=Function(str)
+                                If str Is Nothing Then
+                                    Return ""
+                                Else
+                                    ' 20250102 duplicated value attribute may occurs?
+                                    Return str.Replace("value=""""", "")
+                                End If
+                            End Function).FirstOrDefault
             Dim desc As fileDescription = LoadUltraLargeXMLDataSet(Of fileDescription)(imzml, typeName:=NameOf(fileDescription)).FirstOrDefault
             Dim softwares As softwareList = LoadUltraLargeXMLDataSet(Of softwareList)(imzml, typeName:=NameOf(mzML.softwareList)).FirstOrDefault
             Dim scanMeta As scanSettingsList = LoadUltraLargeXMLDataSet(Of scanSettingsList)(imzml, typeName:=NameOf(scanSettingsList)).FirstOrDefault
@@ -126,15 +136,15 @@ Namespace MarkupData.imzML
 
             Call GetFileContents(desc?.fileContent, guid, format, checksum)
 
-            Dim softwareList As NamedValue(Of String)() = softwares.ToArray
+            Dim softwareList As NamedValue(Of String)() = softwares.AsEnumerable.ToArray
             Dim instrumentName As String = Nothing
             Dim source As String = Nothing
             Dim analyzer As String = Nothing
             Dim detector As String = Nothing
 
-            Call GetInstrument(instrument.instrumentConfiguration.FirstOrDefault, instrumentName, source, analyzer, detector)
+            Call GetInstrument(instrument?.instrumentConfiguration.FirstOrDefault, instrumentName, source, analyzer, detector)
 
-            Dim settings = scanMeta.scanSettings.First
+            Dim settings As scanSettings = scanMeta?.scanSettings.FirstOrDefault
             Dim dir1 As String = settings.FindVocabulary("IMS:1000401")?.name
             Dim dir2 As String = settings.FindVocabulary("IMS:1000490")?.name
             Dim dim1 As Integer = settings.FindVocabulary("IMS:1000042")?.value
