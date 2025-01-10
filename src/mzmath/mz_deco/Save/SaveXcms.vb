@@ -99,7 +99,7 @@ Public Module SaveXcms
             Next
         End If
 
-        Static required_id As String() = {"xcms_id", "id", "ID", ""}
+        Static required_id As String() = {"xcms_id", "id", "ID", "name"}
         Static required_mz As String() = {"mz", "m/z", "MZ", "M/Z", "mass to charge"}
         Static required_rt As String() = {"rt", "RT", "retention_time"}
 
