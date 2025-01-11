@@ -126,7 +126,11 @@ Namespace MsImaging
                 raw.metadata = New Dictionary(Of String, String)
             End If
 
+            raw.metadata!scan_x = dims.Width
+            raw.metadata!scan_y = dims.Height
+
             raw.Application = FileApplicationClass.MSImaging
+
             Return raw
         End Function
     End Module
