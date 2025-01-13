@@ -21,6 +21,13 @@ Public Module CrossReferenceData
     ''' <returns></returns>
     Public Function UnionData(Of C As {New, ICrossReference}, T As {New, IMetabolite(Of C)})(group As IEnumerable(Of T), setMeta As SetMeta(Of T)) As T
         Dim groupData As T() = group.ToArray
+
+        If groupData.Length = 0 Then
+            Return Nothing
+        ElseIf groupData.Length = 1 Then
+            Return groupData(Scan0)
+        End If
+
         Dim xrefs As C() = groupData.Select(Function(a) a.CrossReference).ToArray
         Dim xref As C = xrefs.PickId
         Dim name As String = groupData.Select(Function(a) a.CommonName).TopMostFrequent(New DirectTextComparer(False, False))
