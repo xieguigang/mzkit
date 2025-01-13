@@ -372,6 +372,30 @@ Module Massbank
     End Function
 
     ''' <summary>
+    ''' Extract the unique metabolite information from the mona database
+    ''' </summary>
+    ''' <param name="mona"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("extract_mona_metabolites")>
+    Public Function extractMoNAMetabolites(<RRawVectorArgument> mona As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of SpectraSection)(mona, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+        Dim unique = CrossReferenceData.UniqueGroups(Of xref, SpectraSection)(pull.populates(Of SpectraSection)(env)).ToArray
+        Dim list As New list
+
+        For Each i As NamedCollection(Of SpectraSection) In unique
+            Call list.add(i.name, i.value)
+        Next
+
+        Return list
+    End Function
+
+    ''' <summary>
     ''' read metabolite data in a given sdf data file.
     ''' </summary>
     ''' <param name="file">the file path of the target sdf file</param>
