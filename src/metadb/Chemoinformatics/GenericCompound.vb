@@ -76,8 +76,21 @@ Public Interface GenericCompound
 
 End Interface
 
-Public Interface IMetabolite(Of T As ICrossReference) : Inherits GenericCompound
+Public Interface IMetabolite(Of T As ICrossReference) : Inherits GenericCompound, ICompoundClass
 
     Property CrossReference As T
+
+End Interface
+
+''' <summary>
+''' 主要是取自HMDB数据库之中的代谢物分类信息
+''' </summary>
+Public Interface ICompoundClass
+
+    Property kingdom As String
+    Property super_class As String
+    Property [class] As String
+    Property sub_class As String
+    Property molecular_framework As String
 
 End Interface
