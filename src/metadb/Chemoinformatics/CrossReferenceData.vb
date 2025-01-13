@@ -31,7 +31,14 @@ Public Module CrossReferenceData
         Next
 
         For Each meta As ClusterKey(Of T) In groups.AsEnumerable
-            Yield New NamedCollection(Of T)("", meta.ToArray)
+            Dim listSet As T() = meta.ToArray
+            Dim name As IGrouping(Of String, String) = listSet _
+                .Select(Function(a) a.CommonName) _
+                .GroupBy(Function(a) a.ToLower) _
+                .OrderByDescending(Function(a) a.Count) _
+                .First
+
+            Yield New NamedCollection(Of T)(name.Key, meta.ToArray)
         Next
     End Function
 
