@@ -152,8 +152,13 @@ Public Class SpectraSection : Inherits MetaInfo
         Me.ID = metadata.accession
         Me.name = metadata.name
         Me.IUPACName = metadata.name
-        Me.exact_mass = metadata.exact_mass
         Me.formula = metadata.GetFormula
+        Me.exact_mass = FormulaScanner.EvaluateExactMass(formula)
+
+        If exact_mass <= 0 Then
+            exact_mass = metadata.exact_mass
+        End If
+
         Me.xref = GetCrossReference()
     End Sub
 
