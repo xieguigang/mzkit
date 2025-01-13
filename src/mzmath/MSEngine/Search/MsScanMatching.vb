@@ -1,68 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::729115dddd524ac0a47b222a1b5524f1, mzmath\MSEngine\MsScanMatching.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1320
-    '    Code Lines: 882 (66.82%)
-    ' Comment Lines: 237 (17.95%)
-    '    - Xml Docs: 53.16%
-    ' 
-    '   Blank Lines: 201 (15.23%)
-    '     File Size: 68.33 KB
+' Summaries:
 
 
-    ' Class MatchedPeak
-    ' 
-    '     Properties: Intensity, IsNeutralLossMatched, IsProductIonMatched, Mass, MatchedIntensity
-    ' 
-    ' Class MsScanMatching
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: (+2 Overloads) CompareBasicMSScanProperties, (+2 Overloads) CompareEIMSScanProperties, CompareMS2ProteomicsScanProperties, (+2 Overloads) CompareMS2ScanProperties, (+2 Overloads) CompareMSScanProperties
-    '               GetAndromedaScore, GetBonanzaScore, (+3 Overloads) GetGaussianSimilarity, GetIntegratedSpectraSimilarity, GetIsotopeRatioSimilarity
-    '               (+2 Overloads) GetMachedSpectralPeaks, (+2 Overloads) GetMatchedPeaksScores, GetModifiedDotProductScore, GetProcessedSpectrum, GetReverseDotProduct
-    '               GetSimpleDotProduct, GetSpectralEntropy, GetSpetralEntropySimilarity, GetTotalScore, (+5 Overloads) GetTotalSimilarity
-    '               GetTotalSimilarityUsingSimpleDotProduct, GetWeightedDotProduct, (+2 Overloads) IsComparedAvailable
-    ' 
-    '     Sub: SearchMatchedPeaks
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1320
+'    Code Lines: 882 (66.82%)
+' Comment Lines: 237 (17.95%)
+'    - Xml Docs: 53.16%
+' 
+'   Blank Lines: 201 (15.23%)
+'     File Size: 68.33 KB
+
+
+' Class MatchedPeak
+' 
+'     Properties: Intensity, IsNeutralLossMatched, IsProductIonMatched, Mass, MatchedIntensity
+' 
+' Class MsScanMatching
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: (+2 Overloads) CompareBasicMSScanProperties, (+2 Overloads) CompareEIMSScanProperties, CompareMS2ProteomicsScanProperties, (+2 Overloads) CompareMS2ScanProperties, (+2 Overloads) CompareMSScanProperties
+'               GetAndromedaScore, GetBonanzaScore, (+3 Overloads) GetGaussianSimilarity, GetIntegratedSpectraSimilarity, GetIsotopeRatioSimilarity
+'               (+2 Overloads) GetMachedSpectralPeaks, (+2 Overloads) GetMatchedPeaksScores, GetModifiedDotProductScore, GetProcessedSpectrum, GetReverseDotProduct
+'               GetSimpleDotProduct, GetSpectralEntropy, GetSpetralEntropySimilarity, GetTotalScore, (+5 Overloads) GetTotalSimilarity
+'               GetTotalSimilarityUsingSimpleDotProduct, GetWeightedDotProduct, (+2 Overloads) IsComparedAvailable
+' 
+'     Sub: SearchMatchedPeaks
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -70,6 +70,7 @@ Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
 Imports Microsoft.VisualBasic.Math.Statistics
 Imports std = System.Math
@@ -453,7 +454,7 @@ Public NotInheritable Class MsScanMatching
     Public Shared Function GetModifiedDotProductScore(prop1 As IMSScanProperty, prop2 As IMSScanProperty,
                                                       Optional massTolerance As Double = 0.05,
                                                       Optional massToleranceType As MassToleranceType = MassToleranceType.Da) As Double()
-        Dim matchedPeaks = New List(Of MatchedPeak)()
+        Dim matchedPeaks = New List(Of SSM2MatrixFragment)()
         If prop1.PrecursorMz < prop2.PrecursorMz Then
             SearchMatchedPeaks(prop1.Spectrum, prop1.PrecursorMz, prop2.Spectrum, prop2.PrecursorMz, massTolerance, massToleranceType, matchedPeaks)
         Else
@@ -464,16 +465,16 @@ Public NotInheritable Class MsScanMatching
             Return New Double() {0, 0}
         End If
 
-        Dim product = matchedPeaks.Sum(Function(n) n.Intensity * n.MatchedIntensity)
-        Dim scaler1 = matchedPeaks.Sum(Function(n) n.Intensity * n.Intensity)
-        Dim scaler2 = matchedPeaks.Sum(Function(n) n.MatchedIntensity * n.MatchedIntensity)
+        Dim product = matchedPeaks.Sum(Function(n) n.query * n.ref)
+        Dim scaler1 = matchedPeaks.Sum(Function(n) n.query ^ 2)
+        Dim scaler2 = matchedPeaks.Sum(Function(n) n.ref ^ 2)
         Return New Double() {product / (std.Sqrt(scaler1) * std.Sqrt(scaler2)), matchedPeaks.Count}
     End Function
 
     Public Shared Function GetBonanzaScore(prop1 As IMSScanProperty, prop2 As IMSScanProperty,
                                            Optional massTolerance As Double = 0.05,
                                            Optional massToleranceType As MassToleranceType = MassToleranceType.Da) As Double()
-        Dim matchedPeaks = New List(Of MatchedPeak)()
+        Dim matchedPeaks = New List(Of SSM2MatrixFragment)()
         If prop1.PrecursorMz < prop2.PrecursorMz Then
             SearchMatchedPeaks(prop1.Spectrum, prop1.PrecursorMz, prop2.Spectrum, prop2.PrecursorMz, massTolerance, massToleranceType, matchedPeaks)
         Else
@@ -484,7 +485,7 @@ Public NotInheritable Class MsScanMatching
             Return New Double() {0, 0}
         End If
 
-        Dim product = matchedPeaks.Sum(Function(n) n.Intensity * n.MatchedIntensity)
+        Dim product = matchedPeaks.Sum(Function(n) n.query * n.ref)
         Dim scaler1 = prop1.Spectrum.Where(Function(n) n.IsMatched = False).Sum(Function(n) std.Pow(n.intensity, 2))
         Dim scaler2 = prop2.Spectrum.Where(Function(n) n.IsMatched = False).Sum(Function(n) std.Pow(n.intensity, 2))
         Return New Double() {product / (product + scaler1 + scaler2), matchedPeaks.Count}
@@ -494,9 +495,9 @@ Public NotInheritable Class MsScanMatching
                                          rPeaks As List(Of SpectrumPeak), rPrecursor As Double,
                                          massTolerance As Double,
                                          massTolType As MassToleranceType,
-                                         <Out> ByRef matchedPeaks As List(Of MatchedPeak)) ' small precursor
+                                         <Out> ByRef matchedPeaks As List(Of SSM2MatrixFragment)) ' small precursor
         ' large precursor
-        matchedPeaks = New List(Of MatchedPeak)()
+        matchedPeaks = New List(Of SSM2MatrixFragment)()
         For Each e In ePeaks
             e.IsMatched = False
         Next
@@ -536,13 +537,14 @@ Public NotInheritable Class MsScanMatching
             If minPeakID >= 0 Then
                 rPeak.IsMatched = True
                 ePeaks(minPeakID).IsMatched = True
-                matchedPeaks.Add(New MatchedPeak() With {
-    .Mass = rPeak.mz,
-    .Intensity = rPeak.intensity,
-    .MatchedIntensity = ePeaks(minPeakID).intensity,
-    .IsProductIonMatched = isProduct,
-    .IsNeutralLossMatched = Not isProduct
-})
+                matchedPeaks.Add(New SSM2MatrixFragment() With {
+                    .mz = rPeak.mz,
+                    .query = rPeak.intensity,
+                    .ref = ePeaks(minPeakID).intensity,
+                    .IsProductIonMatched = isProduct,
+                    .IsNeutralLossMatched = Not isProduct,
+                    .da = std.Abs(rPeak.mz - ePeaks(minPeakID).mz)
+                })
             End If
         Next
     End Sub
