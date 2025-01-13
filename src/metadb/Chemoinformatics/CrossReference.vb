@@ -35,6 +35,7 @@ Public Interface ICrossReference
     ''' <returns></returns>
     <XmlElement>
     Property CAS As String()
+
     Property InChIkey As String
     Property InChI As String
     Property SMILES As String

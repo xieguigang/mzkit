@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Public Class AnnotationData(Of T As ICrossReference)
     Implements IReadOnlyId, IExactMassProvider, ICompoundNameProvider, IFormulaProvider
     Implements GenericCompound
+    Implements IMetabolite(Of T)
 
     ''' <summary>
     ''' A unique database reference id of current metabolite data object
@@ -20,7 +21,7 @@ Public Class AnnotationData(Of T As ICrossReference)
     ''' the external database cross reference
     ''' </summary>
     ''' <returns></returns>
-    Public Property Xref As T
+    Public Property Xref As T Implements IMetabolite(Of T).CrossReference
 
     ''' <summary>
     ''' MSDIAL score
