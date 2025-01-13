@@ -19,15 +19,15 @@ Public Module CrossReferenceData
     ''' from the <see cref="UniqueGroups(Of C, T)(IEnumerable(Of T))"/> function.
     ''' </param>
     ''' <returns></returns>
-    Public Function UnionData(Of C As {New, ICrossReference}, T As {New, IMetabolite(Of C)})(group As IEnumerable(Of T), setMeta As SetMeta(Of T)) As T
+    Public Function UnionData(Of C As ICrossReference, T As {New, IMetabolite(Of C)})(group As IEnumerable(Of T), setMeta As SetMeta(Of T)) As T
         Dim groupData As T() = group.ToArray
         Dim xrefs As C() = groupData.Select(Function(a) a.CrossReference).ToArray
-        Dim id As String = xrefs.PickId
+        Dim xref As C = xrefs.PickId
         Dim name As String = groupData.Select(Function(a) a.CommonName).TopMostFrequent(New DirectTextComparer(False, False))
         Dim formula As String = groupData.First.Formula
         Dim exact_mass As Double = FormulaScanner.EvaluateExactMass(formula)
         Dim classData As ICompoundClass = groupData.GetTopClass
-        Dim xref As New C
+        Dim id As String = xref.PickId(name)
         Dim m As T = setMeta(New T With {
             .[class] = classData.[class],
             .CrossReference = xref,
@@ -41,13 +41,47 @@ Public Module CrossReferenceData
     End Function
 
     <Extension>
-    Private Function PickId(Of X As ICrossReference)(c As IEnumerable(Of X)) As String
+    Private Function PickId(Of X As ICrossReference)(c As X()) As X
 
     End Function
 
     <Extension>
-    Private Function GetTopClass(Of C As ICompoundClass)(classList As C()) As ICompoundClass
+    Private Function PickId(Of X As ICrossReference)(c As X, name As String) As String
+        If Not c.KEGG.StringEmpty(True, True) Then Return c.KEGG
+        If Not c.HMDB.StringEmpty(True, True) Then Return c.HMDB
+        If Not c.Wikipedia.StringEmpty(True, True) Then Return c.Wikipedia
+        If Not c.MeSH.StringEmpty(True, True) Then Return c.MeSH
+        If Not c.MetaCyc.StringEmpty(True, True) Then Return c.MetaCyc
+        If Not c.lipidmaps.StringEmpty(True, True) Then Return c.lipidmaps
+        If Not c.pubchem.StringEmpty(True, True) Then Return c.pubchem
+        If Not c.chebi.StringEmpty(True, True) Then Return c.chebi
 
+        Dim cas_id As String = c.CAS.SafeQuery.Where(Function(a) Not a.StringEmpty(True, True)).FirstOrDefault
+
+        If Not cas_id Is Nothing Then
+            Return "CAS:" & cas_id
+        End If
+
+        Return name.Replace(" "c, "_").StringReplace("[-_,]+", "_")
+    End Function
+
+    <Extension>
+    Private Function GetTopClass(Of C As ICompoundClass)(classList As C()) As ICompoundClass
+        Dim top = classList _
+            .OrderByDescending(Function(a)
+                                   Dim count As Integer = 0
+
+                                   If Not a.kingdom.StringEmpty(True, True) Then count += 1
+                                   If Not a.class.StringEmpty(True, True) Then count += 1
+                                   If Not a.sub_class.StringEmpty(True, True) Then count += 1
+                                   If Not a.super_class.StringEmpty(True, True) Then count += 1
+                                   If Not a.molecular_framework.StringEmpty(True, True) Then count += 1
+
+                                   Return count
+                               End Function) _
+            .First
+
+        Return top
     End Function
 
     Public Iterator Function UniqueGroups(Of C As ICrossReference, T As IMetabolite(Of C))(list As IEnumerable(Of T)) As IEnumerable(Of NamedCollection(Of T))
