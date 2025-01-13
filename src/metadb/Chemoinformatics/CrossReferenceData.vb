@@ -69,7 +69,6 @@ Public Module CrossReferenceData
         If cx.Wikipedia.TextEquals(cy.Wikipedia, False, False) Then i += 1
         If cx.DrugBank.TextEquals(cy.DrugBank, False, False) Then i += 1
         If cx.lipidmaps.TextEquals(cy.lipidmaps, False, False) Then i += 1
-        If cx.CAS.Any(Function(id) cy.CAS.Any(Function(id2) id.TextEquals(id2, False, False))) Then i += 1
         If cx.KEGG.TextEquals(cy.KEGG, False, False) Then i += 1
         If cx.ChEMBL.TextEquals(cy.ChEMBL, False, False) Then i += 1
         If cx.ChemIDplus.TextEquals(cy.ChemIDplus, False, False) Then i += 1
@@ -80,6 +79,12 @@ Public Module CrossReferenceData
         If cx.MetaCyc.TextEquals(cy.MetaCyc, False, False) Then i += 1
         If cx.metlin.TextEquals(cy.metlin, False, False) Then i += 1
         If cx.pubchem.TextEquals(cy.pubchem, False, False) Then i += 1
+
+        If Not (cx.CAS.IsNullOrEmpty OrElse cy.CAS.IsNullOrEmpty) Then
+            If cx.CAS.Any(Function(id) cy.CAS.Any(Function(id2) id.TextEquals(id2, False, False))) Then
+                i += 1
+            End If
+        End If
 
         If i > 6 Then
             Dim f1 = FormulaScanner.ScanFormula(x.Formula)
