@@ -154,7 +154,31 @@ Public Class SpectraSection : Inherits MetaInfo
         Me.IUPACName = metadata.name
         Me.exact_mass = metadata.exact_mass
         Me.formula = metadata.GetFormula
+        Me.xref = GetCrossReference()
     End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetCrossReference() As xref
+        Return New xref With {
+            .CAS = meta.cas_number,
+            .chebi = meta.chebi,
+            .ChEMBL = meta.chembl,
+            .ChemIDplus = meta.ChemIDplus,
+            .DrugBank = meta.drugbank,
+            .HMDB = meta.hmdb,
+            .InChI = meta.InChI,
+            .InChIkey = meta.InChIKey,
+            .KEGG = meta.kegg,
+            .KNApSAcK = meta.knapsack,
+            .lipidmaps = meta.lipidmaps,
+            .MeSH = meta.Mesh,
+            .MetaCyc = "",
+            .metlin = "",
+            .pubchem = meta.pubchem_cid,
+            .SMILES = meta.SMILES.ElementAtOrDefault(0, ""),
+            .Wikipedia = meta.wikipedia
+        }
+    End Function
 
     ''' <summary>
     ''' get metabolite information based on the metadata
@@ -169,25 +193,7 @@ Public Class SpectraSection : Inherits MetaInfo
             .IUPACName = If(Me.IUPACName, .name),
             .formula = Me.formula,
             .exact_mass = If(mass > 0, mass, Me.exact_mass),
-            .xref = New xref With {
-                .CAS = meta.cas_number,
-                .chebi = meta.chebi,
-                .ChEMBL = meta.chembl,
-                .ChemIDplus = meta.ChemIDplus,
-                .DrugBank = meta.drugbank,
-                .HMDB = meta.hmdb,
-                .InChI = meta.InChI,
-                .InChIkey = meta.InChIKey,
-                .KEGG = meta.kegg,
-                .KNApSAcK = meta.knapsack,
-                .lipidmaps = meta.lipidmaps,
-                .MeSH = meta.Mesh,
-                .MetaCyc = "",
-                .metlin = "",
-                .pubchem = meta.pubchem_cid,
-                .SMILES = meta.SMILES.ElementAtOrDefault(0, ""),
-                .Wikipedia = meta.wikipedia
-            },
+            .xref = GetCrossReference(),
             .description = meta.comment.JoinBy(vbCrLf),
             .synonym = {meta.name}
         }
