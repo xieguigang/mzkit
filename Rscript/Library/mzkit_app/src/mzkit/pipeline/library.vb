@@ -86,6 +86,7 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal
@@ -845,6 +846,7 @@ Module library
     Public Function openRepository(<RRawVectorArgument> file As Object,
                                    <RRawVectorArgument(TypeCodes.string)>
                                    Optional mode As Object = "read|write",
+                                   Optional mapping As list = Nothing,
                                    Optional env As Environment = Nothing) As Object
 
         Dim modes As String() = CLRVector.asCharacter(mode)
@@ -864,7 +866,13 @@ Module library
         End If
 
         If access = FileAccess.Read Then
-            Return New LocalRepository(buf.TryCast(Of Stream))
+            Dim libs As New LocalRepository(buf.TryCast(Of Stream))
+
+            If Not mapping Is Nothing AndAlso mapping.length > 0 Then
+                Call libs.SetIdMapping(mapping.slots.AsCharacter)
+            End If
+
+            Return libs
         Else
             Return New RepositoryWriter(buf.TryCast(Of Stream))
         End If

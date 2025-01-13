@@ -27,6 +27,10 @@ Public Class LocalRepository : Implements IDisposable, IMetaDb
     ReadOnly cacheXrefs As New Dictionary(Of String, Dictionary(Of String, String))
     ReadOnly blocks As New Dictionary(Of String, Stream)
 
+    ''' <summary>
+    ''' used for mapping from reference id to metabolite id
+    ''' </summary>
+    Dim mapping As Dictionary(Of String, String)
     Dim disposedValue As Boolean
 
     Sub New(file As Stream)
@@ -67,7 +71,24 @@ Public Class LocalRepository : Implements IDisposable, IMetaDb
                         End Function)
     End Function
 
+    Public Function SetIdMapping(maps As Dictionary(Of String, String))
+        mapping = maps
+        Return Me
+    End Function
+
     Private Function ReadMetadata(id As String) As metadata
+        If Not offset.ContainsKey(id) Then
+            If mapping Is Nothing Then
+                Return Nothing
+            End If
+            If mapping.ContainsKey(id) Then
+                id = mapping(id)
+            End If
+            If Not offset.ContainsKey(id) Then
+                Return Nothing
+            End If
+        End If
+
         Dim ref = offset(id)
         Dim s As Stream = blocks(ref.id)
         Dim buf As Byte() = New Byte(ref.Item2.size - 1) {}
