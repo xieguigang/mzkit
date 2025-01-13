@@ -83,6 +83,7 @@ Namespace MetaLib.Models
         ' the abstract metabolite annotation data model
         Implements IReadOnlyId, IExactMassProvider, ICompoundNameProvider, IFormulaProvider
         Implements GenericCompound
+        Implements IMetabolite(Of xref)
 
         ''' <summary>
         ''' 该物质在整合库之中的唯一标识符
@@ -126,7 +127,17 @@ Namespace MetaLib.Models
         ''' The database cross reference of current metabolite and the molecule structure data.
         ''' </summary>
         ''' <returns></returns>
-        <MessagePackMember(7)> Public Property xref As xref
+        <MessagePackMember(7)> Public Property xref As xref Implements IMetabolite(Of xref).CrossReference
+
+#Region "化合物分类"
+
+        <MessagePackMember(8)> Public Property kingdom As String Implements ICompoundClass.kingdom
+        <MessagePackMember(9)> Public Property super_class As String Implements ICompoundClass.super_class
+        <MessagePackMember(10)> Public Property [class] As String Implements ICompoundClass.class
+        <MessagePackMember(11)> Public Property sub_class As String Implements ICompoundClass.sub_class
+        <MessagePackMember(12)> Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
+
+#End Region
 
         ''' <summary>
         ''' get database cross reference id by database name
@@ -160,6 +171,9 @@ Namespace MetaLib.Models
                 End Select
             End Get
         End Property
+
+        Sub New()
+        End Sub
 
         ''' <summary>
         ''' display the name for debug view

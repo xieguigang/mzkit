@@ -72,6 +72,8 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 ''' <remarks>
 ''' this data object used for union the metabolite annotation <see cref="MetaData"/> and 
 ''' the spectrum data(<see cref="SpectraInfo"/>).
+''' 
+''' also is a sub class of the <see cref="MetaInfo"/> annotation information object
 ''' </remarks>
 Public Class SpectraSection : Inherits MetaInfo
 
@@ -113,6 +115,13 @@ Public Class SpectraSection : Inherits MetaInfo
         End Get
     End Property
 
+    ''' <summary>
+    ''' get the current reference spectrum object
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' the <see cref="ID"/> will be tagged as the <see cref="PeakMs2.lib_guid"/>.
+    ''' </remarks>
     Public ReadOnly Property GetSpectrumPeaks As PeakMs2
         Get
             Return SpectraInfo.ToPeaksMs2(id:=ID)
@@ -152,9 +161,38 @@ Public Class SpectraSection : Inherits MetaInfo
         Me.ID = metadata.accession
         Me.name = metadata.name
         Me.IUPACName = metadata.name
-        Me.exact_mass = metadata.exact_mass
         Me.formula = metadata.GetFormula
+        Me.exact_mass = FormulaScanner.EvaluateExactMass(formula)
+
+        If exact_mass <= 0 Then
+            exact_mass = metadata.exact_mass
+        End If
+
+        Me.xref = GetCrossReference()
     End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetCrossReference() As xref
+        Return New xref With {
+            .CAS = meta.cas_number,
+            .chebi = meta.chebi,
+            .ChEMBL = meta.chembl,
+            .ChemIDplus = meta.ChemIDplus,
+            .DrugBank = meta.drugbank,
+            .HMDB = meta.hmdb,
+            .InChI = meta.InChI,
+            .InChIkey = meta.InChIKey,
+            .KEGG = meta.kegg,
+            .KNApSAcK = meta.knapsack,
+            .lipidmaps = meta.lipidmaps,
+            .MeSH = meta.Mesh,
+            .MetaCyc = "",
+            .metlin = "",
+            .pubchem = meta.pubchem_cid,
+            .SMILES = meta.SMILES.ElementAtOrDefault(0, ""),
+            .Wikipedia = meta.wikipedia
+        }
+    End Function
 
     ''' <summary>
     ''' get metabolite information based on the metadata
@@ -169,25 +207,7 @@ Public Class SpectraSection : Inherits MetaInfo
             .IUPACName = If(Me.IUPACName, .name),
             .formula = Me.formula,
             .exact_mass = If(mass > 0, mass, Me.exact_mass),
-            .xref = New xref With {
-                .CAS = meta.cas_number,
-                .chebi = meta.chebi,
-                .ChEMBL = meta.chembl,
-                .ChemIDplus = meta.ChemIDplus,
-                .DrugBank = meta.drugbank,
-                .HMDB = meta.hmdb,
-                .InChI = meta.InChI,
-                .InChIkey = meta.InChIKey,
-                .KEGG = meta.kegg,
-                .KNApSAcK = meta.knapsack,
-                .lipidmaps = meta.lipidmaps,
-                .MeSH = meta.Mesh,
-                .MetaCyc = "",
-                .metlin = "",
-                .pubchem = meta.pubchem_cid,
-                .SMILES = meta.SMILES.ElementAtOrDefault(0, ""),
-                .Wikipedia = meta.wikipedia
-            },
+            .xref = GetCrossReference(),
             .description = meta.comment.JoinBy(vbCrLf),
             .synonym = {meta.name}
         }

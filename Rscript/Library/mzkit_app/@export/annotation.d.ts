@@ -141,11 +141,13 @@ declare namespace annotation {
     * 
     * 
      * @param file -
+     * @param mode 
+     * + default value Is ``["read","write"]``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function open_repository(file: any, env?: object): object;
+   function open_repository(file: any, mode?: any, env?: object): object|object;
    /**
     * Associates the ms1 peaks with the ms2 spectrum alignment result hits.
     * 
@@ -226,11 +228,24 @@ declare namespace annotation {
    */
    function set_xicCache(workspace: object, raw_set: any, da?: number, rt_win?: number, env?: object): any;
    /**
+    * 
+    * 
+     * @param candidates should be a collection of the @``T:BioNovoGene.BioDeep.MSEngine.AnnotationData`1`` object
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function unique_candidates(candidates: any, env?: object): any;
+   /**
     * create an empty workspace object
     * 
     * 
    */
    function workspace(): object;
+   /**
+     * @param env default value Is ``null``.
+   */
+   function write_metadata(writer: object, meta: any, env?: object): any;
    /**
     * Create the database cross reference links
     * 

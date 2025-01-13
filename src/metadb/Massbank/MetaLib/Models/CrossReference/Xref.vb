@@ -73,6 +73,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
+Imports CrossReferenceList = BioNovoGene.BioDeep.Chemoinformatics.ICrossReference
 
 Namespace MetaLib.CrossReference
 
@@ -82,41 +83,41 @@ Namespace MetaLib.CrossReference
     ''' <remarks>
     ''' (对某一个物质在数据库之间的相互引用编号)
     ''' </remarks>
-    Public Class xref
+    Public Class xref : Implements CrossReferenceList
 
         ''' <summary>
         ''' chebi main id, Chemical Entities of Biological Interest (ChEBI)
         ''' </summary>
         ''' <returns></returns>
-        <MessagePackMember(0)> Public Property chebi As String
-        <MessagePackMember(1)> Public Property KEGG As String
-        <MessagePackMember(2)> Public Property KEGGdrug As String
+        <MessagePackMember(0)> Public Property chebi As String Implements CrossReferenceList.chebi
+        <MessagePackMember(1)> Public Property KEGG As String Implements CrossReferenceList.KEGG
+        <MessagePackMember(2)> Public Property KEGGdrug As String Implements CrossReferenceList.KEGGdrug
         ''' <summary>
         ''' The pubchem cid
         ''' </summary>
         ''' <returns></returns>
-        <MessagePackMember(3)> Public Property pubchem As String
-        <MessagePackMember(4)> Public Property HMDB As String
-        <MessagePackMember(5)> Public Property metlin As String
-        <MessagePackMember(6)> Public Property DrugBank As String
-        <MessagePackMember(7)> Public Property ChEMBL As String
-        <MessagePackMember(8)> Public Property Wikipedia As String
-        <MessagePackMember(9)> Public Property lipidmaps As String
-        <MessagePackMember(10)> Public Property MeSH As String
-        <MessagePackMember(11)> Public Property ChemIDplus As String
-        <MessagePackMember(12)> Public Property MetaCyc As String
-        <MessagePackMember(13)> Public Property KNApSAcK As String
-        <MessagePackMember(14)> Public Property foodb As String
-        <MessagePackMember(15)> Public Property chemspider As String
+        <MessagePackMember(3)> Public Property pubchem As String Implements CrossReferenceList.pubchem
+        <MessagePackMember(4)> Public Property HMDB As String Implements CrossReferenceList.HMDB
+        <MessagePackMember(5)> Public Property metlin As String Implements CrossReferenceList.metlin
+        <MessagePackMember(6)> Public Property DrugBank As String Implements CrossReferenceList.DrugBank
+        <MessagePackMember(7)> Public Property ChEMBL As String Implements CrossReferenceList.ChEMBL
+        <MessagePackMember(8)> Public Property Wikipedia As String Implements CrossReferenceList.Wikipedia
+        <MessagePackMember(9)> Public Property lipidmaps As String Implements CrossReferenceList.lipidmaps
+        <MessagePackMember(10)> Public Property MeSH As String Implements CrossReferenceList.MeSH
+        <MessagePackMember(11)> Public Property ChemIDplus As String Implements CrossReferenceList.ChemIDplus
+        <MessagePackMember(12)> Public Property MetaCyc As String Implements CrossReferenceList.MetaCyc
+        <MessagePackMember(13)> Public Property KNApSAcK As String Implements CrossReferenceList.KNApSAcK
+        <MessagePackMember(14)> Public Property foodb As String Implements CrossReferenceList.foodb
+        <MessagePackMember(15)> Public Property chemspider As String Implements CrossReferenceList.chemspider
         ''' <summary>
         ''' Multiple CAS id may exists
         ''' </summary>
         ''' <returns></returns>
         <XmlElement>
-        <MessagePackMember(16)> Public Property CAS As String()
-        <MessagePackMember(17)> Public Property InChIkey As String
-        <MessagePackMember(18)> Public Property InChI As String
-        <MessagePackMember(19)> Public Property SMILES As String
+        <MessagePackMember(16)> Public Property CAS As String() Implements CrossReferenceList.CAS
+        <MessagePackMember(17)> Public Property InChIkey As String Implements CrossReferenceList.InChIkey
+        <MessagePackMember(18)> Public Property InChI As String Implements CrossReferenceList.InChI
+        <MessagePackMember(19)> Public Property SMILES As String Implements CrossReferenceList.SMILES
 
         ''' <summary>
         ''' other additional database id set

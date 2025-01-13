@@ -25,7 +25,9 @@
         <p>Union of the spectrum data and the metabolite annotation metadata</p>
 
 <p>this data object used for union the metabolite annotation <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaData.html">MetaData</a> and 
- the spectrum data(<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/SpectraSection.html">SpectraSection</a>.<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/SpectraInfo.html">SpectraInfo</a>).</p>
+ the spectrum data(<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/SpectraSection.html">SpectraSection</a>.<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/SpectraInfo.html">SpectraInfo</a>).
+ 
+ also is a sub class of the <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaInfo.html">MetaInfo</a> annotation information object</p>
 
         <h3>Declare</h3>        
 
@@ -33,24 +35,30 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemistry
 export class SpectraSection extends <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaInfo.html">MetaInfo</a> {
+   class: string;
    # should contains the necessary header data for @<code>M:BioNovoGene.BioDeep.Chemistry.SchemaMapper.FillData(System.Collections.Specialized.NameValueCollection)</code>
    Comment: <a href="/vignettes/clr/System/Collections/Specialized/NameValueCollection.html">NameValueCollection</a>;
    description: string;
    exact_mass: double;
    formula: string;
+   # get the current reference spectrum object
    GetSpectrumPeaks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a>;
    ID: string;
    IUPACName: string;
+   kingdom: string;
    libtype: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a>;
    # MoNA里面都主要是将注释的信息放在<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/SpectraSection.html">SpectraSection</a>.<a href="/vignettes/clr/System/Collections/Specialized/NameValueCollection.html">Comment</a>字段里面的。
    #  物质的注释信息主要是放在这个结构体之中，这个属性是对<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/SpectraSection.html">SpectraSection</a>.<a href="/vignettes/clr/System/Collections/Specialized/NameValueCollection.html">Comment</a>
    #  属性的解析结果
    MetaDB: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaData.html">MetaData</a>;
    MetaReader: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/UnionReader.html">UnionReader</a>;
+   molecular_framework: string;
    ms_level: integer;
    name: string;
    # The reference spectrum data
    SpectraInfo: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/SpectraInfo.html">SpectraInfo</a>;
+   sub_class: string;
+   super_class: string;
    synonym: string;
    xref: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a>;
 }

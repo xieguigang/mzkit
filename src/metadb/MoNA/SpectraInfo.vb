@@ -90,6 +90,11 @@ Public Class SpectraInfo
 
     Public Property MassPeaks As ms2()
 
+    ''' <summary>
+    ''' the given id will be tagged as the <see cref="PeakMs2.lib_guid"/>
+    ''' </summary>
+    ''' <param name="id"></param>
+    ''' <returns></returns>
     Public Function ToPeaksMs2(Optional id As String = Nothing) As PeakMs2
         Dim precursor_type As String = Me.precursor_type
 

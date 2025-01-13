@@ -73,6 +73,7 @@ Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
+Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
@@ -667,6 +668,33 @@ Module library
     End Function
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="candidates">
+    ''' should be a collection of the <see cref="AnnotationData(Of xref)"/> object
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("unique_candidates")>
+    Public Function uniqueAnnotations(<RRawVectorArgument> candidates As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of AnnotationData(Of xref))(candidates, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+        Dim candidateList As AnnotationData(Of xref)() = pull.populates(Of AnnotationData(Of xref))(env).ToArray
+        Dim unique = CrossReferenceData.UniqueGroups(Of xref, AnnotationData(Of xref))(candidateList).ToArray
+        Dim list As New list
+
+        For Each i As NamedCollection(Of AnnotationData(Of xref)) In unique
+            Call list.add(i.name, i.value)
+        Next
+
+        Return list
+    End Function
+
+    ''' <summary>
     ''' create a new metabolite annotation information
     ''' </summary>
     ''' <param name="id"></param>
@@ -808,13 +836,26 @@ Module library
     ''' </summary>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' 
+    ''' </returns>
     ''' 
     <ExportAPI("open_repository")>
-    <RApiReturn(GetType(LocalRepository))>
-    Public Function openRepository(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+    <RApiReturn(GetType(LocalRepository), GetType(RepositoryWriter))>
+    Public Function openRepository(<RRawVectorArgument> file As Object,
+                                   <RRawVectorArgument(TypeCodes.string)>
+                                   Optional mode As Object = "read|write",
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim modes As String() = CLRVector.asCharacter(mode)
         Dim is_filepath As Boolean
-        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env, is_filepath:=is_filepath)
+
+        If modes.IsNullOrEmpty Then
+            Return RInternal.debug.stop("the data io mode for the local annotation metadata repository should not be nothing!", env)
+        End If
+
+        Dim access As FileAccess = If(modes(0).TextEquals("read"), FileAccess.Read, FileAccess.Write)
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, access, env, is_filepath:=is_filepath)
 
         If buf Like GetType(Message) Then
             Return buf.TryCast(Of Message)
@@ -822,7 +863,28 @@ Module library
             Call VBDebugger.EchoLine($"open the local annotation database file: {CLRVector.asCharacter(file).First}")
         End If
 
-        Return New LocalRepository(buf.TryCast(Of Stream))
+        If access = FileAccess.Read Then
+            Return New LocalRepository(buf.TryCast(Of Stream))
+        Else
+            Return New RepositoryWriter(buf.TryCast(Of Stream))
+        End If
+    End Function
+
+    <ExportAPI("write_metadata")>
+    Public Function Save(writer As RepositoryWriter, <RRawVectorArgument> meta As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of Models.MetaInfo)(meta, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+        Dim alldata As Models.MetaInfo() = pull.populates(Of Models.MetaInfo)(env).ToArray
+
+        For Each m As Models.MetaInfo In TqdmWrapper.Wrap(alldata)
+            Call writer.Add(m)
+        Next
+
+        Return True
     End Function
 
     ''' <summary>

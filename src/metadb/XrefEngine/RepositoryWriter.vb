@@ -1,6 +1,8 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
+Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
@@ -9,6 +11,9 @@ Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Metadata = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
 
+''' <summary>
+''' the data writer for <see cref="LocalRepository"/>.
+''' </summary>
 Public Class RepositoryWriter : Implements IDisposable
 
     ReadOnly s As StreamPack
@@ -48,6 +53,23 @@ Public Class RepositoryWriter : Implements IDisposable
 
         Call block.Write(buf, Scan0, buf.Length)
         Call blockIndex.Add(meta.ID, size)
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Sub Add(meta As IMetabolite(Of xref))
+        Call Add(New Metadata With {
+            .xref = meta.CrossReference,
+            .exact_mass = meta.ExactMass,
+            .formula = meta.Formula,
+            .ID = meta.Identity,
+            .name = meta.CommonName,
+            .synonym = {},
+            .[class] = meta.class,
+            .kingdom = meta.kingdom,
+            .sub_class = meta.sub_class,
+            .super_class = meta.super_class,
+            .molecular_framework = meta.molecular_framework
+        })
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -93,7 +115,6 @@ Public Class RepositoryWriter : Implements IDisposable
         End If
 
         Call VBDebugger.EchoLine("make index for the metabolite repository...")
-
     End Sub
 
     Protected Overridable Sub Dispose(disposing As Boolean)
