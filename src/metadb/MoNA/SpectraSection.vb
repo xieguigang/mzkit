@@ -115,6 +115,13 @@ Public Class SpectraSection : Inherits MetaInfo
         End Get
     End Property
 
+    ''' <summary>
+    ''' get the current reference spectrum object
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' the <see cref="ID"/> will be tagged as the <see cref="PeakMs2.lib_guid"/>.
+    ''' </remarks>
     Public ReadOnly Property GetSpectrumPeaks As PeakMs2
         Get
             Return SpectraInfo.ToPeaksMs2(id:=ID)

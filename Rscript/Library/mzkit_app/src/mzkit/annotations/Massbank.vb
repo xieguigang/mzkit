@@ -1,65 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::d82583491dff85e13921dffe36614474, Rscript\Library\mzkit_app\src\mzkit\annotations\Massbank.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 963
-    '    Code Lines: 630 (65.42%)
-    ' Comment Lines: 215 (22.33%)
-    '    - Xml Docs: 92.56%
-    ' 
-    '   Blank Lines: 118 (12.25%)
-    '     File Size: 39.00 KB
+' Summaries:
 
 
-    ' Module Massbank
-    ' 
-    '     Function: castToClassProfiles, chebiSecondary2Main, createIdMapping, createLipidMapTable, ExtractChebiCompounds
-    '               GlycosylNameSolver, GlycosylTokens, HERB_ingredient_info, hmdbSecondary2Main, inchikey
-    '               KEGGPathwayCoverages, lipidClassReader, lipidmaps_data, lipidmaps_id, lipidnameMapping
-    '               lipidNameReader, lipidProfiles, load_herbs, load_herbs_list, loadLotus
-    '               makeMetaboliteTable, meta_anno, monaMSP, name2, ParseChebiEntity
-    '               rankingNames, readLipidMapsRepo, readMetalibMsgPack, (+2 Overloads) readMoNA, readRefMet
-    '               readSDF, refMetTable, saveIDMapping, toLipidMaps, writeLipidMapsRepo
-    '               writeMetalib
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 963
+'    Code Lines: 630 (65.42%)
+' Comment Lines: 215 (22.33%)
+'    - Xml Docs: 92.56%
+' 
+'   Blank Lines: 118 (12.25%)
+'     File Size: 39.00 KB
+
+
+' Module Massbank
+' 
+'     Function: castToClassProfiles, chebiSecondary2Main, createIdMapping, createLipidMapTable, ExtractChebiCompounds
+'               GlycosylNameSolver, GlycosylTokens, HERB_ingredient_info, hmdbSecondary2Main, inchikey
+'               KEGGPathwayCoverages, lipidClassReader, lipidmaps_data, lipidmaps_id, lipidnameMapping
+'               lipidNameReader, lipidProfiles, load_herbs, load_herbs_list, loadLotus
+'               makeMetaboliteTable, meta_anno, monaMSP, name2, ParseChebiEntity
+'               rankingNames, readLipidMapsRepo, readMetalibMsgPack, (+2 Overloads) readMoNA, readRefMet
+'               readSDF, refMetTable, saveIDMapping, toLipidMaps, writeLipidMapsRepo
+'               writeMetalib
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -67,6 +67,8 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.ChEBI
 Imports BioNovoGene.BioDeep.Chemistry.HERB
@@ -89,6 +91,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
+Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -369,6 +372,21 @@ Module Massbank
             Case Else
                 Throw New NotImplementedException
         End Select
+    End Function
+
+    <ExportAPI("write_mona")>
+    Public Sub writeMoNA(pack As SpectrumPack, spec As SpectraSection)
+        Call pack.Push($"{spec.ID}|{spec.name}", spec.formula, spec.GetSpectrumPeaks)
+    End Sub
+
+    ''' <summary>
+    ''' check of the mona reference spectrum is positive or not?
+    ''' </summary>
+    ''' <param name="spec"></param>
+    ''' <returns></returns>
+    <ExportAPI("is_positive")>
+    Public Function isPositive(spec As SpectraSection) As Boolean
+        Return spec.libtype = IonModes.Positive
     End Function
 
     ''' <summary>
