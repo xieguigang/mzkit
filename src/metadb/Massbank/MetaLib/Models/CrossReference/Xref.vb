@@ -73,7 +73,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
-Imports CrossReferenceList = BioNovoGene.BioDeep.Chemoinformatics.CrossReference
+Imports CrossReferenceList = BioNovoGene.BioDeep.Chemoinformatics.ICrossReference
 
 Namespace MetaLib.CrossReference
 

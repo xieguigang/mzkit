@@ -2,7 +2,7 @@
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
-Public Class AnnotationData(Of T As CrossReference)
+Public Class AnnotationData(Of T As ICrossReference)
     Implements IReadOnlyId, IExactMassProvider, ICompoundNameProvider, IFormulaProvider
     Implements GenericCompound
 
@@ -19,6 +19,6 @@ Public Class AnnotationData(Of T As CrossReference)
     ''' the external database cross reference
     ''' </summary>
     ''' <returns></returns>
-    Public Property Xref As CrossReference
+    Public Property Xref As T
 
 End Class

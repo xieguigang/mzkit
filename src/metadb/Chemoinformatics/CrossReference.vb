@@ -3,7 +3,7 @@
 ''' <summary>
 ''' the external database cross reference
 ''' </summary>
-Public Interface CrossReference
+Public Interface ICrossReference
 
     ''' <summary>
     ''' chebi main id, Chemical Entities of Biological Interest (ChEBI)
