@@ -77,8 +77,20 @@ Imports std = System.Math
 Public Class MatchedPeak
     Public Property IsProductIonMatched As Boolean = False
     Public Property IsNeutralLossMatched As Boolean = False
+    ''' <summary>
+    ''' the m/z of this spectrum peak fragment
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Mass As Double
+    ''' <summary>
+    ''' intensity value from the sample data
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Intensity As Double
+    ''' <summary>
+    ''' intensity value of the reference spectrum peak 
+    ''' </summary>
+    ''' <returns></returns>
     Public Property MatchedIntensity As Double
 End Class
 
@@ -458,7 +470,9 @@ Public NotInheritable Class MsScanMatching
         Return -1 * peaks.Sum(Function(n) n.intensity / sumIntensity * std.Log(n.intensity / sumIntensity, 2))
     End Function
 
-    Public Shared Function GetModifiedDotProductScore(prop1 As IMSScanProperty, prop2 As IMSScanProperty, Optional massTolerance As Double = 0.05, Optional massToleranceType As MassToleranceType = MassToleranceType.Da) As Double()
+    Public Shared Function GetModifiedDotProductScore(prop1 As IMSScanProperty, prop2 As IMSScanProperty,
+                                                      Optional massTolerance As Double = 0.05,
+                                                      Optional massToleranceType As MassToleranceType = MassToleranceType.Da) As Double()
         Dim matchedPeaks = New List(Of MatchedPeak)()
         If prop1.PrecursorMz < prop2.PrecursorMz Then
             SearchMatchedPeaks(prop1.Spectrum, prop1.PrecursorMz, prop2.Spectrum, prop2.PrecursorMz, massTolerance, massToleranceType, matchedPeaks)
@@ -476,7 +490,9 @@ Public NotInheritable Class MsScanMatching
         Return New Double() {product / (std.Sqrt(scaler1) * std.Sqrt(scaler2)), matchedPeaks.Count}
     End Function
 
-    Public Shared Function GetBonanzaScore(prop1 As IMSScanProperty, prop2 As IMSScanProperty, Optional massTolerance As Double = 0.05, Optional massToleranceType As MassToleranceType = MassToleranceType.Da) As Double()
+    Public Shared Function GetBonanzaScore(prop1 As IMSScanProperty, prop2 As IMSScanProperty,
+                                           Optional massTolerance As Double = 0.05,
+                                           Optional massToleranceType As MassToleranceType = MassToleranceType.Da) As Double()
         Dim matchedPeaks = New List(Of MatchedPeak)()
         If prop1.PrecursorMz < prop2.PrecursorMz Then
             SearchMatchedPeaks(prop1.Spectrum, prop1.PrecursorMz, prop2.Spectrum, prop2.PrecursorMz, massTolerance, massToleranceType, matchedPeaks)
@@ -494,7 +510,11 @@ Public NotInheritable Class MsScanMatching
         Return New Double() {product / (product + scaler1 + scaler2), matchedPeaks.Count}
     End Function
 
-    Public Shared Sub SearchMatchedPeaks(ePeaks As List(Of SpectrumPeak), ePrecursor As Double, rPeaks As List(Of SpectrumPeak), rPrecursor As Double, massTolerance As Double, massTolType As MassToleranceType, <Out> ByRef matchedPeaks As List(Of MatchedPeak)) ' small precursor
+    Public Shared Sub SearchMatchedPeaks(ePeaks As List(Of SpectrumPeak), ePrecursor As Double,
+                                         rPeaks As List(Of SpectrumPeak), rPrecursor As Double,
+                                         massTolerance As Double,
+                                         massTolType As MassToleranceType,
+                                         <Out> ByRef matchedPeaks As List(Of MatchedPeak)) ' small precursor
         ' large precursor
         matchedPeaks = New List(Of MatchedPeak)()
         For Each e In ePeaks
