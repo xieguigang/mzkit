@@ -29,7 +29,9 @@ Public Class Library(Of T As {INamedValue, GenericCompound})
         End Sub
 
         Public Function GetAnnotation(uniqueId As String) As (name As String, formula As String) Implements IMetaDb.GetAnnotation
-            Throw New NotImplementedException()
+            Dim metadata As T = Me.metadata(uniqueId)
+            Dim anno = (metadata.CommonName, metadata.Formula)
+            Return anno
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

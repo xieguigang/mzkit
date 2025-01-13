@@ -667,6 +667,19 @@ Module library
     End Function
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="candidates">
+    ''' should be a collection of the <see cref="AnnotationData(Of xref)"/> object
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("unique_candidates")>
+    Public Function uniqueAnnotations(<RRawVectorArgument> candidates As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of AnnotationData(Of xref)( can)
+    End Function
+
+    ''' <summary>
     ''' create a new metabolite annotation information
     ''' </summary>
     ''' <param name="id"></param>
