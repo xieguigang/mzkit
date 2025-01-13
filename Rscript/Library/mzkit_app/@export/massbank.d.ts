@@ -39,6 +39,16 @@ declare namespace massbank {
      * @param chebi the chebi ontology data, in clr type: @``T:SMRUCC.genomics.foundation.OBO_Foundry.IO.Models.OBOFile``
    */
    function extract_chebi_compounds(chebi: object): object;
+   /**
+    * Extract the unique metabolite information from the mona database
+    * 
+    * 
+     * @param mona -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function extract_mona_metabolites(mona: any, env?: object): any;
    module glycosyl {
       /**
         * @param rules default value Is ``null``.
