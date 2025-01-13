@@ -66,7 +66,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
+Imports MetaboliteData = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
@@ -74,6 +76,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
@@ -359,6 +362,36 @@ Module ReferenceTreePkg
         Return pull.populates(Of AlignmentOutput)(env) _
             .Select(Function(a) a.reference.id) _
             .ToArray
+    End Function
+
+    <ExportAPI("as.annotation_result")>
+    Public Function CreateAnnotationSet(metadb As LocalRepository, hits As ClusterHit()) As AnnotationData(Of MetaboliteData)
+        Return hits _
+            .SafeQuery _
+            .Select(Function(hit)
+                        Dim metadata As MetaboliteData = metadb.GetMetadata(hit.Id.Split("|"c).First)
+                        Dim data As New AnnotationData(Of MetaboliteData) With {
+                            .Alignment = New AlignmentOutput With {
+                                .alignments = hit.representive,
+                                .entropy = hit.entropy,
+                                .forward = hit.forward,
+                                .jaccard = hit.jaccard,
+                                .reverse = hit.reverse,
+                                .query = New Meta(hit.queryMz, hit.queryRt, hit.queryIntensity, hit.queryId),
+                                .reference = New Meta(hit.queryMz, hit.ClusterRt.Average, 100, hit.Id)
+                            },
+                            .[class] = metadata.class,
+                            .kingdom = metadata.kingdom,
+                            .molecular_framework = metadata.molecular_framework,
+                            .sub_class = metadata.sub_class,
+                            .super_class = metadata.super_class,
+                            .Xref = metadata.xref,
+                            .Score = New MsScanMatchResult
+                        }
+
+                        Return data
+                    End Function) _
+            .ToArray()
     End Function
 
     ''' <summary>
