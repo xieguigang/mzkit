@@ -98,6 +98,10 @@ Public Module CrossReferenceData
             ' then we could check these two metabolite identical
             If f1 = f2 Then
                 Return 0
+                ' some spectrum metadata has the identical name but no formula information?
+                ' deal with this as identical?
+            ElseIf check_name AndAlso f1 Is Nothing AndAlso f2 Is Nothing Then
+                Return 0
             End If
         End If
 
