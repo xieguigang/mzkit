@@ -377,7 +377,7 @@ Module Massbank
 
     <ExportAPI("write_mona")>
     Public Sub writeMoNA(pack As SpectrumPack, spec As SpectraSection)
-        Call pack.Push($"{spec.ID}|{spec.name}", spec.formula, spec.GetSpectrumPeaks)
+        Call pack.Push($"{spec.ID}|{spec.name}_{spec.GetHashCode}", spec.formula, spec.GetSpectrumPeaks)
     End Sub
 
     ''' <summary>
