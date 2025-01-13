@@ -86,17 +86,21 @@ Public Module CrossReferenceData
             End If
         End If
 
-        If i > 6 Then
+        If i > 4 Then
             Dim f1 = FormulaScanner.ScanFormula(x.Formula)
             Dim f2 = FormulaScanner.ScanFormula(y.Formula)
 
-            If f1 = f2 Then i += 1
+            ' 20250113 has the same formula composition and the same cross reference or names
+            ' then we could check these two metabolite identical
+            If f1 = f2 Then
+                Return 0
+            End If
         End If
 
         Dim jaccard As Double = i / union
 
-        If jaccard > 0.4 Then
-            Return 0
+        If jaccard > 0.2 Then
+            Return 1
         Else
             Return -1
         End If
