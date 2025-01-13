@@ -395,7 +395,10 @@ Module Massbank
             Dim union As MetaInfo = MetaLib.Union(i)
 
             Call list.add(i.name, union)
-            Call mapping.add(union.ID, i.Select(Function(a) a.ID).ToArray)
+            Call mapping.add(union.ID, i _
+                .Select(Function(a) a.ID) _
+                .Distinct _
+                .ToArray)
         Next
 
         Call list.setAttribute("mapping", mapping)
