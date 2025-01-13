@@ -365,7 +365,7 @@ Module ReferenceTreePkg
     End Function
 
     <ExportAPI("as.annotation_result")>
-    Public Function CreateAnnotationSet(metadb As LocalRepository, hits As ClusterHit()) As AnnotationData(Of MetaboliteData)
+    Public Function CreateAnnotationSet(hits As ClusterHit(), metadb As LocalRepository) As AnnotationData(Of MetaboliteData)
         Return hits _
             .SafeQuery _
             .Select(Function(hit)
