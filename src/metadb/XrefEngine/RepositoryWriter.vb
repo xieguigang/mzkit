@@ -55,6 +55,7 @@ Public Class RepositoryWriter : Implements IDisposable
         Call blockIndex.Add(meta.ID, size)
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub Add(meta As IMetabolite(Of xref))
         Call Add(New Metadata With {
             .xref = meta.CrossReference,
@@ -62,7 +63,12 @@ Public Class RepositoryWriter : Implements IDisposable
             .formula = meta.Formula,
             .ID = meta.Identity,
             .name = meta.CommonName,
-            .synonym = {}
+            .synonym = {},
+            .[class] = meta.class,
+            .kingdom = meta.kingdom,
+            .sub_class = meta.sub_class,
+            .super_class = meta.super_class,
+            .molecular_framework = meta.molecular_framework
         })
     End Sub
 
@@ -109,7 +115,6 @@ Public Class RepositoryWriter : Implements IDisposable
         End If
 
         Call VBDebugger.EchoLine("make index for the metabolite repository...")
-
     End Sub
 
     Protected Overridable Sub Dispose(disposing As Boolean)
