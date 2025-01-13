@@ -40,7 +40,7 @@ Public Module CrossReferenceData
                 .OrderByDescending(Function(a) a.Count) _
                 .First
 
-            Yield New NamedCollection(Of T)(name.Key, meta.ToArray)
+            Yield New NamedCollection(Of T)(name.Key, listSet)
         Next
     End Function
 
