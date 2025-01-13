@@ -3,6 +3,10 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
+''' <summary>
+''' the annotation result dataset
+''' </summary>
+''' <typeparam name="T"></typeparam>
 Public Class AnnotationData(Of T As ICrossReference)
     Implements IReadOnlyId, IExactMassProvider, ICompoundNameProvider, IFormulaProvider
     Implements GenericCompound

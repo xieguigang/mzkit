@@ -73,6 +73,7 @@ Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
+Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
@@ -676,7 +677,21 @@ Module library
     ''' <returns></returns>
     <ExportAPI("unique_candidates")>
     Public Function uniqueAnnotations(<RRawVectorArgument> candidates As Object, Optional env As Environment = Nothing) As Object
-        Dim pull As pipeline = pipeline.TryCreatePipeline(Of AnnotationData(Of xref)( can)
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of AnnotationData(Of xref))(candidates, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+        Dim candidateList As AnnotationData(Of xref)() = pull.populates(Of AnnotationData(Of xref))(env).ToArray
+        Dim unique = CrossReferenceData.UniqueGroups(Of xref, AnnotationData(Of xref))(candidateList).ToArray
+        Dim list As New list
+
+        For Each i As NamedCollection(Of AnnotationData(Of xref)) In unique
+            Call list.add(i.name, i.value)
+        Next
+
+        Return list
     End Function
 
     ''' <summary>
