@@ -870,6 +870,23 @@ Module library
         End If
     End Function
 
+    <ExportAPI("write_metadata")>
+    Public Function Save(writer As RepositoryWriter, <RRawVectorArgument> meta As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of Models.MetaInfo)(meta, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+        Dim alldata As Models.MetaInfo() = pull.populates(Of Models.MetaInfo)(env).ToArray
+
+        For Each m As Models.MetaInfo In TqdmWrapper.Wrap(alldata)
+            Call writer.Add(m)
+        Next
+
+        Return True
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
