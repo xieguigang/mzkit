@@ -65,10 +65,11 @@
 Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ASCII.MSP
 
@@ -93,14 +94,16 @@ Namespace ASCII.MSP
             Dim libs = path _
                 .IterateAllLines _
                 .Split(AddressOf StringEmpty, includes:=False) _
-                .Where(Function(c) c.Length > 0)
+                .Where(Function(c) c.Length > 0) _
+                .Where(Function(r) Not r.IsNullOrEmpty AndAlso r.Length > 2) _
+                .ToArray
 
-            If path.FileLength <= 0 Then
+            If path.FileLength <= 0 OrElse libs.IsNullOrEmpty Then
                 Call $"Target msp file: [{path}] contains no data or file not found!".Warning
                 Return
             End If
 
-            For Each reference As String() In libs.Where(Function(r) Not r.IsNullOrEmpty AndAlso r.Length > 2)
+            For Each reference As String() In TqdmWrapper.Wrap(libs)
                 Dim parts = reference _
                     .Split(Function(s)
                                Return s.MatchPattern("Num Peaks[:]\s*\d+", RegexICSng)
@@ -231,7 +234,7 @@ Namespace ASCII.MSP
                 If msp.PrecursorMZ.StringEmpty Then
                     Dim mz2 = msp.Peaks _
                         .Select(Function(p)
-                                    Return (p.mz, d:=stdNum.Abs(p.mz - mt(0)))
+                                    Return (p.mz, d:=std.Abs(p.mz - mt(0)))
                                 End Function) _
                         .OrderBy(Function(t) t.d) _
                         .FirstOrDefault
