@@ -421,6 +421,7 @@ Module Massbank
 
             If counter.ContainsKey(id) Then
                 id = id & "_" & (++counter(id))
+                union.ID = id
             Else
                 Call counter.Add(id, 1)
             End If
