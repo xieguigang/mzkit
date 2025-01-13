@@ -836,13 +836,26 @@ Module library
     ''' </summary>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' 
+    ''' </returns>
     ''' 
     <ExportAPI("open_repository")>
-    <RApiReturn(GetType(LocalRepository))>
-    Public Function openRepository(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+    <RApiReturn(GetType(LocalRepository), GetType(RepositoryWriter))>
+    Public Function openRepository(<RRawVectorArgument> file As Object,
+                                   <RRawVectorArgument(TypeCodes.string)>
+                                   Optional mode As Object = "read|write",
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim modes As String() = CLRVector.asCharacter(mode)
         Dim is_filepath As Boolean
-        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env, is_filepath:=is_filepath)
+
+        If modes.IsNullOrEmpty Then
+            Return RInternal.debug.stop("the data io mode for the local annotation metadata repository should not be nothing!", env)
+        End If
+
+        Dim access As FileAccess = If(modes(0).TextEquals("read"), FileAccess.Read, FileAccess.Write)
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, access, env, is_filepath:=is_filepath)
 
         If buf Like GetType(Message) Then
             Return buf.TryCast(Of Message)
@@ -850,7 +863,11 @@ Module library
             Call VBDebugger.EchoLine($"open the local annotation database file: {CLRVector.asCharacter(file).First}")
         End If
 
-        Return New LocalRepository(buf.TryCast(Of Stream))
+        If access = FileAccess.Read Then
+            Return New LocalRepository(buf.TryCast(Of Stream))
+        Else
+            Return New RepositoryWriter(buf.TryCast(Of Stream))
+        End If
     End Function
 
     ''' <summary>

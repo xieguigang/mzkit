@@ -1,10 +1,54 @@
-﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Text.Similarity
 
 Public Module CrossReferenceData
+
+    Public Delegate Function SetMeta(Of T As GenericCompound)(ByRef m As T, id As String, name As String, formula As String, exact_mass As Double) As T
+
+    ''' <summary>
+    ''' Union a collection of the metabolite data into a single metabolite data model
+    ''' </summary>
+    ''' <typeparam name="C"></typeparam>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="group">a collection of the metabolite data that should be populates 
+    ''' from the <see cref="UniqueGroups(Of C, T)(IEnumerable(Of T))"/> function.
+    ''' </param>
+    ''' <returns></returns>
+    Public Function UnionData(Of C As {New, ICrossReference}, T As {New, IMetabolite(Of C)})(group As IEnumerable(Of T), setMeta As SetMeta(Of T)) As T
+        Dim groupData As T() = group.ToArray
+        Dim xrefs As C() = groupData.Select(Function(a) a.CrossReference).ToArray
+        Dim id As String = xrefs.PickId
+        Dim name As String = groupData.Select(Function(a) a.CommonName).TopMostFrequent(New DirectTextComparer(False, False))
+        Dim formula As String = groupData.First.Formula
+        Dim exact_mass As Double = FormulaScanner.EvaluateExactMass(formula)
+        Dim classData As ICompoundClass = groupData.GetTopClass
+        Dim xref As New C
+        Dim m As T = setMeta(New T With {
+            .[class] = classData.[class],
+            .CrossReference = xref,
+            .kingdom = classData.kingdom,
+            .molecular_framework = classData.molecular_framework,
+            .sub_class = classData.sub_class,
+            .super_class = classData.super_class
+        }, id, name, formula, exact_mass)
+
+        Return m
+    End Function
+
+    <Extension>
+    Private Function PickId(Of X As ICrossReference)(c As IEnumerable(Of X)) As String
+
+    End Function
+
+    <Extension>
+    Private Function GetTopClass(Of C As ICompoundClass)(classList As C()) As ICompoundClass
+
+    End Function
 
     Public Iterator Function UniqueGroups(Of C As ICrossReference, T As IMetabolite(Of C))(list As IEnumerable(Of T)) As IEnumerable(Of NamedCollection(Of T))
         Dim masses = list.GroupBy(Function(a) a.ExactMass, offsets:=0.1).ToArray
