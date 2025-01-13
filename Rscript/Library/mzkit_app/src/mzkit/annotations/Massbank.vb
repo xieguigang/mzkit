@@ -376,7 +376,7 @@ Module Massbank
     ''' </summary>
     ''' <param name="mona"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>a list of the <see cref="MetaInfo"/> data</returns>
     <ExportAPI("extract_mona_metabolites")>
     Public Function extractMoNAMetabolites(<RRawVectorArgument> mona As Object, Optional env As Environment = Nothing) As Object
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of SpectraSection)(mona, env)
@@ -385,12 +385,20 @@ Module Massbank
             Return pull.getError
         End If
 
-        Dim unique = CrossReferenceData.UniqueGroups(Of xref, SpectraSection)(pull.populates(Of SpectraSection)(env)).ToArray
+        Dim unique = CrossReferenceData _
+            .UniqueGroups(Of xref, SpectraSection)(pull.populates(Of SpectraSection)(env)) _
+            .ToArray
         Dim list As New list
+        Dim mapping As New list
 
         For Each i As NamedCollection(Of SpectraSection) In unique
-            Call list.add(i.name, i.value)
+            Dim union As MetaInfo = MetaLib.Union(i)
+
+            Call list.add(i.name, union)
+            Call mapping.add(union.ID, i.Select(Function(a) a.ID).ToArray)
         Next
+
+        Call list.setAttribute("mapping", mapping)
 
         Return list
     End Function

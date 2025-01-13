@@ -173,6 +173,19 @@ Namespace MetaLib.Models
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Union(metabolite As IEnumerable(Of MetaInfo)) As MetaInfo
+            Return CrossReferenceData.UnionData(Of xref, MetaInfo)(
+                group:=metabolite,
+                setMeta:=Function(ByRef m, id, name, formula, exact_mass)
+                             m.ID = id
+                             m.name = name
+                             m.formula = formula
+                             m.exact_mass = exact_mass
+                             Return m
+                         End Function)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Union(metabolite As IEnumerable(Of MetaLib)) As MetaInfo
             Return CrossReferenceData.UnionData(Of xref, MetaInfo)(
                 group:=metabolite,

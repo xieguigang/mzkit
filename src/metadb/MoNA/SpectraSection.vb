@@ -72,6 +72,8 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 ''' <remarks>
 ''' this data object used for union the metabolite annotation <see cref="MetaData"/> and 
 ''' the spectrum data(<see cref="SpectraInfo"/>).
+''' 
+''' also is a sub class of the <see cref="MetaInfo"/> annotation information object
 ''' </remarks>
 Public Class SpectraSection : Inherits MetaInfo
 

@@ -172,6 +172,9 @@ Namespace MetaLib.Models
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
         ''' <summary>
         ''' display the name for debug view
         ''' </summary>
