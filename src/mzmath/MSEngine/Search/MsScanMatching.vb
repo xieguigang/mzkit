@@ -74,26 +74,6 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
 Imports Microsoft.VisualBasic.Math.Statistics
 Imports std = System.Math
 
-Public Class MatchedPeak
-    Public Property IsProductIonMatched As Boolean = False
-    Public Property IsNeutralLossMatched As Boolean = False
-    ''' <summary>
-    ''' the m/z of this spectrum peak fragment
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Mass As Double
-    ''' <summary>
-    ''' intensity value from the sample data
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Intensity As Double
-    ''' <summary>
-    ''' intensity value of the reference spectrum peak 
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property MatchedIntensity As Double
-End Class
-
 Public NotInheritable Class MsScanMatching
     Private Sub New()
     End Sub

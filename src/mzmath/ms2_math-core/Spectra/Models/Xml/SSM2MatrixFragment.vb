@@ -64,7 +64,7 @@ Imports System.Xml.Serialization
 Namespace Spectra.Xml
 
     ''' <summary>
-    ''' tuple data of [mz, query_intensity, reference_intensity]
+    ''' tuple data of [mz, query_intensity, reference_intensity], a MatchedPeak model
     ''' </summary>
     Public Class SSM2MatrixFragment
 
@@ -86,6 +86,9 @@ Namespace Spectra.Xml
         ''' <returns></returns>
         <XmlAttribute> Public Property ref As Double
 #End Region
+
+        <XmlAttribute> Public Property IsProductIonMatched As Boolean = False
+        <XmlAttribute> Public Property IsNeutralLossMatched As Boolean = False
 
         ''' <summary>
         ''' Mass delta between the query and reference fragment in unit ``da``
