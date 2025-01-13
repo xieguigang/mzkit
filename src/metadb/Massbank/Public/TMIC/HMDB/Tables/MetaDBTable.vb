@@ -1,85 +1,86 @@
 ﻿#Region "Microsoft.VisualBasic::15b84934f149ae970ee4af18284be046, metadb\Massbank\Public\TMIC\HMDB\Tables\MetaDBTable.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 279
-    '    Code Lines: 244 (87.46%)
-    ' Comment Lines: 3 (1.08%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 32 (11.47%)
-    '     File Size: 12.71 KB
+' Summaries:
 
 
-    '     Class MetaInfo
-    ' 
-    '         Properties: CAS, chebi, HMDB, KEGG
-    ' 
-    '     Class BriefTable
-    ' 
-    '         Properties: AdultConcentrationAbnormal, AdultConcentrationNormal, ChildrenConcentrationAbnormal, ChildrenConcentrationNormal, disease
-    '                     NewbornConcentrationAbnormal, NewbornConcentrationNormal, Sample, water_solubility
-    ' 
-    '         Function: Clone
-    ' 
-    '     Class MetaDb
-    ' 
-    '         Properties: [class], accession, biocyc_id, Biomarker, CAS
-    '                     cellular_locations, chebi_id, chemical_formula, chemspider_id, contents
-    '                     description, direct_parent, disease, Disposition, drugbank_id
-    '                     exact_mass, foodb_id, inchi, inchikey, iupac_name
-    '                     kegg_id, kingdom, metlin_id, molecular_framework, name
-    '                     pathways, Physiological_effects, Process, proteins, pubchem_cid
-    '                     Role, secondary_accessions, smiles, state, sub_class
-    '                     super_class, synonyms, tissue, traditional_iupac, wikipedia_id
-    ' 
-    '         Function: FromMetabolite, getBioMarkers, getOntologyIndex, GetSynonym, OntologyTreeLines
-    '                   PopulateTable, populateTree
-    ' 
-    '         Sub: WriteTable
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 279
+'    Code Lines: 244 (87.46%)
+' Comment Lines: 3 (1.08%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 32 (11.47%)
+'     File Size: 12.71 KB
+
+
+'     Class MetaInfo
+' 
+'         Properties: CAS, chebi, HMDB, KEGG
+' 
+'     Class BriefTable
+' 
+'         Properties: AdultConcentrationAbnormal, AdultConcentrationNormal, ChildrenConcentrationAbnormal, ChildrenConcentrationNormal, disease
+'                     NewbornConcentrationAbnormal, NewbornConcentrationNormal, Sample, water_solubility
+' 
+'         Function: Clone
+' 
+'     Class MetaDb
+' 
+'         Properties: [class], accession, biocyc_id, Biomarker, CAS
+'                     cellular_locations, chebi_id, chemical_formula, chemspider_id, contents
+'                     description, direct_parent, disease, Disposition, drugbank_id
+'                     exact_mass, foodb_id, inchi, inchikey, iupac_name
+'                     kegg_id, kingdom, metlin_id, molecular_framework, name
+'                     pathways, Physiological_effects, Process, proteins, pubchem_cid
+'                     Role, secondary_accessions, smiles, state, sub_class
+'                     super_class, synonyms, tissue, traditional_iupac, wikipedia_id
+' 
+'         Function: FromMetabolite, getBioMarkers, getOntologyIndex, GetSynonym, OntologyTreeLines
+'                   PopulateTable, populateTree
+' 
+'         Sub: WriteTable
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
+Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Linq

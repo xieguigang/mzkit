@@ -7,6 +7,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 ''' the annotation result dataset
 ''' </summary>
 ''' <typeparam name="T"></typeparam>
+''' <remarks>
+''' the report table row will be generates from this object
+''' </remarks>
 Public Class AnnotationData(Of T As ICrossReference)
     Implements IReadOnlyId, IExactMassProvider, ICompoundNameProvider, IFormulaProvider
     Implements GenericCompound
@@ -38,4 +41,9 @@ Public Class AnnotationData(Of T As ICrossReference)
     ''' <returns></returns>
     Public Property Alignment As AlignmentOutput
 
+    Public Property kingdom As String Implements ICompoundClass.kingdom
+    Public Property super_class As String Implements ICompoundClass.super_class
+    Public Property [class] As String Implements ICompoundClass.class
+    Public Property sub_class As String Implements ICompoundClass.sub_class
+    Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
 End Class

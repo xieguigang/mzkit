@@ -129,6 +129,16 @@ Namespace MetaLib.Models
         ''' <returns></returns>
         <MessagePackMember(7)> Public Property xref As xref Implements IMetabolite(Of xref).CrossReference
 
+#Region "化合物分类"
+
+        <MessagePackMember(8)> Public Property kingdom As String Implements ICompoundClass.kingdom
+        <MessagePackMember(9)> Public Property super_class As String Implements ICompoundClass.super_class
+        <MessagePackMember(10)> Public Property [class] As String Implements ICompoundClass.class
+        <MessagePackMember(11)> Public Property sub_class As String Implements ICompoundClass.sub_class
+        <MessagePackMember(12)> Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
+
+#End Region
+
         ''' <summary>
         ''' get database cross reference id by database name
         ''' </summary>

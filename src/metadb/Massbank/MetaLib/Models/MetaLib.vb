@@ -117,17 +117,7 @@ Namespace MetaLib.Models
         Implements IEquatable(Of MetaLib)
         Implements ICompoundClass
 
-        <MessagePackMember(8)> Public Property chemical As ChemicalDescriptor
-
-#Region "化合物分类"
-
-        <MessagePackMember(9)> Public Property kingdom As String Implements ICompoundClass.kingdom
-        <MessagePackMember(10)> Public Property super_class As String Implements ICompoundClass.super_class
-        <MessagePackMember(11)> Public Property [class] As String Implements ICompoundClass.class
-        <MessagePackMember(12)> Public Property sub_class As String Implements ICompoundClass.sub_class
-        <MessagePackMember(13)> Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
-
-#End Region
+        <MessagePackMember(13)> Public Property chemical As ChemicalDescriptor
 
         <MessagePackMember(14)> Public Property organism As String()
 
