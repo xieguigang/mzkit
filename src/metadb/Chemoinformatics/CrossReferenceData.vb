@@ -9,8 +9,10 @@ Public Module CrossReferenceData
     Public Iterator Function UniqueGroups(Of C As ICrossReference, T As IMetabolite(Of C))(list As IEnumerable(Of T)) As IEnumerable(Of NamedCollection(Of T))
         Dim masses = list.GroupBy(Function(a) a.ExactMass, offsets:=0.1).ToArray
 
-        For Each unique In MakeGroups(Of C, T)(masses)
-            Yield unique
+        For Each mass As NamedCollection(Of T) In masses
+            For Each unique In MakeGroups(Of C, T)(mass)
+                Yield unique
+            Next
         Next
     End Function
 
