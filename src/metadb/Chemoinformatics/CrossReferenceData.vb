@@ -79,6 +79,12 @@ Public Module CrossReferenceData
             If f1 = f2 Then i += 1
         End If
 
-        Return i / union
+        Dim jaccard As Double = i / union
+
+        If jaccard > 0.4 Then
+            Return 0
+        Else
+            Return -1
+        End If
     End Function
 End Module
