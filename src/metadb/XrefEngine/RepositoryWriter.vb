@@ -56,7 +56,17 @@ Public Class RepositoryWriter : Implements IDisposable
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function HasReferenceId(id As String)
+        Return blockIndex.ContainsKey(id)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub Add(meta As IMetabolite(Of xref))
+        If HasReferenceId(meta.Identity) Then
+            Call $"found duplicated metabolite id: {meta.Identity}.".Warning
+            Return
+        End If
+
         Call Add(New Metadata With {
             .xref = meta.CrossReference,
             .exact_mass = meta.ExactMass,
