@@ -408,7 +408,7 @@ Module Massbank
             .UniqueGroups(Of xref, SpectraSection)(pull.populates(Of SpectraSection)(env)) _
             .ToArray
         Dim list As New list
-        Dim mapping As New list
+        Dim mapping As New Dictionary(Of String, Object)
         Dim counter As New Dictionary(Of String, i32)
 
         For Each i As NamedCollection(Of SpectraSection) In unique
@@ -426,14 +426,15 @@ Module Massbank
                 Call counter.Add(id, 1)
             End If
 
+            ' mapping from spectrum reference id to metabolite id
+            For Each spec As SpectraSection In i
+                mapping(spec.ID) = id
+            Next
+
             Call list.add(id, union)
-            Call mapping.add(id, i _
-                .Select(Function(a) a.ID) _
-                .Distinct _
-                .ToArray)
         Next
 
-        Call list.setAttribute("mapping", mapping)
+        Call list.setAttribute("mapping", New list(mapping))
 
         Return list
     End Function
