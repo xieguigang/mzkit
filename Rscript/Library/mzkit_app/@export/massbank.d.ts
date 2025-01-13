@@ -47,6 +47,7 @@ declare namespace massbank {
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return a list of the @``T:BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo`` data
    */
    function extract_mona_metabolites(mona: any, env?: object): any;
    module glycosyl {
@@ -78,6 +79,13 @@ declare namespace massbank {
      * + default value Is ``null``.
    */
    function inchikey(inchi: any, env?: object): object;
+   /**
+    * check of the mona reference spectrum is positive or not?
+    * 
+    * 
+     * @param spec -
+   */
+   function is_positive(spec: object): boolean;
    module lipid {
       /**
        * Create lipid class helper for annotation
@@ -319,4 +327,7 @@ declare namespace massbank {
       */
       function metalib(metadb: any, file: any, env?: object): any;
    }
+   /**
+   */
+   function write_mona(pack: object, spec: object): ;
 }

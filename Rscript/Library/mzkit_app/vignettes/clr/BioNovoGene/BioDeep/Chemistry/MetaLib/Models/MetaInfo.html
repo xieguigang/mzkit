@@ -35,6 +35,7 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 export class MetaInfo {
+   class: string;
    description: string;
    exact_mass: double;
    formula: string;
@@ -56,7 +57,11 @@ export class MetaInfo {
    #  confusing or non-existent. They are widely used in scientific literature, patents, and other 
    #  technical documents related to chemistry.
    IUPACName: string;
+   kingdom: string;
+   molecular_framework: string;
    name: string;
+   sub_class: string;
+   super_class: string;
    # the synonym of current metabolite, multiple names in different languages maybe contains inside this data names pool
    synonym: string;
    # The database cross reference of current metabolite and the molecule structure data.
