@@ -92,6 +92,7 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -408,12 +409,24 @@ Module Massbank
             .ToArray
         Dim list As New list
         Dim mapping As New list
+        Dim counter As New Dictionary(Of String, i32)
 
         For Each i As NamedCollection(Of SpectraSection) In unique
             Dim union As MetaInfo = MetaLib.Union(i)
+            Dim id As String = union.ID
 
-            Call list.add(i.name, union)
-            Call mapping.add(union.ID, i _
+            If id Is Nothing Then
+                Continue For
+            End If
+
+            If counter.ContainsKey(id) Then
+                id = id & "_" & (++counter(id))
+            Else
+                Call counter.Add(id, 1)
+            End If
+
+            Call list.add(id, union)
+            Call mapping.add(id, i _
                 .Select(Function(a) a.ID) _
                 .Distinct _
                 .ToArray)
