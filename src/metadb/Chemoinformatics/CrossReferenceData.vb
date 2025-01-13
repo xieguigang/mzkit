@@ -19,7 +19,7 @@ Public Module CrossReferenceData
     ''' from the <see cref="UniqueGroups(Of C, T)(IEnumerable(Of T))"/> function.
     ''' </param>
     ''' <returns></returns>
-    Public Function UnionData(Of C As ICrossReference, T As {New, IMetabolite(Of C)})(group As IEnumerable(Of T), setMeta As SetMeta(Of T)) As T
+    Public Function UnionData(Of C As {New, ICrossReference}, T As {New, IMetabolite(Of C)})(group As IEnumerable(Of T), setMeta As SetMeta(Of T)) As T
         Dim groupData As T() = group.ToArray
         Dim xrefs As C() = groupData.Select(Function(a) a.CrossReference).ToArray
         Dim xref As C = xrefs.PickId
@@ -41,8 +41,51 @@ Public Module CrossReferenceData
     End Function
 
     <Extension>
-    Private Function PickId(Of X As ICrossReference)(c As X()) As X
+    Private Function PickId(Of X As {New, ICrossReference})(c As X()) As X
+        Dim chebi = c.Select(Function(a) a.chebi).TopMostFrequent
+        Dim kegg = c.Select(Function(a) a.KEGG).TopMostFrequent
+        Dim kegg_drug = c.Select(Function(a) a.KEGGdrug).TopMostFrequent
+        Dim pubchem = c.Select(Function(a) a.pubchem).TopMostFrequent
+        Dim hmdb = c.Select(Function(a) a.HMDB).TopMostFrequent
+        Dim metlin = c.Select(Function(a) a.metlin).TopMostFrequent
+        Dim drugbank = c.Select(Function(a) a.DrugBank).TopMostFrequent
+        Dim chembl = c.Select(Function(a) a.ChEMBL).TopMostFrequent
+        Dim wikipedia = c.Select(Function(a) a.Wikipedia).TopMostFrequent
+        Dim lipidmaps = c.Select(Function(a) a.lipidmaps).TopMostFrequent
+        Dim mesh = c.Select(Function(a) a.MeSH).TopMostFrequent
+        Dim chemidplus = c.Select(Function(a) a.ChemIDplus).TopMostFrequent
+        Dim metacyc = c.Select(Function(a) a.MetaCyc).TopMostFrequent
+        Dim knapsack = c.Select(Function(a) a.KNApSAcK).TopMostFrequent
+        Dim foodb = c.Select(Function(a) a.foodb).TopMostFrequent
+        Dim chemspider = c.Select(Function(a) a.chemspider).TopMostFrequent
+        Dim cas = c.Select(Function(a) a.CAS).IteratesALL.TopMostFrequent
+        Dim inchikey = c.Select(Function(a) a.InChIkey).TopMostFrequent
+        Dim struct_data = c.Where(Function(a) a.InChIkey.TextEquals(inchikey)).FirstOrDefault
+        Dim inchi = struct_data?.InChI
+        Dim smiles = struct_data?.SMILES
 
+        Return New X With {
+            .SMILES = smiles,
+            .InChI = inchi,
+            .CAS = If(cas.StringEmpty(True, True), {}, {cas}),
+            .chebi = chebi,
+            .ChEMBL = chembl,
+            .ChemIDplus = chemidplus,
+            .chemspider = chemspider,
+            .DrugBank = drugbank,
+            .foodb = foodb,
+            .HMDB = hmdb,
+            .InChIkey = inchikey,
+            .KEGG = kegg,
+            .KEGGdrug = kegg_drug,
+            .KNApSAcK = knapsack,
+            .lipidmaps = lipidmaps,
+            .MeSH = mesh,
+            .MetaCyc = metacyc,
+            .metlin = metlin,
+            .pubchem = pubchem,
+            .Wikipedia = wikipedia
+        }
     End Function
 
     <Extension>
