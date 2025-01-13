@@ -104,9 +104,15 @@ End Enum
 ''' <summary>
 ''' ms spectrum annotation result
 ''' </summary>
+''' <remarks>
+''' contains the score matched result
+''' </remarks>
 Public Class MsScanMatchResult
-    ' basic annotated information
 
+    ''' <summary>
+    ''' basic annotated information
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Name As String
 
     Public Property InChIKey As String
@@ -114,8 +120,10 @@ Public Class MsScanMatchResult
 
     Public Property TotalScore As Single
 
-    ' spectral similarity
-
+    ''' <summary>
+    ''' spectral similarity
+    ''' </summary>
+    ''' <returns></returns>
     Public Property WeightedDotProduct As Single
 
     Public Property SimpleDotProduct As Single
@@ -144,8 +152,10 @@ Public Class MsScanMatchResult
 
     Public Property AcurateMassSimilarity As Single
 
-    ' Link to database
-
+    ''' <summary>
+    ''' Link to database
+    ''' </summary>
+    ''' <returns></returns>
     Public Property LibraryID As Integer = -1
 
     Public Property LibraryIDWhenOrdered As Integer = -1
@@ -184,8 +194,10 @@ Public Class MsScanMatchResult
         End Get
     End Property
 
-    ' Support for multiple annotation method
-
+    ''' <summary>
+    ''' Support for multiple annotation method
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property IsManuallyModified As Boolean
         Get
             Return (Source And SourceType.Manual) <> 0

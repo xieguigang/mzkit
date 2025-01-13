@@ -80,12 +80,20 @@ Public NotInheritable Class MsScanMatching
     End Sub
 
     Public Shared Function IsComparedAvailable(Of T)(obj1 As IReadOnlyCollection(Of T), obj2 As IReadOnlyCollection(Of T)) As Boolean
-        If obj1 Is Nothing OrElse obj2 Is Nothing OrElse obj1.Count = 0 OrElse obj2.Count = 0 Then Return False
+        If obj1 Is Nothing OrElse
+            obj2 Is Nothing OrElse
+            obj1.Count = 0 OrElse
+            obj2.Count = 0 Then Return False
+
         Return True
     End Function
 
     Public Shared Function IsComparedAvailable(obj1 As IMSScanProperty, obj2 As IMSScanProperty) As Boolean
-        If obj1.Spectrum Is Nothing OrElse obj2.Spectrum Is Nothing OrElse obj1.Spectrum.Count = 0 OrElse obj2.Spectrum.Count = 0 Then Return False
+        If obj1.Spectrum Is Nothing OrElse
+            obj2.Spectrum Is Nothing OrElse
+            obj1.Spectrum.Count = 0 OrElse
+            obj2.Spectrum.Count = 0 Then Return False
+
         Return True
     End Function
 
@@ -187,7 +195,11 @@ Public NotInheritable Class MsScanMatching
     '}
 
 
-    Public Shared Function CompareMS2ProteomicsScanProperties(scanProp As IMSScanProperty, chargestate As Integer, refSpec As PeptideMsReference, param As MsRefSearchParameterBase, andromedaDelta As Single, andromedaMaxPeaks As Single) As MsScanMatchResult
+    Public Shared Function CompareMS2ProteomicsScanProperties(scanProp As IMSScanProperty, chargestate As Integer,
+                                                              refSpec As PeptideMsReference,
+                                                              param As MsRefSearchParameterBase,
+                                                              andromedaDelta As Single,
+                                                              andromedaMaxPeaks As Single) As MsScanMatchResult
 
         Dim result = CompareBasicMSScanProperties(scanProp, refSpec, param, param.Ms2Tolerance, param.MassRangeBegin, param.MassRangeEnd)
         Dim matchedPeaks = GetMachedSpectralPeaks(scanProp, chargestate, refSpec, param.Ms2Tolerance, param.MassRangeBegin, param.MassRangeEnd)
@@ -197,7 +209,12 @@ Public NotInheritable Class MsScanMatching
         result.MatchedPeaksCount = matchedPeaks.Where(Function(n) n.IsMatched).Count
         result.MatchedPeaksPercentage = CSng((result.MatchedPeaksCount / matchedPeaks.Count()))
 
-        If result.WeightedDotProduct >= param.WeightedDotProductCutOff AndAlso result.SimpleDotProduct >= param.SimpleDotProductCutOff AndAlso result.ReverseDotProduct >= param.ReverseDotProductCutOff AndAlso result.MatchedPeaksPercentage >= param.MatchedPeaksPercentageCutOff AndAlso result.MatchedPeaksCount >= param.MinimumSpectrumMatch AndAlso result.AndromedaScore >= param.AndromedaScoreCutOff Then
+        If result.WeightedDotProduct >= param.WeightedDotProductCutOff AndAlso
+            result.SimpleDotProduct >= param.SimpleDotProductCutOff AndAlso
+            result.ReverseDotProduct >= param.ReverseDotProductCutOff AndAlso
+            result.MatchedPeaksPercentage >= param.MatchedPeaksPercentageCutOff AndAlso
+            result.MatchedPeaksCount >= param.MinimumSpectrumMatch AndAlso
+            result.AndromedaScore >= param.AndromedaScoreCutOff Then
             result.IsSpectrumMatch = True
         End If
         result.TotalScore = CSng(GetTotalScore(result, param))
@@ -252,7 +269,11 @@ Public NotInheritable Class MsScanMatching
 
         result.MatchedPeaksCount = CSng(matchedPeaksScores(1))
         result.MatchedPeaksPercentage = CSng(matchedPeaksScores(0))
-        If result.WeightedDotProduct >= param.WeightedDotProductCutOff AndAlso result.SimpleDotProduct >= param.SimpleDotProductCutOff AndAlso result.ReverseDotProduct >= param.ReverseDotProductCutOff AndAlso result.MatchedPeaksPercentage >= param.MatchedPeaksPercentageCutOff AndAlso result.MatchedPeaksCount >= param.MinimumSpectrumMatch Then
+        If result.WeightedDotProduct >= param.WeightedDotProductCutOff AndAlso
+            result.SimpleDotProduct >= param.SimpleDotProductCutOff AndAlso
+            result.ReverseDotProduct >= param.ReverseDotProductCutOff AndAlso
+            result.MatchedPeaksPercentage >= param.MatchedPeaksPercentageCutOff AndAlso
+            result.MatchedPeaksCount >= param.MinimumSpectrumMatch Then
             result.IsSpectrumMatch = True
         End If
 
@@ -1148,7 +1169,9 @@ Public NotInheritable Class MsScanMatching
     ''' <returns>
     ''' The similarity score which is standadized from 0 (no similarity) to 1 (consistency) will be return.
     ''' </returns>
-    Public Shared Function GetTotalSimilarity(accurateMassSimilarity As Double, rtSimilarity As Double, isotopeSimilarity As Double, spectraSimilarity As Double, reverseSearchSimilarity As Double, presenceSimilarity As Double, spectrumPenalty As Boolean, targetOmics As TargetOmics, isUseRT As Boolean) As Double
+    Public Shared Function GetTotalSimilarity(accurateMassSimilarity As Double, rtSimilarity As Double, isotopeSimilarity As Double,
+                                              spectraSimilarity As Double, reverseSearchSimilarity As Double,
+                                              presenceSimilarity As Double, spectrumPenalty As Boolean, targetOmics As TargetOmics, isUseRT As Boolean) As Double
         Dim dotProductFactor = 3.0
         Dim revesrseDotProdFactor = 2.0
         Dim presensePercentageFactor = 1.0
@@ -1189,7 +1212,10 @@ Public NotInheritable Class MsScanMatching
         End If
     End Function
 
-    Public Shared Function GetTotalSimilarity(accurateMassSimilarity As Double, rtSimilarity As Double, ccsSimilarity As Double, isotopeSimilarity As Double, spectraSimilarity As Double, reverseSearchSimilarity As Double, presenceSimilarity As Double, spectrumPenalty As Boolean, targetOmics As TargetOmics, isUseRT As Boolean, isUseCcs As Boolean) As Double
+    Public Shared Function GetTotalSimilarity(accurateMassSimilarity As Double, rtSimilarity As Double, ccsSimilarity As Double,
+                                              isotopeSimilarity As Double, spectraSimilarity As Double, reverseSearchSimilarity As Double,
+                                              presenceSimilarity As Double, spectrumPenalty As Boolean, targetOmics As TargetOmics,
+                                              isUseRT As Boolean, isUseCcs As Boolean) As Double
         Dim dotProductFactor = 3.0
         Dim revesrseDotProdFactor = 2.0
         Dim presensePercentageFactor = 1.0

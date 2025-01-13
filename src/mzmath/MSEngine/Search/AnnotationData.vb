@@ -1,4 +1,5 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
@@ -20,5 +21,16 @@ Public Class AnnotationData(Of T As ICrossReference)
     ''' </summary>
     ''' <returns></returns>
     Public Property Xref As T
+
+    ''' <summary>
+    ''' MSDIAL score
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Score As MsScanMatchResult
+    ''' <summary>
+    ''' Spectrum alignment result
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Alignment As AlignmentOutput
 
 End Class
