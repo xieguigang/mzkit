@@ -55,10 +55,14 @@ Public Module CrossReferenceData
     Private Function Compares(Of C As ICrossReference, T As IMetabolite(Of C))(x As T, y As T) As Integer
         Dim i As Integer = 0
         Dim union As Integer = 20
+        Dim check_name As Boolean = False
 
         ' has the same database reference id?
         If x.Identity = y.Identity Then i += 1
-        If x.CommonName.TextEquals(y.CommonName, False, False) Then i += 1
+        If x.CommonName.TextEquals(y.CommonName, False, False) Then
+            i += 1
+            check_name = True
+        End If
 
         Dim cx As C = x.CrossReference
         Dim cy As C = y.CrossReference
@@ -86,7 +90,7 @@ Public Module CrossReferenceData
             End If
         End If
 
-        If i > 4 Then
+        If check_name OrElse i > 4 Then
             Dim f1 = FormulaScanner.ScanFormula(x.Formula)
             Dim f2 = FormulaScanner.ScanFormula(y.Formula)
 
