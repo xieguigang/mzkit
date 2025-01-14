@@ -1,69 +1,71 @@
 ﻿#Region "Microsoft.VisualBasic::15e80602722c53232712ed5f7678eff4, metadb\Chemoinformatics\Formula\Models\Formula.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 378
-    '    Code Lines: 212 (56.08%)
-    ' Comment Lines: 119 (31.48%)
-    '    - Xml Docs: 98.32%
-    ' 
-    '   Blank Lines: 47 (12.43%)
-    '     File Size: 14.51 KB
+' Summaries:
 
 
-    '     Class Formula
-    ' 
-    '         Properties: AllAtomElements, Counts, CountsByElement, Elements, EmpiricalFormula
-    '                     Empty, ExactMass
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: CanonicalFormula, CheckElement, EqualsTo, ToString, TryEvaluateExactMass
-    '         Operators: (+4 Overloads) -, (+2 Overloads) *, /, (+4 Overloads) +, <>
-    '                    =
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 378
+'    Code Lines: 212 (56.08%)
+' Comment Lines: 119 (31.48%)
+'    - Xml Docs: 98.32%
+' 
+'   Blank Lines: 47 (12.43%)
+'     File Size: 14.51 KB
+
+
+'     Class Formula
+' 
+'         Properties: AllAtomElements, Counts, CountsByElement, Elements, EmpiricalFormula
+'                     Empty, ExactMass
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: CanonicalFormula, CheckElement, EqualsTo, ToString, TryEvaluateExactMass
+'         Operators: (+4 Overloads) -, (+2 Overloads) *, /, (+4 Overloads) +, <>
+'                    =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
+Imports std = System.Math
 
 Namespace Formula
 
@@ -271,6 +273,48 @@ Namespace Formula
 
             For Each atom As String In CountsByElement.Keys
                 If CountsByElement(atom) <> fb.CountsByElement(atom) Then
+                    Return False
+                End If
+            Next
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' Check of the two formula has formal charge 
+        ''' </summary>
+        ''' <param name="fb"></param>
+        ''' <param name="deltaCharge"></param>
+        ''' <returns>
+        ''' does these two formula reference to a same compound but with different formal charge value?
+        ''' false means these formula reference to different compound object
+        ''' </returns>
+        Public Function CompareFormalCharge(fb As Formula, Optional ByRef deltaCharge As Integer = Nothing) As Boolean
+            If fb Is Nothing Then
+                Return False
+            ElseIf Me Is fb Then
+                Return True
+            End If
+
+            Dim unionKeys As String() = CountsByElement.Keys.Union(fb.CountsByElement.Keys).ToArray
+            Dim c1 = CountsByElement
+            Dim c2 = fb.CountsByElement
+
+            ' check for H, Na, Cl, K
+            Static check_ions As Index(Of String) = {"H", "Na", "Cl", "K"}
+
+            For Each atom As String In unionKeys
+                If c1.ContainsKey(atom) AndAlso c2.ContainsKey(atom) Then
+                    If c1(atom) <> c2(atom) Then
+                        If atom <> "H" Then
+                            Return False
+                        Else
+                            deltaCharge += std.Abs(c1(atom) - c2(atom))
+                        End If
+                    End If
+                ElseIf atom Like check_ions Then
+                    deltaCharge += std.Abs(c1.TryGetValue(atom) - c2.TryGetValue(atom))
+                Else
                     Return False
                 End If
             Next

@@ -218,13 +218,14 @@ Public Module CrossReferenceData
             End If
         End If
 
-        If check_name OrElse i > 1 Then
+        ' has any evidence matched then we check of the formula composition
+        If check_name OrElse i > 0 Then
             Dim f1 = FormulaScanner.ScanFormula(x.Formula)
             Dim f2 = FormulaScanner.ScanFormula(y.Formula)
 
             ' 20250113 has the same formula composition and the same cross reference or names
             ' then we could check these two metabolite identical
-            If f1 = f2 Then
+            If f1 = f2 OrElse f1.CompareFormalCharge(f2) Then
                 Return 0
                 ' some spectrum metadata has the identical name but no formula information?
                 ' deal with this as identical?
