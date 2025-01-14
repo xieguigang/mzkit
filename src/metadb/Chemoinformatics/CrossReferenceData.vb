@@ -218,7 +218,7 @@ Public Module CrossReferenceData
             End If
         End If
 
-        If check_name OrElse i > 4 Then
+        If check_name OrElse i > 1 Then
             Dim f1 = FormulaScanner.ScanFormula(x.Formula)
             Dim f2 = FormulaScanner.ScanFormula(y.Formula)
 
