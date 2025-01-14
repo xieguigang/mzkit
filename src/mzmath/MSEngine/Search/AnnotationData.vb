@@ -19,10 +19,10 @@ Public Class AnnotationData(Of T As ICrossReference)
     ''' A unique database reference id of current metabolite data object
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property ID As String Implements IReadOnlyId.Identity
-    Public ReadOnly Property ExactMass As Double Implements IExactMassProvider.ExactMass
-    Public ReadOnly Property CommonName As String Implements ICompoundNameProvider.CommonName
-    Public ReadOnly Property Formula As String Implements IFormulaProvider.Formula
+    Public Property ID As String Implements IReadOnlyId.Identity
+    Public Property ExactMass As Double Implements IExactMassProvider.ExactMass
+    Public Property CommonName As String Implements ICompoundNameProvider.CommonName
+    Public Property Formula As String Implements IFormulaProvider.Formula
 
     ''' <summary>
     ''' the external database cross reference

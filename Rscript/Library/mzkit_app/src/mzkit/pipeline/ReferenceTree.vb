@@ -69,6 +69,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
@@ -387,7 +388,11 @@ Module ReferenceTreePkg
                             .sub_class = metadata.sub_class,
                             .super_class = metadata.super_class,
                             .Xref = metadata.xref,
-                            .Score = New MsScanMatchResult
+                            .Score = New MsScanMatchResult,
+                            .CommonName = metadata.name,
+                            .ExactMass = FormulaScanner.EvaluateExactMass(metadata.formula),
+                            .Formula = metadata.formula,
+                            .ID = metadata.ID
                         }
 
                         Return data

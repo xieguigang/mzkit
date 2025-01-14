@@ -120,6 +120,7 @@ Module library
             .columns = New Dictionary(Of String, Array)
         }
         Dim xrefs = data.Select(Function(a) a.Xref).ToArray
+        Dim aligns = data.Select(Function(a) a.Alignment).ToArray
 
         Call report.add("metabolite_id", From mi As AnnotationData(Of xref) In data Select mi.ID)
         Call report.add("name", From mi As AnnotationData(Of xref) In data Select mi.CommonName)
@@ -143,6 +144,15 @@ Module library
         Call report.add("class", From mi As AnnotationData(Of xref) In data Select mi.class)
         Call report.add("sub_class", From mi As AnnotationData(Of xref) In data Select mi.sub_class)
         Call report.add("molecular_framework", From mi As AnnotationData(Of xref) In data Select mi.molecular_framework)
+
+        Call report.add("forward", From ai As AlignmentOutput In aligns Select ai.forward)
+        Call report.add("reverse", From ai As AlignmentOutput In aligns Select ai.reverse)
+        Call report.add("jaccard", From ai As AlignmentOutput In aligns Select ai.jaccard)
+        Call report.add("entropy", From ai As AlignmentOutput In aligns Select ai.entropy)
+
+        Call report.add("mz", From ai As AlignmentOutput In aligns Select ai.query.mz)
+        Call report.add("rt", From ai As AlignmentOutput In aligns Select ai.query.scan_time)
+        Call report.add("alignment", From ai As AlignmentOutput In aligns Select ai.alignment_str)
 
         Return report
     End Function
