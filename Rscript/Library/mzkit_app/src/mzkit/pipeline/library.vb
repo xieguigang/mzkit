@@ -128,7 +128,7 @@ Module library
 
         Call report.add("chebi", From xi As xref In xrefs Select xi.chebi)
         Call report.add("pubchem", From xi As xref In xrefs Select xi.pubchem)
-        Call report.add("cas", From xi As xref In xrefs Select xi.CAS.FirstOrDefault)
+        Call report.add("cas", From xi As xref In xrefs Select xi.CAS?.FirstOrDefault)
         Call report.add("kegg", From xi As xref In xrefs Select xi.KEGG)
         Call report.add("hmdb", From xi As xref In xrefs Select xi.HMDB)
         Call report.add("lipidmaps", From xi As xref In xrefs Select xi.lipidmaps)
