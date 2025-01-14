@@ -116,9 +116,7 @@ Module library
     End Sub
 
     Public Function create_reportTable(data As AnnotationData(Of xref)(), args As list, env As Environment) As dataframe
-        Dim report As New dataframe With {
-            .columns = New Dictionary(Of String, Array)
-        }
+        Dim report As New dataframe With {.columns = New Dictionary(Of String, Array)}
         Dim xrefs = data.Select(Function(a) a.Xref).ToArray
         Dim aligns = data.Select(Function(a) a.Alignment).ToArray
 
@@ -149,6 +147,8 @@ Module library
         Call report.add("reverse", From ai As AlignmentOutput In aligns Select ai.reverse)
         Call report.add("jaccard", From ai As AlignmentOutput In aligns Select ai.jaccard)
         Call report.add("entropy", From ai As AlignmentOutput In aligns Select ai.entropy)
+
+        Call report.add("evidence", From ai As AlignmentOutput In aligns Select ai.reference.id)
 
         Call report.add("mz", From ai As AlignmentOutput In aligns Select ai.query.mz)
         Call report.add("rt", From ai As AlignmentOutput In aligns Select ai.query.scan_time)
