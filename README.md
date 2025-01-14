@@ -13,7 +13,9 @@
 + [View Mzkit Update History](HISTORY.md)
 + Found me at: https://bio.tools/mzkit 
 
-**Download Software**: [http://www.biodeep.cn/downloads?lang=en-US](http://www.biodeep.cn/downloads?lang=en-US)
+**Download Software**: [https://mzkit.org/download.html](https://mzkit.org/download.html)
+
+**Docker Image**: ``docker pull xieguigang/mzkit``
 
 ## LICENSE
 
