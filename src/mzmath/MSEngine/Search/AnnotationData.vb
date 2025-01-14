@@ -46,4 +46,5 @@ Public Class AnnotationData(Of T As ICrossReference)
     Public Property [class] As String Implements ICompoundClass.class
     Public Property sub_class As String Implements ICompoundClass.sub_class
     Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
+
 End Class

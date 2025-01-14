@@ -110,9 +110,42 @@ Module library
         Call RInternal.generic.add("readBin.library_workspace", GetType(Stream), AddressOf loadWorkspace)
 
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(Peaktable()), AddressOf create_table)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(AnnotationData(Of xref)()), AddressOf create_reportTable)
 
         Call htmlPrinter.AttachHtmlFormatter(Of AnnotationPack)(AddressOf tohtmlString)
     End Sub
+
+    Public Function create_reportTable(data As AnnotationData(Of xref)(), args As list, env As Environment) As dataframe
+        Dim report As New dataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+        Dim xrefs = data.Select(Function(a) a.Xref).ToArray
+
+        Call report.add("metabolite_id", From mi As AnnotationData(Of xref) In data Select mi.ID)
+        Call report.add("name", From mi As AnnotationData(Of xref) In data Select mi.CommonName)
+        Call report.add("formula", From mi As AnnotationData(Of xref) In data Select mi.Formula)
+        Call report.add("exact_mass", From mi As AnnotationData(Of xref) In data Select mi.ExactMass)
+
+        Call report.add("chebi", From xi As xref In xrefs Select xi.chebi)
+        Call report.add("pubchem", From xi As xref In xrefs Select xi.pubchem)
+        Call report.add("cas", From xi As xref In xrefs Select xi.CAS.FirstOrDefault)
+        Call report.add("kegg", From xi As xref In xrefs Select xi.KEGG)
+        Call report.add("hmdb", From xi As xref In xrefs Select xi.HMDB)
+        Call report.add("lipidmaps", From xi As xref In xrefs Select xi.lipidmaps)
+        Call report.add("mesh", From xi As xref In xrefs Select xi.MeSH)
+
+        Call report.add("inchikey", From xi As xref In xrefs Select xi.InChIkey)
+        Call report.add("inchi", From xi As xref In xrefs Select xi.InChI)
+        Call report.add("smiles", From xi As xref In xrefs Select xi.SMILES)
+
+        Call report.add("kingdom", From mi As AnnotationData(Of xref) In data Select mi.kingdom)
+        Call report.add("super_class", From mi As AnnotationData(Of xref) In data Select mi.super_class)
+        Call report.add("class", From mi As AnnotationData(Of xref) In data Select mi.class)
+        Call report.add("sub_class", From mi As AnnotationData(Of xref) In data Select mi.sub_class)
+        Call report.add("molecular_framework", From mi As AnnotationData(Of xref) In data Select mi.molecular_framework)
+
+        Return report
+    End Function
 
     <RGenericOverloads("as.data.frame")>
     Public Function create_table(data As Peaktable(), args As list, env As Environment) As dataframe
