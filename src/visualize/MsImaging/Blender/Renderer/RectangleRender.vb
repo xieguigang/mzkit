@@ -262,7 +262,7 @@ Namespace Blender
             Return RenderPixels(pixels, dimension, colors, defaultFill)
         End Function
 
-        Private Sub FillLayerInternal(gr As IGraphics,
+        Private Sub FillLayerInternal(g As IGraphics,
                                       pixels() As PixelData,
                                       defaultColor As Brush,
                                       colors As SolidBrush(),
@@ -295,7 +295,7 @@ Namespace Blender
 
                 ' imzXML里面的坐标是从1开始的
                 ' 需要减一转换为.NET中从零开始的位置
-                Call gr.FillRectangle(color, rect)
+                Call g.FillRectangle(color, rect)
             Next
         End Sub
 

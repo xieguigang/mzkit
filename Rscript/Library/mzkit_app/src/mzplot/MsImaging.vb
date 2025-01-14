@@ -1175,7 +1175,7 @@ Module MsImaging
             Return Message.InCompatibleType(GetType(MSISummary), data.GetType, env)
         End If
 
-        Dim engine As New RectangleRender(env.getDriver, heatmapRender:=False)
+        Dim engine As New RectangleRender(Drivers.GDI, heatmapRender:=False)
         Dim dimSize As Size = InteropArgumentHelper _
             .getSize(dims, env, [default]:=$"{dataSize.Width},{dataSize.Height}") _
             .SizeParser
@@ -1205,7 +1205,10 @@ Module MsImaging
             End If
         End If
 
-        Return New RasterScaler(image).Scale(scaleSize.Width, scaleSize.Height)
+        Using g As IGraphics = DriverLoad.CreateGraphicsDevice(scaleSize, defaultFill, driver:=Drivers.GDI)
+            Call g.DrawImage(image, New Rectangle(New System.Drawing.Point, scaleSize))
+            Return DirectCast(g, GdiRasterGraphics).ImageResource
+        End Using
     End Function
 
     ''' <summary>
