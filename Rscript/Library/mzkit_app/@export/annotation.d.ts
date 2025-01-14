@@ -143,11 +143,13 @@ declare namespace annotation {
      * @param file -
      * @param mode 
      * + default value Is ``["read","write"]``.
+     * @param mapping 
+     * + default value Is ``null``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function open_repository(file: any, mode?: any, env?: object): object|object;
+   function open_repository(file: any, mode?: any, mapping?: object, env?: object): object|object;
    /**
     * Associates the ms1 peaks with the ms2 spectrum alignment result hits.
     * 

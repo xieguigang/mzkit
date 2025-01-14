@@ -34,6 +34,11 @@ declare namespace spectrumTree {
      * + default value Is ``null``.
    */
    function addBucket(tree: any, x: any, ignore_error?: boolean, args?: object, env?: object): any;
+   module as {
+      /**
+      */
+      function annotation_result(hits: object, metadb: object): object;
+   }
    /**
      * @param env default value Is ``null``.
    */
