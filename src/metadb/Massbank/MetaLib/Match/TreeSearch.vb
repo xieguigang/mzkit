@@ -64,7 +64,7 @@ Namespace MetaLib
     ''' <summary>
     ''' 在数据库的编号定义比较模糊的情况下, 会需要使用这个模块进行快速匹配搜索
     ''' </summary>
-    Public Class TreeSearch
+    Public Class MetaDataTreeSearch
 
         ReadOnly metaTree As AVLTree(Of MetaInfo, MetaInfo)
         ReadOnly cutoff#
@@ -91,7 +91,7 @@ Namespace MetaLib
             End If
         End Function
 
-        Public Function BuildTree(pubchem As IEnumerable(Of MetaInfo)) As TreeSearch
+        Public Function BuildTree(pubchem As IEnumerable(Of MetaInfo)) As MetaDataTreeSearch
             For Each meta As MetaInfo In pubchem
                 Call metaTree.Add(meta, meta, False)
             Next
