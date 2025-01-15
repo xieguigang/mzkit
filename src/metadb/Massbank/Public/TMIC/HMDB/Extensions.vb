@@ -220,8 +220,8 @@ Namespace TMIC.HMDB
         ''' <param name="path$"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function LoadXML(path$) As IEnumerable(Of metabolite)
-            Return metabolite.Load(path)
+        Public Function LoadXML(path$, Optional tqdm As Boolean = True) As IEnumerable(Of metabolite)
+            Return metabolite.Load(path, tqdm:=tqdm)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

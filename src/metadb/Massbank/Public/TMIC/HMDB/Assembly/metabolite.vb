@@ -288,8 +288,8 @@ Namespace TMIC.HMDB
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Load(path$) As IEnumerable(Of metabolite)
-            Return path.LoadUltraLargeXMLDataSet(Of metabolite)(NameOf(metabolite), xmlns:="http://www.hmdb.ca")
+        Public Shared Function Load(path$, Optional tqdm As Boolean = True) As IEnumerable(Of metabolite)
+            Return path.LoadUltraLargeXMLDataSet(Of metabolite)(NameOf(metabolite), xmlns:="http://www.hmdb.ca", tqdm:=tqdm)
         End Function
     End Class
 

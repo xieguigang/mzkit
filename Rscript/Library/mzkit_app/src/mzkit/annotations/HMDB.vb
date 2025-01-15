@@ -233,15 +233,18 @@ Module HMDBTools
     ''' <param name="xml">
     ''' the file path of the hmdb metabolite database xml file
     ''' </param>
+    ''' <param name="convert_std">
+    ''' convert the metabolite annotation data as the mzkit standard metabolite annotation data model(<see cref="MetaLib.Models.MetaLib"/>)?
+    ''' </param>
     ''' <returns>
     ''' this function populate a collection of the hmdb metabolites data
     ''' </returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("read.hmdb")>
-    <RApiReturn(GetType(HMDB.metabolite))>
-    Public Function readHMDB(xml As String, Optional convert_std As Boolean = False) As pipeline
-        Dim pull As IEnumerable(Of metabolite) = TMIC.HMDB.LoadXML(xml)
+    <RApiReturn(GetType(HMDB.metabolite), GetType(MetaLib.Models.MetaLib))>
+    Public Function readHMDB(xml As String, Optional convert_std As Boolean = False, Optional tqdm As Boolean = True) As pipeline
+        Dim pull As IEnumerable(Of metabolite) = TMIC.HMDB.LoadXML(xml, tqdm)
 
         If convert_std Then
             Return pull _
