@@ -31,7 +31,7 @@ Public Module CrossReferenceData
         Dim xrefs As C() = groupData.Select(Function(a) a.CrossReference).ToArray
         Dim xref As C = xrefs.PickId
         Dim name As String = groupData.Select(Function(a) a.CommonName).TopMostFrequent(New DirectTextComparer(False, False))
-        Dim formula As String = groupData.First.Formula
+        Dim formula As String = groupData.Select(Function(a) a.Formula).TopMostFrequent
         Dim exact_mass As Double = FormulaScanner.EvaluateExactMass(formula)
         Dim classData As ICompoundClass = groupData.GetTopClass
         Dim id As String = xref.PickId(name)
@@ -225,7 +225,7 @@ Public Module CrossReferenceData
 
             ' 20250113 has the same formula composition and the same cross reference or names
             ' then we could check these two metabolite identical
-            If f1 = f2 OrElse f1.CompareFormalCharge(f2) Then
+            If f1 = f2 OrElse (Not f1 Is Nothing AndAlso f1.CompareFormalCharge(f2)) Then
                 Return 0
                 ' some spectrum metadata has the identical name but no formula information?
                 ' deal with this as identical?
