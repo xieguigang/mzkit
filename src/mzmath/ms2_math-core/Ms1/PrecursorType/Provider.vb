@@ -59,6 +59,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Ms1.PrecursorType
 
@@ -163,7 +164,9 @@ Namespace Ms1.PrecursorType
         ''' 解析出阳离子模式的加合物形式
         ''' </summary>
         ''' <param name="mode">例如[M]+，[M+H]+等</param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' 
+        ''' </returns>
         Public ReadOnly Property Positive(mode As String) As MzCalculator
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -221,22 +224,56 @@ Namespace Ms1.PrecursorType
         ''' the internal cache.
         ''' </remarks>
         Public Function Calculators(ParamArray precursor_types As String()) As MzCalculator()
-            Return (Iterator Function() As IEnumerable(Of MzCalculator)
-                        For Each type As String In precursor_types
-                            If type.StringEmpty(, True) Then
-                                Call "one of the given precursor adducts type string is empty!".Warning
-                            End If
+            Return Calculators(precursor_types, strict:=False).ToArray
+        End Function
 
-                            If type.Last = "+"c Then
-                                Yield Positive(type)
-                            ElseIf type.Last = "-"c Then
-                                Yield Negative(type)
-                            Else
-                                ' do nothing?
-                                Throw New InvalidExpressionException($"unknown charge mode '{type}'!")
-                            End If
-                        Next
-                    End Function)().ToArray
+        Const empty_adducts_input As String = "one of the given precursor adducts type string for parsed is empty!"
+
+        ''' <summary>
+        ''' get internal m/z calculator
+        ''' </summary>
+        ''' <param name="precursor_types"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this function has an internal cache hash table for the given input adducts string.
+        ''' and the new precursor adducts object will be parsed if it not found inside 
+        ''' the internal cache.
+        ''' </remarks>
+        Public Iterator Function Calculators(precursor_types As String(), strict As Boolean) As IEnumerable(Of MzCalculator)
+            For Each type As String In precursor_types.SafeQuery
+                type = Strings.Trim(type)
+
+                If type.StringEmpty(, True) Then
+                    If strict Then
+                        Throw New NullReferenceException(empty_adducts_input)
+                    Else
+                        Call type.Warning
+                        Continue For
+                    End If
+                End If
+
+                ' get adducts
+                ' and parse adducts object from the string value type
+                ' if the adducts object is not found in the cached data list
+                If type.Last = "+"c Then
+                    Yield Positive(type)
+                ElseIf type.Last = "-"c Then
+                    Yield Negative(type)
+                Else
+                    If strict Then
+                        ' do nothing?
+                        Throw New InvalidExpressionException($"unknown charge mode that could be parsed from the given adducts string: '{type}'!")
+                    Else
+                        Call $"unknown charge mode that could be parsed from the given adducts string: '{type}'! Assuming positive mode for parse adducts model.".Warning
+
+                        If Not (type.First = "["c AndAlso type.Last = "]"c) Then
+                            type = $"[{type}]+"
+                        End If
+
+                        Yield Positive(type)
+                    End If
+                End If
+            Next
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
