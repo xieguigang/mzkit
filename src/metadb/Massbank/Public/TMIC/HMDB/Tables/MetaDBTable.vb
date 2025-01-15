@@ -351,6 +351,8 @@ Namespace TMIC.HMDB
 
         Public Shared Sub WriteTable(metabolites As IEnumerable(Of metabolite), out As Stream)
             Using table As New WriteStream(Of MetaDb)(New StreamWriter(out))
+                Call table.CacheMetaIndex({})
+
                 For Each metabolite As metabolite In metabolites
                     Call table.Flush(FromMetabolite(metabolite))
                 Next
