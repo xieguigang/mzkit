@@ -4,7 +4,8 @@
 read.hmdb \- open a reader for read hmdb database
 .SH SYNOPSIS
 \fIread.hmdb(\fBxml\fR as string, 
-\fBconvert_std\fR as boolean = FALSE);\fR
+\fBconvert_std\fR as boolean = FALSE, 
+\fBtqdm\fR as boolean = TRUE);\fR
 .SH DESCRIPTION
 .PP
 open a reader for read hmdb database
@@ -13,6 +14,11 @@ open a reader for read hmdb database
 .PP
 \fBxml\fB \fR\- 
  the file path of the hmdb metabolite database xml file
+. 
+.PP
+.PP
+\fBconvert_std\fB \fR\- 
+ convert the metabolite annotation data as the mzkit standard metabolite annotation data model(@\fBT:BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib\fR)?
 . 
 .PP
 .SH VALUE

@@ -90,11 +90,14 @@ declare namespace hmdb_kit {
        * 
        * 
         * @param xml the file path of the hmdb metabolite database xml file
-        * @param convert_std 
+        * @param convert_std convert the metabolite annotation data as the mzkit standard metabolite annotation data model(@``T:BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib``)?
+        * 
         * + default value Is ``false``.
+        * @param tqdm 
+        * + default value Is ``true``.
         * @return this function populate a collection of the hmdb metabolites data
       */
-      function hmdb(xml: string, convert_std?: boolean): object;
+      function hmdb(xml: string, convert_std?: boolean, tqdm?: boolean): object;
       /**
        * read hmdb spectral data collection
        * 
