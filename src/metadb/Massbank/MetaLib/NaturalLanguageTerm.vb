@@ -128,21 +128,37 @@ Namespace MetaLib
             Next
         End Function
 
-        Public Iterator Function ProcessingNaturalLanguageName(name As String) As IEnumerable(Of String)
-            Yield name
+        Public Iterator Function ProcessingNaturalLanguageName(compoundName As String) As IEnumerable(Of String)
+            Yield compoundName
 
-            If name.StartsWith("L-") OrElse name.StartsWith("D-") Then
-                Dim short$ = name.Substring(2)
+            If compoundName.StartsWith("L-") OrElse compoundName.StartsWith("D-") Then
+                Dim short$ = compoundName.Substring(2)
 
                 Yield [short]
 
-                If [short].EndsWith("ate") Then
-                    Yield [short].Substring(0, [short].Length - 3) & " acid"
+                If [short].EndsWith("ate", StringComparison.OrdinalIgnoreCase) Then
+                    Yield [short].Substring(0, [short].Length - 3) & "ic acid"
                 End If
             End If
 
-            If name.EndsWith("ate") Then
-                Yield name.Substring(0, name.Length - 3) & " acid"
+            If compoundName.EndsWith("ate", StringComparison.OrdinalIgnoreCase) Then
+                Yield compoundName.Substring(0, compoundName.Length - 3) & "ic acid"
+            End If
+        End Function
+
+        ''' <summary>
+        ''' ate to acid name conversion
+        ''' </summary>
+        ''' <param name="compoundName"></param>
+        ''' <returns></returns>
+        Public Function ConvertToAcidName(compoundName As String) As String
+            ' 检查输入的化合物名称是否以 "ate" 结尾
+            If compoundName.EndsWith("ate", StringComparison.OrdinalIgnoreCase) Then
+                ' 将 "ate" 替换为 "ic acid"
+                Return compoundName.Substring(0, compoundName.Length - 3) & "ic acid"
+            Else
+                ' 如果不是以 "ate" 结尾，返回原始名称
+                Return compoundName
             End If
         End Function
 
