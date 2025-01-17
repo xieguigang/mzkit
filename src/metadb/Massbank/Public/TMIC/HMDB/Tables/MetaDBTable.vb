@@ -79,84 +79,77 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Data.IO.MessagePack
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Imports Microsoft.VisualBasic.Linq
 
 Namespace TMIC.HMDB
 
-    Public Class MetaInfo : Inherits MetaLib.Models.MetaInfo
+    ''' <summary>
+    ''' A simple metabolite table that used for save in messagepack format
+    ''' </summary>
+    Public Class MetaboliteTable : Implements ICompoundClass
 
-        Public Property HMDB As String
-        Public Property KEGG As String
-        Public Property chebi As String
-        Public Property CAS As String
+        <MessagePackMember(0)> <Column("hmdb_id")> Public Property accession As String
+        <MessagePackMember(1)> Public Property name As String
+        <MessagePackMember(2)> Public Property chemical_formula As String
+        <MessagePackMember(3)> Public Property exact_mass As Double
+        <MessagePackMember(4)> Public Property iupac_name As String
+        <MessagePackMember(5)> Public Property traditional_iupac As String
+        <MessagePackMember(6)> <Column("cas_id")> Public Property CAS As String
+        <MessagePackMember(7)> Public Property smiles As String
+        <MessagePackMember(8)> Public Property inchi As String
+        <MessagePackMember(9)> Public Property inchikey As String
+        <MessagePackMember(10)> Public Property kingdom As String Implements ICompoundClass.kingdom
+        <MessagePackMember(11)> Public Property super_class As String Implements ICompoundClass.super_class
+        <MessagePackMember(12)> Public Property [class] As String Implements ICompoundClass.class
+        <MessagePackMember(13)> Public Property sub_class As String Implements ICompoundClass.sub_class
+        <MessagePackMember(14)> Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
+        <MessagePackMember(15)> Public Property direct_parent As String
+        <MessagePackMember(16)> Public Property chebi_id As Long
+        <MessagePackMember(17)> Public Property pubchem_cid As Long
+        <MessagePackMember(18)> Public Property kegg_id As String
+        <MessagePackMember(19)> Public Property chemspider_id As String
+        <MessagePackMember(20)> Public Property drugbank_id As String
+        <MessagePackMember(21)> Public Property foodb_id As String
+        <MessagePackMember(22)> Public Property biocyc_id As String
+        <MessagePackMember(23)> Public Property metlin_id As String
+        <MessagePackMember(24)> Public Property wikipedia_id As String
 
-    End Class
-
-    Public Class BriefTable : Inherits MetaInfo
-        Implements ICloneable
-
-        Public Property Sample As String
-        Public Property disease As String()
-        Public Property water_solubility As String
-
-        <Column("concentration (children-normal)")>
-        Public Property ChildrenConcentrationNormal As String()
-        <Column("concentration (children-abnormal)")>
-        Public Property ChildrenConcentrationAbnormal As String()
-        <Column("concentration (adult-normal)")>
-        Public Property AdultConcentrationNormal As String()
-        <Column("concentration (adult-abnormal)")>
-        Public Property AdultConcentrationAbnormal As String()
-        <Column("concentration (newborn-normal)")>
-        Public Property NewbornConcentrationNormal As String()
-        <Column("concentration (newborn-abnormal)")>
-        Public Property NewbornConcentrationAbnormal As String()
-
-        Public Function Clone() As Object Implements ICloneable.Clone
-            Return MemberwiseClone()
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function ToString() As String
+            Return $"{accession}: {name} ({chemical_formula})"
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Sub SaveMessagePack(hmdb As IEnumerable(Of MetaboliteTable), s As Stream)
+            Call MsgPackSerializer.SerializeObject(hmdb.ToArray, s, closeFile:=False)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function LoadMessagePack(s As Stream) As MetaboliteTable()
+            Return MsgPackSerializer.Deserialize(Of MetaboliteTable())(s)
+        End Function
+
     End Class
 
     ''' <summary>
     ''' store the hmdb metabolite information in table format
     ''' </summary>
-    Public Class MetaDb : Implements ICompoundClass, ICompoundNames
+    Public Class MetaDb : Inherits MetaboliteTable
+        Implements ICompoundClass, ICompoundNames
 
-        <Column("HMDB ID")> Public Property accession As String
         Public Property secondary_accessions As String()
-        <Column("Common Name")> Public Property name As String
-        Public Property chemical_formula As String
-        Public Property exact_mass As Double
-        Public Property iupac_name As String
-        Public Property traditional_iupac As String
         Public Property synonyms As String()
-        <Column("CAS Registry Number")> Public Property CAS As String
-        <Column("SMILES")> Public Property smiles As String
-        Public Property inchi As String
-        Public Property inchikey As String
-        Public Property kingdom As String Implements ICompoundClass.kingdom
-        Public Property super_class As String Implements ICompoundClass.super_class
-        Public Property [class] As String Implements ICompoundClass.class
-        Public Property sub_class As String Implements ICompoundClass.sub_class
-        Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
-        Public Property direct_parent As String
         Public Property state As String
         Public Property cellular_locations As String()
         Public Property contents As Dictionary(Of String, String)
         Public Property tissue As String()
-        Public Property chebi_id As Long
-        Public Property pubchem_cid As Long
-        Public Property kegg_id As String
-        Public Property chemspider_id As String
-        Public Property drugbank_id As String
-        Public Property foodb_id As String
-        Public Property biocyc_id As String
-        Public Property metlin_id As String
-        Public Property wikipedia_id As String
         Public Property description As String
         Public Property pathways As String()
         Public Property proteins As String()
