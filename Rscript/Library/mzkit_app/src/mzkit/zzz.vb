@@ -83,6 +83,7 @@ Public Class zzz
         Call data.Main()
         Call MSI.Main()
         Call MzMath.Main()
+        Call HMDBTools.Main()
     End Sub
 
     Private Shared Function printMSScan(scan As MSScan) As String
