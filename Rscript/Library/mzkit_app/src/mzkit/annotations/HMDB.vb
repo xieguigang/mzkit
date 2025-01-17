@@ -76,7 +76,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
 ''' <summary>
-''' toolkit for handling of the hmdb database
+''' ### toolkit for handling of the hmdb database
 ''' 
 ''' The Human Metabolome Database (HMDB) is a comprehensive, high-quality, freely accessible, 
 ''' online database of small molecule metabolites found in the human body. It bas been created 
@@ -264,11 +264,28 @@ Module HMDBTools
     ''' if this parameter value default null
     ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this function returns the data depends of the <paramref name="file"/> parameter is
+    ''' existsed or not: for ``file`` parameter has been omit, then a vector of the hmdb 
+    ''' <see cref="MetaDb"/> clr object will be returns, otherwise a logical value for indicates 
+    ''' the write table file success or not will be returns.
+    ''' </returns>
     <ExportAPI("export.hmdb_table")>
-    Public Function exportTable(hmdb As pipeline, Optional file As Object = Nothing, Optional env As Environment = Nothing) As Object
+    <RApiReturn(GetType(Boolean), GetType(TMIC.HMDB.MetaDb))>
+    Public Function exportTable(hmdb As pipeline,
+                                Optional file As Object = Nothing,
+                                Optional env As Environment = Nothing) As Object
+
+        Dim pull As IEnumerable(Of TMIC.HMDB.metabolite)
+
+        If Not hmdb.elementType Is RType.TypeOf(Of TMIC.HMDB.metabolite) Then
+            Return Message.InCompatibleType(GetType(TMIC.HMDB.metabolite), hmdb.elementType.GetRawElementType, env)
+        Else
+            pull = hmdb.populates(Of TMIC.HMDB.metabolite)(env)
+        End If
+
         If file Is Nothing Then
-            Return TMIC.HMDB.MetaDb.PopulateTable(hmdb.populates(Of TMIC.HMDB.metabolite)(env)).ToArray
+            Return TMIC.HMDB.MetaDb.PopulateTable(pull).ToArray
         End If
 
         Dim con = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
@@ -278,7 +295,7 @@ Module HMDBTools
         End If
 
         Using buffer As Stream = con.TryCast(Of Stream)
-            Call TMIC.HMDB.MetaDb.WriteTable(hmdb.populates(Of TMIC.HMDB.metabolite)(env), out:=buffer)
+            Call TMIC.HMDB.MetaDb.WriteTable(pull, out:=buffer)
             Call buffer.Flush()
         End Using
 
