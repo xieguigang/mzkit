@@ -30,6 +30,45 @@
             <code id="clr_ts">
 # namespace Microsoft.VisualBasic.Imaging.SVG.XML
 export class SvgElement {
+   # The `aria-label` attribute is part of the Accessible Rich Internet Applications (ARIA) specification,
+   #  which is designed to make web content and web applications more accessible to people with disabilities.
+   #  Here's an overview of the `aria-label` attribute:
+   #  
+   #  <strong>Purpose:</strong>
+   #  - The `aria-label` attribute is used to provide a text label for an element that is not otherwise 
+   #    labeled through text content or other attributes like `aria-labelledby`.
+   #  - It is particularly useful for elements that do not have a visible text label, such as icons,
+   #    buttons, or other interactive elements.
+   #    
+   #  <strong>Usage:</strong>
+   #  - The value of the `aria-label` attribute is a string that contains the text label for the element.
+   #  - This text label is intended to be read by assistive technologies like screen readers, which can 
+   #    announce the label to users who cannot see the screen.
+   #    
+   #  <strong>Example:</strong>
+   # 
+   # <pre><code class="html"> &lt;button aria-label="Close">×&lt;!-- This is an icon representing a close action -->&lt;/button>
+   # </code></pre>
+   # 
+   # 
+   #  
+   #  In this example, a screen reader would announce "Close" when the user navigates to the button, even 
+   #  though the visible content of the button is just an "×" symbol.
+   #  
+   #  <strong>Benefits:</strong>
+   #  - Improves accessibility by providing a clear description of the element's purpose or content.
+   #  - Allows developers to create more semantic and accessible user interfaces without relying on off-screen 
+   #    text or other less semantic methods.
+   #    
+   #  <strong>Considerations:</strong>
+   #  - The `aria-label` should be concise and descriptive.
+   #  - It should not duplicate text that is already provided in the visible content of the element.
+   #  - Avoid using `aria-label` for elements that already have a text label visible on the screen, as this
+   #    can cause redundancy for screen reader users.
+   #    
+   #  <strong>Compatibility:</strong>
+   #  - The `aria-label` attribute is supported by most modern web browsers and assistive technologies.
+   AriaLabel: string;
    Fill: string;
    FillOpacity: double;
    # html element node id liked identifer
