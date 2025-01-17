@@ -139,6 +139,7 @@ Module mzDeco
         Return peaksetMatrix(peaks.peaks, args, env)
     End Function
 
+    <RGenericOverloads("writeBin")>
     Private Function writePeaktable(table As PeakSet, args As list, env As Environment) As Object
         Dim con As Stream = args!con
         Call SaveXcms.DumpSample(table, con)
@@ -146,10 +147,12 @@ Module mzDeco
         Return True
     End Function
 
+    <RGenericOverloads("readBin")>
     Private Function readPeaktable(file As Stream, args As list, env As Environment) As Object
         Return SaveXcms.ReadSample(file)
     End Function
 
+    <RGenericOverloads("writeBin")>
     Private Function writeSamples(samples As PeakFeature(), args As list, env As Environment) As Object
         Dim con As Stream = args!con
         Call SaveSample.DumpSample(samples, con)
@@ -157,10 +160,12 @@ Module mzDeco
         Return True
     End Function
 
+    <RGenericOverloads("writeBin")>
     Private Function writeXIC1(xic As MzGroup, args As list, env As Environment) As Object
         Return writeXIC({xic}, args, env)
     End Function
 
+    <RGenericOverloads("writeBin")>
     Private Function writeXIC(xic As MzGroup(), args As list, env As Environment) As Object
         Dim con As Stream = args!con
         Call SaveXIC.DumpSample(xic, con)
@@ -168,10 +173,12 @@ Module mzDeco
         Return True
     End Function
 
+    <RGenericOverloads("readBin")>
     Private Function readSamples(file As Stream, args As list, env As Environment) As Object
         Return SaveSample.ReadSample(file).ToArray
     End Function
 
+    <RGenericOverloads("readBin")>
     Private Function readXIC(file As Stream, args As list, env As Environment) As Object
         Return SaveXIC.ReadSample(file).ToArray
     End Function

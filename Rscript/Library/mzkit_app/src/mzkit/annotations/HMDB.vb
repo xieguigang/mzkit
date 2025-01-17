@@ -74,6 +74,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' ### toolkit for handling of the hmdb database
@@ -107,7 +108,26 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 ''' </summary>
 <Package("hmdb_kit")>
 <RTypeExport("hmdb_metabolite", GetType(HMDB.metabolite))>
+<RTypeExport("hmdb", GetType(MetaboliteTable))>
 Module HMDBTools
+
+    Sub Main()
+        Call RInternal.generic.add("readBin.hmdb", GetType(Stream), AddressOf loadMessageDb)
+        Call RInternal.generic.add("writeBin", GetType(MetaboliteTable()), AddressOf saveMessage)
+    End Sub
+
+    <RGenericOverloads("writeBin")>
+    Private Function saveMessage(hmdb As MetaboliteTable(), args As list, env As Environment) As Object
+        Dim con As Stream = args!con
+        Call MetaboliteTable.SaveMessagePack(hmdb, con)
+        Call con.Flush()
+        Return True
+    End Function
+
+    <RGenericOverloads("readBin")>
+    Public Function loadMessageDb(file As Stream, args As list, env As Environment) As Object
+        Return MetaboliteTable.LoadMessagePack(file)
+    End Function
 
     ''' <summary>
     ''' read hmdb spectral data collection
