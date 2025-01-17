@@ -216,7 +216,7 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
         Dim project As PixelData() = New PixelData(rawdata.Length - 1) {}
         Dim source As PixelData
 
-        For Each i As Integer In Tqdm.Range(0, Me.m.matrix.Length)
+        For Each i As Integer In Tqdm.Range(0, Me.m.matrix.Length, wrap_console:=App.EnableTqdm)
             source = rawdata(i)
             project(i) = New PixelData With {
                 .label = source.label,
