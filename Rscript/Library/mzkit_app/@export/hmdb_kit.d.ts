@@ -5,7 +5,7 @@
 // ref=mzkit.HMDBTools@mzkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**
- * toolkit for handling of the hmdb database
+ * ### toolkit for handling of the hmdb database
  *  
  *  The Human Metabolome Database (HMDB) is a comprehensive, high-quality, freely accessible, 
  *  online database of small molecule metabolites found in the human body. It bas been created 
@@ -68,8 +68,12 @@ declare namespace hmdb_kit {
         * @param env -
         * 
         * + default value Is ``null``.
+        * @return this function returns the data depends of the **`file`** parameter is
+        *  existsed or not: for ``file`` parameter has been omit, then a vector of the hmdb 
+        *  @``T:BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.MetaDb`` clr object will be returns, otherwise a logical value for indicates 
+        *  the write table file success or not will be returns.
       */
-      function hmdb_table(hmdb: object, file?: any, env?: object): any;
+      function hmdb_table(hmdb: object, file?: any, env?: object): boolean|object;
    }
    /**
     * get metabolite via a given hmdb id from the hmdb.ca online web services
