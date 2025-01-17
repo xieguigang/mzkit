@@ -113,11 +113,18 @@ Module HMDBTools
 
     Sub Main()
         Call RInternal.generic.add("readBin.hmdb", GetType(Stream), AddressOf loadMessageDb)
-        Call RInternal.generic.add("writeBin", GetType(MetaboliteTable()), AddressOf saveMessage)
+        Call RInternal.generic.add("writeBin", GetType(MetaboliteTable()), AddressOf saveHmdbMessage)
+        Call RInternal.generic.add("writeBin", GetType(MetaDb()), AddressOf saveHmdbMessage2)
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <RGenericOverloads("writeBin")>
-    Private Function saveMessage(hmdb As MetaboliteTable(), args As list, env As Environment) As Object
+    Private Function saveHmdbMessage2(hmdb As MetaDb(), args As list, env As Environment) As Object
+        Return saveHmdbMessage(hmdb.Select(Function(a) DirectCast(a, MetaboliteTable)).ToArray, args, env)
+    End Function
+
+    <RGenericOverloads("writeBin")>
+    Private Function saveHmdbMessage(hmdb As MetaboliteTable(), args As list, env As Environment) As Object
         Dim con As Stream = args!con
         Call MetaboliteTable.SaveMessagePack(hmdb, con)
         Call con.Flush()
