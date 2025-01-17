@@ -147,7 +147,7 @@ Public Class PeakTablePlot : Inherits Plot
         Call Axis.DrawX(g, strokePen, "Retention Time(s)", scaler, XAxisLayoutStyles.Bottom, 0, Nothing, theme.axisLabelCSS, Brushes.Black, tickFont, Brushes.Black, htmlLabel:=False)
 
         ' for each sample as matrix row
-        For Each sampleId As String In Tqdm.Wrap(sampleNames, bar:=bar)
+        For Each sampleId As String In Tqdm.Wrap(sampleNames, bar:=bar, wrap_console:=App.EnableTqdm)
             lbSize = g.MeasureString(sampleId, idFont)
             pos = New PointF(rect.Left - lbSize.Width / 2, y + (dy - lbSize.Height) / 2)
             g.DrawString(sampleId, idFont, Brushes.Black, pos)

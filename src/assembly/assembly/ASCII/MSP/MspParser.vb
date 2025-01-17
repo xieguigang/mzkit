@@ -103,7 +103,7 @@ Namespace ASCII.MSP
                 Return
             End If
 
-            For Each reference As String() In TqdmWrapper.Wrap(libs)
+            For Each reference As String() In TqdmWrapper.Wrap(libs, wrap_console:=App.EnableTqdm)
                 Dim parts = reference _
                     .Split(Function(s)
                                Return s.MatchPattern("Num Peaks[:]\s*\d+", RegexICSng)

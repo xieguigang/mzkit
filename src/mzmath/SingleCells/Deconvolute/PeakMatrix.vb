@@ -141,7 +141,7 @@ Namespace Deconvolute
             Dim mzIndex As New MzPool(mzSet)
             Dim len As Integer = mzSet.Length
 
-            For Each scan As ScanMS1 In Tqdm.Wrap(raw.MS)
+            For Each scan As ScanMS1 In Tqdm.Wrap(raw.MS, wrap_console:=App.EnableTqdm)
                 Dim cellId As String = scan.scan_id
                 Dim v As Double() = SpectraEncoder.DeconvoluteScan(scan.mz, scan.into, len, mzIndex)
                 Dim cell_scan As New T With {

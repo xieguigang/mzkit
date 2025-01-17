@@ -90,7 +90,7 @@ Namespace SingleCells
             Dim source_tag As String
             Dim bar As Tqdm.ProgressBar = Nothing
 
-            For Each sample As mzPack In Tqdm.Wrap(single_samples.ToArray, bar:=bar)
+            For Each sample As mzPack In Tqdm.Wrap(single_samples.ToArray, bar:=bar, wrap_console:=App.EnableTqdm)
                 If sample.metadata IsNot Nothing AndAlso sample.metadata.ContainsKey("sample") Then
                     source_tag = sample.metadata!sample
                 Else

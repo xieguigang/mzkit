@@ -154,7 +154,7 @@ Public Class SpectrumGrid
 
         Call VBDebugger.EchoLine("make spectrum alignment for each precursor ion...")
 
-        For Each ion_group As NamedCollection(Of PeakMs2) In TqdmWrapper.Wrap(parent_groups)
+        For Each ion_group As NamedCollection(Of PeakMs2) In TqdmWrapper.Wrap(parent_groups, wrap_console:=App.EnableTqdm)
             Dim tree As New BinaryClustering(equals:=dotcutoff)
 
             ' ion groups has the same precursor ion m/z
@@ -289,7 +289,7 @@ Public Class SpectrumGrid
         Dim q As New SpectrumLine
         Dim mapped As New Dictionary(Of String, SpectrumLine)
 
-        For Each peak As xcms2 In TqdmWrapper.Wrap(peaks.ToArray)
+        For Each peak As xcms2 In TqdmWrapper.Wrap(peaks.ToArray, wrap_console:=App.EnableTqdm)
             Dim i1 As Double() = SumNorm(peak(filenames))
             Dim candidates = clusters _
                 .Search(q.SetRT(peak.rt), tolerance:=rt_win) _

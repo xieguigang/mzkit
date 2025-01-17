@@ -130,7 +130,7 @@ Public Module PeakAlignment
             rt_shift = New List(Of RtShift)
         End If
 
-        For Each ri_point As NamedCollection(Of PeakFeature) In Tqdm.Wrap(RI_rawdata)
+        For Each ri_point As NamedCollection(Of PeakFeature) In Tqdm.Wrap(RI_rawdata, wrap_console:=App.EnableTqdm)
             ' make data bins by mz
             ' where the given data all has the same RI value
             Dim mz_group As NamedCollection(Of PeakFeature)() = mz_bin _

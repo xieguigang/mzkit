@@ -226,7 +226,7 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
             .Distinct _
             .ToArray
 
-        For Each name As String In TqdmWrapper.Wrap(sampleNames)
+        For Each name As String In TqdmWrapper.Wrap(sampleNames, wrap_console:=App.EnableTqdm)
             Dim v As Double() = pool _
                 .Select(Function(k)
                             Dim vi As Double = k(name)

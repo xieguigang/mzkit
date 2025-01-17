@@ -208,7 +208,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         ' commit current data pool
         Call Flush()
         ' and then load the peaktable back from the filesystem
-        For Each peak As xcms2 In TqdmWrapper.Wrap(LoadPeakTable.ToArray)
+        For Each peak As xcms2 In TqdmWrapper.Wrap(LoadPeakTable.ToArray, wrap_console:=App.EnableTqdm)
             Dim scatter = pool.AsParallel _
                 .Select(Function(file)
                             Return New NamedCollection(Of ms1_scan)(file.source, file.PickIonScatter(peak.mz, peak.rt, mass_da, rt_win))

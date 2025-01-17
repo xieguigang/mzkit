@@ -75,7 +75,7 @@ Namespace MatrixMath
         Public Function TotalPeakSumNormalization(m As MzMatrix, Optional scale As Double = 1000000.0) As MzMatrix
             Dim norm As New List(Of PixelData)
 
-            For Each spot As PixelData In Tqdm.Wrap(m.matrix)
+            For Each spot As PixelData In Tqdm.Wrap(m.matrix, wrap_console:=App.EnableTqdm)
                 Dim sum_val As Double = Aggregate into As Double In spot.intensity Into Sum(into)
                 Dim norm_vec As Double() = Multiply.f64_scalar_op_multiply_f64(scale, Divide.f64_op_divide_f64_scalar(spot.intensity, sum_val))
                 Dim norm_spot As New PixelData With {

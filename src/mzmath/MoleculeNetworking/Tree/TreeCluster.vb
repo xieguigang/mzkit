@@ -179,7 +179,7 @@ Public Class TreeCluster
         Dim align As MSScoreGenerator = args.alignment
         Dim c As ClusterTree = Nothing
 
-        For Each part As TreeCluster In Tqdm.Wrap(trees.ToArray, useColor:=True)
+        For Each part As TreeCluster In Tqdm.Wrap(trees.ToArray, useColor:=True, wrap_console:=App.EnableTqdm)
             If part Is Nothing Then
                 Continue For
             End If
