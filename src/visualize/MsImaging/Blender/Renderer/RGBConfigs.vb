@@ -84,6 +84,10 @@ Namespace Blender
             Return json.GetJson
         End Function
 
+        ''' <summary>
+        ''' show rgb ions config data
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Dim rgb As New List(Of String)
 
