@@ -87,6 +87,10 @@ Namespace Spectra
         Sub New()
         End Sub
 
+        Sub New(mz As Double)
+            productMz = mz
+        End Sub
+
         Sub New(annotation As String, mz As Double)
             Me.productMz = mz
             Me.annotation = annotation
