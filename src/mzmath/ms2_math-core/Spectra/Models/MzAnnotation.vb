@@ -70,6 +70,9 @@ Namespace Spectra
     ''' <summary>
     ''' annotation of the m/z value
     ''' </summary>
+    ''' <remarks>
+    ''' could be ctype cast to mz number value
+    ''' </remarks>
     Public Class MzAnnotation : Implements IMzAnnotation
 
         ''' <summary>
