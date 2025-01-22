@@ -59,6 +59,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Blender
@@ -66,7 +67,7 @@ Namespace Blender
     ''' <summary>
     ''' config for the rgb ions
     ''' </summary>
-    Public Class RGBConfigs
+    Public Class RGBConfigs : Implements Enumeration(Of MzAnnotation)
 
         Public Property R As MzAnnotation
         Public Property G As MzAnnotation
@@ -83,6 +84,17 @@ Namespace Blender
             Return json.GetJson
         End Function
 
+        Public Overrides Function ToString() As String
+            Dim rgb As New List(Of String)
+
+            If Not R Is Nothing Then Call rgb.Add($"{R.productMz.ToString("F4")}(red)")
+            If Not G Is Nothing Then Call rgb.Add($"{G.productMz.ToString("F4")}(green)")
+            If Not B Is Nothing Then Call rgb.Add($"{B.productMz.ToString("F4")}(blue)")
+
+            Return rgb.JoinBy("; ")
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ToJson(m As MzAnnotation) As Dictionary(Of String, String)
             Return New Dictionary(Of String, String) From {
                 {"m/z", m.productMz},
@@ -107,6 +119,12 @@ Namespace Blender
                 .annotation = val!annotation,
                 .productMz = Double.Parse(val("m/z"))
             }
+        End Function
+
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of MzAnnotation) Implements Enumeration(Of MzAnnotation).GenericEnumerator
+            If Not R Is Nothing Then Yield R
+            If Not G Is Nothing Then Yield G
+            If Not B Is Nothing Then Yield B
         End Function
     End Class
 End Namespace
