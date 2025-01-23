@@ -184,6 +184,9 @@ Namespace Blender
 
     End Class
 
+    ''' <summary>
+    ''' A single signal channel data spatial reader helper
+    ''' </summary>
     Friend Class PixelChannelRaster
 
         Dim raster As RasterPixel()
@@ -228,6 +231,10 @@ Namespace Blender
 
             If Not ylist.ContainsKey(y) Then
                 Return 0
+            End If
+
+            If intensityRange.Length = 0.0 Then
+                Return 255
             End If
 
             Dim into As Double = ylist.Item(y)
