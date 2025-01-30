@@ -1,65 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::8ad24b7b06fe41956decff761e4208b5, Rscript\Library\mzkit_app\src\mzkit\math\InChITool.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 75
-    '    Code Lines: 24 (32.00%)
-    ' Comment Lines: 44 (58.67%)
-    '    - Xml Docs: 88.64%
-    ' 
-    '   Blank Lines: 7 (9.33%)
-    '     File Size: 3.71 KB
+' Summaries:
 
 
-    ' Module InChITool
-    ' 
-    '     Function: get_formula, get_struct, inchikey, parse_inchi
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 75
+'    Code Lines: 24 (32.00%)
+' Comment Lines: 44 (58.67%)
+'    - Xml Docs: 88.64%
+' 
+'   Blank Lines: 7 (9.33%)
+'     File Size: 3.71 KB
+
+
+' Module InChITool
+' 
+'     Function: get_formula, get_struct, inchikey, parse_inchi
+' 
+' /********************************************************************************/
 
 #End Region
 
 
+Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChI
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF.Models
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp
+Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Interop
 
 ''' <summary>
 ''' InChI (International Chemical Identifier) string parser
@@ -123,9 +127,26 @@ Module InChITool
         Return inchi.GetStruct
     End Function
 
+    ''' <summary>
+    ''' get inchi hash key object from the given inchi object
+    ''' </summary>
+    ''' <param name="inchi"></param>
+    ''' <returns></returns>
     <ExportAPI("inchikey")>
     Public Function inchikey(inchi As InChI) As InChIKey
         Return inchi.InChIKey
+    End Function
+
+    ''' <summary>
+    ''' generates the inchikey hashcode based on the given inchi data
+    ''' </summary>
+    ''' <param name="inchi"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("eval_inchikey")>
+    <RApiReturn(GetType(InChIKey))>
+    Public Function inchikey(<RRawVectorArgument> inchi As Object, Optional env As Environment = Nothing) As Object
+        Return env.EvaluateFramework(Of String, InChIKey)(inchi, eval:=AddressOf IUPAC.InChI.MakeHashCode)
     End Function
 
 End Module
