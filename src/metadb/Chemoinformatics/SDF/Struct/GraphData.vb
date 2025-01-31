@@ -12,23 +12,23 @@ Namespace SDF.Models
 
         <Extension>
         Public Function AsMolecularGraph(Of Node As {New, Network.Node}, Edge As {New, Network.Edge(Of Node)}, G As {New, NetworkGraph(Of Node, Edge)})(mol As [Structure]) As G
-            Dim g As New G
-            Dim id As i32 = 0
-            Dim atom_keys As New List(Of String)
+            Dim graph As New G
 
             For Each atom As Atom In mol.Atoms
-                Call atom_keys.Add($"{atom.Atom}_{atom.Coordination.ToString}_{atom.GetHashCode}")
-                Call g.AddVertex(New Node With {
-                    .ID = ++id,
+                Call graph.AddVertex(New Node With {
+                    .ID = atom.GetHashCode,
                     .label = atom.Atom
                 })
             Next
 
             For Each key As Bound In mol.Bounds
-                Call g.CreateEdge(mol.Atoms(key.i).Atom, mol.Atoms(key.j).Atom, key.Type)
+                Dim key1 = mol.Atoms(key.i).GetHashCode
+                Dim key2 = mol.Atoms(key.j).GetHashCode
+
+                Call graph.CreateEdge(key1, key2, key.Type)
             Next
 
-            Return g
+            Return graph
         End Function
     End Module
 End Namespace
