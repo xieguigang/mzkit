@@ -60,6 +60,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChI
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF.Models
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
@@ -125,6 +126,16 @@ Module InChITool
     <ExportAPI("get_struct")>
     Public Function get_struct(inchi As InChI) As [Structure]
         Return inchi.GetStruct
+    End Function
+
+    ''' <summary>
+    ''' make conversion of molecular structure data to the network graph object
+    ''' </summary>
+    ''' <param name="mol"></param>
+    ''' <returns></returns>
+    <ExportAPI("create_graphdata")>
+    Public Function create_graphdata(mol As [Structure]) As NetworkGraph
+        Return mol.AsMolecularGraph(Of Node, Edge, NetworkGraph)
     End Function
 
     ''' <summary>
