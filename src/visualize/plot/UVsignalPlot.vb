@@ -163,8 +163,8 @@ Public Module UVsignalPlot
             Dim max = data.Select(Function(a) a.pts.Select(Function(b) b.pt.Y).Max).Max
 
             ablines = {
-               New Line(New PointF(rtLine, min), New PointF(rtLine, max), New Pen(Color.Black, 3) With {
-                   .DashStyle = DashStyle.Dash
+               New Line(New PointF(rtLine, min), New PointF(rtLine, max), New Stroke(Color.Black, 3) With {
+                   .dash = DashStyle.Dash
                })
             }
         End If
