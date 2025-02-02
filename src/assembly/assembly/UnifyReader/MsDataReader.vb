@@ -69,6 +69,7 @@ Namespace DataReader
         Public MustOverride Function GetScanTime(scan As Scan) As Double
         Public MustOverride Function GetScanId(scan As Scan) As String
         Public MustOverride Function IsEmpty(scan As Scan) As Boolean
+        Public MustOverride Function GetScanNumber(scan As Scan) As String
 
         ''' <summary>
         ''' get ms1 or ms2 data
