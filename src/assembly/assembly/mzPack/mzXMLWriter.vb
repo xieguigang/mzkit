@@ -281,7 +281,7 @@ Namespace MarkupData.mzXML
 
             ' write multiple stage product scan tree data
             If Not scan.product Is Nothing Then
-                Call writeScan(scan.product, ++scanNum, msLevel + 1)
+                Call writeScan(scan.product, scanNum, msLevel + 1)
             End If
         End Sub
 
