@@ -67,7 +67,7 @@ Imports Microsoft.VisualBasic.ValueTypes
 Namespace mzData.mzWebCache
 
     ''' <summary>
-    ''' MS/MS scan
+    ''' MSn product scan
     ''' </summary>
     Public Class ScanMS2 : Inherits MSScan
         Implements IMs1

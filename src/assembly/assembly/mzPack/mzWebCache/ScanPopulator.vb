@@ -189,7 +189,15 @@ Namespace mzData.mzWebCache
 
                     ms1 = scanVal
                 Else
-                    Call products.Add(scanVal)
+                    Dim isMS2 As Boolean = InStr(scanVal.scan_id, "MS/MS") > 0
+
+                    If isMS2 Then
+                        Call products.Add(scanVal)
+                    ElseIf products.Any Then
+                        products.Last.product = scanVal
+                    Else
+                        Call products.Add(scanVal)
+                    End If
                 End If
 
                 ' adjust to 17 for make progress less verbose
