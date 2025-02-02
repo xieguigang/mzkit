@@ -261,7 +261,7 @@ Public Module mzStreamWriter
                 ' open block function returns a stream
                 ' in readonly!
 
-                Throw New InvalidDataException($"A duplicated scan id({product.scan_id}) was found!")
+                Throw New InvalidDataException($"A duplicated scan id({product.scan_id}) was found! you should make the product scan id unique!")
             Else
                 Dim scan2 As New BinaryDataWriter(blockStream) With {
                     .ByteOrder = ByteOrder.LittleEndian
