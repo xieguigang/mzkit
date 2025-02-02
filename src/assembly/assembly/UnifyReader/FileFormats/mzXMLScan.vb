@@ -92,6 +92,11 @@ Namespace DataReader
             Return scan.peaks Is Nothing OrElse scan.peaks.value.StringEmpty
         End Function
 
+        ''' <summary>
+        ''' try to extract the mass spectrum data from the given data scan
+        ''' </summary>
+        ''' <param name="scan"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetMsMs(scan As scan) As ms2()
             Return scan.peaks _
@@ -123,7 +128,7 @@ Namespace DataReader
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetParentMz(scan As scan) As Double
-            Return scan.precursorMz.value
+            Return scan.GetPrecursorData.value
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -133,12 +138,12 @@ Namespace DataReader
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetCharge(scan As scan) As Integer
-            Return scan.precursorMz.precursorCharge
+            Return scan.GetPrecursorData.precursorCharge
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetActivationMethod(scan As scan) As ActivationMethods
-            Dim method As String = scan.precursorMz.activationMethod
+            Dim method As String = scan.GetPrecursorData.activationMethod
 
             If String.IsNullOrWhiteSpace(method) OrElse method = "" Then
                 Return ActivationMethods.Unknown

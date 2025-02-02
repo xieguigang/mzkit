@@ -195,7 +195,7 @@ Namespace MarkupData.mzXML
                 mzInto = mzInto / mzInto.Max
             End If
 
-            Dim precursorMz As precursorMz = getPrecursorMz()
+            Dim precursorMz As precursorMz = GetPrecursorData()
 
             Return New PeakMs2 With {
                 .mz = precursorMz,
@@ -212,7 +212,11 @@ Namespace MarkupData.mzXML
             }
         End Function
 
-        Private Function getPrecursorMz() As precursorMz
+        ''' <summary>
+        ''' get precursor mz data of current mass spectrum scan data
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetPrecursorData() As precursorMz
             If msLevel <= 1 Then
                 Return Nothing
             ElseIf msLevel = 2 Then
