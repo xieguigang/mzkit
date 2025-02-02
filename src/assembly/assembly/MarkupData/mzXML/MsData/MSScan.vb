@@ -195,6 +195,8 @@ Namespace MarkupData.mzXML
                 mzInto = mzInto / mzInto.Max
             End If
 
+            Dim precursorMz As precursorMz = getPrecursorMz()
+
             Return New PeakMs2 With {
                 .mz = precursorMz,
                 .rt = PeakMs2.RtInSecond(retentionTime),
@@ -205,6 +207,19 @@ Namespace MarkupData.mzXML
                 .collisionEnergy = Val(collisionEnergy),
                 .intensity = precursorMz.precursorIntensity
             }
+        End Function
+
+        Private Function getPrecursorMz() As precursorMz
+            If msLevel <= 1 Then
+                Return Nothing
+            ElseIf msLevel = 2 Then
+                Return _precursorMz(0)
+            Else
+                ' ms3/ms4/ms5/...
+                Return precursorMz _
+                    .Where(Function(a) Val(a.precursorScanNum) > 0) _
+                    .FirstOrDefault
+            End If
         End Function
     End Class
 End Namespace
