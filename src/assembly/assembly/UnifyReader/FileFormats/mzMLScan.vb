@@ -78,11 +78,12 @@ Namespace DataReader
             Dim scanParams = scan.scanList.scans(0).cvParams
             Dim scanType As String = If(scanParams Is Nothing, "?", scanParams.KeyItem("filter string")?.value)
             Dim polarity As String = GetPolarity(scan)
+            Dim msLevel As String = mzXML.msLevels(CInt(Val(scan.ms_level)))
 
             If scan.ms_level = 1 Then
                 Return $"[MS1] {scanType}, ({polarity}) scan_time={(scan.scan_time / 60).ToString("F2")}min,basepeak={GetBPC(scan)},totalIons={GetTIC(scan)}"
             Else
-                Return $"[MS/MS] {scanType}, ({polarity}) M{CInt(scan.selectedIon.mz)}T{CInt(scan.scan_time)}, {scan.selectedIon.mz.ToString("F4")}@{(scan.scan_time / 60).ToString("F2")}min"
+                Return $"[{msLevel}] {scanType}, ({polarity}) M{CInt(scan.selectedIon.mz)}T{CInt(scan.scan_time)}, {scan.selectedIon.mz.ToString("F4")}@{(scan.scan_time / 60).ToString("F2")}min"
             End If
         End Function
 
