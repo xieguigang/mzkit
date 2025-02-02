@@ -210,30 +210,7 @@ Public Module mzStreamWriter
 
             ' save all ms2 level spectrum in current ms1 spectrum node into file
             For Each product As ScanMS2 In ms1.products.SafeQuery
-                Using blockStream As Stream = pack.OpenBlock($"{dir}/{product.scan_id.MD5}.mz")
-                    If TypeOf blockStream Is SubStream Then
-                        ' 20230210
-                        '
-                        ' has duplicated scan id will cause the
-                        ' open block function returns a stream
-                        ' in readonly!
-
-                        Throw New InvalidDataException($"A duplicated scan id({product.scan_id}) was found!")
-                    Else
-                        Dim scan2 As New BinaryDataWriter(blockStream) With {
-                            .ByteOrder = ByteOrder.LittleEndian
-                        }
-
-                        Call product.WriteBuffer(scan2)
-                        Call scan2.Flush()
-
-                        ' do not close the writer at here
-                        ' or the exception of can not access to
-                        ' a closed stream will be happended
-                        '
-                        ' Call scan2.Close()
-                    End If
-                End Using
+                Call WriteMultipleStageProductTree(pack, product, relpath:=New String() {dir, $"{product.scan_id.MD5}.mz"})
 
                 ' 20241227 mzpack v2.1 upgrade
                 ' save ms2 spectrum peak annotation data file
@@ -273,6 +250,42 @@ Public Module mzStreamWriter
         Call index.Add(NameOf(mzmax), mzmax)
         Call index.Add(NameOf(rtmin), rtmin)
         Call index.Add(NameOf(rtmax), rtmax)
+    End Sub
+
+    Private Sub WriteMultipleStageProductTree(pack As StreamPack, product As ScanMS2, relpath As String())
+        Using blockStream As Stream = pack.OpenBlock(relpath.JoinBy("/"))
+            If TypeOf blockStream Is SubStream Then
+                ' 20230210
+                '
+                ' has duplicated scan id will cause the
+                ' open block function returns a stream
+                ' in readonly!
+
+                Throw New InvalidDataException($"A duplicated scan id({product.scan_id}) was found!")
+            Else
+                Dim scan2 As New BinaryDataWriter(blockStream) With {
+                    .ByteOrder = ByteOrder.LittleEndian
+                }
+
+                Call product.WriteBuffer(scan2)
+                Call scan2.Flush()
+
+                ' do not close the writer at here
+                ' or the exception of can not access to
+                ' a closed stream will be happended
+                '
+                ' Call scan2.Close()
+                If Not product.product Is Nothing Then
+                    Call WriteMultipleStageProductTree(
+                        pack:=pack,
+                        product:=product.product,
+                        relpath:=relpath _
+                            .Take(relpath.Length - 1) _
+                            .JoinIterates(New String() {"products", $"{product.scan_id.MD5}.mz"}) _
+                            .ToArray)
+                End If
+            End If
+        End Using
     End Sub
 
     ''' <summary>
