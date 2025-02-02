@@ -205,7 +205,10 @@ Namespace MarkupData.mzXML
                 .mzInto = mzInto.Array,
                 .activation = precursorMz.activationMethod Or ms1,
                 .collisionEnergy = Val(collisionEnergy),
-                .intensity = precursorMz.precursorIntensity
+                .intensity = precursorMz.precursorIntensity,
+                .meta = New Dictionary(Of String, String) From {
+                    {NameOf(precursorMz.precursorScanNum), precursorMz.precursorScanNum}
+                }
             }
         End Function
 
