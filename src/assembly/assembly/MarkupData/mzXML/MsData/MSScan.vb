@@ -122,7 +122,20 @@ Namespace MarkupData.mzXML
         <XmlAttribute> Public Property highMz As Double
         <XmlAttribute> Public Property msInstrumentID As String
 
-        Public Property precursorMz As precursorMz
+        ''' <summary>
+        ''' the precursor mz data
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' + for ms1 level scan data has no precursor mz data;
+        ''' + for ms2 level scan data has one precursor mz data, reference to the ms1 ion
+        ''' + for ms3 level scan data has two precursor mz data, one reference to the precursor 
+        '''   of the ms2 scan data and another reference to the fragment peak in ms2 spectrum
+        '''   as the true precursor of the ms3 spectrum.
+        ''' </remarks>
+        <XmlElement>
+        Public Property precursorMz As precursorMz()
+
         Public Property peaks As peaks
 
         ''' <summary>
