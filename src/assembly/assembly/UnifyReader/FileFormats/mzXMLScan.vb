@@ -64,6 +64,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace DataReader
 
+    ''' <summary>
+    ''' the mass spectrum data reader for mzXML file format
+    ''' </summary>
     Public Class mzXMLScan : Inherits MsDataReader(Of scan)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -87,6 +87,12 @@ Namespace mzData.mzWebCache
         Public Property collisionEnergy As Double Implements ISpectrumScanData.CollisionEnergy
         Public Property centroided As Boolean
 
+        ''' <summary>
+        ''' the ms3/ms4/... product scan data
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property product As ScanMS2
+
         Public Overrides Function ToString() As String
             Return MyBase.ToString() & " - " & DateTimeHelper.ReadableElapsedTime(rt * 1000)
         End Function
