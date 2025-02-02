@@ -173,7 +173,7 @@ Namespace mzData.mzWebCache
         Public Iterator Function Load(scans As IEnumerable(Of Scan), Optional progress As Action(Of String) = Nothing) As IEnumerable(Of ScanMS1)
             Dim i As i32 = 1
             Dim ms1Yields As Integer = 0
-            Dim lastProduct As ScanMS2
+            Dim lastProduct As ScanMS2 = Nothing
 
             For Each scan As Scan In PopulateValidScans(scans)
                 Dim scanVal As MSScan = CreateScan(scan, ++i)
@@ -193,8 +193,6 @@ Namespace mzData.mzWebCache
                 Else
                     Dim isMS2 As Boolean = InStr(scanVal.scan_id, "MS/MS") > 0
 
-                    lastProduct = scanVal
-
                     If isMS2 Then
                         Call products.Add(scanVal)
                     ElseIf Not lastProduct Is Nothing Then
@@ -202,6 +200,8 @@ Namespace mzData.mzWebCache
                     Else
                         Call products.Add(scanVal)
                     End If
+
+                    lastProduct = scanVal
                 End If
 
                 ' adjust to 17 for make progress less verbose
