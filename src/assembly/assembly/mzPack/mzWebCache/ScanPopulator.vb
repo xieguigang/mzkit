@@ -64,6 +64,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language
@@ -199,6 +200,7 @@ Namespace mzData.mzWebCache
                         lastProduct(parent_id).product = scanVal
                     Else
                         Call products.Add(scanVal)
+                        Call $"missing precursor scan of number({parent_id}) for {scanVal.scan_id}".Warning
                     End If
 
                     Call lastProduct.Add(parent_id, scanVal)
