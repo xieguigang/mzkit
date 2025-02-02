@@ -126,9 +126,16 @@ Namespace MarkupData.mzXML
             Return (name, peaks)
         End Function
 
+        Public ReadOnly msLevels As IReadOnlyCollection(Of String) = {
+            "Unknown", ' = 0
+            "MS1",     ' = 1
+            "MS/MS",   ' = 2
+            "MS3"      ' = 3
+        }
+
         <Extension>
         Public Function getName(scan As scan) As String
-            Dim level$ = If(scan.msLevel = 1, "MS1", "MS/MS")
+            Dim level$ = Extensions.msLevels(scan.msLevel)
             Dim empty As Boolean =
                 scan.scanType.StringEmpty AndAlso
                 scan.polarity.StringEmpty AndAlso
@@ -139,11 +146,12 @@ Namespace MarkupData.mzXML
             End If
 
             Dim rt As Double = PeakMs2.RtInSecond(scan.retentionTime)
+            Dim precursorMz As Double = scan.GetPrecursorData
 
             If scan.msLevel = 1 Then
                 Return $"[{level}] {scan.scanType} scan_{(rt / 60).ToString("F2")}min, ({scan.polarity}) basepeak_m/z={scan.basePeakMz.ToString("F4")},totalIons={scan.totIonCurrent}"
             Else
-                Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) M{CInt(scan.precursorMz.value)}T{CInt(rt)}, {scan.precursorMz.value.ToString("F4")}@{(rt / 60).ToString("F2")}min"
+                Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) M{CInt(precursorMz)}T{CInt(rt)}, {precursorMz.ToString("F4")}@{(rt / 60).ToString("F2")}min"
             End If
         End Function
 
