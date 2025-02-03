@@ -168,5 +168,18 @@ Namespace DataReader
         Public Overrides Function GetScanNumber(scan As scan) As String
             Return scan.num
         End Function
+
+        Public Overrides Function GetParentScanNumber(scan As scan) As String
+            Dim precursor = scan.precursorMz
+
+            If precursor.IsNullOrEmpty Then
+                Return ""
+            Else
+                Return precursor _
+                    .Where(Function(a) Not a.precursorScanNum.StringEmpty(, True)) _
+                    .FirstOrDefault _
+                    .precursorScanNum
+            End If
+        End Function
     End Class
 End Namespace

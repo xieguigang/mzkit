@@ -181,6 +181,10 @@ Namespace DataReader
         End Function
 
         Public Overrides Function GetScanNumber(scan As spectrum) As String
+            Return scan.index
+        End Function
+
+        Public Overrides Function GetParentScanNumber(scan As spectrum) As String
             Throw New NotImplementedException()
         End Function
     End Class

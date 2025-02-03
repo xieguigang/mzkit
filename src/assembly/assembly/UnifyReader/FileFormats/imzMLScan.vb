@@ -120,5 +120,9 @@ Namespace DataReader
         Public Overrides Function GetScanNumber(scan As ScanReader) As String
             Throw New NotImplementedException()
         End Function
+
+        Public Overrides Function GetParentScanNumber(scan As ScanReader) As String
+            Throw New NotImplementedException()
+        End Function
     End Class
 End Namespace
