@@ -192,7 +192,7 @@ Namespace mzData.mzWebCache
                     ms1 = scanVal
                 Else
                     Dim isMS2 As Boolean = InStr(scanVal.scan_id, "MS/MS") > 0
-                    Dim parent_id As String = reader.GetScanNumber(scan)
+                    Dim parent_id As String = reader.GetParentScanNumber(scan)
 
                     If isMS2 Then
                         Call products.Add(scanVal)
@@ -203,7 +203,7 @@ Namespace mzData.mzWebCache
                         Call $"missing precursor scan of number({parent_id}) for {scanVal.scan_id}".Warning
                     End If
 
-                    Call lastProduct.Add(parent_id, scanVal)
+                    Call lastProduct.Add(reader.GetScanNumber(scan), scanVal)
                 End If
 
                 ' adjust to 17 for make progress less verbose
