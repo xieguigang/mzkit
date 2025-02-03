@@ -163,5 +163,10 @@ Namespace DataReader
         Public Overrides Function GetCentroided(scan As scan) As Boolean
             Return scan.centroided = "1"
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function GetScanNumber(scan As scan) As String
+            Return scan.num
+        End Function
     End Class
 End Namespace

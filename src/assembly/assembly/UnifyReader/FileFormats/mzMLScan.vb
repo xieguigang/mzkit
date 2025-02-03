@@ -179,5 +179,9 @@ Namespace DataReader
         Public Overrides Function GetCentroided(scan As spectrum) As Boolean
             Return Not scan.profile
         End Function
+
+        Public Overrides Function GetScanNumber(scan As spectrum) As String
+            Throw New NotImplementedException()
+        End Function
     End Class
 End Namespace
