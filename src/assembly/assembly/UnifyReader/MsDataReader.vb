@@ -64,12 +64,31 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace DataReader
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="Scan"></typeparam>
+    ''' <remarks>
+    ''' the scan number and parent scan number is used for create the multiple stage product tree of the mass spectrum data.
+    ''' </remarks>
     Public MustInherit Class MsDataReader(Of Scan) : Implements IDataReader, ISpectrumReader(Of Scan)
 
         Public MustOverride Function GetScanTime(scan As Scan) As Double
         Public MustOverride Function GetScanId(scan As Scan) As String
         Public MustOverride Function IsEmpty(scan As Scan) As Boolean
+
+        ''' <summary>
+        ''' get the scan number of current scan data
+        ''' </summary>
+        ''' <param name="scan"></param>
+        ''' <returns></returns>
         Public MustOverride Function GetScanNumber(scan As Scan) As String
+        ''' <summary>
+        ''' get the scan number of parent scan data
+        ''' </summary>
+        ''' <param name="scan"></param>
+        ''' <returns></returns>
+        Public MustOverride Function GetParentScanNumber(scan As Scan) As String
 
         ''' <summary>
         ''' get ms1 or ms2 data
