@@ -135,13 +135,24 @@ Public Class RawScatterPlot : Inherits Plot
             .Select(Function(c) c.ToHtmlColor) _
             .ToArray
         ' 20250204 data has already been filter by intensity > 0
-        Dim points As PointData() = (From compound As ms1_scan
-                                     In samples
-                                     Select New PointData() With {
-                                         .pt = New PointF(compound.scan_time, compound.mz),
-                                         .value = std.Log(compound.intensity)
-                                     }) _
-           .ToArray
+        Dim points As PointData() = New PointData(samples.Length - 1) {}
+        ' (From compound As ms1_scan
+        '  In samples
+        '  Select New PointData() With {
+        '     .pt = New PointF(compound.scan_time, compound.mz),
+        '     .value = std.Log(compound.intensity)
+        '  }) _
+        '.ToArray
+
+        ' 20250204 there is a bug about linq expression
+        ' processing of the large array
+        For i As Integer = 0 To samples.Length - 1
+            points(i) = New PointData() With {
+                .pt = New PointF(samples(i).scan_time, samples(i).mz),
+                .value = std.Log(samples(i).intensity)
+            }
+        Next
+
         Dim serials As New SerialData With {
             .title = rawfile,
             .pts = points,
