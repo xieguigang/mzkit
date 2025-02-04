@@ -112,7 +112,7 @@ Namespace mzData.mzWebCache
         ''' </summary>
         Dim level As Integer
 
-        Const metaheader_offset As Integer = 128 + 1 + 4 + 4 + 4 + 8 + 1024
+        Const metaheader_offset As Integer = 128 + 4 + 4 + 4 + 4 + 8 + 1024
 
         Sub New(file As String)
             Call Me.New(file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
@@ -126,13 +126,13 @@ Namespace mzData.mzWebCache
             Me.file.Write(Magic, BinaryStringFormat.NoPrefixOrTermination)
 
             ' 20250204
-            ' 128 + 1 + 4 + 4 + 4 + 8 + 1024
+            ' 128 + 4 + 4 + 4 + 4 + 8 + 1024
 
             ' placeholder for source name
             ' 128 bytes max length
             Me.file.Write(New Byte(127) {})
             ' write application tag data placeholder
-            Me.file.Write(CByte(0))
+            Me.file.Write(0)
 
             ' write version data
             Me.file.Write({ver.Major, ver.Minor, ver.Build})

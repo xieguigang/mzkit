@@ -117,6 +117,7 @@ Namespace mzData.mzWebCache
         End Property
 
         Public ReadOnly Property filepath As String
+        Public ReadOnly Property application As FileApplicationClass
 
         ''' <summary>
         ''' the source file
@@ -190,7 +191,7 @@ Namespace mzData.mzWebCache
             Dim scanPos As Long
             Dim scanId As String
             Dim sourcedata As Byte() = file.ReadBytes(128)
-            Dim app = file.ReadByte
+            Dim app = file.ReadInt32
             Dim version As Integer() = file.ReadInt32s(3)
             Dim [date] As Date = DateTimeHelper.FromUnixTimeStamp(file.ReadDouble)
             Dim descdata As Byte() = file.ReadBytes(1024)
@@ -207,6 +208,9 @@ Namespace mzData.mzWebCache
             End If
 
             source_str = Strings.Len(Encoding.ASCII.GetString(sourcedata))
+
+            ' 20250204 lcms/gcms?
+            _application = CType(app, FileApplicationClass)
 
             ' the first 32 Bytes is the summary of the MS1
             ' data which is followd the magic header
@@ -373,7 +377,7 @@ Namespace mzData.mzWebCache
 
         Private Iterator Function populateMs2Products(nsize As Integer) As IEnumerable(Of ScanMS2)
             For i As Integer = 0 To nsize - 1
-                Yield file.ReadScanMs2
+                Yield file.ReadScanMs2(level)
             Next
         End Function
 
