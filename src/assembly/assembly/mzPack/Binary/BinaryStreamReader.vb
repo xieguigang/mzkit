@@ -125,6 +125,8 @@ Namespace mzData.mzWebCache
             End Get
         End Property
 
+        Dim level As Integer = 1
+
         ''' <summary>
         ''' 以只读的形式打开文件
         ''' </summary>

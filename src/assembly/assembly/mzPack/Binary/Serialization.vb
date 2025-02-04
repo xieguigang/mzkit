@@ -163,6 +163,11 @@ Namespace mzData.mzWebCache
             ms2.mz = file.ReadDoubles(productSize)
             ms2.into = file.ReadDoubles(productSize)
 
+            ' 20250204 read multiple stage product tree data
+            If file.ReadInt32 > 0 Then
+                ms2.product = ReadScanMs2(file)
+            End If
+
             Return ms2
         End Function
     End Module
