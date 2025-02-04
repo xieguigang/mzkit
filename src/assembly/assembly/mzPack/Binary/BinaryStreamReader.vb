@@ -66,6 +66,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
@@ -85,6 +86,7 @@ Namespace mzData.mzWebCache
         ''' </summary>
         Dim index As New Dictionary(Of String, Long)
         Dim metadata As New Dictionary(Of String, Dictionary(Of String, String))
+        Dim source_str As String
 
         Protected file As BinaryDataReader
         Protected MSscannerIndex As BufferRegion
@@ -116,8 +118,16 @@ Namespace mzData.mzWebCache
 
         Public ReadOnly Property filepath As String
 
+        ''' <summary>
+        ''' the source file
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property source As String Implements IMzPackReader.source
             Get
+                If Not source_str.StringEmpty() Then
+                    Return source_str
+                End If
+
                 If filepath.StringEmpty Then
                     Return "n/a"
                 Else
@@ -186,6 +196,17 @@ Namespace mzData.mzWebCache
             Dim descdata As Byte() = file.ReadBytes(1024)
             Dim range As Double() = file.ReadDoubles(4)
             Dim start As Long
+            Dim levels As New System.Version(version(0), version(1), version(2))
+
+            If levels = BinaryStreamWriter.version Then
+                level = 1
+            ElseIf levels = BinaryStreamWriter.version2025 Then
+                level = 2
+            Else
+                Throw New NotImplementedException($"unknown mzpack version levels tag: {levels.ToString}!")
+            End If
+
+            source_str = Strings.Len(Encoding.ASCII.GetString(sourcedata))
 
             ' the first 32 Bytes is the summary of the MS1
             ' data which is followd the magic header
