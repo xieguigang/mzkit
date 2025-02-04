@@ -112,6 +112,8 @@ Namespace mzData.mzWebCache
         ''' </summary>
         Dim level As Integer
 
+        Const metaheader_offset As Integer = 128 + 1 + 4 + 4 + 4 + 8 + 1024
+
         Sub New(file As String)
             Call Me.New(file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
         End Sub
@@ -122,6 +124,9 @@ Namespace mzData.mzWebCache
             Me.level = level
             Me.file = New BinaryDataWriter(file, encoding:=Encodings.ASCII)
             Me.file.Write(Magic, BinaryStringFormat.NoPrefixOrTermination)
+
+            ' 20250204
+            ' 128 + 1 + 4 + 4 + 4 + 8 + 1024
 
             ' placeholder for source name
             ' 128 bytes max length
@@ -240,7 +245,7 @@ Namespace mzData.mzWebCache
 
             indexPos = file.Position
 
-            file.Seek(Magic.Length, SeekOrigin.Begin)
+            file.Seek(Magic.Length + metaheader_offset, SeekOrigin.Begin)
             file.Write({mzmin, mzmax, rtmin, rtmax})
             file.Write(indexPos)
             file.Seek(indexPos, SeekOrigin.Begin)
