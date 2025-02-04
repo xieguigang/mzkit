@@ -75,7 +75,6 @@ Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports std = System.Math
 Imports Microsoft.VisualBasic.Linq
 
-
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
 Imports Pens = System.Drawing.Pens
