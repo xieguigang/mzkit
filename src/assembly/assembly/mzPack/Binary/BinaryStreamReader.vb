@@ -69,6 +69,7 @@ Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.ValueTypes
 
 Namespace mzData.mzWebCache
 
@@ -151,7 +152,7 @@ Namespace mzData.mzWebCache
             End If
 
             If Not Me.VerifyMagicSignature(Me.file) Then
-                Throw New InvalidProgramException("invalid magic header!")
+                Throw New InvalidProgramException("invalid magic header of the version 1 mzpack data file!")
             Else
                 Call loadIndex()
             End If
@@ -174,9 +175,15 @@ Namespace mzData.mzWebCache
         ''' load MS scanner index
         ''' </summary>
         Protected Overridable Sub loadIndex()
+            Dim magicSize = BinaryStreamWriter.Magic.Length
             Dim nsize As Integer
             Dim scanPos As Long
             Dim scanId As String
+            Dim sourcedata As Byte() = file.ReadBytes(128)
+            Dim app = file.ReadByte
+            Dim version As Integer() = file.ReadInt32s(3)
+            Dim [date] As Date = DateTimeHelper.FromUnixTimeStamp(file.ReadDouble)
+            Dim descdata As Byte() = file.ReadBytes(1024)
             Dim range As Double() = file.ReadDoubles(4)
             Dim start As Long
 
