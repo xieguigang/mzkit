@@ -62,6 +62,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.ValueTypes
 
 Namespace mzData.mzWebCache
@@ -92,6 +93,24 @@ Namespace mzData.mzWebCache
         ''' </summary>
         ''' <returns></returns>
         Public Property product As ScanMS2
+
+        Public Overloads Function GetMs(loadProductTree As Boolean, MSn As Integer) As IEnumerable(Of ms2)
+            If Not loadProductTree Then
+                Return Me.GetMs
+            ElseIf product Is Nothing Then
+                Return Me.GetMs
+            Else
+                Dim products = product.GetMs(True, MSn + 1).ToArray
+
+                If MSn > 2 Then
+                    products = products _
+                        .JoinIterates(Me.GetMs.UnifyTag($"MS{MSn},precursorMz={product.parentMz}")) _
+                        .ToArray
+                End If
+
+                Return products
+            End If
+        End Function
 
         Public Overrides Function ToString() As String
             Return MyBase.ToString() & " - " & DateTimeHelper.ReadableElapsedTime(rt * 1000)

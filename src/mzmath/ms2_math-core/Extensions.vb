@@ -63,7 +63,23 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports std = System.Math
 
+''' <summary>
+''' Some common helper function for the mass spectrum data
+''' </summary>
 <HideModuleName> Public Module Extensions
+
+    <Extension>
+    Public Iterator Function UnifyTag(source As IEnumerable(Of ms2), tag As String) As IEnumerable(Of ms2)
+        For Each f As ms2 In source
+            If f.Annotation.StringEmpty(, True) Then
+                f.Annotation = tag
+            Else
+                f.Annotation = f.Annotation & $"; [{tag}]"
+            End If
+
+            Yield f
+        Next
+    End Function
 
     <Extension>
     Public Function CreateMzIndex(mzSet As Double(),
