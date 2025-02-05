@@ -99,16 +99,16 @@ Namespace mzData.mzWebCache
                 Return Me.GetMs
             ElseIf product Is Nothing Then
                 If MSn > 2 Then
-                    Return Me.GetMs.Normalize.UnifyTag($"MS{MSn},precursor_m/z={parentMz.ToString("F3")}")
+                    Return Me.GetMs.Normalize(1 / MSn).UnifyTag($"MS{MSn},precursor_m/z={parentMz.ToString("F3")}")
                 Else
-                    Return Me.GetMs.Normalize
+                    Return Me.GetMs.Normalize(1 / MSn)
                 End If
             Else
                 Dim products As ms2() = product _
                     .GetMs(True, MSn + 1) _
                     .ToArray
 
-                Return Me.GetMs.Normalize.JoinIterates(products)
+                Return Me.GetMs.Normalize(1 / MSn).JoinIterates(products)
             End If
         End Function
 

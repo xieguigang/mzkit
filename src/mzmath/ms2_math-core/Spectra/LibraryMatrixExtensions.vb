@@ -75,7 +75,7 @@ Namespace Spectra
     Public Module LibraryMatrixExtensions
 
         <Extension>
-        Public Iterator Function Normalize(ms As IEnumerable(Of ms2)) As IEnumerable(Of ms2)
+        Public Iterator Function Normalize(ms As IEnumerable(Of ms2), Optional scale As Double? = Nothing) As IEnumerable(Of ms2)
             If ms Is Nothing Then
                 Return
             End If
@@ -93,11 +93,21 @@ Namespace Spectra
                 Return
             End If
 
-            For Each mzi As ms2 In pool
-                Yield New ms2(mzi) With {
-                    .intensity = mzi.intensity / max
-                }
-            Next
+            If scale IsNot Nothing Then
+                Dim factor As Double = CDbl(scale)
+
+                For Each mzi As ms2 In pool
+                    Yield New ms2(mzi) With {
+                        .intensity = mzi.intensity / max * factor
+                    }
+                Next
+            Else
+                For Each mzi As ms2 In pool
+                    Yield New ms2(mzi) With {
+                        .intensity = mzi.intensity / max
+                    }
+                Next
+            End If
         End Function
 
         ''' <summary>
