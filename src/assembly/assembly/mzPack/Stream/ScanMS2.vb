@@ -104,8 +104,11 @@ Namespace mzData.mzWebCache
                     Return Me.GetMs
                 End If
             Else
-                Dim products = product.GetMs(True, MSn + 1).ToArray
-                Return products
+                Dim products As ms2() = product _
+                    .GetMs(True, MSn + 1) _
+                    .ToArray
+
+                Return Me.GetMs.JoinIterates(products)
             End If
         End Function
 
