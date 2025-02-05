@@ -116,6 +116,10 @@ Namespace Spectra
             Me.intensity = intensity
         End Sub
 
+        ''' <summary>
+        ''' makes peak data copy
+        ''' </summary>
+        ''' <param name="peak"></param>
         Sub New(peak As IMs1Scan)
             Me.mz = peak.mz
             Me.intensity = peak.intensity
