@@ -125,6 +125,16 @@ Namespace Spectra
             Me.intensity = peak.intensity
         End Sub
 
+        ''' <summary>
+        ''' make value copy
+        ''' </summary>
+        ''' <param name="data"></param>
+        Sub New(data As ms2)
+            mz = data.mz
+            intensity = data.intensity
+            Annotation = data.Annotation
+        End Sub
+
         Public Overrides Function ToString() As String
             Dim mzinto As String
 

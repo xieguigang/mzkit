@@ -95,8 +95,7 @@ Namespace Spectra
 
             For Each mzi As ms2 In pool
                 Yield New ms2(mzi) With {
-                    .intensity = mzi.intensity / max,
-                    .Annotation = mzi.Annotation
+                    .intensity = mzi.intensity / max
                 }
             Next
         End Function
