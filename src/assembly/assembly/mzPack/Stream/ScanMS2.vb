@@ -98,16 +98,13 @@ Namespace mzData.mzWebCache
             If Not loadProductTree Then
                 Return Me.GetMs
             ElseIf product Is Nothing Then
-                Return Me.GetMs
+                If MSn > 2 Then
+                    Return Me.GetMs.UnifyTag($"MS{MSn},precursor_m/z={parentMz.ToString("F3")}")
+                Else
+                    Return Me.GetMs
+                End If
             Else
                 Dim products = product.GetMs(True, MSn + 1).ToArray
-
-                If MSn > 2 Then
-                    products = products _
-                        .JoinIterates(Me.GetMs.UnifyTag($"MS{MSn},precursorMz={product.parentMz}")) _
-                        .ToArray
-                End If
-
                 Return products
             End If
         End Function
