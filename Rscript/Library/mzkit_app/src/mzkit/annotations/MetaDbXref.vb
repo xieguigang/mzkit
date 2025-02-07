@@ -110,7 +110,7 @@ Module MetaDbXref
             {NameOf(MzQuery.name), query.Select(Function(q) q.name).ToArray},
             {NameOf(MzQuery.mz), query.Select(Function(q) q.mz).ToArray},
             {NameOf(MzQuery.ppm), query.Select(Function(q) q.ppm).ToArray},
-            {NameOf(MzQuery.precursorType), query.Select(Function(q) q.precursorType).ToArray},
+            {NameOf(MzQuery.precursor_type), query.Select(Function(q) q.precursor_type).ToArray},
             {NameOf(MzQuery.score), query.Select(Function(q) q.score).ToArray}
         }
 
@@ -540,7 +540,7 @@ Module MetaDbXref
                 .mz_ref = evalMz,
                 .name = exactMass.ToString("F4"),
                 .ppm = minPpm,
-                .precursorType = matchType.ToString,
+                .precursor_type = matchType.ToString,
                 .score = 1,
                 .unique_id = If(matchId, .name)
             }
@@ -990,7 +990,7 @@ Module MetaDbXref
                 {"m/z", mzqueries.getVector(Function(i) i.Value.mz)},
                 {"theoretical_mz", mzqueries.getVector(Function(i) i.Value.mz_ref)},
                 {"ppm", mzqueries.getVector(Function(i) i.Value.ppm)},
-                {"precursor_type", mzqueries.getVector(Function(i) i.Value.precursorType)},
+                {"precursor_type", mzqueries.getVector(Function(i) i.Value.precursor_type)},
                 {"unique_id", mzqueries.getVector(Function(i) i.Value.unique_id)},
                 {"name", mzqueries.getVector(Function(i) i.Value.name)},
                 {"score", mzqueries.getVector(Function(i) i.Value.score)}
@@ -1074,7 +1074,7 @@ Module MetaDbXref
                             .mz_ref = mz(i),
                             .name = name(i),
                             .ppm = ppm(i),
-                            .precursorType = precursorType(i),
+                            .precursor_type = precursorType(i),
                             .score = score(i)
                         }
                     End Function) _
