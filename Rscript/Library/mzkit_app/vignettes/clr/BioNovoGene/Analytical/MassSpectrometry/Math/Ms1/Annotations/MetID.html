@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        <p>the ion annotation model</p>
 
         <h3>Declare</h3>        
 
@@ -33,7 +33,9 @@ export class MetID {
    intensity: double;
    # the source <code>m/z</code> value of current annotated ion feature.
    mz: double;
+   # the metabolite name of current ion that annotated.
    name: string;
+   # the ion adducts of this ion precursor
    precursor_type: string;
    rt: double;
    # the unique id of the target query result metabolite

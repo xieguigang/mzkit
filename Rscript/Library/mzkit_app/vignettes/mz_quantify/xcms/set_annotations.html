@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>cast the given dataframe as the ion feature annotation result</title>
+    <title>set annotation to the ion features</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>load_asQueryHits {metadb}</td>
+                <td>set_annotations {xcms}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>cast the given dataframe as the ion feature annotation result</h2>
+        <h2>set annotation to the ion features</h2>
 
         <h3>Description</h3>
 
@@ -27,22 +27,24 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>load_asQueryHits</strong>(<i>x</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>set_annotations</strong>(<i>peaktable</i>, <i>id</i>, <i>annotation</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>x</dt>
-<dd><p>a dataframe of the ion annotation data that required of the data fields:
- 
- 1. unique_id: metabolite reference id
- 2. name: metabolite name
- 3. mz: target ion feature m/z value
- 4. ppm: the ppm error between the sample m/z and evaluated mz valuefrom the exact mass
- 5. adducts: ion feature adducts type for the annotation
- 6. score: the ion annotation score for the result. [as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Internal/Object/dataframe.html">dataframe</a>]</p></dd>
+<dt>peaktable</dt>
+<dd><p>[as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a>]</p></dd>
+
+
+<dt>id</dt>
+<dd><p>should be a character vector of the ion reference id</p></dd>
+
+
+<dt>annotation</dt>
+<dd><p>should be a collection of the metabolite annotation model <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/Annotations/MetID.html">MetID</a>, 
+ size of this collection should be equals to the size of the given id vector.</p></dd>
 
 
 <dt>env</dt>
@@ -61,15 +63,15 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/MzQuery.html">MzQuery[]</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/MzQuery.html">MzQuery[]</a></li></ul>
+        this function returns data object of type <i>any</i> kind.<h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
 
         <h3 style="display: none;">Examples</h3>
 
         
 
         <hr />
-        <div style="text-align: center;">[Package <em>metadb</em> version 1.0.0.0 <a
-                href="../metadb.html">Index</a>]
+        <div style="text-align: center;">[Package <em>xcms</em> version 1.0.0.0 <a
+                href="../xcms.html">Index</a>]
         </div>
     </div>
 </body>

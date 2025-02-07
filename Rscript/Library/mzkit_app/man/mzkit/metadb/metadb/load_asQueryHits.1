@@ -1,10 +1,30 @@
 .\" man page create by R# package system.
 .TH METADB 1 2000-Jan "load_asQueryHits" "load_asQueryHits"
 .SH NAME
-load_asQueryHits \- 
+load_asQueryHits \- cast the given dataframe as the ion feature annotation result
 .SH SYNOPSIS
 \fIload_asQueryHits(\fBx\fR as <generic> dataframe, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+cast the given dataframe as the ion feature annotation result
+.PP
+.SH OPTIONS
+.PP
+\fBx\fB \fR\- 
+ a dataframe of the ion annotation data that required of the data fields:
+ 
+ 1. unique_id: metabolite reference id
+ 2. name: metabolite name
+ 3. mz: target ion feature m/z value
+ 4. ppm: the ppm error between the sample m/z and evaluated mz valuefrom the exact mass
+ 5. adducts: ion feature adducts type for the annotation
+ 6. score: the ion annotation score for the result.
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
 .SH SEE ALSO
 metadb
 .SH FILES
