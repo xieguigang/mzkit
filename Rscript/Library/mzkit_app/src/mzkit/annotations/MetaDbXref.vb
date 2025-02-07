@@ -1056,14 +1056,29 @@ Module MetaDbXref
         End If
     End Function
 
+    ''' <summary>
+    ''' cast the given dataframe as the ion feature annotation result
+    ''' </summary>
+    ''' <param name="x">
+    ''' a dataframe of the ion annotation data that required of the data fields:
+    ''' 
+    ''' 1. unique_id: metabolite reference id
+    ''' 2. name: metabolite name
+    ''' 3. mz: target ion feature m/z value
+    ''' 4. ppm: the ppm error between the sample m/z and evaluated mz valuefrom the exact mass
+    ''' 5. adducts: ion feature adducts type for the annotation
+    ''' 6. score: the ion annotation score for the result.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("load_asQueryHits")>
     Public Function loadQueryHits(x As dataframe, Optional env As Environment = Nothing) As MzQuery()
         'unique_id,name,mz,ppm,precursorType,score
-        Dim unique_id As String() = CLRVector.asCharacter(x.getColumnVector("unique_id"))
+        Dim unique_id As String() = CLRVector.asCharacter(x.getBySynonym("", "id", "ID", "unique_id"))
         Dim name As String() = CLRVector.asCharacter(x.getColumnVector("name"))
         Dim mz As Double() = CLRVector.asNumeric(x.getColumnVector("mz"))
         Dim ppm As Double() = CLRVector.asNumeric(x.getColumnVector("ppm"))
-        Dim precursorType As String() = CLRVector.asCharacter(x.getColumnVector("precursorType"))
+        Dim precursorType As String() = CLRVector.asCharacter(x.getBySynonym("adducts", "precursor_type", "precursorType"))
         Dim score As Double() = CLRVector.asNumeric(x.getColumnVector("score"))
 
         Return unique_id _
