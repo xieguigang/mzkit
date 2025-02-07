@@ -108,6 +108,13 @@ Public Class PeakSet : Implements Enumeration(Of xcms2)
         End Get
     End Property
 
+    ''' <summary>
+    ''' annotation of the part of the <see cref="peaks"/>
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' the hash key of the dictionary is the <see cref="xcms2.ID"/>.
+    ''' </remarks>
     Public Property annotations As Dictionary(Of String, MetID)
 
     Public Sub New()
