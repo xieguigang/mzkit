@@ -247,7 +247,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
 
             Yield New MzQuery With {
                 .unique_id = cpd.Identity,
-                .precursorType = minppm.type.ToString,
+                .precursor_type = minppm.type.ToString,
                 .mz = mz,
                 .ppm = minppm.Item3,
                 .name = cpd.CommonName,
