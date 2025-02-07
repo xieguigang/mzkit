@@ -165,6 +165,7 @@ Module xcms
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("set_annotations")>
+    <RApiReturn(GetType(PeakSet))>
     Public Function setAnnotations(peaktable As PeakSet,
                                    <RRawVectorArgument> id As Object,
                                    <RRawVectorArgument> annotation As Object,
@@ -174,6 +175,10 @@ Module xcms
         Dim metid As pipeline = pipeline.TryCreatePipeline(Of MetID)(annotation, env)
         Dim i As i32 = 0
         Dim list As New Dictionary(Of String, MetID)
+
+        If metid.isError Then
+            Return metid.getError
+        End If
 
         For Each met As MetID In metid.populates(Of MetID)(env)
             Call list.Add(xcms_id(++i), met)
