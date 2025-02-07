@@ -136,7 +136,7 @@ Public Class MSJointConnection : Implements IMzQuery
                             .Select(Function(q)
                                         Return New MzQuery With {
                                             .score = score,
-                                            .precursorType = q.precursorType,
+                                            .precursor_type = q.precursor_type,
                                             .unique_id = q.unique_id,
                                             .mz = q.mz,
                                             .ppm = q.ppm,
@@ -186,7 +186,7 @@ Public Class MSJointConnection : Implements IMzQuery
                                             .unique_id = m.Key,
                                             .mz = Double.Parse(mzi.Key),
                                             .ppm = m.First.ppm,
-                                            .precursorType = m.First.precursorType,
+                                            .precursor_type = m.First.precursor_type,
                                             .name = m.First.name,
                                             .mz_ref = m.First.mz_ref,
                                             .score = Aggregate hit As MzQuery
