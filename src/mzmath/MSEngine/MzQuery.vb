@@ -59,6 +59,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports Microsoft.VisualBasic.Language.Default
 
 <Assembly: InternalsVisibleTo("mzkit")>
@@ -66,13 +67,9 @@ Imports Microsoft.VisualBasic.Language.Default
 ''' <summary>
 ''' query result of a ms1 m/z ion
 ''' </summary>
-Public Class MzQuery : Implements IsEmpty
+Public Class MzQuery : Inherits MetID
+    Implements IsEmpty
 
-    ''' <summary>
-    ''' the source ``m/z`` value
-    ''' </summary>
-    ''' <returns></returns>
-    <XmlAttribute> Public Property mz As Double
     ''' <summary>
     ''' the evaluated theoretical m/z value based 
     ''' on the precursor type and formula string 
@@ -81,22 +78,11 @@ Public Class MzQuery : Implements IsEmpty
     ''' <returns></returns>
     <XmlAttribute> Public Property mz_ref As Double
     <XmlAttribute> Public Property ppm As Double
-    <XmlAttribute> Public Property precursorType As String
-
-    ''' <summary>
-    ''' the unique id of the target query result metabolite
-    ''' </summary>
-    ''' <returns></returns>
-    <XmlAttribute> Public Property unique_id As String
-
     ''' <summary>
     ''' used in MSJointConnection peak list annotation.
     ''' </summary>
     ''' <returns></returns>
     <XmlAttribute> Public Property score As Double
-
-    <XmlText>
-    Public Property name As String
 
     Friend ReadOnly Property isEmpty As Boolean Implements Language.Default.IsEmpty.IsEmpty
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -104,19 +90,23 @@ Public Class MzQuery : Implements IsEmpty
             Return mz = 0.0 AndAlso
                 ppm = 0.0 AndAlso
                 score = 0.0 AndAlso
-                precursorType.StringEmpty AndAlso
+                precursor_type.StringEmpty AndAlso
                 unique_id.StringEmpty AndAlso
                 name.StringEmpty
         End Get
     End Property
 
+    ''' <summary>
+    ''' make value copy
+    ''' </summary>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Clone() As MzQuery
         Return New MzQuery With {
             .unique_id = unique_id,
             .mz = mz,
             .ppm = ppm,
-            .precursorType = precursorType,
+            .precursor_type = precursor_type,
             .score = score,
             .name = name,
             .mz_ref = mz_ref
@@ -138,7 +128,7 @@ Public Class MzQuery : Implements IsEmpty
     ''' </summary>
     ''' <returns></returns>
     Public Overrides Function ToString() As String
-        Dim prefix As String = $"{unique_id} {precursorType}, m/z {mz.ToString("F4")}"
+        Dim prefix As String = $"{unique_id} {precursor_type}, m/z {mz.ToString("F4")}"
 
         If score > 0 Then
             Return $"{prefix}; score={score}"
