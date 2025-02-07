@@ -78,6 +78,11 @@ Namespace MarkupData.mzXML
         <XmlAttribute> Public Property precursorScanNum As String
         <XmlAttribute> Public Property precursorIntensity As Double
         <XmlAttribute> Public Property activationMethod As String
+
+        ''' <summary>
+        ''' the precursor mz value
+        ''' </summary>
+        ''' <returns></returns>
         <XmlText>
         Public Property value As Double
 

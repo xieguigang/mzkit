@@ -80,4 +80,8 @@ Namespace DataReader
         Function GetCentroided(scan As Object) As Boolean
 
     End Interface
+
+    Public Interface ISpectrumReader(Of T)
+        Function GetMsMs(scan As T) As ms2()
+    End Interface
 End Namespace

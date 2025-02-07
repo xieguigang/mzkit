@@ -62,12 +62,13 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.ValueTypes
 
 Namespace mzData.mzWebCache
 
     ''' <summary>
-    ''' MS/MS scan
+    ''' MSn product scan
     ''' </summary>
     Public Class ScanMS2 : Inherits MSScan
         Implements IMs1
@@ -86,6 +87,30 @@ Namespace mzData.mzWebCache
         Public Property activationMethod As ActivationMethods Implements ISpectrumScanData.ActivationMethod
         Public Property collisionEnergy As Double Implements ISpectrumScanData.CollisionEnergy
         Public Property centroided As Boolean
+
+        ''' <summary>
+        ''' the ms3/ms4/... product scan data
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property product As ScanMS2
+
+        Public Overloads Function GetMs(loadProductTree As Boolean, MSn As Integer) As IEnumerable(Of ms2)
+            If Not loadProductTree Then
+                Return Me.GetMs
+            ElseIf product Is Nothing Then
+                If MSn > 2 Then
+                    Return Me.GetMs.Normalize(1 / MSn).UnifyTag($"MS{MSn},precursor_m/z={parentMz.ToString("F3")}")
+                Else
+                    Return Me.GetMs.Normalize(1 / MSn)
+                End If
+            Else
+                Dim products As ms2() = product _
+                    .GetMs(True, MSn + 1) _
+                    .ToArray
+
+                Return Me.GetMs.Normalize(1 / MSn).JoinIterates(products)
+            End If
+        End Function
 
         Public Overrides Function ToString() As String
             Return MyBase.ToString() & " - " & DateTimeHelper.ReadableElapsedTime(rt * 1000)

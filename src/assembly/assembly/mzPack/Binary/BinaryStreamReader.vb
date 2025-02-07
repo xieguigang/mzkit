@@ -66,9 +66,11 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.ValueTypes
 
 Namespace mzData.mzWebCache
 
@@ -84,6 +86,7 @@ Namespace mzData.mzWebCache
         ''' </summary>
         Dim index As New Dictionary(Of String, Long)
         Dim metadata As New Dictionary(Of String, Dictionary(Of String, String))
+        Dim source_str As String
 
         Protected file As BinaryDataReader
         Protected MSscannerIndex As BufferRegion
@@ -114,9 +117,18 @@ Namespace mzData.mzWebCache
         End Property
 
         Public ReadOnly Property filepath As String
+        Public ReadOnly Property application As FileApplicationClass
 
+        ''' <summary>
+        ''' the source file
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property source As String Implements IMzPackReader.source
             Get
+                If Not source_str.StringEmpty() Then
+                    Return source_str
+                End If
+
                 If filepath.StringEmpty Then
                     Return "n/a"
                 Else
@@ -124,6 +136,8 @@ Namespace mzData.mzWebCache
                 End If
             End Get
         End Property
+
+        Dim level As Integer = 1
 
         ''' <summary>
         ''' 以只读的形式打开文件
@@ -149,7 +163,7 @@ Namespace mzData.mzWebCache
             End If
 
             If Not Me.VerifyMagicSignature(Me.file) Then
-                Throw New InvalidProgramException("invalid magic header!")
+                Throw New InvalidProgramException("invalid magic header of the version 1 mzpack data file!")
             Else
                 Call loadIndex()
             End If
@@ -172,11 +186,31 @@ Namespace mzData.mzWebCache
         ''' load MS scanner index
         ''' </summary>
         Protected Overridable Sub loadIndex()
+            Dim magicSize = BinaryStreamWriter.Magic.Length
             Dim nsize As Integer
             Dim scanPos As Long
             Dim scanId As String
+            Dim sourcedata As Byte() = file.ReadBytes(128)
+            Dim app = file.ReadInt32
+            Dim version As Integer() = file.ReadInt32s(3)
+            Dim [date] As Date = DateTimeHelper.FromUnixTimeStamp(file.ReadDouble)
+            Dim descdata As Byte() = file.ReadBytes(1024)
             Dim range As Double() = file.ReadDoubles(4)
             Dim start As Long
+            Dim levels As New System.Version(version(0), version(1), version(2))
+
+            If levels = BinaryStreamWriter.version Then
+                level = 1
+            ElseIf levels = BinaryStreamWriter.version2025 Then
+                level = 2
+            Else
+                Throw New NotImplementedException($"unknown mzpack version levels tag: {levels.ToString}!")
+            End If
+
+            source_str = Strings.Len(Encoding.ASCII.GetString(sourcedata))
+
+            ' 20250204 lcms/gcms?
+            _application = CType(app, FileApplicationClass)
 
             ' the first 32 Bytes is the summary of the MS1
             ' data which is followd the magic header
@@ -343,7 +377,7 @@ Namespace mzData.mzWebCache
 
         Private Iterator Function populateMs2Products(nsize As Integer) As IEnumerable(Of ScanMS2)
             For i As Integer = 0 To nsize - 1
-                Yield file.ReadScanMs2
+                Yield file.ReadScanMs2(level)
             Next
         End Function
 

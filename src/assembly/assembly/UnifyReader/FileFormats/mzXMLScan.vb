@@ -64,6 +64,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace DataReader
 
+    ''' <summary>
+    ''' the mass spectrum data reader for mzXML file format
+    ''' </summary>
     Public Class mzXMLScan : Inherits MsDataReader(Of scan)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -92,6 +95,11 @@ Namespace DataReader
             Return scan.peaks Is Nothing OrElse scan.peaks.value.StringEmpty
         End Function
 
+        ''' <summary>
+        ''' try to extract the mass spectrum data from the given data scan
+        ''' </summary>
+        ''' <param name="scan"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetMsMs(scan As scan) As ms2()
             Return scan.peaks _
@@ -123,7 +131,7 @@ Namespace DataReader
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetParentMz(scan As scan) As Double
-            Return scan.precursorMz.value
+            Return scan.GetPrecursorData.value
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -133,12 +141,12 @@ Namespace DataReader
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetCharge(scan As scan) As Integer
-            Return scan.precursorMz.precursorCharge
+            Return scan.GetPrecursorData.precursorCharge
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetActivationMethod(scan As scan) As ActivationMethods
-            Dim method As String = scan.precursorMz.activationMethod
+            Dim method As String = scan.GetPrecursorData.activationMethod
 
             If String.IsNullOrWhiteSpace(method) OrElse method = "" Then
                 Return ActivationMethods.Unknown
@@ -154,6 +162,24 @@ Namespace DataReader
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetCentroided(scan As scan) As Boolean
             Return scan.centroided = "1"
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function GetScanNumber(scan As scan) As String
+            Return scan.num
+        End Function
+
+        Public Overrides Function GetParentScanNumber(scan As scan) As String
+            Dim precursor = scan.precursorMz
+
+            If precursor.IsNullOrEmpty Then
+                Return ""
+            Else
+                Return precursor _
+                    .Where(Function(a) Not a.precursorScanNum.StringEmpty(, True)) _
+                    .FirstOrDefault _
+                    .precursorScanNum
+            End If
         End Function
     End Class
 End Namespace

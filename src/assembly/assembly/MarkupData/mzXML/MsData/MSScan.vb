@@ -122,7 +122,20 @@ Namespace MarkupData.mzXML
         <XmlAttribute> Public Property highMz As Double
         <XmlAttribute> Public Property msInstrumentID As String
 
-        Public Property precursorMz As precursorMz
+        ''' <summary>
+        ''' the precursor mz data
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' + for ms1 level scan data has no precursor mz data;
+        ''' + for ms2 level scan data has one precursor mz data, reference to the ms1 ion
+        ''' + for ms3 level scan data has two precursor mz data, one reference to the precursor 
+        '''   of the ms2 scan data and another reference to the fragment peak in ms2 spectrum
+        '''   as the true precursor of the ms3 spectrum.
+        ''' </remarks>
+        <XmlElement>
+        Public Property precursorMz As precursorMz()
+
         Public Property peaks As peaks
 
         ''' <summary>
@@ -182,6 +195,8 @@ Namespace MarkupData.mzXML
                 mzInto = mzInto / mzInto.Max
             End If
 
+            Dim precursorMz As precursorMz = GetPrecursorData()
+
             Return New PeakMs2 With {
                 .mz = precursorMz,
                 .rt = PeakMs2.RtInSecond(retentionTime),
@@ -190,8 +205,28 @@ Namespace MarkupData.mzXML
                 .mzInto = mzInto.Array,
                 .activation = precursorMz.activationMethod Or ms1,
                 .collisionEnergy = Val(collisionEnergy),
-                .intensity = precursorMz.precursorIntensity
+                .intensity = precursorMz.precursorIntensity,
+                .meta = New Dictionary(Of String, String) From {
+                    {NameOf(precursorMz.precursorScanNum), precursorMz.precursorScanNum}
+                }
             }
+        End Function
+
+        ''' <summary>
+        ''' get precursor mz data of current mass spectrum scan data
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetPrecursorData() As precursorMz
+            If msLevel <= 1 Then
+                Return Nothing
+            ElseIf msLevel = 2 Then
+                Return _precursorMz(0)
+            Else
+                ' ms3/ms4/ms5/...
+                Return precursorMz _
+                    .Where(Function(a) Val(a.precursorScanNum) > 0) _
+                    .FirstOrDefault
+            End If
         End Function
     End Class
 End Namespace

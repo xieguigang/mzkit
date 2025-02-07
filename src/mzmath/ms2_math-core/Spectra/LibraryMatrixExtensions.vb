@@ -74,6 +74,42 @@ Namespace Spectra
     <HideModuleName>
     Public Module LibraryMatrixExtensions
 
+        <Extension>
+        Public Iterator Function Normalize(ms As IEnumerable(Of ms2), Optional scale As Double? = Nothing) As IEnumerable(Of ms2)
+            If ms Is Nothing Then
+                Return
+            End If
+
+            Dim pool = ms.ToArray
+
+            If pool.Length = 0 Then
+                Return
+            End If
+
+            Dim max As Double = ms.Max(Function(a) a.intensity)
+
+            If max <= 0.0 Then
+                Call "the max intensity of the given spectrum is negative or ZERO!".Warning
+                Return
+            End If
+
+            If scale IsNot Nothing Then
+                Dim factor As Double = CDbl(scale)
+
+                For Each mzi As ms2 In pool
+                    Yield New ms2(mzi) With {
+                        .intensity = mzi.intensity / max * factor
+                    }
+                Next
+            Else
+                For Each mzi As ms2 In pool
+                    Yield New ms2(mzi) With {
+                        .intensity = mzi.intensity / max
+                    }
+                Next
+            End If
+        End Function
+
         ''' <summary>
         ''' SUM(<see cref="ms2.intensity"/>)
         ''' </summary>

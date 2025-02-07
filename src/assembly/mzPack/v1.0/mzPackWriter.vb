@@ -92,6 +92,9 @@ Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 Imports Microsoft.VisualBasic.Imaging
 #End If
 
+''' <summary>
+''' version 1.0 data file format
+''' </summary>
 Public Class mzPackWriter : Inherits BinaryStreamWriter
 
     ''' <summary>

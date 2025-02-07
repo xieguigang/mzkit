@@ -70,6 +70,9 @@ Namespace Spectra
     ''' <summary>
     ''' annotation of the m/z value
     ''' </summary>
+    ''' <remarks>
+    ''' could be ctype cast to mz number value
+    ''' </remarks>
     Public Class MzAnnotation : Implements IMzAnnotation
 
         ''' <summary>
@@ -85,6 +88,10 @@ Namespace Spectra
         <XmlAttribute> Public Property annotation As String Implements IMzAnnotation.annotation
 
         Sub New()
+        End Sub
+
+        Sub New(mz As Double)
+            productMz = mz
         End Sub
 
         Sub New(annotation As String, mz As Double)

@@ -184,12 +184,16 @@ Namespace Blender
 
     End Class
 
+    ''' <summary>
+    ''' A single signal channel data spatial reader helper
+    ''' </summary>
     Friend Class PixelChannelRaster
 
         Dim raster As RasterPixel()
         Dim intensityRange As DoubleRange
         Dim xy As Dictionary(Of Integer, Dictionary(Of Integer, Double))
         Dim byteRange As DoubleRange = New Double() {8, 255}
+        Dim delta As Double
 
         Sub New(gauss As Integer, sigma As Integer, channel As PixelData())
             Me.raster = New HeatMapRaster(Of PixelData)(gauss, sigma) _
@@ -217,6 +221,7 @@ Namespace Blender
             Me.intensityRange = raster _
                 .Select(Function(p) p.Scale) _
                 .ToArray
+            Me.delta = intensityRange.Length
         End Sub
 
         Public Function GetPixelChannelReader(x As Integer, y As Integer) As Byte
@@ -228,6 +233,13 @@ Namespace Blender
 
             If Not ylist.ContainsKey(y) Then
                 Return 0
+            End If
+
+            ' 20250123 just a single pixel spot data
+            ' so scale range is zero
+            ' returns 255 directly
+            If delta = 0.0 Then
+                Return 255
             End If
 
             Dim into As Double = ylist.Item(y)

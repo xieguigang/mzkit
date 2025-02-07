@@ -64,6 +64,11 @@ Namespace SingleCells
 
     Public Module View
 
+        ''' <summary>
+        ''' Resolve the single cells embedding data
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function ResolveSingleCells(raw As mzPack) As IEnumerable(Of UMAPPoint)
             Return raw.MS.AsParallel.Select(Function(cell) LoadScanMeta(cell))
