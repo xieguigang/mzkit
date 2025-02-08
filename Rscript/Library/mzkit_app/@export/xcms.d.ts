@@ -43,5 +43,5 @@ declare namespace xcms {
      * 
      * + default value Is ``null``.
    */
-   function set_annotations(peaktable: object, id: any, annotation: any, env?: object): any;
+   function set_annotations(peaktable: object, id: any, annotation: any, env?: object): object;
 }
