@@ -70,16 +70,6 @@ declare namespace massbank {
       }
    }
    /**
-    * generates the inchikey hashcode based on the given inchi data
-    * 
-    * 
-     * @param inchi -
-     * @param env -
-     * 
-     * + default value Is ``null``.
-   */
-   function inchikey(inchi: any, env?: object): object;
-   /**
     * check of the mona reference spectrum is positive or not?
     * 
     * 

@@ -10,12 +10,32 @@
 */
 declare namespace InChI {
    /**
+    * make conversion of molecular structure data to the network graph object
+    * 
+    * 
+     * @param mol -
+   */
+   function create_graphdata(mol: object): object;
+   /**
+    * get inchi hash key object from the given inchi object
+    * 
+    * 
+     * @param inchi -
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function eval_inchikey(inchi: any, env?: object): object;
+   /**
    */
    function get_formula(inchi: object): object;
    /**
    */
    function get_struct(inchi: object): object;
    /**
+    * get inchi hash key object from the given inchi object
+    * 
+    * 
+     * @param inchi -
    */
    function inchikey(inchi: object): object;
    /**

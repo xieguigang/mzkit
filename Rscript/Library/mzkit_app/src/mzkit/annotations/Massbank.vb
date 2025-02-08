@@ -81,7 +81,6 @@ Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemistry.TMIC
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
-Imports BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChI
 Imports BioNovoGene.BioDeep.Chemoinformatics.Lipidomics
 Imports BioNovoGene.BioDeep.Chemoinformatics.NaturalProduct
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
@@ -1073,18 +1072,6 @@ Module Massbank
             .xref = xref,
             .exact_mass = FormulaScanner.EvaluateExactMass(formula)
         }
-    End Function
-
-    ''' <summary>
-    ''' generates the inchikey hashcode based on the given inchi data
-    ''' </summary>
-    ''' <param name="inchi"></param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
-    <ExportAPI("inchikey")>
-    <RApiReturn(GetType(InChIKey))>
-    Public Function inchikey(<RRawVectorArgument> inchi As Object, Optional env As Environment = Nothing) As Object
-        Return env.EvaluateFramework(Of String, InChIKey)(inchi, eval:=AddressOf IUPAC.InChI.MakeHashCode)
     End Function
 
     ''' <summary>

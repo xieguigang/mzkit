@@ -68,7 +68,15 @@ Namespace SDF.Models
     ''' </summary>
     Public Class [Structure]
 
+        ''' <summary>
+        ''' the atom element vetriex collection.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Atoms As Atom()
+        ''' <summary>
+        ''' the edge connections between the atoms
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Bounds As Bound()
 
         Sub New()
