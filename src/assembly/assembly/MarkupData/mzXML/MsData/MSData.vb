@@ -60,14 +60,14 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Linq
 
 Namespace MarkupData.mzXML
 
-    <XmlType("msRun")> Public Class MSData
+    ''' <summary>
+    ''' a collection of the ms <see cref="scan"/> data
+    ''' </summary>
+    <XmlType("msRun")> Public Class MSData : Implements Enumeration(Of scan)
 
         <XmlAttribute> Public Property scanCount As Integer
         <XmlAttribute> Public Property startTime As String
@@ -77,6 +77,10 @@ Namespace MarkupData.mzXML
         Public Property msInstrument As msInstrument
         Public Property dataProcessing As dataProcessing
 
+        ''' <summary>
+        ''' the mass spectrum scan data collection
+        ''' </summary>
+        ''' <returns></returns>
         <XmlElement("scan")>
         Public Property scans As scan()
 
@@ -85,5 +89,12 @@ Namespace MarkupData.mzXML
             Return parentFile.ToString
         End Function
 
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of scan) Implements Enumeration(Of scan).GenericEnumerator
+            If Not scans Is Nothing Then
+                For Each scan As scan In scans
+                    Yield scan
+                Next
+            End If
+        End Function
     End Class
 End Namespace

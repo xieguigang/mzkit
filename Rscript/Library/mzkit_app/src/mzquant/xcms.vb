@@ -56,7 +56,9 @@
 
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -150,6 +152,41 @@ Module xcms
                         }
                     End Function) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' set annotation to the ion features
+    ''' </summary>
+    ''' <param name="peaktable"></param>
+    ''' <param name="id">should be a character vector of the ion reference id</param>
+    ''' <param name="annotation">should be a collection of the metabolite annotation model <see cref="MetID"/>, 
+    ''' size of this collection should be equals to the size of the given id vector.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("set_annotations")>
+    <RApiReturn(GetType(PeakSet))>
+    Public Function setAnnotations(peaktable As PeakSet,
+                                   <RRawVectorArgument> id As Object,
+                                   <RRawVectorArgument> annotation As Object,
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim xcms_id As String() = CLRVector.asCharacter(id)
+        Dim metid As pipeline = pipeline.TryCreatePipeline(Of MetID)(annotation, env)
+        Dim i As i32 = 0
+        Dim list As New Dictionary(Of String, MetID)
+
+        If metid.isError Then
+            Return metid.getError
+        End If
+
+        For Each met As MetID In metid.populates(Of MetID)(env)
+            Call list.Add(xcms_id(++i), met)
+        Next
+
+        peaktable.annotations = list
+
+        Return peaktable
     End Function
 
 End Module

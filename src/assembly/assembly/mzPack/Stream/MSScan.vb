@@ -125,6 +125,12 @@ Namespace mzData.mzWebCache
             Return max
         End Function
 
+        ''' <summary>
+        ''' get selected ion data
+        ''' </summary>
+        ''' <param name="mz"></param>
+        ''' <param name="tolerance"></param>
+        ''' <returns></returns>
         Public Iterator Function GetMs(mz As Double, tolerance As Tolerance) As IEnumerable(Of ms1_scan)
             For i As Integer = 0 To Me.mz.Length - 1
                 If tolerance(mz, Me.mz(i)) Then
@@ -137,7 +143,7 @@ Namespace mzData.mzWebCache
         ''' create matrix from [<see cref="mz"/>...] and [<see cref="into"/>...] these two vector
         ''' </summary>
         ''' <returns></returns>
-        Public Iterator Function GetMs() As IEnumerable(Of ms2) Implements IMsScan.GetMs, ISpectrum.GetIons
+        Public Overridable Iterator Function GetMs() As IEnumerable(Of ms2) Implements IMsScan.GetMs, ISpectrum.GetIons
             If mz Is Nothing Then
                 Return
             End If

@@ -343,6 +343,9 @@ Public Class mzStream : Implements IMzPackReader
     ''' <param name="scan_id"></param>
     ''' <param name="skipProducts"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' this function also read the multiple stage product tree
+    ''' </remarks>
     Public Function ReadScan(scan_id As String, Optional skipProducts As Boolean = False) As ScanMS1 Implements IMzPackReader.ReadScan
         Dim ms1 As ScanMS1 = ReadMS1(scan_id)
         Dim refer As String = findScan1Name(scan_id)
@@ -355,26 +358,38 @@ Public Class mzStream : Implements IMzPackReader
             ms1.products = New ScanMS2(n - 1) {}
 
             For i As Integer = 0 To n - 1
-                Dim buffer As Stream = pack.OpenBlock($"{refer}/{id2(i).MD5}.mz")
-                Dim reader As New BinaryDataReader(buffer) With {
-                    .ByteOrder = ByteOrder.LittleEndian
-                }
-                Dim msnProduct As ScanMS2 = Serialization.ReadScanMs2(reader)
-                ' 20241227 v2.1 format updates
-                ' read peak list annotation metadata
-                Dim metadata As String = $"{refer}/{id2(i).MD5}.txt"
-
-                If pack.FileExists(metadata, ZERO_Nonexists:=True) Then
-                    msnProduct.metadata = pack.ReadText(metadata).LineTokens
-                End If
-
-                ms1.products(i) = msnProduct
+                ms1.products(i) = loadMultipleStageProductTree(refer, id2(i).MD5)
             Next
         Else
             ms1.products = {}
         End If
 
         Return ms1
+    End Function
+
+    Private Function loadMultipleStageProductTree(refer$, scan_hash$) As ScanMS2
+        Dim relpath = $"{refer}/{scan_hash}.mz"
+        Dim msnProduct As ScanMS2 = Nothing
+
+        If pack.FileExists(relpath) Then
+            Dim buffer As Stream = pack.OpenBlock(relpath)
+            Dim reader As New BinaryDataReader(buffer) With {
+                .ByteOrder = ByteOrder.LittleEndian
+            }
+            ' 20241227 v2.1 format updates
+            ' read peak list annotation metadata
+            Dim metadata As String = $"{refer}/{scan_hash}.txt"
+
+            msnProduct = Serialization.ReadScanMs2(reader)
+
+            If pack.FileExists(metadata, ZERO_Nonexists:=True) Then
+                msnProduct.metadata = pack.ReadText(metadata).LineTokens
+            End If
+
+            msnProduct.product = loadMultipleStageProductTree(refer & "/products", scan_hash:=msnProduct.scan_id.MD5)
+        End If
+
+        Return msnProduct
     End Function
 
     Public Function GetThumbnail() As Image

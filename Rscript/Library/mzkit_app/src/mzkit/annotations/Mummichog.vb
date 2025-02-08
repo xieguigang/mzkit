@@ -168,7 +168,7 @@ Module Mummichog
         Call scores.add("ppm", allUnion.Select(Function(i) i.ppm))
         Call scores.add("unique_id", allUnion.Select(Function(i) i.unique_id))
         Call scores.add("name", allUnion.Select(Function(i) i.name))
-        Call scores.add("precursor_type", allUnion.Select(Function(i) i.precursorType))
+        Call scores.add("precursor_type", allUnion.Select(Function(i) i.precursor_type))
         Call scores.add("score", allUnion.Select(Function(a) unionScore(MzQuery.ReferenceKey(a))))
 
         Return scores

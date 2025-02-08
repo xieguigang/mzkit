@@ -64,6 +64,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language
@@ -173,6 +174,7 @@ Namespace mzData.mzWebCache
         Public Iterator Function Load(scans As IEnumerable(Of Scan), Optional progress As Action(Of String) = Nothing) As IEnumerable(Of ScanMS1)
             Dim i As i32 = 1
             Dim ms1Yields As Integer = 0
+            Dim lastProduct As New Dictionary(Of String, ScanMS2)
 
             For Each scan As Scan In PopulateValidScans(scans)
                 Dim scanVal As MSScan = CreateScan(scan, ++i)
@@ -189,7 +191,19 @@ Namespace mzData.mzWebCache
 
                     ms1 = scanVal
                 Else
-                    Call products.Add(scanVal)
+                    Dim isMS2 As Boolean = InStr(scanVal.scan_id, "MS/MS") > 0
+                    Dim parent_id As String = reader.GetParentScanNumber(scan)
+
+                    If isMS2 Then
+                        Call products.Add(scanVal)
+                    ElseIf lastProduct.ContainsKey(parent_id) Then
+                        lastProduct(parent_id).product = scanVal
+                    Else
+                        Call products.Add(scanVal)
+                        Call $"missing precursor scan of number({parent_id}) for {scanVal.scan_id}".Warning
+                    End If
+
+                    Call lastProduct.Add(reader.GetScanNumber(scan), scanVal)
                 End If
 
                 ' adjust to 17 for make progress less verbose

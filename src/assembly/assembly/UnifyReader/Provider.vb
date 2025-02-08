@@ -66,16 +66,10 @@ Namespace DataReader
     Public Module Provider
 
         Public Function GetMsMs(Of Scan)() As Func(Of Scan, ms2())
-            Dim reader = MsDataReader(Of Scan).ScanProvider
+            Dim reader As ISpectrumReader(Of Scan) = MsDataReader(Of Scan).ScanProvider
+            Dim decoder As Func(Of Scan, ms2()) = AddressOf reader.GetMsMs
 
-            Select Case GetType(Scan)
-                Case GetType(mzXML.scan)
-                    Return CObj(New Func(Of mzXML.scan, ms2())(AddressOf DirectCast(reader, mzXMLScan).GetMsMs))
-                Case GetType(spectrum)
-                    Return CObj(New Func(Of spectrum, ms2())(AddressOf DirectCast(reader, mzMLScan).GetMsMs))
-                Case Else
-                    Throw New NotImplementedException(GetType(Scan).FullName)
-            End Select
+            Return decoder
         End Function
 
         <Extension>

@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>MS/MS scan</p>
+        <p>MSn product scan</p>
 
         <h3>Declare</h3>        
 
@@ -42,6 +42,8 @@ export class ScanMS2 extends <a href="/vignettes/clr/BioNovoGene/Analytical/Mass
    # the parent ion m/z
    parentMz: double;
    polarity: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a>;
+   # the ms3/ms4/... product scan data
+   product: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/ScanMS2.html">ScanMS2</a>;
    rt: double;
    scan_id: string;
    size: integer;
@@ -56,6 +58,7 @@ export class ScanMS2 extends <a href="/vignettes/clr/BioNovoGene/Analytical/Mass
 <li>use by <i>property</i> member <code>activationMethod</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/ActivationMethods.html">ActivationMethods</a></li>
 <li>use by <i>property</i> member <code>MRM</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/MRM.html">MRM</a></li>
 <li>use by <i>property</i> member <code>polarity</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a></li>
+<li>use by <i>property</i> member <code>product</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/ScanMS2.html">ScanMS2</a></li>
 </ol>
 
 

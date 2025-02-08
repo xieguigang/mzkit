@@ -64,18 +64,38 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace DataReader
 
-    Public MustInherit Class MsDataReader(Of Scan) : Implements IDataReader
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="Scan"></typeparam>
+    ''' <remarks>
+    ''' the scan number and parent scan number is used for create the multiple stage product tree of the mass spectrum data.
+    ''' </remarks>
+    Public MustInherit Class MsDataReader(Of Scan) : Implements IDataReader, ISpectrumReader(Of Scan)
 
         Public MustOverride Function GetScanTime(scan As Scan) As Double
         Public MustOverride Function GetScanId(scan As Scan) As String
         Public MustOverride Function IsEmpty(scan As Scan) As Boolean
 
         ''' <summary>
+        ''' get the scan number of current scan data
+        ''' </summary>
+        ''' <param name="scan"></param>
+        ''' <returns></returns>
+        Public MustOverride Function GetScanNumber(scan As Scan) As String
+        ''' <summary>
+        ''' get the scan number of parent scan data
+        ''' </summary>
+        ''' <param name="scan"></param>
+        ''' <returns></returns>
+        Public MustOverride Function GetParentScanNumber(scan As Scan) As String
+
+        ''' <summary>
         ''' get ms1 or ms2 data
         ''' </summary>
         ''' <param name="scan"></param>
         ''' <returns></returns>
-        Public MustOverride Function GetMsMs(scan As Scan) As ms2()
+        Public MustOverride Function GetMsMs(scan As Scan) As ms2() Implements ISpectrumReader(Of Scan).GetMsMs
         Public MustOverride Function GetMsLevel(scan As Scan) As Integer
         Public MustOverride Function GetBPC(scan As Scan) As Double
         Public MustOverride Function GetTIC(scan As Scan) As Double
@@ -87,10 +107,10 @@ Namespace DataReader
         Public MustOverride Function GetCentroided(scan As Scan) As Boolean
 
         ''' <summary>
-        ''' 
+        ''' A unify method for create the scan data provider
         ''' </summary>
         ''' <returns>
-        ''' <see cref="MsDataReader(Of Scan)"/>
+        ''' <see cref="MsDataReader(Of Scan)"/>, and <see cref="ISpectrumReader(Of Scan)"/> 
         ''' </returns>
         Public Shared Function ScanProvider() As Object
             Select Case GetType(Scan)
@@ -98,7 +118,7 @@ Namespace DataReader
                 Case GetType(mzML.spectrum) : Return New mzMLScan
                 Case GetType(imzML.ScanReader) : Return New imzMLScan
                 Case Else
-                    Throw New NotImplementedException(GetType(Scan).ToString)
+                    Throw New NotImplementedException("the spectrum reader for scan data type is not implemeted yet: " & GetType(Scan).ToString)
             End Select
         End Function
 

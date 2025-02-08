@@ -185,10 +185,12 @@ Namespace MarkupData.mzXML
             Call WriteHeader(scanCount, startTime, endTime)
 
             For Each scan As ScanMS1 In mzData
+                Dim parent_id As Integer = CInt(i)
+
                 Call writeScan(scan, i)
 
                 For Each ion As ScanMS2 In scan.products
-                    Call writeScan(ion, i)
+                    Call writeScan(ion, parent_id, i, msLevel:=2)
                 Next
 
                 Call print(scan.scan_id)
@@ -247,7 +249,7 @@ Namespace MarkupData.mzXML
             Return Convert.ToBase64String(rawBytes)
         End Function
 
-        Private Sub writeScan(scan As ScanMS2, ByRef scanNum As i32)
+        Private Sub writeScan(scan As ScanMS2, parent_id%, ByRef scanNum As i32, msLevel As Integer)
             Dim size As Integer = 0
             Dim mzint As String = encode(scan, len:=size)
             Dim i As String = ++scanNum
@@ -260,7 +262,7 @@ Namespace MarkupData.mzXML
             Call println($"<scan num=""{i}""
           scanType=""Full""
           centroided=""1""
-          msLevel=""2""
+          msLevel=""{msLevel}""
           peaksCount=""{scan.size}""
           polarity=""{If(scan.polarity > 0, "+", "-")}""
           retentionTime=""PT{scan.rt}S""
@@ -271,13 +273,18 @@ Namespace MarkupData.mzXML
           basePeakIntensity=""{scan.into.Max}""
           totIonCurrent=""{scan.into.Sum}""
           msInstrumentID=""2"">
-      <precursorMz precursorScanNum=""1"" precursorIntensity=""{scan.intensity}"" precursorCharge=""{scan.charge}"" activationMethod=""{scan.activationMethod}"" windowWideness=""2.0"">{scan.parentMz}</precursorMz>
+      <precursorMz precursorScanNum=""{parent_id}"" precursorIntensity=""{scan.intensity}"" precursorCharge=""{scan.charge}"" activationMethod=""{scan.activationMethod}"" windowWideness=""2.0"">{scan.parentMz}</precursorMz>
       <peaks compressionType=""none""
              compressedLen=""{size}""
              precision=""64""
              byteOrder=""network""
              contentType=""m/z-int"">{mzint}</peaks>
     </scan>")
+
+            ' write multiple stage product scan tree data
+            If Not scan.product Is Nothing Then
+                Call writeScan(scan.product, i, scanNum, msLevel + 1)
+            End If
         End Sub
 
         Private Sub WriteSha1()

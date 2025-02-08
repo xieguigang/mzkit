@@ -1,0 +1,34 @@
+.\" man page create by R# package system.
+.TH XCMS 1 2000-Jan "set_annotations" "set_annotations"
+.SH NAME
+set_annotations \- set annotation to the ion features
+.SH SYNOPSIS
+\fIset_annotations(\fBpeaktable\fR as <generic> PeakSet, 
+\fBid\fR as any, 
+\fBannotation\fR as any, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+set annotation to the ion features
+.PP
+.SH OPTIONS
+.PP
+\fBpeaktable\fB \fR\- -. 
+.PP
+.PP
+\fBid\fB \fR\- should be a character vector of the ion reference id. 
+.PP
+.PP
+\fBannotation\fB \fR\- should be a collection of the metabolite annotation model @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations.MetID\fR, 
+ size of this collection should be equals to the size of the given id vector.
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH SEE ALSO
+xcms
+.SH FILES
+.PP
+mz_quantify.dll
+.PP

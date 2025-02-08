@@ -110,7 +110,7 @@ Module MetaDbXref
             {NameOf(MzQuery.name), query.Select(Function(q) q.name).ToArray},
             {NameOf(MzQuery.mz), query.Select(Function(q) q.mz).ToArray},
             {NameOf(MzQuery.ppm), query.Select(Function(q) q.ppm).ToArray},
-            {NameOf(MzQuery.precursorType), query.Select(Function(q) q.precursorType).ToArray},
+            {NameOf(MzQuery.precursor_type), query.Select(Function(q) q.precursor_type).ToArray},
             {NameOf(MzQuery.score), query.Select(Function(q) q.score).ToArray}
         }
 
@@ -540,7 +540,7 @@ Module MetaDbXref
                 .mz_ref = evalMz,
                 .name = exactMass.ToString("F4"),
                 .ppm = minPpm,
-                .precursorType = matchType.ToString,
+                .precursor_type = matchType.ToString,
                 .score = 1,
                 .unique_id = If(matchId, .name)
             }
@@ -990,7 +990,7 @@ Module MetaDbXref
                 {"m/z", mzqueries.getVector(Function(i) i.Value.mz)},
                 {"theoretical_mz", mzqueries.getVector(Function(i) i.Value.mz_ref)},
                 {"ppm", mzqueries.getVector(Function(i) i.Value.ppm)},
-                {"precursor_type", mzqueries.getVector(Function(i) i.Value.precursorType)},
+                {"precursor_type", mzqueries.getVector(Function(i) i.Value.precursor_type)},
                 {"unique_id", mzqueries.getVector(Function(i) i.Value.unique_id)},
                 {"name", mzqueries.getVector(Function(i) i.Value.name)},
                 {"score", mzqueries.getVector(Function(i) i.Value.score)}
@@ -1056,14 +1056,29 @@ Module MetaDbXref
         End If
     End Function
 
+    ''' <summary>
+    ''' cast the given dataframe as the ion feature annotation result
+    ''' </summary>
+    ''' <param name="x">
+    ''' a dataframe of the ion annotation data that required of the data fields:
+    ''' 
+    ''' 1. unique_id: metabolite reference id
+    ''' 2. name: metabolite name
+    ''' 3. mz: target ion feature m/z value
+    ''' 4. ppm: the ppm error between the sample m/z and evaluated mz valuefrom the exact mass
+    ''' 5. adducts: ion feature adducts type for the annotation
+    ''' 6. score: the ion annotation score for the result.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("load_asQueryHits")>
     Public Function loadQueryHits(x As dataframe, Optional env As Environment = Nothing) As MzQuery()
         'unique_id,name,mz,ppm,precursorType,score
-        Dim unique_id As String() = CLRVector.asCharacter(x.getColumnVector("unique_id"))
+        Dim unique_id As String() = CLRVector.asCharacter(x.getBySynonym("", "id", "ID", "unique_id"))
         Dim name As String() = CLRVector.asCharacter(x.getColumnVector("name"))
         Dim mz As Double() = CLRVector.asNumeric(x.getColumnVector("mz"))
         Dim ppm As Double() = CLRVector.asNumeric(x.getColumnVector("ppm"))
-        Dim precursorType As String() = CLRVector.asCharacter(x.getColumnVector("precursorType"))
+        Dim precursorType As String() = CLRVector.asCharacter(x.getBySynonym("adducts", "precursor_type", "precursorType"))
         Dim score As Double() = CLRVector.asNumeric(x.getColumnVector("score"))
 
         Return unique_id _
@@ -1074,7 +1089,7 @@ Module MetaDbXref
                             .mz_ref = mz(i),
                             .name = name(i),
                             .ppm = ppm(i),
-                            .precursorType = precursorType(i),
+                            .precursor_type = precursorType(i),
                             .score = score(i)
                         }
                     End Function) _

@@ -74,7 +74,20 @@ declare namespace metadb {
       function metal_ion(formula: any, env?: object): boolean;
    }
    /**
-     * @param env default value Is ``null``.
+    * cast the given dataframe as the ion feature annotation result
+    * 
+    * 
+     * @param x a dataframe of the ion annotation data that required of the data fields:
+     *  
+     *  1. unique_id: metabolite reference id
+     *  2. name: metabolite name
+     *  3. mz: target ion feature m/z value
+     *  4. ppm: the ppm error between the sample m/z and evaluated mz valuefrom the exact mass
+     *  5. adducts: ion feature adducts type for the annotation
+     *  6. score: the ion annotation score for the result.
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function load_asQueryHits(x: object, env?: object): object;
    module mass_search {

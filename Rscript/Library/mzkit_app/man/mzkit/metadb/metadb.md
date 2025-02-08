@@ -18,4 +18,4 @@ Metabolite annotation database search engine
 + [has.metal_ion](metadb/has.metal_ion.1) Check the formula string has metal ion inside?
 + [uniqueFeatures](metadb/uniqueFeatures.1) unique of the peak annotation features
 + [cbind.metainfo](metadb/cbind.metainfo.1) 
-+ [load_asQueryHits](metadb/load_asQueryHits.1) 
++ [load_asQueryHits](metadb/load_asQueryHits.1) cast the given dataframe as the ion feature annotation result

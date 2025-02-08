@@ -385,7 +385,7 @@ Public Class Algorithm
         Dim kegg As New MzQuery With {
             .mz = mz,
             .unique_id = compound.Identity,
-            .precursorType = type.ToString,
+            .precursor_type = type.ToString,
             .ppm = PPMmethod.PPM(mz, hit.mz)
         }
 

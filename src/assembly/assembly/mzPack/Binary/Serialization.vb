@@ -144,9 +144,13 @@ Namespace mzData.mzWebCache
         ''' 
         ''' </summary>
         ''' <param name="file">should be in little endian byte order</param>
+        ''' <param name="levels">
+        ''' for mzpack version 1, this optional parameter flag controls the multiple stage product tree reader;
+        ''' for mzpack version 2, this optional parameter flag should be always be 1, due to the reason of read product tree code in somewhere else
+        ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function ReadScanMs2(file As BinaryDataReader) As ScanMS2
+        Public Function ReadScanMs2(file As BinaryDataReader, Optional levels As Integer = 1) As ScanMS2
             Dim ms2 As New ScanMS2 With {
                 .scan_id = file.ReadString(BinaryStringFormat.ZeroTerminated),
                 .parentMz = file.ReadDouble,
@@ -162,6 +166,13 @@ Namespace mzData.mzWebCache
 
             ms2.mz = file.ReadDoubles(productSize)
             ms2.into = file.ReadDoubles(productSize)
+
+            If levels > 1 Then
+                ' 20250204 read multiple stage product tree data
+                If file.ReadInt32 > 0 Then
+                    ms2.product = ReadScanMs2(file)
+                End If
+            End If
 
             Return ms2
         End Function
