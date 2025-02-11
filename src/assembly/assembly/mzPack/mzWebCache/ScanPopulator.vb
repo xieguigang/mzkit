@@ -194,7 +194,7 @@ Namespace mzData.mzWebCache
                     Dim isMS2 As Boolean = InStr(scanVal.scan_id, "MS/MS") > 0
                     Dim parent_id As String = reader.GetParentScanNumber(scan)
 
-                    If isMS2 Then
+                    If isMS2 OrElse parent_id Is Nothing Then
                         Call products.Add(scanVal)
                     ElseIf lastProduct.ContainsKey(parent_id) Then
                         lastProduct(parent_id).product = scanVal
