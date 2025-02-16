@@ -848,6 +848,31 @@ Module Massbank
         Throw New NotImplementedException
     End Function
 
+    ''' <summary>
+    ''' normalized the input id data as canonical chebi id
+    ''' </summary>
+    ''' <param name="id"></param>
+    ''' <returns></returns>
+    <ExportAPI("chebi_id")>
+    Public Function chebi_id(<RRawVectorArgument> id As Object) As Object
+        Dim ids As String() = CLRVector.asCharacter(id)
+        Dim canonical As String() = ids.SafeQuery _
+            .Select(Function(id_str)
+                        id_str = Strings.Trim(id_str)
+
+                        If id_str.IsPattern("\d+") Then
+                            Return $"CHEBI:{id_str}"
+                        ElseIf id_str.StringEmpty(, True) Then
+                            Return ""
+                        Else
+                            Return id_str.ToUpper
+                        End If
+                    End Function) _
+            .ToArray
+
+        Return canonical
+    End Function
+
     <ExportAPI("chebi.secondary2main.mapping")>
     <RApiReturn(GetType(String))>
     Public Function chebiSecondary2Main(repository As String) As Object
