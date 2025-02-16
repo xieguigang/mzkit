@@ -859,17 +859,7 @@ Module Massbank
             Dim raw_list As list = DirectCast(id, list)
 
             For Each name As String In raw_list.getNames
-                Dim id_str As String = Strings.Trim(raw_list.getValue(name, env, [default]:=""))
-
-                If id_str.IsPattern("\d+") Then
-                    id_str = $"CHEBI:{id_str}"
-                ElseIf id_str.StringEmpty(, True) Then
-                    id_str = ""
-                Else
-                    id_str = id_str.ToUpper
-                End If
-
-                raw_list.slots(name) = id_str
+                raw_list.slots(name) = CanonicalChEBIId(Strings.Trim(raw_list.getValue(name, env, [default]:=""))).ToArray
             Next
 
             Return raw_list
@@ -877,20 +867,35 @@ Module Massbank
             Dim ids As String() = CLRVector.asCharacter(id)
             Dim canonical As String() = ids.SafeQuery _
                 .Select(Function(id_str)
-                            id_str = Strings.Trim(id_str)
-
-                            If id_str.IsPattern("\d+") Then
-                                Return $"CHEBI:{id_str}"
-                            ElseIf id_str.StringEmpty(, True) Then
-                                Return ""
-                            Else
-                                Return id_str.ToUpper
-                            End If
+                            Return CanonicalChEBIId(id_str)
                         End Function) _
+                .IteratesALL _
                 .ToArray
 
             Return canonical
         End If
+    End Function
+
+    Private Iterator Function CanonicalChEBIId(val As String) As IEnumerable(Of String)
+        If val.StringEmpty(, True) Then
+            Return
+        End If
+
+        For Each id_str As String In Strings.Trim(val).Split
+            id_str = Strings.Trim(id_str)
+
+            If id_str = "" Then
+                Continue For
+            End If
+
+            If id_str.IsPattern("\d+") Then
+                Yield $"CHEBI:{id_str}"
+            ElseIf id_str.StringEmpty(, True) Then
+                Continue For
+            Else
+                Yield id_str.ToUpper
+            End If
+        Next
     End Function
 
     <ExportAPI("chebi.secondary2main.mapping")>
