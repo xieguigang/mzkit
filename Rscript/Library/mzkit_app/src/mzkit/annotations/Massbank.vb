@@ -854,23 +854,43 @@ Module Massbank
     ''' <param name="id"></param>
     ''' <returns></returns>
     <ExportAPI("chebi_id")>
-    Public Function chebi_id(<RRawVectorArgument> id As Object) As Object
-        Dim ids As String() = CLRVector.asCharacter(id)
-        Dim canonical As String() = ids.SafeQuery _
-            .Select(Function(id_str)
-                        id_str = Strings.Trim(id_str)
+    Public Function chebi_id(<RRawVectorArgument> id As Object, Optional env As Environment = Nothing) As Object
+        If TypeOf id Is list Then
+            Dim raw_list As list = DirectCast(id, list)
 
-                        If id_str.IsPattern("\d+") Then
-                            Return $"CHEBI:{id_str}"
-                        ElseIf id_str.StringEmpty(, True) Then
-                            Return ""
-                        Else
-                            Return id_str.ToUpper
-                        End If
-                    End Function) _
-            .ToArray
+            For Each name As String In raw_list.getNames
+                Dim id_str As String = Strings.Trim(raw_list.getValue(name, env, [default]:=""))
 
-        Return canonical
+                If id_str.IsPattern("\d+") Then
+                    id_str = $"CHEBI:{id_str}"
+                ElseIf id_str.StringEmpty(, True) Then
+                    id_str = ""
+                Else
+                    id_str = id_str.ToUpper
+                End If
+
+                raw_list.slots(name) = id_str
+            Next
+
+            Return raw_list
+        Else
+            Dim ids As String() = CLRVector.asCharacter(id)
+            Dim canonical As String() = ids.SafeQuery _
+                .Select(Function(id_str)
+                            id_str = Strings.Trim(id_str)
+
+                            If id_str.IsPattern("\d+") Then
+                                Return $"CHEBI:{id_str}"
+                            ElseIf id_str.StringEmpty(, True) Then
+                                Return ""
+                            Else
+                                Return id_str.ToUpper
+                            End If
+                        End Function) _
+                .ToArray
+
+            Return canonical
+        End If
     End Function
 
     <ExportAPI("chebi.secondary2main.mapping")>
