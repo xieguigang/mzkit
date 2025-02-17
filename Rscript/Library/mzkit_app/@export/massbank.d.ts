@@ -33,6 +33,15 @@ declare namespace massbank {
       }
    }
    /**
+    * normalized the input id data as canonical chebi id
+    * 
+    * 
+     * @param id -
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function chebi_id(id: any, env?: object): any;
+   /**
     * extract the chebi annotation data from the chebi ontology data
     * 
     * 

@@ -21,6 +21,7 @@ Metabolite annotation database toolkit
 + [lipidmaps_id](massbank/lipidmaps_id.1) gets the metabolite id collection from lipidmaps database
 + [as.lipidmaps](massbank/as.lipidmaps.1) populate lipidmaps meta data objects from the loaded sdf data stream
 + [lipid.nameMaps](massbank/lipid.nameMaps.1) 
++ [chebi_id](massbank/chebi_id.1) normalized the input id data as canonical chebi id
 + [chebi.secondary2main.mapping](massbank/chebi.secondary2main.mapping.1) 
 + [hmdb.secondary2main.mapping](massbank/hmdb.secondary2main.mapping.1) 
 + [secondary2main.mapping](massbank/secondary2main.mapping.1) Create SecondaryIDSolver object from mapping file or mapping dictionary object data.

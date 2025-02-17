@@ -848,6 +848,56 @@ Module Massbank
         Throw New NotImplementedException
     End Function
 
+    ''' <summary>
+    ''' normalized the input id data as canonical chebi id
+    ''' </summary>
+    ''' <param name="id"></param>
+    ''' <returns></returns>
+    <ExportAPI("chebi_id")>
+    Public Function chebi_id(<RRawVectorArgument> id As Object, Optional env As Environment = Nothing) As Object
+        If TypeOf id Is list Then
+            Dim raw_list As list = DirectCast(id, list)
+
+            For Each name As String In raw_list.getNames
+                raw_list.slots(name) = CanonicalChEBIId(Strings.Trim(raw_list.getValue(name, env, [default]:=""))).ToArray
+            Next
+
+            Return raw_list
+        Else
+            Dim ids As String() = CLRVector.asCharacter(id)
+            Dim canonical As String() = ids.SafeQuery _
+                .Select(Function(id_str)
+                            Return CanonicalChEBIId(id_str)
+                        End Function) _
+                .IteratesALL _
+                .ToArray
+
+            Return canonical
+        End If
+    End Function
+
+    Private Iterator Function CanonicalChEBIId(val As String) As IEnumerable(Of String)
+        If val.StringEmpty(, True) Then
+            Return
+        End If
+
+        For Each id_str As String In Strings.Trim(val).Split
+            id_str = Strings.Trim(id_str)
+
+            If id_str = "" Then
+                Continue For
+            End If
+
+            If id_str.IsPattern("\d+") Then
+                Yield $"CHEBI:{id_str}"
+            ElseIf id_str.StringEmpty(, True) Then
+                Continue For
+            Else
+                Yield id_str.ToUpper
+            End If
+        Next
+    End Function
+
     <ExportAPI("chebi.secondary2main.mapping")>
     <RApiReturn(GetType(String))>
     Public Function chebiSecondary2Main(repository As String) As Object
