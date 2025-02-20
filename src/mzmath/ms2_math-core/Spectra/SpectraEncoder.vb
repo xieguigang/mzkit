@@ -219,9 +219,12 @@ Namespace Spectra
         ''' <remarks>
         ''' the numeric data vector should be encoded in network byte order
         ''' </remarks>
-        Public Iterator Function Decode(mz64 As String, into64 As String) As IEnumerable(Of ms2)
-            Dim mz As Double() = network.ParseDouble(mz64)
-            Dim into As Double() = network.ParseDouble(into64)
+        Public Iterator Function Decode(mz64 As String, into64 As String,
+                                        Optional gzip As NetworkByteOrderBuffer.Compression = NetworkByteOrderBuffer.Compression.none,
+                                        Optional no_magic As Boolean = False) As IEnumerable(Of ms2)
+
+            Dim mz As Double() = network.ParseDouble(mz64, gzip, no_magic)
+            Dim into As Double() = network.ParseDouble(into64, gzip, no_magic)
 
             For i As Integer = 0 To mz.Length - 1
                 Yield New ms2(mz(i), into(i))
