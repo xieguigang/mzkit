@@ -236,6 +236,16 @@ Namespace Spectra
         ''' </summary>
         ''' <param name="base64"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' the text format description about the input data:
+        ''' 
+        ''' input data should be a text encoded matrix data:
+        ''' 
+        ''' each line is a ion fragment data, in layout of [mz][tab][intensity]
+        ''' then multiple ion fragments data consist the matrix text
+        ''' 
+        ''' the matrix text then encoded as base64 string in utf-8 text encoded format.
+        ''' </remarks>
         Public Function Decode(base64 As String) As (x#, y#)()
             Dim bytes As Byte() = Convert.FromBase64String(base64)
             Dim table$ = TextEncodings.UTF8WithoutBOM.GetString(bytes)
@@ -253,8 +263,8 @@ Namespace Spectra
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function LibraryMatrix(decode As (x#, y#)()) As LibraryMatrix
-            Return decode _
+        Public Function LibraryMatrix(decode As (x#, y#)(), Optional name As String = Nothing) As LibraryMatrix
+            Dim msms = decode _
                 .Select(Function(d)
                             Return New ms2 With {
                                 .mz = d.x,
@@ -262,6 +272,8 @@ Namespace Spectra
                             }
                         End Function) _
                 .ToArray
+
+            Return New LibraryMatrix(name, msms)
         End Function
     End Module
 End Namespace
