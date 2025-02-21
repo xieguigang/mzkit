@@ -471,7 +471,10 @@ Module MRMkit
 
     <ExportAPI("isomerism.ion_pairs")>
     <RApiReturn(GetType(IsomerismIonPairs))>
-    Public Function IsomerismIonPairs(ions As IonPair(), Optional tolerance$ = "ppm:20", Optional env As Environment = Nothing) As Object
+    Public Function IsomerismIonPairs(ions As IonPair(),
+                                      Optional tolerance$ = "ppm:20",
+                                      Optional env As Environment = Nothing) As Object
+
         Dim mzErrors = Math.getTolerance(tolerance, env)
 
         If mzErrors Like GetType(Message) Then
@@ -484,11 +487,16 @@ Module MRMkit
     ''' <summary>
     ''' Convert any compatibale type as the ion pairs data object for MRM target selected.
     ''' </summary>
-    ''' <param name="mz"></param>
+    ''' <param name="mz">
+    ''' should be a set of the <see cref="MSLIon"/> object data.
+    ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' a collection of the mzkit clr ion pair data object. this MRM ion pair data object could 
+    ''' be cast to dataframe vai the ``as.data.frame`` conversion.
+    ''' </returns>
     <ExportAPI("as.ion_pairs")>
-    <RApiReturn(GetType(IonPair()))>
+    <RApiReturn(GetType(IonPair))>
     Public Function asIonPair(<RRawVectorArgument> mz As Object, Optional env As Environment = Nothing) As Object
         If mz Is Nothing Then
             Return Nothing

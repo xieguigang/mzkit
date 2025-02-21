@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::2aa85d3ef3b34560586d89c88097401a, assembly\assembly\ASCII\MSL\MSLIon.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 30
-    '    Code Lines: 21 (70.00%)
-    ' Comment Lines: 4 (13.33%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 5 (16.67%)
-    '     File Size: 1.22 KB
+' Summaries:
 
 
-    '     Class MSLIon
-    ' 
-    '         Properties: [IS], CASNO, Comment, Contributor, Formula
-    '                     MW, Name, Nist, Peaks, RI
-    '                     RT, Source
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 30
+'    Code Lines: 21 (70.00%)
+' Comment Lines: 4 (13.33%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 5 (16.67%)
+'     File Size: 1.22 KB
+
+
+'     Class MSLIon
+' 
+'         Properties: [IS], CASNO, Comment, Contributor, Formula
+'                     MW, Name, Nist, Peaks, RI
+'                     RT, Source
+' 
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -64,6 +64,35 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
 Namespace ASCII.MSL
 
+    ''' <summary>
+    ''' The MSL (Mass Spectrometry Library) mass spectrum file format is a data format used to store mass spectrometry data, 
+    ''' particularly for libraries of reference spectra. These libraries are used to identify unknown compounds by comparing
+    ''' their mass spectra against the reference spectra in the library. The MSL format is commonly used in the field of 
+    ''' mass spectrometry for the following purposes:
+    ''' 
+    ''' 1. **Storage of Reference Spectra**: MSL files contain reference mass spectra for known compounds, which can be used for compound identification.
+    ''' 2. **Data Exchange**: The format allows for the exchange of mass spectrometry data between different software platforms and instruments.
+    ''' 3. **Library Creation**: Researchers can create custom libraries of mass spectra for specific applications, such as metabolomics, proteomics, or environmental analysis.
+    ''' 4. **Quality Control**: MSL files can be used to ensure the quality of mass spectrometry data by providing standardized reference spectra for comparison.
+    ''' 
+    ''' The MSL file format typically includes the following components:
+    ''' 
+    ''' - **Header Information**: This section contains metadata about the file, such as the date of creation, the source of the spectra, and any relevant comments.
+    ''' - **Spectrum Information**: Each spectrum in the file is accompanied by information such as the compound name, molecular weight, retention time, and other identifying characteristics.
+    ''' - **Peak List**: The core of the MSL file is the list of mass-to-charge ratio (m/z) values and their corresponding intensities for each spectrum. These peaks represent the fragmentation pattern of the compound.
+    ''' - **Additional Metadata**: Depending on the application, the MSL file may also include additional metadata such as chemical structure information, fragmentation rules, or analytical conditions.
+    ''' 
+    ''' MSL files are typically generated by mass spectrometry software and can be read by various programs designed for 
+    ''' mass spectrometry data analysis. Some popular software tools that can handle MSL files include:
+    ''' 
+    ''' - **MassHunter**: A software suite from Agilent Technologies for mass spectrometry data acquisition and analysis.
+    ''' - **Maven**: An open-source software tool for LC-MS data processing and analysis.
+    ''' - **NIST MS Search**: A software program from the National Institute of Standards and Technology (NIST) for searching and identifying compounds using mass spectrometry data.
+    ''' 
+    ''' When working with MSL files, it's important to ensure that the software being used is compatible with the specific 
+    ''' version of the MSL format, as there may be variations in the file structure depending on the software and instrument 
+    ''' used to generate the data.
+    ''' </summary>
     Public Class MSLIon
 
         <Column(Name:="NAME")> Public Property Name As String
