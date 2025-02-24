@@ -20,6 +20,15 @@ Namespace SDF.Models
         <XmlAttribute> Public Property Type As BoundTypes
         <XmlAttribute> Public Property Stereo As BoundStereos
 
+        Sub New()
+        End Sub
+
+        Sub New(i As Integer, j As Integer, Optional type As BoundTypes = BoundTypes.Single)
+            Me.i = i
+            Me.j = j
+            Me.Type = type
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"[{i}, {j}] {Type} AND {Stereo}"
         End Function

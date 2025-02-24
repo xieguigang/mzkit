@@ -83,6 +83,17 @@ Namespace SDF.Models
         <XmlElement("xyz")>
         Public Property Coordination As Point3D
 
+        Sub New()
+        End Sub
+
+        ''' <summary>
+        ''' construct an atom element model by its atom name
+        ''' </summary>
+        ''' <param name="atom"></param>
+        Sub New(atom As String)
+            Me.Atom = atom
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"({Coordination}) {Atom}"
         End Function

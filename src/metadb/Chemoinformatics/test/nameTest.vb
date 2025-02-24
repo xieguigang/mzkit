@@ -63,6 +63,7 @@ Module nameTest
     Dim parser As New GlycosylNameSolver
 
     Sub Main()
+        Call fingerprintTest.Main333()
         Call inchiTest.Main2()
         Call parseLipids()
 
