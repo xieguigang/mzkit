@@ -20,12 +20,14 @@ Namespace MorganFingerprint
             ' Perform iterations to expand the atom codes
             For iteration As Integer = 0 To Iterations - 1
                 Dim newCodes As Integer() = New Integer(struct.Atoms.Length - 1) {}
+
                 For Each bound As Bound In struct.Bounds
                     Dim code1 As Integer = atoms(bound.i).Code
                     Dim code2 As Integer = atoms(bound.j).Code
                     newCodes(bound.i) = HashCodes(code1, code2, bound.Type, bound.Stereo)
                     newCodes(bound.j) = HashCodes(code2, code1, bound.Type, bound.Stereo)
                 Next
+
                 For i As Integer = 0 To struct.Atoms.Length - 1
                     atoms(i).Code = newCodes(i)
                 Next
@@ -33,6 +35,7 @@ Namespace MorganFingerprint
 
             ' Generate the final fingerprint
             Dim fingerprint As New BitArray(FingerprintLength)
+
             For Each atom As MorganAtom In atoms
                 Dim position As Integer = atom.Code Mod FingerprintLength
                 fingerprint.Set(position, True)
