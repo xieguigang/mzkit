@@ -5,7 +5,7 @@ Namespace MorganFingerprint
     Public Class MorganAtom : Inherits Atom
 
         Public Property Index As Integer
-        Public Property Code As Integer
+        Public Property Code As ULong
 
         Sub New(base As Atom)
             Atom = base.Atom
