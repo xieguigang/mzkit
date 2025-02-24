@@ -1,6 +1,4 @@
 ﻿Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
 
 Namespace SDF.Models
 
@@ -9,7 +7,15 @@ Namespace SDF.Models
     ''' </summary>
     Public Class Bound
 
+        ''' <summary>
+        ''' index of atom 1
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property i As Integer
+        ''' <summary>
+        ''' index of atom 2
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property j As Integer
         <XmlAttribute> Public Property Type As BoundTypes
         <XmlAttribute> Public Property Stereo As BoundStereos

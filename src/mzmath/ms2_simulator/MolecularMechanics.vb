@@ -9,7 +9,7 @@
     ''' <param name="r">当前键长</param>
     ''' <param name="r0">平衡键长</param>
     ''' <returns>势能 V = 0.5 * k * (r - r0)^2</returns>
-    Function CalculateHarmesFinkelPotential(k As Double, r As Double, r0 As Double) As Double
+    Public Function CalculateHarmesFinkelPotential(k As Double, r As Double, r0 As Double) As Double
         ' k 是力常数
         ' r 是当前键长
         ' r0 是平衡键长
@@ -28,7 +28,7 @@
     ''' <param name="sigma">分子间的范德华半径</param>
     ''' <param name="r">分子间的距离</param>
     ''' <returns>势能 V = 4 * epsilon * [(sigma / r)^12 - (sigma / r)^6]</returns>
-    Function CalculateLennardJonesPotential(epsilon As Double, sigma As Double, r As Double) As Double
+    Public Function CalculateLennardJonesPotential(epsilon As Double, sigma As Double, r As Double) As Double
         ' epsilon 是势能阱的深度
         ' sigma 是分子间的范德华半径
         ' r 是分子间的距离
