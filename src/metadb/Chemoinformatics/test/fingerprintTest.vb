@@ -18,9 +18,9 @@ Module fingerprintTest
             New Bound(2, 4)
         }}
 
-        Dim hash = struct.CalculateFingerprint
-        Dim bytes = hash.
+        Dim hash = struct.CalculateFingerprintCheckSum
 
         Call Console.WriteLine(BitConverter.ToString(hash))
+        Call Pause()
     End Sub
 End Module
