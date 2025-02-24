@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Morgan fingerprints, also known as circular fingerprints, are a type of molecular fingerprint</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>morgan_fingerprint {QSAR}</td>
+                <td style="text-align: right;">R Documentation</td>
+            </tr>
+        </table>
+
+        <h2>Morgan fingerprints, also known as circular fingerprints, are a type of molecular fingerprint</h2>
+
+        <h3>Description</h3>
+
+        <p>used in cheminformatics to represent the structure of chemical compounds. The algorithm steps <br /> for generating Morgan fingerprints are as follows:<br /> <br /> 1. <strong>Initialization<em></em>:<br />  - Start with the initial set of atoms in the molecule.<br />  - Assign a unique identifier (e.g., integer) to each atom.<br />  <br /> 2. <em></em>Atom Environment Encoding<em></em>:<br />  - For each atom, encode its immediate environment, which includes the atom type and the types of its directly connected neighbors.<br />  - This information can be represented as a string or a hash.<br />  <br /> 3. <em></em>Iterative Expansion<em></em>:<br />  - Expand the environment encoding iteratively to include atoms further away from the starting atom.<br />  - In each iteration, update the encoding to include the types of atoms that are two, three, etc., bonds away from the starting atom.<br />  <br /> 4. <em></em>Hashing<em></em>:<br />  - Convert the environment encoding into a fixed-size integer using a hashing function. This integer represents the fingerprint of the atom's environment.<br />  - Different atoms in the molecule will have different fingerprints based on their environments.<br />  <br /> 5. <em></em>Circular Fingerprint Generation<em></em>:<br />  - For each atom, generate a series of fingerprints that represent its environment at different radii (number of bonds away).<br />  - The final fingerprint for an atom is a combination of these series of fingerprints.<br />  <br /> 6. <em></em>Molecular Fingerprint<em></em>:<br />  - Combine the fingerprints of all atoms in the molecule to create the final molecular fingerprint.<br />  - This can be done by taking the bitwise OR of all atom fingerprints, resulting in a single fingerprint that represents the entire molecule.<br />  <br /> 7. <em></em>Optional Folding<em></em>:<br />  - To reduce the size of the fingerprint, an optional folding step can be applied. This involves <br />    dividing the fingerprint into chunks and performing a bitwise XOR operation within each chunk.<br />    <br /> 8. <em></em>Result</strong>:<br />  - The final result is a binary vector (or a list of integers) that represents the Morgan fingerprint <br />    of the molecule. This fingerprint can be used for similarity searching, clustering, and other <br />    cheminformatics tasks.<br />    <br /> Morgan fingerprints are particularly useful because they capture the circular nature of molecular<br /> environments, meaning that the path taken to reach an atom is not as important as the environment <br /> around it. This makes them effective for comparing the similarity of molecules based on their <br /> structural features.</p>
+
+        <h3>Usage</h3>
+
+        <div style="width: 100%; padding-left: 3%; color: black;">
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>morgan_fingerprint</strong>(<i>struct</i>,
+    <i>itrs</i> = <span style='color: green;'>3</span>);</code></pre>
+        </div>
+
+        <h3>Arguments</h3>
+
+        <table>
+            
+        </table>
+
+
+        <h3 style="display: none;">Details</h3>
+
+        
+
+        <h3 style="display: block">Authors</h3>
+
+        BioNovoGene
+
+        <h3>Value</h3>
+
+        this function returns data object of type <a href="/vignettes/clr/System/Byte.html">Byte</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/System/Byte.html">Byte</a></li></ul>
+
+        <h3 style="display: none;">Examples</h3>
+
+        
+
+        <hr />
+        <div style="text-align: center;">[Package <em>QSAR</em> version 1.0.0.0 <a
+                href="../QSAR.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("example_r");</script>
+
+</html>
