@@ -49,13 +49,13 @@ Namespace MorganFingerprint
     ''' </summary>
     Public Module MorganFingerprint
 
-        Dim FingerprintLength As Integer = 1024
+        Public ReadOnly Property FingerprintLength As Integer = 1024
 
         Public Sub SetLength(len As Integer)
             If len Mod 8 <> 0 Then
                 Throw New InvalidProgramException("the length of the Morgan Fingerprint vector should be mod by 8!")
             Else
-                FingerprintLength = len
+                _FingerprintLength = len
             End If
         End Sub
 
