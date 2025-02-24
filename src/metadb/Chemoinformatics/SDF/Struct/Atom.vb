@@ -70,6 +70,9 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace SDF.Models
 
+    ''' <summary>
+    ''' atom element key and its spatial coordinates
+    ''' </summary>
     Public Class Atom : Implements IReadOnlyId
 
         ''' <summary>
