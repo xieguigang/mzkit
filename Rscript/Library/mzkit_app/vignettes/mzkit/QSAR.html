@@ -1,0 +1,181 @@
+<!DOCTYPE html><html lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>QSAR</title>
+    <meta name="author" content="xie.guigang@gcmodeller.org" />
+    <meta name="copyright" content="SMRUCC genomics Copyright (c) 2022" />
+    <meta name="keywords" content="R#; QSAR; mzkit" />
+    <meta name="generator" content="https://github.com/rsharp-lang" />
+    <meta name="theme-color" content="#333" />
+    <meta name="description" content="QSAR, which stands for Quantitative Structure-Activity Relations..." />
+    <meta class="foundation-data-attribute-namespace" />
+    <meta class="foundation-mq-xxlarge" />
+    <meta class="foundation-mq-xlarge" />
+    <meta class="foundation-mq-large" />
+    <meta class="foundation-mq-medium" />
+    <meta class="foundation-mq-small" />
+    <meta class="foundation-mq-topbar" />
+    <style>
+
+.table-three-line {
+border-collapse:collapse; /* 关键属性：合并表格内外边框(其实表格边框有2px，外面1px，里面还有1px哦) */
+border:solid #000000; /* 设置边框属性；样式(solid=实线)、颜色(#999=灰) */
+border-width:2px 0 2px 0px; /* 设置边框状粗细：上 右 下 左 = 对应：1px 0 0 1px */
+}
+.left-1{
+    border:solid #000000;border-width:1px 1px 2px 0px;padding:2px;
+    font-weight:bolder;
+}
+.right-1{
+    border:solid #000000;border-width:1px 0px 2px 1px;padding:2px;
+    font-weight:bolder;
+}
+.mid-1{
+    border:solid #000000;border-width:1px 1px 2px 1px;padding:2px;
+    font-weight:bolder;
+}
+.left{
+    border:solid #000000;border-width:1px 1px 1px 0px;padding:2px;
+}
+.right{
+    border:solid #000000;border-width:1px 0px 1px 1px;padding:2px;
+}
+.mid{
+    border:solid #000000;border-width:1px 1px 1px 1px;padding:2px;
+}
+table caption {font-size:14px;font-weight:bolder;}
+</style>
+  </head>
+  <body>
+    <table width="100%" summary="page for {QSAR}">
+      <tbody>
+        <tr>
+          <td>{QSAR}</td>
+          <td style="text-align: right;">R# Documentation</td>
+        </tr>
+      </tbody>
+    </table>
+    <h1>QSAR</h1>
+    <hr />
+    <p style="     font-size: 1.125em;     line-height: .8em;     margin-left: 0.5%;     background-color: #fbfbfb;     padding: 24px; ">
+      <code>
+        <span style="color: blue;">require</span>(<span style="color: black; font-weight: bold;">mzkit</span>);
+                               <br /><br /><span style="color: green;">#' QSAR, which stands for Quantitative Structure-Activity Relationship, is a computational</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "QSAR"</span><span style="color: blue;"> from</span><span style="color: brown"> "mzkit"</span>;
+                           </code>
+    </p>
+    <p><p>QSAR, which stands for Quantitative Structure-Activity Relationship, is a computational
+ methodology used in the fields of chemistry, biology, and pharmacology to analyze and 
+ predict the relationship between the chemical structure of a molecule and its biological
+ activity or properties.
+ 
+ The basic principle of QSAR is that the biological activity of a molecule is related to its
+ physicochemical properties, which can be described by various molecular descriptors. These
+ descriptors can include factors such as molecular weight, hydrophobicity, electronic
+ properties, and structural features like the presence of certain functional groups.
+ 
+ Here's a more detailed breakdown of the QSAR process:
+ 
+ 1. <strong>Data Collection</strong>: A set of compounds with known biological activities is collected. 
+    This dataset serves as the training set for the QSAR model.
+ 2. <strong>Molecular Descriptors Calculation</strong>: For each compound in the dataset, a series of 
+    molecular descriptors are calculated. These descriptors quantitatively represent the 
+    molecular structure and properties.
+ 3. <strong>Model Development</strong>: Statistical or machine learning methods are used to analyze the 
+    relationship between the molecular descriptors and the biological activities. This results
+    in a mathematical model that can predict the activity of new compounds based on their descriptors.
+ 4. <strong>Validation</strong>: The developed QSAR model is validated using a separate set of compounds
+    (the test set) to ensure its predictive power and robustness.
+ 5. <strong>Prediction</strong>: Once validated, the QSAR model can be used to predict the biological 
+    activities of new or untested compounds based on their molecular descriptors.
+    
+ QSAR has several applications, including:
+ 
+ - <strong>Drug Discovery</strong>: Predicting the biological activity of potential drug candidates, thereby 
+   reducing the number of compounds that need to be synthesized and tested in the lab.
+ - <strong>Environmental Chemistry</strong>: Assessing the toxicity of chemicals and their environmental impact.
+ - <strong>Chemical Safety</strong>: Evaluating the safety of chemicals used in consumer products.
+ 
+ However, QSAR models also have limitations. They are based on the assumption that the molecular 
+ descriptors adequately capture the relevant aspects of molecular structure that influence biological
+ activity. Additionally, the quality of the predictions is highly dependent on the quality and
+ diversity of the training data.
+ 
+ In summary, QSAR is a powerful tool for predicting the biological activities of compounds based 
+ on their chemical structures, with wide-ranging applications in various scientific disciplines.
+ However, it requires careful validation and interpretation to ensure the reliability of its 
+ predictions.</p></p>
+    <blockquote>
+      <p style="font-style: italic; font-size: 0.9em;">
+                           
+                           </p>
+    </blockquote>
+    <div id="main-wrapper">
+      <table class="table-three-line" style="display: none">
+        <caption>.NET clr type export</caption>
+        <tbody></tbody>
+      </table>
+      <br />
+      <br />
+      <table class="table-three-line">
+        <caption>.NET clr function exports</caption>
+        <tbody><tr>
+  <td id="morgan_fingerprint">
+    <a href="./QSAR/morgan_fingerprint.html">morgan_fingerprint</a>
+  </td>
+  <td><p>Morgan fingerprints, also known as circular fingerprints, are a type of molecular fingerprint 
+ used in cheminformatics to represent the structure of chemical compounds. The algorithm steps 
+ for generating Morgan fingerprints are as follows:
+ 
+ 1. <strong>Initialization</strong>:
+  - Start with the initial set of atoms in the molecule.
+  - Assign a unique identifier (e.g., integer) to each atom.
+  
+ 2. <strong>Atom Environment Encoding</strong>:
+  - For each atom, encode its immediate environment, which includes the atom type and the types of its directly connected neighbors.
+  - This information can be represented as a string or a hash.
+  
+ 3. <strong>Iterative Expansion</strong>:
+  - Expand the environment encoding iteratively to include atoms further away from the starting atom.
+  - In each iteration, update the encoding to include the types of atoms that are two, three, etc., bonds away from the starting atom.
+  
+ 4. <strong>Hashing</strong>:
+  - Convert the environment encoding into a fixed-size integer using a hashing function. This integer represents the fingerprint of the atom's environment.
+  - Different atoms in the molecule will have different fingerprints based on their environments.
+  
+ 5. <strong>Circular Fingerprint Generation</strong>:
+  - For each atom, generate a series of fingerprints that represent its environment at different radii (number of bonds away).
+  - The final fingerprint for an atom is a combination of these series of fingerprints.
+  
+ 6. <strong>Molecular Fingerprint</strong>:
+  - Combine the fingerprints of all atoms in the molecule to create the final molecular fingerprint.
+  - This can be done by taking the bitwise OR of all atom fingerprints, resulting in a single fingerprint that represents the entire molecule.
+  
+ 7. <strong>Optional Folding</strong>:
+  - To reduce the size of the fingerprint, an optional folding step can be applied. This involves 
+    dividing the fingerprint into chunks and performing a bitwise XOR operation within each chunk.
+    
+ 8. <strong>Result</strong>:
+  - The final result is a binary vector (or a list of integers) that represents the Morgan fingerprint 
+    of the molecule. This fingerprint can be used for similarity searching, clustering, and other 
+    cheminformatics tasks.
+    
+ Morgan fingerprints are particularly useful because they capture the circular nature of molecular
+ environments, meaning that the path taken to reach an atom is not as important as the environment 
+ around it. This makes them effective for comparing the similarity of molecules based on their 
+ structural features.</p></td>
+</tr>
+<tr>
+  <td id="fingerprint">
+    <a href="./QSAR/fingerprint.html">fingerprint</a>
+  </td>
+  <td></td>
+</tr></tbody>
+      </table>
+    </div>
+    <hr />
+    <div style="text-align: center;">[<a href="../index.html">Document Index</a>]</div>
+  </body>
+</html>
