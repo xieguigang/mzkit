@@ -69,7 +69,7 @@ Imports System.IO
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO.Linq
+Imports Microsoft.VisualBasic.Data.Framework.IO.Linq
 
 Namespace TMIC.HMDB
 

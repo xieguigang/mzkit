@@ -59,8 +59,8 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF.Models
-Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.csv.IO.Linq
+Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO.Linq
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Scripting
