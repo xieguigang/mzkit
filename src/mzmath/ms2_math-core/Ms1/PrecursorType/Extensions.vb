@@ -206,7 +206,10 @@ Namespace Ms1.PrecursorType
 
         Private Function AdductFormulaParts(precursor_type As String) As ICollection(Of (sign%, expression As String))
             Dim formulas As New List(Of (sign%, expression As String))
-            Dim parser As CharPtr = precursor_type.GetStackValue("[", "]").StringReplace("\d*M", "")
+            ' 20250227 try to replace the DMSO with its formula string
+            ' or the `M` character inside the DMSO will be replaced via the
+            ' regexp pattern laterly
+            Dim parser As CharPtr = precursor_type.Replace("DMSO", "CH3CH3SO").GetStackValue("[", "]").StringReplace("\d*M", "")
             Dim buffer As New List(Of Char)
             Dim c As Char
             Dim sign% = 1
