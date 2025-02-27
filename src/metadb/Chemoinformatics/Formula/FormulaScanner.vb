@@ -84,6 +84,10 @@ Namespace Formula
         End Sub
 
         Shared Sub New()
+            Call SetupAdductsScanner()
+        End Sub
+
+        Public Shared Sub SetupAdductsScanner()
             Call ExactMass.SetExactMassParser(Function(f) EvaluateExactMass(f))
         End Sub
 
