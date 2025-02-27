@@ -60,8 +60,8 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
@@ -108,7 +108,7 @@ Public Class UMAPPoint
         Return $"[{x}, {y}, {z}] {[class]}"
     End Function
 
-    Private Shared Function GetClusterLabels(df As DataFrame) As String()
+    Private Shared Function GetClusterLabels(df As DataFrameResolver) As String()
         Dim [class] As String()
 
         Static fields As String() = {
@@ -129,7 +129,7 @@ Public Class UMAPPoint
     End Function
 
     Public Shared Iterator Function ParseCsvTable(file As String) As IEnumerable(Of UMAPPoint)
-        Dim df As DataFrame = DataFrame.Load(file)
+        Dim df As DataFrameResolver = DataFrameResolver.Load(file)
         Dim labels As String() = df.GetColumnVectors.First.ToArray
         Dim x As Double() = df.GetColumnValues("x").Select(AddressOf Val).ToArray
         Dim y As Double() = df.GetColumnValues("y").Select(AddressOf Val).ToArray

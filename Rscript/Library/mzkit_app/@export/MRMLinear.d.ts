@@ -14,10 +14,12 @@ declare namespace MRMLinear {
        * Convert any compatibale type as the ion pairs data object for MRM target selected.
        * 
        * 
-        * @param mz -
+        * @param mz should be a set of the @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL.MSLIon`` object data.
         * @param env -
         * 
         * + default value Is ``null``.
+        * @return a collection of the mzkit clr ion pair data object. this MRM ion pair data object could 
+        *  be cast to dataframe vai the ``as.data.frame`` conversion.
       */
       function ion_pairs(mz: any, env?: object): object;
    }

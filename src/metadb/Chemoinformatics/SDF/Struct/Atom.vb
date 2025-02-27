@@ -64,16 +64,35 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Namespace SDF.Models
 
-    Public Class Atom
+    ''' <summary>
+    ''' atom element key and its spatial coordinates
+    ''' </summary>
+    Public Class Atom : Implements IReadOnlyId
 
-        <XmlAttribute> Public Property Atom As String
+        ''' <summary>
+        ''' the element atom key
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute> Public Property Atom As String Implements IReadOnlyId.Identity
         <XmlElement("xyz")>
         Public Property Coordination As Point3D
+
+        Sub New()
+        End Sub
+
+        ''' <summary>
+        ''' construct an atom element model by its atom name
+        ''' </summary>
+        ''' <param name="atom"></param>
+        Sub New(atom As String)
+            Me.Atom = atom
+        End Sub
 
         Public Overrides Function ToString() As String
             Return $"({Coordination}) {Atom}"

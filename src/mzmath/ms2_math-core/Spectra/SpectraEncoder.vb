@@ -219,9 +219,12 @@ Namespace Spectra
         ''' <remarks>
         ''' the numeric data vector should be encoded in network byte order
         ''' </remarks>
-        Public Iterator Function Decode(mz64 As String, into64 As String) As IEnumerable(Of ms2)
-            Dim mz As Double() = network.ParseDouble(mz64)
-            Dim into As Double() = network.ParseDouble(into64)
+        Public Iterator Function Decode(mz64 As String, into64 As String,
+                                        Optional gzip As NetworkByteOrderBuffer.Compression = NetworkByteOrderBuffer.Compression.none,
+                                        Optional no_magic As Boolean = False) As IEnumerable(Of ms2)
+
+            Dim mz As Double() = network.ParseDouble(mz64, gzip, no_magic)
+            Dim into As Double() = network.ParseDouble(into64, gzip, no_magic)
 
             For i As Integer = 0 To mz.Length - 1
                 Yield New ms2(mz(i), into(i))
@@ -233,6 +236,16 @@ Namespace Spectra
         ''' </summary>
         ''' <param name="base64"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' the text format description about the input data:
+        ''' 
+        ''' input data should be a text encoded matrix data:
+        ''' 
+        ''' each line is a ion fragment data, in layout of [mz][tab][intensity]
+        ''' then multiple ion fragments data consist the matrix text
+        ''' 
+        ''' the matrix text then encoded as base64 string in utf-8 text encoded format.
+        ''' </remarks>
         Public Function Decode(base64 As String) As (x#, y#)()
             Dim bytes As Byte() = Convert.FromBase64String(base64)
             Dim table$ = TextEncodings.UTF8WithoutBOM.GetString(bytes)
@@ -250,8 +263,8 @@ Namespace Spectra
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function LibraryMatrix(decode As (x#, y#)()) As LibraryMatrix
-            Return decode _
+        Public Function LibraryMatrix(decode As (x#, y#)(), Optional name As String = Nothing) As LibraryMatrix
+            Dim msms = decode _
                 .Select(Function(d)
                             Return New ms2 With {
                                 .mz = d.x,
@@ -259,6 +272,8 @@ Namespace Spectra
                             }
                         End Function) _
                 .ToArray
+
+            Return New LibraryMatrix(name, msms)
         End Function
     End Module
 End Namespace
