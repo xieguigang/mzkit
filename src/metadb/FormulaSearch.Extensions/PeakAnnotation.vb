@@ -88,6 +88,7 @@ Public Class PeakAnnotation
     Public Property formula As FormulaComposition
     Public Property precursor_matched As Boolean = False
     Public Property score As Double
+    Public Property norm_score As Double
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Sub New(formula As FormulaComposition, products As IEnumerable(Of ProductIon))
@@ -205,7 +206,8 @@ Public Class PeakAnnotation
 
         Return New PeakAnnotation(fcom, union) With {
             .precursor_matched = precursorHit,
-            .score = score
+            .score = score,
+            .norm_score = .score / (3 * union.Length)
         }
     End Function
 
