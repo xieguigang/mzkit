@@ -171,8 +171,10 @@ Public NotInheritable Class FragmentAssigner
             Dim dl = std.Abs(loss.MassLoss - delta)
 
             If dl <= da AndAlso dl < minErr Then
-                minErr = dl
-                minLoss = loss
+                If isFormulaComposition(loss.Formula, formula) Then
+                    minErr = dl
+                    minLoss = loss
+                End If
             End If
         Next
 
