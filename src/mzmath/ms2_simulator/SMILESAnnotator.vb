@@ -4,13 +4,14 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES
+Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES.Embedding
 Imports BioNovoGene.BioDeep.MSFinder
 
 Public Class SMILESAnnotator
 
     ReadOnly smiles As ChemicalFormula
     ReadOnly formula As Formula
-    ReadOnly da As Tolerance = Tolerance.DefaultTolerance
+    ReadOnly da As Tolerance = Tolerance.DeltaMass(0.5)
 
     Sub New(smiles As ChemicalFormula, formula As Formula)
         Me.smiles = smiles
@@ -34,10 +35,11 @@ Public Class SMILESAnnotator
                 Dim adducts As Formula = candiate - formula
 
                 Return $"[M+{adducts.CanonicalFormula}]{If(ionMode = IonModes.Positive, "+", "-")}"
-            ElseIf da(candiate.ExactMass, formula.ExactMass) Then
+            ElseIf candiate = formula Then
                 Return $"[M]{If(ionMode = IonModes.Positive, "+", "-")}"
             Else
-                Dim adducts As Formula = formula - candiate
+                Dim loss As Formula = formula - candiate
+                Dim check As Boolean = smiles.CheckSubGroup(loss)
 
                 Throw New NotImplementedException
             End If
