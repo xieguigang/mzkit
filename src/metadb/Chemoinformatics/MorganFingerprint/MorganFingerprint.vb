@@ -79,7 +79,7 @@ Namespace MorganFingerprint
             Next
 
             ' Perform iterations to expand the atom codes
-            For iteration As Integer = 0 To radius - 1
+            For r As Integer = 0 To radius - 1
                 Dim newCodes As ULong() = New ULong(struct.Atoms.Length - 1) {}
 
                 For Each bound As Bound In struct.Bounds
