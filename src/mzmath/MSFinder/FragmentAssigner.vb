@@ -93,6 +93,58 @@ Public NotInheritable Class FragmentAssigner
 
     Public Shared ReadOnly Property [Default] As New FragmentAssigner
 
+    Public Function FragmnetAssign(peak As SpectrumPeak, eMass As Double, formula As Formula, AdductIon As AdductIon) As ProductIon
+        Dim mass = peak.mz + eMass
+        Dim minDiff = Double.MaxValue
+        Dim massTol = ms2Tol
+
+        If massTolType = MassToleranceType.Ppm Then
+            massTol = PPMmethod.ConvertPpmToMassAccuracy(mass, ms2Tol)
+        End If
+
+        Dim minId = -1
+
+        'for precursor annotation
+        If std.Abs(mass - formula.ExactMass - AdductIon.AdductIonAccurateMass) < massTol Then
+            Dim nFormula = FormulaCalculateUtility.ConvertFormulaAdductPairToPrecursorAdduct(formula, AdductIon)
+
+            Return New ProductIon() With {
+                .Formula = nFormula,
+                .Mass = peak.mz,
+                .MassDiff = formula.ExactMass + AdductIon.AdductIonAccurateMass - mass,
+                .Intensity = peak.intensity
+            }
+        End If
+
+        'library search
+        Dim fragmentFormulas = getFormulaCandidatesbyLibrarySearch(formula, AdductIon.IonMode, peak.mz, massTol, productIonDB)
+
+        If fragmentFormulas.IsNullOrEmpty Then
+            fragmentFormulas = getValenceCheckedFragmentFormulaList(formula, AdductIon.IonMode, peak.mz, massTol)
+        End If
+
+        For i As Integer = 0 To fragmentFormulas.Count - 1
+            If minDiff > std.Abs(mass - fragmentFormulas(i).ExactMass) Then
+                minId = i
+                minDiff = std.Abs(mass - fragmentFormulas(i).ExactMass)
+            End If
+        Next
+
+        If minId >= 0 Then
+            Return New ProductIon() With {
+                .Formula = fragmentFormulas(minId),
+                .Mass = peak.mz,
+                .MassDiff = fragmentFormulas(minId).ExactMass - mass,
+                .Intensity = peak.intensity,
+                .IonMode = AdductIon.IonMode,
+                .Name = fragmentFormulas(minId).EmpiricalFormula,
+                .ShortName = .Name
+            }
+        Else
+            Return Nothing
+        End If
+    End Function
+
     ''' <summary>
     ''' peaklist should be centroid and refined. For peaklist refining, use GetRefinedPeaklist.
     ''' </summary>
@@ -116,54 +168,13 @@ Public NotInheritable Class FragmentAssigner
                 Continue For
             End If
 
-            Dim mass = peak.mz + eMass
-            Dim minDiff = Double.MaxValue
-            Dim massTol = ms2Tol
+            Dim ion As ProductIon = FragmnetAssign(peak, eMass, formula, AdductIon)
 
-            If massTolType = MassToleranceType.Ppm Then
-                massTol = PPMmethod.ConvertPpmToMassAccuracy(mass, ms2Tol)
-            End If
-
-            Dim minId = -1
-
-            'for precursor annotation
-            If std.Abs(mass - formula.ExactMass - AdductIon.AdductIonAccurateMass) < massTol Then
-                Dim nFormula = FormulaCalculateUtility.ConvertFormulaAdductPairToPrecursorAdduct(formula, AdductIon)
-
-                Call productIons.Add(New ProductIon() With {
-                    .Formula = nFormula,
-                    .Mass = peak.mz,
-                    .MassDiff = formula.ExactMass + AdductIon.AdductIonAccurateMass - mass,
-                    .Intensity = peak.intensity
-                })
+            If ion Is Nothing Then
                 Continue For
             End If
 
-            'library search
-            Dim fragmentFormulas = getFormulaCandidatesbyLibrarySearch(formula, AdductIon.IonMode, peak.mz, massTol, productIonDB)
-
-            If fragmentFormulas.IsNullOrEmpty Then
-                fragmentFormulas = getValenceCheckedFragmentFormulaList(formula, AdductIon.IonMode, peak.mz, massTol)
-            End If
-
-            For i As Integer = 0 To fragmentFormulas.Count - 1
-                If minDiff > std.Abs(mass - fragmentFormulas(i).ExactMass) Then
-                    minId = i
-                    minDiff = std.Abs(mass - fragmentFormulas(i).ExactMass)
-                End If
-            Next
-
-            If minId >= 0 Then
-                productIons.Add(New ProductIon() With {
-                    .Formula = fragmentFormulas(minId),
-                    .Mass = peak.mz,
-                    .MassDiff = fragmentFormulas(minId).ExactMass - mass,
-                    .Intensity = peak.intensity,
-                    .IonMode = AdductIon.IonMode,
-                    .Name = fragmentFormulas(minId).EmpiricalFormula,
-                    .ShortName = .Name
-                })
-            End If
+            Call productIons.Add(ion)
         Next
 
         For Each ion As ProductIon In productIons
@@ -512,7 +523,17 @@ Public NotInheritable Class FragmentAssigner
     'private static double brMass = 78.91833710000;
     'private static double iMass = 126.90447300000;
 
-    Private Shared Function getValenceCheckedFragmentFormulaList(formula As Formula, ionMode As IonModes, mass As Double, massTol As Double) As List(Of Formula)
+    ''' <summary>
+    ''' de-novo search of the fragment formula candidates
+    ''' </summary>
+    ''' <param name="formula">the molecule formula</param>
+    ''' <param name="ionMode">adducts ion mode</param>
+    ''' <param name="mass">ms2 fragment mz value</param>
+    ''' <param name="massTol">mass tolerance error in mass delta delton</param>
+    ''' <returns>
+    ''' a candidate list of the fragment formula
+    ''' </returns>
+    Public Shared Function getValenceCheckedFragmentFormulaList(formula As Formula, ionMode As IonModes, mass As Double, massTol As Double) As List(Of Formula)
         Dim fragmentFormulas = New List(Of Formula)()
         Dim hydrogen = 1
 
