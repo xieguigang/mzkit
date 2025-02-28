@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
@@ -9,7 +10,7 @@ Public Class SMILESAnnotator
 
     ReadOnly smiles As ChemicalFormula
     ReadOnly formula As Formula
-    ReadOnly da As Double = 0.3
+    ReadOnly da As Tolerance = Tolerance.DefaultTolerance
 
     Sub New(smiles As ChemicalFormula, formula As Formula)
         Me.smiles = smiles
@@ -23,11 +24,23 @@ Public Class SMILESAnnotator
     End Sub
 
     Public Function Annotation(mz As Double, ionMode As IonModes) As String
-        Dim candiates = FragmentAssigner.getValenceCheckedFragmentFormulaList(formula, ionMode, mz, da)
+        Dim candiates = FragmentAssigner.getValenceCheckedFragmentFormulaList(formula, ionMode, mz, da.DeltaTolerance)
         Dim topRank As Formula = Nothing
 
         For Each candiate As Formula In candiates
+            If candiate.ExactMass > formula.ExactMass Then
+                ' [M+xxx]
+                ' precursor ion?
+                Dim adducts As Formula = candiate - formula
 
+                Return $"[M+{adducts.CanonicalFormula}]{If(ionMode = IonModes.Positive, "+", "-")}"
+            ElseIf da(candiate.ExactMass, formula.ExactMass) Then
+                Return $"[M]{If(ionMode = IonModes.Positive, "+", "-")}"
+            Else
+                Dim adducts As Formula = formula - candiate
+
+                Throw New NotImplementedException
+            End If
         Next
 
         If topRank Is Nothing Then

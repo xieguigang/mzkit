@@ -121,6 +121,12 @@ Namespace Formula
             End Get
         End Property
 
+        Public Shared ReadOnly Property H As Formula
+            Get
+                Return FormulaScanner.ScanFormula("H")
+            End Get
+        End Property
+
         Public Shared ReadOnly Property AllAtomElements As IReadOnlyDictionary(Of String, Element) = Element.MemoryLoadElements
 
         ''' <summary>
