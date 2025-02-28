@@ -181,7 +181,9 @@ Public Class PeakAnnotation
                         Return New ms2 With {
                             .mz = i.Mass,
                             .intensity = i.Intensity,
-                            .Annotation = i.Name
+                            .Annotation = If(i.Comment = "FragmentFormula" OrElse i.Comment = "Precursor",
+                                i.Name,
+                                $"{i.ShortName} [{i.Formula.EmpiricalFormula}]")
                         }
                     End Function) _
             .JoinIterates(peaks.GetIons) _

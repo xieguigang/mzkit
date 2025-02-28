@@ -14,7 +14,9 @@ Module annotation_test
     Sub annotation_test()
         Dim formuyla As Formula = FormulaScanner.ScanFormula("C7H11N3O2")
         Dim adducts As MzCalculator = Provider.ParseAdductModel("[M+H]+")
-        Dim result = PeakAnnotation.DoPeakAnnotation(New LibraryMatrix({170.16, 124.2}, {100, 20}), adducts, formuyla, da:=0.3)
+        Dim result = PeakAnnotation.DoPeakAnnotation(New LibraryMatrix(
+               {170.16, formuyla.ExactMass, 124.2, 170.0923990201 - 17.001, 29.0027395999},
+               {100, 45, 20, 5, 30}), adducts, formuyla, da:=0.3)
 
         Pause()
     End Sub

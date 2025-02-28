@@ -176,7 +176,13 @@ Namespace Formula.MS
             Dim lossFormula As New Formula
 
             For Each part In parts
-                If part.sign > 0 Then
+                ' 20250228
+                ' due to the reason of get loss formula at here
+                ' so we should reverse the sign relationship
+                ' example as [M-H2O]+ its loss formula should be 
+                ' H2O, so if the sign is -1, then we should add
+                ' H2O this loss part
+                If part.sign < 0 Then
                     lossFormula = lossFormula + part.expression
                 Else
                     lossFormula = lossFormula - part.expression
@@ -184,7 +190,7 @@ Namespace Formula.MS
             Next
 
             _Name = name
-            _ShortName = name
+            _ShortName = loss.GetStackValue("[", "]")
             _Comment = comment
             _Frequency = 1
             _Iontype = IonModes.Unknown
