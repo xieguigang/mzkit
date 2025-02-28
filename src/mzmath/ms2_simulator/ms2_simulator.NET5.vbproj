@@ -154,6 +154,7 @@
     <ProjectReference Include="..\..\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
     <ProjectReference Include="..\..\metadb\SMILES\SMILES.NET5.vbproj" />
     <ProjectReference Include="..\ms2_math-core\mzmath-netcore5.vbproj" />
+    <ProjectReference Include="..\MSFinder\MSFinder.vbproj" />
   </ItemGroup>
 
 </Project>

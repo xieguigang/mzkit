@@ -550,57 +550,57 @@ Public NotInheritable Class FragmentAssigner
         Dim maxClSPSiFONCHmass = maxSPSiFONCHmass + clMass * formula!Cl
         Dim maxBrClSPSiFONCHmass = maxClSPSiFONCHmass + brMass * formula!Br
 
-        For inum = 0 To formula!I
+        For inum As Integer = 0 To formula!I
             If inum * iMass + maxBrClSPSiFONCHmass < mass - massTol Then Continue For
             If inum * iMass > mass + massTol Then Exit For
             Dim uImass = inum * iMass
 
-            For brnum = 0 To formula!Br
+            For brnum As Integer = 0 To formula!Br
                 If uImass + brnum * brMass + maxClSPSiFONCHmass < mass - massTol Then Continue For
                 If uImass + brnum * brMass > mass + massTol Then Exit For
                 Dim uBrmass = uImass + brnum * brMass
 
-                For clnum = 0 To formula!Cl
+                For clnum As Integer = 0 To formula!Cl
                     If uBrmass + clnum * clMass + maxSPSiFONCHmass < mass - massTol Then Continue For
                     If uBrmass + clnum * clMass > mass + massTol Then Exit For
                     Dim uClmass = uBrmass + clnum * clMass
 
-                    For snum = 0 To formula!S
+                    For snum As Integer = 0 To formula!S
                         If uClmass + snum * sMass + maxPSiFONCHmass < mass - massTol Then Continue For
                         If uClmass + snum * sMass > mass + massTol Then Exit For
                         Dim uSmass = uClmass + snum * sMass
 
-                        For pnum = 0 To formula!P
+                        For pnum As Integer = 0 To formula!P
                             If uSmass + pnum * pMass + maxSiFONCHmass < mass - massTol Then Continue For
                             If uSmass + pnum * pMass > mass + massTol Then Exit For
                             Dim uPmass = uSmass + pnum * pMass
 
-                            For sinum = 0 To formula!Si
+                            For sinum As Integer = 0 To formula!Si
                                 If uPmass + sinum * siMass + maxFONCHmass < mass - massTol Then Continue For
                                 If uPmass + sinum * siMass > mass + massTol Then Exit For
                                 Dim uSimass = uPmass + sinum * siMass
 
-                                For fnum = 0 To formula!F
+                                For fnum As Integer = 0 To formula!F
                                     If uSimass + fnum * fMass + maxONCHmass < mass - massTol Then Continue For
                                     If uSimass + fnum * fMass > mass + massTol Then Exit For
                                     Dim uFmass = uSimass + fnum * fMass
 
-                                    For onum = 0 To formula!O
+                                    For onum As Integer = 0 To formula!O
                                         If uFmass + onum * oMass + maxNCHmass < mass - massTol Then Continue For
                                         If uFmass + onum * oMass > mass + massTol Then Exit For
                                         Dim uOmass = uFmass + onum * oMass
 
-                                        For nnum = 0 To formula!N
+                                        For nnum As Integer = 0 To formula!N
                                             If uOmass + nnum * nMass + maxCHmass < mass - massTol Then Continue For
                                             If uOmass + nnum * nMass > mass + massTol Then Exit For
                                             Dim uNmass = uOmass + nnum * nMass
 
-                                            For cnum = 0 To formula!C
+                                            For cnum As Integer = 0 To formula!C
                                                 If uNmass + cnum * cMass + maxHmass < mass - massTol Then Continue For
                                                 If uNmass + cnum * cMass > mass + massTol Then Exit For
                                                 Dim uCmass = uNmass + cnum * cMass
 
-                                                For hnum = 0 To formula!H + hydrogen
+                                                For hnum As Integer = 0 To formula!H + hydrogen
                                                     If uCmass + hnum * hMass < mass - massTol Then Continue For
                                                     If uCmass + hnum * hMass > mass + massTol Then Exit For
 
