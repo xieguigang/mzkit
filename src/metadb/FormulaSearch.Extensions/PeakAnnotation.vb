@@ -178,12 +178,20 @@ Public Class PeakAnnotation
         ' un-annotated fragments
         Dim union As ms2() = result _
             .Select(Function(i)
+                        Dim text As String
+
+                        If i.Comment = "FragmentFormula" OrElse i.Comment = "Precursor" Then
+                            text = i.Name
+                        ElseIf i.Type = AnnotationType.Loss Then
+                            text = i.ShortName
+                        Else
+                            text = $"{i.ShortName} [{i.Formula.EmpiricalFormula}]"
+                        End If
+
                         Return New ms2 With {
                             .mz = i.Mass,
                             .intensity = i.Intensity,
-                            .Annotation = If(i.Comment = "FragmentFormula" OrElse i.Comment = "Precursor",
-                                i.Name,
-                                $"{i.ShortName} [{i.Formula.EmpiricalFormula}]")
+                            .Annotation = text
                         }
                     End Function) _
             .JoinIterates(peaks.GetIons) _

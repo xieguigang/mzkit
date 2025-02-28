@@ -119,7 +119,8 @@ Public NotInheritable Class FragmentAssigner
                 .Intensity = peak.intensity,
                 .Comment = "Precursor",
                 .Name = .Comment,
-                .ShortName = .Comment
+                .ShortName = .Comment,
+                .Type = AnnotationType.Precursor
             }
         End If
 
@@ -145,7 +146,8 @@ Public NotInheritable Class FragmentAssigner
                                 .Name = .ShortName,
                                 .Mass = peak.mz,
                                 .Intensity = peak.intensity,
-                                .IonMode = AdductIon.IonMode
+                                .IonMode = AdductIon.IonMode,
+                                .Type = AnnotationType.Product
                             }
                         End Function) _
                 .ToList
@@ -199,7 +201,8 @@ Public NotInheritable Class FragmentAssigner
             .Mass = peak.mz,
             .Name = minLoss.Name,
             .ShortName = minLoss.ShortName,
-            .Intensity = peak.intensity
+            .Intensity = peak.intensity,
+            .Type = AnnotationType.Loss
         }
     End Function
 

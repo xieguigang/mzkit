@@ -16,6 +16,7 @@ Namespace Formula.MS
         Public Property Formula As Formula
 
         Public Property IonMode As IonModes
+        Public Property Type As AnnotationType = AnnotationType.Product
 
         Public Property Smiles As String
 
