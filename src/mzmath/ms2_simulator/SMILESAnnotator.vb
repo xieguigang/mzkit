@@ -9,12 +9,10 @@ Imports BioNovoGene.BioDeep.MSFinder
 
 Public Class SMILESAnnotator
 
-    ReadOnly smiles As GroupQuery
     ReadOnly formula As Formula
     ReadOnly da As Tolerance = Tolerance.DeltaMass(0.5)
 
     Sub New(smiles As ChemicalFormula, formula As Formula)
-        Me.smiles = New GroupQuery(smiles)
         Me.formula = formula
     End Sub
 
@@ -39,11 +37,6 @@ Public Class SMILESAnnotator
                 Return $"[M]{If(ionMode = IonModes.Positive, "+", "-")}"
             Else
                 Dim loss As Formula = formula - candiate
-                Dim check As Boolean = smiles.CheckSubGroup(loss)
-
-                If check Then
-
-                End If
 
                 Throw New NotImplementedException
             End If

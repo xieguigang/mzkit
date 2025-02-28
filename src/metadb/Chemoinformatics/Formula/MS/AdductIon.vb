@@ -102,6 +102,7 @@ Namespace Formula.MS
 
         Public Function ConvertToMz(exactMass As Double) As Double
             Dim precursorMz = (exactMass * AdductIonXmer + AdductIonAccurateMass) / ChargeNumber
+
             If IonMode = IonModes.Positive Then
                 precursorMz -= 0.0005485799 * ChargeNumber
             Else
@@ -147,13 +148,15 @@ Namespace Formula.MS
 
         Public ReadOnly Property IsFA As Boolean
             Get
-                Return Equals(AdductIonName, "[M+HCOO]-") OrElse Equals(AdductIonName, "[M+FA-H]-")
+                Return AdductIonName = "[M+HCOO]-" OrElse
+                    AdductIonName = "[M+FA-H]-"
             End Get
         End Property
 
         Public ReadOnly Property IsHac As Boolean
             Get
-                Return Equals(AdductIonName, "[M+CH3COO]-") OrElse Equals(AdductIonName, "[M+Hac-H]-")
+                Return AdductIonName = "[M+CH3COO]-" OrElse
+                    AdductIonName = "[M+Hac-H]-"
             End Get
         End Property
 
@@ -167,13 +170,14 @@ Namespace Formula.MS
         ''' <param name="adductName">Add the formula string such as "C6H12O6"</param>
         ''' <returns>AdductIon</returns>
         Public Shared Function GetAdductIon(adductName As String) As AdductIon
+            Static ADDUCT_IONS As New AdductIons()
             Return ADDUCT_IONS.GetOrAdd(adductName)
         End Function
 
         Private Shared Function GetAdductIonCore(adductName As String) As AdductIon
             Dim adduct As AdductIon = New AdductIon() With {
-            .AdductIonName = adductName
-        }
+                .AdductIonName = adductName
+            }
 
             If Not IonTypeFormatChecker(adductName) Then
                 adduct.FormatCheck = False
@@ -190,8 +194,12 @@ Namespace Formula.MS
             Dim ionType = GetIonType(adductName)
             Dim isRadical = GetRadicalInfo(adductName)
 
-            Dim accurateMass As Double = Nothing, m1Intensity As Double = Nothing, m2Intensity As Double = Nothing
-            Dim tr As (accurateMass As Double, m1Intensity As Double, m2Intensity As Double) = CalculateAccurateMassAndIsotopeRatio(adduct.AdductIonName)
+            Dim accurateMass As Double = Nothing
+            Dim m1Intensity As Double = Nothing
+            Dim m2Intensity As Double = Nothing
+            Dim tr As (accurateMass As Double, m1Intensity As Double, m2Intensity As Double) =
+                CalculateAccurateMassAndIsotopeRatio(adduct.AdductIonName)
+
             adduct.AdductIonAccurateMass += accurateMass
             adduct.M1Intensity += m1Intensity
             adduct.M2Intensity += m2Intensity
@@ -227,9 +235,7 @@ Namespace Formula.MS
 
         Public Shared ReadOnly [Default] As New AdductIon()
 
-        Private Shared ReadOnly ADDUCT_IONS As New AdductIons()
-
-        Friend Class AdductIons
+        Private Class AdductIons
 
             ReadOnly _dictionary As ConcurrentDictionary(Of String, AdductIon)
 

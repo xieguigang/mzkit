@@ -1,64 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::e0ed8816710cd03b46d8961c7fe7d7c8, mzmath\MSFinder\FragmentAssigner.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 724
-    '    Code Lines: 531 (73.34%)
-    ' Comment Lines: 75 (10.36%)
-    '    - Xml Docs: 64.00%
-    ' 
-    '   Blank Lines: 118 (16.30%)
-    '     File Size: 36.55 KB
+' Summaries:
 
 
-    ' Class FragmentAssigner
-    ' 
-    '     Properties: [Default]
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: FastFragmnetAssigner, FastNeutralLossAssigner, GetAnnotatedIon, GetCentroidMsMsSpectrum, getFormulaCandidatesbyLibrarySearch
-    '               GetNeutralLossList, (+3 Overloads) GetRefinedPeaklist, (+2 Overloads) getStartIndex, getValenceCheckedFragmentFormulaList, isFormulaComposition
-    '               isotopicPeakAssignmnet
-    ' 
-    '     Sub: AnnotateAdducts, AnnotateIsotopes
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 724
+'    Code Lines: 531 (73.34%)
+' Comment Lines: 75 (10.36%)
+'    - Xml Docs: 64.00%
+' 
+'   Blank Lines: 118 (16.30%)
+'     File Size: 36.55 KB
+
+
+' Class FragmentAssigner
+' 
+'     Properties: [Default]
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: FastFragmnetAssigner, FastNeutralLossAssigner, GetAnnotatedIon, GetCentroidMsMsSpectrum, getFormulaCandidatesbyLibrarySearch
+'               GetNeutralLossList, (+3 Overloads) GetRefinedPeaklist, (+2 Overloads) getStartIndex, getValenceCheckedFragmentFormulaList, isFormulaComposition
+'               isotopicPeakAssignmnet
+' 
+'     Sub: AnnotateAdducts, AnnotateIsotopes
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -78,6 +78,7 @@ Public NotInheritable Class FragmentAssigner
     ''' must be sort by mass
     ''' </summary>
     Dim productIonDB As List(Of ProductIon)
+    Dim loss As List(Of NeutralLoss)
     Dim ms2Tol As Double, massTolType As MassToleranceType
 
     ''' <summary>
@@ -85,6 +86,7 @@ Public NotInheritable Class FragmentAssigner
     ''' </summary>
     Sub New(Optional da As Double = 0.3)
         productIonDB = New List(Of ProductIon)(MemorySheet.GetDefault.OrderBy(Function(i) i.Mass))
+        loss = New List(Of NeutralLoss)(MemorySheet.GetDefaultNeutralLoss.OrderBy(Function(i) i.MassLoss))
         ms2Tol = da
         massTolType = MassToleranceType.Da
     End Sub
@@ -97,6 +99,8 @@ Public NotInheritable Class FragmentAssigner
         Dim mass = peak.mz + eMass
         Dim minDiff = Double.MaxValue
         Dim massTol = ms2Tol
+        Dim exactMass As Double = formula.ExactMass
+        Dim precursor As Double = AdductIon.ConvertToMz(exactMass)
 
         If massTolType = MassToleranceType.Ppm Then
             massTol = PPMmethod.ConvertPpmToMassAccuracy(mass, ms2Tol)
@@ -105,19 +109,28 @@ Public NotInheritable Class FragmentAssigner
         Dim minId = -1
 
         'for precursor annotation
-        If std.Abs(mass - formula.ExactMass - AdductIon.AdductIonAccurateMass) < massTol Then
+        If std.Abs(mass - exactMass - AdductIon.AdductIonAccurateMass) < massTol Then
             Dim nFormula = FormulaCalculateUtility.ConvertFormulaAdductPairToPrecursorAdduct(formula, AdductIon)
 
             Return New ProductIon() With {
                 .Formula = nFormula,
                 .Mass = peak.mz,
-                .MassDiff = formula.ExactMass + AdductIon.AdductIonAccurateMass - mass,
+                .MassDiff = exactMass + AdductIon.AdductIonAccurateMass - mass,
                 .Intensity = peak.intensity
             }
         End If
 
         'library search
         Dim fragmentFormulas = getFormulaCandidatesbyLibrarySearch(formula, AdductIon.IonMode, peak.mz, massTol, productIonDB)
+
+        If fragmentFormulas.IsNullOrEmpty Then
+            ' loss search
+            Dim ion = getLossFragment(formula, peak, precursor, loss, da:=massTol)
+
+            If Not ion Is Nothing Then
+                Return ion
+            End If
+        End If
 
         If fragmentFormulas.IsNullOrEmpty Then
             fragmentFormulas = getValenceCheckedFragmentFormulaList(formula, AdductIon.IonMode, peak.mz, massTol)
@@ -143,6 +156,36 @@ Public NotInheritable Class FragmentAssigner
         Else
             Return Nothing
         End If
+    End Function
+
+    Private Shared Function getLossFragment(formula As Formula,
+                                            peak As SpectrumPeak,
+                                            precursor As Double,
+                                            lossDb As IEnumerable(Of NeutralLoss),
+                                            da As Double) As ProductIon
+        Dim delta = precursor - peak.mz
+        Dim minLoss As NeutralLoss = Nothing
+        Dim minErr As Double = Double.MaxValue
+
+        For Each loss As NeutralLoss In lossDb
+            Dim dl = std.Abs(loss.MassLoss - delta)
+
+            If dl <= da AndAlso dl < minErr Then
+                minErr = dl
+                minLoss = loss
+            End If
+        Next
+
+        If minLoss Is Nothing Then Return Nothing
+
+        Return New ProductIon With {
+            .Comment = minLoss.Comment,
+            .Formula = formula - minLoss.Formula,
+            .Mass = peak.mz,
+            .Name = minLoss.Name,
+            .ShortName = minLoss.ShortName,
+            .Intensity = peak.intensity
+        }
     End Function
 
     ''' <summary>
@@ -207,7 +250,10 @@ Public NotInheritable Class FragmentAssigner
     ''' <param name="massTol"></param>
     ''' <param name="productIonDB"></param>
     ''' <returns></returns>
-    Private Shared Function getFormulaCandidatesbyLibrarySearch(formula As Formula, ionMode As IonModes, mz As Double, massTol As Double, productIonDB As List(Of ProductIon)) As List(Of Formula)
+    Private Shared Function getFormulaCandidatesbyLibrarySearch(formula As Formula, ionMode As IonModes,
+                                                                mz As Double,
+                                                                massTol As Double,
+                                                                productIonDB As List(Of ProductIon)) As List(Of Formula)
         Dim candidates = New List(Of Formula)()
         Dim startIndex = getStartIndex(mz, massTol, productIonDB)
 
@@ -219,7 +265,7 @@ Public NotInheritable Class FragmentAssigner
             If ionQuery.Formula.ExactMass > mz + massTol Then Exit For
 
             If isFormulaComposition(ionQuery.Formula, formula) Then
-                candidates.Add(ionQuery.Formula)
+                Call candidates.Add(ionQuery.Formula)
             End If
         Next
 
@@ -338,7 +384,9 @@ Public NotInheritable Class FragmentAssigner
         Dim maxNeutralLoss = 1000
 
         For Each peak As SpectrumPeak In peaklist
-            If Equals(peak.Annotation, "M") Then monoIsotopicPeaklist.Add(peak)
+            If peak.Annotation = "M" Then
+                monoIsotopicPeaklist.Add(peak)
+            End If
         Next
 
         monoIsotopicPeaklist = monoIsotopicPeaklist.OrderByDescending(Function(n) n.mz).ToList()
