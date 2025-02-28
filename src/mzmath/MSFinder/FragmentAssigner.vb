@@ -86,7 +86,7 @@ Public NotInheritable Class FragmentAssigner
     ''' </summary>
     Sub New(Optional da As Double = 0.3)
         productIonDB = New List(Of ProductIon)(MemorySheet.GetDefault.OrderBy(Function(i) i.Mass))
-        loss = New List(Of NeutralLoss)(MemorySheet.GetDefaultNeutralLoss.OrderBy(Function(i) i.MassLoss))
+        loss = New List(Of NeutralLoss)(MemorySheet.GetDefaultNeutralLoss(absMass:=True).OrderBy(Function(i) i.MassLoss))
         ms2Tol = da
         massTolType = MassToleranceType.Da
     End Sub
@@ -174,6 +174,10 @@ Public NotInheritable Class FragmentAssigner
                 If isFormulaComposition(loss.Formula, formula) Then
                     minErr = dl
                     minLoss = loss
+
+                    ' fast check
+                    ' just check of the first candidates?
+                    Exit For
                 End If
             End If
         Next
