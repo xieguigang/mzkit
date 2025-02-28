@@ -71,6 +71,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports std = System.Math
+Imports AdductParser = BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType.Parser
 
 Namespace Formula.MS
 
@@ -146,7 +147,7 @@ Namespace Formula.MS
 
         Public Property MassError As Double
 
-        Public Property Formula As Formula = New Formula()
+        Public Property Formula As New Formula()
 
         Public Property Iontype As IonModes
 
@@ -160,15 +161,27 @@ Namespace Formula.MS
 
         Public Property ShortName As String
 
-        Public Property CandidateInChIKeys As List(Of String) = New List(Of String)()
+        Public Property CandidateInChIKeys As New List(Of String)()
 
-        Public Property CandidateOntologies As List(Of String) = New List(Of String)()
+        Public Property CandidateOntologies As New List(Of String)()
 
         Sub New()
         End Sub
 
         Sub New(loss As String, name As String, comment As String, Optional absMass As Boolean = False)
             Dim adduct As MzCalculator = Provider.ParseAdductModel(loss)
+            Dim parts = AdductParser.Formula(Strings.Trim(loss), raw:=True) _
+                .TryCast(Of IEnumerable(Of (sign%, expression As String))) _
+                .ToArray
+            Dim lossFormula As New Formula
+
+            For Each part In parts
+                If part.sign > 0 Then
+                    lossFormula = lossFormula + part.expression
+                Else
+                    lossFormula = lossFormula - part.expression
+                End If
+            Next
 
             _Name = name
             _ShortName = name
@@ -176,6 +189,7 @@ Namespace Formula.MS
             _Frequency = 1
             _Iontype = IonModes.Unknown
             _MassLoss = If(absMass, std.Abs(adduct.adducts), adduct.adducts)
+            _Formula = lossFormula
         End Sub
 
     End Class

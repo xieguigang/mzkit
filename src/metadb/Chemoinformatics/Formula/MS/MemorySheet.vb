@@ -136,6 +136,8 @@ Namespace Formula.MS
             Yield New NeutralLoss("[M-CO2H]+", "Carboxylic acid or ester", "", absMass)
             Yield New NeutralLoss("[M-HCl]+", "Chloride Loss", "HCl loss (36 Da) in chlorinated compounds", absMass)
 
+            Yield New NeutralLoss("[M-NO2]+", "Nitro Loss", "NO₂ loss (46 Da) in nitro compounds")
+
             ' 烷基/芳基丢失
             Yield New NeutralLoss("[M-CH3]+", "Methyl Loss", "CH₃ loss (15 Da) from esters/ethers", absMass)
             Yield New NeutralLoss("[M-C2H5]+", "Ethyl Loss", "C₂H₅ loss (29 Da) from ethyl derivatives", absMass)
