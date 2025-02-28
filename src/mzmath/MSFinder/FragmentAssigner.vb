@@ -187,6 +187,15 @@ Public NotInheritable Class FragmentAssigner
         Return productIons
     End Function
 
+    ''' <summary>
+    ''' make fragment annotation by search in <paramref name="productIonDB"/>
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="ionMode"></param>
+    ''' <param name="mz"></param>
+    ''' <param name="massTol"></param>
+    ''' <param name="productIonDB"></param>
+    ''' <returns></returns>
     Private Shared Function getFormulaCandidatesbyLibrarySearch(formula As Formula, ionMode As IonModes, mz As Double, massTol As Double, productIonDB As List(Of ProductIon)) As List(Of Formula)
         Dim candidates = New List(Of Formula)()
         Dim startIndex = getStartIndex(mz, massTol, productIonDB)
@@ -662,7 +671,13 @@ Public NotInheritable Class FragmentAssigner
     End Function
 
 
-    Public Shared Function GetAnnotatedIon(peaklist As List(Of SpectrumPeak), mainAdduct As AdductIon, referenceAdductTypeList As List(Of AdductIon), precursorMz As Double, massTol As Double, massTolType As MassToleranceType) As List(Of AnnotatedIon)
+    Public Shared Function GetAnnotatedIon(peaklist As List(Of SpectrumPeak),
+                                           mainAdduct As AdductIon,
+                                           referenceAdductTypeList As List(Of AdductIon),
+                                           precursorMz As Double,
+                                           massTol As Double,
+                                           massTolType As MassToleranceType) As List(Of AnnotatedIon)
+
         Dim annotations = New List(Of AnnotatedIon)()
         For Each peak In peaklist
             annotations.Add(New AnnotatedIon() With {
@@ -719,7 +734,13 @@ Public NotInheritable Class FragmentAssigner
     End Sub
 
 
-    Public Shared Sub AnnotateAdducts(peaklist As List(Of SpectrumPeak), annotations As List(Of AnnotatedIon), mainAdduct As AdductIon, referenceAdductTypeList As List(Of AdductIon), precursorMz As Double, massTol As Double, massTolType As MassToleranceType)
+    Public Shared Sub AnnotateAdducts(peaklist As List(Of SpectrumPeak),
+                                      annotations As List(Of AnnotatedIon),
+                                      mainAdduct As AdductIon,
+                                      referenceAdductTypeList As List(Of AdductIon),
+                                      precursorMz As Double,
+                                      massTol As Double,
+                                      massTolType As MassToleranceType)
 
         For i = 0 To peaklist.Count - 1
             Dim peak = peaklist(i)
