@@ -92,6 +92,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports dataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports deco_math = BioNovoGene.Analytical.MassSpectrometry.Math.Extensions
 Imports Matrix = SMRUCC.genomics.Analysis.HTS.DataFrame.Matrix
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
