@@ -79,7 +79,7 @@ Public NotInheritable Class Scoring
         Dim devi = 0.0
         If peaklist.Count = 0 Then Return 0
 
-        Dim monoisotopicCount = peaklist.Where(Function(n) Equals(n.Annotation, "M")).Count
+        Dim monoisotopicCount = peaklist.Where(Function(n) n.Annotation = "M").Count
 
         If peaklist IsNot Nothing AndAlso peaklist.Count <> 0 Then
             Dim totalDiff As Double = 0
@@ -133,7 +133,7 @@ Public NotInheritable Class Scoring
     Public Shared Function DatabaseScore(recordNum As Integer, recordName As String) As Double
         Dim lDatabaseScore = 0.0
         Dim isMineIncluded = False
-        If Not Equals(recordName, Nothing) AndAlso recordName.Contains("MINE") Then isMineIncluded = True
+        If recordName IsNot Nothing AndAlso recordName.Contains("MINE") Then isMineIncluded = True
 
         Dim recordNumber = recordNum
         If isMineIncluded Then recordNumber -= 1

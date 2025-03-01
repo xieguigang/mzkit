@@ -195,6 +195,18 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
         Return union
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="SMILES"></param>
+    ''' <param name="strict"></param>
+    ''' <returns>
+    ''' this function may returns nothing if the given smiles string is invalid and case the parser error when strict is false.
+    ''' </returns>
+    Public Shared Function ParseGraph(SMILES As String, Optional strict As Boolean = True) As ChemicalFormula
+        Return ParseChain.ParseGraph(SMILES, strict:=strict)
+    End Function
+
     Public Overrides Function ToString() As String
         Return GetFormula.ToString
     End Function

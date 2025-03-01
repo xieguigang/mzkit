@@ -121,6 +121,12 @@ Namespace Formula
             End Get
         End Property
 
+        Public Shared ReadOnly Property H As Formula
+            Get
+                Return FormulaScanner.ScanFormula("H")
+            End Get
+        End Property
+
         Public Shared ReadOnly Property AllAtomElements As IReadOnlyDictionary(Of String, Element) = Element.MemoryLoadElements
 
         ''' <summary>
@@ -182,10 +188,19 @@ Namespace Formula
         ''' <summary>
         ''' make value copy of the given formula
         ''' </summary>
-        ''' <param name="copy"></param>
+        ''' <param name="copy">make the copy of the element counts</param>
+        ''' <remarks>
+        ''' this constructor function will removes all elements with zero count.
+        ''' </remarks>
         Sub New(copy As Formula)
+            CountsByElement = New Dictionary(Of String, Integer)
             m_formula = copy.m_formula
-            CountsByElement = New Dictionary(Of String, Integer)(copy.CountsByElement)
+
+            For Each element As KeyValuePair(Of String, Integer) In copy.CountsByElement
+                If element.Value > 0 Then
+                    Call CountsByElement.Add(element.Key, element.Value)
+                End If
+            Next
         End Sub
 
         ''' <summary>
@@ -203,7 +218,11 @@ Namespace Formula
         ''' Check of the specific element is inside current formula object?
         ''' </summary>
         ''' <param name="elementName"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function returns true if the given element is existsed inside the
+        ''' formula composition list and also the corresponding element counts 
+        ''' is greater than zero. 
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CheckElement(elementName As String) As Boolean
             Return CountsByElement.ContainsKey(elementName) AndAlso CountsByElement(elementName) > 0

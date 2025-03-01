@@ -87,6 +87,8 @@ Public Class PeakAnnotation
     ''' <returns></returns>
     Public Property formula As FormulaComposition
     Public Property precursor_matched As Boolean = False
+    Public Property score As Double
+    Public Property norm_score As Double
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Sub New(formula As FormulaComposition, products As IEnumerable(Of ProductIon))
@@ -172,16 +174,29 @@ Public Class PeakAnnotation
             .massdiff = 0,
             .ppm = 0
         }
-
+        Dim score As Double = 0
         ' 2024-08-29
         ' make union of the annotated products and
         ' un-annotated fragments
         Dim union As ms2() = result _
             .Select(Function(i)
+                        Dim text As String
+
+                        If i.Comment = "FragmentFormula" OrElse i.Comment = "Precursor" Then
+                            text = i.Name
+                            score += 1
+                        ElseIf i.Type = AnnotationType.Loss Then
+                            text = i.ShortName
+                            score += 3
+                        Else
+                            text = $"{i.ShortName} [{i.Formula.EmpiricalFormula}]"
+                            score += 3
+                        End If
+
                         Return New ms2 With {
                             .mz = i.Mass,
                             .intensity = i.Intensity,
-                            .Annotation = i.Name
+                            .Annotation = text
                         }
                     End Function) _
             .JoinIterates(peaks.GetIons) _
@@ -190,7 +205,9 @@ Public Class PeakAnnotation
             .ToArray
 
         Return New PeakAnnotation(fcom, union) With {
-            .precursor_matched = precursorHit
+            .precursor_matched = precursorHit,
+            .score = score,
+            .norm_score = .score / (3 * union.Length)
         }
     End Function
 

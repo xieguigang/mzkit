@@ -60,15 +60,15 @@ Namespace MorganFingerprint
         End Sub
 
         <Extension>
-        Public Function CalculateFingerprintCheckSum(struct As [Structure], Optional Iterations As Integer = 3) As Byte()
-            Dim bits As BitArray = struct.CalculateFingerprint(Iterations)
+        Public Function CalculateFingerprintCheckSum(struct As [Structure], Optional radius As Integer = 3) As Byte()
+            Dim bits As BitArray = struct.CalculateFingerprint(radius)
             Dim bytes = New Byte(FingerprintLength / 8 - 1) {}
             bits.CopyTo(bytes, 0)
             Return bytes
         End Function
 
         <Extension>
-        Public Function CalculateFingerprint(struct As [Structure], Optional Iterations As Integer = 3) As BitArray
+        Public Function CalculateFingerprint(struct As [Structure], Optional radius As Integer = 3) As BitArray
             Dim atoms As MorganAtom() = New MorganAtom(struct.Atoms.Length - 1) {}
 
             ' Initialize atom codes based on atom type
@@ -79,7 +79,7 @@ Namespace MorganFingerprint
             Next
 
             ' Perform iterations to expand the atom codes
-            For iteration As Integer = 0 To Iterations - 1
+            For r As Integer = 0 To radius - 1
                 Dim newCodes As ULong() = New ULong(struct.Atoms.Length - 1) {}
 
                 For Each bound As Bound In struct.Bounds

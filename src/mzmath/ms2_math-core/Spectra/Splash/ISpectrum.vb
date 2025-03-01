@@ -85,6 +85,9 @@ Namespace Spectra.SplashID
     ''' the abstract spectrum object, a spectrum object is a
     ''' kind of the fragment collection object
     ''' </summary>
+    ''' <remarks>
+    ''' usually be a collection of the <see cref="ms2"/> peak fragment.
+    ''' </remarks>
     Public Interface ISpectrum
 
         ''' <summary>
