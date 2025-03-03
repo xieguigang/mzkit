@@ -278,9 +278,17 @@ declare namespace MsImaging {
    */
    function MSIlayer(viewer: object, mz: number, tolerance?: any, split?: boolean, env?: object): object;
    /**
+    * Converts R raw vector input into a raster processing pipeline configuration
     * 
+    * > This method handles R-to-CLR type conversion and is primarily used for:
+    * >  Interop with R# environmentsParsing pipeline configurations from script parameters
+    * >  
+    * >  The @``M:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.RasterPipeline.Parse(System.Collections.Generic.IEnumerable{System.String})`` method implements the actual
+    * >  filter syntax interpretation and validation.
     * 
-     * @param filters -
+     * @param filters R-side input vector containing filter definitions. Accepts:
+     *  Character vector of filter expressionsList of filter specification stringsOther R vector types convertible via CLRVector.asCharacter
+     * @return A parsed RasterPipeline object configured with the input filter sequence
    */
    function parseFilters(filters: any): object;
    /**

@@ -1,12 +1,30 @@
 .\" man page create by R# package system.
 .TH MSIMAGING 1 2000-Jan "parseFilters" "parseFilters"
 .SH NAME
-parseFilters \- 
+parseFilters \- Converts R raw vector input into a raster processing pipeline configuration
 .SH SYNOPSIS
 \fIparseFilters(\fBfilters\fR as any);\fR
+.SH DESCRIPTION
+.PP
+Converts R raw vector input into a raster processing pipeline configuration
+.PP
 .SH OPTIONS
 .PP
-\fBfilters\fB \fR\- -. 
+\fBfilters\fB \fR\- 
+ R-side input vector containing filter definitions. Accepts:
+ Character vector of filter expressionsList of filter specification stringsOther R vector types convertible via CLRVector.asCharacter. 
+.PP
+.SH VALUE
+.PP
+A parsed RasterPipeline object configured with the input filter sequence
+.PP
+.SH DETAILS
+.PP
+This method handles R-to-CLR type conversion and is primarily used for:
+ Interop with R# environmentsParsing pipeline configurations from script parameters
+ 
+ The @\fBM:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.RasterPipeline.Parse(System.Collections.Generic.IEnumerable{System.String})\fR method implements the actual
+ filter syntax interpretation and validation.
 .PP
 .SH SEE ALSO
 MsImaging

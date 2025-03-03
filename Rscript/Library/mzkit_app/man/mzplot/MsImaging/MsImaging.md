@@ -32,7 +32,7 @@
 + [layer](MsImaging/layer.1) render a ms-imaging layer by a specific ``m/z`` scan.
 + [MSI_summary.scaleMax](MsImaging/MSI_summary.scaleMax.1) Get the max intensity value via TrIQ or quantile cutoff
 + [defaultFilter](MsImaging/defaultFilter.1) get the default ms-imaging filter pipeline
-+ [parseFilters](MsImaging/parseFilters.1) 
++ [parseFilters](MsImaging/parseFilters.1) Converts R raw vector input into a raster processing pipeline configuration
 + [intensityFilter](MsImaging/intensityFilter.1) 
 + [render](MsImaging/render.1) MS-imaging of the MSI summary data result.
 + [as.pixels](MsImaging/as.pixels.1) extract the pixel [x,y] information for all of
