@@ -356,7 +356,7 @@ Module MoleculeNetworking
         Next
 
         For Each link As LinkSet In graph
-            graph_score.slots(link.reference) = New dataframe With {
+            graph_score.slots(link.reference) = New rDataframe With {
                 .rownames = link.links.Keys.ToArray,
                 .columns = New Dictionary(Of String, Array) From {
                     {"forward", .rownames.Select(Function(i) link.links(i).forward).ToArray},

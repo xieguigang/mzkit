@@ -95,6 +95,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Internal.Object.Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports dataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports KeggCompound = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound
 Imports kegReaction = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Reaction
 Imports kegReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass
@@ -103,8 +104,8 @@ Imports MetaDNAAlgorithm = BioNovoGene.BioDeep.MetaDNA.Algorithm
 Imports ReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass
 Imports ReactionClassTbl = BioNovoGene.BioDeep.MetaDNA.Visual.ReactionClass
 Imports REnv = SMRUCC.Rsharp.Runtime
-Imports std = System.Math
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
+Imports std = System.Math
 
 ''' <summary>
 ''' Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics
