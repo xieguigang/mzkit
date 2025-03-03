@@ -1066,10 +1066,34 @@ Module MsImaging
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Converts R raw vector input into a raster processing pipeline configuration
     ''' </summary>
-    ''' <param name="filters"></param>
-    ''' <returns></returns>
+    ''' <param name="filters">
+    ''' R-side input vector containing filter definitions. Accepts:
+    ''' <list type="bullet">
+    '''   <item>Character vector of filter expressions</item>
+    '''   <item>List of filter specification strings</item>
+    '''   <item>Other R vector types convertible via CLRVector.asCharacter</item>
+    ''' </list>
+    ''' </param>
+    ''' <returns>
+    ''' A parsed RasterPipeline object configured with the input filter sequence
+    ''' </returns>
+    ''' <remarks>
+    ''' This method handles R-to-CLR type conversion and is primarily used for:
+    ''' <list type="bullet">
+    '''   <item>Interop with R# environments</item>
+    '''   <item>Parsing pipeline configurations from script parameters</item>
+    ''' </list>
+    ''' 
+    ''' The <see cref="RasterPipeline.Parse"/> method implements the actual
+    ''' filter syntax interpretation and validation.
+    ''' </remarks>
+    ''' <exception cref="InvalidCastException">
+    ''' Thrown when input cannot be converted to character vector via CLRVector.asCharacter
+    ''' </exception>
+    ''' <seealso cref="CLRVector.asCharacter"/>
+    ''' <seealso cref="RasterPipeline.Parse"/>
     <ExportAPI("parseFilters")>
     Public Function parseFilters(<RRawVectorArgument> filters As Object) As RasterPipeline
         Dim filters_str As String() = CLRVector.asCharacter(filters)
