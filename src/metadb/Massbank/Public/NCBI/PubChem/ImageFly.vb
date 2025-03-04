@@ -60,8 +60,6 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Net.WebClient
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports Microsoft.VisualBasic.Net.WebClient
-
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
