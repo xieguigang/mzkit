@@ -25,6 +25,7 @@ Namespace MsImaging
         Public Function ConvertImzMLOntheFly(target As String, output As String,
                                              Optional defaultIon As IonModes = IonModes.Positive,
                                              Optional make_centroid As Tolerance = Nothing,
+                                             Optional cutoff As Double = 0.001,
                                              Optional progress As RunSlavePipeline.SetProgressEventHandler = Nothing) As Boolean
             ' convert file on the fly
             Dim allscans As ScanData() = Nothing
@@ -38,7 +39,7 @@ Namespace MsImaging
 
             Using s As Stream = output.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
                 Return allscans _
-                    .LoadScanStream(ibdreader, filename, defaultIon, , make_centroid,
+                    .LoadScanStream(ibdreader, filename, defaultIon, cutoff, make_centroid,
                                     progress:=progress,
                                     verbose:=3) _
                     .WriteStream(file:=s,
