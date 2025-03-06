@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0ce155a729ae62cd7e176eab60091e2, Rscript\Library\mzkit_app\src\mzquant\MRM\MRMkit.vb"
+﻿#Region "Microsoft.VisualBasic::cc3e81d45ad09036add89848d286c5f4, Rscript\Library\mzkit_app\src\mzquant\MRM\MRMkit.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 907
-    '    Code Lines: 608 (67.03%)
-    ' Comment Lines: 201 (22.16%)
-    '    - Xml Docs: 89.55%
+    '   Total Lines: 915
+    '    Code Lines: 610 (66.67%)
+    ' Comment Lines: 206 (22.51%)
+    '    - Xml Docs: 89.81%
     ' 
-    '   Blank Lines: 98 (10.80%)
-    '     File Size: 39.72 KB
+    '   Blank Lines: 99 (10.82%)
+    '     File Size: 40.06 KB
 
 
     ' Module MRMkit
