@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3f198c51bb00587f8a1e23b43d4db17, metadb\Massbank\Public\TMIC\HMDB\Tables\ChemicalDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::3fe52b900b65619e5d842c034ee06876, metadb\Massbank\Public\TMIC\HMDB\Tables\ChemicalDescriptor.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 13 (8.61%)
-    '     File Size: 6.97 KB
+    '     File Size: 6.98 KB
 
 
     '     Class ChemicalDescriptor

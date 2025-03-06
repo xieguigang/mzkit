@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22d3014de5c11438660d72f3040653e8, metadb\Massbank\Public\TMIC\HMDB\Assembly\metabolite.vb"
+﻿#Region "Microsoft.VisualBasic::7e6a013cea9619740d778c9c80c7afbd, metadb\Massbank\Public\TMIC\HMDB\Assembly\metabolite.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 91.18%
     ' 
     '   Blank Lines: 33 (13.41%)
-    '     File Size: 10.94 KB
+    '     File Size: 10.99 KB
 
 
     '     Class MetaReference

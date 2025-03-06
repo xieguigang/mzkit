@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4051354922024ebd95d418994ad2c440, metadb\Massbank\MetaLib\RefMet.vb"
+﻿#Region "Microsoft.VisualBasic::daca9e80f6301b2919b89c56c01b1726, metadb\Massbank\MetaLib\RefMet.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 25 (38.46%)
-    ' Comment Lines: 34 (52.31%)
+    '   Total Lines: 74
+    '    Code Lines: 34 (45.95%)
+    ' Comment Lines: 34 (45.95%)
     '    - Xml Docs: 91.18%
     ' 
-    '   Blank Lines: 6 (9.23%)
-    '     File Size: 3.80 KB
+    '   Blank Lines: 6 (8.11%)
+    '     File Size: 4.18 KB
 
 
     '     Class RefMet
     ' 
-    '         Properties: exactmass, formula, inchi_key, main_class, pubchem_cid
+    '         Properties: chebi_id, exactmass, formula, hmdb_id, inchi_key
+    '                     kegg_id, lipidmaps_id, main_class, pubchem_cid, refmet_id
     '                     refmet_name, smiles, sub_class, super_class
     ' 
     '         Function: CreateReference, ToString

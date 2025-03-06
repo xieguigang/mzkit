@@ -1,63 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::15e80602722c53232712ed5f7678eff4, metadb\Chemoinformatics\Formula\Models\Formula.vb"
+﻿#Region "Microsoft.VisualBasic::8d68fd5bf7e6dd95e1ac74bcd34b6362, metadb\Chemoinformatics\Formula\Models\Formula.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 378
-'    Code Lines: 212 (56.08%)
-' Comment Lines: 119 (31.48%)
-'    - Xml Docs: 98.32%
-' 
-'   Blank Lines: 47 (12.43%)
-'     File Size: 14.51 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Formula
-' 
-'         Properties: AllAtomElements, Counts, CountsByElement, Elements, EmpiricalFormula
-'                     Empty, ExactMass
-' 
-'         Constructor: (+3 Overloads) Sub New
-'         Function: CanonicalFormula, CheckElement, EqualsTo, ToString, TryEvaluateExactMass
-'         Operators: (+4 Overloads) -, (+2 Overloads) *, /, (+4 Overloads) +, <>
-'                    =
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 441
+    '    Code Lines: 251 (56.92%)
+    ' Comment Lines: 136 (30.84%)
+    '    - Xml Docs: 97.79%
+    ' 
+    '   Blank Lines: 54 (12.24%)
+    '     File Size: 17.07 KB
+
+
+    '     Class Formula
+    ' 
+    '         Properties: AllAtomElements, Counts, CountsByElement, Elements, EmpiricalFormula
+    '                     Empty, ExactMass, H
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: CanonicalFormula, CheckElement, CompareFormalCharge, EqualsTo, ToString
+    '                   TryEvaluateExactMass
+    '         Operators: (+4 Overloads) -, (+2 Overloads) *, /, (+4 Overloads) +, <>
+    '                    =
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

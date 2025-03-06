@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c2919dd2b3156a377fc772033a31fb2, metadb\Massbank\Public\Massbank\RecordIO.vb"
+﻿#Region "Microsoft.VisualBasic::17da10548439b4f0c322244f09ddec0c, metadb\Massbank\Public\Massbank\RecordIO.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 37 (18.59%)
-    '     File Size: 7.42 KB
+    '     File Size: 7.48 KB
 
 
     '     Module RecordIO

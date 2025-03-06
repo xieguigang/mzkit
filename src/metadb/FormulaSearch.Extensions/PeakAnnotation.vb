@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a936a21e23a9a24c205ac848cfa51a4, metadb\FormulaSearch.Extensions\PeakAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::a2c13ab27d722f5fa9e665cd98c167a2, metadb\FormulaSearch.Extensions\PeakAnnotation.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 142
-    '    Code Lines: 95 (66.90%)
-    ' Comment Lines: 34 (23.94%)
-    '    - Xml Docs: 91.18%
+    '   Total Lines: 165
+    '    Code Lines: 111 (67.27%)
+    ' Comment Lines: 40 (24.24%)
+    '    - Xml Docs: 92.50%
     ' 
-    '   Blank Lines: 13 (9.15%)
-    '     File Size: 5.61 KB
+    '   Blank Lines: 14 (8.48%)
+    '     File Size: 6.60 KB
 
 
     ' Class PeakAnnotation
     ' 
-    '     Properties: formula, precursor_matched, products
+    '     Properties: formula, norm_score, precursor_matched, products, score
     ' 
     '     Constructor: (+2 Overloads) Sub New
     '     Function: DoPeakAnnotation, GetAnnotatedPeaks, ToString

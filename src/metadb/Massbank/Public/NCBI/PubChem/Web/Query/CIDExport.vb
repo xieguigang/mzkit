@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5bd8c3449d34507fd3f87567e2b97930, metadb\Massbank\Public\NCBI\PubChem\Web\Query\CIDExport.vb"
+﻿#Region "Microsoft.VisualBasic::2ca55beca3e93aa85c7c108a43be4966, metadb\Massbank\Public\NCBI\PubChem\Web\Query\CIDExport.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 8 (19.51%)
-    '     File Size: 1.54 KB
+    '     File Size: 1.55 KB
 
 
     '     Class CIDExport

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::079593dab23f329c860b8fb338705aee, metadb\FormulaSearch.Extensions\AdductsRanking.vb"
+﻿#Region "Microsoft.VisualBasic::b9447c8c6d2f05dd1492ab8db5bb1fc4, metadb\FormulaSearch.Extensions\AdductsRanking.vb"
 
     ' Author:
     ' 
@@ -232,4 +232,3 @@ Public Class AdductsRanking
         Return 1
     End Function
 End Class
-

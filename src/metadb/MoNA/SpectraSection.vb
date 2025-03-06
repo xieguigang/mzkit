@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd2ffabaa3f1de0d7982f4b9f726ef15, metadb\MoNA\SpectraSection.vb"
+﻿#Region "Microsoft.VisualBasic::dde2f1db412141f8e8356831c92aa191, metadb\MoNA\SpectraSection.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 135
-    '    Code Lines: 95 (70.37%)
-    ' Comment Lines: 25 (18.52%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 155
+    '    Code Lines: 103 (66.45%)
+    ' Comment Lines: 34 (21.94%)
+    '    - Xml Docs: 97.06%
     ' 
-    '   Blank Lines: 15 (11.11%)
-    '     File Size: 4.55 KB
+    '   Blank Lines: 18 (11.61%)
+    '     File Size: 5.14 KB
 
 
     ' Class SpectraSection
@@ -52,7 +52,7 @@
     '                 ms_level, SpectraInfo
     ' 
     '     Constructor: (+2 Overloads) Sub New
-    '     Function: GetMetabolite
+    '     Function: GetCrossReference, GetMetabolite
     ' 
     ' /********************************************************************************/
 

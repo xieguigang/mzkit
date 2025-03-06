@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78745e972866f4983802694ab4390e2d, metadb\Massbank\SDFExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::137be0f395dfaed4145265fcdbf43a15, metadb\Massbank\SDFExtensions.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 92.86%
     ' 
     '   Blank Lines: 16 (9.09%)
-    '     File Size: 6.70 KB
+    '     File Size: 6.71 KB
 
 
     ' Module SDFExtensions

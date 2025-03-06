@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28adcec15b1d744a52a2b2c94acc5b98, metadb\Massbank\MetaLib\Models\CrossReference\Xref.vb"
+﻿#Region "Microsoft.VisualBasic::bc76264489ba68a9ce4c59e23bd2ef97, metadb\Massbank\MetaLib\Models\CrossReference\Xref.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 179
-    '    Code Lines: 107 (59.78%)
-    ' Comment Lines: 56 (31.28%)
-    '    - Xml Docs: 96.43%
+    '   Total Lines: 182
+    '    Code Lines: 108 (59.34%)
+    ' Comment Lines: 58 (31.87%)
+    '    - Xml Docs: 96.55%
     ' 
-    '   Blank Lines: 16 (8.94%)
-    '     File Size: 7.26 KB
+    '   Blank Lines: 16 (8.79%)
+    '     File Size: 8.17 KB
 
 
     '     Class xref

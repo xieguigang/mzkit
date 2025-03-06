@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18b6b4b9c911fbe96bbdb839efe5b66b, metadb\Massbank\Public\Massbank\DATA\Record.vb"
+﻿#Region "Microsoft.VisualBasic::7e9a499faccf9df629833cf941cf9375, metadb\Massbank\Public\Massbank\DATA\Record.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 29 (24.37%)
-    '     File Size: 3.39 KB
+    '     File Size: 3.40 KB
 
 
     '     Class Record

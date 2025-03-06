@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38f89486af25a42a6e1c644578decc68, metadb\Massbank\MetaLib\Models\MetaInfo.vb"
+﻿#Region "Microsoft.VisualBasic::e90eda38798c513029697c8cab2e7998, metadb\Massbank\MetaLib\Models\MetaInfo.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 105
-    '    Code Lines: 74 (70.48%)
-    ' Comment Lines: 18 (17.14%)
-    '    - Xml Docs: 88.89%
+    '   Total Lines: 156
+    '    Code Lines: 84 (53.85%)
+    ' Comment Lines: 53 (33.97%)
+    '    - Xml Docs: 90.57%
     ' 
-    '   Blank Lines: 13 (12.38%)
-    '     File Size: 4.54 KB
+    '   Blank Lines: 19 (12.18%)
+    '     File Size: 7.20 KB
 
 
     '     Class MetaInfo
     ' 
-    '         Properties: description, exact_mass, formula, ID, IUPACName
-    '                     name, synonym, xref
+    '         Properties: [class], description, exact_mass, formula, ID
+    '                     IUPACName, kingdom, molecular_framework, name, sub_class
+    '                     super_class, synonym, xref
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Equals, ToSimpleAnnotation, ToString
     ' 
     ' 

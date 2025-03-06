@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e28da0efd53a1da305026dd02b834abc, metadb\Massbank\MetaLib\Match\TreeSearch.vb"
+﻿#Region "Microsoft.VisualBasic::231379f7490e7e89ac3cb2a0c11329fc, metadb\Massbank\MetaLib\Match\TreeSearch.vb"
 
     ' Author:
     ' 
@@ -43,10 +43,10 @@
     '    - Xml Docs: 85.71%
     ' 
     '   Blank Lines: 11 (20.00%)
-    '     File Size: 1.75 KB
+    '     File Size: 1.76 KB
 
 
-    '     Class TreeSearch
+    '     Class MetaDataTreeSearch
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: BuildTree, CompareAnnotation, Search
