@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::814b3f9ba66795e00522a8a725e27b40, visualize\plot\GCxGC\GCxGCTIC3DPeaks.vb"
+﻿#Region "Microsoft.VisualBasic::814b3f9ba66795e00522a8a725e27b40, visualize\ComprehensiveMsPlot\GCxGC\GCxGCTIC3DPeaks.vb"
 
     ' Author:
     ' 
