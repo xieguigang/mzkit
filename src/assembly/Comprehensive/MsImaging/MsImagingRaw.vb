@@ -115,15 +115,15 @@ Namespace MsImaging
             Dim paddingData As ScanMS1() = slide.MS.PixelScanPadding(padding, dims).ToArray
 
             Return New mzPack With {
-            .MS = paddingData,
-            .Application = FileApplicationClass.MSImaging,
-            .Chromatogram = slide.Chromatogram,
-            .Scanners = slide.Scanners,
-            .source = slide.source,
-            .Thumbnail = slide.Thumbnail,
-            .metadata = slide.metadata,
-            .Annotations = slide.Annotations
-        }
+                .MS = paddingData,
+                .Application = FileApplicationClass.MSImaging,
+                .Chromatogram = slide.Chromatogram,
+                .Scanners = slide.Scanners,
+                .source = slide.source,
+                .Thumbnail = slide.Thumbnail,
+                .metadata = slide.metadata,
+                .Annotations = slide.Annotations
+            }
         End Function
 
         ''' <summary>

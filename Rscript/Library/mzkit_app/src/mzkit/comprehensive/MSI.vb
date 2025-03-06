@@ -134,12 +134,24 @@ Module MSI
 
     Friend Sub Main()
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(IonStat()), AddressOf getStatTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(imzMLMetadata), AddressOf createMetadataTable)
 
         Call generic.add("readBin.msi_layer", GetType(Stream), AddressOf readPeaklayer)
         Call generic.add("readBin.msi_summary", GetType(Stream), AddressOf readSummarylayer)
         Call generic.add("writeBin", GetType(MSISummary), AddressOf writeSummarylayer)
         Call generic.add("writeBin", GetType(SingleIonLayer), AddressOf writePeaklayer)
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Private Function createMetadataTable(imzml As imzMLMetadata, args As list, env As Environment) As Object
+        Dim metadata As NamedValue(Of String)() = imzml.AsEnumerable.ToArray
+        Dim table As New rDataframe With {.columns = New Dictionary(Of String, Array)}
+
+        Call table.add("property", From pro As NamedValue(Of String) In metadata Select pro.Name)
+        Call table.add("metadata", From pro As NamedValue(Of String) In metadata Select pro.Value)
+
+        Return table
+    End Function
 
     <RGenericOverloads("writeBin")>
     Private Function writeSummarylayer(layer As MSISummary, args As list, env As Environment) As Object
@@ -673,15 +685,20 @@ Module MSI
     ''' 1. scans: is the [x,y] spatial scans data: <see cref="ScanData"/>.
     ''' 2. ibd: is the binary data reader wrapper object for the corresponding 
     '''       ``ibd`` file of the given input imzML file: <see cref="ibdReader"/>.
+    ''' 3. metadata: get file <see cref="imzMLMetadata"/> from the imzML header.
     ''' </returns>
     ''' <example>
     ''' # the msi_rawdata.ibd file should be in the same folder with the input imzml file.
     ''' let imzml = open.imzML(file = "/path/to/msi_rawdata.imzML");
+    ''' 
+    ''' # view metadata
+    ''' print(as.data.frame(imzml$metadata));
     ''' </example>
     <ExportAPI("open.imzML")>
-    <RApiReturn("scans", "ibd")>
+    <RApiReturn("scans", "ibd", "metadata")>
     Public Function open_imzML(file As String, Optional env As Environment = Nothing) As Object
         Dim scans As ScanData() = imzML.LoadScans(file:=file).ToArray
+        Dim metadata As imzMLMetadata = imzMLMetadata.ReadHeaders(file)
         Dim ibd As ibdReader
         Dim ibdfile As String = file.ChangeSuffix("ibd")
 
@@ -697,9 +714,21 @@ Module MSI
         Return New list With {
             .slots = New Dictionary(Of String, Object) From {
                 {"scans", scans},
-                {"ibd", ibd}
+                {"ibd", ibd},
+                {"metadata", metadata}
             }
         }
+    End Function
+
+    ''' <summary>
+    ''' load the spectrum of a specific spot scan inside the imzML
+    ''' </summary>
+    ''' <param name="ibd">a file reader of the ibd rawdata file</param>
+    ''' <param name="scan">contains the address information for read the spectrum inside a specific spot</param>
+    ''' <returns></returns>
+    <ExportAPI("load_spectrum")>
+    Public Function load_spectrum(ibd As ibdReader, scan As ScanData) As PeakMs2
+        Return ibd.GetSpectrum(scan)
     End Function
 
     ''' <summary>
@@ -746,6 +775,16 @@ Module MSI
             ionMode:=ionMode,
             dims:=dimsVal
         )
+    End Function
+
+    ''' <summary>
+    ''' read the metadata from the imzml file header
+    ''' </summary>
+    ''' <param name="imzML"></param>
+    ''' <returns></returns>
+    <ExportAPI("read.imzml_metadata")>
+    Public Function readImzMLMetadata(imzML As String) As imzMLMetadata
+        Return imzMLMetadata.ReadHeaders(imzML)
     End Function
 
     ''' <summary>

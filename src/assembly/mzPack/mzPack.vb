@@ -103,8 +103,10 @@ Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 
 ''' <summary>
 ''' the unify in-memory data model of the mzkit MS data model.
-''' (mzPack文件格式模型)
 ''' </summary>
+''' <remarks>
+''' (mzPack文件格式模型)
+''' </remarks>
 Public Class mzPack : Implements IMZPack
 
     ''' <summary>
@@ -257,7 +259,7 @@ Public Class mzPack : Implements IMZPack
             .Select(Function(s) s.GetMs1Scans) _
             .IteratesALL _
             .AsParallel _
-            .Where(Function(mzi) mzi.intensity > 0 AndAlso std.abs(mzi.mz - mz) < mass_da) _
+            .Where(Function(mzi) mzi.intensity > 0 AndAlso std.Abs(mzi.mz - mz) < mass_da) _
             .OrderBy(Function(a) a.scan_time)
 
         Return ms1

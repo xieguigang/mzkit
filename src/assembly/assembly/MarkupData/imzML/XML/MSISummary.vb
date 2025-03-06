@@ -200,7 +200,5 @@ Namespace MarkupData.imzML
         Public Overrides Function ToString() As String
             Return $"[width:={size.Width}, height:={size.Height}]"
         End Function
-
     End Class
-
 End Namespace

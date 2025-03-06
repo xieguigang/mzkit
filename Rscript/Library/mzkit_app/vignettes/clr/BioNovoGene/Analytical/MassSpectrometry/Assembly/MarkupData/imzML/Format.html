@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.Format</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>Format {BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>Format</h2>
+
+        <h3>Description</h3>
+
+        <p>In order to insure efficient storage, two different 
+ formats of the binary data are defined: continuous 
+ and processed.</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
+export class Format extends <a href="/vignettes/clr/System/Enum.html">Enum</a> {
+   # Continuous type means that each spectrum of an image has the 
+   #  same m/z values. As a result the m/z array is only saved once 
+   #  directly behind the UUID of the file and the intensity arrays 
+   #  of the spectra are following.
+   Continuous: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/Format.html">Format</a> = 0;
+
+   # At the processed type every spectrum has its own m/z array. 
+   #  So it is necessary to save both – the m/z array and the 
+   #  corresponding intensity array – per spectrum.
+   Processed: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/Format.html">Format</a> = 1;
+
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/System/Enum.html">Enum</a> class: <a href="/vignettes/clr/System/Enum.html">Enum</a></li>
+<li>use by <i>field</i> member <code>Continuous</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/Format.html">Format</a></li>
+<li>use by <i>field</i> member <code>Processed</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/Format.html">Format</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

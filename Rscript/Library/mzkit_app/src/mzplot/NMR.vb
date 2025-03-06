@@ -70,7 +70,7 @@ Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 ''' <summary>
 ''' plot NMR spectrum data
 ''' </summary>
-<Package("NMR")>
+<Package("plotNMR")>
 Public Module plotNMR
 
     Friend Sub Main()

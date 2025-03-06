@@ -83,6 +83,12 @@ Namespace Spectra
             Me.intocutoff = intocutoff
         End Sub
 
+        ''' <summary>
+        ''' default is get the min forward and reverse consine score
+        ''' </summary>
+        ''' <param name="mzwidth"></param>
+        ''' <param name="intocutoff"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Cosine(mzwidth As Tolerance, intocutoff As LowAbundanceTrimming) As CosAlignment
             Return New CosAlignment(mzwidth, intocutoff)

@@ -87,6 +87,12 @@ Namespace Spectra
             End Select
         End Sub
 
+        ''' <summary>
+        ''' default is get min score of forward and reverse
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         Public Overrides Function GetScore(a As ms2(), b As ms2()) As Double
             Dim scores = GlobalAlignment.TwoDirectionSSM(a, b, mzwidth)
             Dim min As Double = scoreAggregate(scores.forward, scores.reverse)

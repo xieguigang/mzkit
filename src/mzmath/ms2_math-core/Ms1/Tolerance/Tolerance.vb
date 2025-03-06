@@ -288,6 +288,8 @@ Namespace Ms1
         End Operator
 
         ''' <summary>
+        ''' Parse the given string value as the tolerance error object
+        ''' 
         ''' + da:xxx
         ''' + ppm:xxx
         ''' </summary>
@@ -297,13 +299,23 @@ Namespace Ms1
         ''' 1. if less than 1, means da:xxx
         ''' 2. if greater than or equals to 1, means ppm:xxx
         ''' </param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function will returns nothing if the given script string is in in-correct format.
+        ''' </returns>
         Public Shared Function ParseScript(script As String) As Tolerance
             Dim tokens = script.GetTagValue(":", trim:=True)
             Dim method = tokens.Name.ToLower
             Dim tolerance# = tokens.Value.ParseDouble
 
             If method.StringEmpty Then
+                If tolerance = 0.0 Then
+                    ' method is empty andalso tolerance is zero
+                    ' means string in invalid format
+                    ' returns nothing directly
+                    Call $"the given string({script}) that represent the tolerance error in invalid format!".Warning
+                    Return Nothing
+                End If
+
                 ' 20230608 when the given script text value just a number, then
                 '
                 ' + less than 1, means da tolerance error
