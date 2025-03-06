@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c5f2439b899a585487ab06d5bafcbc0, mzmath\MSEngine\SequenceToSpec.vb"
+﻿#Region "Microsoft.VisualBasic::8c5f2439b899a585487ab06d5bafcbc0, mzmath\MSEngine\Proteomics\SequenceToSpec.vb"
 
     ' Author:
     ' 

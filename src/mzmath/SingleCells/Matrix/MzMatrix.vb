@@ -1,61 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::19f7fee5699a85eb4f6e38afe19acaed, mzmath\SingleCells\Matrix\MzMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::c309cca710aa3fd2700e765bc0078e70, mzmath\SingleCells\Matrix\MzMatrix.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 234
-'    Code Lines: 126 (53.85%)
-' Comment Lines: 76 (32.48%)
-'    - Xml Docs: 96.05%
-' 
-'   Blank Lines: 32 (13.68%)
-'     File Size: 9.80 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class MzMatrix
-' 
-'         Properties: featureSize, matrix, matrixType, mz, mzmax
-'                     mzmin, tolerance
-' 
-'         Function: ArrayPack, ExportCsvSheet, ExportSpatial, GetHeader, GetLabels
-'                   GetLayer, GetPeaks, GetSpectrum
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 241
+    '    Code Lines: 132 (54.77%)
+    ' Comment Lines: 76 (31.54%)
+    '    - Xml Docs: 96.05%
+    ' 
+    '   Blank Lines: 33 (13.69%)
+    '     File Size: 10.08 KB
+
+
+    '     Class MzMatrix
+    ' 
+    '         Properties: featureSize, matrix, matrixType, mz, mzmax
+    '                     mzmin, tolerance
+    ' 
+    '         Function: ArrayPack, CreateIndex, ExportCsvSheet, ExportSpatial, GetHeader
+    '                   GetLabels, GetLayer, GetPeaks, GetSpectrum
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

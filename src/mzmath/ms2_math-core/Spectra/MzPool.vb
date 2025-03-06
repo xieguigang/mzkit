@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::669d3ef89ed652b6665d2a17ff582fa7, mzmath\ms2_math-core\Spectra\MzPool.vb"
+﻿#Region "Microsoft.VisualBasic::bebe12c9ebbb9efe4557453b617e6c8d, mzmath\ms2_math-core\Spectra\MzPool.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 101
-    '    Code Lines: 53 (52.48%)
-    ' Comment Lines: 35 (34.65%)
+    '   Total Lines: 107
+    '    Code Lines: 58 (54.21%)
+    ' Comment Lines: 35 (32.71%)
     '    - Xml Docs: 97.14%
     ' 
-    '   Blank Lines: 13 (12.87%)
-    '     File Size: 3.80 KB
+    '   Blank Lines: 14 (13.08%)
+    '     File Size: 3.97 KB
 
 
     '     Class MzPool

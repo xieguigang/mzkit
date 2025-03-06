@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d87a7286a1e52018f320745026acbdc, mzmath\mz_deco\Signals\MRM\MS1.vb"
+﻿#Region "Microsoft.VisualBasic::b37872260e4b0eea05eb8cb6e0e11e34, mzmath\mz_deco\Signals\MRM\MS1.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 52 (80.00%)
-    ' Comment Lines: 5 (7.69%)
-    '    - Xml Docs: 80.00%
+    '   Total Lines: 68
+    '    Code Lines: 52 (76.47%)
+    ' Comment Lines: 8 (11.76%)
+    '    - Xml Docs: 87.50%
     ' 
-    '   Blank Lines: 8 (12.31%)
-    '     File Size: 2.88 KB
+    '   Blank Lines: 8 (11.76%)
+    '     File Size: 2.98 KB
 
 
     '     Module MS1Extensions

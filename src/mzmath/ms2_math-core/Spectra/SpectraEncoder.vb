@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cc64c7c4679d4754924d187b5f50290, mzmath\ms2_math-core\Spectra\SpectraEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::af728ed5f5d69d039c629da1a8f50648, mzmath\ms2_math-core\Spectra\SpectraEncoder.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 203
-    '    Code Lines: 127 (62.56%)
-    ' Comment Lines: 50 (24.63%)
-    '    - Xml Docs: 88.00%
+    '   Total Lines: 218
+    '    Code Lines: 130 (59.63%)
+    ' Comment Lines: 60 (27.52%)
+    '    - Xml Docs: 85.00%
     ' 
-    '   Blank Lines: 26 (12.81%)
-    '     File Size: 8.29 KB
+    '   Blank Lines: 28 (12.84%)
+    '     File Size: 9.10 KB
 
 
     '     Module SpectraEncoder

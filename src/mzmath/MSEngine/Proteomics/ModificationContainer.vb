@@ -1,90 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::cadc4166d8edc8942f1feabaa3910233, mzmath\MSEngine\ModificationContainer.vb"
+﻿#Region "Microsoft.VisualBasic::1b7fc10ad2bda670ab1e43f8243b2729, mzmath\MSEngine\Proteomics\ModificationContainer.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 491
-'    Code Lines: 370 (75.36%)
-' Comment Lines: 11 (2.24%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 110 (22.40%)
-'     File Size: 22.48 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class ModificationContainer
-' 
-'     Properties: AnyCtermFixedMods, AnyCtermSite2FixedMod, AnyCtermSite2VariableMod, AnyCtermVariableMods, AnyNtermFixedMods
-'                 AnyNtermSite2FixedMod, AnyNtermSite2VariableMod, AnyNtermVariableMods, AnywehereSite2FixedMod, AnywehereSite2VariableMod
-'                 AnywhereFixedMods, AnywhereVariableMods, Code2AminoAcidObj, Code2ID, ID2Code
-'                 NotCtermFixedMods, NotCtermSite2FixedMod, NotCtermSite2VariableMod, NotCtermVariableMods, ProteinCtermFixedMods
-'                 ProteinCtermSite2FixedMod, ProteinCtermSite2VariableMod, ProteinCtermVariableMods, ProteinNterm2FixedMod, ProteinNterm2VariableMod
-'                 ProteinNtermFixedMods, ProteinNtermVariableMods
-' 
-'     Constructor: (+2 Overloads) Sub New
-'     Function: GetAminoAcidDictionaryUsedInModificationProtocol, GetCode2ID, GetID2Code, GetInitializeObject, GetModificationProtocolDict
-'               IsEmptyOrNull
-' 
-' Class ModificationUtility
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: GetFastModifiedPeptides, (+2 Overloads) GetModificationContainer, GetModifiedAminoacidCode, GetModifiedComposition, GetModifiedCompositions
-'               GetModifiedPeptides
-' 
-' Class ModificationProtocol
-' 
-'     Properties: ModifiedAA, ModifiedAACode, ModifiedComposition, ModSequence, OriginalAA
-' 
-'     Function: IsModified
-' 
-'     Sub: UpdateObjects, UpdateProtocol
-' 
-' Class Modification
-' 
-'     Properties: Composition, CreateDate, Description, IsSelected, IsVariable
-'                 LastModifiedDate, ModificationSites, Position, ReporterCorrectionM1, ReporterCorrectionM2
-'                 ReporterCorrectionP1, ReporterCorrectionP2, ReporterCorrectionType, TerminusType, Title
-'                 Type, User
-' 
-' Class ModificationSite
-' 
-'     Properties: DiagnosticIons, DiagnosticNLs, Site
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 229
+    '    Code Lines: 162 (70.74%)
+    ' Comment Lines: 7 (3.06%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 60 (26.20%)
+    '     File Size: 12.01 KB
+
+
+    ' Class ModificationContainer
+    ' 
+    '     Properties: AnyCtermFixedMods, AnyCtermSite2FixedMod, AnyCtermSite2VariableMod, AnyCtermVariableMods, AnyNtermFixedMods
+    '                 AnyNtermSite2FixedMod, AnyNtermSite2VariableMod, AnyNtermVariableMods, AnywehereSite2FixedMod, AnywehereSite2VariableMod
+    '                 AnywhereFixedMods, AnywhereVariableMods, Code2AminoAcidObj, Code2ID, ID2Code
+    '                 NotCtermFixedMods, NotCtermSite2FixedMod, NotCtermSite2VariableMod, NotCtermVariableMods, ProteinCtermFixedMods
+    '                 ProteinCtermSite2FixedMod, ProteinCtermSite2VariableMod, ProteinCtermVariableMods, ProteinNterm2FixedMod, ProteinNterm2VariableMod
+    '                 ProteinNtermFixedMods, ProteinNtermVariableMods
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    '     Function: GetAminoAcidDictionaryUsedInModificationProtocol, GetCode2ID, GetID2Code, GetInitializeObject, GetModificationProtocolDict
+    '               IsEmptyOrNull
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -317,4 +292,3 @@ Public Class ModificationContainer
         Return dict
     End Function
 End Class
-

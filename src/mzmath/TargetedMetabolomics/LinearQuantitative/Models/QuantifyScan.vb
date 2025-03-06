@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0d2e3edbfe139bc74e97065e68989db, mzmath\TargetedMetabolomics\LinearQuantitative\Models\QuantifyScan.vb"
+﻿#Region "Microsoft.VisualBasic::fc38a701f173eba15423f1ce27d9050b, mzmath\TargetedMetabolomics\LinearQuantitative\Models\QuantifyScan.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 5 (19.23%)
-    '     File Size: 703 B
+    '     File Size: 709 B
 
 
     '     Class QuantifyScan

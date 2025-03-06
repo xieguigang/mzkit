@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::daae77bc8153d7b9eb037cd048845e21, mzmath\mz_deco\xic_deco_task.vb"
+﻿#Region "Microsoft.VisualBasic::037ba1293af43b9d9b24129404405f0e, mzmath\mz_deco\Task\xic_deco_task.vb"
 
     ' Author:
     ' 
@@ -37,22 +37,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 104
-    '    Code Lines: 83 (79.81%)
-    ' Comment Lines: 3 (2.88%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 106
+    '    Code Lines: 82 (77.36%)
+    ' Comment Lines: 6 (5.66%)
+    '    - Xml Docs: 50.00%
     ' 
-    '   Blank Lines: 18 (17.31%)
-    '     File Size: 3.77 KB
+    '   Blank Lines: 18 (16.98%)
+    '     File Size: 4.03 KB
 
 
-    ' Class xic_deco_task
+    '     Class xic_deco_task
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: extractAlignedPeaks
+    '         Function: ExtractAlignedPeaks
     ' 
-    '     Sub: Solve
+    '         Sub: Solve
+    ' 
     ' 
     ' /********************************************************************************/
 

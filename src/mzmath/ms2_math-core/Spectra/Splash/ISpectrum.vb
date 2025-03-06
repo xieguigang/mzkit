@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56f83af71f8f6dfc49f125455bce33ae, mzmath\ms2_math-core\Spectra\Splash\ISpectrum.vb"
+﻿#Region "Microsoft.VisualBasic::2b5aac87f1455e2f0a27fc4a07d7a8e8, mzmath\ms2_math-core\Spectra\Splash\ISpectrum.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 39
-    '    Code Lines: 6 (15.38%)
-    ' Comment Lines: 29 (74.36%)
-    '    - Xml Docs: 27.59%
+    '   Total Lines: 42
+    '    Code Lines: 6 (14.29%)
+    ' Comment Lines: 32 (76.19%)
+    '    - Xml Docs: 34.38%
     ' 
-    '   Blank Lines: 4 (10.26%)
-    '     File Size: 1.33 KB
+    '   Blank Lines: 4 (9.52%)
+    '     File Size: 1.45 KB
 
 
     '     Interface ISpectrum

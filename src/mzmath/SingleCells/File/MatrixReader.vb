@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e329fb64e79c21667c0a9ce3098e1190, mzmath\SingleCells\File\MatrixReader.vb"
+﻿#Region "Microsoft.VisualBasic::0fc9a5416728fdc261b379ef2612edc5, mzmath\SingleCells\File\MatrixReader.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 353
-    '    Code Lines: 219 (62.04%)
-    ' Comment Lines: 71 (20.11%)
-    '    - Xml Docs: 80.28%
+    '   Total Lines: 401
+    '    Code Lines: 241 (60.10%)
+    ' Comment Lines: 92 (22.94%)
+    '    - Xml Docs: 83.70%
     ' 
-    '   Blank Lines: 63 (17.85%)
-    '     File Size: 13.01 KB
+    '   Blank Lines: 68 (16.96%)
+    '     File Size: 14.96 KB
 
 
     '     Class MatrixReader
@@ -51,10 +51,10 @@
     '         Properties: dim_size, featureSize, ionSet, matrixType, spots
     '                     tolerance
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: GetIntensity, GetRaster, (+2 Overloads) GetSpot, LoadCurrentSpot, loadHeaders
-    '                   LoadMemory, LoadSpots
+    '         Function: GetIntensity, GetLayer, GetRaster, (+2 Overloads) GetSpot, LoadCurrentSpot
+    '                   loadHeaders, LoadMemory, LoadSpots
     ' 
     '         Sub: (+2 Overloads) Dispose
     ' 

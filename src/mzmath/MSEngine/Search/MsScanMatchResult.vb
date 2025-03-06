@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf2ea78fa4f9b2df03deb3481d56a3f1, mzmath\MSEngine\Search\MsScanMatchResult.vb"
+﻿#Region "Microsoft.VisualBasic::2397f62bede3099a00a6c918c3eae2bc, mzmath\MSEngine\Search\MsScanMatchResult.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 131
-    '    Code Lines: 75 (57.25%)
-    ' Comment Lines: 9 (6.87%)
-    '    - Xml Docs: 33.33%
+    '   Total Lines: 143
+    '    Code Lines: 75 (52.45%)
+    ' Comment Lines: 24 (16.78%)
+    '    - Xml Docs: 91.67%
     ' 
-    '   Blank Lines: 47 (35.88%)
-    '     File Size: 3.07 KB
+    '   Blank Lines: 44 (30.77%)
+    '     File Size: 3.41 KB
 
 
     ' Enum SourceType

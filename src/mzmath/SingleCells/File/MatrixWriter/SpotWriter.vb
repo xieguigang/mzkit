@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::988d4e2618eb3f2d914fb0ae179b4147, mzmath\SingleCells\File\MatrixWriter\SpotWriter.vb"
+﻿#Region "Microsoft.VisualBasic::1a00f564b842f660ca047a3b4437c319, mzmath\SingleCells\File\MatrixWriter\SpotWriter.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 72
-    '    Code Lines: 40 (55.56%)
-    ' Comment Lines: 19 (26.39%)
-    '    - Xml Docs: 84.21%
+    '   Total Lines: 75
+    '    Code Lines: 40 (53.33%)
+    ' Comment Lines: 22 (29.33%)
+    '    - Xml Docs: 86.36%
     ' 
-    '   Blank Lines: 13 (18.06%)
-    '     File Size: 2.28 KB
+    '   Blank Lines: 13 (17.33%)
+    '     File Size: 2.37 KB
 
 
     '     Class SpotWriter

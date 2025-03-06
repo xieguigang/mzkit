@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01fa55887809ddf7d6d650b396aa67ff, mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\StandardCurveWorker.vb"
+﻿#Region "Microsoft.VisualBasic::978e8e7c7dec96d489cf83275ffbff28, mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\StandardCurveWorker.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 52.54%
     ' 
     '   Blank Lines: 41 (12.39%)
-    '     File Size: 15.66 KB
+    '     File Size: 15.67 KB
 
 
     '     Module StandardCurveWorker

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f3888d4dc0861e87488bb3e52157fca, mzmath\TargetedMetabolomics\LinearQuantitative\Linear\SampleWorker.vb"
+﻿#Region "Microsoft.VisualBasic::b29b967501c8892c1d3a2002cdcc4950, mzmath\TargetedMetabolomics\LinearQuantitative\Linear\SampleWorker.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 86.67%
     ' 
     '   Blank Lines: 15 (13.89%)
-    '     File Size: 4.57 KB
+    '     File Size: 4.58 KB
 
 
     '     Module SampleWorker
