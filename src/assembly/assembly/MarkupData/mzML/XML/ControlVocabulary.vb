@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a08ef3143cea20fed1f9c43632f23dc, assembly\assembly\MarkupData\mzML\XML\ControlVocabulary.vb"
+﻿#Region "Microsoft.VisualBasic::784c5c0dd64697d29b0e1a86dc48e455, assembly\assembly\MarkupData\mzML\XML\ControlVocabulary.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 114
-    '    Code Lines: 65 (57.02%)
-    ' Comment Lines: 28 (24.56%)
+    '   Total Lines: 120
+    '    Code Lines: 71 (59.17%)
+    ' Comment Lines: 28 (23.33%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 21 (18.42%)
-    '     File Size: 4.61 KB
+    '   Blank Lines: 21 (17.50%)
+    '     File Size: 4.90 KB
 
 
     '     Class cvList
     ' 
     '         Properties: list
     ' 
-    '         Function: ToString
+    '         Function: GenericEnumerator, ToString
     ' 
     '     Structure cv
     ' 

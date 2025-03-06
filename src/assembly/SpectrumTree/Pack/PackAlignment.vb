@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1d05326031f2878e63569639084581f, assembly\SpectrumTree\Pack\PackAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::4de58d730f30eb89339772f2ef077cfa, assembly\SpectrumTree\Pack\PackAlignment.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 217
-    '    Code Lines: 126 (58.06%)
-    ' Comment Lines: 70 (32.26%)
+    '   Total Lines: 225
+    '    Code Lines: 132 (58.67%)
+    ' Comment Lines: 70 (31.11%)
     '    - Xml Docs: 78.57%
     ' 
-    '   Blank Lines: 21 (9.68%)
-    '     File Size: 9.24 KB
+    '   Blank Lines: 23 (10.22%)
+    '     File Size: 9.49 KB
 
 
     '     Class PackAlignment

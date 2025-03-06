@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38da0be5f847096acaa869889c1ac5d6, assembly\assembly\MarkupData\imzML\XML\MSISummary.vb"
+﻿#Region "Microsoft.VisualBasic::ba41d4dfb296494a7243b055f8a9da22, assembly\assembly\MarkupData\imzML\XML\MSISummary.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 146
-    '    Code Lines: 100 (68.49%)
-    ' Comment Lines: 26 (17.81%)
+    '   Total Lines: 144
+    '    Code Lines: 100 (69.44%)
+    ' Comment Lines: 26 (18.06%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 20 (13.70%)
-    '     File Size: 5.38 KB
+    '   Blank Lines: 18 (12.50%)
+    '     File Size: 5.37 KB
 
 
     '     Class MSISummary

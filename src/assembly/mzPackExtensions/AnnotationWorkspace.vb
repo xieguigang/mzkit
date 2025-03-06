@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7d536bc1bc82fac23bbb0bb1e2740e9, assembly\mzPackExtensions\AnnotationWorkspace.vb"
+﻿#Region "Microsoft.VisualBasic::edb0998705ce2822468105c128496f2b, assembly\mzPackExtensions\AnnotationWorkspace.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 80.88%
     ' 
     '   Blank Lines: 47 (16.26%)
-    '     File Size: 10.98 KB
+    '     File Size: 11.01 KB
 
 
     ' Class AnnotationWorkspace

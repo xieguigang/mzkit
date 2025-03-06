@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb10f20730732cc4d25c406f195cdef4, assembly\Comprehensive\SingleCells\PackSingleCellsRaw.vb"
+﻿#Region "Microsoft.VisualBasic::cc6f3f663d89fbd33e5300dc401d3ea2, assembly\Comprehensive\SingleCells\PackSingleCellsRaw.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 13 (15.12%)
-    '     File Size: 3.58 KB
+    '     File Size: 3.62 KB
 
 
     '     Module PackSingleCellsRaw

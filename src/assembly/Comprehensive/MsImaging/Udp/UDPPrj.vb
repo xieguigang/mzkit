@@ -1,77 +1,77 @@
-﻿#Region "Microsoft.VisualBasic::31aba5aea8723a7b521cf04d2e365afa, assembly\Comprehensive\MsImaging\Udp\UDPPrj.vb"
+﻿#Region "Microsoft.VisualBasic::42bbc9108f9142ce304888021277cd34, assembly\Comprehensive\MsImaging\Udp\UDPPrj.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 111
-'    Code Lines: 87 (78.38%)
-' Comment Lines: 4 (3.60%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 20 (18.02%)
-'     File Size: 3.52 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class UDPPrj
-' 
-'         Properties: [Global], Scan, Spectra, UDPVersion
-' 
-'         Function: GetDimension, GetMassRange, GetMSIMetadata, GetRawdataFile, GetResolution
-'                   ReadUdpFile
-' 
-'     Class UdpSpectraInfo
-' 
-'         Properties: SpecAnz
-' 
-'         Function: ToString
-' 
-'     Class UdpScanMeta
-' 
-'         Properties: MassMax, MassMin, MaxN, MaxX, MaxY
-'                     MaxZ, OriginX, OriginY, OriginZ, Pattern
-'                     ResolutionX, ResolutionY, ResolutionZ, SpectraPerPixel
-' 
-'     Class UdpGlobal
-' 
-'         Properties: [Operator], DataPath, EndTime, LastModifier, LastUser
-'                     Machine, SpecOrigin, StartTime
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 112
+    '    Code Lines: 88 (78.57%)
+    ' Comment Lines: 4 (3.57%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 20 (17.86%)
+    '     File Size: 3.58 KB
+
+
+    '     Class UDPPrj
+    ' 
+    '         Properties: [Global], Scan, Spectra, UDPVersion
+    ' 
+    '         Function: GetDimension, GetMassRange, GetMSIMetadata, GetRawdataFile, GetResolution
+    '                   ReadUdpFile
+    ' 
+    '     Class UdpSpectraInfo
+    ' 
+    '         Properties: SpecAnz
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class UdpScanMeta
+    ' 
+    '         Properties: MassMax, MassMin, MaxN, MaxX, MaxY
+    '                     MaxZ, OriginX, OriginY, OriginZ, Pattern
+    '                     ResolutionX, ResolutionY, ResolutionZ, SpectraPerPixel
+    ' 
+    '     Class UdpGlobal
+    ' 
+    '         Properties: [Operator], DataPath, EndTime, LastModifier, LastUser
+    '                     Machine, SpecOrigin, StartTime
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77e3645060badd25abdb5bd98b6a837f, assembly\assembly\mzPack\Binary\BinaryStreamReader.vb"
+﻿#Region "Microsoft.VisualBasic::eaf678775a4fd8ceb4a7c89f05e50829, assembly\assembly\mzPack\Binary\BinaryStreamReader.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 311
-    '    Code Lines: 186 (59.81%)
-    ' Comment Lines: 74 (23.79%)
-    '    - Xml Docs: 64.86%
+    '   Total Lines: 345
+    '    Code Lines: 210 (60.87%)
+    ' Comment Lines: 79 (22.90%)
+    '    - Xml Docs: 65.82%
     ' 
-    '   Blank Lines: 51 (16.40%)
-    '     File Size: 11.33 KB
+    '   Blank Lines: 56 (16.23%)
+    '     File Size: 12.75 KB
 
 
     '     Class BinaryStreamReader
     ' 
-    '         Properties: EnumerateIndex, filepath, magic, mzmax, mzmin
-    '                     rtmax, rtmin, source
+    '         Properties: application, EnumerateIndex, filepath, magic, mzmax
+    '                     mzmin, rtmax, rtmin, source
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 

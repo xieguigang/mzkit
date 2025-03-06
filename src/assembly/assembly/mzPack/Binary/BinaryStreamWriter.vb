@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0837d12e5c497a5c50e02fbf34369cba, assembly\assembly\mzPack\Binary\BinaryStreamWriter.vb"
+﻿#Region "Microsoft.VisualBasic::1b9481c1b7fcd85aa6a991e9858003f5, assembly\assembly\mzPack\Binary\BinaryStreamWriter.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 217
-    '    Code Lines: 132 (60.83%)
-    ' Comment Lines: 37 (17.05%)
-    '    - Xml Docs: 21.62%
+    '   Total Lines: 259
+    '    Code Lines: 150 (57.92%)
+    ' Comment Lines: 56 (21.62%)
+    '    - Xml Docs: 42.86%
     ' 
-    '   Blank Lines: 48 (22.12%)
-    '     File Size: 7.20 KB
+    '   Blank Lines: 53 (20.46%)
+    '     File Size: 8.80 KB
 
 
     '     Class BinaryStreamWriter
     ' 
-    '         Properties: version
+    '         Properties: version, version2025
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Sub: (+2 Overloads) Dispose, (+2 Overloads) Write, WriteBuffer, writeIndex, writeMetaData

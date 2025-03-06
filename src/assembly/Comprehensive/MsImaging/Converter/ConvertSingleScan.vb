@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24afaba7fd9f7df37ab2b2f52738e00c, assembly\Comprehensive\MsImaging\Converter\ConvertSingleScan.vb"
+﻿#Region "Microsoft.VisualBasic::309eaeed3e671a0502d149f9e925effc, assembly\Comprehensive\MsImaging\Converter\ConvertSingleScan.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 49 (66.22%)
-    ' Comment Lines: 13 (17.57%)
+    '   Total Lines: 78
+    '    Code Lines: 51 (65.38%)
+    ' Comment Lines: 13 (16.67%)
     '    - Xml Docs: 92.31%
     ' 
-    '   Blank Lines: 12 (16.22%)
-    '     File Size: 2.75 KB
+    '   Blank Lines: 14 (17.95%)
+    '     File Size: 2.85 KB
 
 
     '     Module ConvertSingleScan

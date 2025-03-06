@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3178ad4c2478f3dec8add2bd83218bb, assembly\mzPack\v2.0\mzStreamWriter.vb"
+﻿#Region "Microsoft.VisualBasic::61cff39af76e66cd6300a6cb69ee5ec2, assembly\mzPack\v2.0\mzStreamWriter.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 251
-    '    Code Lines: 180 (71.71%)
-    ' Comment Lines: 27 (10.76%)
-    '    - Xml Docs: 48.15%
+    '   Total Lines: 352
+    '    Code Lines: 239 (67.90%)
+    ' Comment Lines: 59 (16.76%)
+    '    - Xml Docs: 64.41%
     ' 
-    '   Blank Lines: 44 (17.53%)
-    '     File Size: 9.85 KB
+    '   Blank Lines: 54 (15.34%)
+    '     File Size: 14.51 KB
 
 
     ' Module mzStreamWriter
     ' 
-    '     Function: getScan1DirName, readme, WriteStream
+    '     Function: getScan1DirName, (+2 Overloads) readme, (+2 Overloads) WriteStream
     ' 
-    '     Sub: writeAnnotations, WriteApplicationClass, (+2 Overloads) WriteStream
+    '     Sub: writeAnnotations, WriteApplicationClass, WriteMultipleStageProductTree, (+2 Overloads) WriteStream
     ' 
     ' /********************************************************************************/
 
