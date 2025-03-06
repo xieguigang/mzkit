@@ -15,6 +15,7 @@ MS-Imaging data handler
 + [dimension_size](MSI/dimension_size.1) get or set the dimension size of the ms-imaging mzpack raw data object
 + [open.imzML](MSI/open.imzML.1) open the reader for the imzML ms-imaging file
 + [write.imzML](MSI/write.imzML.1) Save and write the given ms-imaging mzpack object as imzML file
++ [read.imzml_metadata](MSI/read.imzml_metadata.1) read the metadata from the imzml file header
 + [row.scans](MSI/row.scans.1) each raw data file is a row scan data
 + [MSI_summary](MSI/MSI_summary.1) Fetch MSI summary data
 + [correction](MSI/correction.1) calculate the X axis scale

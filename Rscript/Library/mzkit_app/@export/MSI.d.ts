@@ -375,6 +375,15 @@ declare namespace MSI {
      * + default value Is ``null``.
    */
    function raster(x: any, layer?: object, env?: object): object;
+   module read {
+      /**
+       * read the metadata from the imzml file header
+       * 
+       * 
+        * @param imzML -
+      */
+      function imzml_metadata(imzML: string): object;
+   }
    module row {
       /**
        * each raw data file is a row scan data
