@@ -294,13 +294,36 @@ imzML:      Return LoadimzML(xml, intocutoff, IonModes.Positive, Sub(p, msg) pro
                               Optional defaultIon As IonModes = IonModes.Positive,
                               Optional progress As RunSlavePipeline.SetProgressEventHandler = Nothing) As mzPack
 
+        Dim allscans As ScanData() = Nothing
+        Dim metadata As imzMLMetadata = Nothing
         Dim scans As New List(Of ScanMS1)
-        Dim metadata As imzMLMetadata = imzMLMetadata.ReadHeaders(imzml:=xml)
-        Dim allscans As ScanData() = imzML.XML.LoadScans(xml).ToArray
-        Dim msiMetadata As New Dictionary(Of String, String)
-        Dim filename As String = metadata.sourcefiles.First.FileName
+        Dim mzpack As mzPack = loadimzMLMetadata(xml, allscans, metadata)
         Dim ibdStream As Stream = xml.ChangeSuffix("ibd").Open(FileMode.Open, doClear:=False, [readOnly]:=True)
         Dim ibd As New ibdReader(ibdStream, metadata.format)
+        Dim filename As String = metadata.sourcefiles.First.FileName
+
+        scans.AddRange(allscans.LoadScanStream(ibd, filename, defaultIon, noiseCutoff, progress))
+        ibd.Dispose()
+        mzpack.MS = scans.ToArray
+
+        Return mzpack
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="imzML"></param>
+    ''' <returns>
+    ''' this function just returns a mzpack object **without** scan data.
+    ''' </returns>
+    Public Function loadimzMLMetadata(imzML As String,
+                                      Optional ByRef allscans As ScanData() = Nothing,
+                                      Optional ByRef metadata As imzMLMetadata = Nothing) As mzPack
+
+        Dim msiMetadata As New Dictionary(Of String, String)
+
+        metadata = imzMLMetadata.ReadHeaders(imzml:=imzML)
+        allscans = MarkupData.imzML.XML.LoadScans(imzML).ToArray
 
         If allscans.Any AndAlso (metadata.dims.Width <= 1 OrElse metadata.dims.Height <= 1) Then
             metadata.dims = New Size(
@@ -313,12 +336,8 @@ imzML:      Return LoadimzML(xml, intocutoff, IonModes.Positive, Sub(p, msg) pro
         msiMetadata!height = metadata.dims.Height
         msiMetadata!resolution = (metadata.resolution.Width + metadata.resolution.Height) / 2
 
-        Call scans.AddRange(allscans.LoadScanStream(ibd, filename, defaultIon, noiseCutoff, progress))
-        Call ibd.Dispose()
-
         Return New mzPack With {
-            .MS = scans.ToArray,
-            .source = If(metadata.sourcefiles.FirstOrDefault, SolveTagSource(xml)),
+            .source = If(metadata.sourcefiles.FirstOrDefault, SolveTagSource(imzML)),
             .Application = FileApplicationClass.MSImaging,
             .metadata = msiMetadata
         }
