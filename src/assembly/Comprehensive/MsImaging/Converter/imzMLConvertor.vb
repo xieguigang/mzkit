@@ -26,7 +26,9 @@ Namespace MsImaging
 
             Using s As Stream = output.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
                 Return allscans _
-                    .LoadScanStream(ibdreader, filename, defaultIon, , make_centroid, progress) _
+                    .LoadScanStream(ibdreader, filename, defaultIon, , make_centroid,
+                                    progress:=progress,
+                                    verbose:=3) _
                     .WriteStream(file:=s,
                                  source:=filename,
                                  meta_size:=64 * ByteSize.MB,

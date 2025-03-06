@@ -210,7 +210,8 @@ imzML:      Return LoadimzML(xml, intocutoff,
                                             Optional defaultIon As IonModes = IonModes.Positive,
                                             Optional noiseCutoff As Double = 0,
                                             Optional make_centroid As toleranceErr = Nothing,
-                                            Optional progress As RunSlavePipeline.SetProgressEventHandler = Nothing) As IEnumerable(Of ScanMS1)
+                                            Optional progress As RunSlavePipeline.SetProgressEventHandler = Nothing,
+                                            Optional verbose As Integer = 100) As IEnumerable(Of ScanMS1)
         Dim mz As Double() = Nothing
         Dim intensity As Double() = Nothing
         Dim pixel As ScanMS1
@@ -218,7 +219,7 @@ imzML:      Return LoadimzML(xml, intocutoff,
         Dim ptag As String
         Dim maxinto As Double
         Dim i As Integer = 0
-        Dim d As Integer = allscans.Length / 100 * 8
+        Dim d As Integer = allscans.Length / If(verbose > 0, verbose, 100) * 8
         Dim j As i32 = 0
         Dim zero_cutoff As New RelativeIntensityCutoff(0.0)
 
