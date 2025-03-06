@@ -10,6 +10,18 @@ Namespace MsImaging
 
     Public Module imzMLConvertor
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="target"></param>
+        ''' <param name="output"></param>
+        ''' <param name="defaultIon"></param>
+        ''' <param name="make_centroid"></param>
+        ''' <param name="progress"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this function report the ibd data load progress in a more verbose mode.
+        ''' </remarks>
         Public Function ConvertImzMLOntheFly(target As String, output As String,
                                              Optional defaultIon As IonModes = IonModes.Positive,
                                              Optional make_centroid As Tolerance = Nothing,
