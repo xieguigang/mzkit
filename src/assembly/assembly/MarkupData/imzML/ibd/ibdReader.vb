@@ -226,9 +226,26 @@ Namespace MarkupData.imzML
             Return $"[{format.ToString}] " & UUID
         End Function
 
+        ''' <summary>
+        ''' Open the imzML ibd file reader
+        ''' </summary>
+        ''' <param name="ibd"></param>
+        ''' <param name="format"></param>
+        ''' <param name="aggresive">
+        ''' load ibd rawdata in aggresive memory usage mode? 
+        ''' </param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Open(ibd As String, Optional format As Format = Format.Processed) As ibdReader
-            Dim file As Stream = ibd.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+        Public Shared Function Open(ibd As String,
+                                    Optional format As Format = Format.Processed,
+                                    Optional aggresive As Boolean = True) As ibdReader
+
+            Dim file As Stream = ibd.Open(
+                mode:=FileMode.Open,
+                doClear:=False,
+                readOnly:=True,
+                aggressive:=aggresive
+            )
             Dim reader As New ibdReader(file, format)
 
             Return reader
