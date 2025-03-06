@@ -163,6 +163,20 @@ Namespace MarkupData.imzML
             Next
         End Function
 
+        Public Function GetSpectrum(scan As ScanData) As PeakMs2
+            Return New PeakMs2 With {
+                .mzInto = GetMSMS(scan),
+                .file = fileName,
+                .scan = scan.spotID,
+                .lib_guid = scan.spotID,
+                .intensity = scan.totalIon,
+                .meta = New Dictionary(Of String, String) From {
+                    {"x", scan.x},
+                    {"y", scan.y}
+                }
+            }
+        End Function
+
         ''' <summary>
         ''' read mz and intensity vector from the ibd file stream
         ''' </summary>

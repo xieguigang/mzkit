@@ -685,15 +685,20 @@ Module MSI
     ''' 1. scans: is the [x,y] spatial scans data: <see cref="ScanData"/>.
     ''' 2. ibd: is the binary data reader wrapper object for the corresponding 
     '''       ``ibd`` file of the given input imzML file: <see cref="ibdReader"/>.
+    ''' 3. metadata: get file <see cref="imzMLMetadata"/> from the imzML header.
     ''' </returns>
     ''' <example>
     ''' # the msi_rawdata.ibd file should be in the same folder with the input imzml file.
     ''' let imzml = open.imzML(file = "/path/to/msi_rawdata.imzML");
+    ''' 
+    ''' # view metadata
+    ''' print(as.data.frame(imzml$metadata));
     ''' </example>
     <ExportAPI("open.imzML")>
-    <RApiReturn("scans", "ibd")>
+    <RApiReturn("scans", "ibd", "metadata")>
     Public Function open_imzML(file As String, Optional env As Environment = Nothing) As Object
         Dim scans As ScanData() = imzML.LoadScans(file:=file).ToArray
+        Dim metadata As imzMLMetadata = imzMLMetadata.ReadHeaders(file)
         Dim ibd As ibdReader
         Dim ibdfile As String = file.ChangeSuffix("ibd")
 
@@ -709,9 +714,21 @@ Module MSI
         Return New list With {
             .slots = New Dictionary(Of String, Object) From {
                 {"scans", scans},
-                {"ibd", ibd}
+                {"ibd", ibd},
+                {"metadata", metadata}
             }
         }
+    End Function
+
+    ''' <summary>
+    ''' load the spectrum of a specific spot scan inside the imzML
+    ''' </summary>
+    ''' <param name="ibd">a file reader of the ibd rawdata file</param>
+    ''' <param name="scan">contains the address information for read the spectrum inside a specific spot</param>
+    ''' <returns></returns>
+    <ExportAPI("load_spectrum")>
+    Public Function load_spectrum(ibd As ibdReader, scan As ScanData) As PeakMs2
+        Return ibd.GetSpectrum(scan)
     End Function
 
     ''' <summary>
