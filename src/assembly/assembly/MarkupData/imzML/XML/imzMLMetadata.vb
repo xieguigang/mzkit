@@ -67,6 +67,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 
@@ -221,11 +222,53 @@ Namespace MarkupData.imzML
         End Sub
 
         Public Function AsList() As Dictionary(Of String, String)
+            Dim metadata As NamedValue(Of String)() = Me.AsEnumerable.UniqueNames.ToArray
+            Dim list As New Dictionary(Of String, String)
 
+            For Each prop As NamedValue(Of String) In metadata
+                Call list.Add(prop.Name, prop.Value)
+            Next
+
+            Return list
         End Function
 
         Public Iterator Function GenericEnumerator() As IEnumerator(Of NamedValue(Of String)) Implements Enumeration(Of NamedValue(Of String)).GenericEnumerator
+            ' a set of the control vocabulary that used in current dataset
+            For Each term As cv In cv.AsEnumerable
+                Yield New NamedValue(Of String)(term.id, term.fullName, term.ToString)
+            Next
 
+            Yield New NamedValue(Of String)("guid", guid)
+            Yield New NamedValue(Of String)("ibd.format", format)
+            Yield New NamedValue(Of String)("ibd.checksum", ibd_checksum)
+
+            For Each file As String In sourcefiles.SafeQuery
+                Yield New NamedValue(Of String)("sourcefile", file)
+            Next
+
+            ' software name => version
+            For Each name As NamedValue(Of String) In softwares.SafeQuery
+                Yield New NamedValue(Of String)("software", $"{name.Name}({name.Value})")
+            Next
+
+#Region "ms-imaging specific metadata"
+            Yield New NamedValue(Of String)("direction1", direction1)
+            Yield New NamedValue(Of String)("direction2", direction2)
+            Yield New NamedValue(Of String)("width", dims.Width)
+            Yield New NamedValue(Of String)("height", dims.Height)
+            Yield New NamedValue(Of String)("physical_width", physical_size.Width)
+            Yield New NamedValue(Of String)("physical_height", physical_size.Height)
+            Yield New NamedValue(Of String)("resolution", (resolution.Width + resolution.Height) / 2)
+            Yield New NamedValue(Of String)("resolution.x", resolution.Width)
+            Yield New NamedValue(Of String)("resolution.y", resolution.Height)
+#End Region
+
+#Region "ms instrument"
+            Yield New NamedValue(Of String)("ms.instrument", ms_instrument)
+            Yield New NamedValue(Of String)("ms.source", ms_source)
+            Yield New NamedValue(Of String)("ms.analyzer", ms_analyzer)
+            Yield New NamedValue(Of String)("ms.detector", ms_detector)
+#End Region
         End Function
     End Class
 End Namespace

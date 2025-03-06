@@ -95,6 +95,7 @@ Namespace MarkupData.mzML.ControlVocabulary
     ''' a set of the control vocabulary that used in current dataset
     ''' </summary>
     Public Class cvList : Inherits List
+        Implements Enumeration(Of cv)
 
         <XmlElement(NameOf(cv))>
         Public Property list As cv()
@@ -103,6 +104,11 @@ Namespace MarkupData.mzML.ControlVocabulary
             Return list.JoinBy("; ")
         End Function
 
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of cv) Implements Enumeration(Of cv).GenericEnumerator
+            For Each vocabulary As cv In list.SafeQuery
+                Yield vocabulary
+            Next
+        End Function
     End Class
 
     ''' <summary>
