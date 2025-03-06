@@ -75,6 +75,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports chromatogramObj = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.Chromatogram
 Imports std = System.Math
+Imports toleranceErr = BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Tolerance
 
 Public Module Converter
 
@@ -176,7 +177,10 @@ mzXML:      Return New mzPack With {
         ElseIf xml.ExtensionSuffix("mzML") Then
 mzML:       Return LoadMzML(xml, tolerance, intocutoff, progress)
         ElseIf xml.ExtensionSuffix("imzML") Then
-imzML:      Return LoadimzML(xml, intocutoff, IonModes.Positive, Sub(p, msg) progress($"{msg}...{p}%"))
+imzML:      Return LoadimzML(xml, intocutoff,
+                             defaultIon:=IonModes.Positive,
+                             make_centroid:=toleranceErr.ParseScript(tolerance),
+                             progress:=Sub(p, msg) progress($"{msg}...{p}%"))
         Else
             If Not prefer.StringEmpty Then
                 Select Case prefer.ToLower
@@ -205,6 +209,7 @@ imzML:      Return LoadimzML(xml, intocutoff, IonModes.Positive, Sub(p, msg) pro
                                             Optional sourceName As String = Nothing,
                                             Optional defaultIon As IonModes = IonModes.Positive,
                                             Optional noiseCutoff As Double = 0,
+                                            Optional make_centroid As toleranceErr = Nothing,
                                             Optional progress As RunSlavePipeline.SetProgressEventHandler = Nothing) As IEnumerable(Of ScanMS1)
         Dim mz As Double() = Nothing
         Dim intensity As Double() = Nothing
@@ -215,6 +220,7 @@ imzML:      Return LoadimzML(xml, intocutoff, IonModes.Positive, Sub(p, msg) pro
         Dim i As Integer = 0
         Dim d As Integer = allscans.Length / 100 * 8
         Dim j As i32 = 0
+        Dim zero_cutoff As New RelativeIntensityCutoff(0.0)
 
         If sourceName.StringEmpty(, True) Then
             sourceName = ibd.fileName
@@ -255,6 +261,9 @@ imzML:      Return LoadimzML(xml, intocutoff, IonModes.Positive, Sub(p, msg) pro
             If scan.totalIon <= 0.0 Then
                 scan.totalIon = intensity.Sum
             End If
+            If make_centroid IsNot Nothing Then
+                ms = ms.Centroid(make_centroid, zero_cutoff).ToArray
+            End If
 
             ptag = If(scan.polarity = IonModes.Positive, "+", If(scan.polarity = IonModes.Negative, "-", "?"))
             pixel = New ScanMS1 With {
@@ -291,6 +300,7 @@ imzML:      Return LoadimzML(xml, intocutoff, IonModes.Positive, Sub(p, msg) pro
     Public Function LoadimzML(xml As String,
                               Optional noiseCutoff As Double = 0,
                               Optional defaultIon As IonModes = IonModes.Positive,
+                              Optional make_centroid As toleranceErr = Nothing,
                               Optional progress As RunSlavePipeline.SetProgressEventHandler = Nothing) As mzPack
 
         Dim allscans As ScanData() = Nothing
@@ -301,7 +311,7 @@ imzML:      Return LoadimzML(xml, intocutoff, IonModes.Positive, Sub(p, msg) pro
         Dim ibd As New ibdReader(ibdStream, metadata.format)
         Dim filename As String = metadata.sourcefiles.First.FileName
 
-        scans.AddRange(allscans.LoadScanStream(ibd, filename, defaultIon, noiseCutoff, progress))
+        scans.AddRange(allscans.LoadScanStream(ibd, filename, defaultIon, noiseCutoff, make_centroid, progress))
         ibd.Dispose()
         mzpack.MS = scans.ToArray
 

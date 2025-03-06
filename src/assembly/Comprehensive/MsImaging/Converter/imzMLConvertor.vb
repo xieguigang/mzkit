@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
@@ -11,6 +12,7 @@ Namespace MsImaging
 
         Public Function ConvertImzMLOntheFly(target As String, output As String,
                                              Optional defaultIon As IonModes = IonModes.Positive,
+                                             Optional make_centroid As Tolerance = Nothing,
                                              Optional progress As RunSlavePipeline.SetProgressEventHandler = Nothing) As Boolean
             ' convert file on the fly
             Dim allscans As ScanData() = Nothing
@@ -24,7 +26,7 @@ Namespace MsImaging
 
             Using s As Stream = output.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
                 Return allscans _
-                    .LoadScanStream(ibdreader, filename, defaultIon, , progress) _
+                    .LoadScanStream(ibdreader, filename, defaultIon, , make_centroid, progress) _
                     .WriteStream(file:=s,
                                  source:=filename,
                                  meta_size:=64 * ByteSize.MB,
