@@ -134,12 +134,24 @@ Module MSI
 
     Friend Sub Main()
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(IonStat()), AddressOf getStatTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(imzMLMetadata), AddressOf createMetadataTable)
 
         Call generic.add("readBin.msi_layer", GetType(Stream), AddressOf readPeaklayer)
         Call generic.add("readBin.msi_summary", GetType(Stream), AddressOf readSummarylayer)
         Call generic.add("writeBin", GetType(MSISummary), AddressOf writeSummarylayer)
         Call generic.add("writeBin", GetType(SingleIonLayer), AddressOf writePeaklayer)
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Private Function createMetadataTable(imzml As imzMLMetadata, args As list, env As Environment) As Object
+        Dim metadata As NamedValue(Of String)() = imzml.AsEnumerable.ToArray
+        Dim table As New rDataframe With {.columns = New Dictionary(Of String, Array)}
+
+        Call table.add("property", From pro As NamedValue(Of String) In metadata Select pro.Name)
+        Call table.add("metadata", From pro As NamedValue(Of String) In metadata Select pro.Value)
+
+        Return table
+    End Function
 
     <RGenericOverloads("writeBin")>
     Private Function writeSummarylayer(layer As MSISummary, args As list, env As Environment) As Object
@@ -746,6 +758,16 @@ Module MSI
             ionMode:=ionMode,
             dims:=dimsVal
         )
+    End Function
+
+    ''' <summary>
+    ''' read the metadata from the imzml file header
+    ''' </summary>
+    ''' <param name="imzML"></param>
+    ''' <returns></returns>
+    <ExportAPI("read.imzml_metadata")>
+    Public Function readImzMLMetadata(imzML As String) As imzMLMetadata
+        Return imzMLMetadata.ReadHeaders(imzML)
     End Function
 
     ''' <summary>
