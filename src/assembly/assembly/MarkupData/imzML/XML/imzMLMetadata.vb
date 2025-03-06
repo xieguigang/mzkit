@@ -75,7 +75,7 @@ Namespace MarkupData.imzML
     ''' <summary>
     ''' the MS-imaging metadata that read from the imzML header data
     ''' </summary>
-    Public Class imzMLMetadata
+    Public Class imzMLMetadata : Implements Enumeration(Of NamedValue(Of String))
 
         ''' <summary>
         ''' a set of the control vocabulary that used in current dataset
@@ -219,5 +219,13 @@ Namespace MarkupData.imzML
                 End If
             End If
         End Sub
+
+        Public Function AsList() As Dictionary(Of String, String)
+
+        End Function
+
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of NamedValue(Of String)) Implements Enumeration(Of NamedValue(Of String)).GenericEnumerator
+
+        End Function
     End Class
 End Namespace
