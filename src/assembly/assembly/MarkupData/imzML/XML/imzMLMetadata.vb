@@ -239,7 +239,7 @@ Namespace MarkupData.imzML
             Next
 
             Yield New NamedValue(Of String)("guid", guid)
-            Yield New NamedValue(Of String)("ibd.format", format)
+            Yield New NamedValue(Of String)("ibd.format", format.Description)
             Yield New NamedValue(Of String)("ibd.checksum", ibd_checksum)
 
             For Each file As String In sourcefiles.SafeQuery
