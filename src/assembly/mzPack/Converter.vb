@@ -320,7 +320,7 @@ imzML:      Return LoadimzML(xml, intocutoff, IonModes.Positive, Sub(p, msg) pro
                                       Optional ByRef allscans As ScanData() = Nothing,
                                       Optional ByRef metadata As imzMLMetadata = Nothing) As mzPack
 
-        Dim msiMetadata As New Dictionary(Of String, String)
+        Dim msiMetadata As Dictionary(Of String, String)
 
         metadata = imzMLMetadata.ReadHeaders(imzml:=imzML)
         allscans = MarkupData.imzML.XML.LoadScans(imzML).ToArray
@@ -332,6 +332,7 @@ imzML:      Return LoadimzML(xml, intocutoff, IonModes.Positive, Sub(p, msg) pro
             )
         End If
 
+        msiMetadata = metadata.AsList
         msiMetadata!width = metadata.dims.Width
         msiMetadata!height = metadata.dims.Height
         msiMetadata!resolution = (metadata.resolution.Width + metadata.resolution.Height) / 2
