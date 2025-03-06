@@ -32,5 +32,40 @@ Namespace MsImaging
                                  metadata:=contentMeta)
             End Using
         End Function
+
+        ''' <summary>
+        ''' view of the sample outline when ibd data file is missing
+        ''' </summary>
+        ''' <param name="imzml"></param>
+        ''' <returns></returns>
+        Public Function ScanShadows(imzml As String) As mzPack
+            Dim allscans As ScanData() = Nothing
+            Dim header As imzMLMetadata = Nothing
+            Dim metadata = Converter.loadimzMLMetadata(imzml, allscans, metadata:=header)
+            Dim checkTic = allscans.Any(Function(a) a.totalIon > 0)
+            Dim pixelShadows = allscans _
+                .Select(Function(si, i)
+                            Dim data As Double = si.totalIon
+
+                            If Not checkTic Then
+                                data = si.MzPtr.arrayLength
+                            End If
+
+                            Return New ScanMS1 With {
+                                .BPC = data,
+                                .into = {data},
+                                .meta = New Dictionary(Of String, String) From {{"x", si.x}, {"y", si.y}},
+                                .mz = {100},
+                                .rt = i,
+                                .scan_id = si.spotID,
+                                .TIC = data
+                            }
+                        End Function) _
+                .ToArray
+
+            metadata.MS = pixelShadows
+
+            Return metadata
+        End Function
     End Module
 End Namespace
