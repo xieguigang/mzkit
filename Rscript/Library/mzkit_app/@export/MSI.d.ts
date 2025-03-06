@@ -160,6 +160,14 @@ declare namespace MSI {
       function convolution(mat: object, clusters?: object, win_size?: object): object;
    }
    /**
+    * load the spectrum of a specific spot scan inside the imzML
+    * 
+    * 
+     * @param ibd a file reader of the ibd rawdata file
+     * @param scan contains the address information for read the spectrum inside a specific spot
+   */
+   function load_spectrum(ibd: object, scan: object): object;
+   /**
     * evaluate the moran index for each ion layer
     * 
     * 
@@ -219,6 +227,7 @@ declare namespace MSI {
         *  1. scans: is the [x,y] spatial scans data: @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ScanData``.
         *  2. ibd: is the binary data reader wrapper object for the corresponding 
         *        ``ibd`` file of the given input imzML file: @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ibdReader``.
+        *  3. metadata: get file @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.imzMLMetadata`` from the imzML header.
       */
       function imzML(file: string, env?: object): object;
    }

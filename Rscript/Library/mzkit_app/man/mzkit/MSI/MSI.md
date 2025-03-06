@@ -14,6 +14,7 @@ MS-Imaging data handler
 + [pixels](MSI/pixels.1) get pixels size from the raw data file
 + [dimension_size](MSI/dimension_size.1) get or set the dimension size of the ms-imaging mzpack raw data object
 + [open.imzML](MSI/open.imzML.1) open the reader for the imzML ms-imaging file
++ [load_spectrum](MSI/load_spectrum.1) load the spectrum of a specific spot scan inside the imzML
 + [write.imzML](MSI/write.imzML.1) Save and write the given ms-imaging mzpack object as imzML file
 + [read.imzml_metadata](MSI/read.imzml_metadata.1) read the metadata from the imzml file header
 + [row.scans](MSI/row.scans.1) each raw data file is a row scan data
