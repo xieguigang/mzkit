@@ -139,10 +139,7 @@ Public Module mzStreamWriter
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function WriteStream(mzpack As mzPack,
-                                file As Stream,
-                                Optional meta_size As Long = 8 * 1024 * 1024) As Boolean
-
+    Public Function WriteStream(mzpack As mzPack, file As Stream, Optional meta_size As Long = 8 * ByteSize.MB) As Boolean
         Dim metadata As New Dictionary(Of String, String)
 
         Using pack As New StreamPack(file, meta_size:=meta_size)
