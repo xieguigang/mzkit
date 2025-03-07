@@ -1,58 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::eda9f826116de3aecabc2c2ed5746f78, Rscript\Library\mzkit_app\src\mzkit\pipeline\ReferenceTree.vb"
+﻿#Region "Microsoft.VisualBasic::a22a9b6a57af4e27d3f4a5fc8228e4aa, Rscript\Library\mzkit_app\src\mzkit\pipeline\ReferenceTree.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 653
-'    Code Lines: 408 (62.48%)
-' Comment Lines: 166 (25.42%)
-'    - Xml Docs: 90.36%
-' 
-'   Blank Lines: 79 (12.10%)
-'     File Size: 26.22 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module ReferenceTreePkg
-' 
-'     Function: addBucket, compress, createJaccardSet, CreateNew, embedding
-'               export_reference, GetSpectrum, GetTestSample, open, (+2 Overloads) QuerySingle
-'               (+2 Overloads) QueryTree, ReadPack, set_dotcutoff, set_parallel
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 728
+    '    Code Lines: 475 (65.25%)
+    ' Comment Lines: 166 (22.80%)
+    '    - Xml Docs: 90.36%
+    ' 
+    '   Blank Lines: 87 (11.95%)
+    '     File Size: 29.69 KB
+
+
+    ' Module ReferenceTreePkg
+    ' 
+    '     Function: addBucket, candidateIds, compress, CreateAnnotationSet, createJaccardSet
+    '               CreateNew, embedding, export_reference, GetSpectrum, GetTestSample
+    '               open, (+2 Overloads) QuerySingle, (+2 Overloads) QueryTree, ReadPack, set_dotcutoff
+    '               set_parallel, top_candidates
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

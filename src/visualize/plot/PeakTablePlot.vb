@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6513ce51bc3a3008a3fffc5eb504a42a, visualize\plot\PeakTablePlot.vb"
+﻿#Region "Microsoft.VisualBasic::36f27b3dc42ec9781d4be26833db03e6, visualize\plot\PeakTablePlot.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 75.00%
     ' 
     '   Blank Lines: 14 (11.57%)
-    '     File Size: 5.32 KB
+    '     File Size: 5.35 KB
 
 
     ' Class PeakTablePlot

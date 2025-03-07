@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ca3b6fcdba080ea12632c0d8f274145, assembly\assembly\MarkupData\mzXML\MsData\MSScan.vb"
+﻿#Region "Microsoft.VisualBasic::ad90ce2ec1da3239cbd5733c98482467, assembly\assembly\MarkupData\mzXML\MsData\MSScan.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 131
-    '    Code Lines: 82 (62.60%)
-    ' Comment Lines: 32 (24.43%)
-    '    - Xml Docs: 87.50%
+    '   Total Lines: 166
+    '    Code Lines: 98 (59.04%)
+    ' Comment Lines: 48 (28.92%)
+    '    - Xml Docs: 89.58%
     ' 
-    '   Blank Lines: 17 (12.98%)
-    '     File Size: 5.29 KB
+    '   Blank Lines: 20 (12.05%)
+    '     File Size: 6.72 KB
 
 
     '     Interface IMsScanData
@@ -57,7 +57,7 @@
     '                     peaksCount, polarity, precursorMz, retentionTime, ScanTime
     '                     scanType, totIonCurrent
     ' 
-    '         Function: ScanData, ToString
+    '         Function: GetPrecursorData, ScanData, ToString
     ' 
     ' 
     ' /********************************************************************************/

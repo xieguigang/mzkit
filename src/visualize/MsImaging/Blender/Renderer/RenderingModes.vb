@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4e0645bdbd847d677350edc4ce21497, visualize\MsImaging\Blender\Renderer\RenderingModes.vb"
+﻿#Region "Microsoft.VisualBasic::9c69e58d32f0e97fe7e1484d38187324, visualize\MsImaging\Blender\Renderer\RenderingModes.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 10
-    '    Code Lines: 7 (70.00%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 17
+    '    Code Lines: 8 (47.06%)
+    ' Comment Lines: 6 (35.29%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 3 (30.00%)
-    '     File Size: 148 B
+    '   Blank Lines: 3 (17.65%)
+    '     File Size: 352 B
 
 
     '     Enum RenderingModes
     ' 
-    '         LayerOverlaps, MixIons, RGBComposition
+    '         CMYKComposition, LayerOverlaps, MixIons, RGBComposition
     ' 
     '  
     ' 

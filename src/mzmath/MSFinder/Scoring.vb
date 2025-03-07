@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1a3c33c6646a0c41a10a9b643fd5dd6, mzmath\MSFinder\Scoring.vb"
+﻿#Region "Microsoft.VisualBasic::0748b31af2bc0153d023807e0257e69e, mzmath\MSFinder\Scoring.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 16 (16.84%)
-    '     File Size: 4.26 KB
+    '     File Size: 4.24 KB
 
 
     ' Class Scoring

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5da9e6e13de514213bb6b1b35f7b29dc, mzmath\mz_deco\SampleFiles.vb"
+﻿#Region "Microsoft.VisualBasic::3725d0188b38269f92d98d4999752eed, mzmath\mz_deco\SampleFiles.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 22
-    '    Code Lines: 6 (27.27%)
-    ' Comment Lines: 15 (68.18%)
+    '   Total Lines: 21
+    '    Code Lines: 6 (28.57%)
+    ' Comment Lines: 15 (71.43%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 1 (4.55%)
-    '     File Size: 406 B
+    '   Blank Lines: 0 (0.00%)
+    '     File Size: 402 B
 
 
     ' Enum SampleFiles
@@ -57,7 +57,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' the sample file types
@@ -80,4 +79,3 @@ Public Enum SampleFiles
     ''' </summary>
     KB
 End Enum
-

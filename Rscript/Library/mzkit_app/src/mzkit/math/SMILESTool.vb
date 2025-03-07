@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9dc7f2519df3dfb5f366c502a3ce1f2, Rscript\Library\mzkit_app\src\mzkit\math\SMILESTool.vb"
+﻿#Region "Microsoft.VisualBasic::ac0f2d782766183da70ce0b38f084d85, Rscript\Library\mzkit_app\src\mzkit\math\SMILESTool.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 211
-    '    Code Lines: 121 (57.35%)
-    ' Comment Lines: 73 (34.60%)
-    '    - Xml Docs: 90.41%
+    '   Total Lines: 222
+    '    Code Lines: 126 (56.76%)
+    ' Comment Lines: 78 (35.14%)
+    '    - Xml Docs: 91.03%
     ' 
-    '   Blank Lines: 17 (8.06%)
-    '     File Size: 8.94 KB
+    '   Blank Lines: 18 (8.11%)
+    '     File Size: 9.33 KB
 
 
     ' Module SMILESTool
     ' 
     '     Function: asFormula, asGraph, asMatrix, atomGroups, atomLinks
-    '               atoms_table, parseSMILES, score
+    '               atoms_table, createMarkup, parseSMILES, score
     ' 
     '     Sub: Main
     ' 

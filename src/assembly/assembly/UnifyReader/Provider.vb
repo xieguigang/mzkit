@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b9488e10a66fb97a440ca8ffc861ee5, assembly\assembly\UnifyReader\Provider.vb"
+﻿#Region "Microsoft.VisualBasic::104c5700dbee77a36845167dff13a0a3, assembly\assembly\UnifyReader\Provider.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 65 (81.25%)
-    ' Comment Lines: 4 (5.00%)
+    '   Total Lines: 74
+    '    Code Lines: 59 (79.73%)
+    ' Comment Lines: 4 (5.41%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 11 (13.75%)
-    '     File Size: 3.39 KB
+    '   Blank Lines: 11 (14.86%)
+    '     File Size: 3.05 KB
 
 
     '     Module Provider

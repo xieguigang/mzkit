@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b67bc026d951d9265ddb494474b8868, Rscript\Library\mzkit_app\src\mzkit\assembly\vendors\ThermoRaw.vb"
+﻿#Region "Microsoft.VisualBasic::fd0c6a7a75d5dfa0fa148bb086f68580, Rscript\Library\mzkit_app\src\mzkit\assembly\vendors\ThermoRaw.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 83.33%
     ' 
     '   Blank Lines: 11 (14.67%)
-    '     File Size: 2.89 KB
+    '     File Size: 2.90 KB
 
 
     ' Module ThermoRaw

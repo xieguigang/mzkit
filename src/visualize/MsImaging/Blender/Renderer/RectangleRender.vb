@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6df110c8f47da663ebd691b726810073, visualize\MsImaging\Blender\Renderer\RectangleRender.vb"
+﻿#Region "Microsoft.VisualBasic::9f45b573fe832598780f5b325ee27edc, visualize\MsImaging\Blender\Renderer\RectangleRender.vb"
 
     ' Author:
     ' 
@@ -37,22 +37,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 251
-    '    Code Lines: 189 (75.30%)
-    ' Comment Lines: 30 (11.95%)
+    '   Total Lines: 296
+    '    Code Lines: 228 (77.03%)
+    ' Comment Lines: 30 (10.14%)
     '    - Xml Docs: 80.00%
     ' 
-    '   Blank Lines: 32 (12.75%)
-    '     File Size: 11.21 KB
+    '   Blank Lines: 38 (12.84%)
+    '     File Size: 13.36 KB
 
 
     '     Class RectangleRender
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: ChannelCompositions, (+2 Overloads) LayerOverlaps, (+2 Overloads) RenderPixels
+    '         Function: (+2 Overloads) ChannelCompositions, (+2 Overloads) LayerOverlaps, (+2 Overloads) RenderPixels
     ' 
-    '         Sub: ChannelCompositions, FillLayerInternal, RenderPixels
+    '         Sub: (+2 Overloads) ChannelCompositions, FillLayerInternal, RenderPixels
     ' 
     ' 
     ' /********************************************************************************/

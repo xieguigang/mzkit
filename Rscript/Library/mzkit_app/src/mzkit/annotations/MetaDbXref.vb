@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d03ea60c47f4655ee0851d459c130860, Rscript\Library\mzkit_app\src\mzkit\annotations\MetaDbXref.vb"
+﻿#Region "Microsoft.VisualBasic::6e056ce52ef3f37ab91a3664033bc6ca, Rscript\Library\mzkit_app\src\mzkit\annotations\MetaDbXref.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1005
-    '    Code Lines: 724 (72.04%)
-    ' Comment Lines: 159 (15.82%)
-    '    - Xml Docs: 89.31%
+    '   Total Lines: 1037
+    '    Code Lines: 737 (71.07%)
+    ' Comment Lines: 176 (16.97%)
+    '    - Xml Docs: 89.77%
     ' 
-    '   Blank Lines: 122 (12.14%)
-    '     File Size: 44.15 KB
+    '   Blank Lines: 124 (11.96%)
+    '     File Size: 45.65 KB
 
 
     ' Module MetaDbXref

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a2dbc74c9d3d983cc8505296d1ce44e, Rscript\Library\mzkit_app\src\mzkit\annotations\PubChem.vb"
+﻿#Region "Microsoft.VisualBasic::f1d9496a7598b9ce00471cc3f8356317, Rscript\Library\mzkit_app\src\mzkit\annotations\PubChem.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 96.13%
     ' 
     '   Blank Lines: 56 (9.44%)
-    '     File Size: 26.10 KB
+    '     File Size: 26.11 KB
 
 
     ' Module PubChemToolKit

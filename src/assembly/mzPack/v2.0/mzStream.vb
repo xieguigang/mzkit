@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6b9d145983082c9ee48eb0bc2ccc55f, assembly\mzPack\v2.0\mzStream.vb"
+﻿#Region "Microsoft.VisualBasic::f0bd8fe8bce60107727c308d8e164b78, assembly\mzPack\v2.0\mzStream.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 420
-    '    Code Lines: 307 (73.10%)
-    ' Comment Lines: 47 (11.19%)
-    '    - Xml Docs: 68.09%
+    '   Total Lines: 454
+    '    Code Lines: 320 (70.48%)
+    ' Comment Lines: 63 (13.88%)
+    '    - Xml Docs: 73.02%
     ' 
-    '   Blank Lines: 66 (15.71%)
-    '     File Size: 15.24 KB
+    '   Blank Lines: 71 (15.64%)
+    '     File Size: 16.48 KB
 
 
     ' Class mzStream
@@ -54,8 +54,8 @@
     '     Constructor: (+2 Overloads) Sub New
     ' 
     '     Function: findScan1Name, GetMetadata, GetSampleTags, GetThumbnail, hasMs2
-    '               loadAnnotations, ReadModel, ReadMS1, ReadScan, safeParseClassType
-    '               (+2 Overloads) SafeParseClassType
+    '               loadAnnotations, loadMultipleStageProductTree, ReadModel, ReadMS1, ReadScan
+    '               safeParseClassType, (+2 Overloads) SafeParseClassType
     ' 
     '     Sub: cacheScanIndex, (+2 Overloads) Dispose, ReadChromatogramTick
     ' 

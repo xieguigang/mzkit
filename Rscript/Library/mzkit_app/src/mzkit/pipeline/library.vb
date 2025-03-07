@@ -1,61 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::f6e6766c256c145aa2d651ef82ee2d86, Rscript\Library\mzkit_app\src\mzkit\pipeline\library.vb"
+﻿#Region "Microsoft.VisualBasic::7550527bd1200c840a08cec23604e769, Rscript\Library\mzkit_app\src\mzkit\pipeline\library.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 965
-'    Code Lines: 475 (49.22%)
-' Comment Lines: 403 (41.76%)
-'    - Xml Docs: 93.80%
-' 
-'   Blank Lines: 87 (9.02%)
-'     File Size: 49.92 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module library
-' 
-'     Function: assertAdducts, checkInSourceFragments, create_table, create_workspace, createAnnotation
-'               filter_unique, ionsFromPeaktable, loadAll, loadPeaktable, loadWorkspace
-'               OpenResultPack, PopulateIonData, readResultPack, set_xicCache, tohtmlString
-'               writeResultPack, writeWorkspace, xref
-' 
-'     Sub: commit, Main, peak_assign, push_temp, saveAnnotation
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1167
+    '    Code Lines: 614 (52.61%)
+    ' Comment Lines: 430 (36.85%)
+    '    - Xml Docs: 93.49%
+    ' 
+    '   Blank Lines: 123 (10.54%)
+    '     File Size: 59.23 KB
+
+
+    ' Module library
+    ' 
+    '     Function: assertAdducts, checkInSourceFragments, create_reportTable, create_table, create_workspace
+    '               createAnnotation, filter_unique, GetAnnotations, ionsFromPeaktable, loadAll
+    '               LoadLocalDatabase, loadPeaktable, loadWorkspace, MakeMoNALibrary, openRepository
+    '               OpenResultPack, PopulateIonData, readResultPack, Save, set_xicCache
+    '               tohtmlString, uniqueAnnotations, writeResultPack, writeWorkspace, xref
+    ' 
+    '     Sub: commit, Main, peak_assign, push_temp, saveAnnotation
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

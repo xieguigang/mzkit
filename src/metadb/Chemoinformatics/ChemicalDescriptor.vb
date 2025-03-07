@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::546a41f4cbc2935f690cd88fcc37ecaf, metadb\Chemoinformatics\ChemicalDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::3e425b8f9d872744270c07f35e74e2de, metadb\Chemoinformatics\ChemicalDescriptor.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 207
-    '    Code Lines: 148 (71.50%)
-    ' Comment Lines: 22 (10.63%)
+    '   Total Lines: 217
+    '    Code Lines: 148 (68.20%)
+    ' Comment Lines: 32 (14.75%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 37 (17.87%)
-    '     File Size: 7.12 KB
+    '   Blank Lines: 37 (17.05%)
+    '     File Size: 7.36 KB
 
 
     ' Class Value

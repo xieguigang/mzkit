@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::faba8430c9585a626cf67d1b28930e5f, assembly\assembly\mzPack\mzWebCache\Cache.vb"
+﻿#Region "Microsoft.VisualBasic::ad519c5d27317e93762953d295bfe2d7, assembly\assembly\mzPack\mzWebCache\Cache.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 84
-    '    Code Lines: 51 (60.71%)
-    ' Comment Lines: 20 (23.81%)
-    '    - Xml Docs: 85.00%
+    '   Total Lines: 85
+    '    Code Lines: 52 (61.18%)
+    ' Comment Lines: 19 (22.35%)
+    '    - Xml Docs: 89.47%
     ' 
-    '   Blank Lines: 13 (15.48%)
-    '     File Size: 3.30 KB
+    '   Blank Lines: 14 (16.47%)
+    '     File Size: 3.40 KB
 
 
     '     Module Cache
     ' 
-    '         Function: (+2 Overloads) Load, vectorBase64
+    '         Function: (+2 Overloads) Load
     ' 
-    '         Sub: Write
+    '         Sub: Write, WriteTabularCache
     ' 
     ' 
     ' /********************************************************************************/

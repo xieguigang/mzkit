@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a04d65577661c797d6d9e4de9fe3d696, Rscript\Library\mzkit_app\src\mzquant\Math.vb"
+﻿#Region "Microsoft.VisualBasic::3c70d033e41a988c3805a9683603a503, Rscript\Library\mzkit_app\src\mzquant\Math.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 87.23%
     ' 
     '   Blank Lines: 28 (12.07%)
-    '     File Size: 9.77 KB
+    '     File Size: 9.78 KB
 
 
     ' Module QuantifyMath

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15a11660bd428857e1e95e1c1fb5d8a6, mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\WiffRaw.vb"
+﻿#Region "Microsoft.VisualBasic::e5b4655263a946b9ad4a6619480ceda1, mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\WiffRaw.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 60.00%
     ' 
     '   Blank Lines: 19 (15.08%)
-    '     File Size: 5.59 KB
+    '     File Size: 5.60 KB
 
 
     '     Module WiffRaw

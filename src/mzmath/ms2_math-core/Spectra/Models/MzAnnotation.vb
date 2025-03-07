@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::930c72bb2ed5d64e2097e0356998347b, mzmath\ms2_math-core\Spectra\Models\MzAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::8adfb17928fe75d1f9b357c04534c5c8, mzmath\ms2_math-core\Spectra\Models\MzAnnotation.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 19 (51.35%)
-    ' Comment Lines: 9 (24.32%)
+    '   Total Lines: 66
+    '    Code Lines: 32 (48.48%)
+    ' Comment Lines: 21 (31.82%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 9 (24.32%)
-    '     File Size: 1.17 KB
+    '   Blank Lines: 13 (19.70%)
+    '     File Size: 2.00 KB
 
 
     '     Class MzAnnotation
     ' 
     '         Properties: annotation, productMz
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString
     '         Operators: -
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::557d07dafb331114de2b42435064a33e, assembly\assembly\MarkupData\mzML\XML\softwareList.vb"
+﻿#Region "Microsoft.VisualBasic::4341df10dd88c31a525d577cf17253de, assembly\assembly\MarkupData\mzML\XML\softwareList.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 40
-    '    Code Lines: 30 (75.00%)
+    '   Total Lines: 44
+    '    Code Lines: 33 (75.00%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 10 (25.00%)
-    '     File Size: 1.31 KB
+    '   Blank Lines: 11 (25.00%)
+    '     File Size: 1.59 KB
 
 
     '     Class softwareList
     ' 
     '         Properties: softwares
     ' 
-    '         Function: ToArray, ToString
+    '         Function: GenericEnumerator, ToArray, ToString
     ' 
     '     Class software
     ' 

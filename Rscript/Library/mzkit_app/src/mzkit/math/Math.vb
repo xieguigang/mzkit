@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d5ae99b7fe50a09a38fcd0b4cb847ca, Rscript\Library\mzkit_app\src\mzkit\math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::124347dc09c4645901236772f69201df, Rscript\Library\mzkit_app\src\mzkit\math\Math.vb"
 
     ' Author:
     ' 
@@ -37,24 +37,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1396
-    '    Code Lines: 863 (61.82%)
-    ' Comment Lines: 361 (25.86%)
+    '   Total Lines: 1418
+    '    Code Lines: 880 (62.06%)
+    ' Comment Lines: 361 (25.46%)
     '    - Xml Docs: 90.30%
     ' 
-    '   Blank Lines: 172 (12.32%)
-    '     File Size: 59.08 KB
+    '   Blank Lines: 177 (12.48%)
+    '     File Size: 60.50 KB
 
 
     ' Module MzMath
     ' 
     '     Function: adducts_table, alignIntensity, centroid, centroidDataframe, (+2 Overloads) cosine
-    '               cosine_pairwise, CreateMSMatrix, CreateMzIndex, createTolerance, defaultPrecursors
-    '               exact_mass, find_precursor, getAlignmentTable, GetClusters, getPrecursorTable
-    '               jaccard, jaccardSet, mass_tabular, mz, MzUnique
-    '               normMs2, ppm, precursorTypes, printCalculator, printMzTable
-    '               rank_adducts, sequenceOrder, spectrumEntropy, SpectrumTreeCluster, SSMCompares
-    '               summaryTolerance, union, xcms_id, XICTable
+    '               cosine_pairwise, CreateAlignmentTable, CreateMSMatrix, CreateMzIndex, createTolerance
+    '               defaultPrecursors, exact_mass, find_precursor, getAlignmentTable, GetClusters
+    '               getPrecursorTable, jaccard, jaccardSet, mass_tabular, mz
+    '               MzUnique, normMs2, ppm, precursorTypes, printCalculator
+    '               printMzTable, rank_adducts, sequenceOrder, spectrumEntropy, SpectrumTreeCluster
+    '               SSMCompares, summaryTolerance, union, xcms_id, XICTable
     ' 
     '     Sub: Main
     ' 

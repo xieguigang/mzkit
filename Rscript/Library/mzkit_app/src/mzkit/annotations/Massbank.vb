@@ -1,65 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::d82583491dff85e13921dffe36614474, Rscript\Library\mzkit_app\src\mzkit\annotations\Massbank.vb"
+﻿#Region "Microsoft.VisualBasic::3cc4fcd79e8ce4bf21d3b42cd67d5b9d, Rscript\Library\mzkit_app\src\mzkit\annotations\Massbank.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 963
-'    Code Lines: 630 (65.42%)
-' Comment Lines: 215 (22.33%)
-'    - Xml Docs: 92.56%
-' 
-'   Blank Lines: 118 (12.25%)
-'     File Size: 39.00 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module Massbank
-' 
-'     Function: castToClassProfiles, chebiSecondary2Main, createIdMapping, createLipidMapTable, ExtractChebiCompounds
-'               GlycosylNameSolver, GlycosylTokens, HERB_ingredient_info, hmdbSecondary2Main, inchikey
-'               KEGGPathwayCoverages, lipidClassReader, lipidmaps_data, lipidmaps_id, lipidnameMapping
-'               lipidNameReader, lipidProfiles, load_herbs, load_herbs_list, loadLotus
-'               makeMetaboliteTable, meta_anno, monaMSP, name2, ParseChebiEntity
-'               rankingNames, readLipidMapsRepo, readMetalibMsgPack, (+2 Overloads) readMoNA, readRefMet
-'               readSDF, refMetTable, saveIDMapping, toLipidMaps, writeLipidMapsRepo
-'               writeMetalib
-' 
-'     Sub: Main
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1093
+    '    Code Lines: 715 (65.42%)
+    ' Comment Lines: 238 (21.77%)
+    '    - Xml Docs: 92.86%
+    ' 
+    '   Blank Lines: 140 (12.81%)
+    '     File Size: 43.61 KB
+
+
+    ' Module Massbank
+    ' 
+    '     Function: CanonicalChEBIId, castToClassProfiles, chebi_id, chebiSecondary2Main, createIdMapping
+    '               createLipidMapTable, ExtractChebiCompounds, extractMoNAMetabolites, GlycosylNameSolver, GlycosylTokens
+    '               HERB_ingredient_info, hmdbSecondary2Main, isPositive, KEGGPathwayCoverages, lipidClassReader
+    '               lipidmaps_data, lipidmaps_id, lipidnameMapping, lipidNameReader, lipidProfiles
+    '               load_herbs, load_herbs_list, loadLotus, makeMetaboliteTable, makeOdorDataframe
+    '               meta_anno, monaMSP, name2, ParseChebiEntity, rankingNames
+    '               readLipidMapsRepo, readMetalibMsgPack, (+2 Overloads) readMoNA, readRefMet, readSDF
+    '               refMetTable, saveIDMapping, toLipidMaps, writeLipidMapsRepo, writeMetalib
+    ' 
+    '     Sub: Main, writeMoNA
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

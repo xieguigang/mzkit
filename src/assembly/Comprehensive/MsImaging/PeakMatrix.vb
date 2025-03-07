@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bea0c51c3640daa54f34d822afa483d6, assembly\Comprehensive\MsImaging\PeakMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::634df3eac97890ddc633dd7d84cd0afd, assembly\Comprehensive\MsImaging\PeakMatrix.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 93.33%
     ' 
     '   Blank Lines: 8 (8.42%)
-    '     File Size: 4.06 KB
+    '     File Size: 4.07 KB
 
 
     '     Module PeakMatrix2

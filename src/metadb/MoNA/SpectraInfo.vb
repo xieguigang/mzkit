@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0ada6fdef3178d6b2be9b08d8a6c662, metadb\MoNA\SpectraInfo.vb"
+﻿#Region "Microsoft.VisualBasic::026588a5e6eedd810422c66343cb6acc, metadb\MoNA\SpectraInfo.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 66
-    '    Code Lines: 51 (77.27%)
-    ' Comment Lines: 6 (9.09%)
+    '   Total Lines: 71
+    '    Code Lines: 51 (71.83%)
+    ' Comment Lines: 11 (15.49%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 9 (13.64%)
-    '     File Size: 2.63 KB
+    '   Blank Lines: 9 (12.68%)
+    '     File Size: 2.81 KB
 
 
     ' Class SpectraInfo

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3dbce9e6faae3aa56159c5be9e5a2264, Rscript\Library\mzkit_app\src\mzkit\assembly\data.vb"
+﻿#Region "Microsoft.VisualBasic::666dee6b796dd6e1161ae4b6e79284e3, Rscript\Library\mzkit_app\src\mzkit\assembly\data.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 97.55%
     ' 
     '   Blank Lines: 120 (13.33%)
-    '     File Size: 37.38 KB
+    '     File Size: 37.39 KB
 
 
     ' Module data

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3032adf17f9080c4ab9e41d428efa10a, mzmath\mz_deco\xcms2.vb"
+﻿#Region "Microsoft.VisualBasic::e217009880b50edc293ed389d31201da, mzmath\mz_deco\xcms2.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 93.48%
     ' 
     '   Blank Lines: 27 (12.39%)
-    '     File Size: 7.00 KB
+    '     File Size: 7.03 KB
 
 
     ' Class xcms2

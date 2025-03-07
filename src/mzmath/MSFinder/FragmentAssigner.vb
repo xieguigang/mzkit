@@ -1,64 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::e0ed8816710cd03b46d8961c7fe7d7c8, mzmath\MSFinder\FragmentAssigner.vb"
+﻿#Region "Microsoft.VisualBasic::4d80d4a8e57eb5bbbcec2fcf4e10c5b0, mzmath\MSFinder\FragmentAssigner.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 724
-'    Code Lines: 531 (73.34%)
-' Comment Lines: 75 (10.36%)
-'    - Xml Docs: 64.00%
-' 
-'   Blank Lines: 118 (16.30%)
-'     File Size: 36.55 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class FragmentAssigner
-' 
-'     Properties: [Default]
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: FastFragmnetAssigner, FastNeutralLossAssigner, GetAnnotatedIon, GetCentroidMsMsSpectrum, getFormulaCandidatesbyLibrarySearch
-'               GetNeutralLossList, (+3 Overloads) GetRefinedPeaklist, (+2 Overloads) getStartIndex, getValenceCheckedFragmentFormulaList, isFormulaComposition
-'               isotopicPeakAssignmnet
-' 
-'     Sub: AnnotateAdducts, AnnotateIsotopes
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 832
+    '    Code Lines: 604 (72.60%)
+    ' Comment Lines: 97 (11.66%)
+    '    - Xml Docs: 69.07%
+    ' 
+    '   Blank Lines: 131 (15.75%)
+    '     File Size: 40.73 KB
+
+
+    ' Class FragmentAssigner
+    ' 
+    '     Properties: [Default]
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: FastFragmnetAssigner, FastNeutralLossAssigner, FragmnetAssign, GetAnnotatedIon, GetCentroidMsMsSpectrum
+    '               getFormulaCandidatesbyLibrarySearch, getLossFragment, GetNeutralLossList, (+3 Overloads) GetRefinedPeaklist, (+2 Overloads) getStartIndex
+    '               getValenceCheckedFragmentFormulaList, isFormulaComposition, isotopicPeakAssignmnet
+    ' 
+    '     Sub: AnnotateAdducts, AnnotateIsotopes
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

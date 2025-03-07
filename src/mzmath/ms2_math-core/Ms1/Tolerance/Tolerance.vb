@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df0739b8262b10a19bb7bf7af985b296, mzmath\ms2_math-core\Ms1\Tolerance\Tolerance.vb"
+﻿#Region "Microsoft.VisualBasic::1c7059c03e013d176abd762ab7fddbe1, mzmath\ms2_math-core\Ms1\Tolerance\Tolerance.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 323
-    '    Code Lines: 157 (48.61%)
-    ' Comment Lines: 128 (39.63%)
-    '    - Xml Docs: 91.41%
+    '   Total Lines: 335
+    '    Code Lines: 161 (48.06%)
+    ' Comment Lines: 135 (40.30%)
+    '    - Xml Docs: 88.89%
     ' 
-    '   Blank Lines: 38 (11.76%)
-    '     File Size: 11.82 KB
+    '   Blank Lines: 39 (11.64%)
+    '     File Size: 12.41 KB
 
 
     '     Enum MassToleranceType

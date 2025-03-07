@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9f2e61b97e9c84c5ba2ad5702d5ce9b, visualize\MsImaging\Blender\Renderer\RenderRGB.vb"
+﻿#Region "Microsoft.VisualBasic::3aeba1a40cf207f178aa73f612ed677e, visualize\MsImaging\Blender\Renderer\RenderRGB.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 79
-    '    Code Lines: 64 (81.01%)
-    ' Comment Lines: 3 (3.80%)
+    '   Total Lines: 62
+    '    Code Lines: 49 (79.03%)
+    ' Comment Lines: 3 (4.84%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 12 (15.19%)
-    '     File Size: 3.58 KB
+    '   Blank Lines: 10 (16.13%)
+    '     File Size: 2.53 KB
 
 
     '     Class RenderRGB
     ' 
-    '         Properties: Bchannel, dimension, Gchannel, Rchannel
+    '         Properties: Bchannel, Gchannel, Rchannel
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: Render

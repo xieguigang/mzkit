@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c498b00877e40a1227caf1d1421d25af, assembly\mzPackExtensions\MSImaging\MSIRawPack.vb"
+﻿#Region "Microsoft.VisualBasic::975ee345a33d12ff7c2666f81f55bbb4, assembly\mzPackExtensions\MSImaging\MSIRawPack.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 65.38%
     ' 
     '   Blank Lines: 42 (16.47%)
-    '     File Size: 9.82 KB
+    '     File Size: 9.83 KB
 
 
     ' Module MSIRawPack

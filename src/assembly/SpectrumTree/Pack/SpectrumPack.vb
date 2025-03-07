@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::583345305f44a732797b56028eef59b2, assembly\SpectrumTree\Pack\SpectrumPack.vb"
+﻿#Region "Microsoft.VisualBasic::ce1d0a70982331febbcc1b8c708d039d, assembly\SpectrumTree\Pack\SpectrumPack.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 126
-    '    Code Lines: 78 (61.90%)
-    ' Comment Lines: 26 (20.63%)
-    '    - Xml Docs: 50.00%
+    '   Total Lines: 133
+    '    Code Lines: 81 (60.90%)
+    ' Comment Lines: 29 (21.80%)
+    '    - Xml Docs: 55.17%
     ' 
-    '   Blank Lines: 22 (17.46%)
-    '     File Size: 4.95 KB
+    '   Blank Lines: 23 (17.29%)
+    '     File Size: 5.32 KB
 
 
     '     Class SpectrumPack

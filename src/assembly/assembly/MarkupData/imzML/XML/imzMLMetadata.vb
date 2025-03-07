@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb05fca14279ebdfc2dd09ae93102e43, assembly\assembly\MarkupData\imzML\XML\imzMLMetadata.vb"
+﻿#Region "Microsoft.VisualBasic::c5d4b5c64651529306077385aa0d8cc9, assembly\assembly\MarkupData\imzML\XML\imzMLMetadata.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 143
-    '    Code Lines: 106 (74.13%)
-    ' Comment Lines: 16 (11.19%)
-    '    - Xml Docs: 93.75%
+    '   Total Lines: 211
+    '    Code Lines: 161 (76.30%)
+    ' Comment Lines: 19 (9.00%)
+    '    - Xml Docs: 78.95%
     ' 
-    '   Blank Lines: 21 (14.69%)
-    '     File Size: 6.46 KB
+    '   Blank Lines: 31 (14.69%)
+    '     File Size: 9.86 KB
 
 
     '     Class imzMLMetadata
@@ -52,7 +52,7 @@
     '                     guid, ibd_checksum, ms_analyzer, ms_detector, ms_instrument
     '                     ms_source, physical_size, resolution, softwares, sourcefiles
     ' 
-    '         Function: ReadHeaders
+    '         Function: AsList, GenericEnumerator, ReadHeaders
     ' 
     '         Sub: GetFileContents, GetInstrument
     ' 

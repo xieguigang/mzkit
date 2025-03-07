@@ -1,65 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::dac12032440317c0959a8b4a01bff8de, Rscript\Library\mzkit_app\src\mzquant\mzDeco.vb"
+﻿#Region "Microsoft.VisualBasic::e1fcb73ad6d7d8020ba45674296751b6, Rscript\Library\mzkit_app\src\mzquant\mzDeco.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 1359
-'    Code Lines: 896 (65.93%)
-' Comment Lines: 317 (23.33%)
-'    - Xml Docs: 88.33%
-' 
-'   Blank Lines: 146 (10.74%)
-'     File Size: 56.82 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module mzDeco
-' 
-'     Function: adjust_to_seconds, convertDataframeToXcmsPeaks, create_peakset, Deconv, dumpPeaks
-'               expression, get_ionPeak, getIonPeak, ms1Scans, mz_deco
-'               mz_groups, peakAlignment, peaksetMatrix, peaksSetMatrix, peakSubset
-'               peaktable, pull_xic, read_rtshifts, readPeakData, readPeaktable
-'               readSamples, readXcmsFeaturePeaks, readXcmsPeaks, readXcmsTableFile, readXIC
-'               RI_batch_join, RI_calc, RI_reference, to_matrix, writePeaktable
-'               writeSamples, writeXcmsPeaktable, writeXIC, writeXIC1, xcms_peak
-'               xic_deco, xic_dtw_list, xic_matrix_list, XICpool_func
-' 
-'     Sub: Main
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1375
+    '    Code Lines: 911 (66.25%)
+    ' Comment Lines: 317 (23.05%)
+    '    - Xml Docs: 88.33%
+    ' 
+    '   Blank Lines: 147 (10.69%)
+    '     File Size: 57.58 KB
+
+
+    ' Module mzDeco
+    ' 
+    '     Function: adjust_to_seconds, convertDataframeToXcmsPeaks, create_peakset, Deconv, dumpPeaks
+    '               expression, get_ionPeak, getIonPeak, ms1Scans, mz_deco
+    '               mz_groups, peakAlignment, peaksetMatrix, peaksSetMatrix, peakSubset
+    '               peaktable, pull_xic, read_rtshifts, readPeakData, readPeaktable
+    '               readSamples, readXcmsFeaturePeaks, readXcmsPeaks, readXcmsTableFile, readXIC
+    '               RI_batch_join, RI_calc, RI_reference, to_matrix, writePeaktable
+    '               writeSamples, writeXcmsPeaktable, writeXIC, writeXIC1, xcms_peak
+    '               xic_deco, xic_dtw_list, xic_matrix_list, XICpool_func
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

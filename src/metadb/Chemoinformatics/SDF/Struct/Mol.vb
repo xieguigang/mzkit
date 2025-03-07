@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd8cfe43c98cdd6e750b178741769de2, metadb\Chemoinformatics\SDF\Struct\Mol.vb"
+﻿#Region "Microsoft.VisualBasic::715f4ac61c1b66c32023cc757f92d5e1, metadb\Chemoinformatics\SDF\Struct\Mol.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 97
-    '    Code Lines: 57 (58.76%)
-    ' Comment Lines: 27 (27.84%)
-    '    - Xml Docs: 85.19%
+    '   Total Lines: 105
+    '    Code Lines: 57 (54.29%)
+    ' Comment Lines: 35 (33.33%)
+    '    - Xml Docs: 88.57%
     ' 
-    '   Blank Lines: 13 (13.40%)
-    '     File Size: 3.45 KB
+    '   Blank Lines: 13 (12.38%)
+    '     File Size: 3.72 KB
 
 
     '     Class [Structure]

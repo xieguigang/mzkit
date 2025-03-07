@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a711379c33299d77e7b582ccd43bf12e, assembly\assembly\UnifyReader\IDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::5ad967cf39a3d69ecf660cde50ea1de6, assembly\assembly\UnifyReader\IDataReader.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 19 (79.17%)
+    '   Total Lines: 28
+    '    Code Lines: 22 (78.57%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 5 (20.83%)
-    '     File Size: 950 B
+    '   Blank Lines: 6 (21.43%)
+    '     File Size: 1.06 KB
 
 
     '     Interface IDataReader
@@ -51,6 +51,10 @@
     '         Function: GetActivationMethod, GetBPC, GetCentroided, GetCharge, GetCollisionEnergy
     '                   GetMsLevel, GetMsMs, GetParentMz, GetPolarity, GetScanId
     '                   GetScanTime, GetTIC, IsEmpty
+    ' 
+    '     Interface ISpectrumReader
+    ' 
+    '         Function: GetMsMs
     ' 
     ' 
     ' /********************************************************************************/
