@@ -280,7 +280,7 @@ Public Module mzStreamWriter
                     ' has peak annotation metadata
                     ' save to a file aside the ms2 product file
                     Using blockStream As Stream = pack.OpenBlock($"{dir}/{product.scan_id.MD5}.txt")
-                        Using str As New StreamWriter(blockStream)
+                        Using str As New StreamWriter(blockStream, Encoding.UTF8, -1, leaveOpen:=True)
                             For Each line As String In product.metadata
                                 Call str.WriteLine(line)
                             Next
