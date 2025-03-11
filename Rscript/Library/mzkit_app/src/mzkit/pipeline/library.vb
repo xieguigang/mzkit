@@ -85,7 +85,6 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp.Runtime
@@ -627,6 +626,14 @@ Module library
         Return New Library(Of MetaLib)(metadb, refSpec.GetReferenceSpectrum(tqdm_verbose))
     End Function
 
+    ''' <summary>
+    ''' get metabolite annotation metadata via given reference id
+    ''' </summary>
+    ''' <param name="libs">the annotation data library model</param>
+    ''' <param name="id">
+    ''' a set of the compound reference id for get the metadata from the library.
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("load_metadata")>
     <RApiReturn(GetType(MetaLib))>
     Public Function GetAnnotations(libs As Library(Of MetaLib), <RRawVectorArgument> id As Object) As Object
