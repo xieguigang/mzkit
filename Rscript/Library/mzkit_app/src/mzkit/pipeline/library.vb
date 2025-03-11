@@ -1111,8 +1111,12 @@ Module library
     ''' Save the reference library annotation result.
     ''' </summary>
     ''' <param name="workspace"></param>
-    ''' <param name="library"></param>
-    ''' <param name="annotations"></param>
+    ''' <param name="library">
+    ''' the reference library name of the spectrum reference data
+    ''' </param>
+    ''' <param name="annotations">
+    ''' A temp workspace of a single reference library.
+    ''' </param>
     <ExportAPI("save_annotations")>
     Public Sub saveAnnotation(workspace As AnnotationWorkspace, library As String, annotations As LibraryWorkspace)
         Call workspace.CreateLibraryResult(library, annotations.GetAnnotations(filterPeaks:=True))
