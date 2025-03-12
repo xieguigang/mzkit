@@ -187,6 +187,69 @@ Public Class ChemicalElement : Inherits Node
         atom.hydrogen = nH
     End Sub
 
+    Private Shared Sub CarbonGroup(ByRef atom As ChemicalElement, keys As Integer)
+        If atom.aromatic Then
+            atom.setAtomLabel("-CH-", 1)
+        Else
+            Select Case keys
+                Case 1 : atom.setAtomLabel("-CH3", 3)
+                Case 2 : atom.setAtomLabel("-CH2-", 2)
+                Case 3 : atom.setAtomLabel("-CH=", 1)
+                Case Else
+                    atom.group = "C"
+            End Select
+        End If
+    End Sub
+
+    Private Shared Sub OxygenGroup(ByRef atom As ChemicalElement, keys As Integer)
+        If atom.aromatic Then
+            atom.setAtomLabel("-O-", 0)
+        Else
+            Select Case keys
+                Case 1
+                    If atom.charge = 0 Then
+                        atom.setAtomLabel("-OH", 1)
+                    Else
+                        ' an ion with negative charge value
+                        ' [O-]
+                        atom.setAtomLabel("[O-]-", 0)
+                    End If
+                Case Else
+                    atom.group = "-O-"
+            End Select
+        End If
+    End Sub
+
+    Private Shared Sub NitrogenGroup(ByRef atom As ChemicalElement, keys As Integer)
+        Dim n As Integer
+
+        ' N -3
+        Select Case keys
+            Case 1
+                If atom.charge = 0 Then
+                    atom.setAtomLabel("-NH2", 2)
+                Else
+                    n = 3 - atom.charge
+                    atom.setAtomLabel($"[-NH{n}]{atom.charge}+", n)
+                End If
+            Case 2
+                If atom.charge = 0 Then
+                    atom.setAtomLabel("-NH-", 1)
+                Else
+                    n = 2 - atom.charge
+                    atom.setAtomLabel($"[-NH{n}-]{atom.charge}+", n)
+                End If
+            Case 3
+                If atom.charge = 0 Then
+                    atom.group = "-N="
+                Else
+                    atom.group = $"[-N=]{atom.charge}+"
+                End If
+            Case Else
+                atom.group = "N"
+        End Select
+    End Sub
+
     ''' <summary>
     ''' Set atom group label based on the chemical keys
     ''' </summary>
@@ -194,63 +257,10 @@ Public Class ChemicalElement : Inherits Node
     ''' <param name="keys"></param>
     Private Shared Sub SetAtomGroups(atom As ChemicalElement, keys As Integer)
         Select Case atom.elementName
-            Case "C"
-                If atom.aromatic Then
-                    atom.setAtomLabel("-CH-", 1)
-                Else
-                    Select Case keys
-                        Case 1 : atom.setAtomLabel("-CH3", 3)
-                        Case 2 : atom.setAtomLabel("-CH2-", 2)
-                        Case 3 : atom.setAtomLabel("-CH=", 1)
-                        Case Else
-                            atom.group = "C"
-                    End Select
-                End If
-            Case "O"
-                If atom.aromatic Then
-                    atom.setAtomLabel("-O-", 0)
-                Else
-                    Select Case keys
-                        Case 1
-                            If atom.charge = 0 Then
-                                atom.setAtomLabel("-OH", 1)
-                            Else
-                                ' an ion with negative charge value
-                                ' [O-]
-                                atom.setAtomLabel("[O-]-", 0)
-                            End If
-                        Case Else
-                            atom.group = "-O-"
-                    End Select
-                End If
-            Case "N"
-                Dim n As Integer
+            Case "C" : Call CarbonGroup(atom, keys)
+            Case "O" : Call OxygenGroup(atom, keys)
+            Case "N" : Call NitrogenGroup(atom, keys)
 
-                ' N -3
-                Select Case keys
-                    Case 1
-                        If atom.charge = 0 Then
-                            atom.setAtomLabel("-NH2", 2)
-                        Else
-                            n = 3 - atom.charge
-                            atom.setAtomLabel($"[-NH{n}]{atom.charge}+", n)
-                        End If
-                    Case 2
-                        If atom.charge = 0 Then
-                            atom.setAtomLabel("-NH-", 1)
-                        Else
-                            n = 2 - atom.charge
-                            atom.setAtomLabel($"[-NH{n}-]{atom.charge}+", n)
-                        End If
-                    Case 3
-                        If atom.charge = 0 Then
-                            atom.group = "-N="
-                        Else
-                            atom.group = $"[-N=]{atom.charge}+"
-                        End If
-                    Case Else
-                        atom.group = "N"
-                End Select
             Case Else
                 If atom.elementName.StartsWith("["c) AndAlso atom.elementName.EndsWith("]"c) Then
                     ' is atom group
