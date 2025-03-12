@@ -198,15 +198,26 @@ Public Class ParseChain
     End Sub
 
     Private Sub WalkElement(t As Token, i As Integer)
-        Dim element As New ChemicalElement(t.text, index:=i) With {
-            .charge = If(t.charge Is Nothing, If(t.aromatic, 2, 1), Val(t.charge)),
-            .graph_id = gid,
-            .aromatic = t.aromatic
-        }
+        Dim element As ChemicalElement
         Dim ringId As String = If(t.ring Is Nothing, Nothing, t.ring.ToString)
 
+        If t.name = ElementTypes.AtomGroup Then
+            element = New ChemicalElement("[" & t.text & "]", index:=i)
+
+            If Atom.AtomGroups.ContainsKey(t.text) AndAlso Atom.AtomGroups(t.text).CheckSingleValence Then
+                element.charge = Atom.AtomGroups(t.text).valence(0)
+            End If
+        Else
+            element = New ChemicalElement(t.text, index:=i) With {
+                .charge = If(t.charge Is Nothing, If(t.aromatic, 2, 1), Val(t.charge))
+            }
+        End If
+
+        element.graph_id = gid
+        element.aromatic = t.aromatic
         element.ID = graph.vertex.Count + 1
-        graph.AddVertex(element)
+
+        Call graph.AddVertex(element)
 
         If Not ringId Is Nothing Then
             If rings.ContainsKey(ringId) Then
