@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0baa7b0cc8c4aa6c329ad26981f790e5, metadb\SMILES\ChemicalMarkup.vb"
+﻿#Region "Microsoft.VisualBasic::6cbfd3a18cda8df3e9772197011db428, metadb\SMILES\ChemicalMarkup.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 7 (15.91%)
-    '     File Size: 1.43 KB
+    '     File Size: 1.42 KB
 
 
     ' Module ChemicalMarkup
@@ -98,4 +98,3 @@ Public Module ChemicalMarkup
     End Function
 
 End Module
-

@@ -1,63 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::b25bee87a609deba8d99b8a502b58345, metadb\SMILES\Graph\ChemicalElement.vb"
+﻿#Region "Microsoft.VisualBasic::35c33c788d4bb13cc90c749aedf01b11, metadb\SMILES\Graph\ChemicalElement.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 201
-'    Code Lines: 129 (64.18%)
-' Comment Lines: 53 (26.37%)
-'    - Xml Docs: 86.79%
-' 
-'   Blank Lines: 19 (9.45%)
-'     File Size: 6.84 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class ChemicalElement
-' 
-'     Properties: aromatic, charge, coordinate, elementName, graph_id
-'                 group, hydrogen, Keys
-' 
-'     Constructor: (+3 Overloads) Sub New
-' 
-'     Function: GetConnection
-' 
-'     Sub: (+2 Overloads) SetAtomGroups, setAtomLabel
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 238
+    '    Code Lines: 154 (64.71%)
+    ' Comment Lines: 57 (23.95%)
+    '    - Xml Docs: 80.70%
+    ' 
+    '   Blank Lines: 27 (11.34%)
+    '     File Size: 7.87 KB
+
+
+    ' Class ChemicalElement
+    ' 
+    '     Properties: aromatic, charge, coordinate, elementName, graph_id
+    '                 group, hydrogen, Keys
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    ' 
+    '     Function: GetConnection
+    ' 
+    '     Sub: CarbonGroup, NitrogenGroup, OxygenGroup, (+2 Overloads) SetAtomGroups, setAtomLabel
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

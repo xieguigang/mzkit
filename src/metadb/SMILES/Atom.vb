@@ -1,60 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::1067414cd9f38edfb36b4304daac631a, metadb\SMILES\Atom.vb"
+﻿#Region "Microsoft.VisualBasic::3e707c6684ef3205a926abcf7ea7e4ba, metadb\SMILES\Atom.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 224
-'    Code Lines: 163 (72.77%)
-' Comment Lines: 12 (5.36%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 49 (21.88%)
-'     File Size: 6.72 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class Atom
-' 
-'     Properties: AtomGroups, isAtomGroup, label, maxKeys, valence
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: ChargeLabel, DefaultAtomGroups, DefaultElements, EvaluateIsAtomGroup, GetIonLabel
-'               GetMaxKeys, LoadAtoms, ToString
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 193
+    '    Code Lines: 137 (70.98%)
+    ' Comment Lines: 12 (6.22%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 44 (22.80%)
+    '     File Size: 5.61 KB
+
+
+    ' Class Atom
+    ' 
+    '     Properties: isAtomGroup, label, maxKeys, valence
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: ChargeLabel, CheckSingleValence, DefaultElements, EvaluateIsAtomGroup, GetIonLabel
+    '               GetMaxKeys, ToString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

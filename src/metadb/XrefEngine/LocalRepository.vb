@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1b2ef1995346bce498134d92013d68d, metadb\XrefEngine\LocalRepository.vb"
+﻿#Region "Microsoft.VisualBasic::75855fad37ca5925612501596d653f8b, metadb\XrefEngine\LocalRepository.vb"
 
     ' Author:
     ' 
@@ -238,4 +238,3 @@ Public Class LocalRepository : Implements IDisposable, IMetaDb
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

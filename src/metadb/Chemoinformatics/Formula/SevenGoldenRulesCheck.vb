@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::507d64108a249c4e02655174ccdf03f4, metadb\Chemoinformatics\Formula\SevenGoldenRulesCheck.vb"
+﻿#Region "Microsoft.VisualBasic::71816587a28b0dc51664d8ff7ab3d438, metadb\Chemoinformatics\Formula\SevenGoldenRulesCheck.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 404
-    '    Code Lines: 329 (81.44%)
-    ' Comment Lines: 36 (8.91%)
-    '    - Xml Docs: 61.11%
+    '   Total Lines: 466
+    '    Code Lines: 386 (82.83%)
+    ' Comment Lines: 38 (8.15%)
+    '    - Xml Docs: 63.16%
     ' 
-    '   Blank Lines: 39 (9.65%)
-    '     File Size: 21.88 KB
+    '   Blank Lines: 42 (9.01%)
+    '     File Size: 23.16 KB
 
 
     '     Enum CoverRange

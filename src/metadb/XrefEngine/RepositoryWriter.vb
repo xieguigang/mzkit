@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8f69c6b8b51f7f6c4d97219089f743e, metadb\XrefEngine\RepositoryWriter.vb"
+﻿#Region "Microsoft.VisualBasic::e4fb9c1dd081abbed98708556910be40, metadb\XrefEngine\RepositoryWriter.vb"
 
     ' Author:
     ' 
@@ -214,4 +214,3 @@ Public Class RepositoryWriter : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

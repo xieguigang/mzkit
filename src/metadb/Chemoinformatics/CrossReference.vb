@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d14ebd15e8b3f5204ce9219a2472d3f3, metadb\Chemoinformatics\CrossReference.vb"
+﻿#Region "Microsoft.VisualBasic::2e6c88b7d7e14068cebb864c3a7687c9, metadb\Chemoinformatics\CrossReference.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 4 (9.30%)
-    '     File Size: 1.16 KB
+    '     File Size: 1.15 KB
 
 
     ' Interface ICrossReference
@@ -100,4 +100,3 @@ Public Interface ICrossReference
     Property SMILES As String
 
 End Interface
-

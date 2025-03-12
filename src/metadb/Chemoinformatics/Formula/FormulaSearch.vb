@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::9df874df5b1eb109f343d6b4e1626dee, metadb\Chemoinformatics\Formula\FormulaSearch.vb"
+﻿#Region "Microsoft.VisualBasic::b67edec5b4f4e25f368301b9a1ed11f1, metadb\Chemoinformatics\Formula\FormulaSearch.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 224
-'    Code Lines: 150 (66.96%)
-' Comment Lines: 33 (14.73%)
-'    - Xml Docs: 30.30%
-' 
-'   Blank Lines: 41 (18.30%)
-'     File Size: 9.50 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class FormulaSearch
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: ConstructAndVerifyCompoundWork, PPM, reorderCandidateElements, (+2 Overloads) SearchByExactMass, ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 206
+    '    Code Lines: 144 (69.90%)
+    ' Comment Lines: 24 (11.65%)
+    '    - Xml Docs: 16.67%
+    ' 
+    '   Blank Lines: 38 (18.45%)
+    '     File Size: 8.87 KB
+
+
+    '     Class FormulaSearch
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ConstructAndVerifyCompoundWork, reorderCandidateElements, (+2 Overloads) SearchByExactMass, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

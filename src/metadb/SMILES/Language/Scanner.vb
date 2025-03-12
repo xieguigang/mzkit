@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24ec6dd546b0a2158314e29ce4a92a8f, metadb\SMILES\Language\Scanner.vb"
+﻿#Region "Microsoft.VisualBasic::fe756d1ba260f881fc582463960b2eff, metadb\SMILES\Language\Scanner.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 309
-    '    Code Lines: 169 (54.69%)
-    ' Comment Lines: 108 (34.95%)
-    '    - Xml Docs: 15.74%
+    '   Total Lines: 313
+    '    Code Lines: 172 (54.95%)
+    ' Comment Lines: 109 (34.82%)
+    '    - Xml Docs: 15.60%
     ' 
-    '   Blank Lines: 32 (10.36%)
-    '     File Size: 14.84 KB
+    '   Blank Lines: 32 (10.22%)
+    '     File Size: 15.11 KB
 
 
     '     Class Scanner
