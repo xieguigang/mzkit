@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7550527bd1200c840a08cec23604e769, Rscript\Library\mzkit_app\src\mzkit\pipeline\library.vb"
+﻿#Region "Microsoft.VisualBasic::bf2bcdb7b430377ce40cd7e7ee7e7bc5, Rscript\Library\mzkit_app\src\mzkit\pipeline\library.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1167
-    '    Code Lines: 614 (52.61%)
-    ' Comment Lines: 430 (36.85%)
-    '    - Xml Docs: 93.49%
+    '   Total Lines: 1178
+    '    Code Lines: 613 (52.04%)
+    ' Comment Lines: 442 (37.52%)
+    '    - Xml Docs: 93.67%
     ' 
-    '   Blank Lines: 123 (10.54%)
-    '     File Size: 59.23 KB
+    '   Blank Lines: 123 (10.44%)
+    '     File Size: 59.67 KB
 
 
     ' Module library
