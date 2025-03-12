@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f19a3264223f80614034ca7598fe0b6, mzmath\MoleculeNetworking\SpectrumGrid\SpectrumGrid.vb"
+﻿#Region "Microsoft.VisualBasic::fdb96d8625ca16aea049db26f67f4c00, mzmath\MoleculeNetworking\SpectrumGrid\SpectrumGrid.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 76.47%
     ' 
     '   Blank Lines: 44 (14.92%)
-    '     File Size: 12.11 KB
+    '     File Size: 12.17 KB
 
 
     ' Class SpectrumGrid

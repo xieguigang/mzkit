@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::6bfdb0f2ac1570fa8bb2040c1491d78d, Rscript\Library\mzkit_app\src\mzquant\xcms.vb"
+﻿#Region "Microsoft.VisualBasic::0063de283b55458d089c8eeba2431b5b, Rscript\Library\mzkit_app\src\mzquant\xcms.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 46
-'    Code Lines: 34 (73.91%)
-' Comment Lines: 3 (6.52%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 9 (19.57%)
-'     File Size: 1.63 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module xcms
-' 
-'     Function: parse_xcms_samples
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 136
+    '    Code Lines: 91 (66.91%)
+    ' Comment Lines: 28 (20.59%)
+    '    - Xml Docs: 96.43%
+    ' 
+    '   Blank Lines: 17 (12.50%)
+    '     File Size: 5.43 KB
+
+
+    ' Module xcms
+    ' 
+    '     Function: cast_raw_dataframe, parse_xcms_samples, setAnnotations
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

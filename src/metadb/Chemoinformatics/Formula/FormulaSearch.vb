@@ -1,61 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::9df874df5b1eb109f343d6b4e1626dee, metadb\Chemoinformatics\Formula\FormulaSearch.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 224
-    '    Code Lines: 150 (66.96%)
-    ' Comment Lines: 33 (14.73%)
-    '    - Xml Docs: 30.30%
-    ' 
-    '   Blank Lines: 41 (18.30%)
-    '     File Size: 9.50 KB
+' Summaries:
 
 
-    '     Class FormulaSearch
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ConstructAndVerifyCompoundWork, PPM, reorderCandidateElements, (+2 Overloads) SearchByExactMass, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 224
+'    Code Lines: 150 (66.96%)
+' Comment Lines: 33 (14.73%)
+'    - Xml Docs: 30.30%
+' 
+'   Blank Lines: 41 (18.30%)
+'     File Size: 9.50 KB
+
+
+'     Class FormulaSearch
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ConstructAndVerifyCompoundWork, PPM, reorderCandidateElements, (+2 Overloads) SearchByExactMass, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
@@ -227,7 +228,7 @@ Namespace Formula
 
             For n As Integer = current.MinCount To current.MaxCount
                 Dim formula As FormulaComposition = parent.AppendElement(current.Element, n)
-                Dim ppm As Double = FormulaSearch.PPM(formula.ExactMass, exact_mass)
+                Dim ppm As Double = PPMmethod.PPM(formula.ExactMass, exact_mass)
 
                 If cancel.Value Then
                     Exit For
@@ -258,25 +259,6 @@ Namespace Formula
 
         Public Overrides Function ToString() As String
             Return opts.ToString
-        End Function
-
-        ''' <summary>
-        ''' 分子量差值
-        ''' </summary>
-        ''' <param name="measured#"></param>
-        ''' <param name="actualValue#"></param>
-        ''' <returns></returns>
-        Public Overloads Shared Function PPM(measured#, actualValue#) As Double
-            ' （测量值-实际分子量）/ 实际分子量
-            ' |(实验数据 - 数据库结果)| / 实验数据 * 1000000
-            Dim ppmd# = (std.Abs(measured - actualValue) / actualValue) * 1000000
-
-            If ppmd < 0 Then
-                ' 计算溢出了
-                Return 10000000000
-            End If
-
-            Return ppmd
         End Function
     End Class
 End Namespace

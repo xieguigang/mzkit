@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3d67c83a5660d966e3eca4cc819d3a1, mzmath\TargetedMetabolomics\Peaks\ScalarPeakReport.vb"
+﻿#Region "Microsoft.VisualBasic::21513b6866837ae518cee7ac851af5f4, mzmath\TargetedMetabolomics\Peaks\ScalarPeakReport.vb"
 
     ' Author:
     ' 
@@ -247,4 +247,3 @@ Public Class ScalarPeakReport
     End Function
 
 End Class
-

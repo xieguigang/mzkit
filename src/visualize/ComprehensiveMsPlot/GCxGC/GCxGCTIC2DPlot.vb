@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdb5f5bd9c4c0c695dea214ffa3b220b, visualize\plot\GCxGC\GCxGCTIC2DPlot.vb"
+﻿#Region "Microsoft.VisualBasic::bdb5f5bd9c4c0c695dea214ffa3b220b, visualize\ComprehensiveMsPlot\GCxGC\GCxGCTIC2DPlot.vb"
 
     ' Author:
     ' 

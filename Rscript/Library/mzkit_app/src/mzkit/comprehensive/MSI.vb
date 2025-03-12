@@ -1,66 +1,67 @@
-﻿#Region "Microsoft.VisualBasic::b34beb0d1904f0eda3810bf084a40df0, Rscript\Library\mzkit_app\src\mzkit\comprehensive\MSI.vb"
+﻿#Region "Microsoft.VisualBasic::251048f1c54e5ece02bfacca53e1ec7c, Rscript\Library\mzkit_app\src\mzkit\comprehensive\MSI.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 1751
-'    Code Lines: 1056 (60.31%)
-' Comment Lines: 514 (29.35%)
-'    - Xml Docs: 91.83%
-' 
-'   Blank Lines: 181 (10.34%)
-'     File Size: 72.19 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module MSI
-' 
-'     Function: asMSILayer, asRaster, basePeakMz, castSpatialLayers, Correction
-'               dimension_size, getimzmlMetadata, GetIonsJointMatrix, GetMatrixIons, GetMSIMetadata
-'               getmzpackFileMetadata, getmzPackMetadata, GetPeakMatrix, getStatTable, GetXySpatialFilter
-'               IonStats, level_convolution, loadRowSummary, LoadSpotVectorDataFrame, moran_index
-'               MSI_summary, MSIScanMatrix, open_imzML, packDf, packFile
-'               packMatrix, PeakMatrix, peakSamples, pixelId, PixelIons
-'               PixelMatrix, pixels, pixels2D, readPeaklayer, readSummarylayer
-'               rowScans, SampleBootstraping, scale, scan, spatialConvolution
-'               splice, write_imzML, writePeaklayer, writeSummarylayer
-' 
-'     Sub: Main
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1791
+    '    Code Lines: 1076 (60.08%)
+    ' Comment Lines: 529 (29.54%)
+    '    - Xml Docs: 91.87%
+    ' 
+    '   Blank Lines: 186 (10.39%)
+    '     File Size: 74.06 KB
+
+
+    ' Module MSI
+    ' 
+    '     Function: asMSILayer, asRaster, basePeakMz, castSpatialLayers, Correction
+    '               createMetadataTable, dimension_size, getimzmlMetadata, GetIonsJointMatrix, GetMatrixIons
+    '               GetMSIMetadata, getmzpackFileMetadata, getmzPackMetadata, GetPeakMatrix, getStatTable
+    '               GetXySpatialFilter, IonStats, level_convolution, load_spectrum, loadRowSummary
+    '               LoadSpotVectorDataFrame, moran_index, MSI_summary, MSIScanMatrix, open_imzML
+    '               packDf, packFile, packMatrix, PeakMatrix, peakSamples
+    '               pixelId, PixelIons, PixelMatrix, pixels, pixels2D
+    '               readImzMLMetadata, readPeaklayer, readSummarylayer, rowScans, SampleBootstraping
+    '               scale, scan, spatialConvolution, splice, write_imzML
+    '               writePeaklayer, writeSummarylayer
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -134,12 +135,24 @@ Module MSI
 
     Friend Sub Main()
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(IonStat()), AddressOf getStatTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(imzMLMetadata), AddressOf createMetadataTable)
 
         Call generic.add("readBin.msi_layer", GetType(Stream), AddressOf readPeaklayer)
         Call generic.add("readBin.msi_summary", GetType(Stream), AddressOf readSummarylayer)
         Call generic.add("writeBin", GetType(MSISummary), AddressOf writeSummarylayer)
         Call generic.add("writeBin", GetType(SingleIonLayer), AddressOf writePeaklayer)
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Private Function createMetadataTable(imzml As imzMLMetadata, args As list, env As Environment) As Object
+        Dim metadata As NamedValue(Of String)() = imzml.AsEnumerable.ToArray
+        Dim table As New rDataframe With {.columns = New Dictionary(Of String, Array)}
+
+        Call table.add("property", From pro As NamedValue(Of String) In metadata Select pro.Name)
+        Call table.add("metadata", From pro As NamedValue(Of String) In metadata Select pro.Value)
+
+        Return table
+    End Function
 
     <RGenericOverloads("writeBin")>
     Private Function writeSummarylayer(layer As MSISummary, args As list, env As Environment) As Object
@@ -673,15 +686,20 @@ Module MSI
     ''' 1. scans: is the [x,y] spatial scans data: <see cref="ScanData"/>.
     ''' 2. ibd: is the binary data reader wrapper object for the corresponding 
     '''       ``ibd`` file of the given input imzML file: <see cref="ibdReader"/>.
+    ''' 3. metadata: get file <see cref="imzMLMetadata"/> from the imzML header.
     ''' </returns>
     ''' <example>
     ''' # the msi_rawdata.ibd file should be in the same folder with the input imzml file.
     ''' let imzml = open.imzML(file = "/path/to/msi_rawdata.imzML");
+    ''' 
+    ''' # view metadata
+    ''' print(as.data.frame(imzml$metadata));
     ''' </example>
     <ExportAPI("open.imzML")>
-    <RApiReturn("scans", "ibd")>
+    <RApiReturn("scans", "ibd", "metadata")>
     Public Function open_imzML(file As String, Optional env As Environment = Nothing) As Object
         Dim scans As ScanData() = imzML.LoadScans(file:=file).ToArray
+        Dim metadata As imzMLMetadata = imzMLMetadata.ReadHeaders(file)
         Dim ibd As ibdReader
         Dim ibdfile As String = file.ChangeSuffix("ibd")
 
@@ -697,9 +715,21 @@ Module MSI
         Return New list With {
             .slots = New Dictionary(Of String, Object) From {
                 {"scans", scans},
-                {"ibd", ibd}
+                {"ibd", ibd},
+                {"metadata", metadata}
             }
         }
+    End Function
+
+    ''' <summary>
+    ''' load the spectrum of a specific spot scan inside the imzML
+    ''' </summary>
+    ''' <param name="ibd">a file reader of the ibd rawdata file</param>
+    ''' <param name="scan">contains the address information for read the spectrum inside a specific spot</param>
+    ''' <returns></returns>
+    <ExportAPI("load_spectrum")>
+    Public Function load_spectrum(ibd As ibdReader, scan As ScanData) As PeakMs2
+        Return ibd.GetSpectrum(scan)
     End Function
 
     ''' <summary>
@@ -746,6 +776,16 @@ Module MSI
             ionMode:=ionMode,
             dims:=dimsVal
         )
+    End Function
+
+    ''' <summary>
+    ''' read the metadata from the imzml file header
+    ''' </summary>
+    ''' <param name="imzML"></param>
+    ''' <returns></returns>
+    <ExportAPI("read.imzml_metadata")>
+    Public Function readImzMLMetadata(imzML As String) As imzMLMetadata
+        Return imzMLMetadata.ReadHeaders(imzML)
     End Function
 
     ''' <summary>

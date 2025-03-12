@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b19f6813534b1048adc17d98f0328900, metadb\XrefEngine\FillClass.vb"
+﻿#Region "Microsoft.VisualBasic::e20b6697818b5806216ef0c722598a11, metadb\XrefEngine\FillClass.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 66
-    '    Code Lines: 44 (66.67%)
-    ' Comment Lines: 11 (16.67%)
+    '   Total Lines: 67
+    '    Code Lines: 45 (67.16%)
+    ' Comment Lines: 11 (16.42%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (16.67%)
-    '     File Size: 3.02 KB
+    '   Blank Lines: 11 (16.42%)
+    '     File Size: 3.10 KB
 
 
     ' Module FillClass

@@ -1,4 +1,8 @@
 ﻿proj,files,totalLines,commentLines,blankLines,lineOfCodes,class,property,method,functions,operator,size(bytes),size
+G:\mzkit\src\visualize\ComprehensiveMsPlot\ComprehensiveMsPlot.vbproj,ComprehensiveMsPlot\GCxGC\GCxGCHeatMap.vb,169,4,23,142,1,0,2,1,0,7024,7.02 KB
+G:\mzkit\src\visualize\ComprehensiveMsPlot\ComprehensiveMsPlot.vbproj,ComprehensiveMsPlot\GCxGC\GCxGCTIC2DPlot.vb,229,5,27,197,1,0,3,2,0,9992,9.99 KB
+G:\mzkit\src\visualize\ComprehensiveMsPlot\ComprehensiveMsPlot.vbproj,ComprehensiveMsPlot\GCxGC\GCxGCTIC3DPeaks.vb,158,6,19,133,1,0,2,1,0,7601,7.60 KB
+G:\mzkit\src\visualize\ComprehensiveMsPlot\ComprehensiveMsPlot.vbproj,<project>,556,15,69,472,3,0,7,4,0,24617,24.62 KB
 G:\mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\Cluster.vb,75,8,12,55,1,0,0,3,0,2804,2.80 KB
 G:\mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\Extensions.vb,8,0,3,5,1,0,0,0,0,161,161 B
 G:\mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\KCF.vb,135,18,18,99,1,0,0,3,0,4623,4.62 KB
@@ -24,7 +28,7 @@ G:\mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,KCF.IO\My Project\AssemblyI
 G:\mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,KCF.IO\My Project\Resources.Designer.vb,112,60,10,42,1,4,0,0,0,4929,4.93 KB
 G:\mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,KCF.IO\My Project\Settings.Designer.vb,75,9,13,53,2,2,1,0,0,3048,3.05 KB
 G:\mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,<project>,660,160,87,413,12,26,5,18,0,23090,23.09 KB
-G:\mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,KCFDraw\Canvas.vb,425,83,53,289,1,0,3,7,0,16194,16.19 KB
+G:\mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,KCFDraw\Canvas.vb,425,83,53,289,1,0,3,7,0,16218,16.22 KB
 G:\mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,KCFDraw\KCFBrush.vb,81,8,7,66,1,6,0,3,0,3061,3.06 KB
 G:\mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,KCFDraw\LabelHtml.vb,174,24,19,131,1,0,1,3,0,6442,6.44 KB
 G:\mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,KCFDraw\zzz.vb,3,0,1,2,0,0,0,0,0,84,84 B
@@ -32,7 +36,7 @@ G:\mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,KCFDraw\My Project\Applic
 G:\mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,KCFDraw\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1180,1.18 KB
 G:\mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,KCFDraw\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2808,2.81 KB
 G:\mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,KCFDraw\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,3063,3.06 KB
-G:\mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,<project>,868,171,107,590,6,10,5,13,0,33266,33.27 KB
+G:\mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,<project>,868,171,107,590,6,10,5,13,0,33290,33.29 KB
 G:\mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\CLI.vb,86,2,11,73,1,0,0,2,0,3238,3.24 KB
 G:\mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\Groups.vb,6,0,2,4,1,0,0,0,0,149,149 B
 G:\mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\Program.vb,15,0,3,12,1,0,1,1,0,277,277 B
@@ -56,9 +60,10 @@ G:\mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\My Project\Ass
 G:\mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\My Project\Resources.Designer.vb,73,26,9,38,1,3,0,0,0,3144,3.14 KB
 G:\mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2991,2.99 KB
 G:\mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,<project>,15322,101,1231,13990,23,121,210,149,0,600748,600.75 KB
-G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Drawer.vb,370,98,50,222,1,2,6,11,0,14818,14.82 KB
+G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Drawer.vb,369,98,50,221,1,2,6,11,0,14760,14.76 KB
 G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Extensions.vb,140,31,16,93,1,0,0,6,0,5295,5.29 KB
-G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\FeatureRegions.vb,80,5,9,66,1,0,0,3,0,3310,3.31 KB
+G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\FeatureRegions.vb,77,5,9,63,1,0,0,3,0,3139,3.14 KB
+G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Metadata.vb,141,64,14,63,1,8,3,3,0,4566,4.57 KB
 G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\PixelsSampler.vb,134,9,21,104,1,0,1,6,0,5044,5.04 KB
 G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\ZAssembler.vb,131,27,21,83,1,0,6,1,0,4321,4.32 KB
 G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\zzz.vb,3,0,1,2,0,0,0,0,0,84,84 B
@@ -70,12 +75,15 @@ G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\MSIColo
 G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\MzLayerColorSet.vb,36,0,8,28,1,3,0,2,0,1140,1.14 KB
 G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\QuantizationThreshold.vb,127,33,21,73,9,2,4,7,0,4162,4.16 KB
 G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Ruler.vb,87,2,18,67,1,1,4,1,0,3262,3.26 KB
-G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\PixelRender.vb,190,48,30,112,1,0,1,5,0,8083,8.08 KB
-G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\RectangleRender.vb,251,30,32,189,1,0,4,5,0,11215,11.21 KB
-G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\Renderer.vb,171,38,21,112,2,0,3,2,0,7152,7.15 KB
-G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\RenderingModes.vb,10,0,3,7,1,0,0,0,0,148,148 B
-G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\RenderRGB.vb,79,3,12,64,1,4,2,0,0,3583,3.58 KB
-G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\RGBConfigs.vb,37,0,9,28,1,3,0,3,0,1472,1.47 KB
+G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\CMYKConfigs.vb,38,0,9,29,1,4,0,2,0,1308,1.31 KB
+G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\CompositionBlender.vb,36,5,7,24,1,1,1,1,0,1374,1.37 KB
+G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\PixelRender.vb,234,53,37,144,1,0,1,6,0,10313,10.31 KB
+G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\RectangleRender.vb,296,30,38,228,1,0,5,6,0,13356,13.36 KB
+G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\RenderCMYK.vb,80,19,10,51,1,4,2,0,0,3118,3.12 KB
+G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\Renderer.vb,192,49,23,120,2,0,3,2,0,8041,8.04 KB
+G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\RenderingModes.vb,17,6,3,8,1,0,0,0,0,352,352 B
+G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\RenderRGB.vb,62,3,10,49,1,3,2,0,0,2533,2.53 KB
+G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\RGBConfigs.vb,75,7,14,54,1,3,0,6,0,2824,2.82 KB
 G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Scaler\DenoiseScaler.vb,43,7,8,28,1,1,2,2,0,1270,1.27 KB
 G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Scaler\IntensityCutScaler.vb,38,4,9,25,1,2,2,2,0,1230,1.23 KB
 G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Scaler\KNNScaler.vb,34,3,7,24,1,3,2,2,0,1079,1.08 KB
@@ -109,29 +117,26 @@ G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Reader\PixelSca
 G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Reader\PixelScan\InMemoryVectorPixel.vb,224,13,45,166,1,7,7,9,0,8319,8.32 KB
 G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Reader\PixelScan\mzPackPixel.vb,161,9,26,126,1,6,5,6,0,5673,5.67 KB
 G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Reader\PixelScan\PixelScan.vb,86,20,16,50,1,0,3,3,0,3536,3.54 KB
-G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,<project>,6286,843,979,4464,73,81,123,212,0,240318,240.32 KB
+G:\mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,<project>,6715,960,1037,4718,77,97,130,223,0,256221,256.22 KB
 G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\MassSpectraMirrorPlot.vb,166,38,8,120,1,0,0,2,0,7894,7.89 KB
 G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\MsContourPlot.vb,15,0,3,12,1,0,0,1,0,534,534 B
 G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\PeakAssign.vb,416,25,55,336,1,0,2,4,0,18095,18.09 KB
-G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\PeakTablePlot.vb,121,4,14,103,1,1,2,0,0,5323,5.32 KB
+G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\PeakTablePlot.vb,121,4,14,103,1,1,2,0,0,5353,5.35 KB
 G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\PlotMassWindow.vb,101,4,13,84,1,0,4,0,0,3854,3.85 KB
 G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\PlotMassWindowXIC.vb,221,26,26,169,1,0,2,2,0,8828,8.83 KB
-G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\RawScatterPlot.vb,168,21,15,132,1,0,2,1,0,7332,7.33 KB
+G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\RawScatterPlot.vb,180,31,16,133,1,0,2,1,0,7772,7.77 KB
 G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\StandardCurvesPlot.vb,69,5,3,61,1,0,0,1,0,3406,3.41 KB
-G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\UVsignalPlot.vb,132,0,10,122,1,0,0,2,0,5903,5.90 KB
+G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\UVsignalPlot.vb,132,0,10,122,1,0,0,2,0,5901,5.90 KB
 G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\zzz.vb,3,0,1,2,0,0,0,0,0,84,84 B
 G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\ChromatogramPlot\ChromatogramPeakPlot.vb,292,31,30,231,1,0,5,1,0,13306,13.31 KB
 G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\ChromatogramPlot\ChromatogramPlot.vb,242,35,12,195,1,0,0,4,0,11213,11.21 KB
 G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\ChromatogramPlot\ScanContour.vb,106,4,16,86,1,0,2,2,0,3879,3.88 KB
 G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\ChromatogramPlot\ScanVisual3D.vb,282,32,39,211,1,0,3,4,0,11368,11.37 KB
 G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\ChromatogramPlot\TICplot.vb,425,26,59,340,1,1,6,3,0,17058,17.06 KB
-G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\GCxGC\GCxGCHeatMap.vb,169,4,23,142,1,0,2,1,0,7024,7.02 KB
-G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\GCxGC\GCxGCTIC2DPlot.vb,229,5,27,197,1,0,3,2,0,9992,9.99 KB
-G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\GCxGC\GCxGCTIC3DPeaks.vb,158,6,19,133,1,0,2,1,0,7601,7.60 KB
 G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\NMR\fidDataPlot.vb,79,0,7,72,1,0,2,0,0,3069,3.07 KB
 G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\NMR\FrequencyPlot.vb,41,0,6,35,1,0,2,0,0,1376,1.38 KB
 G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\NMR\NMRSpectrum.vb,102,9,7,86,1,0,2,0,0,3721,3.72 KB
-G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,<project>,3537,275,393,2869,20,2,41,31,0,150860,150.86 KB
+G:\mzkit\src\visualize\plot\MsPlot.NET5.vbproj,<project>,2993,270,325,2398,17,2,34,27,0,126711,126.71 KB
 G:\mzkit\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj,SDF.Extensions\SDF2KCF.vb,62,5,5,52,1,0,0,3,0,2073,2.07 KB
 G:\mzkit\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj,SDF.Extensions\SMILES2KCF.vb,46,0,5,41,1,0,0,1,0,1493,1.49 KB
 G:\mzkit\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj,SDF.Extensions\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,434,434 B
@@ -153,8 +158,8 @@ G:\mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology
 G:\mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\Scatter\LayerRender.vb,84,15,14,55,1,3,1,2,0,3050,3.05 KB
 G:\mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\Scatter\PhenographSpot.vb,47,7,9,31,1,6,0,3,0,1756,1.76 KB
 G:\mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\Scatter\TissueRegion.vb,90,36,12,42,1,5,0,4,0,3020,3.02 KB
-G:\mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\Scatter\UMAPPoint.vb,104,23,15,66,1,6,2,3,0,3349,3.35 KB
+G:\mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\Scatter\UMAPPoint.vb,104,23,15,66,1,6,2,3,0,3385,3.38 KB
 G:\mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\SpatialMapping\SpatialMapping.vb,99,47,12,40,3,6,0,4,0,3038,3.04 KB
 G:\mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\SpatialMapping\SpotMap.vb,86,38,10,38,1,12,0,1,0,2425,2.42 KB
-G:\mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,<project>,1704,396,220,1088,20,65,5,49,0,63827,63.83 KB
-../src/visualize,<root>,58584,4290,6308,47986,338,634,788,964,0,2292966,2.29 MB
+G:\mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,<project>,1704,396,220,1088,20,65,5,49,0,63863,63.86 KB
+../src/visualize,<root>,59466,4544,6426,48496,346,666,802,986,0,2325828,2.33 MB

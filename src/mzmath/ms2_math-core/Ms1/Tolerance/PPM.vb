@@ -92,8 +92,8 @@ Namespace Ms1
         ''' <summary>
         ''' 分子量差值
         ''' </summary>
-        ''' <param name="measured#"></param>
-        ''' <param name="actualValue#"></param>
+        ''' <param name="measured"></param>
+        ''' <param name="actualValue"></param>
         ''' <returns></returns>
         Public Overloads Shared Function PPM(measured#, actualValue#) As Double
             ' （测量值-实际分子量）/ 实际分子量

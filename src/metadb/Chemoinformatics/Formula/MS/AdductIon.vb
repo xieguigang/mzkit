@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbf228eaf6374fe6845a1f76c772cfbb, metadb\Chemoinformatics\Formula\MS\AdductIon.vb"
+﻿#Region "Microsoft.VisualBasic::ff03e5b92388171dbdfa676802233bbd, metadb\Chemoinformatics\Formula\MS\AdductIon.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 178
-    '    Code Lines: 123 (69.10%)
-    ' Comment Lines: 25 (14.04%)
+    '   Total Lines: 184
+    '    Code Lines: 128 (69.57%)
+    ' Comment Lines: 25 (13.59%)
     '    - Xml Docs: 96.00%
     ' 
-    '   Blank Lines: 30 (16.85%)
-    '     File Size: 6.89 KB
+    '   Blank Lines: 31 (16.85%)
+    '     File Size: 6.95 KB
 
 
     '     Class AdductIon

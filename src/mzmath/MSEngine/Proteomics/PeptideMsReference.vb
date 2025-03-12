@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f8e76cbcc623f7b82ecd4adbd61f4aa, mzmath\MSEngine\Search\PeptideMsReference.vb"
+﻿#Region "Microsoft.VisualBasic::13946248c58aea7de72cf96780fae210, mzmath\MSEngine\Proteomics\PeptideMsReference.vb"
 
     ' Author:
     ' 
@@ -37,33 +37,15 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 277
-    '    Code Lines: 200 (72.20%)
-    ' Comment Lines: 1 (0.36%)
+    '   Total Lines: 85
+    '    Code Lines: 57 (67.06%)
+    ' Comment Lines: 1 (1.18%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 76 (27.44%)
-    '     File Size: 10.37 KB
+    '   Blank Lines: 27 (31.76%)
+    '     File Size: 2.85 KB
 
 
-    ' Class AminoAcid
-    ' 
-    '     Properties: Formula, Modifications, ModifiedCode, ModifiedComposition, ModifiedFormula
-    '                 OneLetter, ThreeLetters
-    ' 
-    '     Constructor: (+5 Overloads) Sub New
-    '     Function: Code, ExactMass, GetFormula, IsModified
-    ' 
-    ' Class Peptide
-    ' 
-    '     Properties: DatabaseOrigin, DatabaseOriginID, ExactMass, Formula, IsDecoy
-    '                 IsProteinCterminal, IsProteinNterminal, MissedCleavages, ModifiedSequence, Position
-    '                 ResidueCodeIndexToModificationIndex, SamePeptideNumberInSearchedProteins, Sequence, SequenceObj
-    ' 
-    '     Function: CountModifiedAminoAcids, GetSequenceObj
-    ' 
-    '     Sub: GenerateSequenceObj
-    ' 
     ' Class PeptideMsReference
     ' 
     '     Properties: AdductType, ChromXs, CollisionCrossSection, CollisionType, Fs

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19457300ba91be23868b11113c7165d1, mzmath\ms2_math-core\Spectra\Alignment\CosAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::2c408428b45b3ee18bc73d94556b0ea3, mzmath\ms2_math-core\Spectra\Alignment\CosAlignment.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 77
-    '    Code Lines: 53 (68.83%)
-    ' Comment Lines: 7 (9.09%)
-    '    - Xml Docs: 71.43%
+    '   Total Lines: 83
+    '    Code Lines: 53 (63.86%)
+    ' Comment Lines: 13 (15.66%)
+    '    - Xml Docs: 84.62%
     ' 
-    '   Blank Lines: 17 (22.08%)
-    '     File Size: 2.93 KB
+    '   Blank Lines: 17 (20.48%)
+    '     File Size: 3.15 KB
 
 
     '     Class CosAlignment

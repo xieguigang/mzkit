@@ -1,61 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::646e38f1f11ed7c8b24bc304d455f910, assembly\Comprehensive\MsImaging\Metadata.vb"
+﻿#Region "Microsoft.VisualBasic::cc125ce491f30cd9ae76c17b623dcd4c, visualize\MsImaging\Metadata.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 144
-'    Code Lines: 65 (45.14%)
-' Comment Lines: 64 (44.44%)
-'    - Xml Docs: 98.44%
-' 
-'   Blank Lines: 15 (10.42%)
-'     File Size: 5.10 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Metadata
-' 
-'         Properties: [class], mass_range, physical_height, physical_width, resolution
-'                     scan_x, scan_y, scan_z
-' 
-'         Constructor: (+3 Overloads) Sub New
-'         Function: GetDimension, GetMetadata, ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 141
+    '    Code Lines: 63 (44.68%)
+    ' Comment Lines: 64 (45.39%)
+    '    - Xml Docs: 98.44%
+    ' 
+    '   Blank Lines: 14 (9.93%)
+    '     File Size: 4.57 KB
+
+
+    ' Class Metadata
+    ' 
+    '     Properties: [class], mass_range, physical_height, physical_width, resolution
+    '                 scan_x, scan_y, scan_z
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    '     Function: GetDimension, GetMetadata, ToString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

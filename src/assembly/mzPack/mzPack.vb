@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a0d2ac57df7eb559440ec6e7f1fd135, assembly\mzPack\mzPack.vb"
+﻿#Region "Microsoft.VisualBasic::6245f93fb7bfdc24acd4f7afcc1fbb73, assembly\mzPack\mzPack.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 402
-    '    Code Lines: 275 (68.41%)
-    ' Comment Lines: 85 (21.14%)
-    '    - Xml Docs: 94.12%
+    '   Total Lines: 404
+    '    Code Lines: 275 (68.07%)
+    ' Comment Lines: 87 (21.53%)
+    '    - Xml Docs: 94.25%
     ' 
-    '   Blank Lines: 42 (10.45%)
-    '     File Size: 14.95 KB
+    '   Blank Lines: 42 (10.40%)
+    '     File Size: 14.98 KB
 
 
     ' Class mzPack
@@ -103,8 +103,10 @@ Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 
 ''' <summary>
 ''' the unify in-memory data model of the mzkit MS data model.
-''' (mzPack文件格式模型)
 ''' </summary>
+''' <remarks>
+''' (mzPack文件格式模型)
+''' </remarks>
 Public Class mzPack : Implements IMZPack
 
     ''' <summary>
@@ -257,7 +259,7 @@ Public Class mzPack : Implements IMZPack
             .Select(Function(s) s.GetMs1Scans) _
             .IteratesALL _
             .AsParallel _
-            .Where(Function(mzi) mzi.intensity > 0 AndAlso std.abs(mzi.mz - mz) < mass_da) _
+            .Where(Function(mzi) mzi.intensity > 0 AndAlso std.Abs(mzi.mz - mz) < mass_da) _
             .OrderBy(Function(a) a.scan_time)
 
         Return ms1

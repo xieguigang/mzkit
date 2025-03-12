@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3880457ef74a7ae369a54f84d06a74b8, mzmath\TargetedMetabolomics\LinearQuantitative\Linear\Points\ReferencePoint.vb"
+﻿#Region "Microsoft.VisualBasic::393f2afe13c986ceaa448e6111aa420d, mzmath\TargetedMetabolomics\LinearQuantitative\Linear\Points\ReferencePoint.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 10 (12.82%)
-    '     File Size: 2.35 KB
+    '     File Size: 2.36 KB
 
 
     '     Class ReferencePoint

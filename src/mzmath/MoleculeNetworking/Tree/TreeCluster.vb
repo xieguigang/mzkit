@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f35a256a4982269bef28321e9c6ba37b, mzmath\MoleculeNetworking\Tree\TreeCluster.vb"
+﻿#Region "Microsoft.VisualBasic::25098a7e2e186cc9b9d44c0d86221bc3, mzmath\MoleculeNetworking\Tree\TreeCluster.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 81.82%
     ' 
     '   Blank Lines: 27 (17.42%)
-    '     File Size: 5.12 KB
+    '     File Size: 5.15 KB
 
 
     ' Delegate Function

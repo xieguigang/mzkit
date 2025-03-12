@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::282e6e706a27baa032e26c7be21bd978, mzmath\SingleCells\Matrix\Math\MathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b3436ad18d54469014bfcb490d70fc81, mzmath\SingleCells\Matrix\Math\MathExtensions.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 19 (20.65%)
-    '     File Size: 3.39 KB
+    '     File Size: 3.42 KB
 
 
     '     Module MathExtensions

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bff2f83e4973a82b08baa9f0fbf8b40, assembly\Comprehensive\MsImaging\MsImagingRaw.vb"
+﻿#Region "Microsoft.VisualBasic::bd98940f14fafade561058d18b78b12f, assembly\Comprehensive\MsImaging\MsImagingRaw.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 346
-    '    Code Lines: 259 (74.86%)
-    ' Comment Lines: 50 (14.45%)
+    '   Total Lines: 347
+    '    Code Lines: 260 (74.93%)
+    ' Comment Lines: 50 (14.41%)
     '    - Xml Docs: 90.00%
     ' 
-    '   Blank Lines: 37 (10.69%)
-    '     File Size: 14.53 KB
+    '   Blank Lines: 37 (10.66%)
+    '     File Size: 14.66 KB
 
 
     '     Module MsImagingRaw
@@ -115,15 +115,15 @@ Namespace MsImaging
             Dim paddingData As ScanMS1() = slide.MS.PixelScanPadding(padding, dims).ToArray
 
             Return New mzPack With {
-            .MS = paddingData,
-            .Application = FileApplicationClass.MSImaging,
-            .Chromatogram = slide.Chromatogram,
-            .Scanners = slide.Scanners,
-            .source = slide.source,
-            .Thumbnail = slide.Thumbnail,
-            .metadata = slide.metadata,
-            .Annotations = slide.Annotations
-        }
+                .MS = paddingData,
+                .Application = FileApplicationClass.MSImaging,
+                .Chromatogram = slide.Chromatogram,
+                .Scanners = slide.Scanners,
+                .source = slide.source,
+                .Thumbnail = slide.Thumbnail,
+                .metadata = slide.metadata,
+                .Annotations = slide.Annotations
+            }
         End Function
 
         ''' <summary>

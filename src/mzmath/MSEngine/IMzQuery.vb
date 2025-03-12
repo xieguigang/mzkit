@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d58022c85f38f4028339628796a98743, mzmath\MSEngine\IMzQuery.vb"
+﻿#Region "Microsoft.VisualBasic::b1faf444d28c3bcbd4fe6859f761e74b, mzmath\MSEngine\IMzQuery.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 62
-    '    Code Lines: 40 (64.52%)
-    ' Comment Lines: 13 (20.97%)
+    '   Total Lines: 76
+    '    Code Lines: 40 (52.63%)
+    ' Comment Lines: 24 (31.58%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 9 (14.52%)
-    '     File Size: 1.99 KB
+    '   Blank Lines: 12 (15.79%)
+    '     File Size: 2.31 KB
 
 
     ' Interface IMzQuery

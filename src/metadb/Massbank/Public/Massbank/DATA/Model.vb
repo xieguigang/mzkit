@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::383a616be156354e38d3f46855d127f3, metadb\Massbank\Public\Massbank\DATA\Model.vb"
+﻿#Region "Microsoft.VisualBasic::7f0f5de5eff1edc1389f7c7b3d10fb5b, metadb\Massbank\Public\Massbank\DATA\Model.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 12 (22.22%)
-    '     File Size: 1.77 KB
+    '     File Size: 1.78 KB
 
 
     '     Class MASS_SPECTROMETRY

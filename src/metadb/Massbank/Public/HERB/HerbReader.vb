@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::257683aa1572b22095457b91bd2a5463, metadb\Massbank\Public\HERB\HerbReader.vb"
+﻿#Region "Microsoft.VisualBasic::91ee072db4889612dc8794516cbd8cbb, metadb\Massbank\Public\HERB\HerbReader.vb"
 
     ' Author:
     ' 

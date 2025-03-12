@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ff881d2d982513d40ab702cd66659f4, assembly\assembly\MarkupData\imzML\XML\ScanData\PixelScanIntensity.vb"
+﻿#Region "Microsoft.VisualBasic::790c73fe651570d75fcaf4b3ba3753a3, assembly\assembly\MarkupData\imzML\XML\ScanData\PixelScanIntensity.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 81
-    '    Code Lines: 54 (66.67%)
-    ' Comment Lines: 15 (18.52%)
+    '   Total Lines: 86
+    '    Code Lines: 58 (67.44%)
+    ' Comment Lines: 15 (17.44%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 12 (14.81%)
-    '     File Size: 2.93 KB
+    '   Blank Lines: 13 (15.12%)
+    '     File Size: 3.13 KB
 
 
     '     Class PixelScanIntensity

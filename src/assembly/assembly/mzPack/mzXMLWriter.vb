@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::befbb202290de10805449d239953304f, assembly\assembly\mzPack\mzXMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::17f9be82dcbc3c3489bf6430bb82e6b9, assembly\assembly\mzPack\mzXMLWriter.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 285
-    '    Code Lines: 221 (77.54%)
-    ' Comment Lines: 18 (6.32%)
-    '    - Xml Docs: 16.67%
+    '   Total Lines: 292
+    '    Code Lines: 225 (77.05%)
+    ' Comment Lines: 19 (6.51%)
+    '    - Xml Docs: 15.79%
     ' 
-    '   Blank Lines: 46 (16.14%)
-    '     File Size: 11.58 KB
+    '   Blank Lines: 48 (16.44%)
+    '     File Size: 11.90 KB
 
 
     '     Class mzXMLWriter

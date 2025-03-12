@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ed32260cb1551c848315125c6f79e50, mzmath\ms2_math-core\Spectra\Models\PeakList.vb"
+﻿#Region "Microsoft.VisualBasic::568b1edca44e1f406ab395c8002f74a3, mzmath\ms2_math-core\Spectra\Models\PeakList.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 105
-    '    Code Lines: 49 (46.67%)
-    ' Comment Lines: 36 (34.29%)
+    '   Total Lines: 114
+    '    Code Lines: 50 (43.86%)
+    ' Comment Lines: 43 (37.72%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 20 (19.05%)
-    '     File Size: 3.08 KB
+    '   Blank Lines: 21 (18.42%)
+    '     File Size: 3.44 KB
 
 
     '     Class PeakList
     ' 
-    '         Properties: into, MRM, mz, size
+    '         Properties: into, metadata, MRM, mz, size
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: GetPeaks

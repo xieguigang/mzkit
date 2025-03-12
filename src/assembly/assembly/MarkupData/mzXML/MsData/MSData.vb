@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::210565aa034a4f531af861f1ce5cf44e, assembly\assembly\MarkupData\mzXML\MsData\MSData.vb"
+﻿#Region "Microsoft.VisualBasic::e5b5356b24b84c2a862e564b3024012c, assembly\assembly\MarkupData\mzXML\MsData\MSData.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
-    '    Code Lines: 22 (75.86%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 40
+    '    Code Lines: 26 (65.00%)
+    ' Comment Lines: 7 (17.50%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (24.14%)
-    '     File Size: 997 B
+    '   Blank Lines: 7 (17.50%)
+    '     File Size: 1.39 KB
 
 
     '     Class MSData
@@ -51,7 +51,7 @@
     '         Properties: dataProcessing, endTime, msInstrument, parentFile, scanCount
     '                     scans, startTime
     ' 
-    '         Function: ToString
+    '         Function: GenericEnumerator, ToString
     ' 
     ' 
     ' /********************************************************************************/

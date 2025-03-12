@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1a4d17659f8e9d8dcdd4cc0b5e92dae, visualize\TissueMorphology\Scatter\UMAPPoint.vb"
+﻿#Region "Microsoft.VisualBasic::efb2edd15e9c69394a95d5b154711560, visualize\TissueMorphology\Scatter\UMAPPoint.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 91.30%
     ' 
     '   Blank Lines: 15 (14.42%)
-    '     File Size: 3.35 KB
+    '     File Size: 3.38 KB
 
 
     ' Class UMAPPoint

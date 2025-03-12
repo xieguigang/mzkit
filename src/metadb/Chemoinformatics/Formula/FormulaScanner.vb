@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fdecf168550977a20ad49a13d28b016, metadb\Chemoinformatics\Formula\FormulaScanner.vb"
+﻿#Region "Microsoft.VisualBasic::0e049a21433e36778126b9ed918d2d3d, metadb\Chemoinformatics\Formula\FormulaScanner.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 384
-    '    Code Lines: 263 (68.49%)
-    ' Comment Lines: 67 (17.45%)
+    '   Total Lines: 388
+    '    Code Lines: 266 (68.56%)
+    ' Comment Lines: 67 (17.27%)
     '    - Xml Docs: 67.16%
     ' 
-    '   Blank Lines: 54 (14.06%)
-    '     File Size: 14.85 KB
+    '   Blank Lines: 55 (14.18%)
+    '     File Size: 14.96 KB
 
 
     '     Class FormulaScanner
@@ -52,7 +52,7 @@
     ' 
     '         Function: Convert2FormulaObjV2, EvaluateExactMass, (+2 Overloads) ScanFormula, Val
     ' 
-    '         Sub: push
+    '         Sub: push, SetupAdductsScanner
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d24f67236da635971df83c5ad8b143d, metadb\Chemoinformatics\Formula\MS\MemorySheet.vb"
+﻿#Region "Microsoft.VisualBasic::069bc6c099593c89599afec004f004a3, metadb\Chemoinformatics\Formula\MS\MemorySheet.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 66
-    '    Code Lines: 56 (84.85%)
-    ' Comment Lines: 4 (6.06%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 95
+    '    Code Lines: 75 (78.95%)
+    ' Comment Lines: 8 (8.42%)
+    '    - Xml Docs: 50.00%
     ' 
-    '   Blank Lines: 6 (9.09%)
-    '     File Size: 3.65 KB
+    '   Blank Lines: 12 (12.63%)
+    '     File Size: 5.87 KB
 
 
     '     Class MemorySheet
     ' 
-    '         Function: (+2 Overloads) Formula, GetDefault, GetDefaultNeutralLoss
+    '         Function: (+3 Overloads) Formula, GetDefault, GetDefaultNeutralLoss
     ' 
     ' 
     ' /********************************************************************************/

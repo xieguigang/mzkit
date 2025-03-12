@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4edf8936c8ccbfc10e6f5eba3ef7da74, mzmath\mz_deco\GCMS\GCMSDeconv.vb"
+﻿#Region "Microsoft.VisualBasic::f5033d51b742dd4b73b8e014bad97fe4, mzmath\mz_deco\GCMS\GCMSDeconv.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 56
-    '    Code Lines: 37 (66.07%)
-    ' Comment Lines: 9 (16.07%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 110
+    '    Code Lines: 71 (64.55%)
+    ' Comment Lines: 24 (21.82%)
+    '    - Xml Docs: 95.83%
     ' 
-    '   Blank Lines: 10 (17.86%)
-    '     File Size: 2.31 KB
+    '   Blank Lines: 15 (13.64%)
+    '     File Size: 4.02 KB
 
 
     ' Module GCMSDeconv
@@ -55,6 +55,7 @@
     '     Properties: Spectrum
     ' 
     '     Constructor: (+2 Overloads) Sub New
+    '     Function: CreateFeature
     ' 
     ' /********************************************************************************/
 

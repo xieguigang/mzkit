@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc3d61ce5f1cbdf04a11c282b7c4f262, mzmath\ms2_math-core\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::c27780cdc5a7e745dbf2d70703067bf1, mzmath\ms2_math-core\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 150
-    '    Code Lines: 88 (58.67%)
-    ' Comment Lines: 46 (30.67%)
-    '    - Xml Docs: 97.83%
+    '   Total Lines: 166
+    '    Code Lines: 99 (59.64%)
+    ' Comment Lines: 49 (29.52%)
+    '    - Xml Docs: 97.96%
     ' 
-    '   Blank Lines: 16 (10.67%)
-    '     File Size: 5.67 KB
+    '   Blank Lines: 18 (10.84%)
+    '     File Size: 6.17 KB
 
 
     ' Module Extensions
     ' 
     '     Function: CreateLibraryMatrix, (+2 Overloads) CreateMzIndex, GroupByMz, KovatsRI, (+2 Overloads) RetentionIndex
-    '               Trim, TrimBaseline
+    '               Trim, TrimBaseline, UnifyTag
     ' 
     ' /********************************************************************************/
 

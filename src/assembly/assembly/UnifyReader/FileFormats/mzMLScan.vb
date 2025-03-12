@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2f78fdc99ef0dbc1603c1ec288910e4, assembly\assembly\UnifyReader\FileFormats\mzMLScan.vb"
+﻿#Region "Microsoft.VisualBasic::698df6ed7cdcc0fd48ecf7150dca8245, assembly\assembly\UnifyReader\FileFormats\mzMLScan.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 123
-    '    Code Lines: 102 (82.93%)
+    '   Total Lines: 132
+    '    Code Lines: 109 (82.58%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 21 (17.07%)
-    '     File Size: 5.14 KB
+    '   Blank Lines: 23 (17.42%)
+    '     File Size: 5.49 KB
 
 
     '     Class mzMLScan
     ' 
     '         Function: GetActivationMethod, GetBPC, GetCentroided, GetCharge, GetCollisionEnergy
-    '                   GetMsLevel, GetMsMs, GetParentMz, GetPolarity, GetScanId
-    '                   GetScanTime, GetTIC, IsEmpty
+    '                   GetMsLevel, GetMsMs, GetParentMz, GetParentScanNumber, GetPolarity
+    '                   GetScanId, GetScanNumber, GetScanTime, GetTIC, IsEmpty
     ' 
     ' 
     ' /********************************************************************************/

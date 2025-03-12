@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0f4c12c5c055efa3ded595b31f7c171, mzmath\mz_deco\XcmsSamplePeak.vb"
+﻿#Region "Microsoft.VisualBasic::cd4134114872a13f39fd4bd859cef323, mzmath\mz_deco\XcmsSamplePeak.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 58
-    '    Code Lines: 52 (89.66%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 110
+    '    Code Lines: 53 (48.18%)
+    ' Comment Lines: 51 (46.36%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (10.34%)
-    '     File Size: 2.19 KB
+    '   Blank Lines: 6 (5.45%)
+    '     File Size: 3.66 KB
 
 
     ' Class XcmsSamplePeak
     ' 
-    '     Properties: ID, intb, into, maxo, mz
-    '                 mzmax, mzmin, rt, rtmax, rtmin
-    '                 sample, sn
+    '     Properties: ID, intb, into, maxf, maxo
+    '                 mz, mzmax, mzmin, rt, rtmax
+    '                 rtmin, sample, sn
     ' 
     '     Function: ParseCsv
     ' 

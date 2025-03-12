@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3178ad4c2478f3dec8add2bd83218bb, assembly\mzPack\v2.0\mzStreamWriter.vb"
+﻿#Region "Microsoft.VisualBasic::61cff39af76e66cd6300a6cb69ee5ec2, assembly\mzPack\v2.0\mzStreamWriter.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 251
-    '    Code Lines: 180 (71.71%)
-    ' Comment Lines: 27 (10.76%)
-    '    - Xml Docs: 48.15%
+    '   Total Lines: 352
+    '    Code Lines: 239 (67.90%)
+    ' Comment Lines: 59 (16.76%)
+    '    - Xml Docs: 64.41%
     ' 
-    '   Blank Lines: 44 (17.53%)
-    '     File Size: 9.85 KB
+    '   Blank Lines: 54 (15.34%)
+    '     File Size: 14.51 KB
 
 
     ' Module mzStreamWriter
     ' 
-    '     Function: getScan1DirName, readme, WriteStream
+    '     Function: getScan1DirName, (+2 Overloads) readme, (+2 Overloads) WriteStream
     ' 
-    '     Sub: writeAnnotations, WriteApplicationClass, (+2 Overloads) WriteStream
+    '     Sub: writeAnnotations, WriteApplicationClass, WriteMultipleStageProductTree, (+2 Overloads) WriteStream
     ' 
     ' /********************************************************************************/
 
@@ -64,6 +64,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
@@ -81,6 +82,52 @@ Public Module mzStreamWriter
     Public Const annotations_xml As String = ".etc/annotations.xml"
 
     ''' <summary>
+    ''' Write the fly stream of the mzPack raw data
+    ''' </summary>
+    ''' <param name="scans">the data scan pipeline.</param>
+    ''' <param name="file"></param>
+    ''' <param name="meta_size"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function WriteStream(scans As IEnumerable(Of ScanMS1), file As Stream,
+                                Optional source As String = "unknown",
+                                Optional meta_size As Long = 8 * ByteSize.MB,
+                                Optional [class] As FileApplicationClass = FileApplicationClass.LCMS,
+                                Optional metadata As Dictionary(Of String, String) = Nothing) As Boolean
+
+        If metadata Is Nothing Then
+            metadata = New Dictionary(Of String, String)
+        Else
+            ' make value copy
+            metadata = New Dictionary(Of String, String)(metadata)
+        End If
+
+        Using pack As New StreamPack(file, meta_size:=meta_size)
+            Dim summary As New Dictionary(Of String, Double)
+            Dim samples As New List(Of String)
+            Dim nscans As Integer = 0
+
+            Call pack.Clear(meta_size)
+            Call scans.WriteStream(pack, metadata:=summary, samples:=samples, scanNumbers:=nscans)
+            Call pack.WriteText(readme([class], nscans, summary), "readme.txt")
+            Call metadata.Add("thumbnail", False)
+            Call metadata.Add("ms1", nscans)
+            Call metadata.Add("create_time", Now.ToString)
+            Call metadata.Add("github", "https://github.com/xieguigang/mzkit")
+            Call metadata.Add("application", GetType(mzPack).Assembly.ToString)
+            Call metadata.Add("platform", If(App.IsMicrosoftPlatform, "Microsoft Windows", "UNIX/LINUX"))
+            Call metadata.Add("source", source)
+
+            Call pack.WriteText([class].ToString, applicationClassFile)
+            Call pack.WriteText(summary.GetJson, ".etc/ms_scans.json")
+            Call pack.WriteText(samples.Distinct.GetJson, ".etc/sample_tags.json")
+            Call pack.WriteText(metadata.GetJson, metadata_json)
+        End Using
+
+        Return True
+    End Function
+
+    ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="mzpack"></param>
@@ -92,10 +139,7 @@ Public Module mzStreamWriter
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function WriteStream(mzpack As mzPack,
-                                file As Stream,
-                                Optional meta_size As Long = 8 * 1024 * 1024) As Boolean
-
+    Public Function WriteStream(mzpack As mzPack, file As Stream, Optional meta_size As Long = 8 * ByteSize.MB) As Boolean
         Dim metadata As New Dictionary(Of String, String)
 
         Using pack As New StreamPack(file, meta_size:=meta_size)
@@ -135,14 +179,14 @@ Public Module mzStreamWriter
     End Sub
 
     <Extension>
-    Private Function readme(mzpack As mzPack, summary As Dictionary(Of String, Double)) As String
+    Private Function readme([class] As FileApplicationClass, scanNumbers As Integer, summary As Dictionary(Of String, Double)) As String
         Dim sb As New StringBuilder
-        Dim app = mzpack.Application
+        Dim app As FileApplicationClass = [class]
 
         Call sb.AppendLine($"mzPack data v2.0")
         Call sb.AppendLine($"for MZKit application {app.ToString}({app.Description}) data analysis.")
         Call sb.AppendLine()
-        Call sb.AppendLine($"has {mzpack.MS.Length} ms scans")
+        Call sb.AppendLine($"has {scanNumbers} ms scans")
         Call sb.AppendLine("summary:")
         Call sb.AppendLine()
 
@@ -151,6 +195,11 @@ Public Module mzStreamWriter
         Next
 
         Return sb.ToString
+    End Function
+
+    <Extension>
+    Private Function readme(mzpack As mzPack, summary As Dictionary(Of String, Double)) As String
+        Return readme(mzpack.Application, mzpack.MS.Length, summary)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -164,11 +213,22 @@ Public Module mzStreamWriter
     ''' </summary>
     Public Const SampleMetaName As String = "sample"
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="pack"></param>
+    ''' <param name="metadata"></param>
+    ''' <param name="samples"></param>
+    ''' <param name="scanNumbers">
+    ''' get number of the ms1 scans from the given <paramref name="mzpack"/> data stream
+    ''' </param>
     <Extension>
     Public Sub WriteStream(mzpack As IEnumerable(Of ScanMS1),
                            pack As StreamPack,
-                           ByRef index As Dictionary(Of String, Double),
-                           Optional ByRef samples As List(Of String) = Nothing)
+                           ByRef metadata As Dictionary(Of String, Double),
+                           Optional ByRef samples As List(Of String) = Nothing,
+                           Optional ByRef scanNumbers As Integer = 0)
 
         Dim rtmin As Double = 99999
         Dim rtmax As Double = -9999
@@ -188,6 +248,8 @@ Public Module mzStreamWriter
             Else
                 sampleTag = ""
             End If
+
+            scanNumbers += 1
 
             Dim dir As String = $"/MS/{sampleTag}/{ms1.scan_id.getScan1DirName}/"
             Dim dirMetadata As New Dictionary(Of String, Object)
@@ -218,7 +280,7 @@ Public Module mzStreamWriter
                     ' has peak annotation metadata
                     ' save to a file aside the ms2 product file
                     Using blockStream As Stream = pack.OpenBlock($"{dir}/{product.scan_id.MD5}.txt")
-                        Using str As New StreamWriter(blockStream)
+                        Using str As New StreamWriter(blockStream, Encoding.UTF8, -1, leaveOpen:=True)
                             For Each line As String In product.metadata
                                 Call str.WriteLine(line)
                             Next
@@ -246,10 +308,10 @@ Public Module mzStreamWriter
             Call pack.SetAttribute(dir, dirMetadata)
         Next
 
-        Call index.Add(NameOf(mzmin), mzmin)
-        Call index.Add(NameOf(mzmax), mzmax)
-        Call index.Add(NameOf(rtmin), rtmin)
-        Call index.Add(NameOf(rtmax), rtmax)
+        Call metadata.Add(NameOf(mzmin), mzmin)
+        Call metadata.Add(NameOf(mzmax), mzmax)
+        Call metadata.Add(NameOf(rtmin), rtmin)
+        Call metadata.Add(NameOf(rtmax), rtmax)
     End Sub
 
     Private Sub WriteMultipleStageProductTree(pack As StreamPack, product As ScanMS2, relpath As String())

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e60e9599b0abfb3869ab3a2c30eebfb, mzmath\mz_deco\XcmsTable.vb"
+﻿#Region "Microsoft.VisualBasic::95bb4f336f614a19bd618a31c19bc2e3, mzmath\mz_deco\XcmsTable.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 131
-    '    Code Lines: 96 (73.28%)
-    ' Comment Lines: 17 (12.98%)
-    '    - Xml Docs: 76.47%
+    '   Total Lines: 146
+    '    Code Lines: 104 (71.23%)
+    ' Comment Lines: 23 (15.75%)
+    '    - Xml Docs: 82.61%
     ' 
-    '   Blank Lines: 18 (13.74%)
-    '     File Size: 5.04 KB
+    '   Blank Lines: 19 (13.01%)
+    '     File Size: 5.59 KB
 
 
     ' Module XcmsTable

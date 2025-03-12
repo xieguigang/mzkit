@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea2a98a62dcebf5008a84bcf03494828, assembly\Comprehensive\SingleCells\View.vb"
+﻿#Region "Microsoft.VisualBasic::6de8b517c9ac26f9dfe6640af599f109, assembly\Comprehensive\SingleCells\View.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
-    '    Code Lines: 24 (82.76%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 34
+    '    Code Lines: 24 (70.59%)
+    ' Comment Lines: 5 (14.71%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (17.24%)
-    '     File Size: 1.08 KB
+    '   Blank Lines: 5 (14.71%)
+    '     File Size: 1.25 KB
 
 
     '     Module View

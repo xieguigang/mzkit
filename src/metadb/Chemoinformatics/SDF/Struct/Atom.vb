@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84f55f675a27cc1588a459e713be5b35, metadb\Chemoinformatics\SDF\Struct\Elements.vb"
+﻿#Region "Microsoft.VisualBasic::9f05ee6a81ab7e67fd45c5c37327dadb, metadb\Chemoinformatics\SDF\Struct\Atom.vb"
 
     ' Author:
     ' 
@@ -37,26 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 153
-    '    Code Lines: 115 (75.16%)
-    ' Comment Lines: 12 (7.84%)
-    '    - Xml Docs: 66.67%
+    '   Total Lines: 143
+    '    Code Lines: 99 (69.23%)
+    ' Comment Lines: 20 (13.99%)
+    '    - Xml Docs: 80.00%
     ' 
-    '   Blank Lines: 26 (16.99%)
-    '     File Size: 4.97 KB
+    '   Blank Lines: 24 (16.78%)
+    '     File Size: 4.63 KB
 
 
     '     Class Atom
     ' 
     '         Properties: Atom, Coordination
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ensureValidFormat, Parse, splitJointNegativeNum, splitJointNum, ToString
-    ' 
-    '     Class Bound
-    ' 
-    '         Properties: i, j, Stereo, Type
-    ' 
-    '         Function: Parse, ToString
     ' 
     ' 
     ' /********************************************************************************/

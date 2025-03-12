@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::561b33b2a1e34cdd02ee0c4fbb790869, Rscript\Library\mzkit_app\src\mzkit\annotations\HMDB.vb"
+﻿#Region "Microsoft.VisualBasic::681c11d1e3ee0178c546a935a8dd6250, Rscript\Library\mzkit_app\src\mzkit\annotations\HMDB.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 291
-    '    Code Lines: 177 (60.82%)
-    ' Comment Lines: 85 (29.21%)
-    '    - Xml Docs: 90.59%
+    '   Total Lines: 338
+    '    Code Lines: 209 (61.83%)
+    ' Comment Lines: 93 (27.51%)
+    '    - Xml Docs: 91.40%
     ' 
-    '   Blank Lines: 29 (9.97%)
-    '     File Size: 12.51 KB
+    '   Blank Lines: 36 (10.65%)
+    '     File Size: 14.80 KB
 
 
     ' Module HMDBTools
     ' 
     '     Function: biospecimen_slicer, chemical_taxonomy, Convert, exportTable, getHMDB
-    '               readHMDB, readHMDBSpectrals, subCellular_slicer, tissue_slicer
+    '               loadMessageDb, readHMDB, readHMDBSpectrals, saveHmdbMessage, saveHmdbMessage2
+    '               subCellular_slicer, tissue_slicer
+    ' 
+    '     Sub: Main
     ' 
     ' /********************************************************************************/
 
