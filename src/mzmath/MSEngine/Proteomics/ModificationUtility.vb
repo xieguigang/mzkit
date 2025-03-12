@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fcd567f496055e840cb47f387d80be9c, mzmath\MSEngine\Proteomics\ModificationUtility.vb"
+﻿#Region "Microsoft.VisualBasic::ba615cbfbf1329f9d388b6ae986624ec, mzmath\MSEngine\Proteomics\ModificationUtility.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 143
-    '    Code Lines: 124 (86.71%)
+    '   Total Lines: 142
+    '    Code Lines: 124 (87.32%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 19 (13.29%)
-    '     File Size: 6.28 KB
+    '   Blank Lines: 18 (12.68%)
+    '     File Size: 6.27 KB
 
 
     ' Class ModificationUtility
@@ -55,7 +55,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Linq
@@ -199,4 +198,3 @@ Public NotInheritable Class ModificationUtility
         Return mPeptides
     End Function
 End Class
-

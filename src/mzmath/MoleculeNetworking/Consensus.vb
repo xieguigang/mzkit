@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ef9c1a55af8de4c14316575ceb1d5c0, mzmath\MoleculeNetworking\Consensus.vb"
+﻿#Region "Microsoft.VisualBasic::93ffe16302608aab09709d5a2ce8521b, mzmath\MoleculeNetworking\Consensus.vb"
 
     ' Author:
     ' 
@@ -114,4 +114,3 @@ Public Class Consensus
     End Function
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6bb7d81cb315306c88464a3345378033, mzmath\ms2_simulator\test\annotation_test.vb"
+﻿#Region "Microsoft.VisualBasic::f989dd7c09938ebe7afb60aa9dcde51c, mzmath\ms2_simulator\test\annotation_test.vb"
 
     ' Author:
     ' 
@@ -87,4 +87,3 @@ Module annotation_test
         Call Console.WriteLine(anno.Annotation(124.2, IonModes.Positive)) ' C6H6NO2
     End Sub
 End Module
-

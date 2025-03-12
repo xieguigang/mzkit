@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6eb43d602da9ffb951f50ac088683f58, mzmath\MSEngine\Proteomics\Peptide.vb"
+﻿#Region "Microsoft.VisualBasic::5f0d6077720373f754ad2f96b33ca46c, mzmath\MSEngine\Proteomics\Peptide.vb"
 
     ' Author:
     ' 
@@ -37,12 +37,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
-    '    Code Lines: 60 (70.59%)
+    '   Total Lines: 84
+    '    Code Lines: 60 (71.43%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 25 (29.41%)
+    '   Blank Lines: 24 (28.57%)
     '     File Size: 3.39 KB
 
 
@@ -55,7 +55,6 @@
     '     Function: CountModifiedAminoAcids, GetSequenceObj
     ' 
     '     Sub: GenerateSequenceObj
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -145,5 +144,3 @@ Public Class Peptide
         Return sequence
     End Function
 End Class
-
-

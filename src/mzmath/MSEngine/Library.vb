@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2986cc16e3ce8ad167cf34c4d8855e9, mzmath\MSEngine\Library.vb"
+﻿#Region "Microsoft.VisualBasic::1a4ad06c0fdb8e55be8438a0b730621e, mzmath\MSEngine\Library.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 25 (21.37%)
-    '     File Size: 4.08 KB
+    '     File Size: 4.07 KB
 
 
     ' Class Library
@@ -179,4 +179,3 @@ Public Class Library(Of T As {INamedValue, GenericCompound})
     End Function
 
 End Class
-
