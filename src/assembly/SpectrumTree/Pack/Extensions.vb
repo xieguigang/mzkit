@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1830af1afa5b0ac84bb6dfd9448bec33, assembly\SpectrumTree\Pack\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::b85d6d09ba59762a0e17d8020884ae8a, assembly\SpectrumTree\Pack\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,12 +37,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 36
-    '    Code Lines: 19 (52.78%)
-    ' Comment Lines: 10 (27.78%)
+    '   Total Lines: 35
+    '    Code Lines: 19 (54.29%)
+    ' Comment Lines: 10 (28.57%)
     '    - Xml Docs: 90.00%
     ' 
-    '   Blank Lines: 7 (19.44%)
+    '   Blank Lines: 6 (17.14%)
     '     File Size: 1.33 KB
 
 
@@ -54,7 +54,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.IO
 Imports System.Runtime.CompilerServices

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0113b8981815f165a3f81187d5785a6, assembly\assembly\MultipleStageMS.vb"
+﻿#Region "Microsoft.VisualBasic::282ffd9fa1c6793d43663e92344bc862, assembly\assembly\MultipleStageMS.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 4 (11.76%)
-    '     File Size: 1.32 KB
+    '     File Size: 1.31 KB
 
 
     ' Module MultipleStageMS
@@ -88,4 +88,3 @@ Public Module MultipleStageMS
     End Function
 
 End Module
-
