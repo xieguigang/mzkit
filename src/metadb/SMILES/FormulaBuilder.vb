@@ -69,14 +69,14 @@ Public Class FormulaBuilder
     Dim composition As New Dictionary(Of String, Integer)
     Dim visited As New Index(Of String)
     Dim atomProfile As Dictionary(Of String, Atom)
-    Dim atomGroups As Dictionary(Of String, Atom)
+    Dim atomGroups As Dictionary(Of String, AtomGroup)
 
     Sub New(graph As ChemicalFormula)
         Me.graph = graph
         Me.atomProfile = Atom _
             .DefaultElements _
             .ToDictionary(Function(a) a.label)
-        Me.atomGroups = Atom.DefaultAtomGroups _
+        Me.atomGroups = AtomGroup.DefaultAtomGroups _
             .ToDictionary(Function(a)
                               Return a.GetIonLabel
                           End Function)

@@ -96,7 +96,7 @@ Module Layout2D
 
     Friend ReadOnly atomMaxCharges As Dictionary(Of String, Atom) = Atom _
         .DefaultElements _
-        .JoinIterates(Atom.DefaultAtomGroups) _
+        .JoinIterates(AtomGroup.DefaultAtomGroups) _
         .ToDictionary(Function(a)
                           Return a.label
                       End Function)
@@ -109,8 +109,8 @@ Module Layout2D
 
         If atomMaxCharges.ContainsKey(atom.elementName) Then
             maxN = atomMaxCharges(atom.elementName).maxKeys
-        ElseIf SMILES.Atom.AtomGroups.ContainsKey(atom.elementName) Then
-            maxN = SMILES.Atom.AtomGroups(atom.elementName).maxKeys
+        ElseIf AtomGroup.CheckDefaultLabel(atom.elementName) Then
+            maxN = AtomGroup.AtomGroups(atom.elementName).maxKeys
         Else
             maxN = 1
         End If

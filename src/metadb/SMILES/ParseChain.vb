@@ -204,8 +204,8 @@ Public Class ParseChain
         If t.name = ElementTypes.AtomGroup Then
             element = New ChemicalElement("[" & t.text & "]", index:=i)
 
-            If Atom.AtomGroups.ContainsKey(t.text) AndAlso Atom.AtomGroups(t.text).CheckSingleValence Then
-                element.charge = Atom.AtomGroups(t.text).valence(0)
+            If AtomGroup.CheckDefaultLabel(t.text) AndAlso AtomGroup.AtomGroups(t.text).CheckSingleValence Then
+                element.charge = AtomGroup.GetDefaultValence(t.text, -1)
             End If
         Else
             element = New ChemicalElement(t.text, index:=i) With {
