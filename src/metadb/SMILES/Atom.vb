@@ -61,6 +61,70 @@
 Imports System.Runtime.CompilerServices
 Imports std = System.Math
 
+Public Class AtomGroup : Inherits Atom
+
+    Public Property mainElement As String
+
+    Public Shared ReadOnly Property AtomGroups As Dictionary(Of String, AtomGroup) = LoadAtoms()
+
+    Sub New(label As String, main As String, ParamArray valence As Integer())
+        Call MyBase.New(label, valence)
+        mainElement = main
+    End Sub
+
+    Private Shared Function LoadAtoms() As Dictionary(Of String, AtomGroup)
+        Dim atoms = DefaultAtomGroups.ToArray
+        Dim groups As New Dictionary(Of String, AtomGroup)
+
+        For Each atom As AtomGroup In atoms
+            Call groups.Add(atom.GetIonLabel, atom)
+
+            If Not groups.ContainsKey(atom.label) Then
+                Call groups.Add(atom.label, atom)
+            End If
+        Next
+
+        Return groups
+    End Function
+
+    ''' <summary>
+    ''' Check of the given atom group label is existsed inside the default atom group list
+    ''' </summary>
+    ''' <param name="label"></param>
+    ''' <returns></returns>
+    Public Shared Function CheckDefaultLabel(label As String) As Boolean
+        Return _AtomGroups.ContainsKey(label)
+    End Function
+
+    Public Shared Function GetDefaultValence(label As String, val As Integer) As Integer
+        If _AtomGroups.ContainsKey(label) Then
+            Return _AtomGroups(label).valence(0)
+        Else
+            Return val
+        End If
+    End Function
+
+    Public Shared Iterator Function DefaultAtomGroups() As IEnumerable(Of AtomGroup)
+        Yield New AtomGroup("OH", "O", -1)
+        Yield New AtomGroup("NO3", "N", -1)
+        Yield New AtomGroup("SO4", "S", -2)
+        Yield New AtomGroup("CO3", "C", -2)
+        Yield New AtomGroup("NH4", "N", 1)
+        Yield New AtomGroup("NH2", "N", 1, 2)
+        Yield New AtomGroup("SO3", "S", -2)
+        Yield New AtomGroup("MnO4", "Mn", -1)
+        Yield New AtomGroup("HCO3", "C", -1)
+        Yield New AtomGroup("PO4", "P", -3)
+        Yield New AtomGroup("CH", "C", -1, -2, -3)
+        Yield New AtomGroup("CH2", "C", -1, -2)
+        Yield New AtomGroup("CH3", "C", -1)
+        Yield New AtomGroup("CH4", "C", -1)
+        Yield New AtomGroup("CH5", "C", -1) ' 氢化甲基阴离子（hydridomethyl anion）
+        Yield New AtomGroup("COOH", "C", -1)
+        Yield New AtomGroup("COO", "C", -2)
+    End Function
+End Class
+
 ''' <summary>
 ''' the atoms metadata for supports build formula and graph in SMILES parser
 ''' </summary>
@@ -82,8 +146,6 @@ Public Class Atom
     Public ReadOnly Property maxKeys As Integer
     Public ReadOnly Property isAtomGroup As Boolean
 
-    Public Shared ReadOnly Property AtomGroups As Dictionary(Of String, Atom) = LoadAtoms()
-
     Sub New(label As String, ParamArray valence As Integer())
         Me.isAtomGroup = EvaluateIsAtomGroup(label)
         Me.label = label
@@ -94,21 +156,6 @@ Public Class Atom
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function CheckSingleValence() As Boolean
         Return valence.TryCount = 1
-    End Function
-
-    Private Shared Function LoadAtoms() As Dictionary(Of String, Atom)
-        Dim atoms = Atom.DefaultAtomGroups.ToArray
-        Dim groups As New Dictionary(Of String, Atom)
-
-        For Each atom As Atom In atoms
-            Call groups.Add(atom.GetIonLabel, atom)
-
-            If Not groups.ContainsKey(atom.label) Then
-                Call groups.Add(atom.label, atom)
-            End If
-        Next
-
-        Return groups
     End Function
 
     Private Function GetMaxKeys() As Integer
@@ -156,26 +203,6 @@ Public Class Atom
         Else
             Return $"{label} ~ H{maxKeys}"
         End If
-    End Function
-
-    Public Shared Iterator Function DefaultAtomGroups() As IEnumerable(Of Atom)
-        Yield New Atom("OH", -1)
-        Yield New Atom("NO3", -1)
-        Yield New Atom("SO4", -2)
-        Yield New Atom("CO3", -2)
-        Yield New Atom("NH4", 1)
-        Yield New Atom("NH2", 1, 2)
-        Yield New Atom("SO3", -2)
-        Yield New Atom("MnO4", -1)
-        Yield New Atom("HCO3", -1)
-        Yield New Atom("PO4", -3)
-        Yield New Atom("CH", -1, -2, -3)
-        Yield New Atom("CH2", -1, -2)
-        Yield New Atom("CH3", -1)
-        Yield New Atom("CH4", -1)
-        Yield New Atom("CH5", -1) ' 氢化甲基阴离子（hydridomethyl anion）
-        Yield New Atom("COOH", -1)
-        Yield New Atom("COO", -2)
     End Function
 
     Public Shared Iterator Function DefaultElements() As IEnumerable(Of Atom)

@@ -241,9 +241,9 @@ Namespace Language
                     tmpStr = tmpStr.GetStackValue("[", "]")
 
                     ' handling some special ion group
-                    If Atom.AtomGroups.ContainsKey(tmpStr) Then
+                    If AtomGroup.CheckDefaultLabel(tmpStr) Then
                         If charge.StringEmpty Then
-                            chargeVal = Atom.AtomGroups(tmpStr).valence.ElementAtOrDefault(0, -1)
+                            chargeVal = AtomGroup.GetDefaultValence(tmpStr, -1)
                         End If
                         Yield New Token(ElementTypes.AtomGroup, tmpStr) With {.charge = chargeVal}
                         Return

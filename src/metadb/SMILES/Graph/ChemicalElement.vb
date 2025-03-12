@@ -252,12 +252,16 @@ Public Class ChemicalElement : Inherits Node
                         atom.group = "N"
                 End Select
             Case Else
-                If atom.charge = 0 OrElse SMILES.Atom.AtomGroups.ContainsKey(atom.elementName) Then
-                    atom.group = atom.elementName
-                ElseIf atom.charge > 0 Then
-                    atom.group = $"[{atom.elementName}]{atom.charge}+"
+                If atom.elementName.StartsWith("["c) AndAlso atom.elementName.EndsWith("]"c) Then
+                    ' is atom group
+                    Dim key As String = atom.elementName.GetStackValue("[", "]")
+                    Dim group As AtomGroup
                 Else
-                    atom.group = $"[{atom.elementName}]{-atom.charge}-"
+                    If atom.charge > 0 Then
+                        atom.group = $"[{atom.elementName}]{atom.charge}+"
+                    Else
+                        atom.group = $"[{atom.elementName}]{-atom.charge}-"
+                    End If
                 End If
         End Select
     End Sub
