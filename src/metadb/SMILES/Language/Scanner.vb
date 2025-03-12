@@ -214,6 +214,10 @@ Namespace Language
                         Else
                             Yield MeasureElement(New String(buf.PopAllChars))
                         End If
+                    ElseIf Char.IsLower(c) AndAlso buf.Size = 2 AndAlso atoms.ContainsKey(buf.ToString) Then
+                        ' atom|c
+                        Yield MeasureElement(New String(buf.PopAllChars))
+                        Yield MeasureElement(c.ToString)
                     End If
                 ElseIf c = "]"c Then
                     buf += c
@@ -286,6 +290,8 @@ Namespace Language
             End If
         End Function
 
+        Shared ReadOnly atoms As Dictionary(Of String, Element) = Element.MemoryLoadElements
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -312,8 +318,6 @@ Namespace Language
                 ' 0C unsure how to parse it
                 str = str.Match("[a-zA-Z]+")
             End If
-
-            Static atoms As Dictionary(Of String, Element) = Element.MemoryLoadElements
 
             Select Case str
                 Case "("
