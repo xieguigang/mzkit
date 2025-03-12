@@ -106,11 +106,16 @@ Module Layout2D
                                         strict As Boolean) As Double
 
         Dim maxN As Integer
+        Dim key As String = atom.elementName
 
-        If atomMaxCharges.ContainsKey(atom.elementName) Then
-            maxN = atomMaxCharges(atom.elementName).maxKeys
-        ElseIf AtomGroup.CheckDefaultLabel(atom.elementName) Then
-            maxN = AtomGroup.AtomGroups(atom.elementName).maxKeys
+        If atom.elementName.StartsWith("["c) AndAlso atom.elementName.EndsWith("]"c) Then
+            key = atom.elementName.GetStackValue("[", "]")
+        End If
+
+        If atomMaxCharges.ContainsKey(key) Then
+            maxN = atomMaxCharges(key).maxKeys
+        ElseIf AtomGroup.CheckDefaultLabel(key) Then
+            maxN = AtomGroup.AtomGroups(key).maxKeys
         Else
             maxN = 1
         End If

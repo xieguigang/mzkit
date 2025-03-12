@@ -1,67 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::b25bee87a609deba8d99b8a502b58345, metadb\SMILES\Graph\ChemicalElement.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 201
-    '    Code Lines: 129 (64.18%)
-    ' Comment Lines: 53 (26.37%)
-    '    - Xml Docs: 86.79%
-    ' 
-    '   Blank Lines: 19 (9.45%)
-    '     File Size: 6.84 KB
+' Summaries:
 
 
-    ' Class ChemicalElement
-    ' 
-    '     Properties: aromatic, charge, coordinate, elementName, graph_id
-    '                 group, hydrogen, Keys
-    ' 
-    '     Constructor: (+3 Overloads) Sub New
-    ' 
-    '     Function: GetConnection
-    ' 
-    '     Sub: (+2 Overloads) SetAtomGroups, setAtomLabel
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 201
+'    Code Lines: 129 (64.18%)
+' Comment Lines: 53 (26.37%)
+'    - Xml Docs: 86.79%
+' 
+'   Blank Lines: 19 (9.45%)
+'     File Size: 6.84 KB
+
+
+' Class ChemicalElement
+' 
+'     Properties: aromatic, charge, coordinate, elementName, graph_id
+'                 group, hydrogen, Keys
+' 
+'     Constructor: (+3 Overloads) Sub New
+' 
+'     Function: GetConnection
+' 
+'     Sub: (+2 Overloads) SetAtomGroups, setAtomLabel
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
+Imports std = System.Math
 
 ''' <summary>
 ''' the chemical atom element
@@ -215,7 +216,10 @@ Public Class ChemicalElement : Inherits Node
                         atom.setAtomLabel("[O-]-", 0)
                     End If
                 Case Else
-                    atom.group = "-O-"
+                    ' 苯环氧杂环
+                    ' 醚键或类似结构
+                    ' 处理非常规键数（如keys=0或3）
+                    atom.setAtomLabel("-O-", 0) ' 默认处理，可能需要细化
             End Select
         End If
     End Sub
@@ -228,9 +232,12 @@ Public Class ChemicalElement : Inherits Node
             Case 1
                 If atom.charge = 0 Then
                     atom.setAtomLabel("-NH2", 2)
+                ElseIf atom.charge > 0 Then
+                    n = 3 + atom.charge - keys
+                    atom.setAtomLabel($"[-NH{n}]{atom.charge}+", n)
                 Else
                     n = 3 - atom.charge
-                    atom.setAtomLabel($"[-NH{n}]{atom.charge}+", n)
+                    atom.setAtomLabel($"[-NH{n}]{atom.charge}", n)
                 End If
             Case 2
                 If atom.charge = 0 Then
@@ -244,6 +251,12 @@ Public Class ChemicalElement : Inherits Node
                     atom.group = "-N="
                 Else
                     atom.group = $"[-N=]{atom.charge}+"
+                End If
+            Case 4
+                If atom.charge = 1 Then
+                    atom.setAtomLabel("[-NH4]+", 0)
+                Else
+                    atom.group = "N"
                 End If
             Case Else
                 atom.group = "N"
@@ -262,16 +275,26 @@ Public Class ChemicalElement : Inherits Node
             Case "N" : Call NitrogenGroup(atom, keys)
 
             Case Else
+                Dim key As String = atom.elementName
+                Dim group As AtomGroup
+
                 If atom.elementName.StartsWith("["c) AndAlso atom.elementName.EndsWith("]"c) Then
                     ' is atom group
-                    Dim key As String = atom.elementName.GetStackValue("[", "]")
-                    Dim group As AtomGroup
-                Else
-                    If atom.charge > 0 Then
-                        atom.group = $"[{atom.elementName}]{atom.charge}+"
-                    Else
-                        atom.group = $"[{atom.elementName}]{-atom.charge}-"
+                    key = atom.elementName.GetStackValue("[", "]")
+
+                    If AtomGroup.CheckDefaultLabel(key) Then
+                        group = AtomGroup.AtomGroups(key)
+
+                        If atom.charge = 0 Then
+                            atom.charge = group.valence.OrderBy(Function(v) std.Abs(keys - v)).First
+                        End If
                     End If
+                End If
+
+                If atom.charge > 0 Then
+                    atom.group = $"[{key}]{atom.charge}+"
+                Else
+                    atom.group = $"[{key}]{-atom.charge}-"
                 End If
         End Select
     End Sub
