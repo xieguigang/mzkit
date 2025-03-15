@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7948f95c0218d80ad20bbc5ab5ff22f5, mzmath\MSEngine\Proteomics\ModificationProtocol.vb"
+﻿#Region "Microsoft.VisualBasic::aff3c042b0232123de6487d6593e1a99, mzmath\MSEngine\Proteomics\ModificationProtocol.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 9 (11.54%)
-    '     File Size: 3.09 KB
+    '     File Size: 3.08 KB
 
 
     ' Class ModificationProtocol
@@ -136,4 +136,3 @@ Public Class ModificationProtocol
         ModifiedAA = New AminoAcid("0"c, ModifiedAACode, New Formula(dict))
     End Sub
 End Class
-

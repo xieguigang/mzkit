@@ -98,6 +98,11 @@ declare namespace annotation {
    */
    function load_local(metadb: object, refSpec: object, tqdm_verbose?: boolean): object;
    /**
+    * get metabolite annotation metadata via given reference id
+    * 
+    * 
+     * @param libs the annotation data library model
+     * @param id a set of the compound reference id for get the metadata from the library.
    */
    function load_metadata(libs: object, id: any): object;
    module make {
@@ -207,8 +212,8 @@ declare namespace annotation {
     * 
     * 
      * @param workspace -
-     * @param library -
-     * @param annotations -
+     * @param library the reference library name of the spectrum reference data
+     * @param annotations A temp workspace of a single reference library.
    */
    function save_annotations(workspace: object, library: string, annotations: object): ;
    /**

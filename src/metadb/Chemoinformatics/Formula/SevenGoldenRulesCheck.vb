@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::507d64108a249c4e02655174ccdf03f4, metadb\Chemoinformatics\Formula\SevenGoldenRulesCheck.vb"
+﻿#Region "Microsoft.VisualBasic::71816587a28b0dc51664d8ff7ab3d438, metadb\Chemoinformatics\Formula\SevenGoldenRulesCheck.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 404
-    '    Code Lines: 329 (81.44%)
-    ' Comment Lines: 36 (8.91%)
-    '    - Xml Docs: 61.11%
+    '   Total Lines: 466
+    '    Code Lines: 386 (82.83%)
+    ' Comment Lines: 38 (8.15%)
+    '    - Xml Docs: 63.16%
     ' 
-    '   Blank Lines: 39 (9.65%)
-    '     File Size: 21.88 KB
+    '   Blank Lines: 42 (9.01%)
+    '     File Size: 23.16 KB
 
 
     '     Enum CoverRange
@@ -171,7 +171,8 @@ Namespace Formula
         ''' + Conversely, the ``H/C`` ratio Is usually smaller than 2, And should Not be less than 0.125 Like in the case of tetracyanopyrrole (C8HN5).
         ''' + Most typical ratios are found between ``2.0 > H/C > 0.5``
         ''' + More than 99.7% Of all formulas were included With H/C ratios between ``0.2–3.1``. Consequently, we Call this range the 'common range'.
-        ''' + However, a number of chemical classes fall out of this range, And we have hence enabled the user to select 'extended ranges' covering 99.99% of all formulas in this development database (H/C 0.1–6).
+        ''' + However, a number of chemical classes fall out of this range, And we have hence enabled the user to select 'extended ranges'
+        '''   covering 99.99% of all formulas in this development database (H/C 0.1–6).
         ''' </summary>
         Public Shared Function ValenceCheckByHydrogenShift(formula As Formula) As Boolean
             Dim atomTotal = formula!Br + formula!Cl + formula!C + formula!F + formula!H + formula!I + formula!N + formula!O + formula!P + formula!Si + formula!S
@@ -400,11 +401,31 @@ Namespace Formula
         ''' + Conversely, the ``H/C`` ratio Is usually smaller than 2, And should Not be less than 0.125 Like in the case of tetracyanopyrrole (C8HN5).
         ''' + Most typical ratios are found between ``2.0 > H/C > 0.5``
         ''' + More than 99.7% Of all formulas were included With H/C ratios between ``0.2–3.1``. Consequently, we Call this range the 'common range'.
-        ''' + However, a number of chemical classes fall out of this range, And we have hence enabled the user to select 'extended ranges' covering 99.99% of all formulas in this development database (H/C 0.1–6).
+        ''' + However, a number of chemical classes fall out of this range, And we have hence enabled the user to select 'extended ranges'
+        '''   covering 99.99% of all formulas in this development database (H/C 0.1–6).
         ''' </summary>
         Public Shared Function HeteroAtomCheck(formula As Formula, coverRange As CoverRange) As Boolean
-            Dim cnum As Double = formula!C, nnum As Double = formula!N, onum As Double = formula!O, pnum As Double = formula!P, snum As Double = formula!S, hnum As Double = formula!H, fnum As Double = formula!F, clnum As Double = formula!Cl, brnum As Double = formula!Br, inum As Double = formula!I, sinum As Double = formula!Si
-            Dim n_c = nnum / cnum, o_c = onum / cnum, p_c = pnum / cnum, s_c = snum / cnum, h_c = hnum / cnum, f_c = fnum / cnum, cl_c = clnum / cnum, br_c = brnum / cnum, i_c = inum / cnum, si_c = sinum / cnum
+            Dim cnum As Double = formula!C,
+                nnum As Double = formula!N,
+                onum As Double = formula!O,
+                pnum As Double = formula!P,
+                snum As Double = formula!S,
+                hnum As Double = formula!H,
+                fnum As Double = formula!F,
+                clnum As Double = formula!Cl,
+                brnum As Double = formula!Br,
+                inum As Double = formula!I,
+                sinum As Double = formula!Si
+            Dim n_c = nnum / cnum,
+                o_c = onum / cnum,
+                p_c = pnum / cnum,
+                s_c = snum / cnum,
+                h_c = hnum / cnum,
+                f_c = fnum / cnum,
+                cl_c = clnum / cnum,
+                br_c = brnum / cnum,
+                i_c = inum / cnum,
+                si_c = sinum / cnum
             Dim o_p As Double
 
             If pnum > 0 Then
@@ -415,20 +436,51 @@ Namespace Formula
 
             Select Case coverRange
                 Case CoverRange.CommonRange
-                    If h_c <= 4.0 AndAlso f_c <= 1.5 AndAlso cl_c <= 1.0 AndAlso br_c <= 1.0 AndAlso si_c <= 0.5 AndAlso n_c <= 2.0 AndAlso o_c <= 2.5 AndAlso p_c <= 0.5 AndAlso s_c <= 1.0 AndAlso i_c <= 0.5 AndAlso o_p >= 2.0 Then
+                    If h_c <= 4.0 AndAlso
+                        f_c <= 1.5 AndAlso
+                        cl_c <= 1.0 AndAlso
+                        br_c <= 1.0 AndAlso
+                        si_c <= 0.5 AndAlso
+                        n_c <= 2.0 AndAlso
+                        o_c <= 2.5 AndAlso
+                        p_c <= 0.5 AndAlso
+                        s_c <= 1.0 AndAlso
+                        i_c <= 0.5 AndAlso
+                        o_p >= 2.0 Then
+
                         Return True
                     Else
                         Return False
                     End If
                 Case CoverRange.ExtendedRange
-                    If h_c <= 6.0 AndAlso f_c <= 3.0 AndAlso cl_c <= 3.0 AndAlso br_c <= 2.0 AndAlso si_c <= 1.0 AndAlso n_c <= 4.0 AndAlso o_c <= 6.0 AndAlso p_c <= 1.9 AndAlso s_c <= 3.0 AndAlso i_c <= 1.9 Then
+                    If h_c <= 6.0 AndAlso
+                        f_c <= 3.0 AndAlso
+                        cl_c <= 3.0 AndAlso
+                        br_c <= 2.0 AndAlso
+                        si_c <= 1.0 AndAlso
+                        n_c <= 4.0 AndAlso
+                        o_c <= 6.0 AndAlso
+                        p_c <= 1.9 AndAlso
+                        s_c <= 3.0 AndAlso
+                        i_c <= 1.9 Then
+
                         Return True
                     Else
                         Return False
                     End If
 
                 Case Else
-                    If h_c <= 8.0 AndAlso f_c <= 4.0 AndAlso cl_c <= 4.0 AndAlso br_c <= 4.0 AndAlso si_c <= 3.0 AndAlso n_c <= 4.0 AndAlso o_c <= 10.0 AndAlso p_c <= 3.0 AndAlso s_c <= 6.0 AndAlso i_c <= 3.0 Then
+                    If h_c <= 8.0 AndAlso
+                        f_c <= 4.0 AndAlso
+                        cl_c <= 4.0 AndAlso
+                        br_c <= 4.0 AndAlso
+                        si_c <= 3.0 AndAlso
+                        n_c <= 4.0 AndAlso
+                        o_c <= 10.0 AndAlso
+                        p_c <= 3.0 AndAlso
+                        s_c <= 6.0 AndAlso
+                        i_c <= 3.0 Then
+
                         Return True
                     Else
                         Return False
@@ -445,23 +497,33 @@ Namespace Formula
         ''' </summary>
         Public Shared Function ProbabilityCheck(formula As Formula) As Boolean
             If formula!N > 1 AndAlso formula!O > 1 AndAlso formula!P > 1 AndAlso formula!S > 1 Then
-                If formula!N >= 10 OrElse formula!O >= 20 OrElse formula!P >= 4 OrElse formula!S >= 3 Then Return False
+                If formula!N >= 10 OrElse formula!O >= 20 OrElse formula!P >= 4 OrElse formula!S >= 3 Then
+                    Return False
+                End If
             End If
 
             If formula!N > 3 AndAlso formula!O > 3 AndAlso formula!P > 3 Then
-                If formula!N >= 11 OrElse formula!O >= 22 OrElse formula!P >= 6 Then Return False
+                If formula!N >= 11 OrElse formula!O >= 22 OrElse formula!P >= 6 Then
+                    Return False
+                End If
             End If
 
             If formula!O > 1 AndAlso formula!P > 1 AndAlso formula!S > 1 Then
-                If formula!O >= 14 OrElse formula!P >= 3 OrElse formula!S >= 3 Then Return False
+                If formula!O >= 14 OrElse formula!P >= 3 OrElse formula!S >= 3 Then
+                    Return False
+                End If
             End If
 
             If formula!N > 1 AndAlso formula!P > 1 AndAlso formula!S > 1 Then
-                If formula!N >= 4 OrElse formula!P >= 3 OrElse formula!S >= 3 Then Return False
+                If formula!N >= 4 OrElse formula!P >= 3 OrElse formula!S >= 3 Then
+                    Return False
+                End If
             End If
 
             If formula!N > 6 AndAlso formula!O > 6 AndAlso formula!S > 6 Then
-                If formula!N >= 19 OrElse formula!O >= 14 OrElse formula!S >= 8 Then Return False
+                If formula!N >= 19 OrElse formula!O >= 14 OrElse formula!S >= 8 Then
+                    Return False
+                End If
             End If
 
             Return True

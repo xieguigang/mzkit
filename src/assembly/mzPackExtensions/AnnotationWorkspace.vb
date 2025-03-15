@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edb0998705ce2822468105c128496f2b, assembly\mzPackExtensions\AnnotationWorkspace.vb"
+﻿#Region "Microsoft.VisualBasic::365cfd28e3b477600653ac6427c69efb, assembly\mzPackExtensions\AnnotationWorkspace.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 289
-    '    Code Lines: 174 (60.21%)
-    ' Comment Lines: 68 (23.53%)
-    '    - Xml Docs: 80.88%
+    '   Total Lines: 306
+    '    Code Lines: 186 (60.78%)
+    ' Comment Lines: 71 (23.20%)
+    '    - Xml Docs: 81.69%
     ' 
-    '   Blank Lines: 47 (16.26%)
-    '     File Size: 11.01 KB
+    '   Blank Lines: 49 (16.01%)
+    '     File Size: 11.61 KB
 
 
     ' Class AnnotationWorkspace
@@ -81,6 +81,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
 
     ReadOnly pack As StreamPack
+    ''' <summary>
+    ''' summary of the library result count
+    ''' </summary>
     ReadOnly libraries As New Dictionary(Of String, Integer)
     ReadOnly samplefiles As New List(Of String)
     ReadOnly source As String
@@ -287,6 +290,11 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
 
     Public Sub CreateLibraryResult(library$, result As IEnumerable(Of AlignmentHit))
         Dim i As Integer = 0
+        Dim tags As New List(Of String)
+
+        If library.StringEmpty Then
+            library = "missing!"
+        End If
 
         For Each peak_result As AlignmentHit In result.SafeQuery
             i += 1
@@ -300,12 +308,21 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
                 Dim bin As New BinaryDataWriter(file)
                 Dim buf As MemoryStream = peak_result.PackAlignment
 
+                Call tags.Add($"{peak_result.xcms_id}/{peak_result.libname}")
                 Call bin.Write(buf.ToArray)
                 Call bin.Flush()
             End Using
         Next
 
-        Call libraries.Add(library, i)
+        If library = "missing!" Then
+            Call $"missing library reference name for {tags.Take(10).JoinBy(", ")}...".Warning
+        End If
+
+        If libraries.ContainsKey(library) Then
+            Call libraries.Add(library, i + libraries(library))
+        Else
+            Call libraries.Add(library, i)
+        End If
     End Sub
 
     ''' <summary>

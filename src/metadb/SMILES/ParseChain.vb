@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f9fe322146a81318297e7caa375ecf1, metadb\SMILES\ParseChain.vb"
+﻿#Region "Microsoft.VisualBasic::8e503101593a4e311ba0e83f037320da, metadb\SMILES\ParseChain.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 192
-    '    Code Lines: 143 (74.48%)
-    ' Comment Lines: 18 (9.38%)
+    '   Total Lines: 203
+    '    Code Lines: 151 (74.38%)
+    ' Comment Lines: 18 (8.87%)
     '    - Xml Docs: 55.56%
     ' 
-    '   Blank Lines: 31 (16.15%)
-    '     File Size: 6.63 KB
+    '   Blank Lines: 34 (16.75%)
+    '     File Size: 7.05 KB
 
 
     ' Class ParseChain
@@ -198,15 +198,26 @@ Public Class ParseChain
     End Sub
 
     Private Sub WalkElement(t As Token, i As Integer)
-        Dim element As New ChemicalElement(t.text, index:=i) With {
-            .charge = If(t.charge Is Nothing, If(t.aromatic, 2, 1), Val(t.charge)),
-            .graph_id = gid,
-            .aromatic = t.aromatic
-        }
+        Dim element As ChemicalElement
         Dim ringId As String = If(t.ring Is Nothing, Nothing, t.ring.ToString)
 
+        If t.name = ElementTypes.AtomGroup Then
+            element = New ChemicalElement("[" & t.text & "]", index:=i)
+
+            If AtomGroup.CheckDefaultLabel(t.text) AndAlso AtomGroup.AtomGroups(t.text).CheckSingleValence Then
+                element.charge = AtomGroup.GetDefaultValence(t.text, -1)
+            End If
+        Else
+            element = New ChemicalElement(t.text, index:=i) With {
+                .charge = If(t.charge Is Nothing, If(t.aromatic, 2, 1), Val(t.charge))
+            }
+        End If
+
+        element.graph_id = gid
+        element.aromatic = t.aromatic
         element.ID = graph.vertex.Count + 1
-        graph.AddVertex(element)
+
+        Call graph.AddVertex(element)
 
         If Not ringId Is Nothing Then
             If rings.ContainsKey(ringId) Then

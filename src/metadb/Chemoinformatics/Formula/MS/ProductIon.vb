@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c58975c49bc04691b7e5220df665fa1a, metadb\Chemoinformatics\Formula\MS\ProductIon.vb"
+﻿#Region "Microsoft.VisualBasic::a31cd4df22fae89b4b3c3058fd771172, metadb\Chemoinformatics\Formula\MS\ProductIon.vb"
 
     ' Author:
     ' 
@@ -37,12 +37,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 63
-    '    Code Lines: 39 (61.90%)
-    ' Comment Lines: 3 (4.76%)
+    '   Total Lines: 62
+    '    Code Lines: 39 (62.90%)
+    ' Comment Lines: 3 (4.84%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 21 (33.33%)
+    '   Blank Lines: 20 (32.26%)
     '     File Size: 1.86 KB
 
 
@@ -59,7 +59,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType

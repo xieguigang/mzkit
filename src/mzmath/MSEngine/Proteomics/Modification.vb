@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd8d5a40e88ce262d1fcfffaf3c00c4f, mzmath\MSEngine\Proteomics\Modification.vb"
+﻿#Region "Microsoft.VisualBasic::09c8ffe10db73aea1de6268b14e115bf, mzmath\MSEngine\Proteomics\Modification.vb"
 
     ' Author:
     ' 
@@ -115,4 +115,3 @@ Public Class ModificationSite
 
     Public Property DiagnosticNLs As List(Of NeutralLoss) = New List(Of NeutralLoss)()
 End Class
-

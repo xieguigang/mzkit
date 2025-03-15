@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b078f5164211d7c8ae664fa8f222c95, Rscript\Library\mzkit_app\src\mzkit\math\QSAR.vb"
+﻿#Region "Microsoft.VisualBasic::38cd651b74280a2451e0a6bccc812988, Rscript\Library\mzkit_app\src\mzkit\math\QSAR.vb"
 
     ' Author:
     ' 
@@ -37,12 +37,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 119
-    '    Code Lines: 27 (22.69%)
-    ' Comment Lines: 86 (72.27%)
+    '   Total Lines: 118
+    '    Code Lines: 27 (22.88%)
+    ' Comment Lines: 86 (72.88%)
     '    - Xml Docs: 81.40%
     ' 
-    '   Blank Lines: 6 (5.04%)
+    '   Blank Lines: 5 (4.24%)
     '     File Size: 7.02 KB
 
 
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.MorganFingerprint
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF.Models
@@ -173,4 +172,3 @@ Module QSAR
     End Function
 
 End Module
-

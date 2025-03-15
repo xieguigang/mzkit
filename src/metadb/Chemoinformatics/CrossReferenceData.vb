@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f74216888922d2bc7ed9a00fb053bfd2, metadb\Chemoinformatics\CrossReferenceData.vb"
+﻿#Region "Microsoft.VisualBasic::3cfeae4093ab70404e2747d6d378abf5, metadb\Chemoinformatics\CrossReferenceData.vb"
 
     ' Author:
     ' 
@@ -305,4 +305,3 @@ Public Module CrossReferenceData
         End If
     End Function
 End Module
-

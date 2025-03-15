@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61cff39af76e66cd6300a6cb69ee5ec2, assembly\mzPack\v2.0\mzStreamWriter.vb"
+﻿#Region "Microsoft.VisualBasic::03a01ebbf40b7e4065ce969c43ff69c8, assembly\mzPack\v2.0\mzStreamWriter.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 64.41%
     ' 
     '   Blank Lines: 54 (15.34%)
-    '     File Size: 14.51 KB
+    '     File Size: 14.54 KB
 
 
     ' Module mzStreamWriter

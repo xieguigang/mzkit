@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::849752501359f1ae3bc075c85b38ef71, assembly\SpectrumTree\Pack\MgfPack.vb"
+﻿#Region "Microsoft.VisualBasic::b683ae741979b5187bd7ac65b18c9e00, assembly\SpectrumTree\Pack\MgfPack.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 68
-    '    Code Lines: 33 (48.53%)
-    ' Comment Lines: 22 (32.35%)
+    '   Total Lines: 67
+    '    Code Lines: 33 (49.25%)
+    ' Comment Lines: 22 (32.84%)
     '    - Xml Docs: 54.55%
     ' 
-    '   Blank Lines: 13 (19.12%)
-    '     File Size: 2.48 KB
+    '   Blank Lines: 12 (17.91%)
+    '     File Size: 2.47 KB
 
 
     '     Interface IReferencePack
@@ -59,7 +59,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.IO
 Imports System.Runtime.CompilerServices

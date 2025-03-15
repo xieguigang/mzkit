@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b25bee87a609deba8d99b8a502b58345, metadb\SMILES\Graph\ChemicalElement.vb"
+﻿#Region "Microsoft.VisualBasic::35c33c788d4bb13cc90c749aedf01b11, metadb\SMILES\Graph\ChemicalElement.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 201
-    '    Code Lines: 129 (64.18%)
-    ' Comment Lines: 53 (26.37%)
-    '    - Xml Docs: 86.79%
+    '   Total Lines: 238
+    '    Code Lines: 154 (64.71%)
+    ' Comment Lines: 57 (23.95%)
+    '    - Xml Docs: 80.70%
     ' 
-    '   Blank Lines: 19 (9.45%)
-    '     File Size: 6.84 KB
+    '   Blank Lines: 27 (11.34%)
+    '     File Size: 7.87 KB
 
 
     ' Class ChemicalElement
@@ -55,13 +55,14 @@
     ' 
     '     Function: GetConnection
     ' 
-    '     Sub: (+2 Overloads) SetAtomGroups, setAtomLabel
+    '     Sub: CarbonGroup, NitrogenGroup, OxygenGroup, (+2 Overloads) SetAtomGroups, setAtomLabel
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
+Imports std = System.Math
 
 ''' <summary>
 ''' the chemical atom element
@@ -187,6 +188,81 @@ Public Class ChemicalElement : Inherits Node
         atom.hydrogen = nH
     End Sub
 
+    Private Shared Sub CarbonGroup(ByRef atom As ChemicalElement, keys As Integer)
+        If atom.aromatic Then
+            atom.setAtomLabel("-CH-", 1)
+        Else
+            Select Case keys
+                Case 1 : atom.setAtomLabel("-CH3", 3)
+                Case 2 : atom.setAtomLabel("-CH2-", 2)
+                Case 3 : atom.setAtomLabel("-CH=", 1)
+                Case Else
+                    atom.group = "C"
+            End Select
+        End If
+    End Sub
+
+    Private Shared Sub OxygenGroup(ByRef atom As ChemicalElement, keys As Integer)
+        If atom.aromatic Then
+            atom.setAtomLabel("-O-", 0)
+        Else
+            Select Case keys
+                Case 1
+                    If atom.charge = 0 Then
+                        atom.setAtomLabel("-OH", 1)
+                    Else
+                        ' an ion with negative charge value
+                        ' [O-]
+                        atom.setAtomLabel("[O-]-", 0)
+                    End If
+                Case Else
+                    ' 苯环氧杂环
+                    ' 醚键或类似结构
+                    ' 处理非常规键数（如keys=0或3）
+                    atom.setAtomLabel("-O-", 0) ' 默认处理，可能需要细化
+            End Select
+        End If
+    End Sub
+
+    Private Shared Sub NitrogenGroup(ByRef atom As ChemicalElement, keys As Integer)
+        Dim n As Integer
+
+        ' N -3
+        Select Case keys
+            Case 1
+                If atom.charge = 0 Then
+                    atom.setAtomLabel("-NH2", 2)
+                ElseIf atom.charge > 0 Then
+                    n = 3 + atom.charge - keys
+                    atom.setAtomLabel($"[-NH{n}]{atom.charge}+", n)
+                Else
+                    n = 3 - atom.charge
+                    atom.setAtomLabel($"[-NH{n}]{atom.charge}", n)
+                End If
+            Case 2
+                If atom.charge = 0 Then
+                    atom.setAtomLabel("-NH-", 1)
+                Else
+                    n = 2 - atom.charge
+                    atom.setAtomLabel($"[-NH{n}-]{atom.charge}+", n)
+                End If
+            Case 3
+                If atom.charge = 0 Then
+                    atom.group = "-N="
+                Else
+                    atom.group = $"[-N=]{atom.charge}+"
+                End If
+            Case 4
+                If atom.charge = 1 Then
+                    atom.setAtomLabel("[-NH4]+", 0)
+                Else
+                    atom.group = "N"
+                End If
+            Case Else
+                atom.group = "N"
+        End Select
+    End Sub
+
     ''' <summary>
     ''' Set atom group label based on the chemical keys
     ''' </summary>
@@ -194,70 +270,31 @@ Public Class ChemicalElement : Inherits Node
     ''' <param name="keys"></param>
     Private Shared Sub SetAtomGroups(atom As ChemicalElement, keys As Integer)
         Select Case atom.elementName
-            Case "C"
-                If atom.aromatic Then
-                    atom.setAtomLabel("-CH-", 1)
-                Else
-                    Select Case keys
-                        Case 1 : atom.setAtomLabel("-CH3", 3)
-                        Case 2 : atom.setAtomLabel("-CH2-", 2)
-                        Case 3 : atom.setAtomLabel("-CH=", 1)
-                        Case Else
-                            atom.group = "C"
-                    End Select
-                End If
-            Case "O"
-                If atom.aromatic Then
-                    atom.setAtomLabel("-O-", 0)
-                Else
-                    Select Case keys
-                        Case 1
-                            If atom.charge = 0 Then
-                                atom.setAtomLabel("-OH", 1)
-                            Else
-                                ' an ion with negative charge value
-                                ' [O-]
-                                atom.setAtomLabel("[O-]-", 0)
-                            End If
-                        Case Else
-                            atom.group = "-O-"
-                    End Select
-                End If
-            Case "N"
-                Dim n As Integer
+            Case "C" : Call CarbonGroup(atom, keys)
+            Case "O" : Call OxygenGroup(atom, keys)
+            Case "N" : Call NitrogenGroup(atom, keys)
 
-                ' N -3
-                Select Case keys
-                    Case 1
-                        If atom.charge = 0 Then
-                            atom.setAtomLabel("-NH2", 2)
-                        Else
-                            n = 3 - atom.charge
-                            atom.setAtomLabel($"[-NH{n}]{atom.charge}+", n)
-                        End If
-                    Case 2
-                        If atom.charge = 0 Then
-                            atom.setAtomLabel("-NH-", 1)
-                        Else
-                            n = 2 - atom.charge
-                            atom.setAtomLabel($"[-NH{n}-]{atom.charge}+", n)
-                        End If
-                    Case 3
-                        If atom.charge = 0 Then
-                            atom.group = "-N="
-                        Else
-                            atom.group = $"[-N=]{atom.charge}+"
-                        End If
-                    Case Else
-                        atom.group = "N"
-                End Select
             Case Else
-                If atom.charge = 0 OrElse SMILES.Atom.AtomGroups.ContainsKey(atom.elementName) Then
-                    atom.group = atom.elementName
-                ElseIf atom.charge > 0 Then
-                    atom.group = $"[{atom.elementName}]{atom.charge}+"
+                Dim key As String = atom.elementName
+                Dim group As AtomGroup
+
+                If atom.elementName.StartsWith("["c) AndAlso atom.elementName.EndsWith("]"c) Then
+                    ' is atom group
+                    key = atom.elementName.GetStackValue("[", "]")
+
+                    If AtomGroup.CheckDefaultLabel(key) Then
+                        group = AtomGroup.AtomGroups(key)
+
+                        If atom.charge = 0 Then
+                            atom.charge = group.valence.OrderBy(Function(v) std.Abs(keys - v)).First
+                        End If
+                    End If
+                End If
+
+                If atom.charge > 0 Then
+                    atom.group = $"[{key}]{atom.charge}+"
                 Else
-                    atom.group = $"[{atom.elementName}]{-atom.charge}-"
+                    atom.group = $"[{key}]{-atom.charge}-"
                 End If
         End Select
     End Sub

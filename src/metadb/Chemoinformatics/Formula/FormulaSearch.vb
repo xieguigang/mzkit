@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9df874df5b1eb109f343d6b4e1626dee, metadb\Chemoinformatics\Formula\FormulaSearch.vb"
+﻿#Region "Microsoft.VisualBasic::b67edec5b4f4e25f368301b9a1ed11f1, metadb\Chemoinformatics\Formula\FormulaSearch.vb"
 
     ' Author:
     ' 
@@ -37,25 +37,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 224
-    '    Code Lines: 150 (66.96%)
-    ' Comment Lines: 33 (14.73%)
-    '    - Xml Docs: 30.30%
+    '   Total Lines: 206
+    '    Code Lines: 144 (69.90%)
+    ' Comment Lines: 24 (11.65%)
+    '    - Xml Docs: 16.67%
     ' 
-    '   Blank Lines: 41 (18.30%)
-    '     File Size: 9.50 KB
+    '   Blank Lines: 38 (18.45%)
+    '     File Size: 8.87 KB
 
 
     '     Class FormulaSearch
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ConstructAndVerifyCompoundWork, PPM, reorderCandidateElements, (+2 Overloads) SearchByExactMass, ToString
+    '         Function: ConstructAndVerifyCompoundWork, reorderCandidateElements, (+2 Overloads) SearchByExactMass, ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
@@ -227,7 +228,7 @@ Namespace Formula
 
             For n As Integer = current.MinCount To current.MaxCount
                 Dim formula As FormulaComposition = parent.AppendElement(current.Element, n)
-                Dim ppm As Double = FormulaSearch.PPM(formula.ExactMass, exact_mass)
+                Dim ppm As Double = PPMmethod.PPM(formula.ExactMass, exact_mass)
 
                 If cancel.Value Then
                     Exit For
@@ -258,25 +259,6 @@ Namespace Formula
 
         Public Overrides Function ToString() As String
             Return opts.ToString
-        End Function
-
-        ''' <summary>
-        ''' 分子量差值
-        ''' </summary>
-        ''' <param name="measured#"></param>
-        ''' <param name="actualValue#"></param>
-        ''' <returns></returns>
-        Public Overloads Shared Function PPM(measured#, actualValue#) As Double
-            ' （测量值-实际分子量）/ 实际分子量
-            ' |(实验数据 - 数据库结果)| / 实验数据 * 1000000
-            Dim ppmd# = (std.Abs(measured - actualValue) / actualValue) * 1000000
-
-            If ppmd < 0 Then
-                ' 计算溢出了
-                Return 10000000000
-            End If
-
-            Return ppmd
         End Function
     End Class
 End Namespace

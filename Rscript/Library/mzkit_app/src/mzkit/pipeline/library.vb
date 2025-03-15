@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7550527bd1200c840a08cec23604e769, Rscript\Library\mzkit_app\src\mzkit\pipeline\library.vb"
+﻿#Region "Microsoft.VisualBasic::bf2bcdb7b430377ce40cd7e7ee7e7bc5, Rscript\Library\mzkit_app\src\mzkit\pipeline\library.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1167
-    '    Code Lines: 614 (52.61%)
-    ' Comment Lines: 430 (36.85%)
-    '    - Xml Docs: 93.49%
+    '   Total Lines: 1178
+    '    Code Lines: 613 (52.04%)
+    ' Comment Lines: 442 (37.52%)
+    '    - Xml Docs: 93.67%
     ' 
-    '   Blank Lines: 123 (10.54%)
-    '     File Size: 59.23 KB
+    '   Blank Lines: 123 (10.44%)
+    '     File Size: 59.67 KB
 
 
     ' Module library
@@ -85,7 +85,6 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp.Runtime
@@ -627,6 +626,14 @@ Module library
         Return New Library(Of MetaLib)(metadb, refSpec.GetReferenceSpectrum(tqdm_verbose))
     End Function
 
+    ''' <summary>
+    ''' get metabolite annotation metadata via given reference id
+    ''' </summary>
+    ''' <param name="libs">the annotation data library model</param>
+    ''' <param name="id">
+    ''' a set of the compound reference id for get the metadata from the library.
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("load_metadata")>
     <RApiReturn(GetType(MetaLib))>
     Public Function GetAnnotations(libs As Library(Of MetaLib), <RRawVectorArgument> id As Object) As Object
@@ -1111,8 +1118,12 @@ Module library
     ''' Save the reference library annotation result.
     ''' </summary>
     ''' <param name="workspace"></param>
-    ''' <param name="library"></param>
-    ''' <param name="annotations"></param>
+    ''' <param name="library">
+    ''' the reference library name of the spectrum reference data
+    ''' </param>
+    ''' <param name="annotations">
+    ''' A temp workspace of a single reference library.
+    ''' </param>
     <ExportAPI("save_annotations")>
     Public Sub saveAnnotation(workspace As AnnotationWorkspace, library As String, annotations As LibraryWorkspace)
         Call workspace.CreateLibraryResult(library, annotations.GetAnnotations(filterPeaks:=True))

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24ec6dd546b0a2158314e29ce4a92a8f, metadb\SMILES\Language\Scanner.vb"
+﻿#Region "Microsoft.VisualBasic::fe756d1ba260f881fc582463960b2eff, metadb\SMILES\Language\Scanner.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 309
-    '    Code Lines: 169 (54.69%)
-    ' Comment Lines: 108 (34.95%)
-    '    - Xml Docs: 15.74%
+    '   Total Lines: 313
+    '    Code Lines: 172 (54.95%)
+    ' Comment Lines: 109 (34.82%)
+    '    - Xml Docs: 15.60%
     ' 
-    '   Blank Lines: 32 (10.36%)
-    '     File Size: 14.84 KB
+    '   Blank Lines: 32 (10.22%)
+    '     File Size: 15.11 KB
 
 
     '     Class Scanner
@@ -214,6 +214,10 @@ Namespace Language
                         Else
                             Yield MeasureElement(New String(buf.PopAllChars))
                         End If
+                    ElseIf Char.IsLower(c) AndAlso buf.Size = 2 AndAlso atoms.ContainsKey(buf.ToString) Then
+                        ' atom|c
+                        Yield MeasureElement(New String(buf.PopAllChars))
+                        Yield MeasureElement(c.ToString)
                     End If
                 ElseIf c = "]"c Then
                     buf += c
@@ -241,9 +245,9 @@ Namespace Language
                     tmpStr = tmpStr.GetStackValue("[", "]")
 
                     ' handling some special ion group
-                    If Atom.AtomGroups.ContainsKey(tmpStr) Then
+                    If AtomGroup.CheckDefaultLabel(tmpStr) Then
                         If charge.StringEmpty Then
-                            chargeVal = Atom.AtomGroups(tmpStr).valence.ElementAtOrDefault(0, -1)
+                            chargeVal = AtomGroup.GetDefaultValence(tmpStr, -1)
                         End If
                         Yield New Token(ElementTypes.AtomGroup, tmpStr) With {.charge = chargeVal}
                         Return
@@ -286,6 +290,8 @@ Namespace Language
             End If
         End Function
 
+        Shared ReadOnly atoms As Dictionary(Of String, Element) = Element.MemoryLoadElements
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -312,8 +318,6 @@ Namespace Language
                 ' 0C unsure how to parse it
                 str = str.Match("[a-zA-Z]+")
             End If
-
-            Static atoms As Dictionary(Of String, Element) = Element.MemoryLoadElements
 
             Select Case str
                 Case "("

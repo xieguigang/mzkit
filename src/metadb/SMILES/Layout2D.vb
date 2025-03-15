@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae579781837577d12f6091d2c8f7ba87, metadb\SMILES\Layout2D.vb"
+﻿#Region "Microsoft.VisualBasic::115e59fe77c7e02293031acfffffdc90, metadb\SMILES\Layout2D.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 127
-    '    Code Lines: 93 (73.23%)
-    ' Comment Lines: 9 (7.09%)
+    '   Total Lines: 132
+    '    Code Lines: 97 (73.48%)
+    ' Comment Lines: 9 (6.82%)
     '    - Xml Docs: 33.33%
     ' 
-    '   Blank Lines: 25 (19.69%)
-    '     File Size: 4.22 KB
+    '   Blank Lines: 26 (19.70%)
+    '     File Size: 4.38 KB
 
 
     ' Module Layout2D
@@ -96,7 +96,7 @@ Module Layout2D
 
     Friend ReadOnly atomMaxCharges As Dictionary(Of String, Atom) = Atom _
         .DefaultElements _
-        .JoinIterates(Atom.DefaultAtomGroups) _
+        .JoinIterates(AtomGroup.DefaultAtomGroups) _
         .ToDictionary(Function(a)
                           Return a.label
                       End Function)
@@ -106,11 +106,16 @@ Module Layout2D
                                         strict As Boolean) As Double
 
         Dim maxN As Integer
+        Dim key As String = atom.elementName
 
-        If atomMaxCharges.ContainsKey(atom.elementName) Then
-            maxN = atomMaxCharges(atom.elementName).maxKeys
-        ElseIf SMILES.Atom.AtomGroups.ContainsKey(atom.elementName) Then
-            maxN = SMILES.Atom.AtomGroups(atom.elementName).maxKeys
+        If atom.elementName.StartsWith("["c) AndAlso atom.elementName.EndsWith("]"c) Then
+            key = atom.elementName.GetStackValue("[", "]")
+        End If
+
+        If atomMaxCharges.ContainsKey(key) Then
+            maxN = atomMaxCharges(key).maxKeys
+        ElseIf AtomGroup.CheckDefaultLabel(key) Then
+            maxN = AtomGroup.AtomGroups(key).maxKeys
         Else
             maxN = 1
         End If

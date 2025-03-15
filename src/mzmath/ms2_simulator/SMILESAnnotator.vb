@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::976ec492d309e17a893ada495ccabbe3, mzmath\ms2_simulator\SMILESAnnotator.vb"
+﻿#Region "Microsoft.VisualBasic::13f323d22f43f057478fb1a60698db13, mzmath\ms2_simulator\SMILESAnnotator.vb"
 
     ' Author:
     ' 
@@ -110,4 +110,3 @@ Public Class SMILESAnnotator
     End Function
 
 End Class
-

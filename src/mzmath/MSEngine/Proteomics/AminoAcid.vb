@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5d697f3af339cf346fa8a17fda90616, mzmath\MSEngine\Proteomics\AminoAcid.vb"
+﻿#Region "Microsoft.VisualBasic::f65b35555e388139aa7ff05628584acf, mzmath\MSEngine\Proteomics\AminoAcid.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 25 (22.94%)
-    '     File Size: 4.18 KB
+    '     File Size: 4.17 KB
 
 
     ' Class AminoAcid
@@ -167,4 +167,3 @@ Public Class AminoAcid
         {"U"c, FormulaScanner.Convert2FormulaObjV2("C3H7NO2Se")}
     }
 End Class
-

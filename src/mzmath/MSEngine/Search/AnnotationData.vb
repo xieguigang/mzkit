@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::046ab5c140497837875425b2bfafade5, mzmath\MSEngine\Search\AnnotationData.vb"
+﻿#Region "Microsoft.VisualBasic::75d69fe40c811fd7edd699eba86c9964, mzmath\MSEngine\Search\AnnotationData.vb"
 
     ' Author:
     ' 
@@ -106,4 +106,3 @@ Public Class AnnotationData(Of T As ICrossReference)
     Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
 
 End Class
-

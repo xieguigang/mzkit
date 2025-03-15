@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1067414cd9f38edfb36b4304daac631a, metadb\SMILES\Atom.vb"
+﻿#Region "Microsoft.VisualBasic::3e707c6684ef3205a926abcf7ea7e4ba, metadb\SMILES\Atom.vb"
 
     ' Author:
     ' 
@@ -37,27 +37,28 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 224
-    '    Code Lines: 163 (72.77%)
-    ' Comment Lines: 12 (5.36%)
+    '   Total Lines: 193
+    '    Code Lines: 137 (70.98%)
+    ' Comment Lines: 12 (6.22%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 49 (21.88%)
-    '     File Size: 6.72 KB
+    '   Blank Lines: 44 (22.80%)
+    '     File Size: 5.61 KB
 
 
     ' Class Atom
     ' 
-    '     Properties: AtomGroups, isAtomGroup, label, maxKeys, valence
+    '     Properties: isAtomGroup, label, maxKeys, valence
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: ChargeLabel, DefaultAtomGroups, DefaultElements, EvaluateIsAtomGroup, GetIonLabel
-    '               GetMaxKeys, LoadAtoms, ToString
+    '     Function: ChargeLabel, CheckSingleValence, DefaultElements, EvaluateIsAtomGroup, GetIonLabel
+    '               GetMaxKeys, ToString
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports std = System.Math
 
 ''' <summary>
@@ -81,8 +82,6 @@ Public Class Atom
     Public ReadOnly Property maxKeys As Integer
     Public ReadOnly Property isAtomGroup As Boolean
 
-    Public Shared ReadOnly Property AtomGroups As Dictionary(Of String, Atom) = LoadAtoms()
-
     Sub New(label As String, ParamArray valence As Integer())
         Me.isAtomGroup = EvaluateIsAtomGroup(label)
         Me.label = label
@@ -90,19 +89,9 @@ Public Class Atom
         Me.maxKeys = GetMaxKeys()
     End Sub
 
-    Private Shared Function LoadAtoms() As Dictionary(Of String, Atom)
-        Dim atoms = Atom.DefaultAtomGroups.ToArray
-        Dim groups As New Dictionary(Of String, Atom)
-
-        For Each atom As Atom In atoms
-            Call groups.Add(atom.GetIonLabel, atom)
-
-            If Not groups.ContainsKey(atom.label) Then
-                Call groups.Add(atom.label, atom)
-            End If
-        Next
-
-        Return groups
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function CheckSingleValence() As Boolean
+        Return valence.TryCount = 1
     End Function
 
     Private Function GetMaxKeys() As Integer
@@ -150,26 +139,6 @@ Public Class Atom
         Else
             Return $"{label} ~ H{maxKeys}"
         End If
-    End Function
-
-    Public Shared Iterator Function DefaultAtomGroups() As IEnumerable(Of Atom)
-        Yield New Atom("OH", -1)
-        Yield New Atom("NO3", -1)
-        Yield New Atom("SO4", -2)
-        Yield New Atom("CO3", -2)
-        Yield New Atom("NH4", 1)
-        Yield New Atom("NH2", 1, 2)
-        Yield New Atom("SO3", -2)
-        Yield New Atom("MnO4", -1)
-        Yield New Atom("HCO3", -1)
-        Yield New Atom("PO4", -3)
-        Yield New Atom("CH", -1, -2, -3)
-        Yield New Atom("CH2", -1, -2)
-        Yield New Atom("CH3", -1)
-        Yield New Atom("CH4", -1)
-        Yield New Atom("CH5", -1) ' 氢化甲基阴离子（hydridomethyl anion）
-        Yield New Atom("COOH", -1)
-        Yield New Atom("COO", -2)
     End Function
 
     Public Shared Iterator Function DefaultElements() As IEnumerable(Of Atom)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb0e9df0a2078ee1646ec27a826def6b, metadb\SMILES\FormulaBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::9cc5605aac0cac319d8eaf9f75779066, metadb\SMILES\FormulaBuilder.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 107
-    '    Code Lines: 77 (71.96%)
-    ' Comment Lines: 12 (11.21%)
+    '   Total Lines: 108
+    '    Code Lines: 77 (71.30%)
+    ' Comment Lines: 12 (11.11%)
     '    - Xml Docs: 83.33%
     ' 
-    '   Blank Lines: 18 (16.82%)
-    '     File Size: 3.73 KB
+    '   Blank Lines: 19 (17.59%)
+    '     File Size: 3.75 KB
 
 
     ' Class FormulaBuilder
@@ -69,17 +69,18 @@ Public Class FormulaBuilder
     Dim composition As New Dictionary(Of String, Integer)
     Dim visited As New Index(Of String)
     Dim atomProfile As Dictionary(Of String, Atom)
-    Dim atomGroups As Dictionary(Of String, Atom)
+    Dim atomGroups As New Dictionary(Of String, AtomGroup)
 
     Sub New(graph As ChemicalFormula)
         Me.graph = graph
         Me.atomProfile = Atom _
             .DefaultElements _
             .ToDictionary(Function(a) a.label)
-        Me.atomGroups = Atom.DefaultAtomGroups _
-            .ToDictionary(Function(a)
-                              Return a.GetIonLabel
-                          End Function)
+
+        For Each group As AtomGroup In AtomGroup.DefaultAtomGroups
+            atomGroups(group.GetIonLabel) = group
+            atomGroups($"[{group.label}]") = group
+        Next
     End Sub
 
     Public Function GetComposition(ByRef empirical As String) As Dictionary(Of String, Integer)

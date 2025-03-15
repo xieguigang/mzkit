@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b468d9bc55e8ab697c0c309edb195a5b, mzmath\ms2_simulator\MolecularMechanics.vb"
+﻿#Region "Microsoft.VisualBasic::14cef8622bba8402a96182d955535acd, mzmath\ms2_simulator\MolecularMechanics.vb"
 
     ' Author:
     ' 
@@ -94,4 +94,3 @@ Public Module MolecularMechanics
         Return 4 * epsilon * (sigmaOverR12 - sigmaOverR6)
     End Function
 End Module
-
