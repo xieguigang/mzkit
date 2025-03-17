@@ -7,7 +7,7 @@
 #' 
 const pugview_repo = function(repo_dir) {
     let local_caches = resolve_repository(repo_dir);
-    let meta = local_caches |> sapply(pug -> metadata.pugView(pug));
+    let meta = local_caches |> sapply(pug -> metadata.pugView(pug), stream = TRUE);
 
     meta |> which(m -> !is.null(m));
 }
