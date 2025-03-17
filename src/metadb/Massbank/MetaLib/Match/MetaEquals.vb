@@ -79,22 +79,42 @@ Namespace MetaLib
             Return Agreement(meta, other) >= threshold
         End Function
 
-        Public Function CompareXref(xref As xref, otherXref As xref) As Double
-            Dim agree As Integer
-            Dim total As Integer
-            Dim yes = Sub()
-                          agree += 1
-                          total += 1
-                      End Sub
-            Dim no = Sub() total += 1
+        Friend Class SimpleCheck
 
-            Call agreementInternal(xref, otherXref, yes, no)
+            Public agree, total As Integer
 
-            Return agree / total
+            ''' <summary>
+            ''' get the jaccard similarity score
+            ''' </summary>
+            ''' <returns></returns>
+            Public ReadOnly Property score As Double
+                Get
+                    Return agree / total
+                End Get
+            End Property
+
+            Public Sub yes()
+                agree += 1
+                total += 1
+            End Sub
+
+            Public Sub no()
+                total += 1
+            End Sub
+
+            Public Overrides Function ToString() As String
+                Return $"{(score * 100).ToString("F2")}%, agree:{agree}/total:{total}"
+            End Function
+        End Class
+
+        Public Shared Function CompareXref(xref As xref, otherXref As xref) As Double
+            Dim check As New SimpleCheck
+            Call CompareXref(check, xref, otherXref)
+            Return check.score
         End Function
 
-        Private Sub agreementInternal(xref As xref, otherXref As xref, yes As Action, no As Action)
-            Dim compareInteger As New ComparesIdXrefInteger(yes, no)
+        Private Shared Sub CompareXref(ByRef check As SimpleCheck, xref As xref, otherXref As xref)
+            Dim compareInteger As New ComparesIdXrefInteger(AddressOf check.yes, AddressOf check.no)
 
             ' 下面的这个几个数据库编号可能都是没有的
             Call compareInteger.DoCompares(xref.chebi, otherXref.chebi)
@@ -103,40 +123,34 @@ Namespace MetaLib
             Call compareInteger.DoCompares(xref.HMDB, otherXref.HMDB)
 
             If xref.CAS.SafeQuery.Any(Function(id) otherXref.CAS.IndexOf(id) > -1) Then
-                yes()
+                check.yes()
             Else
-                no()
+                check.no()
             End If
 
             If xref.InChIkey = otherXref.InChIkey Then
-                yes()
+                check.yes()
             Else
-                no()
+                check.no()
             End If
         End Sub
 
         Public Function Agreement(meta As MetaInfo, other As MetaInfo) As Double
-            Dim agree As Integer
-            Dim total As Integer
-            Dim yes = Sub()
-                          agree += 1
-                          total += 1
-                      End Sub
-            Dim no = Sub() total += 1
+            Dim check As New SimpleCheck
 
             If std.Abs(meta.exact_mass - other.exact_mass) > 0.3 Then
-                no()
+                check.no()
             End If
 
             ' 因为name在不同的数据库之间差异有些大,所以在这里只作为可选参考
             ' 不调用no函数了
             If Strings.Trim(meta.name).TextEquals(Strings.Trim(other.name)) AndAlso Not Strings.Trim(other.name).StringEmpty Then
-                yes()
+                check.yes()
             End If
 
-            Call agreementInternal(meta.xref, other.xref, yes, no)
+            Call CompareXref(check, meta.xref, other.xref)
 
-            Return agree / total
+            Return check.score
         End Function
     End Class
 End Namespace
