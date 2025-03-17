@@ -1,16 +1,22 @@
 .\" man page create by R# package system.
 .TH PUBCHEM_KIT 1 2000-Jan "resolve_repository" "resolve_repository"
 .SH NAME
-resolve_repository \- load pubchem repository
+resolve_repository \- load pubchem local repository
 .SH SYNOPSIS
 \fIresolve_repository(\fBrepo\fR as string);\fR
 .SH DESCRIPTION
 .PP
-load pubchem repository
+load pubchem local repository
 .PP
 .SH OPTIONS
 .PP
-\fBrepo\fB \fR\- -. 
+\fBrepo\fB \fR\- a directory path to the local pubchem repository. 
+.PP
+.SH VALUE
+.PP
+a collection of the pubchem @\fBT:BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.PugViewRecord\fR data, which could be converted 
+ to the mzkit internal metabolite metadata annotation model via the function 
+ \fBmetadata.pugView\fR.
 .PP
 .SH SEE ALSO
 pubchem_kit

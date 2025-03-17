@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>load pubchem local repository</title>
+    <title>Load pubchem metadata</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>resolve_repository {pubchem_kit}</td>
+                <td>pugview_repo {mzkit}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>load pubchem local repository</h2>
+        <h2>Load pubchem metadata</h2>
 
         <h3>Description</h3>
 
@@ -27,40 +27,38 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>resolve_repository</strong>(<i>repo</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>pugview_repo</strong>(<i>repo.dir</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>repo</dt>
-<dd><p>a directory path to the local pubchem repository. [as string]</p></dd>
+<dt>repo.dir</dt>
+<dd><p><p>a local directory path that contains the cache data files of the pubchem download data.</p></p></dd>
 
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>this function load the local pubchem pugview data repository and then populates out a collection of the mzkit internal metadata reference object.</p>
 
         <h3 style="display: block">Authors</h3>
 
-        BioNovoGene
+        xieguigang
 
         <h3>Value</h3>
 
-        <p>a collection of the pubchem <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/PugViewRecord.html">PugViewRecord</a> data, which could be converted 
- to the mzkit internal metabolite metadata annotation model via the function 
- <code>metadata.pugView</code>.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/PugViewRecord.html">PugViewRecord</a></li></ul>
+        This function has no value returns.
 
         <h3 style="display: none;">Examples</h3>
 
         
 
         <hr />
-        <div style="text-align: center;">[Package <em>pubchem_kit</em> version 1.0.0.0 <a
-                href="../pubchem_kit.html">Index</a>]
+        <div style="text-align: center;">[Package <em>mzkit</em> version 3.2.56.56444 <a
+                href="../mzkit.html">Index</a>]
         </div>
     </div>
 </body>

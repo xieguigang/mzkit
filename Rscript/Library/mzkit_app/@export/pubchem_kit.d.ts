@@ -220,12 +220,15 @@ declare namespace pubchem_kit {
       function webquery(file: string, convert_std?: boolean): object;
    }
    /**
-    * load pubchem repository
+    * load pubchem local repository
     * 
     * 
-     * @param repo -
+     * @param repo a directory path to the local pubchem repository
+     * @return a collection of the pubchem @``T:BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.PugViewRecord`` data, which could be converted 
+     *  to the mzkit internal metabolite metadata annotation model via the function 
+     *  ``metadata.pugView``.
    */
-   function resolve_repository(repo: string): any;
+   function resolve_repository(repo: string): object;
    /**
     * parse the pubchem sid map data file
     * 
