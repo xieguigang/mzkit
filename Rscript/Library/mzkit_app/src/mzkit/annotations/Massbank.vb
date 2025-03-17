@@ -134,6 +134,7 @@ Module Massbank
         Dim idprefix As String = args.getValue("prefix", env, [default]:="")
         Dim synonym As Boolean = args.getValue("synonym", env, [default]:=False)
         Dim odorInfo As Boolean = args.getValue("odor", env, [default]:=False)
+        Dim extras As Boolean = args.getValue("extras", env, [default]:=False)
         Dim df As New Rdataframe With {
             .rownames = metadata _
                 .Select(Function(a) idprefix & a.ID) _
@@ -158,6 +159,14 @@ Module Massbank
         Call df.add("smiles", From m In metadata Select m.xref.SMILES)
         Call df.add("inchikey", From m In metadata Select m.xref.InChIkey)
         Call df.add("inchi", From m In metadata Select m.xref.InChI)
+
+        If extras Then
+            Dim extra_keys = metadata.Select(Function(m) m.xref.extras.Keys).IteratesALL.Distinct.ToArray
+
+            For Each key As String In extra_keys
+                Call df.add(key, metadata.Select(Function(m) m.xref.extras.TryGetValue(key).FirstOrDefault))
+            Next
+        End If
 
         If synonym Then
             Call df.add("synonym", From m In metadata Select m.synonym.JoinBy("; "))
