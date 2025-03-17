@@ -133,7 +133,7 @@ Module Massbank
     Friend Function makeMetaboliteTable(metadata As MetaLib(), args As list, env As Environment) As Rdataframe
         Dim df As New Rdataframe With {
             .rownames = metadata _
-                .Select(Function(a) $"PubChem:{a.ID}") _
+                .Select(Function(a) a.ID) _
                 .ToArray,
             .columns = New Dictionary(Of String, Array)
         }
