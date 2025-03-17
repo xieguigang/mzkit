@@ -126,17 +126,22 @@ Namespace MetaLib.Models
             IUPACName = clone.IUPACName
             description = clone.description
             synonym = clone.synonym.SafeQuery.ToArray
-            xref = New xref(clone.xref)
             kingdom = clone.kingdom
             super_class = clone.super_class
             [class] = clone.class
             sub_class = clone.sub_class
             molecular_framework = clone.molecular_framework
-            chemical = New ChemicalDescriptor(chemical)
             organism = clone.organism.SafeQuery.ToArray
             pathways = clone.pathways.SafeQuery.ToArray
             samples = clone.samples.SafeQuery.Select(Function(a) New BiosampleSource(a)).toarray
             keywords = clone.keywords.SafeQuery.ToArray
+
+            If Not clone.xref Is Nothing Then
+                xref = New xref(clone.xref)
+            End If
+            If Not clone.chemical Is Nothing Then
+                chemical = New ChemicalDescriptor(clone.chemical)
+            End If
         End Sub
 
         Public Overrides Function ToString() As String
