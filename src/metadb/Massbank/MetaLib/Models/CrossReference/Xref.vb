@@ -276,15 +276,13 @@ Namespace MetaLib.CrossReference
         ''' <param name="b"></param>
         ''' <returns></returns>
         Public Shared Operator Like(a As xref, b As xref) As Double
-            Static compares As New MetaEquals(0.3)
-
             If a Is Nothing AndAlso b Is Nothing Then
                 Return 1
             ElseIf a Is Nothing OrElse b Is Nothing Then
                 Return 0
             End If
 
-            Return compares.CompareXref(a, b)
+            Return MetaEquals.CompareXref(a, b)
         End Operator
     End Class
 End Namespace
