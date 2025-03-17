@@ -132,6 +132,8 @@ Module Massbank
     <RGenericOverloads("as.data.frame")>
     Friend Function makeMetaboliteTable(metadata As MetaLib(), args As list, env As Environment) As Rdataframe
         Dim idprefix As String = args.getValue("prefix", env, [default]:="")
+        Dim synonym As Boolean = args.getValue("synonym", env, [default]:=False)
+        Dim odorInfo As Boolean = args.getValue("odor", env, [default]:=False)
         Dim df As New Rdataframe With {
             .rownames = metadata _
                 .Select(Function(a) idprefix & a.ID) _
@@ -143,7 +145,7 @@ Module Massbank
         Call df.add("iupac_name", From m In metadata Select m.IUPACName)
         Call df.add("formula", From m In metadata Select m.formula)
         Call df.add("exact_mass", From m In metadata Select m.exact_mass)
-        Call df.add("pubchem", From m In metadata Select m.ID)
+        Call df.add("pubchem", From m In metadata Select m.xref.pubchem)
         Call df.add("kegg", From m In metadata Select m.xref.KEGG)
         Call df.add("hmdb", From m In metadata Select m.xref.HMDB)
         Call df.add("cas", From m In metadata Select m.xref.CAS.JoinBy(", "))
@@ -156,10 +158,16 @@ Module Massbank
         Call df.add("smiles", From m In metadata Select m.xref.SMILES)
         Call df.add("inchikey", From m In metadata Select m.xref.InChIkey)
         Call df.add("inchi", From m In metadata Select m.xref.InChI)
-        Call df.add("synonym", From m In metadata Select m.synonym.JoinBy("; "))
-        Call df.add("order", From m In metadata Select m.chemical.Odor.SafeQuery.Select(Function(c) c.condition).JoinBy("; "))
-        Call df.add("color", From m In metadata Select m.chemical.Color.SafeQuery.Select(Function(c) c.condition).JoinBy("; "))
-        Call df.add("taste", From m In metadata Select m.chemical.Taste.SafeQuery.Select(Function(c) c.condition).JoinBy("; "))
+
+        If synonym Then
+            Call df.add("synonym", From m In metadata Select m.synonym.JoinBy("; "))
+        End If
+
+        If odorInfo Then
+            Call df.add("order", From m In metadata Select m.chemical.Odor.SafeQuery.Select(Function(c) c.condition).JoinBy("; "))
+            Call df.add("color", From m In metadata Select m.chemical.Color.SafeQuery.Select(Function(c) c.condition).JoinBy("; "))
+            Call df.add("taste", From m In metadata Select m.chemical.Taste.SafeQuery.Select(Function(c) c.condition).JoinBy("; "))
+        End If
 
         Return df
     End Function
