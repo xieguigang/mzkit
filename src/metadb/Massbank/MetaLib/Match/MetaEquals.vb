@@ -114,7 +114,7 @@ Namespace MetaLib
         End Function
 
         Private Shared Sub CompareXref(ByRef check As SimpleCheck, xref As xref, otherXref As xref)
-            Dim compareInteger As New ComparesIdXrefInteger(AddressOf check.yes, AddressOf check.no)
+            Dim compareInteger As New ComparesIdXrefInteger(check)
 
             ' 下面的这个几个数据库编号可能都是没有的
             Call compareInteger.DoCompares(xref.chebi, otherXref.chebi)
