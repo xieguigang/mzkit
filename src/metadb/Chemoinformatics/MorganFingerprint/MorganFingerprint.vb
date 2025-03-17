@@ -1,66 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::bcdf355829298cd429eee15ff462411c, metadb\Chemoinformatics\MorganFingerprint\MorganFingerprint.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 139
-    '    Code Lines: 62 (44.60%)
-    ' Comment Lines: 59 (42.45%)
-    '    - Xml Docs: 79.66%
-    ' 
-    '   Blank Lines: 18 (12.95%)
-    '     File Size: 6.59 KB
+' Summaries:
 
 
-    '     Module MorganFingerprint
-    ' 
-    '         Properties: FingerprintLength
-    ' 
-    '         Function: CalculateFingerprint, CalculateFingerprintCheckSum, GetAtomCode, HashCodes
-    ' 
-    '         Sub: [Xor], SetLength
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 139
+'    Code Lines: 62 (44.60%)
+' Comment Lines: 59 (42.45%)
+'    - Xml Docs: 79.66%
+' 
+'   Blank Lines: 18 (12.95%)
+'     File Size: 6.59 KB
+
+
+'     Module MorganFingerprint
+' 
+'         Properties: FingerprintLength
+' 
+'         Function: CalculateFingerprint, CalculateFingerprintCheckSum, GetAtomCode, HashCodes
+' 
+'         Sub: [Xor], SetLength
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF.Models
+Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis.MorganFingerprint
 Imports Microsoft.VisualBasic.Math.HashMaps
 
 Namespace MorganFingerprint
@@ -110,13 +111,49 @@ Namespace MorganFingerprint
     ''' </summary>
     Public Module MorganFingerprint
 
-        Public ReadOnly Property FingerprintLength As Integer = 1024
+        Public ReadOnly Property FingerprintLength As Integer
+            Get
+                Return m_hashBuilder.FingerprintLength
+            End Get
+        End Property
+
+        Private Class HashBuilder : Inherits GraphMorganFingerprint(Of MorganAtom, Bound)
+
+            Public Sub New(size As Integer)
+                MyBase.New(size)
+            End Sub
+
+            Protected Overrides Function HashAtom(v As MorganAtom) As Integer
+                Return v.Atom.GetHashCode()
+            End Function
+
+            Protected Overrides Function HashEdge(atoms() As MorganAtom, e As Bound, flip As Boolean) As ULong
+                Dim hashcode As ULong
+
+                If flip Then
+                    hashcode = HashMap.HashCodePair(atoms(e.i).Code, atoms(e.j).Code)
+                Else
+                    hashcode = HashMap.HashCodePair(atoms(e.j).Code, atoms(e.i).Code)
+                End If
+
+                Return hashcode Xor CULng(e.Type) Xor CULng(e.Stereo)
+            End Function
+        End Class
+
+        Private Class StructData : Implements MorganGraph(Of MorganAtom, Bound)
+
+            Public Property Atoms As MorganAtom() Implements MorganGraph(Of MorganAtom, Bound).Atoms
+            Public Property Graph As Bound() Implements MorganGraph(Of MorganAtom, Bound).Graph
+
+        End Class
+
+        Dim m_hashBuilder As New HashBuilder(4096)
 
         Public Sub SetLength(len As Integer)
             If len Mod 8 <> 0 Then
                 Throw New InvalidProgramException("the length of the Morgan Fingerprint vector should be mod by 8!")
             Else
-                _FingerprintLength = len
+                m_hashBuilder = New HashBuilder(len)
             End If
         End Sub
 
@@ -135,66 +172,12 @@ Namespace MorganFingerprint
             ' Initialize atom codes based on atom type
             For i As Integer = 0 To struct.Atoms.Length - 1
                 atoms(i) = New MorganAtom(struct.Atoms(i))
-                atoms(i).Code = CULng(GetAtomCode(struct.Atoms(i).Atom))
-                atoms(i).Index = i
             Next
 
-            ' Perform iterations to expand the atom codes
-            For r As Integer = 0 To radius - 1
-                Dim newCodes As ULong() = New ULong(struct.Atoms.Length - 1) {}
-
-                For Each bound As Bound In struct.Bounds
-                    Dim code1 As ULong = atoms(bound.i).Code
-                    Dim code2 As ULong = atoms(bound.j).Code
-
-                    newCodes(bound.i) = HashCodes(code1, code2, bound.Type, bound.Stereo)
-                    newCodes(bound.j) = HashCodes(code2, code1, bound.Type, bound.Stereo)
-                Next
-
-                For i As Integer = 0 To struct.Atoms.Length - 1
-                    atoms(i).Code = newCodes(i)
-                Next
-            Next
-
-            ' Generate the final fingerprint
-            Dim fingerprint As New BitArray(FingerprintLength)
-
-            For Each atom As MorganAtom In atoms
-                Call fingerprint.Xor(position:=atom.Code Mod FingerprintLength)
-            Next
-
-            Return fingerprint
+            Return m_hashBuilder.CalculateFingerprint(New StructData With {
+                .Atoms = atoms,
+                .Graph = struct.Bounds
+            }, radius)
         End Function
-
-        <Extension>
-        Private Sub [Xor](fingerprint As BitArray, position As Integer)
-            If fingerprint.Get(position) Then
-                Call fingerprint.Set(position, False)
-            Else
-                Call fingerprint.Set(position, True)
-            End If
-        End Sub
-
-        ''' <summary>
-        ''' Simple hash function for atom type
-        ''' </summary>
-        ''' <param name="element"></param>
-        ''' <returns></returns>
-        Private Function GetAtomCode(element As String) As Integer
-            Return element.GetHashCode()
-        End Function
-
-        ''' <summary>
-        ''' Combine the codes and return a new hash code
-        ''' </summary>
-        ''' <param name="code1"></param>
-        ''' <param name="code2"></param>
-        ''' <param name="bondType"></param>
-        ''' <param name="stereo"></param>
-        ''' <returns></returns>
-        Private Function HashCodes(code1 As ULong, code2 As ULong, bondType As BoundTypes, stereo As BoundStereos) As ULong
-            Return HashMap.HashCodePair(code1, code2) Xor CULng(bondType) Xor CULng(stereo)
-        End Function
-
     End Module
 End Namespace

@@ -59,24 +59,25 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 
 Namespace SDF.Models
 
     ''' <summary>
     ''' Connection between atoms
     ''' </summary>
-    Public Class Bound
+    Public Class Bound : Implements IndexEdge
 
         ''' <summary>
         ''' index of atom 1
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property i As Integer
+        <XmlAttribute> Public Property i As Integer Implements IndexEdge.U
         ''' <summary>
         ''' index of atom 2
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property j As Integer
+        <XmlAttribute> Public Property j As Integer Implements IndexEdge.V
         <XmlAttribute> Public Property Type As BoundTypes
         <XmlAttribute> Public Property Stereo As BoundStereos
 
