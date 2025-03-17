@@ -183,6 +183,32 @@ Namespace MetaLib.CrossReference
             Me.HMDB = meta.accession
         End Sub
 
+        Sub New(clone As xref)
+            With Me
+                .CAS = clone.CAS.SafeQuery.ToArray
+                .chebi = clone.chebi
+                .ChEMBL = clone.ChEMBL
+                .ChemIDplus = clone.ChemIDplus
+                .chemspider = clone.chemspider
+                .DrugBank = clone.DrugBank
+                .extras = clone.extras.SafeQuery.ToDictionary
+                .foodb = clone.foodb
+                .HMDB = clone.HMDB
+                .InChI = clone.InChI
+                .InChIkey = clone.InChIkey
+                .KEGG = clone.KEGG
+                .KEGGdrug = clone.KEGGdrug
+                .KNApSAcK = clone.KNApSAcK
+                .lipidmaps = clone.lipidmaps
+                .MeSH = clone.MeSH
+                .MetaCyc = clone.MetaCyc
+                .metlin = clone.metlin
+                .pubchem = clone.pubchem
+                .SMILES = clone.SMILES
+                .Wikipedia = clone.Wikipedia
+            End With
+        End Sub
+
         ''' <summary>
         ''' This function will fill current <see cref="xref"/> object with 
         ''' additional property data from <paramref name="another"/> data object.

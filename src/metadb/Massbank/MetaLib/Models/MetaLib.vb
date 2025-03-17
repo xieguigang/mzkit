@@ -72,6 +72,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
+Imports Microsoft.VisualBasic.Linq
 
 Namespace MetaLib.Models
 
@@ -111,6 +112,31 @@ Namespace MetaLib.Models
                 Me.sub_class = [class].sub_class
                 Me.molecular_framework = [class].molecular_framework
             End If
+        End Sub
+
+        ''' <summary>
+        ''' make value copy
+        ''' </summary>
+        ''' <param name="clone"></param>
+        Sub New(clone As MetaLib)
+            ID = clone.ID
+            formula = clone.formula
+            exact_mass = clone.exact_mass
+            name = clone.name
+            IUPACName = clone.IUPACName
+            description = clone.description
+            synonym = clone.synonym.SafeQuery.ToArray
+            xref = New xref(clone.xref)
+            kingdom = clone.kingdom
+            super_class = clone.super_class
+            [class] = clone.class
+            sub_class = clone.sub_class
+            molecular_framework = clone.molecular_framework
+            chemical = New ChemicalDescriptor(chemical)
+            organism = clone.organism.SafeQuery.ToArray
+            pathways = clone.pathways.SafeQuery.ToArray
+            samples = clone.samples.SafeQuery.Select(Function(a) New BiosampleSource(a)).toarray
+            keywords = clone.keywords.SafeQuery.ToArray
         End Sub
 
         Public Overrides Function ToString() As String

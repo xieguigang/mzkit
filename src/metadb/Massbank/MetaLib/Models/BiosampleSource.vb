@@ -15,6 +15,15 @@ Namespace MetaLib.Models
         ''' <returns></returns>
         <MessagePackMember(2)> Public Property reference As String
 
+        Sub New()
+        End Sub
+
+        Sub New(clone As BiosampleSource)
+            biosample = clone.biosample
+            source = clone.source
+            reference = clone.reference
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
