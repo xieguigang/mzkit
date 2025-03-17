@@ -131,9 +131,10 @@ Module Massbank
 
     <RGenericOverloads("as.data.frame")>
     Friend Function makeMetaboliteTable(metadata As MetaLib(), args As list, env As Environment) As Rdataframe
+        Dim idprefix As String = args.getValue("prefix", env, [default]:="")
         Dim df As New Rdataframe With {
             .rownames = metadata _
-                .Select(Function(a) a.ID) _
+                .Select(Function(a) idprefix & a.ID) _
                 .ToArray,
             .columns = New Dictionary(Of String, Array)
         }
