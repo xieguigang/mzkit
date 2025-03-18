@@ -164,7 +164,7 @@ Module Massbank
             Dim extra_keys = metadata.Select(Function(m) m.xref.extras.Keys).IteratesALL.Distinct.ToArray
 
             For Each key As String In extra_keys
-                Call df.add(key, metadata.Select(Function(m) m.xref.extras.TryGetValue(key).FirstOrDefault))
+                Call df.add(key, metadata.Select(Function(m) m.xref.extras.TryGetValue(key).DefaultFirst))
             Next
         End If
 
