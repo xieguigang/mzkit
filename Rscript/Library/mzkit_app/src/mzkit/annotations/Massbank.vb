@@ -161,10 +161,30 @@ Module Massbank
         Call df.add("inchi", From m In metadata Select m.xref.InChI)
 
         If extras Then
-            Dim extra_keys = metadata.Select(Function(m) m.xref.extras.Keys).IteratesALL.Distinct.ToArray
+            Dim extra_keys As String() = metadata _
+                .Select(Function(m)
+                            If m.xref Is Nothing OrElse m.xref.extras Is Nothing Then
+                                Return New String() {}
+                            Else
+                                Return m.xref.extras.Keys.AsEnumerable
+                            End If
+                        End Function) _
+                .IteratesALL _
+                .Distinct _
+                .ToArray
 
             For Each key As String In extra_keys
-                Call df.add(key, metadata.Select(Function(m) m.xref.extras.TryGetValue(key).DefaultFirst))
+                Call df.add(key, metadata _
+                    .Select(Function(m)
+                                If m.xref Is Nothing OrElse
+                                   m.xref.extras Is Nothing Then
+                                    Return Nothing
+                                End If
+
+                                Return m.xref.extras _
+                                    .TryGetValue(key) _
+                                    .DefaultFirst
+                            End Function))
             Next
         End If
 
