@@ -63,11 +63,12 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Linq
+Imports SingleExpression
 
 ''' <summary>
 ''' 3d scatter data point, a spatial spot or a single cell data
 ''' </summary>
-Public Class UMAPPoint
+Public Class UMAPPoint : Implements IEmbeddingScatter
 
     ''' <summary>
     ''' the spatial point of current spot if it is the sptial data, value
@@ -84,15 +85,15 @@ Public Class UMAPPoint
     ''' label value should not be nothing if the data is single 
     ''' cell data.
     ''' </remarks>
-    Public Property label As String
-    Public Property x As Double
-    Public Property y As Double
-    Public Property z As Double
+    Public Property label As String Implements IEmbeddingScatter.label
+    Public Property x As Double Implements IEmbeddingScatter.x
+    Public Property y As Double Implements IEmbeddingScatter.y
+    Public Property z As Double Implements IEmbeddingScatter.z
     ''' <summary>
     ''' the cell cluster data
     ''' </summary>
     ''' <returns></returns>
-    Public Property [class] As String
+    Public Property [class] As String Implements IEmbeddingScatter.cluster
 
     Sub New()
     End Sub
