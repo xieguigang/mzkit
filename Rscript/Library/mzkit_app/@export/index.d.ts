@@ -159,6 +159,9 @@ declare namespace mzkit {
    /**
    */
    function pubchem_meta(term: any): object;
+   /**
+   */
+   function pugview_repo(repo_dir: any): object;
    module read {
       /**
       */

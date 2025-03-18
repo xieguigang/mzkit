@@ -37,7 +37,7 @@ toolkit for handling of the ncbi pubchem data
 + [pugView](pubchem_kit/pugView.1) query pubchem data via a given cid value
 + [SID_map](pubchem_kit/SID_map.1) parse the pubchem sid map data file
 + [read.pugView](pubchem_kit/read.pugView.1) read xml text and then parse as pugview record data object
-+ [resolve_repository](pubchem_kit/resolve_repository.1) load pubchem repository
++ [resolve_repository](pubchem_kit/resolve_repository.1) load pubchem local repository
 + [read.webquery](pubchem_kit/read.webquery.1) read the pubchem webquery summary xml file
 + [metadata.pugView](pubchem_kit/metadata.pugView.1) extract the compound annotation data
 + [read.mesh_tree](pubchem_kit/read.mesh_tree.1) Parse the mesh ontology tree

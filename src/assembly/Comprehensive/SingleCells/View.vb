@@ -57,8 +57,10 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports SingleExpression
 
 Namespace SingleCells
 
@@ -85,6 +87,20 @@ Namespace SingleCells
                 .x = meta.GetDouble("umap1"),
                 .y = meta.GetDouble("umap2"),
                 .z = meta.GetDouble("umap3")
+            }
+        End Function
+
+        <Extension>
+        Public Function ResolveSingleExpression(cell As ScanMS1, mz As Double, mzErr As Tolerance) As SingleExpression.SingleExpression
+            Dim meta As StringReader = StringReader.WrapDictionary(cell.meta)
+            Dim cluster As String = meta.GetString("cluster")
+            Dim expr As Double = cell.GetIntensity(mz, mzErr)
+
+            Return New SingleExpression.SingleExpression With {
+                .cluster = cluster,
+                .embedding = {meta.GetDouble("umap1"), meta.GetDouble("umap2"), meta.GetDouble("umap3")},
+                .expression = expr,
+                .label = cell.scan_id
             }
         End Function
     End Module

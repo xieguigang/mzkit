@@ -67,11 +67,10 @@ Namespace MetaLib
     Friend Class ComparesIdXrefInteger
 
         Dim intId As i32 = 0
-        Dim yes, no As Action
+        Dim check As MetaEquals.SimpleCheck
 
-        Sub New(yes As Action, no As Action)
-            Me.no = no
-            Me.yes = yes
+        Sub New(check As MetaEquals.SimpleCheck)
+            Me.check = check
         End Sub
 
         Public Sub DoCompares(a$, b$)
@@ -82,29 +81,29 @@ Namespace MetaLib
             ' 都没有该数据库的编号,即改数据库之中还没有登录该物质
             ' 则不应该认为是不一样的
             If a = b AndAlso a = "NA" Then
-                yes()
+                check.yes()
                 Return
             ElseIf (a.StringEmpty OrElse b.StringEmpty) AndAlso (a = "NA" OrElse b = "NA") Then
-                yes()
+                check.yes()
                 Return
             End If
 
             If a = b AndAlso Not a.StringEmpty Then
-                yes()
+                check.yes()
                 Return
             ElseIf a.StringEmpty OrElse b.StringEmpty Then
-                no()
+                check.no()
                 Return
             End If
 
             If ((intId = ParseInteger(a)) = ParseInteger(b)) Then
                 If intId.Equals(0) Then
-                    no()
+                    check.no()
                 Else
-                    yes()
+                    check.yes()
                 End If
             Else
-                no()
+                check.no()
             End If
         End Sub
 

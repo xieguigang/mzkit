@@ -72,43 +72,9 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Linq
 
 Namespace MetaLib.Models
-
-    Public Class BiosampleSource
-
-        <MessagePackMember(0)> Public Property biosample As String
-        <MessagePackMember(1)> Public Property source As String
-
-        ''' <summary>
-        ''' the reference source
-        ''' </summary>
-        ''' <returns></returns>
-        <MessagePackMember(2)> Public Property reference As String
-
-        Public Overrides Function ToString() As String
-            Return Me.GetJson
-        End Function
-
-    End Class
-
-    ''' <summary>
-    ''' the data model of the compound class information
-    ''' </summary>
-    ''' <remarks>
-    ''' this class information model is mainly address on the HMDB
-    ''' metabolite ontology class levels.
-    ''' </remarks>
-    Public Class CompoundClass : Implements ICompoundClass
-
-        <MessagePackMember(0)> Public Property kingdom As String Implements ICompoundClass.kingdom
-        <MessagePackMember(1)> Public Property super_class As String Implements ICompoundClass.super_class
-        <MessagePackMember(2)> Public Property [class] As String Implements ICompoundClass.class
-        <MessagePackMember(3)> Public Property sub_class As String Implements ICompoundClass.sub_class
-        <MessagePackMember(4)> Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
-
-    End Class
 
     ''' <summary>
     ''' 对``chebi/kegg/pubchem/HMDB/metlin``的物质注释信息整合库，这个数据库只要为了生成编号，名称之类的注释信息而构建的
@@ -145,6 +111,36 @@ Namespace MetaLib.Models
                 Me.[class] = [class].class
                 Me.sub_class = [class].sub_class
                 Me.molecular_framework = [class].molecular_framework
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' make value copy
+        ''' </summary>
+        ''' <param name="clone"></param>
+        Sub New(clone As MetaLib)
+            ID = clone.ID
+            formula = clone.formula
+            exact_mass = clone.exact_mass
+            name = clone.name
+            IUPACName = clone.IUPACName
+            description = clone.description
+            synonym = clone.synonym.SafeQuery.ToArray
+            kingdom = clone.kingdom
+            super_class = clone.super_class
+            [class] = clone.class
+            sub_class = clone.sub_class
+            molecular_framework = clone.molecular_framework
+            organism = clone.organism.SafeQuery.ToArray
+            pathways = clone.pathways.SafeQuery.ToArray
+            samples = clone.samples.SafeQuery.Select(Function(a) New BiosampleSource(a)).toarray
+            keywords = clone.keywords.SafeQuery.ToArray
+
+            If Not clone.xref Is Nothing Then
+                xref = New xref(clone.xref)
+            End If
+            If Not clone.chemical Is Nothing Then
+                chemical = New ChemicalDescriptor(clone.chemical)
             End If
         End Sub
 

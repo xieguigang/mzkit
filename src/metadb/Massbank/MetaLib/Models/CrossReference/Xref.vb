@@ -183,6 +183,32 @@ Namespace MetaLib.CrossReference
             Me.HMDB = meta.accession
         End Sub
 
+        Sub New(clone As xref)
+            With Me
+                .CAS = clone.CAS.SafeQuery.ToArray
+                .chebi = clone.chebi
+                .ChEMBL = clone.ChEMBL
+                .ChemIDplus = clone.ChemIDplus
+                .chemspider = clone.chemspider
+                .DrugBank = clone.DrugBank
+                .extras = clone.extras.SafeQuery.ToDictionary
+                .foodb = clone.foodb
+                .HMDB = clone.HMDB
+                .InChI = clone.InChI
+                .InChIkey = clone.InChIkey
+                .KEGG = clone.KEGG
+                .KEGGdrug = clone.KEGGdrug
+                .KNApSAcK = clone.KNApSAcK
+                .lipidmaps = clone.lipidmaps
+                .MeSH = clone.MeSH
+                .MetaCyc = clone.MetaCyc
+                .metlin = clone.metlin
+                .pubchem = clone.pubchem
+                .SMILES = clone.SMILES
+                .Wikipedia = clone.Wikipedia
+            End With
+        End Sub
+
         ''' <summary>
         ''' This function will fill current <see cref="xref"/> object with 
         ''' additional property data from <paramref name="another"/> data object.
@@ -241,6 +267,22 @@ Namespace MetaLib.CrossReference
             Else
                 Return a.Join(b)
             End If
+        End Operator
+
+        ''' <summary>
+        ''' evaluate the jaccard score between two db_xrefs data
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
+        Public Shared Operator Like(a As xref, b As xref) As Double
+            If a Is Nothing AndAlso b Is Nothing Then
+                Return 1
+            ElseIf a Is Nothing OrElse b Is Nothing Then
+                Return 0
+            End If
+
+            Return MetaEquals.CompareXref(a, b)
         End Operator
     End Class
 End Namespace

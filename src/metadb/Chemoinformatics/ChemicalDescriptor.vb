@@ -83,6 +83,7 @@
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' value with reference source
@@ -138,7 +139,6 @@ Public Class ChemicalDescriptor
     ''' <returns></returns>
     Public Property XLogP3 As Double
     Public Property XLogP3_AA As Double
-
     ''' <summary>
     ''' Hydrogen Bond Donor Count
     ''' </summary>
@@ -159,7 +159,6 @@ Public Class ChemicalDescriptor
     Public Property HeavyAtoms As Integer
     Public Property FormalCharge As Integer
     Public Property Complexity As Integer
-
     Public Property IsotopicAtomCount As Integer
     Public Property AtomDefStereoCount As Integer
     Public Property AtomUdefStereoCount As Integer
@@ -168,6 +167,9 @@ Public Class ChemicalDescriptor
     Public Property ComponentCount As Integer
     Public Property TautoCount As Integer
     Public Property CovalentlyBonded As Integer
+
+#Region ""
+
     Public Property MeltingPoint As UnitValue()
     Public Property Solubility As UnitValue()
     Public Property BoilingPoint As UnitValue()
@@ -181,6 +183,8 @@ Public Class ChemicalDescriptor
     Public Property Taste As UnitValue()
     Public Property Color As UnitValue()
 
+#End Region
+
     ''' <summary>
     ''' All of the property reflection info of <see cref="ChemicalDescriptor"/> object.
     ''' </summary>
@@ -189,6 +193,39 @@ Public Class ChemicalDescriptor
         .Values _
         .OrderBy(Function(p) p.Name) _
         .ToArray
+
+    Sub New(clone As ChemicalDescriptor)
+        MeltingPoint = clone.MeltingPoint.SafeQuery.ToArray
+        Solubility = clone.Solubility.SafeQuery.ToArray
+        BoilingPoint = clone.BoilingPoint.SafeQuery.ToArray
+        FlashPoint = clone.FlashPoint.SafeQuery.ToArray
+        Density = clone.Density.SafeQuery.ToArray
+        VaporPressure = clone.VaporPressure.SafeQuery.ToArray
+        LogP = clone.LogP.SafeQuery.ToArray
+        CCS = clone.CCS.SafeQuery.ToArray
+        Odor = clone.Odor.SafeQuery.ToArray
+        Taste = clone.Taste.SafeQuery.ToArray
+        Color = clone.Color.SafeQuery.ToArray
+
+        XLogP3 = clone.XLogP3
+        XLogP3_AA = clone.XLogP3_AA
+        HydrogenDonors = clone.HydrogenDonors
+        HydrogenAcceptor = clone.HydrogenAcceptor
+        RotatableBonds = clone.RotatableBonds
+        ExactMass = clone.ExactMass
+        TopologicalPolarSurfaceArea = clone.TopologicalPolarSurfaceArea
+        HeavyAtoms = clone.HeavyAtoms
+        FormalCharge = clone.FormalCharge
+        Complexity = clone.Complexity
+        IsotopicAtomCount = clone.IsotopicAtomCount
+        AtomDefStereoCount = clone.AtomDefStereoCount
+        AtomUdefStereoCount = clone.AtomUdefStereoCount
+        BondDefStereoCount = clone.BondDefStereoCount
+        BondUdefStereoCount = clone.BondUdefStereoCount
+        ComponentCount = clone.ComponentCount
+        TautoCount = clone.TautoCount
+        CovalentlyBonded = clone.CovalentlyBonded
+    End Sub
 
     Sub New(data As Dictionary(Of String, String()))
         Dim read = getOne(data)

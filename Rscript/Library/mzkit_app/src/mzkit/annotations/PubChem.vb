@@ -61,6 +61,7 @@
 
 Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemistry.NCBI
@@ -92,8 +93,6 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
-Imports System.Runtime.CompilerServices
-
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -544,15 +543,20 @@ Module PubChemToolKit
     End Function
 
     ''' <summary>
-    ''' load pubchem repository
+    ''' load pubchem local repository
     ''' </summary>
-    ''' <param name="repo"></param>
-    ''' <returns></returns>
+    ''' <param name="repo">a directory path to the local pubchem repository</param>
+    ''' <returns>
+    ''' a collection of the pubchem <see cref="PugViewRecord"/> data, which could be converted 
+    ''' to the mzkit internal metabolite metadata annotation model via the function 
+    ''' ``metadata.pugView``.
+    ''' </returns>
     <ExportAPI("resolve_repository")>
+    <RApiReturn(GetType(PugViewRecord))>
     Public Function readPugViewRepository(repo As String) As Object
         Dim pull As Func(Of IEnumerable(Of PugViewRecord)) =
             Iterator Function() As IEnumerable(Of PugViewRecord)
-                For Each dir As String In repo.ListDirectory
+                For Each dir As String In repo.ListDirectory(FileIO.SearchOption.SearchAllSubDirectories)
                     For Each file As String In Tqdm.Wrap(dir.ListFiles("*.xml").ToArray)
                         Try
                             Yield file.LoadXml(Of PugViewRecord)
