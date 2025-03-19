@@ -72,8 +72,13 @@ Namespace TMIC.HMDB
             Next
         End Function
 
+        ''' <summary>
+        ''' Convert of the hmdb metabolite data as the mzkit internal metabolite annotation data model
+        ''' </summary>
+        ''' <param name="metabolite">the HMDB metabolite data</param>
+        ''' <returns>mzkit metabolite annotation internal data model</returns>
         <Extension>
-        Private Function CreateReferenceData(metabolite As metabolite) As Metadata2
+        Public Function CreateReferenceData(metabolite As metabolite) As Metadata2
             Dim id = metabolite.accession
             Dim xref As New xref With {
                 .CAS = {metabolite.cas_registry_number},
