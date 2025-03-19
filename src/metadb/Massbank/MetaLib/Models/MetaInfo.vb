@@ -148,8 +148,11 @@ Namespace MetaLib.Models
         ''' the database name
         ''' </param>
         ''' <returns>
-        ''' db_xref
+        ''' db_xref, returns nothing if no corresponding data
         ''' </returns>
+        ''' <remarks>
+        ''' multiple id will be join with the delimiter ``;``.
+        ''' </remarks>
         Default Public ReadOnly Property GetXrefId(field As String) As String
             Get
                 Dim arg As xref = xref
