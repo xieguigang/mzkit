@@ -82,7 +82,7 @@ Namespace TMIC.HMDB
             Dim id = metabolite.accession
             Dim xref As New xref With {
                 .CAS = {metabolite.cas_registry_number},
-                .chebi = metabolite.chebi_id,
+                .chebi = If(metabolite.chebi_id.IsPattern("\d+"), "CHEBI:" & metabolite.chebi_id, metabolite.chebi_id),
                 .HMDB = metabolite.accession,
                 .InChI = metabolite.inchi,
                 .InChIkey = metabolite.inchikey,
