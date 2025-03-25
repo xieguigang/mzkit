@@ -133,15 +133,15 @@ Public Class PlotMassWindowXIC : Inherits Plot
     ''' <param name="mz">
     ''' the target ion m/z value for extract the XIC data
     ''' </param>
-    ''' <param name="mzerr">
+    ''' <param name="xicErr">
     ''' the mass tolerance error for extract the XIC data
     ''' </param>
     ''' <param name="mzdiff">
     ''' the mass window size for plot the density scatters
     ''' </param>
-    Sub New(xic As IEnumerable(Of ms1_scan), mz As Double, mzerr As Tolerance,
-            theme As Theme,
-            Optional mzdiff As Double = 0.001)
+    Sub New(xic As IEnumerable(Of ms1_scan), mz As Double, xicErr As Tolerance, theme As Theme,
+            Optional mzdiff As Double = 0.001,
+            Optional mzErr As Tolerance = Nothing)
 
         Call MyBase.New(theme)
 
@@ -156,8 +156,13 @@ Public Class PlotMassWindowXIC : Inherits Plot
             Me.rtmax = 1
         End If
 
-        Me.xic = loadXIC(pool, mz, mzerr).ToArray
+        If mzErr Is Nothing Then
+            mzErr = Tolerance.PPM(30)
+        End If
+
+        Me.xic = loadXIC(pool, mz, xicErr).ToArray
         Me.mass_windows = pool _
+            .Where(Function(mzi) mzErr(mzi.mz, mz)) _
             .GroupBy(Function(m) m.mz, offsets:=mzdiff) _
             .Select(Function(m)
                         Return New DoubleTagged(Of ms1_scan())(Val(m.name), m.value)
