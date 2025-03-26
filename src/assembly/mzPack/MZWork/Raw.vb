@@ -101,6 +101,9 @@ Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 
 Namespace MZWork
 
+    ''' <summary>
+    ''' Mzkit rawdata file wrapper object
+    ''' </summary>
     Public Class Raw
 
 #Region "Cache Store"
