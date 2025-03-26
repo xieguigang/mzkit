@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6de8b517c9ac26f9dfe6640af599f109, assembly\Comprehensive\SingleCells\View.vb"
+﻿#Region "Microsoft.VisualBasic::3e2874c721894af08577994e66f18faf, assembly\Comprehensive\SingleCells\View.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 34
-    '    Code Lines: 24 (70.59%)
-    ' Comment Lines: 5 (14.71%)
+    '   Total Lines: 50
+    '    Code Lines: 38 (76.00%)
+    ' Comment Lines: 5 (10.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (14.71%)
-    '     File Size: 1.25 KB
+    '   Blank Lines: 7 (14.00%)
+    '     File Size: 2.03 KB
 
 
     '     Module View
     ' 
-    '         Function: LoadScanMeta, ResolveSingleCells
+    '         Function: LoadScanMeta, ResolveSingleCells, ResolveSingleExpression
     ' 
     ' 
     ' /********************************************************************************/
