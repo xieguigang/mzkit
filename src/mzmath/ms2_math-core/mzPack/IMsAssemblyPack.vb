@@ -1,4 +1,8 @@
-﻿Public Interface IMsAssemblyPack
+﻿
+''' <summary>
+''' an abstract rawdata file model for make data unify representation in mzkit
+''' </summary>
+Public Interface IMsAssemblyPack
 
     ''' <summary>
     ''' the source data file reference name
