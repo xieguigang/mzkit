@@ -260,6 +260,7 @@ Public Class PlotMassWindowXIC : Inherits Plot
         Next
 
         theme.xAxisLayout = Axis.XAxisLayoutStyles.None
+        theme.YaxisTickFormat = "G2"
 
         If Not xic_dat.pts.IsNullOrEmpty Then
             Call New Scatter2D({xic_dat}, theme) With {
@@ -273,6 +274,7 @@ Public Class PlotMassWindowXIC : Inherits Plot
         Call g.DrawLine(axisLine, New PointF(part1.Left, part1.Bottom), New PointF(part1.Right, part1.Bottom))
 
         theme.xAxisLayout = Axis.XAxisLayoutStyles.Bottom
+        theme.YaxisTickFormat = "F4"
 
         If mass_scatter.Select(Function(s) s.pts).IteratesALL.Any Then
             Call New Scatter2D(mass_scatter, theme) With {

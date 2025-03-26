@@ -107,7 +107,7 @@ Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 ''' <remarks>
 ''' (mzPack文件格式模型)
 ''' </remarks>
-Public Class mzPack : Implements IMZPack
+Public Class mzPack : Implements IMZPack, IMsAssemblyPack
 
     ''' <summary>
     ''' 一般为二维散点图
@@ -126,7 +126,7 @@ Public Class mzPack : Implements IMZPack
     ''' the file name of the raw data source file
     ''' </summary>
     ''' <returns></returns>
-    Public Property source As String Implements IMZPack.source
+    Public Property source As String Implements IMZPack.source, IMsAssemblyPack.source
     Public Property metadata As New Dictionary(Of String, String) Implements IMZPack.metadata
 
     ''' <summary>
@@ -253,7 +253,10 @@ Public Class mzPack : Implements IMZPack
         End If
     End Function
 
-    Public Function PickIonScatter(mz As Double, rt As Double, Optional mass_da As Double = 0.25, Optional dt As Double = 7.5) As IEnumerable(Of ms1_scan)
+    Public Function PickIonScatter(mz As Double, rt As Double,
+                                   Optional mass_da As Double = 0.25,
+                                   Optional dt As Double = 7.5) As IEnumerable(Of ms1_scan) Implements IMsAssemblyPack.PickIonScatter
+
         Dim range = MS.AsParallel.Where(Function(s) s.rt >= rt - dt AndAlso s.rt <= rt + dt).ToArray
         Dim ms1 As IEnumerable(Of ms1_scan) = range _
             .Select(Function(s) s.GetMs1Scans) _
