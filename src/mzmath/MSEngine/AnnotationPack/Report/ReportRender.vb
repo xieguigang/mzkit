@@ -183,7 +183,7 @@ Public Class ReportRender : Implements IReportRender
     ''' iterates the html table text, the first element is always the table header title row.
     ''' </returns>
     Public Iterator Function Tabular(biodeep_ids As IEnumerable(Of String), rt_cell As Boolean, ms1 As Boolean, sortMz As Boolean) As IEnumerable(Of String)
-        Dim metabolites = makeSubset(biodeep_ids)
+        Dim metabolites = makeSubset(biodeep_ids, sortMz)
         Dim ordinals = metabolites.Keys.ToArray
         Dim levels As Integer = colorSet.Length
         Dim index As New DoubleRange(0, levels)
@@ -346,14 +346,19 @@ Public Class ReportRender : Implements IReportRender
             .JoinBy("")
     End Function
 
-    Private Function makeSubset(biodeep_ids As IEnumerable(Of String)) As Dictionary(Of String, AlignmentHit)
+    Private Function makeSubset(biodeep_ids As IEnumerable(Of String), sortMz As Boolean) As Dictionary(Of String, AlignmentHit)
         Dim subset As New Dictionary(Of String, AlignmentHit)
 
         For Each id As String In biodeep_ids.Distinct.SafeQuery
             Call subset.Add(id, metabolites.TryGetValue(id))
         Next
 
-        Return subset
+        Return subset _
+            .Where(Function(a) peaks.ContainsKey(a.Value.xcms_id)) _
+            .OrderBy(Function(i)
+                         Return If(sortMz, i.Value.theoretical_mz, i.Value.rt)
+                     End Function) _
+            .ToDictionary
     End Function
 
     Public Function GetPeak(xcms_id As String) As xcms2 Implements IReportRender.GetPeak
