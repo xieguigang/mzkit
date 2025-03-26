@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e47e4cedb98ceff6cc44e3313393f60, metadb\Massbank\MetaLib\Models\MetaLib.vb"
+﻿#Region "Microsoft.VisualBasic::d3c6c0cebd9f39bd5b130b71472d9dd7, metadb\Massbank\MetaLib\Models\MetaLib.vb"
 
     ' Author:
     ' 
@@ -37,30 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 130
-    '    Code Lines: 80 (61.54%)
-    ' Comment Lines: 28 (21.54%)
+    '   Total Lines: 126
+    '    Code Lines: 89 (70.63%)
+    ' Comment Lines: 21 (16.67%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 22 (16.92%)
-    '     File Size: 5.22 KB
+    '   Blank Lines: 16 (12.70%)
+    '     File Size: 5.05 KB
 
 
-    '     Class BiosampleSource
-    ' 
-    '         Properties: biosample, reference, source
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class CompoundClass
-    ' 
-    '         Properties: [class], kingdom, molecular_framework, sub_class, super_class
-    ' 
     '     Class MetaLib
     ' 
     '         Properties: chemical, keywords, organism, pathways, samples
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: Equals, ToString, (+2 Overloads) Union
     ' 
     ' 

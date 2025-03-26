@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::014171f8d99980ad7e5d3d4fbdf7433c, metadb\Massbank\MetaLib\Match\ComparesIdXrefInteger.vb"
+﻿#Region "Microsoft.VisualBasic::518c412af6ba93b6d7d1a9e1c686300e, metadb\Massbank\MetaLib\Match\ComparesIdXrefInteger.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 61
-    '    Code Lines: 49 (80.33%)
-    ' Comment Lines: 3 (4.92%)
+    '   Total Lines: 60
+    '    Code Lines: 48 (80.00%)
+    ' Comment Lines: 3 (5.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 9 (14.75%)
-    '     File Size: 1.77 KB
+    '   Blank Lines: 9 (15.00%)
+    '     File Size: 1.81 KB
 
 
     '     Class ComparesIdXrefInteger

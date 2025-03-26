@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e90eda38798c513029697c8cab2e7998, metadb\Massbank\MetaLib\Models\MetaInfo.vb"
+﻿#Region "Microsoft.VisualBasic::2d2fb72cbedb4822e30d1c899bb537d1, metadb\Massbank\MetaLib\Models\MetaInfo.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 156
-    '    Code Lines: 84 (53.85%)
-    ' Comment Lines: 53 (33.97%)
-    '    - Xml Docs: 90.57%
+    '   Total Lines: 159
+    '    Code Lines: 84 (52.83%)
+    ' Comment Lines: 56 (35.22%)
+    '    - Xml Docs: 91.07%
     ' 
-    '   Blank Lines: 19 (12.18%)
-    '     File Size: 7.20 KB
+    '   Blank Lines: 19 (11.95%)
+    '     File Size: 7.35 KB
 
 
     '     Class MetaInfo
