@@ -194,7 +194,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     ''' <param name="rt_win">
     ''' the rt window size for extract the XIC peak data for the peak ion
     ''' </param>
-    Public Sub CacheXicTable(files As IEnumerable(Of mzPack), Optional mass_da As Double = 0.5, Optional rt_win As Double = 15)
+    Public Sub CacheXicTable(Of mzPack As IMsAssemblyPack)(files As IEnumerable(Of mzPack), Optional mass_da As Double = 0.5, Optional rt_win As Double = 15)
         Dim pool As mzPack() = files.ToArray
 
         For i As Integer = 0 To pool.Length - 1
