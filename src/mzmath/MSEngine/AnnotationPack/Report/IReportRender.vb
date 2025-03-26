@@ -82,6 +82,8 @@ Public Interface IReportRender
     ''' <param name="refSet"></param>
     ''' <param name="rt_cell"></param>
     ''' <returns>this function generates the html table code for view report</returns>
-    Function Tabular(refSet As IEnumerable(Of String), println As Action(Of String), Optional rt_cell As Boolean = False) As IEnumerable(Of String)
+    Function Tabular(refSet As IEnumerable(Of String), println As Action(Of String),
+                     Optional rt_cell As Boolean = False,
+                     Optional sort_mz As Boolean = False) As IEnumerable(Of String)
 
 End Interface
