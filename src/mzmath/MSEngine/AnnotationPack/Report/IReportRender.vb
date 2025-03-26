@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b9047045c71f10e8d69448c1639d230, mzmath\MSEngine\AnnotationPack\Report\IReportRender.vb"
+﻿#Region "Microsoft.VisualBasic::fc8558d2171be66750bfc88228480b39, mzmath\MSEngine\AnnotationPack\Report\IReportRender.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
-    '    Code Lines: 9 (31.03%)
-    ' Comment Lines: 14 (48.28%)
+    '   Total Lines: 31
+    '    Code Lines: 11 (35.48%)
+    ' Comment Lines: 14 (45.16%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (20.69%)
-    '     File Size: 1009 B
+    '   Blank Lines: 6 (19.35%)
+    '     File Size: 1.09 KB
 
 
     ' Interface IReportRender
