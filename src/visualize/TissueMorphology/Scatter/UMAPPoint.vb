@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efb2edd15e9c69394a95d5b154711560, visualize\TissueMorphology\Scatter\UMAPPoint.vb"
+﻿#Region "Microsoft.VisualBasic::0ba6ba56dda5149803f06b0c2a533e64, visualize\TissueMorphology\Scatter\UMAPPoint.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 104
-    '    Code Lines: 66 (63.46%)
-    ' Comment Lines: 23 (22.12%)
+    '   Total Lines: 105
+    '    Code Lines: 67 (63.81%)
+    ' Comment Lines: 23 (21.90%)
     '    - Xml Docs: 91.30%
     ' 
-    '   Blank Lines: 15 (14.42%)
-    '     File Size: 3.38 KB
+    '   Blank Lines: 15 (14.29%)
+    '     File Size: 3.61 KB
 
 
     ' Class UMAPPoint
