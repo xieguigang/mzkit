@@ -949,6 +949,9 @@ Module MzWeb
     ''' <param name="tag_source">
     ''' tag the source reference to the metadata of each spectrum data object?
     ''' </param>
+    ''' <param name="loadProductTree">
+    ''' Load MSn product tree.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     ''' <remarks>
@@ -970,12 +973,13 @@ Module MzWeb
                                  Optional into_cutoff As Object = 0,
                                  <RRawVectorArgument()>
                                  Optional rt_window As Object = Nothing,
+                                 Optional loadProductTree As Boolean = False,
                                  Optional env As Environment = Nothing) As Object
 
         Dim ms2peaks As PeakMs2()
 
         If precursorMz.IsNaNImaginary Then
-            ms2peaks = mzpack.GetMs2Peaks.ToArray
+            ms2peaks = mzpack.GetMs2Peaks(loadProductTree).ToArray
         Else
             Dim mzerr = Math.getTolerance(tolerance, env)
 
