@@ -64,6 +64,14 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Spectra
 
+    ''' <summary>
+    ''' algorithm wrapper of the noise fragment filter by theirs intensity cutoff 
+    ''' </summary>
+    ''' <remarks>
+    ''' the peak fragment <see cref="ms2.Annotation"/> metadata maybe lost due 
+    ''' to the reason of intensity filter will removes some fragment object 
+    ''' that with lower intensity value.
+    ''' </remarks>
     Public MustInherit Class LowAbundanceTrimming
 
         Protected ReadOnly m_threshold As Double

@@ -1031,6 +1031,7 @@ Module MzMath
         Else
             Dim mzvec As pipeline = pipeline.TryCreatePipeline(Of Double)(ions, env, suppress:=True)
 
+            ' make centroid bins of the m/z numeric vector
             If Not mzvec.isError Then
                 Return mzvec _
                     .populates(Of Double)(env) _
