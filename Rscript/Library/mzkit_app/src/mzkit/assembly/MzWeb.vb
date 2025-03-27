@@ -502,7 +502,19 @@ Module MzWeb
                     Dim json_str As String = meta.ElementAtOrDefault(i, "{}")
 
                     If Not json_str.StringEmpty(, True) Then
-                        data(i).meta = json_str.LoadJSON(Of Dictionary(Of String, String))(throwEx:=False)
+                        With If(json_str.LoadJSON(Of AnnotationMetadata)(throwEx:=False), New AnnotationMetadata)
+                            data(i).meta = .meta
+
+                            If Not .annotation.IsNullOrEmpty Then
+                                Dim offset As Integer = 0
+                                Dim peaks As ms2() = data(i).mzInto
+
+                                For Each str As String In .annotation
+                                    peaks(offset).Annotation = str
+                                    offset += 1
+                                Next
+                            End If
+                        End With
 
                         If Not data(i).meta.IsNullOrEmpty Then
                             ' 20241105
@@ -510,9 +522,16 @@ Module MzWeb
                             ' so we needs to restore the file source information from the metadata
                             ' try get file source information via tags:
                             ' source, file, rawdata, filename, etc something
-                            Dim m = data(i).meta
+                            Dim m As Dictionary(Of String, String) = data(i).meta
 
-                            Static tags As String() = {"source", "file", "rawdata", "filename"}
+                            ' some possible tag name that could be used for represents 
+                            ' of the source file name metadata information.
+                            Static tags As String() = {
+                                "source", "file", "rawdata", "filename",
+                                "datafile",
+                                "data_raw",
+                                "data"
+                            }
 
                             For Each name As String In tags
                                 If m.ContainsKey(name) Then
