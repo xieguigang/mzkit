@@ -246,6 +246,9 @@ Namespace Spectra
         ''' <param name="matrix"></param>
         ''' <param name="x">should be max intensity</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this operator just normalized the intensity value, fragment annotation metadata will not lost at here.
+        ''' </remarks>
         Public Shared Operator /(matrix As LibraryMatrix, x#) As LibraryMatrix
             For Each ms2 As ms2 In matrix.ms2
                 If ms2.intensity = 0 Then
