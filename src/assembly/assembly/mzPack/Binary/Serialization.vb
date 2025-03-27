@@ -111,10 +111,13 @@ Namespace mzData.mzWebCache
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' write the product scan data into binary data file
         ''' </summary>
         ''' <param name="scan"></param>
         ''' <param name="file">should be in little endian byte order</param>
+        ''' <remarks>
+        ''' this function will not write the peak annotation metadata at here
+        ''' </remarks>
         <Extension>
         Public Sub WriteBuffer(scan As ScanMS2, file As BinaryDataWriter)
             Call file.Write(scan.scan_id, BinaryStringFormat.ZeroTerminated)

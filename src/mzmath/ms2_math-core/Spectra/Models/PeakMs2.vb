@@ -75,6 +75,26 @@ Imports std = System.Math
 Namespace Spectra
 
     ''' <summary>
+    ''' json list model for save the annotation metadata for
+    ''' the ion and the corresponding peak fragments.
+    ''' </summary>
+    Public Class AnnotationMetadata
+
+        ''' <summary>
+        ''' <see cref="PeakMs2.meta"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property meta As Dictionary(Of String, String)
+        ''' <summary>
+        ''' A collection of the <see cref="ms2.Annotation"/> for each peaks 
+        ''' inside the collection <see cref="PeakMs2.mzInto"/>.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property annotation As String()
+
+    End Class
+
+    ''' <summary>
     ''' 将mzXML文件之中的每一个ms2 scan转换而来
     ''' </summary>
     ''' <remarks>
@@ -196,6 +216,16 @@ Namespace Spectra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function GetIons() As IEnumerable(Of ms2) Implements ISpectrum.GetIons
             Return mzInto.AsEnumerable
+        End Function
+
+        Public Function GetAnnotationJsonModel() As AnnotationMetadata
+            Return New AnnotationMetadata With {
+                .annotation = mzInto _
+                    .SafeQuery _
+                    .Select(Function(i) i.Annotation) _
+                    .ToArray,
+                .meta = If(meta, New Dictionary(Of String, String))
+            }
         End Function
 
         ''' <summary>
