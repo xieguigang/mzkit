@@ -281,10 +281,15 @@ Public Class mzPack : Implements IMZPack, IMsAssemblyPack
         Next
     End Function
 
-    Public Iterator Function GetMs2Peaks() As IEnumerable(Of PeakMs2)
+    ''' <summary>
+    ''' Load Msn products scans data
+    ''' </summary>
+    ''' <param name="loadProductTree"></param>
+    ''' <returns></returns>
+    Public Iterator Function GetMs2Peaks(Optional loadProductTree As Boolean = False) As IEnumerable(Of PeakMs2)
         For Each ms1 As ScanMS1 In MS
             For Each ms2 As ScanMS2 In ms1.products
-                Yield CastToPeakMs2(ms2, file:=source)
+                Yield CastToPeakMs2(ms2, file:=source, loadProductTree:=loadProductTree)
             Next
         Next
     End Function
@@ -296,7 +301,7 @@ Public Class mzPack : Implements IMZPack, IMsAssemblyPack
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function CastToPeakMs2(ms2 As ScanMS2, Optional file As String = "n/a") As PeakMs2
+    Public Shared Function CastToPeakMs2(ms2 As ScanMS2, Optional file As String = "n/a", Optional loadProductTree As Boolean = False) As PeakMs2
         Return New PeakMs2 With {
             .activation = ms2.activationMethod.ToString,
             .collisionEnergy = ms2.collisionEnergy,
@@ -308,7 +313,7 @@ Public Class mzPack : Implements IMZPack, IMsAssemblyPack
             .precursor_type = "",
             .rt = ms2.rt,
             .scan = ms2.scan_id,
-            .mzInto = ms2.GetMs.ToArray
+            .mzInto = ms2.GetMs(loadProductTree, MSn:=2).ToArray
         }
     End Function
 

@@ -208,6 +208,8 @@ Namespace Spectra
         ''' order of data processing:
         ''' 
         ''' ``intensity_cutoff -> centroid``
+        ''' 
+        ''' this function will always keeps the fragment peak annotation data.
         ''' </remarks>
         <Extension>
         Public Function Centroid(peaks As ms2(), tolerance As Tolerance, cutoff As LowAbundanceTrimming) As IEnumerable(Of ms2)
@@ -251,8 +253,15 @@ Namespace Spectra
         ''' <param name="tolerance"></param>
         ''' <param name="cutoff"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this function will keeps the annotation metadata for the peaks.
+        ''' </remarks>
         <Extension>
-        Public Function Centroid(peaks As ms2(), tolerance As Tolerance, cutoff As LowAbundanceTrimming, aggregate As Func(Of IEnumerable(Of Double), Double)) As IEnumerable(Of ms2)
+        Public Function Centroid(peaks As ms2(),
+                                 tolerance As Tolerance,
+                                 cutoff As LowAbundanceTrimming,
+                                 aggregate As Func(Of IEnumerable(Of Double), Double)) As IEnumerable(Of ms2)
+
             ' removes low intensity fragment peaks
             ' for save calculation time
             peaks = cutoff.Trim(peaks)

@@ -149,6 +149,11 @@ Namespace ASCII.MGF
         ''' <param name="ion"></param>
         ''' <param name="out"></param>
         ''' <param name="relativeIntensity"></param>
+        ''' <remarks>
+        ''' this function supports write peak annotation metadata into the mgf file, 
+        ''' the msn peak <see cref="ms2.Annotation"/> data will be write beside the 
+        ''' [m/z, intensity] tuple line.
+        ''' </remarks>
         <Extension>
         Public Sub WriteAsciiMgf(ion As Ions, out As TextWriter, Optional relativeIntensity As Boolean = False)
             Call out.WriteLine("BEGIN IONS")

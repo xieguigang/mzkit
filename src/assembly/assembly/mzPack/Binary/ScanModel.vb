@@ -68,6 +68,12 @@ Namespace mzData.mzWebCache
     ''' </summary>
     Public Module ScanModel
 
+        ''' <summary>
+        ''' make model object conversion
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <param name="tag_filesource"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Scan2(i As PeakMs2, Optional tag_filesource As Boolean = True) As ScanMS2
             Dim ionMode As Integer = 1
@@ -85,7 +91,10 @@ Namespace mzData.mzWebCache
                 .rt = i.rt,
                 .scan_id = If(tag_filesource, $"{i.file}#{i.lib_guid}", i.lib_guid),
                 .collisionEnergy = i.collisionEnergy,
-                .polarity = ionMode
+                .polarity = ionMode,
+                .metadata = i.mzInto _
+                    .Select(Function(mzi) mzi.Annotation) _
+                    .ToArray
             }
         End Function
 
