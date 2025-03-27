@@ -205,8 +205,10 @@ Namespace Spectra.Xml
         End Function
 
         Public Shared Iterator Function CreateLinearMatrix(matrix As IEnumerable(Of SSM2MatrixFragment)) As IEnumerable(Of String)
-            For Each line As SSM2MatrixFragment In matrix
-                Yield $"{line.mz.ToString("F4")}_{line.query.ToString("G4")}_{line.ref.ToString("G4")}"
+            For Each line As SSM2MatrixFragment In matrix.SafeQuery
+                If Not line Is Nothing Then
+                    Yield $"{line.mz.ToString("F4")}_{line.query.ToString("G4")}_{line.ref.ToString("G4")}"
+                End If
             Next
         End Function
 
