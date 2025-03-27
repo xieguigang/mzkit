@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a60c1e66fef27e9446787079d404a6a3, assembly\mzPackExtensions\MZWork\Raw.vb"
+﻿#Region "Microsoft.VisualBasic::fbc3fcb6e2cf11e578f5fc772c7fd2fa, assembly\mzPack\MZWork\Raw.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 289
-    '    Code Lines: 205 (70.93%)
-    ' Comment Lines: 40 (13.84%)
+    '   Total Lines: 292
+    '    Code Lines: 205 (70.21%)
+    ' Comment Lines: 43 (14.73%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 44 (15.22%)
-    '     File Size: 10.17 KB
+    '   Blank Lines: 44 (15.07%)
+    '     File Size: 10.26 KB
 
 
     '     Class Raw

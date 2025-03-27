@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::630c471f09194480df9c7bb301700c17, visualize\plot\PlotMassWindowXIC.vb"
+﻿#Region "Microsoft.VisualBasic::f48e321f118b937c1f1038e2811d41f0, visualize\plot\PlotMassWindowXIC.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 221
-    '    Code Lines: 169 (76.47%)
-    ' Comment Lines: 26 (11.76%)
+    '   Total Lines: 228
+    '    Code Lines: 175 (76.75%)
+    ' Comment Lines: 26 (11.40%)
     '    - Xml Docs: 96.15%
     ' 
-    '   Blank Lines: 26 (11.76%)
-    '     File Size: 8.83 KB
+    '   Blank Lines: 27 (11.84%)
+    '     File Size: 9.09 KB
 
 
     ' Class PlotMassWindowXIC

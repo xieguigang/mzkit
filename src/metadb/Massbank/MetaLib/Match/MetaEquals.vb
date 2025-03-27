@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::510067b865d27cd95550a9a1c8a33f32, metadb\Massbank\MetaLib\Match\MetaEquals.vb"
+﻿#Region "Microsoft.VisualBasic::5129398f10de7501347c42ea171fae0d, metadb\Massbank\MetaLib\Match\MetaEquals.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 81
-    '    Code Lines: 61 (75.31%)
-    ' Comment Lines: 3 (3.70%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 95
+    '    Code Lines: 67 (70.53%)
+    ' Comment Lines: 7 (7.37%)
+    '    - Xml Docs: 57.14%
     ' 
-    '   Blank Lines: 17 (20.99%)
-    '     File Size: 2.82 KB
+    '   Blank Lines: 21 (22.11%)
+    '     File Size: 3.21 KB
 
 
     '     Class MetaEquals
@@ -52,7 +52,16 @@
     ' 
     '         Function: Agreement, CompareXref, Equals
     ' 
-    '         Sub: agreementInternal
+    '         Sub: CompareXref
+    '         Class SimpleCheck
+    ' 
+    '             Properties: score
+    ' 
+    '             Function: ToString
+    ' 
+    '             Sub: no, yes
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

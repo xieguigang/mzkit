@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f05ee6a81ab7e67fd45c5c37327dadb, metadb\Chemoinformatics\SDF\Struct\Atom.vb"
+﻿#Region "Microsoft.VisualBasic::8902466b4886e7fb5dcb38135c1df2c3, metadb\Chemoinformatics\SDF\Struct\Atom.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 80.00%
     ' 
     '   Blank Lines: 24 (16.78%)
-    '     File Size: 4.63 KB
+    '     File Size: 4.65 KB
 
 
     '     Class Atom

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14754213b4588cad27ceb15c833bf89d, mzmath\MSEngine\AnnotationPack\Report\ReportRender.vb"
+﻿#Region "Microsoft.VisualBasic::410dcc33bc6765af76bc6e4554041ef5, mzmath\MSEngine\AnnotationPack\Report\ReportRender.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 300
-    '    Code Lines: 219 (73.00%)
-    ' Comment Lines: 35 (11.67%)
+    '   Total Lines: 308
+    '    Code Lines: 226 (73.38%)
+    ' Comment Lines: 35 (11.36%)
     '    - Xml Docs: 80.00%
     ' 
-    '   Blank Lines: 46 (15.33%)
-    '     File Size: 13.41 KB
+    '   Blank Lines: 47 (15.26%)
+    '     File Size: 13.82 KB
 
 
     ' Class ReportRender

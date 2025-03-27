@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc76264489ba68a9ce4c59e23bd2ef97, metadb\Massbank\MetaLib\Models\CrossReference\Xref.vb"
+﻿#Region "Microsoft.VisualBasic::dfdd932cef7009f9e3289455cc04df02, metadb\Massbank\MetaLib\Models\CrossReference\Xref.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 182
-    '    Code Lines: 108 (59.34%)
-    ' Comment Lines: 58 (31.87%)
-    '    - Xml Docs: 96.55%
+    '   Total Lines: 224
+    '    Code Lines: 141 (62.95%)
+    ' Comment Lines: 64 (28.57%)
+    '    - Xml Docs: 96.88%
     ' 
-    '   Blank Lines: 16 (8.79%)
-    '     File Size: 8.17 KB
+    '   Blank Lines: 19 (8.48%)
+    '     File Size: 9.72 KB
 
 
     '     Class xref
@@ -54,8 +54,9 @@
     '                     MeSH, MetaCyc, metlin, pubchem, SMILES
     '                     Wikipedia
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: Join, PopulateXrefs, ToString
+    '         Operators: (+2 Overloads) Like
     ' 
     ' 
     ' /********************************************************************************/

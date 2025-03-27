@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06992c379df3802dfab6d78bda52bb06, metadb\SMILES\AtomGroup.vb"
+﻿#Region "Microsoft.VisualBasic::9fa43995f9988ef4de2e54937b6eaea1, metadb\SMILES\AtomGroup.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 78
-    '    Code Lines: 60 (76.92%)
-    ' Comment Lines: 6 (7.69%)
+    '   Total Lines: 77
+    '    Code Lines: 60 (77.92%)
+    ' Comment Lines: 6 (7.79%)
     '    - Xml Docs: 83.33%
     ' 
-    '   Blank Lines: 12 (15.38%)
-    '     File Size: 3.20 KB
+    '   Blank Lines: 11 (14.29%)
+    '     File Size: 3.19 KB
 
 
     ' Class AtomGroup
@@ -56,7 +56,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Public Class AtomGroup : Inherits Atom
 
@@ -135,4 +134,3 @@ Public Class AtomGroup : Inherits Atom
         Yield New AtomGroup("SH", "S", -1)       ' 巯基（假设作为阴离子）
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e425b8f9d872744270c07f35e74e2de, metadb\Chemoinformatics\ChemicalDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::44c4790d90303be74f42cc20f330b3ac, metadb\Chemoinformatics\ChemicalDescriptor.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 217
-    '    Code Lines: 148 (68.20%)
-    ' Comment Lines: 32 (14.75%)
+    '   Total Lines: 254
+    '    Code Lines: 182 (71.65%)
+    ' Comment Lines: 32 (12.60%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 37 (17.05%)
-    '     File Size: 7.36 KB
+    '   Blank Lines: 40 (15.75%)
+    '     File Size: 8.92 KB
 
 
     ' Class Value
@@ -72,7 +72,7 @@
     '                 Odor, RotatableBonds, schema, Solubility, Taste
     '                 TautoCount, TopologicalPolarSurfaceArea, VaporPressure, XLogP3, XLogP3_AA
     ' 
-    '     Constructor: (+2 Overloads) Sub New
+    '     Constructor: (+3 Overloads) Sub New
     '     Function: FromBytes, GetBytesBuffer, GetEnumerator, getOne, TryParseDouble
     '               TryParseInteger
     ' 
