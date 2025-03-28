@@ -72,6 +72,9 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Language
 Imports std = System.Math
 
+''' <summary>
+''' Helper for read/write of the imaging pixel data into cdf file
+''' </summary>
 Public Module PixelsCDF
 
     ''' <summary>
@@ -82,7 +85,11 @@ Public Module PixelsCDF
     ''' <param name="dimension"></param>
     ''' <param name="tolerance"></param>
     <Extension>
-    Public Sub CreateCDF(loadedPixels As PixelData(), file As Stream, dimension As Size, tolerance As Tolerance, Optional rgb As RGBConfigs = Nothing)
+    Public Sub CreateCDF(loadedPixels As PixelData(), file As Stream,
+                         dimension As Size,
+                         tolerance As Tolerance,
+                         Optional rgb As RGBConfigs = Nothing)
+
         Using matrix As New CDFWriter(file)
             Dim mz As New List(Of Double)
             Dim intensity As New List(Of Double)
