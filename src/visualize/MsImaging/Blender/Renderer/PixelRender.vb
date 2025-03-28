@@ -201,7 +201,7 @@ Namespace Blender
                 Call g.Flush()
 
 #If NETCOREAPP Then
-                Return CType(DirectCast(g, GdiRasterGraphics).ImageResource, Bitmap)
+                Return New Bitmap(DirectCast(g, GdiRasterGraphics).ImageResource)
 #End If
             End Using
 
