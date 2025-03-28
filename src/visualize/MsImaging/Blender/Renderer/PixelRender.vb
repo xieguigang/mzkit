@@ -245,15 +245,17 @@ Namespace Blender
             Dim raw As Bitmap = DrawBackground(dimension, Color.Transparent)
             Dim defaultColor As Color = defaultFill.TranslateColor
             Dim skipTransparent As Boolean = Not overlaps Is Nothing
+            Dim isTransparentFill As Boolean = defaultFill.TextEquals("Transparent")
 
             Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw)
                 For Each point As PixelData In PixelData.ScalePixels(pixels)
                     level = point.level
 
-                    If level <= 0.000005 Then
+                    If level <= 0.000005 OrElse level.IsNaNImaginary Then
                         color = defaultColor
 
-                        If skipTransparent Then
+                        ' skip draw on this pixel for missing pixel
+                        If skipTransparent OrElse isTransparentFill Then
                             Continue For
                         End If
                     Else
@@ -262,7 +264,7 @@ Namespace Blender
                         If index <= 0 Then
                             index = 0
 
-                            If skipTransparent Then
+                            If skipTransparent OrElse isTransparentFill Then
                                 Continue For
                             End If
                         End If
