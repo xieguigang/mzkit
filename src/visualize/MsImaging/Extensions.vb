@@ -71,6 +71,28 @@ Imports Point = System.Drawing.Point
 <HideModuleName>
 Public Module Extensions
 
+    <Extension>
+    Public Function Clamp(ion As SingleIonLayer, min As Double, max As Double) As SingleIonLayer
+        If ion Is Nothing Then Return ion
+
+        Return New SingleIonLayer With {
+            .DimensionSize = ion.DimensionSize,
+            .IonMz = ion.IonMz,
+            .MSILayer = ion.MSILayer _
+                .Select(Function(p)
+                            Return New PixelData(
+                                x:=p.x,
+                                y:=p.y,
+                                into:=If(p.intensity > max, max, If(p.intensity < min, min, p.intensity))) With {
+                                .level = p.level,
+                                .mz = p.mz,
+                                .sampleTag = p.sampleTag
+                            }
+                        End Function) _
+                .ToArray
+        }
+    End Function
+
     ''' <summary>
     ''' get pixels boundary of the MSImaging
     ''' </summary>
