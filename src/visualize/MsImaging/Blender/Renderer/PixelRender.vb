@@ -244,8 +244,8 @@ Namespace Blender
             ' create a blank canvas image
             Dim raw As Bitmap = DrawBackground(dimension, Color.Transparent)
             Dim defaultColor As Color = defaultFill.TranslateColor
-            Dim skipTransparent As Boolean = Not overlaps Is Nothing
             Dim isTransparentFill As Boolean = defaultFill.TextEquals("Transparent")
+            Dim skipTransparent As Boolean = (Not overlaps Is Nothing) OrElse isTransparentFill
 
             Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw)
                 For Each point As PixelData In PixelData.ScalePixels(pixels)
