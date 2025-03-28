@@ -71,6 +71,34 @@ Imports Point = System.Drawing.Point
 <HideModuleName>
 Public Module Extensions
 
+    ''' <summary>
+    ''' Clamp of the pixel data its <see cref="PixelData.intensity"/> to a given [<paramref name="min"/>,<paramref name="max"/>] range.
+    ''' </summary>
+    ''' <param name="pixels"></param>
+    ''' <param name="min"></param>
+    ''' <param name="max"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function Clamp(pixels As IEnumerable(Of PixelData), min As Double, max As Double) As IEnumerable(Of PixelData)
+        For Each p As PixelData In pixels.SafeQuery
+            Yield New PixelData(
+                x:=p.x,
+                y:=p.y,
+                into:=If(p.intensity > max, max, If(p.intensity < min, min, p.intensity))) With {
+                    .level = p.level,
+                    .mz = p.mz,
+                    .sampleTag = p.sampleTag
+            }
+        Next
+    End Function
+
+    ''' <summary>
+    ''' Clamp of the pixel data its <see cref="PixelData.intensity"/> to a given [<paramref name="min"/>,<paramref name="max"/>] range.
+    ''' </summary>
+    ''' <param name="ion"></param>
+    ''' <param name="min"></param>
+    ''' <param name="max"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Clamp(ion As SingleIonLayer, min As Double, max As Double) As SingleIonLayer
         If ion Is Nothing Then Return ion
@@ -79,16 +107,7 @@ Public Module Extensions
             .DimensionSize = ion.DimensionSize,
             .IonMz = ion.IonMz,
             .MSILayer = ion.MSILayer _
-                .Select(Function(p)
-                            Return New PixelData(
-                                x:=p.x,
-                                y:=p.y,
-                                into:=If(p.intensity > max, max, If(p.intensity < min, min, p.intensity))) With {
-                                .level = p.level,
-                                .mz = p.mz,
-                                .sampleTag = p.sampleTag
-                            }
-                        End Function) _
+                .Clamp(min, max) _
                 .ToArray
         }
     End Function
