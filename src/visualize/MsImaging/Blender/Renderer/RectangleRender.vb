@@ -72,6 +72,8 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Scaler
+
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -248,35 +250,27 @@ Namespace Blender
             Return RenderPixels(pixels, dimension, heatmap.CreateBrushParameters)
         End Function
 
-        Private Sub FillLayerInternal(g As IGraphics,
-                                      pixels() As PixelData,
-                                      defaultColor As Brush,
-                                      colors As SolidBrush(),
-                                      Offset As Point)
+        Private Sub FillLayerInternal(g As IGraphics, pixels() As PixelData, scale As ValueScaleColorProfile, Offset As Point)
             Dim color As Brush
-            Dim index As Integer
-            Dim levelRange As DoubleRange = New Double() {0, 1}
-            Dim indexrange As DoubleRange = New Double() {0, colors.Length - 1}
+            Dim defaultColor As New SolidBrush(scale.DefaultColor)
             Dim dimSize As New SizeF(1, 1)
+            Dim intensityRange As Double() = scale.ValueMinMax
 
-            For Each point As PixelData In PixelData.ScalePixels(pixels)
+            scale = scale.ReScaleToValueRange(0, 1)
+
+            For Each point As PixelData In PixelData.ScalePixels(pixels, setRange:=intensityRange)
                 Dim level As Double = point.level
                 Dim pos As New PointF With {
                     .X = (point.x - 1) + Offset.X,
                     .Y = (point.y - 1) + Offset.Y
                 }
                 Dim rect As New RectangleF(pos, dimSize)
+                Dim index As Integer
 
-                If level <= 0.0 Then
+                color = scale.GetSolidColor(level, index)
+
+                If level <= 0.0 OrElse index <= 0 Then
                     color = defaultColor
-                Else
-                    index = levelRange.ScaleMapping(level, indexrange)
-
-                    If index <= 0 Then
-                        color = defaultColor
-                    Else
-                        color = colors(index)
-                    End If
                 End If
 
                 ' imzXML里面的坐标是从1开始的
