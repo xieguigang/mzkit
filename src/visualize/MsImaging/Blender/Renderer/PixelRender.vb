@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 
@@ -213,22 +214,9 @@ Namespace Blender
         ''' </summary>
         ''' <param name="pixels"></param>
         ''' <param name="dimension">the scan size</param>
-        ''' <param name="colorSet"></param>
-        ''' <param name="mapLevels"></param>
         ''' <returns></returns>
-        Public Overrides Function RenderPixels(pixels As PixelData(), dimension As Size,
-                                               Optional colorSet As String = "YlGnBu:c8",
-                                               Optional mapLevels% = 25,
-                                               Optional defaultFill As String = "Transparent") As GraphicsData
-
-            Dim brushColors As SolidBrush() = Designer _
-                .GetColors(colorSet, mapLevels) _
-                .Select(Function(c)
-                            Return New SolidBrush(c)
-                        End Function) _
-                .ToArray
-
-            Return RenderPixels(pixels, dimension, brushColors, defaultFill)
+        Public Overrides Function RenderPixels(pixels As PixelData(), dimension As Size, heatmap As HeatMapParameters) As GraphicsData
+            Return RenderPixels(pixels, dimension, heatmap.GetBrushes, heatmap.defaultFill.ToHtmlColor)
         End Function
 
         ''' <summary>

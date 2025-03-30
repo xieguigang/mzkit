@@ -154,6 +154,9 @@ Namespace Blender
         ''' <param name="pixels"></param>
         ''' <param name="dimension">the scan size</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' <see cref="HeatMapParameters.defaultFill"/> configs of the background of the MS-imaging chartting.
+        ''' </remarks>
         Public MustOverride Function RenderPixels(pixels As PixelData(), dimension As Size, heatmap As HeatMapParameters) As GraphicsData
 
         ''' <summary>

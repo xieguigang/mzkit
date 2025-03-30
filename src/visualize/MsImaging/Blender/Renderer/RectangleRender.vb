@@ -71,6 +71,8 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
+
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -244,22 +246,9 @@ Namespace Blender
         ''' <param name="dimension">
         ''' the ms-imaging canvas size
         ''' </param>
-        ''' <param name="colorSet"></param>
-        ''' <param name="mapLevels"></param>
-        ''' <param name="defaultFill">
-        ''' the background of the MS-imaging chartting.
-        ''' </param>
         ''' <returns></returns>
-        Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size,
-                                               Optional colorSet As String = "YlGnBu:c8",
-                                               Optional mapLevels As Integer = 25,
-                                               Optional defaultFill As String = "Transparent") As GraphicsData
-
-            Dim colors As SolidBrush() = Designer.GetColors(colorSet, mapLevels) _
-                .Select(Function(c) New SolidBrush(c)) _
-                .ToArray
-
-            Return RenderPixels(pixels, dimension, colors, defaultFill)
+        Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, heatmap As HeatMapParameters) As GraphicsData
+            Return RenderPixels(pixels, dimension, heatmap.GetBrushes, heatmap.defaultFill.ToHtmlColor)
         End Function
 
         Private Sub FillLayerInternal(g As IGraphics,
