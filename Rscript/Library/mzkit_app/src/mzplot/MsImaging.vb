@@ -1209,12 +1209,11 @@ Module MsImaging
             pixels = filter.DoIntensityScale(pixels, dimSize)
         End If
 
+        Dim heatmap As New HeatMapParameters(colorSet, colorLevels, defaultFill)
         Dim image As Image = engine.RenderPixels(
             pixels:=pixels,
             dimension:=dimSize,
-            colorSet:=colorSet,
-            defaultFill:=defaultFill,
-            mapLevels:=colorLevels
+            heatmap:=heatmap
         ).AsGDIImage
         Dim scaleSize As New Size(image.Width * pointSize.Width, image.Height * pointSize.Height)
 
