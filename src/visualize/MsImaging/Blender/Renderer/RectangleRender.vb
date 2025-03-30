@@ -73,7 +73,6 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 
-
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
 Imports Pens = System.Drawing.Pens
@@ -216,9 +215,7 @@ Namespace Blender
             Call FillLayerInternal(g, pixels, colorSet.First, colorSet, offset)
         End Sub
 
-        Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, colorSet() As SolidBrush,
-                                               Optional defaultFill As String = "Transparent") As GraphicsData
-
+        Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, heatmap As HeatMapBrushes) As GraphicsData
             Dim defaultColor As Brush = defaultFill.GetBrush
             Dim w = dimension.Width
             Dim h = dimension.Height
@@ -248,7 +245,7 @@ Namespace Blender
         ''' </param>
         ''' <returns></returns>
         Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, heatmap As HeatMapParameters) As GraphicsData
-            Return RenderPixels(pixels, dimension, heatmap.GetBrushes, heatmap.defaultFill.ToHtmlColor)
+            Return RenderPixels(pixels, dimension, heatmap.CreateBrushParameters)
         End Function
 
         Private Sub FillLayerInternal(g As IGraphics,
