@@ -73,6 +73,8 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Scaler
+Imports System.Runtime.CompilerServices
+
 
 
 #If NET48 Then
@@ -214,13 +216,17 @@ Namespace Blender
         End Function
 
         Public Overloads Sub RenderPixels(g As IGraphics, offset As Point, pixels() As PixelData, colorSet() As SolidBrush)
-            Call FillLayerInternal(g, pixels, colorSet.First, colorSet, offset)
+            Dim heatmap As New HeatMapBrushes(colorSet, colorSet(0).Color.ToHtmlColor)
+            Dim scale As ValueScaleColorProfile = heatmap.GetMapping(From p As PixelData In pixels Select p.intensity)
+
+            Call FillLayerInternal(g, pixels, scale, offset)
         End Sub
 
         Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, heatmap As HeatMapBrushes) As GraphicsData
-            Dim defaultColor As Brush = defaultFill.GetBrush
+            Dim defaultColor As Brush = heatmap.defaultFill.GetBrush
             Dim w = dimension.Width
             Dim h = dimension.Height
+            Dim scale As ValueScaleColorProfile = heatmap.GetMapping(From p As PixelData In pixels Select p.intensity)
 
             If TypeOf defaultColor Is TextureBrush Then
                 ' the background is a gdi image 
@@ -231,10 +237,10 @@ Namespace Blender
             Return g.GraphicsPlots(
                 size:=New Size(w, h),
                 padding:=New Padding,
-                bg:=defaultFill,
+                bg:=heatmap.defaultFill,
                 driver:=driver,
                 plotAPI:=Sub(ByRef g, region)
-                             Call FillLayerInternal(g, pixels, defaultColor, colorSet, Nothing)
+                             Call FillLayerInternal(g, pixels, scale, Nothing)
                          End Sub)
         End Function
 
@@ -246,6 +252,8 @@ Namespace Blender
         ''' the ms-imaging canvas size
         ''' </param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, heatmap As HeatMapParameters) As GraphicsData
             Return RenderPixels(pixels, dimension, heatmap.CreateBrushParameters)
         End Function
@@ -282,8 +290,6 @@ Namespace Blender
         Public Overrides Function LayerOverlaps(layers()() As PixelData, dimension As Size, colorSet As MzLayerColorSet,
                                                 Optional defaultFill As String = "Transparent",
                                                 Optional mapLevels As Integer = 25) As GraphicsData
-
-            Dim defaultColor As SolidBrush = defaultFill.GetBrush
             Dim i As i32 = Scan0
             Dim w = dimension.Width
             Dim h = dimension.Height
@@ -291,7 +297,7 @@ Namespace Blender
             Return g.GraphicsPlots(
                 size:=New Size(w, h),
                 padding:=New Padding,
-                bg:=defaultColor.Color.ToHtmlColor,
+                bg:=defaultFill,
                 driver:=driver,
                 plotAPI:=Sub(ByRef g, region)
                              For Each layer As PixelData() In layers
@@ -299,8 +305,10 @@ Namespace Blender
                                  Dim colors As SolidBrush() = seq(50, 255, (255 - 30) / mapLevels) _
                                      .Select(Function(a) New SolidBrush(baseColor.Alpha(a))) _
                                      .ToArray
+                                 Dim heatmap As New HeatMapBrushes(colors, defaultFill)
+                                 Dim scale As ValueScaleColorProfile = heatmap.GetMapping(From p As PixelData In layer Select p.intensity)
 
-                                 Call FillLayerInternal(g, layer, defaultColor, colors, Nothing)
+                                 Call FillLayerInternal(g, layer, scale, Nothing)
                              Next
                          End Sub)
         End Function
@@ -328,8 +336,10 @@ Namespace Blender
                                                   Return New SolidBrush(baseColor.Alpha(a))
                                               End Function) _
                                       .ToArray
+                                 Dim heatmap As New HeatMapBrushes(colors, defaultFill)
+                                 Dim scale As ValueScaleColorProfile = heatmap.GetMapping(From p As PixelData In layer Select p.intensity)
 
-                                 Call FillLayerInternal(g, layer.value, defaultColor, colors, Nothing)
+                                 Call FillLayerInternal(g, layer.value, scale, Nothing)
                              Next
                          End Sub)
         End Function
