@@ -164,10 +164,8 @@ Namespace Blender
         ''' </summary>
         ''' <param name="pixels"></param>
         ''' <param name="dimension">the scan size</param>
-        ''' <param name="colorSet"></param>
         ''' <returns></returns>
-        Public MustOverride Function RenderPixels(pixels As PixelData(), dimension As Size, colorSet As SolidBrush(),
-                                                  Optional defaultFill As String = "Transparent") As GraphicsData
+        Public MustOverride Function RenderPixels(pixels As PixelData(), dimension As Size, heatmap As HeatMapBrushes) As GraphicsData
 
         ''' <summary>
         ''' 

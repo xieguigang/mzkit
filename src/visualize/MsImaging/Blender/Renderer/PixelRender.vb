@@ -215,7 +215,7 @@ Namespace Blender
         ''' <param name="dimension">the scan size</param>
         ''' <returns></returns>
         Public Overrides Function RenderPixels(pixels As PixelData(), dimension As Size, heatmap As HeatMapParameters) As GraphicsData
-            Return RenderPixels(pixels, dimension, heatmap.GetBrushes, heatmap.defaultFill.ToHtmlColor)
+            Return RenderPixels(pixels, dimension, New HeatMapBrushes(heatmap))
         End Function
 
         ''' <summary>
@@ -223,11 +223,9 @@ Namespace Blender
         ''' </summary>
         ''' <param name="pixels"></param>
         ''' <param name="dimension">the scan size</param>
-        ''' <param name="colorSet"></param>
         ''' <returns>a gdi+ image obejct with size which is specified by
         ''' <paramref name="dimension"/> parameter.</returns>
-        Public Overrides Function RenderPixels(pixels As PixelData(), dimension As Size, colorSet As SolidBrush(),
-                                               Optional defaultFill As String = "Transparent") As GraphicsData
+        Public Overrides Function RenderPixels(pixels As PixelData(), dimension As Size, heatmap As HeatMapBrushes) As GraphicsData
             Dim color As Color
             Dim colors As Color() = colorSet.Select(Function(br) br.Color).ToArray
             Dim index As Integer
