@@ -23,6 +23,13 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
+    <Title>MS-Imaging data visualization</Title>
+    <Authors>xieguigang</Authors>
+    <Company>BioNovoGene</Company>
+    <Product>MZKit</Product>
+    <Description>Make ms-imaging heatmap data visualization of the sample data</Description>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/xieguigang/mzkit.git</RepositoryUrl>
   </PropertyGroup>
 
  
@@ -60,6 +67,8 @@
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows|AnyCPU'">
@@ -78,6 +87,8 @@
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">
@@ -96,6 +107,8 @@
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|x64'">
@@ -114,6 +127,8 @@
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0-windows|AnyCPU'">
@@ -131,6 +146,8 @@
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0-windows|x64'">
@@ -152,6 +169,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineConstants>UNIX=1</DefineConstants>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net6.0-windows|AnyCPU'">
@@ -167,6 +186,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net48|AnyCPU'">
     <DebugType>full</DebugType>
     <DefineTrace>True</DefineTrace>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net6.0-windows|x64'">
@@ -182,6 +202,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net48|x64'">
     <DebugType>full</DebugType>
     <DefineConstants>UNIX=1</DefineConstants>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0-windows|AnyCPU'">
@@ -199,6 +221,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineTrace>True</DefineTrace>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0-windows|x64'">
@@ -220,6 +243,108 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineConstants>UNIX=1</DefineConstants>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows|x64'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|x64'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows|x64'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|x64'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net8.0-windows|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net8.0|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net8.0-windows|x64'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net8.0|x64'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net8.0-windows|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net8.0|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net8.0-windows|x64'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net8.0|x64'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0-windows|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0-windows|x64'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0|x64'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DefineTrace>True</DefineTrace>
   </PropertyGroup>
 
   <ItemGroup>

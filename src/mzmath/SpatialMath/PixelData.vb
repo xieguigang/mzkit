@@ -70,6 +70,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports HeatMapPixel = Microsoft.VisualBasic.Imaging.Pixel
 
@@ -202,16 +203,21 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel, RasterPix
     ''' 将响应度数据统一缩放到[0,1]之间
     ''' </summary>
     ''' <param name="pixels"></param>
+    ''' <param name="setRange">
+    ''' make configs of the intensity scale range manually.
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks>
+    ''' scale the <see cref="PixelData.intensity"/> to <see cref="PixelData.level"/> in normalized range ``[0,1]``.
     ''' </remarks>
-    Public Shared Iterator Function ScalePixels(pixels As PixelData()) As IEnumerable(Of PixelData)
+    Public Shared Iterator Function ScalePixels(pixels As PixelData(), Optional setRange As Double() = Nothing) As IEnumerable(Of PixelData)
         Dim level As Double
         Dim levelRange As DoubleRange = New Double() {0, 1}
         Dim intensityRange As DoubleRange = pixels _
             .Select(Function(p)
                         Return p.intensity
                     End Function) _
+            .JoinIterates(setRange) _
             .Range()
         Dim removesFilterSmall As Boolean = intensityRange.Max > 10
 

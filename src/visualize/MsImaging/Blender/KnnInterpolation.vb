@@ -65,7 +65,12 @@ Namespace Blender
     Public Module KnnInterpolation
 
         <Extension>
-        Private Function KnnInterpolation(Of T As PixelScanIntensity)(graph As Grid(Of T), x As Integer, y As Integer, deltaSize As Size, q As Double, aggregate As Func(Of Integer, Integer, T(), T)) As T
+        Private Function KnnInterpolation(Of T As PixelScanIntensity)(graph As Grid(Of T),
+                                                                      x As Integer,
+                                                                      y As Integer,
+                                                                      deltaSize As Size,
+                                                                      q As Double,
+                                                                      aggregate As Func(Of Integer, Integer, T(), T)) As T
             Dim query As T() = graph.Query(x, y, deltaSize).ToArray
 
             If query.IsNullOrEmpty Then
@@ -128,7 +133,11 @@ Namespace Blender
         End Function
 
         <Extension>
-        Public Function KnnFill(summary As MSISummary, Optional dx As Integer = 10, Optional dy As Integer = 10, Optional q As Double = 0.65) As MSISummary
+        Public Function KnnFill(summary As MSISummary,
+                                Optional dx As Integer = 10,
+                                Optional dy As Integer = 10,
+                                Optional q As Double = 0.65) As MSISummary
+
             Dim aggregate As Func(Of Integer, Integer, iPixelIntensity(), iPixelIntensity) =
                 Function(x, y, query)
                     Dim total = query.Select(Function(p) p.totalIon).Min
@@ -224,7 +233,13 @@ Namespace Blender
         End Function
 
         <Extension>
-        Private Function KnnInterpolation(graph As Grid(Of PixelData), x As Integer, y As Integer, deltaSize As Size, q As Double, random As Boolean) As PixelData
+        Private Function KnnInterpolation(graph As Grid(Of PixelData),
+                                          x As Integer,
+                                          y As Integer,
+                                          deltaSize As Size,
+                                          q As Double,
+                                          random As Boolean) As PixelData
+
             ' get non-empty pixels in current region block
             Dim query As PixelData() = graph.Query(x, y, deltaSize).ToArray
             Dim A As Double = deltaSize.Width * deltaSize.Height

@@ -162,11 +162,14 @@ declare namespace mzweb {
      *  be in data unit of seconds.
      * 
      * + default value Is ``null``.
+     * @param loadProductTree Load MSn product tree.
+     * 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function ms2_peaks(mzpack: object, precursorMz?: number, tolerance?: any, tag_source?: boolean, centroid?: boolean, norm?: boolean, filter_empty?: boolean, into_cutoff?: any, rt_window?: any, env?: object): object;
+   function ms2_peaks(mzpack: object, precursorMz?: number, tolerance?: any, tag_source?: boolean, centroid?: boolean, norm?: boolean, filter_empty?: boolean, into_cutoff?: any, rt_window?: any, loadProductTree?: boolean, env?: object): object;
    module open {
       /**
        * open a raw data files in common raw data format and then returns 

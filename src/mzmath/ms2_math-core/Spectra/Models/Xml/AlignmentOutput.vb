@@ -141,6 +141,10 @@ Namespace Spectra.Xml
         ''' <returns></returns>
         Public Property reference As Meta
 
+        ''' <summary>
+        ''' the spectrum alignment fragments details
+        ''' </summary>
+        ''' <returns></returns>
         <XmlArray("alignments")>
         Public Property alignments As SSM2MatrixFragment()
 
@@ -182,7 +186,8 @@ Namespace Spectra.Xml
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>
-        ''' the name of the generated <see cref="LibraryMatrix"/> object is generates from the metadata of query and reference.
+        ''' the name of the generated <see cref="LibraryMatrix"/> object is 
+        ''' generates from the metadata of query and reference.
         ''' </remarks>
         Public Function GetAlignmentMirror() As (query As LibraryMatrix, ref As LibraryMatrix)
             With New Ms2AlignMatrix(alignments)
@@ -205,11 +210,43 @@ Namespace Spectra.Xml
         End Function
 
         Public Shared Iterator Function CreateLinearMatrix(matrix As IEnumerable(Of SSM2MatrixFragment)) As IEnumerable(Of String)
-            For Each line As SSM2MatrixFragment In matrix
-                Yield $"{line.mz.ToString("F4")}_{line.query.ToString("G4")}_{line.ref.ToString("G4")}"
+            For Each line As SSM2MatrixFragment In matrix.SafeQuery
+                If Not line Is Nothing Then
+                    Dim mz = line.mz.ToString("F4")
+                    Dim q = line.query.ToString("G4")
+                    Dim r = line.ref.ToString("G4")
+                    Dim str = Strings.Trim(line.annotation).Replace(" "c, "-"c).Replace("_"c, "-"c).Replace("'"c, "-"c).Replace(""""c, "-"c)
+
+                    If str = "" Then
+                        Yield New String() {mz, q, r}.JoinBy("_")
+                    Else
+                        Yield New String() {mz, q, r, str}.JoinBy("_")
+                    End If
+                End If
             Next
         End Function
 
+        ''' <summary>
+        ''' Export function for the ``R#`` language
+        ''' </summary>
+        ''' <param name="mz"></param>
+        ''' <param name="query"></param>
+        ''' <param name="ref"></param>
+        ''' <param name="annotation_str"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function CreateLinearMatrix(mz As Double(), query As Double(), ref As Double(), annotation_str As String()) As IEnumerable(Of String)
+            Return CreateLinearMatrix(mz.Select(Function(mzi, i) New SSM2MatrixFragment(mzi, query(i), ref(i), annotation_str(i))))
+        End Function
+
+        ''' <summary>
+        ''' parse the string data as the peak fragment alignment details matrix.
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <returns>
+        ''' an alingment details matrix between the sample query and reference spectrum.
+        ''' </returns>
         Public Shared Iterator Function ParseAlignmentLinearMatrix(str As String) As IEnumerable(Of SSM2MatrixFragment)
             If Not str Is Nothing Then
                 Dim peaks As String() = str.Split
@@ -220,10 +257,15 @@ Namespace Spectra.Xml
                     Dim query = Val(tokens(1))
                     Dim refer = Val(tokens(2))
 
+                    ' optional annotation string of current
+                    ' spectrum peak fragment alingment.
+                    str = tokens.ElementAtOrNull(3)
+
                     Yield New SSM2MatrixFragment With {
                         .mz = mz,
                         .query = query,
-                        .ref = refer
+                        .ref = refer,
+                        .annotation = str
                     }
                 Next
             End If

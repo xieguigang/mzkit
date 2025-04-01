@@ -59,7 +59,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
@@ -72,6 +71,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports HeatMapBrushes = Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.HeatMapBrushes
 
 Public Class DualRegionUnionPlot : Inherits Plot
 
@@ -156,11 +156,14 @@ Public Class DualRegionUnionPlot : Inherits Plot
         }
         Dim MSI1 As Image, MSI2 As Image
         Dim engine As New PixelRender(heatmapRender:=False)
+        Dim heatmap As HeatMapBrushes
 
-        MSI1 = engine.RenderPixels(region1.MSILayer, MSIsize, colorSet:=colorSet1).AsGDIImage
+        heatmap = New HeatMapBrushes(colorSet1, NameOf(Color.Transparent))
+        MSI1 = engine.RenderPixels(region1.MSILayer, MSIsize, heatmap).AsGDIImage
         MSI1 = Drawer.ScaleLayer(MSI1, rect.Width, rect.Height)
 
-        MSI2 = engine.RenderPixels(region2.MSILayer, MSIsize, colorSet:=colorSet2).AsGDIImage
+        heatmap = New HeatMapBrushes(colorSet2, NameOf(Color.Transparent))
+        MSI2 = engine.RenderPixels(region2.MSILayer, MSIsize, heatmap).AsGDIImage
         MSI2 = Drawer.ScaleLayer(MSI2, rect.Width, rect.Height)
 
         Call g.DrawAxis(canvas, scale,

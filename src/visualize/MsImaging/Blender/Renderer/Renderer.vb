@@ -65,7 +65,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -101,6 +100,9 @@ Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 
 Namespace Blender
 
+    ''' <summary>
+    ''' abstract model for pixel based heatmap render or the rectangle based pixel heatmap render
+    ''' </summary>
     Public MustInherit Class Renderer
 
         Protected heatmapMode As Boolean
@@ -151,23 +153,19 @@ Namespace Blender
         ''' </summary>
         ''' <param name="pixels"></param>
         ''' <param name="dimension">the scan size</param>
-        ''' <param name="colorSet"></param>
-        ''' <param name="mapLevels"></param>
         ''' <returns></returns>
-        Public MustOverride Function RenderPixels(pixels As PixelData(), dimension As Size,
-                                                  Optional colorSet As String = "YlGnBu:c8",
-                                                  Optional mapLevels% = 25,
-                                                  Optional defaultFill As String = "Transparent") As GraphicsData
+        ''' <remarks>
+        ''' <see cref="HeatMapParameters.defaultFill"/> configs of the background of the MS-imaging chartting.
+        ''' </remarks>
+        Public MustOverride Function RenderPixels(pixels As PixelData(), dimension As Size, heatmap As HeatMapParameters) As GraphicsData
 
         ''' <summary>
         ''' 将所有的离子混合叠加再一个图层中可视化
         ''' </summary>
         ''' <param name="pixels"></param>
         ''' <param name="dimension">the scan size</param>
-        ''' <param name="colorSet"></param>
         ''' <returns></returns>
-        Public MustOverride Function RenderPixels(pixels As PixelData(), dimension As Size, colorSet As SolidBrush(),
-                                                  Optional defaultFill As String = "Transparent") As GraphicsData
+        Public MustOverride Function RenderPixels(pixels As PixelData(), dimension As Size, heatmap As HeatMapBrushes) As GraphicsData
 
         ''' <summary>
         ''' 
