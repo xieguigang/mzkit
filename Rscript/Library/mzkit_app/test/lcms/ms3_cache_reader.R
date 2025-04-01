@@ -10,8 +10,11 @@ let cache = "\\192.168.1.254\backup3\项目以外内容\2025\三级MSn测试\tes
 # loaddata |> write.mzPack(file = cachefile, version = 1);
 
 let data = open.mzpack(cachefile);
-let ions = ms2_peaks(data);
+let ions = ms2_peaks(data,loadProductTree=TRUE);
 
 assembly::write.mgf(ions, file = mgf_ascii);
 mzweb::write.cache(ions, file = cache, 
     tag_filesource = FALSE);
+
+
+let ions2 = mzweb::read.cache(cache);

@@ -535,6 +535,7 @@ Module MzWeb
                             For Each name As String In tags
                                 If m.ContainsKey(name) Then
                                     data(i).file = m(name)
+                                    Exit For
                                 End If
                             Next
                         End If
