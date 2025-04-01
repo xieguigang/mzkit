@@ -227,6 +227,20 @@ Namespace Spectra.Xml
         End Function
 
         ''' <summary>
+        ''' Export function for the ``R#`` language
+        ''' </summary>
+        ''' <param name="mz"></param>
+        ''' <param name="query"></param>
+        ''' <param name="ref"></param>
+        ''' <param name="annotation_str"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function CreateLinearMatrix(mz As Double(), query As Double(), ref As Double(), annotation_str As String()) As IEnumerable(Of String)
+            Return CreateLinearMatrix(mz.Select(Function(mzi, i) New SSM2MatrixFragment(mzi, query(i), ref(i), annotation_str(i))))
+        End Function
+
+        ''' <summary>
         ''' parse the string data as the peak fragment alignment details matrix.
         ''' </summary>
         ''' <param name="str"></param>
