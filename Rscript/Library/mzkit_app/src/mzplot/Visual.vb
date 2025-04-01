@@ -780,6 +780,15 @@ Module Visual
         Return XIC.plotOverlaps(args, env)
     End Function
 
+    ''' <summary>
+    ''' Parse the spectrum alignment details from the given string data
+    ''' </summary>
+    ''' <param name="s">
+    ''' A string data that represents the spectrum alignment details.
+    ''' </param>
+    ''' <returns>
+    ''' A collection of the <see cref="SSM2MatrixFragment"/> matrix data
+    ''' </returns>
     <ExportAPI("parse.spectrum_alignment")>
     Public Function ParseSpectrumAlignment(s As String) As AlignmentOutput
         Return AlignmentOutput.ParseAlignment(s)

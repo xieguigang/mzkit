@@ -79,7 +79,9 @@ Public Module FeatureRegions
     End Function
 
     <Extension>
-    Public Iterator Function TrimRegion(Of T As IMSIPixel)(layer As IEnumerable(Of T), polygon As Polygon2D, unionSize As Size) As IEnumerable(Of T)
+    Public Iterator Function TrimRegion(Of T As IMSIPixel)(layer As IEnumerable(Of T),
+                                                           polygon As Polygon2D,
+                                                           unionSize As Size) As IEnumerable(Of T)
         Dim xy As Index(Of String) = polygon.xpoints _
             .Select(Iterator Function(xi, idx) As IEnumerable(Of String)
                         For i As Integer = 0 To unionSize.Width
@@ -101,7 +103,9 @@ Public Module FeatureRegions
     End Function
 
     <Extension>
-    Public Iterator Function TakeRegion(Of T As IMSIPixel)(layer As IEnumerable(Of T), polygon As Polygon2D, unionSize As Size) As IEnumerable(Of T)
+    Public Iterator Function TakeRegion(Of T As IMSIPixel)(layer As IEnumerable(Of T),
+                                                           polygon As Polygon2D,
+                                                           unionSize As Size) As IEnumerable(Of T)
         Dim xy = layer _
             .GroupBy(Function(p) p.x) _
             .ToDictionary(Function(xr) xr.Key,

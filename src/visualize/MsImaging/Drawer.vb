@@ -64,6 +64,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
@@ -73,8 +74,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
-
+Imports HeatMapParameters = Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.HeatMapParameters
 
 #If NET48 Then
 Imports Microsoft.VisualBasic.Drawing
@@ -252,14 +252,9 @@ Public Class Drawer : Implements IDisposable
             New PixelRender(heatmapRender:=False),
             New RectangleRender(driver, heatmapRender:=False)
         )
+        Dim heatmap As New HeatMapParameters(colorSet, mapLevels, background)
 
-        Return engine.RenderPixels(
-            pixels:=pixels,
-            dimension:=dimension,
-            colorSet:=colorSet,
-            defaultFill:=background,
-            mapLevels:=mapLevels
-        )
+        Return engine.RenderPixels(pixels:=pixels, dimension:=dimension, heatmap:=heatmap)
     End Function
 
     Public Shared Function ScaleLayer(raw As Bitmap, dimension As Size, dimSize As Size) As Bitmap
@@ -306,6 +301,7 @@ Public Class Drawer : Implements IDisposable
 
         Dim pixels As PixelData() = pixelReader.LoadPixels({mz}, tolerance).ToArray
         Dim engine As New RectangleRender(driver, heatmapRender:=False)
+        Dim heatmap As New HeatMapParameters(colorSet, mapLevels, background)
 
         If Not filter Is Nothing Then
             pixels = filter.DoIntensityScale(pixels, dimSize:=dimension)
@@ -316,9 +312,7 @@ Public Class Drawer : Implements IDisposable
         Return engine.RenderPixels(
             pixels:=pixels,
             dimension:=dimension,
-            colorSet:=colorSet,
-            mapLevels:=mapLevels,
-            defaultFill:=background
+            heatmap:=heatmap
         )
     End Function
 
@@ -392,15 +386,14 @@ Public Class Drawer : Implements IDisposable
 
         Dim matrix As PixelData() = GetPixelsMatrix(rawPixels)
         Dim engine As Renderer = New RectangleRender(driver, heatmapRender:=False)
+        Dim heatmap As New HeatMapParameters(colorSet, mapLevels, background)
 
         Call $"rendering {matrix.Length} pixel blocks...".__INFO_ECHO
 
         Return engine.RenderPixels(
             pixels:=matrix,
             dimension:=dimension,
-            colorSet:=colorSet,
-            mapLevels:=mapLevels,
-            defaultFill:=background
+            heatmap:=heatmap
         )
     End Function
 

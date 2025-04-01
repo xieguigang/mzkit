@@ -1,63 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::666dee6b796dd6e1161ae4b6e79284e3, Rscript\Library\mzkit_app\src\mzkit\assembly\data.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 900
-    '    Code Lines: 617 (68.56%)
-    ' Comment Lines: 163 (18.11%)
-    '    - Xml Docs: 97.55%
-    ' 
-    '   Blank Lines: 120 (13.33%)
-    '     File Size: 37.39 KB
+' Summaries:
 
 
-    ' Module data
-    ' 
-    '     Function: createPeakMs2, getIntensity, getIonsSummaryTable, getMSMSTable, getRawXICSet
-    '               getScantime, getXICPoints, groupBy_ROI, libraryMatrix, LibraryTable
-    '               linearMatrix, makeROInames, MsdataFromDf, nfragments, rawXIC
-    '               readMatrix, representative_spectrum, RtSlice, simpleSearch, (+2 Overloads) splashId
-    '               TICTable, toString, unionPeaks, XIC, XICGroups
-    '               XICTable
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 900
+'    Code Lines: 617 (68.56%)
+' Comment Lines: 163 (18.11%)
+'    - Xml Docs: 97.55%
+' 
+'   Blank Lines: 120 (13.33%)
+'     File Size: 37.39 KB
+
+
+' Module data
+' 
+'     Function: createPeakMs2, getIntensity, getIonsSummaryTable, getMSMSTable, getRawXICSet
+'               getScantime, getXICPoints, groupBy_ROI, libraryMatrix, LibraryTable
+'               linearMatrix, makeROInames, MsdataFromDf, nfragments, rawXIC
+'               readMatrix, representative_spectrum, RtSlice, simpleSearch, (+2 Overloads) splashId
+'               TICTable, toString, unionPeaks, XIC, XICGroups
+'               XICTable
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -79,6 +79,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -428,6 +429,54 @@ Module data
             .ToArray
 
         Return alignments
+    End Function
+
+    ''' <summary>
+    ''' get alignment result tuple: query and reference
+    ''' </summary>
+    ''' <param name="align"></param>
+    ''' <returns>
+    ''' a tuple list object that contains spectrum alignment result:
+    ''' 
+    ''' 1. query - spectrum of sample query
+    ''' 2. reference - spectrum of library reference
+    ''' </returns>
+    <ExportAPI("alignment_ref")>
+    <RApiReturn("query", "reference")>
+    Public Function getAlignmentReference(align As AlignmentOutput, Optional query$ = "Query", Optional reference$ = "Reference") As Object
+        Dim tuple = align.GetAlignmentMirror
+        Dim list As New list(
+            slot("query") = tuple.query,
+            slot("reference") = tuple.ref
+        )
+
+        tuple.query.name = query
+        tuple.ref.name = reference
+
+        Return list
+    End Function
+
+    ''' <summary>
+    ''' Make alignment string
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="query"></param>
+    ''' <param name="reference"></param>
+    ''' <param name="annotation"></param>
+    ''' <returns></returns>
+    <ExportAPI("alignment_str")>
+    Public Function makeAlignmentString(<RRawVectorArgument> mz As Object,
+                                        <RRawVectorArgument> query As Object,
+                                        <RRawVectorArgument> reference As Object,
+                                        <RRawVectorArgument>
+                                        Optional annotation As Object = Nothing) As String
+
+        Return AlignmentOutput.CreateLinearMatrix(
+            mz:=CLRVector.asNumeric(mz),
+            query:=CLRVector.asNumeric(query),
+            ref:=CLRVector.asNumeric(reference),
+            annotation_str:=CLRVector.asCharacter(annotation)
+        ).JoinBy(" ")
     End Function
 
     ''' <summary>
