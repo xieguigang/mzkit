@@ -1,74 +1,74 @@
 ﻿#Region "Microsoft.VisualBasic::3808f53b0ca7c03e052abbb39d32e75a, assembly\assembly\mzPack\mzWebCache\ScanPopulator.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 186
-    '    Code Lines: 140 (75.27%)
-    ' Comment Lines: 17 (9.14%)
-    '    - Xml Docs: 88.24%
-    ' 
-    '   Blank Lines: 29 (15.59%)
-    '     File Size: 7.83 KB
+' Summaries:
 
 
-    '     Interface IScanReader
-    ' 
-    '         Function: CreateScan
-    ' 
-    '     Class ScanPopulator
-    ' 
-    '         Properties: verbose
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: CreateScan, CreateScanGeneral, (+2 Overloads) Load, PopulateValidScans, yieldFakeMs1
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 186
+'    Code Lines: 140 (75.27%)
+' Comment Lines: 17 (9.14%)
+'    - Xml Docs: 88.24%
+' 
+'   Blank Lines: 29 (15.59%)
+'     File Size: 7.83 KB
+
+
+'     Interface IScanReader
+' 
+'         Function: CreateScan
+' 
+'     Class ScanPopulator
+' 
+'         Properties: verbose
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: CreateScan, CreateScanGeneral, (+2 Overloads) Load, PopulateValidScans, yieldFakeMs1
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports std = System.Math
 
 Namespace mzData.mzWebCache
 
@@ -86,6 +86,10 @@ Namespace mzData.mzWebCache
     Public MustInherit Class ScanPopulator(Of Scan) : Implements IScanReader
 
         Protected ms1 As ScanMS1
+
+        ''' <summary>
+        ''' cache of the current MSn products list, this cache pool will be clear when move to next MS1 scan data.
+        ''' </summary>
         Protected products As New List(Of ScanMS2)
         Protected trim As LowAbundanceTrimming
         Protected ms1Err As Tolerance
@@ -191,8 +195,45 @@ Namespace mzData.mzWebCache
 
                     ms1 = scanVal
                 Else
+                    ' 20250401 the scan model is the mzkit mzpack data model
+                    ' scan id is not the raw id string that parsed from the
+                    ' xml file
+                    ' MS level prefix has been added into this scan id data
+                    ' MS1 - for mslevel = 1
+                    ' MS/MS - for mslevel = 2
+                    ' MSx - for mslevel > 2
                     Dim isMS2 As Boolean = InStr(scanVal.scan_id, "MS/MS") > 0
                     Dim parent_id As String = reader.GetParentScanNumber(scan)
+
+                    If parent_id Is Nothing AndAlso products.Any AndAlso Not isMS2 Then
+                        ' 20250401
+                        ' is MSn scan but missing parent scan id,
+                        ' this happends in mzML rawdata file, but
+                        ' the mzXML file does not.
+                        ' needs fix this problem for mzML file.
+                        Dim parentMz As Double = DirectCast(scanVal, ScanMS2).parentMz
+                        Dim check As ScanMS2 = products _
+                            .AsParallel _
+                            .Where(Function(ms2)
+                                       If ms2.mz Is Nothing Then
+                                           Return False
+                                       Else
+                                           For Each mzi As Double In ms2.mz
+                                               If std.Abs(mzi - parentMz) < 0.1 Then
+                                                   Return True
+                                               End If
+                                           Next
+
+                                           Return False
+                                       End If
+                                   End Function) _
+                            .OrderByDescending(Function(a) a.rt) _
+                            .FirstOrDefault
+
+                        If Not check Is Nothing Then
+                            parent_id = check.scan_id
+                        End If
+                    End If
 
                     If isMS2 OrElse parent_id Is Nothing Then
                         Call products.Add(scanVal)
@@ -203,6 +244,8 @@ Namespace mzData.mzWebCache
                         Call $"missing precursor scan of number({parent_id}) for {scanVal.scan_id}".Warning
                     End If
 
+                    ' add current product scan to the hash index
+                    ' for build next tree node
                     Call lastProduct.Add(reader.GetScanNumber(scan), scanVal)
                 End If
 
