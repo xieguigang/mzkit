@@ -7,6 +7,8 @@ m/z data operator module
 + [representative](data/representative.1) Create a representative spectrum from a given spectrum collection via a sum or mean aggregate method.
 + [nsize](data/nsize.1) get the size of the target ms peaks
 + [search](data/search.1) search the target query spectra against a reference mzpack data file
++ [alignment_ref](data/alignment_ref.1) get alignment result tuple: query and reference
++ [alignment_str](data/alignment_str.1) Make alignment string
 + [peakMs2](data/peakMs2.1) create a new ms2 peaks data object
 + [groupBy_ROI](data/groupBy_ROI.1) make a tuple list via grouping of the spectrum data via the ROI id inside the metadata list
 + [libraryMatrix](data/libraryMatrix.1) Create a library matrix object

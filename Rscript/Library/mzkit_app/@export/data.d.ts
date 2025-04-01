@@ -10,6 +10,33 @@
 */
 declare namespace data {
    /**
+    * get alignment result tuple: query and reference
+    * 
+    * 
+     * @param align -
+     * @param query 
+     * + default value Is ``'Query'``.
+     * @param reference 
+     * + default value Is ``'Reference'``.
+     * @return a tuple list object that contains spectrum alignment result:
+     *  
+     *  1. query - spectrum of sample query
+     *  2. reference - spectrum of library reference
+   */
+   function alignment_ref(align: object, query?: string, reference?: string): object;
+   /**
+    * Make alignment string
+    * 
+    * 
+     * @param mz -
+     * @param query -
+     * @param reference -
+     * @param annotation -
+     * 
+     * + default value Is ``null``.
+   */
+   function alignment_str(mz: any, query: any, reference: any, annotation?: any): string;
+   /**
     * make a tuple list via grouping of the spectrum data via the ROI id inside the metadata list
     * 
     * 
