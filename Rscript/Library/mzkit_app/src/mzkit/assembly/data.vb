@@ -443,12 +443,15 @@ Module data
     ''' </returns>
     <ExportAPI("alignment_ref")>
     <RApiReturn("query", "reference")>
-    Public Function getAlignmentReference(align As AlignmentOutput) As Object
+    Public Function getAlignmentReference(align As AlignmentOutput, Optional query$ = "Query", Optional reference$ = "Reference") As Object
         Dim tuple = align.GetAlignmentMirror
         Dim list As New list(
             slot("query") = tuple.query,
             slot("reference") = tuple.ref
         )
+
+        tuple.query.name = query
+        tuple.ref.name = reference
 
         Return list
     End Function
