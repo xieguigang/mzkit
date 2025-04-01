@@ -137,6 +137,12 @@ Namespace mzData.mzWebCache
             End Get
         End Property
 
+        ''' <summary>
+        ''' the file version level, for: 
+        ''' 
+        ''' - level1, only contains the MS1 and MS2 data
+        ''' - level2, since from the year 2025, version 1 data file supports ms1, ms2, and msn product tree data
+        ''' </summary>
         Dim level As Integer = 1
 
         ''' <summary>
@@ -377,6 +383,8 @@ Namespace mzData.mzWebCache
 
         Private Iterator Function populateMs2Products(nsize As Integer) As IEnumerable(Of ScanMS2)
             For i As Integer = 0 To nsize - 1
+                ' 20250401 read msn product data based on the
+                ' rawdata file level
                 Yield file.ReadScanMs2(level)
             Next
         End Function
