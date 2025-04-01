@@ -457,6 +457,29 @@ Module data
     End Function
 
     ''' <summary>
+    ''' Make alignment string
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="query"></param>
+    ''' <param name="reference"></param>
+    ''' <param name="annotation"></param>
+    ''' <returns></returns>
+    <ExportAPI("alignment_str")>
+    Public Function makeAlignmentString(<RRawVectorArgument> mz As Object,
+                                        <RRawVectorArgument> query As Object,
+                                        <RRawVectorArgument> reference As Object,
+                                        <RRawVectorArgument>
+                                        Optional annotation As Object = Nothing) As String
+
+        Return AlignmentOutput.CreateLinearMatrix(
+            mz:=CLRVector.asNumeric(mz),
+            query:=CLRVector.asNumeric(query),
+            ref:=CLRVector.asNumeric(reference),
+            annotation_str:=CLRVector.asCharacter(annotation)
+        ).JoinBy(" ")
+    End Function
+
+    ''' <summary>
     ''' create a new ms2 peaks data object
     ''' </summary>
     ''' <param name="precursor"></param>
