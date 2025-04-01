@@ -72,6 +72,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -101,8 +102,6 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Imports SIMDAdd = Microsoft.VisualBasic.Math.SIMD.Add
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
-
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen

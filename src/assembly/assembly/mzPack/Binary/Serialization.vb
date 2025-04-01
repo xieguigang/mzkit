@@ -173,7 +173,7 @@ Namespace mzData.mzWebCache
             If levels > 1 Then
                 ' 20250204 read multiple stage product tree data
                 If file.ReadInt32 > 0 Then
-                    ms2.product = ReadScanMs2(file)
+                    ms2.product = ReadScanMs2(file, levels)
                 End If
             End If
 
