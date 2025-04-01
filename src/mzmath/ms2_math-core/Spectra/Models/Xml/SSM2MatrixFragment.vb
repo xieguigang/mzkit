@@ -97,6 +97,12 @@ Namespace Spectra.Xml
         ''' <returns></returns>
         <XmlAttribute> Public Property da As String
 
+        ''' <summary>
+        ''' the annotation of current fragment peak <see cref="mz"/>.
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlText> Public Property annotation As String
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetSampleFragment() As ms2
             Return New ms2(mz, query)

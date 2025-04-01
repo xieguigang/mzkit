@@ -281,9 +281,20 @@ Namespace Spectra
                     .mz = mz,
                     .query = If(qmz Is Nothing, 0, qmz.intensity),
                     .ref = If(rmz Is Nothing, 0, rmz.intensity),
-                    .da = If(qmz Is Nothing OrElse rmz Is Nothing, Double.NaN, std.Abs(qmz.mz - rmz.mz))
+                    .da = If(qmz Is Nothing OrElse rmz Is Nothing, Double.NaN, std.Abs(qmz.mz - rmz.mz)),
+                    .annotation = CreateAnnotation(qmz, rmz)
                 }
             Next
+        End Function
+
+        Private Function CreateAnnotation(q As ms2, r As ms2) As String
+            If q.Annotation.StringEmpty(, True) Then
+                Return r.Annotation
+            ElseIf r.Annotation.StringEmpty(, True) Then
+                Return q.Annotation
+            Else
+                Return {q.Annotation, r.Annotation}.Distinct.JoinBy("_")
+            End If
         End Function
     End Module
 End Namespace

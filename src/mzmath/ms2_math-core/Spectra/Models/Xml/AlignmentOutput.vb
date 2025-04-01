@@ -141,6 +141,10 @@ Namespace Spectra.Xml
         ''' <returns></returns>
         Public Property reference As Meta
 
+        ''' <summary>
+        ''' the spectrum alignment fragments details
+        ''' </summary>
+        ''' <returns></returns>
         <XmlArray("alignments")>
         Public Property alignments As SSM2MatrixFragment()
 
@@ -204,10 +208,16 @@ Namespace Spectra.Xml
             Return $"{query} vs {reference}"
         End Function
 
-        Public Shared Iterator Function CreateLinearMatrix(matrix As IEnumerable(Of SSM2MatrixFragment)) As IEnumerable(Of String)
+        Public Shared Iterator Function CreateLinearMatrix(matrix As IEnumerable(Of SSM2MatrixFragment), Optional MSnFlag As Boolean = True) As IEnumerable(Of String)
             For Each line As SSM2MatrixFragment In matrix.SafeQuery
                 If Not line Is Nothing Then
-                    Yield $"{line.mz.ToString("F4")}_{line.query.ToString("G4")}_{line.ref.ToString("G4")}"
+                    Dim line_str As String = $"{line.mz.ToString("F4")}_{line.query.ToString("G4")}_{line.ref.ToString("G4")}"
+
+                    If MSnFlag AndAlso InStr(line.annotation, "MSn") > 0 Then
+                        Yield $"[{line_str}]"
+                    Else
+                        Yield line_str
+                    End If
                 End If
             Next
         End Function
