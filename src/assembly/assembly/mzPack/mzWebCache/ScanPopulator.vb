@@ -232,6 +232,8 @@ Namespace mzData.mzWebCache
 
                         If Not check Is Nothing Then
                             parent_id = check.scan_id
+                        Else
+                            parent_id = products.Last.scan_id
                         End If
                     End If
 
@@ -247,6 +249,7 @@ Namespace mzData.mzWebCache
                     ' add current product scan to the hash index
                     ' for build next tree node
                     Call lastProduct.Add(reader.GetScanNumber(scan), scanVal)
+                    Call lastProduct.Add(scanVal.scan_id, scanVal)
                 End If
 
                 ' adjust to 17 for make progress less verbose
