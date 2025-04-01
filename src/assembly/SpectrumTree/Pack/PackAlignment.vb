@@ -143,6 +143,13 @@ Namespace PackLib
             Dim hits As ___tmp()
             Dim q As IEnumerable(Of ___tmp)
 
+            If centroid Is Nothing OrElse centroid.Any(Function(mzi) mzi Is Nothing) Then
+                Throw New InvalidProgramException($"Unexpected null reference of the search query input collection, precursor ion: {mz1}!")
+            End If
+            If candidates Is Nothing OrElse candidates.Any(Function(ci) ci Is Nothing) Then
+                Throw New InvalidProgramException($"Unexpected null reference of the search reference candidates collection, precursor ion: {mz1}!")
+            End If
+
             If parallel Then
                 q = SearchParallel(centroid, candidates)
             Else
