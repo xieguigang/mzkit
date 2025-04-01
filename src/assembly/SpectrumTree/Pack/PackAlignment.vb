@@ -68,6 +68,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
 Namespace PackLib
@@ -138,18 +140,25 @@ Namespace PackLib
         Public Overrides Iterator Function Search(centroid() As ms2, mz1 As Double) As IEnumerable(Of ClusterHit)
             ' get spectrum reference via matches the precursor ions
             Dim candidates As BlockNode() = spectrum.QueryByMz(mz1).ToArray
-            Dim hits As New List(Of ___tmp)
+            Dim hits As ___tmp()
+            Dim q As IEnumerable(Of ___tmp)
 
             If parallel Then
-                Call hits.AddRange(SearchParallel(centroid, candidates))
+                q = SearchParallel(centroid, candidates)
             Else
-                Call hits.AddRange(SearchSequential(centroid, candidates))
+                q = SearchSequential(centroid, candidates)
+            End If
+
+            If q Is Nothing Then
+                Throw New InvalidProgramException($"Unexpected null reference of the search result collection, precursor ion: {mz1}, ms2 search: {centroid.SafeQuery.Select(Function(mzi) mzi).ToArray.GetJson}")
+            Else
+                hits = q.ToArray
             End If
 
             ' hits may contains multiple metabolite reference data
             ' multiple cluster object should be populates from
             ' this function?
-            If hits.Count > 0 Then
+            If hits.Length > 0 Then
                 For Each metabolite In hits.GroupBy(Function(i) i.id)
                     Yield reportClusterHit(centroid, hit_group:=metabolite)
                 Next
