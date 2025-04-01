@@ -1,0 +1,29 @@
+.\" man page create by R# package system.
+.TH DATA 1 2000-Jan "alignment_ref" "alignment_ref"
+.SH NAME
+alignment_ref \- get alignment result tuple: query and reference
+.SH SYNOPSIS
+\fIalignment_ref(\fBalign\fR as <generic> AlignmentOutput, 
+\fBquery\fR as string = "Query", 
+\fBreference\fR as string = "Reference");\fR
+.SH DESCRIPTION
+.PP
+get alignment result tuple: query and reference
+.PP
+.SH OPTIONS
+.PP
+\fBalign\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+a tuple list object that contains spectrum alignment result:
+ 
+ 1. query - spectrum of sample query
+ 2. reference - spectrum of library reference
+.PP
+.SH SEE ALSO
+data
+.SH FILES
+.PP
+mzkit.dll
+.PP
