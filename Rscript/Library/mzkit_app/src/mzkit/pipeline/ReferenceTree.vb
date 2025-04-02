@@ -91,23 +91,44 @@ Imports MetaboliteData = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
-''' the spectrum tree reference library tools
+''' Provides R language interface for mass spectrometry data processing and metabolite annotation using spectrum tree-based reference libraries.
 ''' </summary>
 ''' <remarks>
-''' the spectrum data is clustering and save in family 
-''' tree data structure.
+''' This module enables cross-language interoperability between VB.NET mass spectrometry algorithms and R scripting environments.
+''' 
+''' Key features include:
+''' 
+''' 1. Reference library management (Pack/Binary/Tree formats)
+''' 2. Spectrum similarity searches with multiple algorithms
+''' 3. Metabolite annotation pipeline integration
+''' 4. Library compression and optimization
+''' 5. Test dataset generation
+''' 6. Embedding generation for machine learning applications
+''' 
+''' Supported data types:
+''' 
+''' - mzPack containers
+''' - PeakMs2 spectra
+''' - LibraryMatrix objects
+''' - BioDeep metabolite metadata
+''' 
+''' Search algorithms implemented:
+''' 
+''' - Cosine similarity (dot product)
+''' - Jaccard index
+''' - Entropy-based scoring
+''' - Forward/reverse match validation
 ''' </remarks>
 <Package("spectrumTree")>
 Module ReferenceTreePkg
 
     ''' <summary>
-    ''' create new reference spectrum database
+    ''' Creates a new reference spectrum database file for storing spectral data.
     ''' </summary>
-    ''' <param name="file">
-    ''' A file path to save the spectrum reference database
-    ''' </param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="file">The file path where the spectrum database will be saved.</param>
+    ''' <param name="type">The type of cluster structure to create (Pack, Binary, or Tree).</param>
+    ''' <param name="env">The R environment for error handling and output.</param>
+    ''' <returns>An instance of ReferenceTree, ReferenceBinaryTree, or SpectrumPack based on the specified type.</returns>
     ''' <example>
     ''' libfile &lt;- spectrumTree::new(file = "./hmdb_lib.pack", type = "Pack");
     ''' </example>
@@ -138,8 +159,9 @@ Module ReferenceTreePkg
     ''' <summary>
     ''' Extract the test sample data for run evaluation of the annotation workflow
     ''' </summary>
-    ''' <param name="packlib"></param>
-    ''' <param name="n"></param>
+    ''' <param name="packlib">The SpectrumReader object containing reference spectra.</param>
+    ''' <param name="n">The number of test samples to generate.</param>
+    ''' <param name="rtmax">The maximum retention time for generated test spectra.</param>
     ''' <param name="source_name">
     ''' A fake source name for label this generated test dataset.
     ''' </param>
@@ -271,8 +293,8 @@ Module ReferenceTreePkg
     ''' <summary>
     ''' export all reference spectrum from the given library object
     ''' </summary>
-    ''' <param name="pack"></param>
-    ''' <returns></returns>
+    ''' <param name="pack">The PackAlignment object containing spectral data.</param>
+    ''' <returns>An array of PeakMs2 objects representing reference spectra.</returns>
     <ExportAPI("export_spectrum")>
     Public Function export_reference(pack As PackAlignment) As PeakMs2()
         Return pack.GetReferenceSpectrum.ToArray
@@ -295,11 +317,14 @@ Module ReferenceTreePkg
     End Function
 
     ''' <summary>
-    ''' enable internal parallel for the spectrum alignment search?
+    ''' Enables or disables parallel processing for spectral searches.
     ''' </summary>
-    ''' <param name="search"></param>
-    ''' <param name="enable"></param>
-    ''' <returns></returns>
+    ''' <param name="search">The PackAlignment object to configure.</param>
+    ''' <param name="enable">TRUE to enable parallel processing, FALSE otherwise.</param>
+    ''' <returns>The modified PackAlignment object.</returns>
+    ''' <remarks>
+    ''' this function only works for the <see cref="PackAlignment"/> method.
+    ''' </remarks>
     <ExportAPI("parallel")>
     Public Function set_parallel(search As Object, enable As Boolean) As Object
         If TypeOf search Is PackAlignment Then
@@ -312,13 +337,14 @@ Module ReferenceTreePkg
     ''' <summary>
     ''' construct a fragment set library for run spectrum search in jaccard index matches method
     ''' </summary>
-    ''' <param name="libname"></param>
-    ''' <param name="mz"></param>
-    ''' <param name="mzset"></param>
-    ''' <param name="rt"></param>
-    ''' <param name="cutoff"></param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="libname">Array of library spectrum identifiers.</param>
+    ''' <param name="mz">Array of precursor m/z values.</param>
+    ''' <param name="mzset">Array of fragment m/z strings (comma-separated).</param>
+    ''' <param name="rt">Array of retention times (optional).</param>
+    ''' <param name="cutoff">Jaccard similarity threshold (0.0 to 1.0).</param>
+    ''' <param name="filter_complex_adducts">Exclude spectra with multiple adducts if TRUE.</param>
+    ''' <param name="env">The R environment for error handling.</param>
+    ''' <returns>A JaccardSearch object for fragment-based searches.</returns>
     <ExportAPI("jaccardSet")>
     Public Function createJaccardSet(libname As String(),
                                      mz As Double(),
@@ -351,6 +377,13 @@ Module ReferenceTreePkg
         Return New JaccardSearch(dataset, cutoff, filter_complex_adducts)
     End Function
 
+    ''' <summary>
+    ''' Retrieves the top candidate matches from a metabolite library search.
+    ''' </summary>
+    ''' <param name="libs">The metabolite library (Library(Of MetaLib)).</param>
+    ''' <param name="x">The query spectrum (PeakMs2 or GCMSPeak).</param>
+    ''' <param name="top">The maximum number of top candidates to return.</param>
+    ''' <returns>An array of AlignmentOutput objects representing top matches.</returns>
     <ExportAPI("top_candidates")>
     <RApiReturn(GetType(AlignmentOutput))>
     Public Function top_candidates(libs As Library(Of MetaLib), x As Object, Optional top As Integer = 9) As Object
@@ -375,9 +408,9 @@ Module ReferenceTreePkg
     ''' <summary>
     ''' Extract all reference id from a set of spectrum annotation candidate result
     ''' </summary>
-    ''' <param name="result"></param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="result">An array of AlignmentOutput objects.</param>
+    ''' <param name="env">The R environment for error handling.</param>
+    ''' <returns>A string array of metabolite reference IDs.</returns>
     <ExportAPI("candidate_ids")>
     Public Function candidateIds(<RRawVectorArgument> result As Object, Optional env As Environment = Nothing) As Object
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of AlignmentOutput)(result, env)
@@ -396,7 +429,7 @@ Module ReferenceTreePkg
     ''' </summary>
     ''' <param name="hits">A set of the spectrum annotation hits candidates</param>
     ''' <param name="metadb">A metabolite annotation data repository, which could be pull annotation information by a unique reference id.</param>
-    ''' <returns></returns>
+    ''' <returns>An array of AnnotationData(Of xref) with metabolite annotations.</returns>
     <ExportAPI("as.annotation_result")>
     Public Function CreateAnnotationSet(hits As ClusterHit(), metadb As LocalRepository) As AnnotationData(Of xref)()
         Return hits _
@@ -712,15 +745,16 @@ Module ReferenceTreePkg
     End Function
 
     ''' <summary>
-    ''' Compress and make cleanup of the spectrum library
+    ''' Compresses and optimizes a spectrum library, removing redundant entries.
     ''' </summary>
-    ''' <param name="spectrumLib"></param>
-    ''' <param name="file">A file object for write the spectrum library.</param>
-    ''' <param name="metadb">
-    ''' metabolite annotation database library for get annotation information
-    ''' </param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="spectrumLib">The SpectrumReader source library.</param>
+    ''' <param name="file">Output file path for compressed library.</param>
+    ''' <param name="metadb">Metadata repository for annotations.</param>
+    ''' <param name="nspec">Maximum spectra per metabolite entry.</param>
+    ''' <param name="xrefDb">Cross-reference database name.</param>
+    ''' <param name="test">Number of test entries to process (-1 for all).</param>
+    ''' <param name="env">The R environment for error handling.</param>
+    ''' <returns>TRUE on successful compression.</returns>
     <ExportAPI("compress")>
     Public Function compress(spectrumLib As SpectrumReader, file As Object, metadb As IMetaDb,
                              Optional nspec As Integer = 5,
@@ -751,14 +785,13 @@ Module ReferenceTreePkg
     End Function
 
     ''' <summary>
-    ''' do embedding of the spectrum data
+    ''' Generates vector embeddings for spectral data (e.g., for machine learning).
     ''' </summary>
-    ''' <param name="x">a set of the spectrum data, usually be a mzpack object</param>
-    ''' <param name="mslevel">
-    ''' only works when the input dataset is <see cref="mzPack"/>
-    ''' </param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="x">Input spectra (mzPack, PeakMs2 array, or mzPack list).</param>
+    ''' <param name="mslevel">MS level for spectra extraction (1 or 2). 
+    ''' only works when the input dataset is <see cref="mzPack"/></param>
+    ''' <param name="env">The R environment for error handling.</param>
+    ''' <returns>A VectorModel containing spectral embeddings.</returns>
     <ExportAPI("embedding")>
     <RApiReturn(GetType(VectorModel))>
     Public Function embedding(<RRawVectorArgument>
