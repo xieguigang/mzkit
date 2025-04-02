@@ -1,5 +1,7 @@
 require(mzkit);
 
+imports "spectrumTree" from "mzkit";
+
 let precursor = 223.0845;
 let ms2 = [
     {"Annotation":"MS3,precursor_m/z=57.071","intensity":0.07752298556522008,"mz":62.9818},

@@ -288,13 +288,15 @@ Namespace Spectra
         End Function
 
         Private Function CreateAnnotation(q As ms2, r As ms2) As String
-            If q.Annotation.StringEmpty(, True) Then
-                Return r.Annotation
-            ElseIf r.Annotation.StringEmpty(, True) Then
-                Return q.Annotation
-            Else
-                Return {q.Annotation, r.Annotation}.Distinct.JoinBy("_")
+            If q Is Nothing OrElse q.Annotation.StringEmpty(, True) Then
+                Return r?.Annotation
             End If
+
+            If r Is Nothing OrElse r.Annotation.StringEmpty(, True) Then
+                Return q?.Annotation
+            End If
+
+            Return {q.Annotation, r.Annotation}.Distinct.JoinBy("_")
         End Function
     End Module
 End Namespace
