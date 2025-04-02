@@ -80,6 +80,11 @@ declare namespace visual {
    }
    module parse {
       /**
+       * Parse the spectrum alignment details from the given string data
+       * 
+       * 
+        * @param s A string data that represents the spectrum alignment details.
+        * @return A collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml.SSM2MatrixFragment`` matrix data
       */
       function spectrum_alignment(s: string): object;
    }
