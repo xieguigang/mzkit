@@ -837,7 +837,7 @@ Module Visual
 
         Dim ms As [Variant](Of Message, LibraryMatrix) = getSpectrum(spectrum, env)
         Dim layouts As String() = CLRVector.asCharacter(legend_layout)
-        Dim highlights As Double() = Nothing
+        Dim highlights As NamedValue(Of Double)() = Nothing
         Dim highlightStyle As String = Stroke.StrongHighlightStroke
 
         If ms Like GetType(Message) Then
@@ -877,7 +877,7 @@ Module Visual
                     .Where(Function(mzi)
                                Return Not Strings.Trim(mzi.Annotation).Match("MS\d+", RegexICSng).StringEmpty(, True)
                            End Function) _
-                    .Select(Function(i) i.mz) _
+                    .Select(Function(i) New NamedValue(Of Double)(i.Annotation.Match("MS\d+", RegexICSng), i.mz)) _
                     .Distinct _
                     .ToArray
             End If

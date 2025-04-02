@@ -62,6 +62,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
@@ -173,10 +174,10 @@ Namespace Spectra.Xml
             End Get
         End Property
 
-        Public Iterator Function GetHitsMzPeaks() As IEnumerable(Of Double)
+        Public Iterator Function GetHitsMzPeaks() As IEnumerable(Of NamedValue(Of Double))
             For Each hit As SSM2MatrixFragment In alignments
                 If hit.query > 0 AndAlso hit.ref > 0 Then
-                    Yield hit.mz
+                    Yield New NamedValue(Of Double)(hit.annotation, hit.mz)
                 End If
             Next
         End Function
