@@ -150,17 +150,25 @@ Namespace PackLib
                 Throw New InvalidProgramException($"Unexpected null reference of the search reference candidates collection, precursor ion: {mz1}!")
             End If
 
-            If parallel Then
-                q = SearchParallel(centroid, candidates)
-            Else
-                q = SearchSequential(centroid, candidates)
-            End If
+            Try
+                If parallel Then
+                    q = SearchParallel(centroid, candidates)
+                Else
+                    q = SearchSequential(centroid, candidates)
+                End If
 
-            If q Is Nothing Then
-                Throw New InvalidProgramException($"Unexpected null reference of the search result collection, precursor ion: {mz1}, ms2 search: {centroid.SafeQuery.Select(Function(mzi) mzi).ToArray.GetJson}")
-            Else
-                hits = q.ToArray
-            End If
+                If q Is Nothing Then
+                    Throw New InvalidProgramException($"Unexpected null reference of the search result collection, precursor ion: {mz1}, ms2 search: {centroid.SafeQuery.Select(Function(mzi) mzi).ToArray.GetJson}")
+                Else
+                    hits = q.ToArray
+                End If
+            Catch ex As Exception
+                Call Console.WriteLine(centroid.GetJson)
+                Call Console.WriteLine(mz1)
+                Call Console.WriteLine(parallel)
+
+                Throw
+            End Try
 
             ' hits may contains multiple metabolite reference data
             ' multiple cluster object should be populates from

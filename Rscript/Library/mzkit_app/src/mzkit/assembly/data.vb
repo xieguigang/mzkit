@@ -192,11 +192,12 @@ Module data
     End Function
 
     ''' <summary>
-    ''' evaluate the splash id of the given spectrum data
+    ''' Calculates the SPLASH identifier for the given spectrum data.
     ''' </summary>
-    ''' <param name="spec"></param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="spec">The spectrum data, which can be a single spectrum object, a list, or an array of spectra.</param>
+    ''' <param name="type">The type of spectrum (default is MS).</param>
+    ''' <param name="env">The R environment for error handling.</param>
+    ''' <returns>A SPLASH ID string or an array/list of SPLASH IDs if input is multiple spectra.</returns>
     ''' <remarks>
     ''' The SPLASH is an unambiguous, database-independent spectral identifier, 
     ''' just as the InChIKey is designed to serve as a unique identifier for 
@@ -323,11 +324,14 @@ Module data
     End Function
 
     ''' <summary>
-    ''' Create a representative spectrum from a given spectrum collection via a sum or mean aggregate method.
+    ''' Generates a representative spectrum by aggregating (sum or mean) input spectra.
     ''' </summary>
-    ''' <param name="x"></param>
-    ''' <param name="mean"></param>
-    ''' <returns></returns>
+    ''' <param name="x">Input spectra (PeakMs2 or LibraryMatrix collection).</param>
+    ''' <param name="mean">If true, uses mean intensity; otherwise sums intensities.</param>
+    ''' <param name="centroid">Mass tolerance for centroiding peaks.</param>
+    ''' <param name="intocutoff">Relative intensity cutoff (0-1) to filter weak peaks.</param>
+    ''' <param name="env">R environment for error handling.</param>
+    ''' <returns>A LibraryMatrix representing the aggregated spectrum.</returns>
     <ExportAPI("representative")>
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function representative_spectrum(<RRawVectorArgument> x As Object,
@@ -359,10 +363,11 @@ Module data
     End Function
 
     ''' <summary>
-    ''' get the size of the target ms peaks
+    ''' Gets the number of fragments in a spectrum object.
     ''' </summary>
-    ''' <param name="matrix"></param>
-    ''' <returns></returns>
+    ''' <param name="matrix">A LibraryMatrix or PeakMs2 object.</param>
+    ''' <param name="env">R environment for error handling.</param>
+    ''' <returns>Integer count of fragments.</returns>
     <ExportAPI("nsize")>
     <RApiReturn(GetType(Integer))>
     Public Function nfragments(matrix As Object, Optional env As Environment = Nothing) As Object
@@ -434,7 +439,9 @@ Module data
     ''' <summary>
     ''' get alignment result tuple: query and reference
     ''' </summary>
-    ''' <param name="align"></param>
+    ''' <param name="align">AlignmentOutput object from spectral matching.</param>
+    ''' <param name="query">Name label for query spectrum.</param>
+    ''' <param name="reference">Name label for reference spectrum.</param>
     ''' <returns>
     ''' a tuple list object that contains spectrum alignment result:
     ''' 
@@ -457,13 +464,13 @@ Module data
     End Function
 
     ''' <summary>
-    ''' Make alignment string
+    ''' Creates a formatted string representation of aligned peaks.
     ''' </summary>
-    ''' <param name="mz"></param>
-    ''' <param name="query"></param>
-    ''' <param name="reference"></param>
-    ''' <param name="annotation"></param>
-    ''' <returns></returns>
+    ''' <param name="mz">Array of m/z values for aligned peaks.</param>
+    ''' <param name="query">Array of query intensities.</param>
+    ''' <param name="reference">Array of reference intensities.</param>
+    ''' <param name="annotation">Optional annotations for peaks.</param>
+    ''' <returns>Formatted string showing alignment details.</returns>
     <ExportAPI("alignment_str")>
     Public Function makeAlignmentString(<RRawVectorArgument> mz As Object,
                                         <RRawVectorArgument> query As Object,
@@ -480,17 +487,19 @@ Module data
     End Function
 
     ''' <summary>
-    ''' create a new ms2 peaks data object
+    ''' Constructs a PeakMs2 object from spectral data.
     ''' </summary>
-    ''' <param name="precursor"></param>
-    ''' <param name="rt"></param>
-    ''' <param name="mz"></param>
-    ''' <param name="into"></param>
-    ''' <param name="totalIons"></param>
-    ''' <param name="file"></param>
-    ''' <param name="meta"></param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="precursor">Precursor m/z value.</param>
+    ''' <param name="rt">Retention time in seconds.</param>
+    ''' <param name="mz">Array of fragment m/z values.</param>
+    ''' <param name="into">Array of fragment intensities.</param>
+    ''' <param name="totalIons">Total ion current (optional).</param>
+    ''' <param name="file">Source file identifier.</param>
+    ''' <param name="libname">Library identifier.</param>
+    ''' <param name="precursor_type">Precursor adduct type.</param>
+    ''' <param name="meta">Metadata list for the peak.</param>
+    ''' <param name="env">R environment for error handling.</param>
+    ''' <returns>A PeakMs2 object containing the spectral data.</returns>
     <ExportAPI("peakMs2")>
     Public Function createPeakMs2(precursor As Double, rt As Double, mz As Double(), into As Double(),
                                   Optional totalIons As Double = 0,
@@ -644,15 +653,12 @@ Module data
     End Function
 
     ''' <summary>
-    ''' grouping of the ms1 scan points by m/z data
+    ''' Groups MS1 scans into XIC (Extracted Ion Chromatogram) groups by m/z.
     ''' </summary>
-    ''' <param name="ms1"></param>
-    ''' <param name="tolerance">
-    ''' the m/z diff tolerance value for grouping ms1 scan point 
-    ''' based on its ``m/z`` value
-    ''' </param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="ms1">Input MS1 data (mzPack or array of scans).</param>
+    ''' <param name="tolerance">Mass tolerance for grouping m/z values.</param>
+    ''' <param name="env">R environment for error handling.</param>
+    ''' <returns>A list of XIC groups, each containing scans with similar m/z.</returns>
     <ExportAPI("XIC_groups")>
     Public Function XICGroups(<RRawVectorArgument>
                               ms1 As Object,
@@ -715,17 +721,13 @@ Module data
     End Function
 
     ''' <summary>
-    ''' get chromatogram data for a specific metabolite with given m/z from the ms1 scans data.
+    ''' Extracts chromatogram data for a specific m/z from MS1 scans.
     ''' </summary>
-    ''' <param name="ms1">a sequence data of ms1 scans, or the mzkit mzpack data object.</param>
-    ''' <param name="mz">target mz value</param>
-    ''' <param name="tolerance">
-    ''' tolerance value in unit ``ppm`` or ``da`` for 
-    ''' extract ``m/z`` data from the given ms1 ion 
-    ''' scans.
-    ''' </param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="ms1">Input MS1 data (mzPack, PeakSet, or scan array).</param>
+    ''' <param name="mz">Target m/z value to extract.</param>
+    ''' <param name="tolerance">Mass tolerance for m/z matching.</param>
+    ''' <param name="env">R environment for error handling.</param>
+    ''' <returns>ChromatogramTick array or ChromatogramOverlap object.</returns>
     <ExportAPI("XIC")>
     <RApiReturn(GetType(ms1_scan), GetType(ChromatogramTick), GetType(ChromatogramOverlap))>
     Public Function XIC(<RRawVectorArgument> ms1 As Object, mz#,
@@ -829,13 +831,13 @@ Module data
     End Function
 
     ''' <summary>
-    ''' slice a region of ms1 scan data by a given rt window.
+    ''' Filters MS1 scans within a specified retention time window.
     ''' </summary>
-    ''' <param name="ms1">a sequence of ms1 scan data.</param>
-    ''' <param name="rtmin"></param>
-    ''' <param name="rtmax"></param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="ms1">Input MS1 scan data.</param>
+    ''' <param name="rtmin">Minimum retention time.</param>
+    ''' <param name="rtmax">Maximum retention time.</param>
+    ''' <param name="env">R environment for error handling.</param>
+    ''' <returns>Array of MS1 scans within the RT window.</returns>
     <ExportAPI("rt_slice")>
     <RApiReturn(GetType(ms1_scan))>
     Public Function RtSlice(<RRawVectorArgument>
@@ -860,11 +862,13 @@ Module data
     End Function
 
     ''' <summary>
-    ''' get intensity value from the ion scan points
+    ''' Extracts intensity values from MS1 scans or PeakMs2 spectra.
     ''' </summary>
-    ''' <param name="ticks"></param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="ticks">Input scans or spectra.</param>
+    ''' <param name="mz">Optional m/z to extract specific intensity.</param>
+    ''' <param name="mzdiff">Mass tolerance for m/z matching.</param>
+    ''' <param name="env">R environment for error handling.</param>
+    ''' <returns>Numeric vector of intensity values.</returns>
     <ExportAPI("intensity")>
     <RApiReturn(GetType(Double))>
     Public Function getIntensity(<RRawVectorArgument>
@@ -908,11 +912,11 @@ Module data
     End Function
 
     ''' <summary>
-    ''' get scan time value from the ion scan points
+    ''' Extracts retention times from MS1 scans or PeakMs2 spectra.
     ''' </summary>
-    ''' <param name="ticks"></param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="ticks">Input scans or spectra.</param>
+    ''' <param name="env">R environment for error handling.</param>
+    ''' <returns>Numeric vector of retention times.</returns>
     <ExportAPI("scan_time")>
     <RApiReturn(GetType(Double))>
     Public Function getScantime(<RRawVectorArgument>
@@ -939,14 +943,13 @@ Module data
     End Function
 
     ''' <summary>
-    ''' makes xcms_id format liked ROI unique id
+    ''' Generates unique ROI (Region of Interest) IDs for spectra.
     ''' </summary>
-    ''' <param name="ROIlist"></param>
-    ''' <param name="name_chrs">
-    ''' just returns the ROI names character?
-    ''' </param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="ROIlist">Input PeakMs2 spectra or list with mz/rt vectors.</param>
+    ''' <param name="name_chrs">If true, returns ROI IDs as strings; otherwise updates PeakMs2 metadata.</param>
+    ''' <param name="prefix">Prefix for ROI IDs.</param>
+    ''' <param name="env">R environment for error handling.</param>
+    ''' <returns>String array of ROI IDs or modified PeakMs2 objects.</returns>
     <ExportAPI("make.ROI_names")>
     <RApiReturn(GetType(PeakMs2))>
     Public Function makeROInames(<RRawVectorArgument> ROIlist As Object,
@@ -986,11 +989,22 @@ Module data
         End If
     End Function
 
+    ''' <summary>
+    ''' Reads a spectral matrix from a CSV file.
+    ''' </summary>
+    ''' <param name="file">Path to CSV file containing spectral data.</param>
+    ''' <returns>Array of Library objects parsed from the file.</returns>
     <ExportAPI("read.MsMatrix")>
     Public Function readMatrix(file As String) As Spectra.Library()
         Return file.LoadCsv(Of Spectra.Library)
     End Function
 
+    ''' <summary>
+    ''' Generates a string representation of top intensity ions from spectra.
+    ''' </summary>
+    ''' <param name="data">Input PeakMs2 spectra.</param>
+    ''' <param name="topIons">Number of top ions to include per spectrum.</param>
+    ''' <returns>String array formatted as "mz:intensity" for top ions.</returns>
     <ExportAPI("linearMatrix")>
     Public Function linearMatrix(data As PeakMs2(), Optional topIons As Integer = 5) As String()
         Dim da = Tolerance.DeltaMass(0.3)
