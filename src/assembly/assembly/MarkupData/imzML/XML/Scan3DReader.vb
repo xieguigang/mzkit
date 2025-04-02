@@ -66,6 +66,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace MarkupData.imzML
 
+    ''' <summary>
+    ''' 3d volume data reader
+    ''' </summary>
     Public Class Scan3DReader
 
         ReadOnly ibd As ibdReader

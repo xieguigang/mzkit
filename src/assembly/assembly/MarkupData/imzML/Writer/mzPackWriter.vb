@@ -64,7 +64,6 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Security.Cryptography
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
@@ -76,7 +75,7 @@ Imports Microsoft.VisualBasic.SecurityString
 Namespace MarkupData.imzML
 
     ''' <summary>
-    ''' convert
+    ''' convert mzpack data as imzML file.
     ''' </summary>
     Public Class mzPackWriter : Implements IDisposable
 
