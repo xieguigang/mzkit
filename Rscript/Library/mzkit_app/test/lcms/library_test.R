@@ -23,4 +23,9 @@ let ms2 = [
     {"Annotation":"","intensity":0.04557289323022088,"mz":227.0224}
 ];
 
+ms2 = data::libraryMatrix(data.frame(
+    mz = ms2@mz,
+    intensity = ms2@intensity
+), title = "demo spectrum data");
+
 str(ms2);

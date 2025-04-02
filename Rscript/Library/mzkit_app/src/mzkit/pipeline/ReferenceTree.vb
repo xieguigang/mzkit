@@ -108,6 +108,9 @@ Module ReferenceTreePkg
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' libfile &lt;- spectrumTree::new(file = "./hmdb_lib.pack", type = "Pack");
+    ''' </example>
     <ExportAPI("new")>
     <RApiReturn(GetType(ReferenceTree), GetType(ReferenceBinaryTree), GetType(SpectrumPack))>
     Public Function CreateNew(file As Object,
@@ -137,8 +140,19 @@ Module ReferenceTreePkg
     ''' </summary>
     ''' <param name="packlib"></param>
     ''' <param name="n"></param>
-    ''' <param name="source_name"></param>
+    ''' <param name="source_name">
+    ''' A fake source name for label this generated test dataset.
+    ''' </param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let libfile = spectrumTree::readpack(file = "./hmdb_lib.pack");
+    ''' let [peaktable, rawdata] = spectrumTree::get_testSample(libfile, 
+    '''     source_name = "hmdb metabolites test dataset");
+    ''' 
+    ''' print(as.data.frame(peaktable));
+    ''' 
+    ''' write.mzPack(rawdata, file = "./datafile.mzPack");
+    ''' </example>
     <ExportAPI("get_testSample")>
     <RApiReturn("peaktable", "rawdata")>
     Public Function GetTestSample(packlib As SpectrumReader,
@@ -168,6 +182,10 @@ Module ReferenceTreePkg
     ''' <param name="env"></param>
     ''' <returns></returns>
     ''' <keywords>read data</keywords>
+    ''' <example>
+    ''' # open library pack file for read
+    ''' libfile = spectrumTree::readpack(file = "./hmdb_lib.pack");
+    ''' </example>
     <ExportAPI("readpack")>
     <RApiReturn(GetType(SpectrumReader))>
     Public Function ReadPack(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
@@ -354,6 +372,12 @@ Module ReferenceTreePkg
         Return libs.SearchCandidates(x).Take(top)
     End Function
 
+    ''' <summary>
+    ''' Extract all reference id from a set of spectrum annotation candidate result
+    ''' </summary>
+    ''' <param name="result"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("candidate_ids")>
     Public Function candidateIds(<RRawVectorArgument> result As Object, Optional env As Environment = Nothing) As Object
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of AlignmentOutput)(result, env)
@@ -367,6 +391,12 @@ Module ReferenceTreePkg
             .ToArray
     End Function
 
+    ''' <summary>
+    ''' Create metabolite annotation result dataset for a set of the spectrum annotation candidates result.
+    ''' </summary>
+    ''' <param name="hits">A set of the spectrum annotation hits candidates</param>
+    ''' <param name="metadb">A metabolite annotation data repository, which could be pull annotation information by a unique reference id.</param>
+    ''' <returns></returns>
     <ExportAPI("as.annotation_result")>
     Public Function CreateAnnotationSet(hits As ClusterHit(), metadb As LocalRepository) As AnnotationData(Of xref)()
         Return hits _
