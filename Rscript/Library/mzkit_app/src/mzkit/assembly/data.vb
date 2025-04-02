@@ -91,8 +91,42 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
-''' m/z data operator module
+''' Provides core functionality for mass spectrometry data processing and analysis within the mzkit framework.
 ''' </summary>
+''' <remarks>
+''' This module contains operations for:
+''' 
+''' 1. Mass spectral data manipulation (MS1 and MS2 level)
+''' 2. Chromatographic data processing (XIC/TIC generation)
+''' 3. Spectral similarity calculations and alignment
+''' 4. Data format conversions between native objects and R dataframe
+''' 5. Spectral library operations and metadata handling
+''' 
+''' Key features include:
+''' 
+''' - SPLASH ID generation for spectral uniqueness verification
+''' - ROI-based spectral grouping and analysis
+''' - Raw data centroiding and intensity normalization
+''' - Cross-sample spectral alignment and matching
+''' - Mass tolerance-aware operations (ppm/DA)
+''' </remarks>
+''' <example>
+''' ```
+''' # Get XIC from raw data
+''' rawdata &lt;- open.mzpack("sample.mzPack")
+''' xic &lt;- data::XIC(rawdata, mz=438.3251, tolerance="ppm:20")
+''' 
+''' # Create spectral library entry
+''' peaks &lt;- data::libraryMatrix(
+'''     mz=c(438.3251, 512.3987, 615.4872),
+'''     intensity=c(15000, 8700, 4300),
+'''     title="My Compound"
+''' )
+''' 
+''' # Generate SPLASH ID
+''' splash &lt;- data::splash_id(peaks)
+''' ```
+''' </example>
 <Package("data")>
 Module data
 
