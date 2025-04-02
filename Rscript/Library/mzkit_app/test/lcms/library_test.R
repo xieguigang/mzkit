@@ -26,6 +26,17 @@ let ms2 = [
 ms2 = data::libraryMatrix(data.frame(
     mz = ms2@mz,
     intensity = ms2@intensity
-), title = "demo spectrum data");
+), title = "demo spectrum data",parentMz = precursor, centroid = TRUE);
+
+let tree = spectrumTree::open(
+    file = "\\192.168.1.254\backup3\项目以外内容\2025\三级MSn测试\HMDB\lib.pos.pack", 
+    dotcutoff = 0.6, 
+    adducts = ["[M+H]+"      "[M-H2O+H]+"  "[M-2H2O+H]+" "[M+NH4]+"    "[M+Na]+"     "[2M+H]+"     "[M]+"],
+    target_uuid = readLines("\\192.168.1.254\backup3\项目以外内容\2025\三级MSn测试\test1\tmp\biodeepid.txt")
+);
 
 str(ms2);
+
+let result = tree |> spectrumTree::query(ms2, maxdepth = 1024000, top_hits = 9);
+
+print(result);
