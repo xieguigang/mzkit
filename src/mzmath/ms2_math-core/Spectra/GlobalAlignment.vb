@@ -270,12 +270,19 @@ Namespace Spectra
             End If
         End Function
 
-        Public Iterator Function CreateAlignment(query As ms2(), ref As ms2(), tolerance As Tolerance) As IEnumerable(Of SSM2MatrixFragment)
-            Dim union = MzUnion(query.Select(Function(m) m.mz).ToArray, ref.Select(Function(m) m.mz).ToArray, tolerance)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="query">the sample query data</param>
+        ''' <param name="refrs">the reference data</param>
+        ''' <param name="tolerance"></param>
+        ''' <returns></returns>
+        Public Iterator Function CreateAlignment(query As ms2(), refrs As ms2(), tolerance As Tolerance) As IEnumerable(Of SSM2MatrixFragment)
+            Dim union = MzUnion(query.Select(Function(m) m.mz).ToArray, refrs.Select(Function(m) m.mz).ToArray, tolerance)
 
             For Each mz As Double In union
                 Dim qmz = query.Where(Function(a) tolerance(a.mz, mz)).FirstOrDefault
-                Dim rmz = ref.Where(Function(a) tolerance(a.mz, mz)).FirstOrDefault
+                Dim rmz = refrs.Where(Function(a) tolerance(a.mz, mz)).FirstOrDefault
 
                 Yield New SSM2MatrixFragment With {
                     .mz = mz,
