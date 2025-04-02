@@ -870,7 +870,7 @@ Module Visual
             If ref Like GetType(Message) Then
                 Return ref.TryCast(Of Message)
             End If
-            If highlight_msn Then
+            If Not highlight_msn.StringEmpty(, True) Then
                 highlightStyle = $"stroke: {highlight_msn}; stroke-width: {bar_width}px; stroke-dash: solid;"
                 highlights = ms.TryCast(Of LibraryMatrix).Array _
                     .JoinIterates(ref.TryCast(Of LibraryMatrix).Array) _
