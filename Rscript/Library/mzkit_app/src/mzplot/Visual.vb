@@ -832,10 +832,13 @@ Module Visual
                                  Optional legend_layout As Object = "top-right|title|bottom|none",
                                  Optional gridStrokeX As String = PlotAlignmentGroup.DefaultGridXStroke,
                                  Optional gridStrokeY As String = PlotAlignmentGroup.DefaultGridYStroke,
+                                 Optional highlight_msn As String = Nothing,
                                  Optional env As Environment = Nothing) As Object
 
         Dim ms As [Variant](Of Message, LibraryMatrix) = getSpectrum(spectrum, env)
         Dim layouts As String() = CLRVector.asCharacter(legend_layout)
+        Dim highlights As Double() = Nothing
+        Dim highlightStyle As String = Stroke.StrongHighlightStroke
 
         If ms Like GetType(Message) Then
             Return ms.TryCast(Of Message)
@@ -867,6 +870,17 @@ Module Visual
             If ref Like GetType(Message) Then
                 Return ref.TryCast(Of Message)
             End If
+            If highlight_msn Then
+                highlightStyle = $"stroke: {highlight_msn}; stroke-width: {bar_width}px; stroke-dash: solid;"
+                highlights = ms.TryCast(Of LibraryMatrix).Array _
+                    .JoinIterates(ref.TryCast(Of LibraryMatrix).Array) _
+                    .Where(Function(mzi)
+                               Return Not Strings.Trim(mzi.Annotation).Match("MS\d+", RegexICSng).StringEmpty(, True)
+                           End Function) _
+                    .Select(Function(i) i.mz) _
+                    .Distinct _
+                    .ToArray
+            End If
 
             Return MassSpectra.AlignMirrorPlot(
                 query:=ms,
@@ -882,7 +896,9 @@ Module Visual
                 color1:=color1,
                 color2:=color2,
                 gridStrokeX:=gridStrokeX,
-                gridStrokeY:=gridStrokeY
+                gridStrokeY:=gridStrokeY,
+                highlights:=highlights,
+                highlightStyle:=highlightStyle
             )
         End If
     End Function

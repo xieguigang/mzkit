@@ -174,6 +174,7 @@ Public Module MassSpectra
                                     Optional gridStrokeX As String = PlotAlignmentGroup.DefaultGridXStroke,
                                     Optional gridStrokeY As String = PlotAlignmentGroup.DefaultGridYStroke,
                                     Optional highlights As Double() = Nothing,
+                                    Optional highlightStyle As String = Stroke.StrongHighlightStroke,
                                     Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim mz As Double() = query _
@@ -216,7 +217,8 @@ Public Module MassSpectra
             drawGridX:=drawGridX,
             gridStrokeX:=gridStrokeX,
             gridStrokeY:=gridStrokeY,
-            highlights:=highlights
+            highlights:=highlights,
+            highlightStyle:=highlightStyle
         )
     End Function
 End Module
