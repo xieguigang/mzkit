@@ -1,21 +1,28 @@
 .\" man page create by R# package system.
 .TH DATA 1 2000-Jan "splash_id" "splash_id"
 .SH NAME
-splash_id \- evaluate the splash id of the given spectrum data
+splash_id \- Calculates the SPLASH identifier for the given spectrum data.
 .SH SYNOPSIS
 \fIsplash_id(\fBspec\fR as any, 
 \fBtype\fR as <integer> SpectrumType = [MS], 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
-evaluate the splash id of the given spectrum data
+Calculates the SPLASH identifier for the given spectrum data.
 .PP
 .SH OPTIONS
 .PP
-\fBspec\fB \fR\- -. 
+\fBspec\fB \fR\- The spectrum data, which can be a single spectrum object, a list, or an array of spectra.. 
 .PP
 .PP
-\fBenv\fB \fR\- -. 
+\fBtype\fB \fR\- The type of spectrum (default is MS).. 
+.PP
+.PP
+\fBenv\fB \fR\- The R environment for error handling.. 
+.PP
+.SH VALUE
+.PP
+A SPLASH ID string or an array/list of SPLASH IDs if input is multiple spectra.
 .PP
 .SH DETAILS
 .PP

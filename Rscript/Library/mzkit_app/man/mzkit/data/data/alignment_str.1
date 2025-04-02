@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH DATA 1 2000-Jan "alignment_str" "alignment_str"
 .SH NAME
-alignment_str \- Make alignment string
+alignment_str \- Creates a formatted string representation of aligned peaks.
 .SH SYNOPSIS
 \fIalignment_str(\fBmz\fR as any, 
 \fBquery\fR as any, 
@@ -9,20 +9,24 @@ alignment_str \- Make alignment string
 \fBannotation\fR as any = \fB<NULL>\fR);\fR
 .SH DESCRIPTION
 .PP
-Make alignment string
+Creates a formatted string representation of aligned peaks.
 .PP
 .SH OPTIONS
 .PP
-\fBmz\fB \fR\- -. 
+\fBmz\fB \fR\- Array of m/z values for aligned peaks.. 
 .PP
 .PP
-\fBquery\fB \fR\- -. 
+\fBquery\fB \fR\- Array of query intensities.. 
 .PP
 .PP
-\fBreference\fB \fR\- -. 
+\fBreference\fB \fR\- Array of reference intensities.. 
 .PP
 .PP
-\fBannotation\fB \fR\- -. 
+\fBannotation\fB \fR\- Optional annotations for peaks.. 
+.PP
+.SH VALUE
+.PP
+Formatted string showing alignment details.
 .PP
 .SH SEE ALSO
 data

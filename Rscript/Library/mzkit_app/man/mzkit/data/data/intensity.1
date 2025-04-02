@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH DATA 1 2000-Jan "intensity" "intensity"
 .SH NAME
-intensity \- get intensity value from the ion scan points
+intensity \- Extracts intensity values from MS1 scans or PeakMs2 spectra.
 .SH SYNOPSIS
 \fIintensity(\fBticks\fR as any, 
 \fBmz\fR as double = -1, 
@@ -9,14 +9,24 @@ intensity \- get intensity value from the ion scan points
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
-get intensity value from the ion scan points
+Extracts intensity values from MS1 scans or PeakMs2 spectra.
 .PP
 .SH OPTIONS
 .PP
-\fBticks\fB \fR\- -. 
+\fBticks\fB \fR\- Input scans or spectra.. 
 .PP
 .PP
-\fBenv\fB \fR\- -. 
+\fBmz\fB \fR\- Optional m/z to extract specific intensity.. 
+.PP
+.PP
+\fBmzdiff\fB \fR\- Mass tolerance for m/z matching.. 
+.PP
+.PP
+\fBenv\fB \fR\- R environment for error handling.. 
+.PP
+.SH VALUE
+.PP
+Numeric vector of intensity values.
 .PP
 .SH SEE ALSO
 data

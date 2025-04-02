@@ -2,10 +2,10 @@
 <html>
 
 <head>
-    <title>grouping of the ms1 scan points by m/z data</title>
+    <title>Groups MS1 scans into XIC (Extracted Ion Chromatogram) groups by m/z.</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
 </head>
 
 <body>
@@ -18,7 +18,7 @@
             </tr>
         </table>
 
-        <h2>grouping of the ms1 scan points by m/z data</h2>
+        <h2>Groups MS1 scans into XIC (Extracted Ion Chromatogram) groups by m/z.</h2>
 
         <h3>Description</h3>
 
@@ -36,16 +36,15 @@
         <table>
             
 <dt>ms1</dt>
-<dd><p>-</p></dd>
+<dd><p>Input MS1 data (mzPack or array of scans).</p></dd>
 
 
 <dt>tolerance</dt>
-<dd><p>the m/z diff tolerance value for grouping ms1 scan point 
- based on its <code>m/z</code> value</p></dd>
+<dd><p>Mass tolerance for grouping m/z values.</p></dd>
 
 
 <dt>env</dt>
-<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
+<dd><p>R environment for error handling. [as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
 
         </table>
 
@@ -60,7 +59,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <i>any</i> kind.<h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
+        <p>A list of XIC groups, each containing scans with similar m/z.</p><h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
 
         <h3 style="display: none;">Examples</h3>
 
@@ -73,8 +72,8 @@
     </div>
 </body>
 
-<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
-<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("example_r");</script>
 
 </html>

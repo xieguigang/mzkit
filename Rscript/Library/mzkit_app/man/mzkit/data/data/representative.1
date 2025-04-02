@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH DATA 1 2000-Jan "representative" "representative"
 .SH NAME
-representative \- Create a representative spectrum from a given spectrum collection via a sum or mean aggregate method.
+representative \- Generates a representative spectrum by aggregating (sum or mean) input spectra.
 .SH SYNOPSIS
 \fIrepresentative(\fBx\fR as any, 
 \fBmean\fR as boolean = TRUE, 
@@ -10,14 +10,27 @@ representative \- Create a representative spectrum from a given spectrum collect
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
-Create a representative spectrum from a given spectrum collection via a sum or mean aggregate method.
+Generates a representative spectrum by aggregating (sum or mean) input spectra.
 .PP
 .SH OPTIONS
 .PP
-\fBx\fB \fR\- -. 
+\fBx\fB \fR\- Input spectra (PeakMs2 or LibraryMatrix collection).. 
 .PP
 .PP
-\fBmean\fB \fR\- -. 
+\fBmean\fB \fR\- If true, uses mean intensity; otherwise sums intensities.. 
+.PP
+.PP
+\fBcentroid\fB \fR\- Mass tolerance for centroiding peaks.. 
+.PP
+.PP
+\fBintocutoff\fB \fR\- Relative intensity cutoff (0-1) to filter weak peaks.. 
+.PP
+.PP
+\fBenv\fB \fR\- R environment for error handling.. 
+.PP
+.SH VALUE
+.PP
+A LibraryMatrix representing the aggregated spectrum.
 .PP
 .SH SEE ALSO
 data

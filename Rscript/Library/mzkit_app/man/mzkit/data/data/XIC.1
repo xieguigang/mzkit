@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH DATA 1 2000-Jan "XIC" "XIC"
 .SH NAME
-XIC \- get chromatogram data for a specific metabolite with given m/z from the ms1 scans data.
+XIC \- Extracts chromatogram data for a specific m/z from MS1 scans.
 .SH SYNOPSIS
 \fIXIC(\fBms1\fR as any, 
 \fBmz\fR as double, 
@@ -9,24 +9,24 @@ XIC \- get chromatogram data for a specific metabolite with given m/z from the m
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
-get chromatogram data for a specific metabolite with given m/z from the ms1 scans data.
+Extracts chromatogram data for a specific m/z from MS1 scans.
 .PP
 .SH OPTIONS
 .PP
-\fBms1\fB \fR\- a sequence data of ms1 scans, or the mzkit mzpack data object.. 
+\fBms1\fB \fR\- Input MS1 data (mzPack, PeakSet, or scan array).. 
 .PP
 .PP
-\fBmz\fB \fR\- target mz value. 
+\fBmz\fB \fR\- Target m/z value to extract.. 
 .PP
 .PP
-\fBtolerance\fB \fR\- 
- tolerance value in unit \fBppm\fR or \fBda\fR for 
- extract \fBm/z\fR data from the given ms1 ion 
- scans.
-. 
+\fBtolerance\fB \fR\- Mass tolerance for m/z matching.. 
 .PP
 .PP
-\fBenv\fB \fR\- -. 
+\fBenv\fB \fR\- R environment for error handling.. 
+.PP
+.SH VALUE
+.PP
+ChromatogramTick array or ChromatogramOverlap object.
 .PP
 .SH SEE ALSO
 data

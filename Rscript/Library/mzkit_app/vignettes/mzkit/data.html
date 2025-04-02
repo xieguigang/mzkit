@@ -10,7 +10,7 @@
     <meta name="keywords" content="R#; data; mzkit" />
     <meta name="generator" content="https://github.com/rsharp-lang" />
     <meta name="theme-color" content="#333" />
-    <meta name="description" content="m/z data operator module..." />
+    <meta name="description" content="Provides core functionality for mass spectrometry data processin..." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -63,13 +63,27 @@ table caption {font-size:14px;font-weight:bolder;}
     <p style="     font-size: 1.125em;     line-height: .8em;     margin-left: 0.5%;     background-color: #fbfbfb;     padding: 24px; ">
       <code>
         <span style="color: blue;">require</span>(<span style="color: black; font-weight: bold;">mzkit</span>);
-                               <br /><br /><span style="color: green;">#' m/z data operator module</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "data"</span><span style="color: blue;"> from</span><span style="color: brown"> "mzkit"</span>;
+                               <br /><br /><span style="color: green;">#' Provides core functionality for mass spectrometry data processing and analysis within the mzkit framework.</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "data"</span><span style="color: blue;"> from</span><span style="color: brown"> "mzkit"</span>;
                            </code>
     </p>
-    <p><p>m/z data operator module</p></p>
+    <p><p>Provides core functionality for mass spectrometry data processing and analysis within the mzkit framework.</p></p>
     <blockquote>
       <p style="font-style: italic; font-size: 0.9em;">
-                           
+                           <p>This module contains operations for:
+ 
+ 1. Mass spectral data manipulation (MS1 and MS2 level)
+ 2. Chromatographic data processing (XIC/TIC generation)
+ 3. Spectral similarity calculations and alignment
+ 4. Data format conversions between native objects and R dataframe
+ 5. Spectral library operations and metadata handling
+ 
+ Key features include:
+ 
+ - SPLASH ID generation for spectral uniqueness verification
+ - ROI-based spectral grouping and analysis
+ - Raw data centroiding and intensity normalization
+ - Cross-sample spectral alignment and matching
+ - Mass tolerance-aware operations (ppm/DA)</p>
                            </p>
     </blockquote>
     <div id="main-wrapper">
@@ -91,7 +105,7 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="splash_id">
     <a href="./data/splash_id.html">splash_id</a>
   </td>
-  <td><p>evaluate the splash id of the given spectrum data</p></td>
+  <td><p>Calculates the SPLASH identifier for the given spectrum data.</p></td>
 </tr>
 <tr>
   <td id="unionPeaks">
@@ -103,13 +117,13 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="representative">
     <a href="./data/representative.html">representative</a>
   </td>
-  <td><p>Create a representative spectrum from a given spectrum collection via a sum or mean aggregate method.</p></td>
+  <td><p>Generates a representative spectrum by aggregating (sum or mean) input spectra.</p></td>
 </tr>
 <tr>
   <td id="nsize">
     <a href="./data/nsize.html">nsize</a>
   </td>
-  <td><p>get the size of the target ms peaks</p></td>
+  <td><p>Gets the number of fragments in a spectrum object.</p></td>
 </tr>
 <tr>
   <td id="search">
@@ -127,13 +141,13 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="alignment_str">
     <a href="./data/alignment_str.html">alignment_str</a>
   </td>
-  <td><p>Make alignment string</p></td>
+  <td><p>Creates a formatted string representation of aligned peaks.</p></td>
 </tr>
 <tr>
   <td id="peakMs2">
     <a href="./data/peakMs2.html">peakMs2</a>
   </td>
-  <td><p>create a new ms2 peaks data object</p></td>
+  <td><p>Constructs a PeakMs2 object from spectral data.</p></td>
 </tr>
 <tr>
   <td id="groupBy_ROI">
@@ -151,49 +165,49 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="XIC_groups">
     <a href="./data/XIC_groups.html">XIC_groups</a>
   </td>
-  <td><p>grouping of the ms1 scan points by m/z data</p></td>
+  <td><p>Groups MS1 scans into XIC (Extracted Ion Chromatogram) groups by m/z.</p></td>
 </tr>
 <tr>
   <td id="XIC">
     <a href="./data/XIC.html">XIC</a>
   </td>
-  <td><p>get chromatogram data for a specific metabolite with given m/z from the ms1 scans data.</p></td>
+  <td><p>Extracts chromatogram data for a specific m/z from MS1 scans.</p></td>
 </tr>
 <tr>
   <td id="rt_slice">
     <a href="./data/rt_slice.html">rt_slice</a>
   </td>
-  <td><p>slice a region of ms1 scan data by a given rt window.</p></td>
+  <td><p>Filters MS1 scans within a specified retention time window.</p></td>
 </tr>
 <tr>
   <td id="intensity">
     <a href="./data/intensity.html">intensity</a>
   </td>
-  <td><p>get intensity value from the ion scan points</p></td>
+  <td><p>Extracts intensity values from MS1 scans or PeakMs2 spectra.</p></td>
 </tr>
 <tr>
   <td id="scan_time">
     <a href="./data/scan_time.html">scan_time</a>
   </td>
-  <td><p>get scan time value from the ion scan points</p></td>
+  <td><p>Extracts retention times from MS1 scans or PeakMs2 spectra.</p></td>
 </tr>
 <tr>
   <td id="make.ROI_names">
     <a href="./data/make.ROI_names.html">make.ROI_names</a>
   </td>
-  <td><p>makes xcms_id format liked ROI unique id</p></td>
+  <td><p>Generates unique ROI (Region of Interest) IDs for spectra.</p></td>
 </tr>
 <tr>
   <td id="read.MsMatrix">
     <a href="./data/read.MsMatrix.html">read.MsMatrix</a>
   </td>
-  <td></td>
+  <td><p>Reads a spectral matrix from a CSV file.</p></td>
 </tr>
 <tr>
   <td id="linearMatrix">
     <a href="./data/linearMatrix.html">linearMatrix</a>
   </td>
-  <td></td>
+  <td><p>Generates a string representation of top intensity ions from spectra.</p></td>
 </tr></tbody>
       </table>
     </div>
