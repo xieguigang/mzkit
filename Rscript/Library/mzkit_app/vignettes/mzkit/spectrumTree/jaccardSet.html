@@ -38,27 +38,31 @@
         <table>
             
 <dt>libname</dt>
-<dd><p>[as string]</p></dd>
+<dd><p>Array of library spectrum identifiers. [as string]</p></dd>
 
 
 <dt>mz</dt>
-<dd><p>[as double]</p></dd>
+<dd><p>Array of precursor m/z values. [as double]</p></dd>
 
 
 <dt>mzset</dt>
-<dd><p>[as string]</p></dd>
+<dd><p>Array of fragment m/z strings (comma-separated). [as string]</p></dd>
 
 
 <dt>rt</dt>
-<dd><p>[as double]</p></dd>
+<dd><p>Array of retention times (optional). [as double]</p></dd>
 
 
 <dt>cutoff</dt>
-<dd><p>[as double]</p></dd>
+<dd><p>Jaccard similarity threshold (0.0 to 1.0). [as double]</p></dd>
+
+
+<dt>filter.complex.adducts</dt>
+<dd><p>Exclude spectra with multiple adducts if TRUE. [as boolean]</p></dd>
 
 
 <dt>env</dt>
-<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
+<dd><p>The R environment for error handling. [as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
 
         </table>
 
@@ -73,7 +77,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Query/JaccardSearch.html">JaccardSearch</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Query/JaccardSearch.html">JaccardSearch</a></li></ul>
+        <p>A JaccardSearch object for fragment-based searches.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Query/JaccardSearch.html">JaccardSearch</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

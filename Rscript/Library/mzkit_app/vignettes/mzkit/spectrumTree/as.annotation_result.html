@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>as.annotation_result</title>
+    <title>Create metabolite annotation result dataset for a set of the spectrum annotation candidates result.</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>as.annotation_result</h2>
+        <h2>Create metabolite annotation result dataset for a set of the spectrum annotation candidates result.</h2>
 
         <h3>Description</h3>
 
-        as.annotation_result
+        
 
         <h3>Usage</h3>
 
@@ -34,6 +34,13 @@
 
         <table>
             
+<dt>hits</dt>
+<dd><p>A set of the spectrum annotation hits candidates. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Query/ClusterHit.html">ClusterHit</a>]</p></dd>
+
+
+<dt>metadb</dt>
+<dd><p>A metabolite annotation data repository, which could be pull annotation information by a unique reference id. [as <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/LocalRepository.html">LocalRepository</a>]</p></dd>
+
         </table>
 
 
@@ -47,7 +54,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/AnnotationData`1.html">AnnotationData`1[]</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/AnnotationData`1.html">AnnotationData`1[]</a></li></ul>
+        <p>An array of AnnotationData(Of xref) with metabolite annotations.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/AnnotationData`1.html">AnnotationData`1[]</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

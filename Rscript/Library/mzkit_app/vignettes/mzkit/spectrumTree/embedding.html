@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>do embedding of the spectrum data</title>
+    <title>Generates vector embeddings for spectral data (e.g., for machine learning).</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -18,7 +18,7 @@
             </tr>
         </table>
 
-        <h2>do embedding of the spectrum data</h2>
+        <h2>Generates vector embeddings for spectral data (e.g., for machine learning).</h2>
 
         <h3>Description</h3>
 
@@ -36,15 +36,16 @@
         <table>
             
 <dt>x</dt>
-<dd><p>a set of the spectrum data, usually be a mzpack object</p></dd>
+<dd><p>Input spectra (mzPack, PeakMs2 array, or mzPack list).</p></dd>
 
 
 <dt>mslevel</dt>
-<dd><p>only works when the input dataset is <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzPack.html">mzPack</a>. [as integer]</p></dd>
+<dd><p>MS level for spectra extraction (1 or 2). 
+ only works when the input dataset is <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzPack.html">mzPack</a>. [as integer]</p></dd>
 
 
 <dt>env</dt>
-<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
+<dd><p>The R environment for error handling. [as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
 
         </table>
 
@@ -59,7 +60,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/Microsoft/VisualBasic/Data/NLP/Word2Vec/VectorModel.html">VectorModel</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/Microsoft/VisualBasic/Data/NLP/Word2Vec/VectorModel.html">VectorModel</a></li></ul>
+        <p>A VectorModel containing spectral embeddings.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/Microsoft/VisualBasic/Data/NLP/Word2Vec/VectorModel.html">VectorModel</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

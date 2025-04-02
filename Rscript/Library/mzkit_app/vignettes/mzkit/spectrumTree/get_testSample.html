@@ -38,15 +38,19 @@
         <table>
             
 <dt>packlib</dt>
-<dd><p>[as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/PackLib/SpectrumReader.html">SpectrumReader</a>]</p></dd>
+<dd><p>The SpectrumReader object containing reference spectra. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/PackLib/SpectrumReader.html">SpectrumReader</a>]</p></dd>
 
 
 <dt>n</dt>
-<dd><p>[as integer]</p></dd>
+<dd><p>The number of test samples to generate. [as integer]</p></dd>
+
+
+<dt>rtmax</dt>
+<dd><p>The maximum retention time for generated test spectra. [as double]</p></dd>
 
 
 <dt>source.name</dt>
-<dd><p>[as string]</p></dd>
+<dd><p>A fake source name for label this generated test dataset. [as string]</p></dd>
 
         </table>
 
@@ -63,9 +67,15 @@
 
         this function returns data object of type list. the list data also has some specificied data fields: <code>list(peaktable, rawdata)</code>.<h4>clr value class</h4><ul><li>list</li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> let libfile = spectrumTree::readpack(file = "./hmdb_lib.pack");
+ let [peaktable, rawdata] = spectrumTree::get_testSample(libfile, 
+     source_name = "hmdb metabolites test dataset");
+ 
+ print(as.data.frame(peaktable));
+ 
+ write.mzPack(rawdata, file = "./datafile.mzPack");</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>spectrumTree</em> version 1.0.0.0 <a

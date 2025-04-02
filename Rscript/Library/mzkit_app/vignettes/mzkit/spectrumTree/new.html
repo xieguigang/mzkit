@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>create new reference spectrum database</title>
+    <title>Creates a new reference spectrum database file for storing spectral data.</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -18,7 +18,7 @@
             </tr>
         </table>
 
-        <h2>create new reference spectrum database</h2>
+        <h2>Creates a new reference spectrum database file for storing spectral data.</h2>
 
         <h3>Description</h3>
 
@@ -36,11 +36,15 @@
         <table>
             
 <dt>file</dt>
-<dd><p>A file path to save the spectrum reference database</p></dd>
+<dd><p>The file path where the spectrum database will be saved.</p></dd>
+
+
+<dt>type</dt>
+<dd><p>The type of cluster structure to create (Pack, Binary, or Tree). [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/ClusterTypes.html">ClusterTypes</a>]</p></dd>
 
 
 <dt>env</dt>
-<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
+<dd><p>The R environment for error handling and output. [as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
 
         </table>
 
@@ -55,11 +59,11 @@
 
         <h3>Value</h3>
 
-        this function returns data object in these one of the listed data types: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Tree/ReferenceTree.html">ReferenceTree</a>, <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Tree/ReferenceBinaryTree.html">ReferenceBinaryTree</a>, <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/PackLib/SpectrumPack.html">SpectrumPack</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Tree/ReferenceTree.html">ReferenceTree</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Tree/ReferenceBinaryTree.html">ReferenceBinaryTree</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/PackLib/SpectrumPack.html">SpectrumPack</a></li></ul>
+        <p>An instance of ReferenceTree, ReferenceBinaryTree, or SpectrumPack based on the specified type.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Tree/ReferenceTree.html">ReferenceTree</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Tree/ReferenceBinaryTree.html">ReferenceBinaryTree</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/PackLib/SpectrumPack.html">SpectrumPack</a></li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> libfile <- spectrumTree::new(file = "./hmdb_lib.pack", type = "Pack");</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>spectrumTree</em> version 1.0.0.0 <a

@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH SPECTRUMTREE 1 2000-Jan "compress" "compress"
 .SH NAME
-compress \- Compress and make cleanup of the spectrum library
+compress \- Compresses and optimizes a spectrum library, removing redundant entries.
 .SH SYNOPSIS
 \fIcompress(\fBspectrumLib\fR as <generic> SpectrumReader, 
 \fBfile\fR as any, 
@@ -12,22 +12,33 @@ compress \- Compress and make cleanup of the spectrum library
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
-Compress and make cleanup of the spectrum library
+Compresses and optimizes a spectrum library, removing redundant entries.
 .PP
 .SH OPTIONS
 .PP
-\fBspectrumLib\fB \fR\- -. 
+\fBspectrumLib\fB \fR\- The SpectrumReader source library.. 
 .PP
 .PP
-\fBfile\fB \fR\- A file object for write the spectrum library.. 
+\fBfile\fB \fR\- Output file path for compressed library.. 
 .PP
 .PP
-\fBmetadb\fB \fR\- 
- metabolite annotation database library for get annotation information
-. 
+\fBmetadb\fB \fR\- Metadata repository for annotations.. 
 .PP
 .PP
-\fBenv\fB \fR\- -. 
+\fBnspec\fB \fR\- Maximum spectra per metabolite entry.. 
+.PP
+.PP
+\fBxrefDb\fB \fR\- Cross-reference database name.. 
+.PP
+.PP
+\fBtest\fB \fR\- Number of test entries to process (-1 for all).. 
+.PP
+.PP
+\fBenv\fB \fR\- The R environment for error handling.. 
+.PP
+.SH VALUE
+.PP
+TRUE on successful compression.
 .PP
 .SH SEE ALSO
 spectrumTree

@@ -13,13 +13,28 @@ Extract the test sample data for run evaluation of the annotation workflow
 .PP
 .SH OPTIONS
 .PP
-\fBpacklib\fB \fR\- -. 
+\fBpacklib\fB \fR\- The SpectrumReader object containing reference spectra.. 
 .PP
 .PP
-\fBn\fB \fR\- -. 
+\fBn\fB \fR\- The number of test samples to generate.. 
 .PP
 .PP
-\fBsource_name\fB \fR\- -. 
+\fBrtmax\fB \fR\- The maximum retention time for generated test spectra.. 
+.PP
+.PP
+\fBsource_name\fB \fR\- 
+ A fake source name for label this generated test dataset.
+. 
+.PP
+.SH EXAMPLES
+.PP
+let libfile = spectrumTree::readpack(file = "./hmdb_lib.pack");
+ let [peaktable, rawdata] = spectrumTree::get_testSample(libfile, 
+     source_name = "hmdb metabolites test dataset");
+ 
+ print(as.data.frame(peaktable));
+ 
+ write.mzPack(rawdata, file = "./datafile.mzPack");
 .PP
 .SH SEE ALSO
 spectrumTree

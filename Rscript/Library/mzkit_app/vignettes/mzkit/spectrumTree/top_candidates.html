@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>top_candidates</title>
+    <title>Retrieves the top candidate matches from a metabolite library search.</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>top_candidates</h2>
+        <h2>Retrieves the top candidate matches from a metabolite library search.</h2>
 
         <h3>Description</h3>
 
-        top_candidates
+        
 
         <h3>Usage</h3>
 
@@ -35,6 +35,17 @@
 
         <table>
             
+<dt>libs</dt>
+<dd><p>The metabolite library (Library(Of MetaLib)). [as <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/Library`1.html">Library`1</a>]</p></dd>
+
+
+<dt>x</dt>
+<dd><p>The query spectrum (PeakMs2 or GCMSPeak).</p></dd>
+
+
+<dt>top</dt>
+<dd><p>The maximum number of top candidates to return. [as integer]</p></dd>
+
         </table>
 
 
@@ -48,7 +59,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">AlignmentOutput</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">AlignmentOutput</a></li></ul>
+        <p>An array of AlignmentOutput objects representing top matches.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">AlignmentOutput</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

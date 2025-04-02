@@ -1,10 +1,25 @@
 .\" man page create by R# package system.
 .TH SPECTRUMTREE 1 2000-Jan "as.annotation_result" "as.annotation_result"
 .SH NAME
-as.annotation_result \- 
+as.annotation_result \- Create metabolite annotation result dataset for a set of the spectrum annotation candidates result.
 .SH SYNOPSIS
 \fIas.annotation_result(\fBhits\fR as <generic> ClusterHit[], 
 \fBmetadb\fR as <generic> LocalRepository);\fR
+.SH DESCRIPTION
+.PP
+Create metabolite annotation result dataset for a set of the spectrum annotation candidates result.
+.PP
+.SH OPTIONS
+.PP
+\fBhits\fB \fR\- A set of the spectrum annotation hits candidates. 
+.PP
+.PP
+\fBmetadb\fB \fR\- A metabolite annotation data repository, which could be pull annotation information by a unique reference id.. 
+.PP
+.SH VALUE
+.PP
+An array of AnnotationData(Of xref) with metabolite annotations.
+.PP
 .SH SEE ALSO
 spectrumTree
 .SH FILES

@@ -1,10 +1,25 @@
 .\" man page create by R# package system.
 .TH SPECTRUMTREE 1 2000-Jan "candidate_ids" "candidate_ids"
 .SH NAME
-candidate_ids \- 
+candidate_ids \- Extract all reference id from a set of spectrum annotation candidate result
 .SH SYNOPSIS
 \fIcandidate_ids(\fBresult\fR as any, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+Extract all reference id from a set of spectrum annotation candidate result
+.PP
+.SH OPTIONS
+.PP
+\fBresult\fB \fR\- An array of AlignmentOutput objects.. 
+.PP
+.PP
+\fBenv\fB \fR\- The R environment for error handling.. 
+.PP
+.SH VALUE
+.PP
+A string array of metabolite reference IDs.
+.PP
 .SH SEE ALSO
 spectrumTree
 .SH FILES
