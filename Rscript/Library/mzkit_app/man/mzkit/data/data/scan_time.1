@@ -1,20 +1,24 @@
 .\" man page create by R# package system.
 .TH DATA 1 2000-Jan "scan_time" "scan_time"
 .SH NAME
-scan_time \- get scan time value from the ion scan points
+scan_time \- Extracts retention times from MS1 scans or PeakMs2 spectra.
 .SH SYNOPSIS
 \fIscan_time(\fBticks\fR as any, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
-get scan time value from the ion scan points
+Extracts retention times from MS1 scans or PeakMs2 spectra.
 .PP
 .SH OPTIONS
 .PP
-\fBticks\fB \fR\- -. 
+\fBticks\fB \fR\- Input scans or spectra.. 
 .PP
 .PP
-\fBenv\fB \fR\- -. 
+\fBenv\fB \fR\- R environment for error handling.. 
+.PP
+.SH VALUE
+.PP
+Numeric vector of retention times.
 .PP
 .SH SEE ALSO
 data

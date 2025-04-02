@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH DATA 1 2000-Jan "peakMs2" "peakMs2"
 .SH NAME
-peakMs2 \- create a new ms2 peaks data object
+peakMs2 \- Constructs a PeakMs2 object from spectral data.
 .SH SYNOPSIS
 \fIpeakMs2(\fBprecursor\fR as double, 
 \fBrt\fR as double, 
@@ -15,32 +15,42 @@ peakMs2 \- create a new ms2 peaks data object
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
-create a new ms2 peaks data object
+Constructs a PeakMs2 object from spectral data.
 .PP
 .SH OPTIONS
 .PP
-\fBprecursor\fB \fR\- -. 
+\fBprecursor\fB \fR\- Precursor m/z value.. 
 .PP
 .PP
-\fBrt\fB \fR\- -. 
+\fBrt\fB \fR\- Retention time in seconds.. 
 .PP
 .PP
-\fBmz\fB \fR\- -. 
+\fBmz\fB \fR\- Array of fragment m/z values.. 
 .PP
 .PP
-\fBinto\fB \fR\- -. 
+\fBinto\fB \fR\- Array of fragment intensities.. 
 .PP
 .PP
-\fBtotalIons\fB \fR\- -. 
+\fBtotalIons\fB \fR\- Total ion current (optional).. 
 .PP
 .PP
-\fBfile\fB \fR\- -. 
+\fBfile\fB \fR\- Source file identifier.. 
 .PP
 .PP
-\fBmeta\fB \fR\- -. 
+\fBlibname\fB \fR\- Library identifier.. 
 .PP
 .PP
-\fBenv\fB \fR\- -. 
+\fBprecursor_type\fB \fR\- Precursor adduct type.. 
+.PP
+.PP
+\fBmeta\fB \fR\- Metadata list for the peak.. 
+.PP
+.PP
+\fBenv\fB \fR\- R environment for error handling.. 
+.PP
+.SH VALUE
+.PP
+A PeakMs2 object containing the spectral data.
 .PP
 .SH SEE ALSO
 data

@@ -180,7 +180,7 @@ Namespace Spectra
             Return GlobalAlignment _
                 .CreateAlignment(
                     query:=StandardizeSpectrum(New LibraryMatrix(spectrum_a)).ms2,
-                    ref:=StandardizeSpectrum(New LibraryMatrix(spectrum_b)).ms2,
+                    refrs:=StandardizeSpectrum(New LibraryMatrix(spectrum_b)).ms2,
                     tolerance:=tolerance
                 ) _
                 .ToArray _
@@ -193,7 +193,7 @@ Namespace Spectra
             Return GlobalAlignment _
                 .CreateAlignment(
                     query:=StandardizeSpectrum(New LibraryMatrix(spectrum_a)).ms2,
-                    ref:=StandardizeSpectrum(New LibraryMatrix(spectrum_b)).ms2,
+                    refrs:=StandardizeSpectrum(New LibraryMatrix(spectrum_b)).ms2,
                     tolerance:=Tolerance.DeltaMass(ms2_da)
                 ) _
                 .ToArray _

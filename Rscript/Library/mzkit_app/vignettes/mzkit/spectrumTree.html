@@ -10,7 +10,7 @@
     <meta name="keywords" content="R#; spectrumTree; mzkit" />
     <meta name="generator" content="https://github.com/rsharp-lang" />
     <meta name="theme-color" content="#333" />
-    <meta name="description" content="the spectrum tree reference library tools..." />
+    <meta name="description" content="Provides R language interface for mass spectrometry data process..." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -63,14 +63,36 @@ table caption {font-size:14px;font-weight:bolder;}
     <p style="     font-size: 1.125em;     line-height: .8em;     margin-left: 0.5%;     background-color: #fbfbfb;     padding: 24px; ">
       <code>
         <span style="color: blue;">require</span>(<span style="color: black; font-weight: bold;">mzkit</span>);
-                               <br /><br /><span style="color: green;">#' the spectrum tree reference library tools</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "spectrumTree"</span><span style="color: blue;"> from</span><span style="color: brown"> "mzkit"</span>;
+                               <br /><br /><span style="color: green;">#' Provides R language interface for mass spectrometry data processing and metabolite annotation using spectrum tree-based reference libraries.</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "spectrumTree"</span><span style="color: blue;"> from</span><span style="color: brown"> "mzkit"</span>;
                            </code>
     </p>
-    <p><p>the spectrum tree reference library tools</p></p>
+    <p><p>Provides R language interface for mass spectrometry data processing and metabolite annotation using spectrum tree-based reference libraries.</p></p>
     <blockquote>
       <p style="font-style: italic; font-size: 0.9em;">
-                           <p>the spectrum data is clustering and save in family 
- tree data structure.</p>
+                           <p>This module enables cross-language interoperability between VB.NET mass spectrometry algorithms and R scripting environments.
+ 
+ Key features include:
+ 
+ 1. Reference library management (Pack/Binary/Tree formats)
+ 2. Spectrum similarity searches with multiple algorithms
+ 3. Metabolite annotation pipeline integration
+ 4. Library compression and optimization
+ 5. Test dataset generation
+ 6. Embedding generation for machine learning applications
+ 
+ Supported data types:
+ 
+ - mzPack containers
+ - PeakMs2 spectra
+ - LibraryMatrix objects
+ - BioDeep metabolite metadata
+ 
+ Search algorithms implemented:
+ 
+ - Cosine similarity (dot product)
+ - Jaccard index
+ - Entropy-based scoring
+ - Forward/reverse match validation</p>
                            </p>
     </blockquote>
     <div id="main-wrapper">
@@ -86,7 +108,7 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="new">
     <a href="./spectrumTree/new.html">new</a>
   </td>
-  <td><p>create new reference spectrum database</p></td>
+  <td><p>Creates a new reference spectrum database file for storing spectral data.</p></td>
 </tr>
 <tr>
   <td id="get_testSample">
@@ -126,7 +148,7 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="parallel">
     <a href="./spectrumTree/parallel.html">parallel</a>
   </td>
-  <td><p>enable internal parallel for the spectrum alignment search?</p></td>
+  <td><p>Enables or disables parallel processing for spectral searches.</p></td>
 </tr>
 <tr>
   <td id="jaccardSet">
@@ -138,19 +160,19 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="top_candidates">
     <a href="./spectrumTree/top_candidates.html">top_candidates</a>
   </td>
-  <td></td>
+  <td><p>Retrieves the top candidate matches from a metabolite library search.</p></td>
 </tr>
 <tr>
   <td id="candidate_ids">
     <a href="./spectrumTree/candidate_ids.html">candidate_ids</a>
   </td>
-  <td></td>
+  <td><p>Extract all reference id from a set of spectrum annotation candidate result</p></td>
 </tr>
 <tr>
   <td id="as.annotation_result">
     <a href="./spectrumTree/as.annotation_result.html">as.annotation_result</a>
   </td>
-  <td></td>
+  <td><p>Create metabolite annotation result dataset for a set of the spectrum annotation candidates result.</p></td>
 </tr>
 <tr>
   <td id="query">
@@ -168,13 +190,13 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="compress">
     <a href="./spectrumTree/compress.html">compress</a>
   </td>
-  <td><p>Compress and make cleanup of the spectrum library</p></td>
+  <td><p>Compresses and optimizes a spectrum library, removing redundant entries.</p></td>
 </tr>
 <tr>
   <td id="embedding">
     <a href="./spectrumTree/embedding.html">embedding</a>
   </td>
-  <td><p>do embedding of the spectrum data</p></td>
+  <td><p>Generates vector embeddings for spectral data (e.g., for machine learning).</p></td>
 </tr></tbody>
       </table>
     </div>

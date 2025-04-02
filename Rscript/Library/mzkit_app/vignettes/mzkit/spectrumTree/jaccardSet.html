@@ -5,7 +5,7 @@
     <title>construct a fragment set library for run spectrum search in jaccard index matches method</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
 </head>
 
 <body>
@@ -38,27 +38,31 @@
         <table>
             
 <dt>libname</dt>
-<dd><p>[as string]</p></dd>
+<dd><p>Array of library spectrum identifiers. [as string]</p></dd>
 
 
 <dt>mz</dt>
-<dd><p>[as double]</p></dd>
+<dd><p>Array of precursor m/z values. [as double]</p></dd>
 
 
 <dt>mzset</dt>
-<dd><p>[as string]</p></dd>
+<dd><p>Array of fragment m/z strings (comma-separated). [as string]</p></dd>
 
 
 <dt>rt</dt>
-<dd><p>[as double]</p></dd>
+<dd><p>Array of retention times (optional). [as double]</p></dd>
 
 
 <dt>cutoff</dt>
-<dd><p>[as double]</p></dd>
+<dd><p>Jaccard similarity threshold (0.0 to 1.0). [as double]</p></dd>
+
+
+<dt>filter.complex.adducts</dt>
+<dd><p>Exclude spectra with multiple adducts if TRUE. [as boolean]</p></dd>
 
 
 <dt>env</dt>
-<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
+<dd><p>The R environment for error handling. [as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
 
         </table>
 
@@ -73,7 +77,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Query/JaccardSearch.html">JaccardSearch</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Query/JaccardSearch.html">JaccardSearch</a></li></ul>
+        <p>A JaccardSearch object for fragment-based searches.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Query/JaccardSearch.html">JaccardSearch</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 
@@ -86,8 +90,8 @@
     </div>
 </body>
 
-<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
-<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("example_r");</script>
 
 </html>

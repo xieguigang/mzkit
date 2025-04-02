@@ -16,22 +16,29 @@ construct a fragment set library for run spectrum search in jaccard index matche
 .PP
 .SH OPTIONS
 .PP
-\fBlibname\fB \fR\- -. 
+\fBlibname\fB \fR\- Array of library spectrum identifiers.. 
 .PP
 .PP
-\fBmz\fB \fR\- -. 
+\fBmz\fB \fR\- Array of precursor m/z values.. 
 .PP
 .PP
-\fBmzset\fB \fR\- -. 
+\fBmzset\fB \fR\- Array of fragment m/z strings (comma-separated).. 
 .PP
 .PP
-\fBrt\fB \fR\- -. 
+\fBrt\fB \fR\- Array of retention times (optional).. 
 .PP
 .PP
-\fBcutoff\fB \fR\- -. 
+\fBcutoff\fB \fR\- Jaccard similarity threshold (0.0 to 1.0).. 
 .PP
 .PP
-\fBenv\fB \fR\- -. 
+\fBfilter_complex_adducts\fB \fR\- Exclude spectra with multiple adducts if TRUE.. 
+.PP
+.PP
+\fBenv\fB \fR\- The R environment for error handling.. 
+.PP
+.SH VALUE
+.PP
+A JaccardSearch object for fragment-based searches.
 .PP
 .SH SEE ALSO
 spectrumTree

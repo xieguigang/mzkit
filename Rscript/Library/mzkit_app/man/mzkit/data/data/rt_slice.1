@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH DATA 1 2000-Jan "rt_slice" "rt_slice"
 .SH NAME
-rt_slice \- slice a region of ms1 scan data by a given rt window.
+rt_slice \- Filters MS1 scans within a specified retention time window.
 .SH SYNOPSIS
 \fIrt_slice(\fBms1\fR as any, 
 \fBrtmin\fR as double, 
@@ -9,20 +9,24 @@ rt_slice \- slice a region of ms1 scan data by a given rt window.
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
-slice a region of ms1 scan data by a given rt window.
+Filters MS1 scans within a specified retention time window.
 .PP
 .SH OPTIONS
 .PP
-\fBms1\fB \fR\- a sequence of ms1 scan data.. 
+\fBms1\fB \fR\- Input MS1 scan data.. 
 .PP
 .PP
-\fBrtmin\fB \fR\- -. 
+\fBrtmin\fB \fR\- Minimum retention time.. 
 .PP
 .PP
-\fBrtmax\fB \fR\- -. 
+\fBrtmax\fB \fR\- Maximum retention time.. 
 .PP
 .PP
-\fBenv\fB \fR\- -. 
+\fBenv\fB \fR\- R environment for error handling.. 
+.PP
+.SH VALUE
+.PP
+Array of MS1 scans within the RT window.
 .PP
 .SH SEE ALSO
 data

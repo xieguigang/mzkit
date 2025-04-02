@@ -1,10 +1,25 @@
 .\" man page create by R# package system.
 .TH DATA 1 2000-Jan "linearMatrix" "linearMatrix"
 .SH NAME
-linearMatrix \- 
+linearMatrix \- Generates a string representation of top intensity ions from spectra.
 .SH SYNOPSIS
 \fIlinearMatrix(\fBdata\fR as <generic> PeakMs2[], 
 \fBtopIons\fR as integer = 5);\fR
+.SH DESCRIPTION
+.PP
+Generates a string representation of top intensity ions from spectra.
+.PP
+.SH OPTIONS
+.PP
+\fBdata\fB \fR\- Input PeakMs2 spectra.. 
+.PP
+.PP
+\fBtopIons\fB \fR\- Number of top ions to include per spectrum.. 
+.PP
+.SH VALUE
+.PP
+String array formatted as "mz:intensity" for top ions.
+.PP
 .SH SEE ALSO
 data
 .SH FILES

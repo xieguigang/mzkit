@@ -1,26 +1,29 @@
 .\" man page create by R# package system.
 .TH SPECTRUMTREE 1 2000-Jan "embedding" "embedding"
 .SH NAME
-embedding \- do embedding of the spectrum data
+embedding \- Generates vector embeddings for spectral data (e.g., for machine learning).
 .SH SYNOPSIS
 \fIembedding(\fBx\fR as any, 
 \fBmslevel\fR as integer = 2, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
-do embedding of the spectrum data
+Generates vector embeddings for spectral data (e.g., for machine learning).
 .PP
 .SH OPTIONS
 .PP
-\fBx\fB \fR\- a set of the spectrum data, usually be a mzpack object. 
+\fBx\fB \fR\- Input spectra (mzPack, PeakMs2 array, or mzPack list).. 
 .PP
 .PP
-\fBmslevel\fB \fR\- 
- only works when the input dataset is @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack\fR
-. 
+\fBmslevel\fB \fR\- MS level for spectra extraction (1 or 2). 
+ only works when the input dataset is @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack\fR. 
 .PP
 .PP
-\fBenv\fB \fR\- -. 
+\fBenv\fB \fR\- The R environment for error handling.. 
+.PP
+.SH VALUE
+.PP
+A VectorModel containing spectral embeddings.
 .PP
 .SH SEE ALSO
 spectrumTree

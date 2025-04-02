@@ -1,65 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::4de58d730f30eb89339772f2ef077cfa, assembly\SpectrumTree\Pack\PackAlignment.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 225
-    '    Code Lines: 132 (58.67%)
-    ' Comment Lines: 70 (31.11%)
-    '    - Xml Docs: 78.57%
-    ' 
-    '   Blank Lines: 23 (10.22%)
-    '     File Size: 9.49 KB
+' Summaries:
 
 
-    '     Class PackAlignment
-    ' 
-    '         Properties: dotcutoff, libnames, parallel, size, spectrum
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetReferenceSpectrum, reportClusterHit, Search, SearchParallel, SearchSequential
-    '         Structure ___tmp
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 225
+'    Code Lines: 132 (58.67%)
+' Comment Lines: 70 (31.11%)
+'    - Xml Docs: 78.57%
+' 
+'   Blank Lines: 23 (10.22%)
+'     File Size: 9.49 KB
+
+
+'     Class PackAlignment
+' 
+'         Properties: dotcutoff, libnames, parallel, size, spectrum
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GetReferenceSpectrum, reportClusterHit, Search, SearchParallel, SearchSequential
+'         Structure ___tmp
+' 
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -68,6 +68,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
 Namespace PackLib
@@ -138,18 +139,27 @@ Namespace PackLib
         Public Overrides Iterator Function Search(centroid() As ms2, mz1 As Double) As IEnumerable(Of ClusterHit)
             ' get spectrum reference via matches the precursor ions
             Dim candidates As BlockNode() = spectrum.QueryByMz(mz1).ToArray
-            Dim hits As New List(Of ___tmp)
+            Dim hits As ___tmp()
+
+            If False Then
+                If centroid Is Nothing OrElse centroid.Any(Function(mzi) mzi Is Nothing) Then
+                    Throw New InvalidProgramException($"Unexpected null reference of the search query input collection, precursor ion: {mz1}!")
+                End If
+                If candidates Is Nothing OrElse candidates.Any(Function(ci) ci Is Nothing) Then
+                    Throw New InvalidProgramException($"Unexpected null reference of the search reference candidates collection, precursor ion: {mz1}!")
+                End If
+            End If
 
             If parallel Then
-                Call hits.AddRange(SearchParallel(centroid, candidates))
+                hits = SearchParallel(centroid, candidates).ToArray
             Else
-                Call hits.AddRange(SearchSequential(centroid, candidates))
+                hits = SearchSequential(centroid, candidates).ToArray
             End If
 
             ' hits may contains multiple metabolite reference data
             ' multiple cluster object should be populates from
             ' this function?
-            If hits.Count > 0 Then
+            If hits.Length > 0 Then
                 For Each metabolite In hits.GroupBy(Function(i) i.id)
                     Yield reportClusterHit(centroid, hit_group:=metabolite)
                 Next

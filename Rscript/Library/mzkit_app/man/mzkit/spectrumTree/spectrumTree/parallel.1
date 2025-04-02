@@ -1,20 +1,28 @@
 .\" man page create by R# package system.
 .TH SPECTRUMTREE 1 2000-Jan "parallel" "parallel"
 .SH NAME
-parallel \- enable internal parallel for the spectrum alignment search?
+parallel \- Enables or disables parallel processing for spectral searches.
 .SH SYNOPSIS
 \fIparallel(\fBsearch\fR as any, 
 \fBenable\fR as boolean);\fR
 .SH DESCRIPTION
 .PP
-enable internal parallel for the spectrum alignment search?
+Enables or disables parallel processing for spectral searches.
 .PP
 .SH OPTIONS
 .PP
-\fBsearch\fB \fR\- -. 
+\fBsearch\fB \fR\- The PackAlignment object to configure.. 
 .PP
 .PP
-\fBenable\fB \fR\- -. 
+\fBenable\fB \fR\- TRUE to enable parallel processing, FALSE otherwise.. 
+.PP
+.SH VALUE
+.PP
+The modified PackAlignment object.
+.PP
+.SH DETAILS
+.PP
+this function only works for the @\fBT:BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib.PackAlignment\fR method.
 .PP
 .SH SEE ALSO
 spectrumTree

@@ -57,6 +57,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -173,7 +174,8 @@ Public Module MassSpectra
                                     Optional color2 As String = DefaultColor2,
                                     Optional gridStrokeX As String = PlotAlignmentGroup.DefaultGridXStroke,
                                     Optional gridStrokeY As String = PlotAlignmentGroup.DefaultGridYStroke,
-                                    Optional highlights As Double() = Nothing,
+                                    Optional highlights As NamedValue(Of Double)() = Nothing,
+                                    Optional highlightStyle As String = Stroke.StrongHighlightStroke,
                                     Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim mz As Double() = query _
@@ -216,7 +218,8 @@ Public Module MassSpectra
             drawGridX:=drawGridX,
             gridStrokeX:=gridStrokeX,
             gridStrokeY:=gridStrokeY,
-            highlights:=highlights
+            highlights:=highlights,
+            highlightStyle:=highlightStyle
         )
     End Function
 End Module

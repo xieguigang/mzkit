@@ -270,12 +270,19 @@ Namespace Spectra
             End If
         End Function
 
-        Public Iterator Function CreateAlignment(query As ms2(), ref As ms2(), tolerance As Tolerance) As IEnumerable(Of SSM2MatrixFragment)
-            Dim union = MzUnion(query.Select(Function(m) m.mz).ToArray, ref.Select(Function(m) m.mz).ToArray, tolerance)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="query">the sample query data</param>
+        ''' <param name="refrs">the reference data</param>
+        ''' <param name="tolerance"></param>
+        ''' <returns></returns>
+        Public Iterator Function CreateAlignment(query As ms2(), refrs As ms2(), tolerance As Tolerance) As IEnumerable(Of SSM2MatrixFragment)
+            Dim union = MzUnion(query.Select(Function(m) m.mz).ToArray, refrs.Select(Function(m) m.mz).ToArray, tolerance)
 
             For Each mz As Double In union
                 Dim qmz = query.Where(Function(a) tolerance(a.mz, mz)).FirstOrDefault
-                Dim rmz = ref.Where(Function(a) tolerance(a.mz, mz)).FirstOrDefault
+                Dim rmz = refrs.Where(Function(a) tolerance(a.mz, mz)).FirstOrDefault
 
                 Yield New SSM2MatrixFragment With {
                     .mz = mz,
@@ -288,13 +295,15 @@ Namespace Spectra
         End Function
 
         Private Function CreateAnnotation(q As ms2, r As ms2) As String
-            If q.Annotation.StringEmpty(, True) Then
-                Return r.Annotation
-            ElseIf r.Annotation.StringEmpty(, True) Then
-                Return q.Annotation
-            Else
-                Return {q.Annotation, r.Annotation}.Distinct.JoinBy("_")
+            If q Is Nothing OrElse q.Annotation.StringEmpty(, True) Then
+                Return r?.Annotation
             End If
+
+            If r Is Nothing OrElse r.Annotation.StringEmpty(, True) Then
+                Return q?.Annotation
+            End If
+
+            Return {q.Annotation, r.Annotation}.Distinct.JoinBy("_")
         End Function
     End Module
 End Namespace
