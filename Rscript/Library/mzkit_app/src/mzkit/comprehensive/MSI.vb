@@ -1791,6 +1791,39 @@ Module MSI
     ''' hypothesis testing and are notable for being easier to understand and valid for more 
     ''' conditions.
     ''' </remarks>
+    ''' <example>
+    ''' # demo code for export expression matrix from the spatial raw data
+    ''' 
+    ''' # load spatial rawdata file
+    ''' let rawdata = open.mzpack(file = "./rawdata.mzPack");
+    ''' # load ion features
+    ''' let ions = read.csv("./features.csv", row.names = NULL, check.names = FALSE);
+    ''' 
+    ''' let mz = as.numeric(ions$mz);
+    ''' 
+    ''' print("view of the ion features m/z:");
+    ''' print(mz);
+    ''' 
+    ''' # create the aligned matrix data object
+    ''' let matrix = MSI::peakMatrix(raw = rawdata,
+    '''                              mzError = "da:0.05",
+    '''                              ionSet  = mz,
+    '''                              raw_matrix = TRUE
+    ''' );
+    ''' 
+    ''' # load spatial regions
+    ''' let tissue_data = TissueMorphology::loadTissue(file = "tissue_data.cdf");
+    ''' 
+    ''' # finally create the sample bootstrapping result
+    ''' let [sampleinfo, data] = MSI::sample_bootstraping(matrix, tissue_data, n = 200, coverage = 0.1);
+    ''' 
+    ''' print(as.data.frame(sampleinfo));
+    ''' str(data);
+    ''' 
+    ''' # save expression data as csv files for the downstream data analysis.
+    ''' write.csv(data, file = "./expression.csv", row.names = TRUE);
+    ''' write.csv(sampleinfo, file = "./sampleinfo.csv");
+    ''' </example>
     <ExportAPI("sample_bootstraping")>
     Public Function SampleBootstraping(x As Object, tissue As TissueRegion(),
                                        Optional n As Integer = 32,
