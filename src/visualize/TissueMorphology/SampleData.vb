@@ -60,7 +60,9 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module SampleData
 
@@ -115,8 +117,32 @@ Public Module SampleData
         Next
     End Function
 
+    <Extension>
+    Public Iterator Function BootstrapSample(Of T As {Pixel, IVector})(matrix As Grid(Of T), region As TissueRegion,
+                                                                       Optional n As Integer = 32,
+                                                                       Optional coverage As Double = 0.3) As IEnumerable(Of NamedCollection(Of Double))
+        Dim A As Integer = region.points.Length
+        Dim Nsize As Integer = A * coverage
+        Dim dims As Integer = matrix.EnumerateData.First.Data.TryCount
+
+        For Each sample As NamedCollection(Of Point) In region.BootstrapSampleBags(n, coverage)
+            Dim pixelSamples As T() = sample.Select(Function(p) matrix.GetData(p.X, p.Y)).ToArray
+            Dim sum As Vector = Nothing
+
+            If pixelSamples.IsNullOrEmpty Then
+                Yield New NamedCollection(Of Double)(sample.name, Vector.Zero(dims))
+            Else
+                For Each p As T In pixelSamples
+                    sum = sum + p.Data.AsVector
+                Next
+
+                Yield New NamedCollection(Of Double)(sample.name, sum / A)
+            End If
+        Next
+    End Function
+
     ''' <summary>
-    ''' 
+    ''' Create expression samples data for a specific molecule 
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="matrix">the sptial rawdata matrix</param>
