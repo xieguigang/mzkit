@@ -118,9 +118,9 @@ Public Module SampleData
     End Function
 
     <Extension>
-    Public Iterator Function BootstrapSample(Of T As {Pixel, IVector})(matrix As Grid(Of T), region As TissueRegion,
-                                                                       Optional n As Integer = 32,
-                                                                       Optional coverage As Double = 0.3) As IEnumerable(Of NamedCollection(Of Double))
+    Public Iterator Function BootstrapSample(Of T As {RasterPixel, IVector})(matrix As Grid(Of T), region As TissueRegion,
+                                                                             Optional n As Integer = 32,
+                                                                             Optional coverage As Double = 0.3) As IEnumerable(Of NamedCollection(Of Double))
         Dim A As Integer = region.points.Length
         Dim Nsize As Integer = A * coverage
         Dim dims As Integer = matrix.EnumerateData.First.Data.TryCount
