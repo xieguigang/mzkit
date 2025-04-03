@@ -1,67 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::251048f1c54e5ece02bfacca53e1ec7c, Rscript\Library\mzkit_app\src\mzkit\comprehensive\MSI.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1791
-    '    Code Lines: 1076 (60.08%)
-    ' Comment Lines: 529 (29.54%)
-    '    - Xml Docs: 91.87%
-    ' 
-    '   Blank Lines: 186 (10.39%)
-    '     File Size: 74.06 KB
+' Summaries:
 
 
-    ' Module MSI
-    ' 
-    '     Function: asMSILayer, asRaster, basePeakMz, castSpatialLayers, Correction
-    '               createMetadataTable, dimension_size, getimzmlMetadata, GetIonsJointMatrix, GetMatrixIons
-    '               GetMSIMetadata, getmzpackFileMetadata, getmzPackMetadata, GetPeakMatrix, getStatTable
-    '               GetXySpatialFilter, IonStats, level_convolution, load_spectrum, loadRowSummary
-    '               LoadSpotVectorDataFrame, moran_index, MSI_summary, MSIScanMatrix, open_imzML
-    '               packDf, packFile, packMatrix, PeakMatrix, peakSamples
-    '               pixelId, PixelIons, PixelMatrix, pixels, pixels2D
-    '               readImzMLMetadata, readPeaklayer, readSummarylayer, rowScans, SampleBootstraping
-    '               scale, scan, spatialConvolution, splice, write_imzML
-    '               writePeaklayer, writeSummarylayer
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1791
+'    Code Lines: 1076 (60.08%)
+' Comment Lines: 529 (29.54%)
+'    - Xml Docs: 91.87%
+' 
+'   Blank Lines: 186 (10.39%)
+'     File Size: 74.06 KB
+
+
+' Module MSI
+' 
+'     Function: asMSILayer, asRaster, basePeakMz, castSpatialLayers, Correction
+'               createMetadataTable, dimension_size, getimzmlMetadata, GetIonsJointMatrix, GetMatrixIons
+'               GetMSIMetadata, getmzpackFileMetadata, getmzPackMetadata, GetPeakMatrix, getStatTable
+'               GetXySpatialFilter, IonStats, level_convolution, load_spectrum, loadRowSummary
+'               LoadSpotVectorDataFrame, moran_index, MSI_summary, MSIScanMatrix, open_imzML
+'               packDf, packFile, packMatrix, PeakMatrix, peakSamples
+'               pixelId, PixelIons, PixelMatrix, pixels, pixels2D
+'               readImzMLMetadata, readPeaklayer, readSummarylayer, rowScans, SampleBootstraping
+'               scale, scan, spatialConvolution, splice, write_imzML
+'               writePeaklayer, writeSummarylayer
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -93,6 +93,7 @@ Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -102,6 +103,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -1748,19 +1750,30 @@ Module MSI
     End Function
 
     ''' <summary>
-    ''' make expression bootstrapping of current ion layer
+    ''' make expression bootstrapping of the spatial data
     ''' </summary>
-    ''' <param name="layer">The target ion layer to run expression bootstraping</param>
+    ''' <param name="x">The target ion layer to run expression bootstraping, it could be
+    ''' <see cref="SingleIonLayer"/>, or the <see cref="MzMatrix"/> data matrix for 
+    ''' extract the sample dataframe.
+    ''' </param>
     ''' <param name="tissue">A collection of the <see cref="TissueRegion"/> object.</param>
     ''' <param name="n">Get n sample points for each tissue region</param>
     ''' <param name="coverage">The region area coverage for the bootstrapping.</param>
     ''' <returns>
-    ''' A tuple list object that contains the expression data for each <see cref="TissueRegion"/>:
+    ''' For a single ion data layer, this function generates A tuple list object that contains 
+    ''' the expression data for each <see cref="TissueRegion"/>:
     ''' 
     ''' 1. the tuple key is the label of the tissue region data,
     ''' 2. the tuple value is the numeric expression vector that sampling from 
     '''    the corrisponding tissue region, the vector size is equals to the 
     '''    parameter ``n``.
+    '''    
+    ''' For a raw spatial data matrix <see cref="MzMatrix"/> object, a tuple list object that
+    ''' contains two elements will be generats:
+    ''' 
+    ''' 1. sampleinfo - a collection of the gcmodeller <see cref="SampleInfo"/> for mark the sample spatial source
+    ''' 2. data - a dataframe that contains the bootstrapping expression data, ion features in rows
+    '''           and spatial features sample in columns.
     ''' </returns>
     ''' <remarks>
     ''' Bootstrapping is a statistical procedure that resamples a single dataset to create
@@ -1771,11 +1784,45 @@ Module MSI
     ''' conditions.
     ''' </remarks>
     <ExportAPI("sample_bootstraping")>
-    Public Function SampleBootstraping(layer As SingleIonLayer, tissue As TissueRegion(),
+    Public Function SampleBootstraping(x As Object, tissue As TissueRegion(),
                                        Optional n As Integer = 32,
-                                       Optional coverage As Double = 0.3) As Object
+                                       Optional coverage As Double = 0.3,
+                                       Optional env As Environment = Nothing) As Object
+        If x Is Nothing Then
+            Return Nothing
+        End If
 
-        Return layer.MSILayer.ExtractSample(tissue, n, coverage)
+        If TypeOf x Is SingleIonLayer Then
+            Return DirectCast(x, SingleIonLayer).MSILayer.ExtractSample(tissue, n, coverage)
+        ElseIf TypeOf x Is MzMatrix Then
+            Dim spatial As Grid(Of SpotVector) = Grid(Of SpotVector).CreateReadOnly(DirectCast(x, MzMatrix).matrix, Function(i) New Point(i.X, i.Y))
+            Dim samples As New List(Of SampleInfo)
+            Dim data As New rDataframe With {
+                .rownames = DirectCast(x, MzMatrix).mz _
+                    .AsCharacter(format:="F4") _
+                    .ToArray
+            }
+
+            For Each feature As TissueRegion In tissue
+                For Each sampleData As NamedCollection(Of Double) In spatial.BootstrapSample(feature, n, coverage)
+                    Call samples.Add(New SampleInfo With {
+                        .ID = sampleData.name,
+                        .sample_name = .ID,
+                        .sample_info = feature.label,
+                        .color = feature.color.ToHtmlColor
+                    })
+                    Call data.add(sampleData.name, sampleData.value)
+                Next
+            Next
+
+            Return New list(
+                slot("data") = data,
+                slot("sampleinfo") = samples.ToArray
+            )
+        Else
+            ' generates the type mis-matched error
+            Return Message.InCompatibleType(require:=GetType(MzMatrix), x.GetType, env)
+        End If
     End Function
 
     ''' <summary>

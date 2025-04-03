@@ -117,6 +117,15 @@ Public Module SampleData
         Next
     End Function
 
+    ''' <summary>
+    ''' Create samples data for a single spatial region
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="matrix"></param>
+    ''' <param name="region"></param>
+    ''' <param name="n"></param>
+    ''' <param name="coverage"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function BootstrapSample(Of T As {RasterPixel, IVector})(matrix As Grid(Of T), region As TissueRegion,
                                                                              Optional n As Integer = 32,
