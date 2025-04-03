@@ -1,19 +1,23 @@
 .\" man page create by R# package system.
 .TH MSI 1 2000-Jan "sample_bootstraping" "sample_bootstraping"
 .SH NAME
-sample_bootstraping \- make expression bootstrapping of current ion layer
+sample_bootstraping \- make expression bootstrapping of the spatial data
 .SH SYNOPSIS
-\fIsample_bootstraping(\fBlayer\fR as <generic> SingleIonLayer, 
+\fIsample_bootstraping(\fBx\fR as any, 
 \fBtissue\fR as <generic> TissueRegion[], 
 \fBn\fR as integer = 32, 
-\fBcoverage\fR as double = 0.3);\fR
+\fBcoverage\fR as double = 0.3, 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
-make expression bootstrapping of current ion layer
+make expression bootstrapping of the spatial data
 .PP
 .SH OPTIONS
 .PP
-\fBlayer\fB \fR\- The target ion layer to run expression bootstraping. 
+\fBx\fB \fR\- The target ion layer to run expression bootstraping, it could be
+ @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer\fR, or the @\fBT:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix\fR data matrix for 
+ extract the sample dataframe.
+. 
 .PP
 .PP
 \fBtissue\fB \fR\- A collection of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion\fR object.. 
@@ -26,12 +30,20 @@ make expression bootstrapping of current ion layer
 .PP
 .SH VALUE
 .PP
-A tuple list object that contains the expression data for each @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion\fR:
+For a single ion data layer, this function generates A tuple list object that contains 
+ the expression data for each @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion\fR:
  
  1. the tuple key is the label of the tissue region data,
  2. the tuple value is the numeric expression vector that sampling from 
     the corrisponding tissue region, the vector size is equals to the 
     parameter \fBn\fR.
+    
+ For a raw spatial data matrix @\fBT:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix\fR object, a tuple list object that
+ contains two elements will be generats:
+ 
+ 1. sampleinfo - a collection of the gcmodeller @\fBT:SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner.SampleInfo\fR for mark the sample spatial source
+ 2. data - a dataframe that contains the bootstrapping expression data, ion features in rows
+           and spatial features sample in columns.
 .PP
 .SH DETAILS
 .PP

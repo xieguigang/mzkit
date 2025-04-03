@@ -254,6 +254,8 @@ declare namespace MSI {
    /**
     * Extract the ion data matrix
     * 
+    * > feature elements inside the generated matrix object keeps the same order with 
+    * >  the input ion features.
     * 
      * @param raw -
      * @param topN select top N ion feature in each spot and then union the ion features as 
@@ -329,7 +331,7 @@ declare namespace MSI {
     * 
     * 
      * @param raw -
-     * @param file -
+     * @param file write the generated data matrix into this file
      * 
      * + default value Is ``null``.
      * @param mzdiff the mass tolerance width for extract the feature ions
@@ -415,7 +417,7 @@ declare namespace MSI {
       function scans(raw: string, y?: object, correction?: object, env?: object): object;
    }
    /**
-    * make expression bootstrapping of current ion layer
+    * make expression bootstrapping of the spatial data
     * 
     * > Bootstrapping is a statistical procedure that resamples a single dataset to create
     * >  many simulated samples. This process allows you to calculate standard errors, 
@@ -424,7 +426,9 @@ declare namespace MSI {
     * >  hypothesis testing and are notable for being easier to understand and valid for more 
     * >  conditions.
     * 
-     * @param layer The target ion layer to run expression bootstraping
+     * @param x The target ion layer to run expression bootstraping, it could be
+     *  @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer``, or the @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix`` data matrix for 
+     *  extract the sample dataframe.
      * @param tissue A collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion`` object.
      * @param n Get n sample points for each tissue region
      * 
@@ -432,14 +436,24 @@ declare namespace MSI {
      * @param coverage The region area coverage for the bootstrapping.
      * 
      * + default value Is ``0.3``.
-     * @return A tuple list object that contains the expression data for each @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion``:
+     * @param env 
+     * + default value Is ``null``.
+     * @return For a single ion data layer, this function generates A tuple list object that contains 
+     *  the expression data for each @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion``:
      *  
      *  1. the tuple key is the label of the tissue region data,
      *  2. the tuple value is the numeric expression vector that sampling from 
      *     the corrisponding tissue region, the vector size is equals to the 
      *     parameter ``n``.
+     *     
+     *  For a raw spatial data matrix @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix`` object, a tuple list object that
+     *  contains two elements will be generats:
+     *  
+     *  1. sampleinfo - a collection of the gcmodeller @``T:SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner.SampleInfo`` for mark the sample spatial source
+     *  2. data - a dataframe that contains the bootstrapping expression data, ion features in rows
+     *            and spatial features sample in columns.
    */
-   function sample_bootstraping(layer: object, tissue: object, n?: object, coverage?: number): any;
+   function sample_bootstraping(x: any, tissue: object, n?: object, coverage?: number, env?: object): any;
    /**
     * scale the spatial matrix by column
     * 

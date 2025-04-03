@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>make expression bootstrapping of current ion layer</title>
+    <title>make expression bootstrapping of the spatial data</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -18,7 +18,7 @@
             </tr>
         </table>
 
-        <h2>make expression bootstrapping of current ion layer</h2>
+        <h2>make expression bootstrapping of the spatial data</h2>
 
         <h3>Description</h3>
 
@@ -27,7 +27,7 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>sample_bootstraping</strong>(<i>layer</i>, <i>tissue</i>,
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>sample_bootstraping</strong>(<i>x</i>, <i>tissue</i>,
     <i>n</i> = <span style='color: green;'>32</span>,
     <i>coverage</i> = <span style='color: green;'>0.3</span>);</code></pre>
         </div>
@@ -36,8 +36,10 @@
 
         <table>
             
-<dt>layer</dt>
-<dd><p>The target ion layer to run expression bootstraping. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a>]</p></dd>
+<dt>x</dt>
+<dd><p>The target ion layer to run expression bootstraping, it could be
+ <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a>, or the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a> data matrix for 
+ extract the sample dataframe.</p></dd>
 
 
 <dt>tissue</dt>
@@ -69,12 +71,20 @@
 
         <h3>Value</h3>
 
-        <p>A tuple list object that contains the expression data for each <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/TissueRegion.html">TissueRegion</a>:
+        <p>For a single ion data layer, this function generates A tuple list object that contains 
+ the expression data for each <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/TissueRegion.html">TissueRegion</a>:
  
  1. the tuple key is the label of the tissue region data,
  2. the tuple value is the numeric expression vector that sampling from 
     the corrisponding tissue region, the vector size is equals to the 
-    parameter <code>n</code>.</p><h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
+    parameter <code>n</code>.
+    
+ For a raw spatial data matrix <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a> object, a tuple list object that
+ contains two elements will be generats:
+ 
+ 1. sampleinfo - a collection of the gcmodeller @<code>T:SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner.SampleInfo</code> for mark the sample spatial source
+ 2. data - a dataframe that contains the bootstrapping expression data, ion features in rows
+           and spatial features sample in columns.</p><h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
 
         <h3 style="display: none;">Examples</h3>
 
