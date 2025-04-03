@@ -1414,7 +1414,7 @@ Module MSI
     ''' dumping raw data matrix as text table file. 
     ''' </summary>
     ''' <param name="raw"></param>
-    ''' <param name="file"></param>
+    ''' <param name="file">write the generated data matrix into this file</param>
     ''' <param name="mzdiff">
     ''' the mass tolerance width for extract the feature ions
     ''' </param>
