@@ -90,6 +90,13 @@ Public Module SampleData
         Return data
     End Function
 
+    ''' <summary>
+    ''' Make bootstrapping sampling of the spatial pixels inside a given tissue region.
+    ''' </summary>
+    ''' <param name="region"></param>
+    ''' <param name="n"></param>
+    ''' <param name="coverage"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function BootstrapSampleBags(region As TissueRegion,
                                                  Optional n As Integer = 32,
@@ -150,6 +157,11 @@ Public Module SampleData
         Return vec
     End Function
 
+    ''' <summary>
+    ''' Convert the tissue regions as the cluster labelled spots
+    ''' </summary>
+    ''' <param name="regions"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function ExtractSpatialSpots(regions As IEnumerable(Of TissueRegion)) As IEnumerable(Of PhenographSpot)
         For Each region As TissueRegion In regions
