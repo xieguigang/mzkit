@@ -1183,6 +1183,10 @@ Module MSI
     ''' + for a dataset collection vector, the column is also the ion features and the 
     '''   rows is the spatial spots.
     ''' </returns>
+    ''' <remarks>
+    ''' feature elements inside the generated matrix object keeps the same order with 
+    ''' the input ion features.
+    ''' </remarks>
     ''' <example>
     ''' let raw = open.mzpack("/path/to/rawdata.mzPack");
     ''' let ionsSet = list(ion1 = 100.0321, ion2 = 563.2254, ion3 = 336.9588);
@@ -1241,7 +1245,9 @@ Module MSI
     ''' false for returns a collection of the <see cref="DataSet"/> rows.
     ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' feature elements inside the generated matrix object keeps the same order with the input ion features.
+    ''' </returns>
     <Extension>
     Private Function GetPeakMatrix(raw As mzPack, ionSet As Object, err As Tolerance,
                                    rawMatrix As Boolean,
@@ -1290,6 +1296,8 @@ Module MSI
         End If
 
         If rawMatrix Then
+            ' 20250404
+            ' feature elements inside the generated matrix object keeps the same order with the input ion features.
             Return Deconvolute.PeakMatrix.CreateMatrix(raw, err.GetErrorDalton, 0, mzSet:=ions.Values.ToArray)
         Else
             Return raw _

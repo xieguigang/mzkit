@@ -77,7 +77,9 @@ Namespace Deconvolute
         ''' <param name="raw"></param>
         ''' <param name="mzdiff"></param>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' feature elements inside the generated matrix object keeps the same order with the input ion features.
+        ''' </remarks>
         <Extension>
         Public Function CreateMatrix(raw As IMZPack, massVals As MassWindow(), Optional mzdiff As Double = 0.001) As MzMatrix
             Dim mzSet As Double() = massVals.Mass
