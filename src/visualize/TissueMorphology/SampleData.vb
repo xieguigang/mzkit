@@ -148,6 +148,8 @@ Public Module SampleData
 
                 Yield New NamedCollection(Of Double)(sample.name, sum / A)
             End If
+
+            Call App.FlushMemory()
         Next
     End Function
 
