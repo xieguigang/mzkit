@@ -1841,7 +1841,8 @@ Module MSI
             Dim data As New rDataframe With {
                 .rownames = DirectCast(x, MzMatrix).mz _
                     .AsCharacter(format:="F4") _
-                    .ToArray
+                    .ToArray,
+                .columns = New Dictionary(Of String, Array)
             }
 
             For Each feature As TissueRegion In tissue
