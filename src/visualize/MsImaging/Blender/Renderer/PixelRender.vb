@@ -58,18 +58,16 @@
 
 Imports System.Drawing
 Imports System.Drawing.Imaging
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Scaler
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports Microsoft.VisualBasic.Linq
 
 Namespace Blender
 
     ''' <summary>
-    ''' Do ms-imaging rendering via pixel drawing
+    ''' Do ms-imaging rendering via setpixel method in bitmap drawing
     ''' </summary>
     ''' <remarks>
     ''' this component is working on windows for the mzkit_win32 
@@ -77,13 +75,17 @@ Namespace Blender
     ''' </remarks>
     Public Class PixelRender : Inherits Renderer
 
-        ReadOnly overlaps As Image
         ReadOnly transparentCutoff As Integer = 5
 
+        ''' <summary>
+        ''' Construct an ms-imaging data render via the bitmap buffer set pixel method
+        ''' </summary>
+        ''' <param name="heatmapRender"></param>
+        ''' <param name="overlaps"></param>
+        ''' <param name="transparent"></param>
         Public Sub New(heatmapRender As Boolean, Optional overlaps As Image = Nothing, Optional transparent As Integer = 5)
-            MyBase.New(heatmapRender)
+            MyBase.New(heatmapRender, overlaps)
 
-            Me.overlaps = overlaps
             Me.transparentCutoff = transparent
         End Sub
 
@@ -181,32 +183,6 @@ Namespace Blender
 
             ' no scale
             Return New ImageData(raw)
-        End Function
-
-        ''' <summary>
-        ''' draw background
-        ''' </summary>
-        ''' <remarks>
-        ''' <paramref name="dimension"/> defines the image size directly
-        ''' </remarks>
-        Private Function DrawBackground(dimension As Size, defaultBackground As Color) As Bitmap
-            Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
-
-            Using g As IGraphics = DriverLoad.CreateGraphicsDevice(raw)
-                Call g.Clear(defaultBackground)
-
-                If Not overlaps Is Nothing Then
-                    Call g.DrawImage(overlaps, New Rectangle(New Point, raw.Size))
-                End If
-
-                Call g.Flush()
-
-#If NETCOREAPP Then
-                Return New Bitmap(DirectCast(g, GdiRasterGraphics).ImageResource)
-#End If
-            End Using
-
-            Return raw
         End Function
 
         ''' <summary>

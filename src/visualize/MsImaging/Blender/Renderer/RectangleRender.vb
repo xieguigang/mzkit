@@ -60,22 +60,18 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Scaler
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Scaler
-Imports System.Runtime.CompilerServices
-
-
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -105,13 +101,22 @@ Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 
 Namespace Blender
 
+    ''' <summary>
+    ''' Do ms-imaging rendering via graphics draw rectangle method in heatmap rendering 
+    ''' </summary>
     Public Class RectangleRender : Inherits Renderer
 
         ReadOnly driver As Drivers
 
+        ''' <summary>
+        ''' Construct a ms-imaging data render based on the graphics draw rectangle method
+        ''' </summary>
+        ''' <param name="driver"></param>
+        ''' <param name="heatmapRender"></param>
+        ''' <param name="overlaps"></param>
         <DebuggerStepThrough>
-        Public Sub New(driver As Drivers, heatmapRender As Boolean)
-            MyBase.New(heatmapRender)
+        Public Sub New(driver As Drivers, heatmapRender As Boolean, Optional overlaps As Image = Nothing)
+            MyBase.New(heatmapRender, overlaps)
             Me.driver = driver
         End Sub
 
@@ -263,6 +268,11 @@ Namespace Blender
             Dim defaultColor As New SolidBrush(scale.DefaultColor)
             Dim dimSize As New SizeF(1, 1)
             Dim intensityRange As Double() = scale.ValueMinMax
+            Dim is_transparentBg As Boolean = scale.DefaultColor.IsTransparent
+
+            If Not overlaps Is Nothing Then
+                Call g.DrawImage(overlaps, New Rectangle(New Point, g.Size))
+            End If
 
             scale = scale.ReScaleToValueRange(0, 1)
 
@@ -278,6 +288,11 @@ Namespace Blender
                 color = scale.GetSolidColor(level, index)
 
                 If level <= 0.0 OrElse index <= 0 Then
+                    If is_transparentBg Then
+                        ' 20250405 skip of current pixels rectangle drawing
+                        Continue For
+                    End If
+
                     color = defaultColor
                 End If
 

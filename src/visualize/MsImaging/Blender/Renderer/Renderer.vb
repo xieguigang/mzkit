@@ -1,71 +1,72 @@
 ﻿#Region "Microsoft.VisualBasic::4b08bc43c2d3dbb91141d434c85a3b38, visualize\MsImaging\Blender\Renderer\Renderer.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 192
-    '    Code Lines: 120 (62.50%)
-    ' Comment Lines: 49 (25.52%)
-    '    - Xml Docs: 89.80%
-    ' 
-    '   Blank Lines: 23 (11.98%)
-    '     File Size: 8.04 KB
+' Summaries:
 
 
-    '     Class Renderer
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetPixelChannelReader
-    ' 
-    '     Class PixelChannelRaster
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GetPixelChannelReader
-    ' 
-    '         Sub: setRange
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 192
+'    Code Lines: 120 (62.50%)
+' Comment Lines: 49 (25.52%)
+'    - Xml Docs: 89.80%
+' 
+'   Blank Lines: 23 (11.98%)
+'     File Size: 8.04 KB
+
+
+'     Class Renderer
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GetPixelChannelReader
+' 
+'     Class PixelChannelRaster
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GetPixelChannelReader
+' 
+'         Sub: setRange
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
@@ -84,6 +85,7 @@ Imports Image = System.Drawing.Image
 Imports Bitmap = System.Drawing.Bitmap
 Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
 Imports FontStyle = System.Drawing.FontStyle
+Imports PixelFormat = System.Drawing.Imaging.PixelFormat
 #Else
 Imports Pen = Microsoft.VisualBasic.Imaging.Pen
 Imports Pens = Microsoft.VisualBasic.Imaging.Pens
@@ -96,6 +98,7 @@ Imports Image = Microsoft.VisualBasic.Imaging.Image
 Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
 Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+Imports PixelFormat = Microsoft.VisualBasic.Imaging.PixelFormat
 #End If
 
 Namespace Blender
@@ -109,10 +112,42 @@ Namespace Blender
         Protected gauss As Integer = 8
         Protected sigma As Integer = 32
 
+        ''' <summary>
+        ''' overlaps raster image as background
+        ''' </summary>
+        Protected ReadOnly overlaps As Image
+
         <DebuggerStepThrough>
-        Sub New(heatmapRender As Boolean)
-            heatmapMode = heatmapRender
+        Sub New(heatmapRender As Boolean, overlaps As Image)
+            Me.heatmapMode = heatmapRender
+            Me.overlaps = overlaps
         End Sub
+
+        ''' <summary>
+        ''' draw background
+        ''' </summary>
+        ''' <remarks>
+        ''' <paramref name="dimension"/> defines the image size directly
+        ''' </remarks>
+        Protected Function DrawBackground(dimension As Size, defaultBackground As Color) As Bitmap
+            Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
+
+            Using g As IGraphics = DriverLoad.CreateGraphicsDevice(raw)
+                Call g.Clear(defaultBackground)
+
+                If Not overlaps Is Nothing Then
+                    Call g.DrawImage(overlaps, New Rectangle(New Point, raw.Size))
+                End If
+
+                Call g.Flush()
+
+#If NETCOREAPP Then
+                Return New Bitmap(DirectCast(g, GdiRasterGraphics).ImageResource)
+#End If
+            End Using
+
+            Return raw
+        End Function
 
         ''' <summary>
         ''' 每一种离子一种对应的颜色生成多个图层，然后叠在在一块进行可视化
