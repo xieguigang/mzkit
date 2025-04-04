@@ -83,6 +83,9 @@ Namespace Blender
         ''' <param name="heatmapRender"></param>
         ''' <param name="overlaps"></param>
         ''' <param name="transparent"></param>
+        ''' <remarks>
+        ''' only works for the gdi+ bitmap image
+        ''' </remarks>
         Public Sub New(heatmapRender As Boolean, Optional overlaps As Image = Nothing, Optional transparent As Integer = 5)
             MyBase.New(heatmapRender, overlaps)
 

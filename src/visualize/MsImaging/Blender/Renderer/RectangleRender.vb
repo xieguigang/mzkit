@@ -114,6 +114,9 @@ Namespace Blender
         ''' <param name="driver"></param>
         ''' <param name="heatmapRender"></param>
         ''' <param name="overlaps"></param>
+        ''' <remarks>
+        ''' could be works for the gdi+ bitmap raster image/svg+pdf vector image file
+        ''' </remarks>
         <DebuggerStepThrough>
         Public Sub New(driver As Drivers, heatmapRender As Boolean, Optional overlaps As Image = Nothing)
             MyBase.New(heatmapRender, overlaps)
