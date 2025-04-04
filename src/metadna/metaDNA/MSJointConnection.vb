@@ -122,20 +122,37 @@ Public Class MSJointConnection : Implements IMzQuery
         Return enrichment
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="topN"></param>
+    ''' <returns>
+    ''' annotation result set which is grouped by mz as key
+    ''' </returns>
     Private Function getEnrichedMzSet(mz As Double(), topN As Integer) As IGrouping(Of String, MzQuery)()
         Dim allId As Dictionary(Of String, MzQuery()) = Nothing
         Dim enrichment As EnrichmentResult() = GetEnrichment(mz, allId).Take(topN).ToArray
         Dim mzSet As IGrouping(Of String, MzQuery)() = enrichment _
             .Select(Function(list)
                         Dim score As Double = -Math.Log10(list.pvalue)
+
+                        If score.IsNaNImaginary Then
+                            If Double.IsPositiveInfinity(score) Then
+                                score = 1000
+                            Else
+                                score = 0
+                            End If
+                        End If
+
                         Dim result = list.IDs _
                             .Select(Function(id) allId(id)) _
                             .IteratesALL _
                             .ToArray
-                        Dim copy = result _
+                        Dim copy As MzQuery() = result _
                             .Select(Function(q)
                                         Return New MzQuery With {
-                                            .score = score,
+                                            .score = score / (q.ppm + 1),
                                             .precursor_type = q.precursor_type,
                                             .unique_id = q.unique_id,
                                             .mz = q.mz,

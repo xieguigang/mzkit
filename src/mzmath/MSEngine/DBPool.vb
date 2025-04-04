@@ -103,7 +103,7 @@ Public Class DBPool
             Yield New NamedCollection(Of MzQuery) With {
                 .name = xrefDb.Key,
                 .value = xrefDb.Value _
-                    .MSetAnnotation(allMz) _
+                    .MSetAnnotation(allMz, 9) _
                     .ToArray
             }
         Next
