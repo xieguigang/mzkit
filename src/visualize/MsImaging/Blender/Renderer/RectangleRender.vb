@@ -270,12 +270,17 @@ Namespace Blender
             Dim color As Brush
             Dim defaultColor As New SolidBrush(scale.DefaultColor)
             Dim dimSize As New SizeF(1, 1)
-            Dim intensityRange As Double() = scale.ValueMinMax
-            Dim is_transparentBg As Boolean = scale.DefaultColor.IsTransparent
 
             If Not overlaps Is Nothing Then
                 Call g.DrawImage(overlaps, New Rectangle(New Point, g.Size))
             End If
+            ' skip rendering for empty data collection
+            If pixels.IsNullOrEmpty Then
+                Return
+            End If
+
+            Dim intensityRange As Double() = scale.ValueMinMax
+            Dim is_transparentBg As Boolean = scale.DefaultColor.IsTransparent
 
             scale = scale.ReScaleToValueRange(0, 1)
 
