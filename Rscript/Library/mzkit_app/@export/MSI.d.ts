@@ -436,6 +436,8 @@ declare namespace MSI {
      * @param coverage The region area coverage for the bootstrapping.
      * 
      * + default value Is ``0.3``.
+     * @param scale_by_area 
+     * + default value Is ``true``.
      * @param env 
      * + default value Is ``null``.
      * @return For a single ion data layer, this function generates A tuple list object that contains 
@@ -453,7 +455,7 @@ declare namespace MSI {
      *  2. data - a dataframe that contains the bootstrapping expression data, ion features in rows
      *            and spatial features sample in columns.
    */
-   function sample_bootstraping(x: any, tissue: object, n?: object, coverage?: number, env?: object): any;
+   function sample_bootstraping(x: any, tissue: object, n?: object, coverage?: number, scale_by_area?: boolean, env?: object): any;
    /**
     * scale the spatial matrix by column
     * 
