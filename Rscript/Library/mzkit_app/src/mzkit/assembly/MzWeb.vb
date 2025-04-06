@@ -1,62 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::9fcff9402be32e11dccdcb264313dbd3, Rscript\Library\mzkit_app\src\mzkit\assembly\MzWeb.vb"
+﻿#Region "Microsoft.VisualBasic::742c60a8598ad15240c69e2e90df1893, Rscript\Library\mzkit_app\src\mzkit\assembly\MzWeb.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 1160
-'    Code Lines: 731 (63.02%)
-' Comment Lines: 282 (24.31%)
-'    - Xml Docs: 92.20%
-' 
-'   Blank Lines: 147 (12.67%)
-'     File Size: 47.23 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module MzWeb
-' 
-'     Function: BPC, GetChromatogram, getMs1PointTable, loadStream, loadXcmsRData
-'               MassCalibration, Ms1Peaks, Ms1ScanPoints, Ms2ScanPeaks, Open
-'               openFile, openFromFile, parse_base64, parseScanMsBuffer, readCache
-'               setMzpackThumbnail, TIC, ToMzPack, uniqueReference, writeCache
-'               writeMzpack, writeStream, writeToCDF
-' 
-'     Sub: Main, WriteCache
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1183
+    '    Code Lines: 748 (63.23%)
+    ' Comment Lines: 287 (24.26%)
+    '    - Xml Docs: 91.64%
+    ' 
+    '   Blank Lines: 148 (12.51%)
+    '     File Size: 48.43 KB
+
+
+    ' Module MzWeb
+    ' 
+    '     Function: BPC, GetChromatogram, getMs1PointTable, loadStream, loadXcmsRData
+    '               MassCalibration, Ms1Peaks, Ms1ScanPoints, Ms2ScanPeaks, Open
+    '               openFile, openFromFile, parse_base64, parseScanMsBuffer, readCache
+    '               setMzpackThumbnail, TIC, ToMzPack, uniqueReference, writeCache
+    '               writeMzpack, writeStream, writeToCDF
+    ' 
+    '     Sub: Main, WriteCache
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

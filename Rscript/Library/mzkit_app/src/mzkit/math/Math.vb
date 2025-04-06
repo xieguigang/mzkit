@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::124347dc09c4645901236772f69201df, Rscript\Library\mzkit_app\src\mzkit\math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::2ac06ddc377536e1833cc46dc3692f6d, Rscript\Library\mzkit_app\src\mzkit\math\Math.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1418
-    '    Code Lines: 880 (62.06%)
-    ' Comment Lines: 361 (25.46%)
-    '    - Xml Docs: 90.30%
+    '   Total Lines: 1419
+    '    Code Lines: 880 (62.02%)
+    ' Comment Lines: 362 (25.51%)
+    '    - Xml Docs: 90.06%
     ' 
-    '   Blank Lines: 177 (12.48%)
-    '     File Size: 60.50 KB
+    '   Blank Lines: 177 (12.47%)
+    '     File Size: 60.56 KB
 
 
     ' Module MzMath
