@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d982089d92969629dd1c68ec29742fd4, assembly\assembly\MarkupData\imzML\XML\Scan3DReader.vb"
+﻿#Region "Microsoft.VisualBasic::00bd68cce740d30c7140a0ef54557ff7, assembly\assembly\MarkupData\imzML\XML\Scan3DReader.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 63
-    '    Code Lines: 48 (76.19%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 66
+    '    Code Lines: 48 (72.73%)
+    ' Comment Lines: 3 (4.55%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 15 (23.81%)
-    '     File Size: 1.77 KB
+    '   Blank Lines: 15 (22.73%)
+    '     File Size: 1.84 KB
 
 
     '     Class Scan3DReader
