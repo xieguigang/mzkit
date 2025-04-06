@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::066ec72695585f4339e81df30c1ec9d0, mzmath\ms2_math-core\Spectra\Models\Xml\SSM2MatrixFragment.vb"
+﻿#Region "Microsoft.VisualBasic::f4d07261dcb458a51ac57a692f870054, mzmath\ms2_math-core\Spectra\Models\Xml\SSM2MatrixFragment.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 78
-    '    Code Lines: 47 (60.26%)
-    ' Comment Lines: 19 (24.36%)
+    '   Total Lines: 94
+    '    Code Lines: 56 (59.57%)
+    ' Comment Lines: 23 (24.47%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 12 (15.38%)
-    '     File Size: 2.52 KB
+    '   Blank Lines: 15 (15.96%)
+    '     File Size: 3.03 KB
 
 
     '     Class SSM2MatrixFragment
     ' 
-    '         Properties: da, IsNeutralLossMatched, IsProductIonMatched, mz, query
-    '                     ref
+    '         Properties: annotation, da, IsNeutralLossMatched, IsProductIonMatched, mz
+    '                     query, ref
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: createFragment, FromXml, GetSampleFragment, ToString
     ' 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24f4dfa4c75be3d2db68bf04976b97b0, mzmath\ms2_math-core\mzPack\IMsAssemblyPack.vb"
+﻿#Region "Microsoft.VisualBasic::29ffd28c71100695ca5050440c2652fd, mzmath\ms2_math-core\mzPack\IMsAssemblyPack.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 25
-    '    Code Lines: 6 (24.00%)
-    ' Comment Lines: 15 (60.00%)
+    '   Total Lines: 24
+    '    Code Lines: 6 (25.00%)
+    ' Comment Lines: 15 (62.50%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (16.00%)
-    '     File Size: 794 B
+    '   Blank Lines: 3 (12.50%)
+    '     File Size: 790 B
 
 
     ' Interface IMsAssemblyPack
@@ -55,7 +55,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' an abstract rawdata file model for make data unify representation in mzkit
@@ -81,4 +80,3 @@ Public Interface IMsAssemblyPack
                             Optional dt As Double = 7.5) As IEnumerable(Of ms1_scan)
 
 End Interface
-

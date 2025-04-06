@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc4f7d7d4fe4170576db3bd6824a4745, mzmath\MSEngine\DBPool.vb"
+﻿#Region "Microsoft.VisualBasic::af1ec3ae5a49e122f59715198c92eb6f, mzmath\MSEngine\DBPool.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 10 (18.87%)
-    '     File Size: 1.80 KB
+    '     File Size: 1.84 KB
 
 
     ' Class DBPool

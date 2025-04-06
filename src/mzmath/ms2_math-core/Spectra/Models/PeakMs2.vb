@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57d35249c085e6712832846fce484fab, mzmath\ms2_math-core\Spectra\Models\PeakMs2.vb"
+﻿#Region "Microsoft.VisualBasic::0d561eef6678bfcd9299f3a6ad91ad0f, mzmath\ms2_math-core\Spectra\Models\PeakMs2.vb"
 
     ' Author:
     ' 
@@ -37,15 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 184
-    '    Code Lines: 100 (54.35%)
-    ' Comment Lines: 61 (33.15%)
+    '   Total Lines: 214
+    '    Code Lines: 113 (52.80%)
+    ' Comment Lines: 74 (34.58%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 23 (12.50%)
-    '     File Size: 6.67 KB
+    '   Blank Lines: 27 (12.62%)
+    '     File Size: 7.73 KB
 
 
+    '     Class AnnotationMetadata
+    ' 
+    '         Properties: annotation, meta
+    ' 
     '     Class PeakMs2
     ' 
     '         Properties: activation, collisionEnergy, file, fragments, intensity
@@ -54,8 +58,8 @@
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 
-    '         Function: AlignMatrix, GetIntensity, GetIons, GetMatrix, RtInSecond
-    '                   ToString
+    '         Function: AlignMatrix, GetAnnotationJsonModel, GetIntensity, GetIons, GetMatrix
+    '                   RtInSecond, ToString
     ' 
     '         Sub: SetIons
     ' 
