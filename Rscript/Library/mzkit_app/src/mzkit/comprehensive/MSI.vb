@@ -1828,6 +1828,7 @@ Module MSI
     Public Function SampleBootstraping(x As Object, tissue As TissueRegion(),
                                        Optional n As Integer = 32,
                                        Optional coverage As Double = 0.3,
+                                       Optional scale_by_area As Boolean = True,
                                        Optional env As Environment = Nothing) As Object
         If x Is Nothing Then
             Return Nothing
@@ -1846,7 +1847,11 @@ Module MSI
             }
 
             For Each feature As TissueRegion In tissue
-                For Each sampleData As NamedCollection(Of Double) In spatial.BootstrapSample(feature, n, coverage)
+                For Each sampleData As NamedCollection(Of Double) In spatial.BootstrapSample(
+                    region:=feature,
+                    n, coverage,
+                    scaleByArea:=scale_by_area
+                )
                     Call samples.Add(New SampleInfo With {
                         .ID = sampleData.name,
                         .sample_name = .ID,
