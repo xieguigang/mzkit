@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f45b573fe832598780f5b325ee27edc, visualize\MsImaging\Blender\Renderer\RectangleRender.vb"
+﻿#Region "Microsoft.VisualBasic::ef31eb612c6d6855f3c7c1301c2384c3, visualize\MsImaging\Blender\Renderer\RectangleRender.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 296
-    '    Code Lines: 228 (77.03%)
-    ' Comment Lines: 30 (10.14%)
-    '    - Xml Docs: 80.00%
+    '   Total Lines: 309
+    '    Code Lines: 230 (74.43%)
+    ' Comment Lines: 40 (12.94%)
+    '    - Xml Docs: 77.50%
     ' 
-    '   Blank Lines: 38 (12.84%)
-    '     File Size: 13.36 KB
+    '   Blank Lines: 39 (12.62%)
+    '     File Size: 14.29 KB
 
 
     '     Class RectangleRender

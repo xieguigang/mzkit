@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7075888734342c4c9613ae0f9d2ec390, visualize\plot\MassSpectraMirrorPlot.vb"
+﻿#Region "Microsoft.VisualBasic::db61385e5ed4b26ebda9ebfc21706183, visualize\plot\MassSpectraMirrorPlot.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 166
-    '    Code Lines: 120 (72.29%)
-    ' Comment Lines: 38 (22.89%)
+    '   Total Lines: 169
+    '    Code Lines: 123 (72.78%)
+    ' Comment Lines: 38 (22.49%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (4.82%)
-    '     File Size: 7.89 KB
+    '   Blank Lines: 8 (4.73%)
+    '     File Size: 8.12 KB
 
 
     ' Module MassSpectra

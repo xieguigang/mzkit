@@ -1,66 +1,66 @@
-﻿#Region "Microsoft.VisualBasic::4b08bc43c2d3dbb91141d434c85a3b38, visualize\MsImaging\Blender\Renderer\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::62576d644d8a701f14f25a8b3addd832, visualize\MsImaging\Blender\Renderer\Renderer.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 192
-'    Code Lines: 120 (62.50%)
-' Comment Lines: 49 (25.52%)
-'    - Xml Docs: 89.80%
-' 
-'   Blank Lines: 23 (11.98%)
-'     File Size: 8.04 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Renderer
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: GetPixelChannelReader
-' 
-'     Class PixelChannelRaster
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: GetPixelChannelReader
-' 
-'         Sub: setRange
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 225
+    '    Code Lines: 134 (59.56%)
+    ' Comment Lines: 61 (27.11%)
+    '    - Xml Docs: 91.80%
+    ' 
+    '   Blank Lines: 30 (13.33%)
+    '     File Size: 9.10 KB
+
+
+    '     Class Renderer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: DrawBackground, GetPixelChannelReader
+    ' 
+    '     Class PixelChannelRaster
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetPixelChannelReader
+    ' 
+    '         Sub: setRange
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

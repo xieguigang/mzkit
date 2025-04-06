@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b51bf44b0e1550efe58ee391929ff937, visualize\MsImaging\IndexedCache\XIC.vb"
+﻿#Region "Microsoft.VisualBasic::be75034bb9743d2de114c0a9fbf7ce22, visualize\MsImaging\IndexedCache\XIC.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 133
-    '    Code Lines: 92 (69.17%)
-    ' Comment Lines: 22 (16.54%)
-    '    - Xml Docs: 81.82%
+    '   Total Lines: 85
+    '    Code Lines: 61 (71.76%)
+    ' Comment Lines: 10 (11.76%)
+    '    - Xml Docs: 70.00%
     ' 
-    '   Blank Lines: 19 (14.29%)
-    '     File Size: 4.43 KB
+    '   Blank Lines: 14 (16.47%)
+    '     File Size: 2.90 KB
 
 
     '     Class MatrixXIC
@@ -51,14 +51,6 @@
     '         Properties: intensity, mz
     ' 
     '         Function: Decode, GetLayer
-    ' 
-    '         Sub: Serialize
-    ' 
-    '     Class PointXIC
-    ' 
-    '         Properties: pixels, x, y
-    ' 
-    '         Function: GetLayer
     ' 
     '         Sub: Serialize
     ' 
