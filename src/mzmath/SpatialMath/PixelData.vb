@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bd9cb616cc457277935938c16b768ff, mzmath\SpatialMath\PixelData.vb"
+﻿#Region "Microsoft.VisualBasic::e35a08e5c11038687a8fc56ba9692e4d, mzmath\SpatialMath\PixelData.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 190
-    '    Code Lines: 127 (66.84%)
-    ' Comment Lines: 36 (18.95%)
-    '    - Xml Docs: 94.44%
+    '   Total Lines: 196
+    '    Code Lines: 129 (65.82%)
+    ' Comment Lines: 40 (20.41%)
+    '    - Xml Docs: 95.00%
     ' 
-    '   Blank Lines: 27 (14.21%)
-    '     File Size: 6.76 KB
+    '   Blank Lines: 27 (13.78%)
+    '     File Size: 7.10 KB
 
 
     ' Class PixelData

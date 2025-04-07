@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e2874c721894af08577994e66f18faf, assembly\Comprehensive\SingleCells\View.vb"
+﻿#Region "Microsoft.VisualBasic::6f1a12ee75d7a310f8ad07448746e7be, assembly\Comprehensive\SingleCells\View.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 7 (14.00%)
-    '     File Size: 2.03 KB
+    '     File Size: 2.01 KB
 
 
     '     Module View
@@ -60,7 +60,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports SingleExpression
+Imports SMRUCC.genomics.Analysis.SingleCell
 
 Namespace SingleCells
 
@@ -91,12 +91,12 @@ Namespace SingleCells
         End Function
 
         <Extension>
-        Public Function ResolveSingleExpression(cell As ScanMS1, mz As Double, mzErr As Tolerance) As SingleExpression.SingleExpression
+        Public Function ResolveSingleExpression(cell As ScanMS1, mz As Double, mzErr As Tolerance) As SingleExpression
             Dim meta As StringReader = StringReader.WrapDictionary(cell.meta)
             Dim cluster As String = meta.GetString("cluster")
             Dim expr As Double = cell.GetIntensity(mz, mzErr)
 
-            Return New SingleExpression.SingleExpression With {
+            Return New SingleExpression With {
                 .cluster = cluster,
                 .embedding = {meta.GetDouble("umap1"), meta.GetDouble("umap2"), meta.GetDouble("umap3")},
                 .expression = expr,

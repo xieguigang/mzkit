@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1f459d2f286552ac31376ba86ced0b3, Rscript\Library\mzkit_app\src\mzplot\Visual.vb"
+﻿#Region "Microsoft.VisualBasic::e1dd98a2401630c226f9e1f2615a4702, Rscript\Library\mzkit_app\src\mzplot\Visual.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 934
-    '    Code Lines: 728 (77.94%)
-    ' Comment Lines: 118 (12.63%)
-    '    - Xml Docs: 92.37%
+    '   Total Lines: 959
+    '    Code Lines: 744 (77.58%)
+    ' Comment Lines: 127 (13.24%)
+    '    - Xml Docs: 92.91%
     ' 
-    '   Blank Lines: 88 (9.42%)
-    '     File Size: 42.61 KB
+    '   Blank Lines: 88 (9.18%)
+    '     File Size: 43.97 KB
 
 
     ' Module Visual

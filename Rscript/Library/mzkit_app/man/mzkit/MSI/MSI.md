@@ -34,6 +34,6 @@ MS-Imaging data handler
 + [spatial.convolution](MSI/spatial.convolution.1) sum pixels for create pixel spot convolution
 + [pack_matrix](MSI/pack_matrix.1) pack the matrix file as the MSI mzpack
 + [moran_I](MSI/moran_I.1) evaluate the moran index for each ion layer
-+ [sample_bootstraping](MSI/sample_bootstraping.1) make expression bootstrapping of current ion layer
++ [sample_bootstraping](MSI/sample_bootstraping.1) make expression bootstrapping of the spatial data
 + [cast.spatial_layers](MSI/cast.spatial_layers.1) cast the rawdata matrix as the ms-imaging ion layer
 + [raster](MSI/raster.1) cast the ms-imaging layer data to raster object 

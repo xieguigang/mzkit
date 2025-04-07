@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c83888e9225267d666e226c52081482, visualize\MsImaging\Analysis\GridScanner.vb"
+﻿#Region "Microsoft.VisualBasic::cf849794a94c423aa66fbf662f184451, visualize\MsImaging\Analysis\GridScanner.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 270
-    '    Code Lines: 183 (67.78%)
-    ' Comment Lines: 45 (16.67%)
+    '   Total Lines: 269
+    '    Code Lines: 182 (67.66%)
+    ' Comment Lines: 45 (16.73%)
     '    - Xml Docs: 46.67%
     ' 
-    '   Blank Lines: 42 (15.56%)
-    '     File Size: 11.00 KB
+    '   Blank Lines: 42 (15.61%)
+    '     File Size: 10.94 KB
 
 
     ' Module GridScanner

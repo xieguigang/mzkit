@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::251048f1c54e5ece02bfacca53e1ec7c, Rscript\Library\mzkit_app\src\mzkit\comprehensive\MSI.vb"
+﻿#Region "Microsoft.VisualBasic::9888a07759a8596df1a3f28a5a00ea6f, Rscript\Library\mzkit_app\src\mzkit\comprehensive\MSI.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1791
-    '    Code Lines: 1076 (60.08%)
-    ' Comment Lines: 529 (29.54%)
-    '    - Xml Docs: 91.87%
+    '   Total Lines: 1880
+    '    Code Lines: 1110 (59.04%)
+    ' Comment Lines: 582 (30.96%)
+    '    - Xml Docs: 90.38%
     ' 
-    '   Blank Lines: 186 (10.39%)
-    '     File Size: 74.06 KB
+    '   Blank Lines: 188 (10.00%)
+    '     File Size: 78.24 KB
 
 
     ' Module MSI
@@ -93,6 +93,7 @@ Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -102,6 +103,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -1181,6 +1183,10 @@ Module MSI
     ''' + for a dataset collection vector, the column is also the ion features and the 
     '''   rows is the spatial spots.
     ''' </returns>
+    ''' <remarks>
+    ''' feature elements inside the generated matrix object keeps the same order with 
+    ''' the input ion features.
+    ''' </remarks>
     ''' <example>
     ''' let raw = open.mzpack("/path/to/rawdata.mzPack");
     ''' let ionsSet = list(ion1 = 100.0321, ion2 = 563.2254, ion3 = 336.9588);
@@ -1239,7 +1245,9 @@ Module MSI
     ''' false for returns a collection of the <see cref="DataSet"/> rows.
     ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' feature elements inside the generated matrix object keeps the same order with the input ion features.
+    ''' </returns>
     <Extension>
     Private Function GetPeakMatrix(raw As mzPack, ionSet As Object, err As Tolerance,
                                    rawMatrix As Boolean,
@@ -1288,6 +1296,8 @@ Module MSI
         End If
 
         If rawMatrix Then
+            ' 20250404
+            ' feature elements inside the generated matrix object keeps the same order with the input ion features.
             Return Deconvolute.PeakMatrix.CreateMatrix(raw, err.GetErrorDalton, 0, mzSet:=ions.Values.ToArray)
         Else
             Return raw _
@@ -1414,7 +1424,7 @@ Module MSI
     ''' dumping raw data matrix as text table file. 
     ''' </summary>
     ''' <param name="raw"></param>
-    ''' <param name="file"></param>
+    ''' <param name="file">write the generated data matrix into this file</param>
     ''' <param name="mzdiff">
     ''' the mass tolerance width for extract the feature ions
     ''' </param>
@@ -1748,19 +1758,30 @@ Module MSI
     End Function
 
     ''' <summary>
-    ''' make expression bootstrapping of current ion layer
+    ''' make expression bootstrapping of the spatial data
     ''' </summary>
-    ''' <param name="layer">The target ion layer to run expression bootstraping</param>
+    ''' <param name="x">The target ion layer to run expression bootstraping, it could be
+    ''' <see cref="SingleIonLayer"/>, or the <see cref="MzMatrix"/> data matrix for 
+    ''' extract the sample dataframe.
+    ''' </param>
     ''' <param name="tissue">A collection of the <see cref="TissueRegion"/> object.</param>
     ''' <param name="n">Get n sample points for each tissue region</param>
     ''' <param name="coverage">The region area coverage for the bootstrapping.</param>
     ''' <returns>
-    ''' A tuple list object that contains the expression data for each <see cref="TissueRegion"/>:
+    ''' For a single ion data layer, this function generates A tuple list object that contains 
+    ''' the expression data for each <see cref="TissueRegion"/>:
     ''' 
     ''' 1. the tuple key is the label of the tissue region data,
     ''' 2. the tuple value is the numeric expression vector that sampling from 
     '''    the corrisponding tissue region, the vector size is equals to the 
     '''    parameter ``n``.
+    '''    
+    ''' For a raw spatial data matrix <see cref="MzMatrix"/> object, a tuple list object that
+    ''' contains two elements will be generats:
+    ''' 
+    ''' 1. sampleinfo - a collection of the gcmodeller <see cref="SampleInfo"/> for mark the sample spatial source
+    ''' 2. data - a dataframe that contains the bootstrapping expression data, ion features in rows
+    '''           and spatial features sample in columns.
     ''' </returns>
     ''' <remarks>
     ''' Bootstrapping is a statistical procedure that resamples a single dataset to create
@@ -1770,12 +1791,85 @@ Module MSI
     ''' hypothesis testing and are notable for being easier to understand and valid for more 
     ''' conditions.
     ''' </remarks>
+    ''' <example>
+    ''' # demo code for export expression matrix from the spatial raw data
+    ''' 
+    ''' # load spatial rawdata file
+    ''' let rawdata = open.mzpack(file = "./rawdata.mzPack");
+    ''' # load ion features
+    ''' let ions = read.csv("./features.csv", row.names = NULL, check.names = FALSE);
+    ''' 
+    ''' let mz = as.numeric(ions$mz);
+    ''' 
+    ''' print("view of the ion features m/z:");
+    ''' print(mz);
+    ''' 
+    ''' # create the aligned matrix data object
+    ''' let matrix = MSI::peakMatrix(raw = rawdata,
+    '''                              mzError = "da:0.05",
+    '''                              ionSet  = mz,
+    '''                              raw_matrix = TRUE
+    ''' );
+    ''' 
+    ''' # load spatial regions
+    ''' let tissue_data = TissueMorphology::loadTissue(file = "tissue_data.cdf");
+    ''' 
+    ''' # finally create the sample bootstrapping result
+    ''' let [sampleinfo, data] = MSI::sample_bootstraping(matrix, tissue_data, n = 200, coverage = 0.1);
+    ''' 
+    ''' print(as.data.frame(sampleinfo));
+    ''' str(data);
+    ''' 
+    ''' # save expression data as csv files for the downstream data analysis.
+    ''' write.csv(data, file = "./expression.csv", row.names = TRUE);
+    ''' write.csv(sampleinfo, file = "./sampleinfo.csv");
+    ''' </example>
     <ExportAPI("sample_bootstraping")>
-    Public Function SampleBootstraping(layer As SingleIonLayer, tissue As TissueRegion(),
+    Public Function SampleBootstraping(x As Object, tissue As TissueRegion(),
                                        Optional n As Integer = 32,
-                                       Optional coverage As Double = 0.3) As Object
+                                       Optional coverage As Double = 0.3,
+                                       Optional scale_by_area As Boolean = True,
+                                       Optional env As Environment = Nothing) As Object
+        If x Is Nothing Then
+            Return Nothing
+        End If
 
-        Return layer.MSILayer.ExtractSample(tissue, n, coverage)
+        If TypeOf x Is SingleIonLayer Then
+            Return DirectCast(x, SingleIonLayer).MSILayer.ExtractSample(tissue, n, coverage)
+        ElseIf TypeOf x Is MzMatrix Then
+            Dim spatial As Grid(Of SpotVector) = Grid(Of SpotVector).CreateReadOnly(DirectCast(x, MzMatrix).matrix, Function(i) New Point(i.X, i.Y))
+            Dim samples As New List(Of SampleInfo)
+            Dim data As New rDataframe With {
+                .rownames = DirectCast(x, MzMatrix).mz _
+                    .AsCharacter(format:="F4") _
+                    .ToArray,
+                .columns = New Dictionary(Of String, Array)
+            }
+
+            For Each feature As TissueRegion In tissue
+                For Each sampleData As NamedCollection(Of Double) In spatial.BootstrapSample(
+                    region:=feature,
+                    n, coverage,
+                    scaleByArea:=scale_by_area
+                )
+                    Call samples.Add(New SampleInfo With {
+                        .ID = sampleData.name,
+                        .sample_name = .ID,
+                        .sample_info = feature.label,
+                        .color = feature.color.ToHtmlColor
+                    })
+                    Call data.add(sampleData.name, sampleData.value)
+                Next
+            Next
+
+            Return New list(
+                slot("data") = data,
+                slot("sampleinfo") = samples.ToArray
+            )
+        Else
+            ' generates the type mis-matched error
+            Return Message.InCompatibleType(require:=GetType(MzMatrix), x.GetType, env)
+        End If
     End Function
 
     ''' <summary>
