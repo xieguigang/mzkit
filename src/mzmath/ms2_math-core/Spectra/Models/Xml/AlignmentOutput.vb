@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab43caaa726565189cfd3adf3042ea9a, mzmath\ms2_math-core\Spectra\Models\Xml\AlignmentOutput.vb"
+﻿#Region "Microsoft.VisualBasic::958d508974b6c5db67fc51454a789766, mzmath\ms2_math-core\Spectra\Models\Xml\AlignmentOutput.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 178
-    '    Code Lines: 109 (61.24%)
-    ' Comment Lines: 45 (25.28%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 221
+    '    Code Lines: 126 (57.01%)
+    ' Comment Lines: 68 (30.77%)
+    '    - Xml Docs: 95.59%
     ' 
-    '   Blank Lines: 24 (13.48%)
-    '     File Size: 6.37 KB
+    '   Blank Lines: 27 (12.22%)
+    '     File Size: 8.36 KB
 
 
     '     Class AlignmentOutput
@@ -52,7 +52,7 @@
     '                     jaccard, mean, mirror, nhits, query
     '                     reference, reverse
     ' 
-    '         Function: CreateLinearMatrix, GetAlignmentMirror, GetHitsMzPeaks, ParseAlignment, ParseAlignmentLinearMatrix
+    '         Function: (+2 Overloads) CreateLinearMatrix, GetAlignmentMirror, GetHitsMzPeaks, ParseAlignment, ParseAlignmentLinearMatrix
     '                   ToString
     ' 
     ' 

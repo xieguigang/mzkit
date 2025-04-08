@@ -1,80 +1,80 @@
-﻿#Region "Microsoft.VisualBasic::10b83477b304e5ad587c81df2401f791, visualize\MsImaging\Blender\QuantizationThreshold.vb"
+﻿#Region "Microsoft.VisualBasic::c31f19307cf10ca27ac827d68d50fb8f, visualize\MsImaging\Blender\QuantizationThreshold.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 127
-'    Code Lines: 73 (57.48%)
-' Comment Lines: 33 (25.98%)
-'    - Xml Docs: 84.85%
-' 
-'   Blank Lines: 21 (16.54%)
-'     File Size: 4.16 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Delegate Function
-' 
-' 
-'     Delegate Function
-' 
-' 
-'     Class QuantizationThreshold
-' 
-'         Properties: qcut
-' 
-'         Function: RankQuantileThreshold, ThresholdValue, TrIQThreshold
-' 
-'     Class RankQuantileThreshold
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: ThresholdValue, ToString
-' 
-'     Class TrIQThreshold
-' 
-'         Properties: levels
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: ThresholdValue, ToString
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 126
+    '    Code Lines: 72 (57.14%)
+    ' Comment Lines: 33 (26.19%)
+    '    - Xml Docs: 84.85%
+    ' 
+    '   Blank Lines: 21 (16.67%)
+    '     File Size: 4.10 KB
+
+
+    '     Delegate Function
+    ' 
+    ' 
+    '     Delegate Function
+    ' 
+    ' 
+    '     Class QuantizationThreshold
+    ' 
+    '         Properties: qcut
+    ' 
+    '         Function: RankQuantileThreshold, ThresholdValue, TrIQThreshold
+    ' 
+    '     Class RankQuantileThreshold
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ThresholdValue, ToString
+    ' 
+    '     Class TrIQThreshold
+    ' 
+    '         Properties: levels
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ThresholdValue, ToString
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

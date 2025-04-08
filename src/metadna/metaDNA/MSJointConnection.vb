@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b073f6a2be90064de51375065c01586e, metadna\metaDNA\MSJointConnection.vb"
+﻿#Region "Microsoft.VisualBasic::9bcda5d50e7ccb8b837df6083806bcb1, metadna\metaDNA\MSJointConnection.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 258
-    '    Code Lines: 207 (80.23%)
-    ' Comment Lines: 26 (10.08%)
-    '    - Xml Docs: 88.46%
+    '   Total Lines: 275
+    '    Code Lines: 214 (77.82%)
+    ' Comment Lines: 34 (12.36%)
+    '    - Xml Docs: 88.24%
     ' 
-    '   Blank Lines: 25 (9.69%)
-    '     File Size: 10.53 KB
+    '   Blank Lines: 27 (9.82%)
+    '     File Size: 11.10 KB
 
 
     ' Class MSJointConnection
@@ -122,20 +122,37 @@ Public Class MSJointConnection : Implements IMzQuery
         Return enrichment
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="topN"></param>
+    ''' <returns>
+    ''' annotation result set which is grouped by mz as key
+    ''' </returns>
     Private Function getEnrichedMzSet(mz As Double(), topN As Integer) As IGrouping(Of String, MzQuery)()
         Dim allId As Dictionary(Of String, MzQuery()) = Nothing
         Dim enrichment As EnrichmentResult() = GetEnrichment(mz, allId).Take(topN).ToArray
         Dim mzSet As IGrouping(Of String, MzQuery)() = enrichment _
             .Select(Function(list)
                         Dim score As Double = -Math.Log10(list.pvalue)
+
+                        If score.IsNaNImaginary Then
+                            If Double.IsPositiveInfinity(score) Then
+                                score = 1000
+                            Else
+                                score = 0
+                            End If
+                        End If
+
                         Dim result = list.IDs _
                             .Select(Function(id) allId(id)) _
                             .IteratesALL _
                             .ToArray
-                        Dim copy = result _
+                        Dim copy As MzQuery() = result _
                             .Select(Function(q)
                                         Return New MzQuery With {
-                                            .score = score,
+                                            .score = score / (q.ppm + 1),
                                             .precursor_type = q.precursor_type,
                                             .unique_id = q.unique_id,
                                             .mz = q.mz,

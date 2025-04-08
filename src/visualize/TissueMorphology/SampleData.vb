@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f72dfb6a65dbee9fb362d621317f18ea, visualize\TissueMorphology\SampleData.vb"
+﻿#Region "Microsoft.VisualBasic::24be4ba885e5b6e1865c106a688d9c34, visualize\TissueMorphology\SampleData.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 122
-    '    Code Lines: 86 (70.49%)
-    ' Comment Lines: 21 (17.21%)
-    '    - Xml Docs: 85.71%
+    '   Total Lines: 172
+    '    Code Lines: 110 (63.95%)
+    ' Comment Lines: 42 (24.42%)
+    '    - Xml Docs: 95.24%
     ' 
-    '   Blank Lines: 15 (12.30%)
-    '     File Size: 4.92 KB
+    '   Blank Lines: 20 (11.63%)
+    '     File Size: 7.17 KB
 
 
     ' Module SampleData
     ' 
-    '     Function: BootstrapSampleBags, (+2 Overloads) ExtractSample, ExtractSpatialSpots
+    '     Function: BootstrapSample, BootstrapSampleBags, (+2 Overloads) ExtractSample, ExtractSpatialSpots
     ' 
     ' /********************************************************************************/
 
@@ -56,11 +56,14 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module SampleData
 
@@ -90,6 +93,13 @@ Public Module SampleData
         Return data
     End Function
 
+    ''' <summary>
+    ''' Make bootstrapping sampling of the spatial pixels inside a given tissue region.
+    ''' </summary>
+    ''' <param name="region"></param>
+    ''' <param name="n"></param>
+    ''' <param name="coverage"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function BootstrapSampleBags(region As TissueRegion,
                                                  Optional n As Integer = 32,
@@ -109,7 +119,43 @@ Public Module SampleData
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Create samples data for a single spatial region
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="matrix"></param>
+    ''' <param name="region"></param>
+    ''' <param name="n"></param>
+    ''' <param name="coverage"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function BootstrapSample(Of T As {RasterPixel, IVector})(matrix As Grid(Of T), region As TissueRegion,
+                                                                             Optional n As Integer = 32,
+                                                                             Optional coverage As Double = 0.3,
+                                                                             Optional scaleByArea As Boolean = True) As IEnumerable(Of NamedCollection(Of Double))
+        Dim A As Integer = region.points.Length
+        Dim Nsize As Integer = A * coverage
+        Dim dims As Integer = matrix.EnumerateData.First.Data.TryCount
+
+        For Each sample As NamedCollection(Of Point) In Tqdm.Wrap(region.BootstrapSampleBags(n, coverage).ToArray)
+            Dim pixelSamples As T() = sample.Select(Function(p) matrix.GetData(p.X, p.Y)).ToArray
+            Dim sum As Vector = Nothing
+
+            If pixelSamples.IsNullOrEmpty Then
+                Yield New NamedCollection(Of Double)(sample.name, Vector.Zero(dims))
+            Else
+                For Each p As T In pixelSamples
+                    sum = sum + p.Data.AsVector
+                Next
+
+                Yield New NamedCollection(Of Double)(sample.name, If(scaleByArea, sum / A, sum))
+            End If
+
+            Call App.FlushMemory()
+        Next
+    End Function
+
+    ''' <summary>
+    ''' Create expression samples data for a specific molecule 
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="matrix">the sptial rawdata matrix</param>
@@ -150,6 +196,11 @@ Public Module SampleData
         Return vec
     End Function
 
+    ''' <summary>
+    ''' Convert the tissue regions as the cluster labelled spots
+    ''' </summary>
+    ''' <param name="regions"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function ExtractSpatialSpots(regions As IEnumerable(Of TissueRegion)) As IEnumerable(Of PhenographSpot)
         For Each region As TissueRegion In regions

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a75320d21166e61f0e895ebdb5d9350f, visualize\MsImaging\FeatureRegions.vb"
+﻿#Region "Microsoft.VisualBasic::7cd0138cc98c3b36b4b82aa8ce7c28b6, visualize\MsImaging\FeatureRegions.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 77
-    '    Code Lines: 63 (81.82%)
-    ' Comment Lines: 5 (6.49%)
+    '   Total Lines: 81
+    '    Code Lines: 67 (82.72%)
+    ' Comment Lines: 5 (6.17%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 9 (11.69%)
-    '     File Size: 3.14 KB
+    '   Blank Lines: 9 (11.11%)
+    '     File Size: 3.38 KB
 
 
     ' Module FeatureRegions

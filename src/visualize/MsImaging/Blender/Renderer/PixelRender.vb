@@ -1,75 +1,73 @@
-﻿#Region "Microsoft.VisualBasic::ca1af9ac0b4ac70e8750ffccdcefe428, visualize\MsImaging\Blender\Renderer\PixelRender.vb"
+﻿#Region "Microsoft.VisualBasic::bdf4f15e0645a7c2d64fb8c28fa80858, visualize\MsImaging\Blender\Renderer\PixelRender.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 234
-'    Code Lines: 144 (61.54%)
-' Comment Lines: 53 (22.65%)
-'    - Xml Docs: 67.92%
-' 
-'   Blank Lines: 37 (15.81%)
-'     File Size: 10.31 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class PixelRender
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: (+2 Overloads) ChannelCompositions, DrawBackground, LayerOverlaps, (+2 Overloads) RenderPixels
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 197
+    '    Code Lines: 114 (57.87%)
+    ' Comment Lines: 54 (27.41%)
+    '    - Xml Docs: 66.67%
+    ' 
+    '   Blank Lines: 29 (14.72%)
+    '     File Size: 9.09 KB
+
+
+    '     Class PixelRender
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: (+2 Overloads) ChannelCompositions, LayerOverlaps, (+2 Overloads) RenderPixels
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Imaging
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Scaler
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports Microsoft.VisualBasic.Linq
 
 Namespace Blender
 
     ''' <summary>
-    ''' Do ms-imaging rendering via pixel drawing
+    ''' Do ms-imaging rendering via setpixel method in bitmap drawing
     ''' </summary>
     ''' <remarks>
     ''' this component is working on windows for the mzkit_win32 
@@ -77,13 +75,20 @@ Namespace Blender
     ''' </remarks>
     Public Class PixelRender : Inherits Renderer
 
-        ReadOnly overlaps As Image
         ReadOnly transparentCutoff As Integer = 5
 
+        ''' <summary>
+        ''' Construct an ms-imaging data render via the bitmap buffer set pixel method
+        ''' </summary>
+        ''' <param name="heatmapRender"></param>
+        ''' <param name="overlaps"></param>
+        ''' <param name="transparent"></param>
+        ''' <remarks>
+        ''' only works for the gdi+ bitmap image
+        ''' </remarks>
         Public Sub New(heatmapRender As Boolean, Optional overlaps As Image = Nothing, Optional transparent As Integer = 5)
-            MyBase.New(heatmapRender)
+            MyBase.New(heatmapRender, overlaps)
 
-            Me.overlaps = overlaps
             Me.transparentCutoff = transparent
         End Sub
 
@@ -181,32 +186,6 @@ Namespace Blender
 
             ' no scale
             Return New ImageData(raw)
-        End Function
-
-        ''' <summary>
-        ''' draw background
-        ''' </summary>
-        ''' <remarks>
-        ''' <paramref name="dimension"/> defines the image size directly
-        ''' </remarks>
-        Private Function DrawBackground(dimension As Size, defaultBackground As Color) As Bitmap
-            Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
-
-            Using g As IGraphics = DriverLoad.CreateGraphicsDevice(raw)
-                Call g.Clear(defaultBackground)
-
-                If Not overlaps Is Nothing Then
-                    Call g.DrawImage(overlaps, New Rectangle(New Point, raw.Size))
-                End If
-
-                Call g.Flush()
-
-#If NETCOREAPP Then
-                Return New Bitmap(DirectCast(g, GdiRasterGraphics).ImageResource)
-#End If
-            End Using
-
-            Return raw
         End Function
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f45b573fe832598780f5b325ee27edc, visualize\MsImaging\Blender\Renderer\RectangleRender.vb"
+﻿#Region "Microsoft.VisualBasic::ef31eb612c6d6855f3c7c1301c2384c3, visualize\MsImaging\Blender\Renderer\RectangleRender.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 296
-    '    Code Lines: 228 (77.03%)
-    ' Comment Lines: 30 (10.14%)
-    '    - Xml Docs: 80.00%
+    '   Total Lines: 309
+    '    Code Lines: 230 (74.43%)
+    ' Comment Lines: 40 (12.94%)
+    '    - Xml Docs: 77.50%
     ' 
-    '   Blank Lines: 38 (12.84%)
-    '     File Size: 13.36 KB
+    '   Blank Lines: 39 (12.62%)
+    '     File Size: 14.29 KB
 
 
     '     Class RectangleRender
@@ -60,22 +60,18 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Scaler
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Scaler
-Imports System.Runtime.CompilerServices
-
-
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -105,13 +101,25 @@ Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 
 Namespace Blender
 
+    ''' <summary>
+    ''' Do ms-imaging rendering via graphics draw rectangle method in heatmap rendering 
+    ''' </summary>
     Public Class RectangleRender : Inherits Renderer
 
         ReadOnly driver As Drivers
 
+        ''' <summary>
+        ''' Construct a ms-imaging data render based on the graphics draw rectangle method
+        ''' </summary>
+        ''' <param name="driver"></param>
+        ''' <param name="heatmapRender"></param>
+        ''' <param name="overlaps"></param>
+        ''' <remarks>
+        ''' could be works for the gdi+ bitmap raster image/svg+pdf vector image file
+        ''' </remarks>
         <DebuggerStepThrough>
-        Public Sub New(driver As Drivers, heatmapRender As Boolean)
-            MyBase.New(heatmapRender)
+        Public Sub New(driver As Drivers, heatmapRender As Boolean, Optional overlaps As Image = Nothing)
+            MyBase.New(heatmapRender, overlaps)
             Me.driver = driver
         End Sub
 
@@ -262,7 +270,17 @@ Namespace Blender
             Dim color As Brush
             Dim defaultColor As New SolidBrush(scale.DefaultColor)
             Dim dimSize As New SizeF(1, 1)
+
+            If Not overlaps Is Nothing Then
+                Call g.DrawImage(overlaps, New Rectangle(New Point, g.Size))
+            End If
+            ' skip rendering for empty data collection
+            If pixels.IsNullOrEmpty Then
+                Return
+            End If
+
             Dim intensityRange As Double() = scale.ValueMinMax
+            Dim is_transparentBg As Boolean = scale.DefaultColor.IsTransparent
 
             scale = scale.ReScaleToValueRange(0, 1)
 
@@ -278,6 +296,11 @@ Namespace Blender
                 color = scale.GetSolidColor(level, index)
 
                 If level <= 0.0 OrElse index <= 0 Then
+                    If is_transparentBg Then
+                        ' 20250405 skip of current pixels rectangle drawing
+                        Continue For
+                    End If
+
                     color = defaultColor
                 End If
 

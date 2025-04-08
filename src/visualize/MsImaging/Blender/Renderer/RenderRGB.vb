@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3aeba1a40cf207f178aa73f612ed677e, visualize\MsImaging\Blender\Renderer\RenderRGB.vb"
+﻿#Region "Microsoft.VisualBasic::807e5d6023fa3f19f5c94c6b3bce8ffd, visualize\MsImaging\Blender\Renderer\RenderRGB.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 62
-    '    Code Lines: 49 (79.03%)
-    ' Comment Lines: 3 (4.84%)
+    '   Total Lines: 61
+    '    Code Lines: 48 (78.69%)
+    ' Comment Lines: 3 (4.92%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 10 (16.13%)
-    '     File Size: 2.53 KB
+    '   Blank Lines: 10 (16.39%)
+    '     File Size: 2.49 KB
 
 
     '     Class RenderRGB

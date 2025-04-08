@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa5f0a158199fc817cd2eeaac7075503, assembly\mzPack\mzPack.vb"
+﻿#Region "Microsoft.VisualBasic::f1748d8e88fc512b33051fca6dec2b3e, assembly\mzPack\mzPack.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 407
-    '    Code Lines: 277 (68.06%)
-    ' Comment Lines: 87 (21.38%)
-    '    - Xml Docs: 94.25%
+    '   Total Lines: 412
+    '    Code Lines: 277 (67.23%)
+    ' Comment Lines: 92 (22.33%)
+    '    - Xml Docs: 94.57%
     ' 
-    '   Blank Lines: 43 (10.57%)
-    '     File Size: 15.14 KB
+    '   Blank Lines: 43 (10.44%)
+    '     File Size: 15.44 KB
 
 
     ' Class mzPack

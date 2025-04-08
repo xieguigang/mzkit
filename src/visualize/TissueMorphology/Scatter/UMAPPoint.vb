@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ba6ba56dda5149803f06b0c2a533e64, visualize\TissueMorphology\Scatter\UMAPPoint.vb"
+﻿#Region "Microsoft.VisualBasic::3b153097ebba2d67eb73e9ec22db4069, visualize\TissueMorphology\Scatter\UMAPPoint.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 91.30%
     ' 
     '   Blank Lines: 15 (14.29%)
-    '     File Size: 3.61 KB
+    '     File Size: 3.63 KB
 
 
     ' Class UMAPPoint
@@ -63,7 +63,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Linq
-Imports SingleExpression
+Imports SMRUCC.genomics.Analysis.SingleCell
 
 ''' <summary>
 ''' 3d scatter data point, a spatial spot or a single cell data
