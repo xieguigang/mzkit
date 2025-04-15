@@ -313,10 +313,14 @@ declare namespace mzDeco {
     * 
      * @param names 
      * + default value Is ``null``.
+     * @param reference_mz 
+     * + default value Is ``null``.
+     * @param reference_rt 
+     * + default value Is ``null``.
      * @return a collection of the mzkit ri reference object model 
      *  which is matched via the xcms peaktable.
    */
-   function RI_reference(xcms_id: string, mz: number, rt: number, ri: number, names?: string): object;
+   function RI_reference(xcms_id: string, mz: number, rt: number, ri: number, names?: string, reference_mz?: number, reference_rt?: number): object;
    /**
     * cast peaktable to expression matrix object
     * 
