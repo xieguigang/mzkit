@@ -302,11 +302,13 @@ declare namespace mzDeco {
      * @param C the number of carbon atoms for kovats retention index
      * 
      * + default value Is ``null``.
+     * @param safe_wrap_missing 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function RI_cal(peakdata: object, RI?: any, ppm?: number, dt?: number, rawfile?: string, by_id?: boolean, C?: object, env?: object): any;
+   function RI_cal(peakdata: object, RI?: any, ppm?: number, dt?: number, rawfile?: string, by_id?: boolean, C?: object, safe_wrap_missing?: boolean, env?: object): any;
    /**
     * Create RI reference dataset.
     * 
