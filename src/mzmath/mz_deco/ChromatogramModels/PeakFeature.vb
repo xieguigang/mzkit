@@ -194,12 +194,20 @@ Public Class PeakFeature
 
     Public Overrides Function ToString() As String
         Dim xcms_id As String = Me.xcms_id
+        Dim rt_range As String
+
+        If rtmin = 0.0 AndAlso rtmax = 0.0 Then
+            ' use rt
+            rt_range = $"{(rt / 60).ToString("F2")}min"
+        Else
+            rt_range = $"[{(rtmin / 60).ToString("F2")}min - {(rtmax / 60).ToString("F2")}min]"
+        End If
 
         If xcms_id.StringEmpty Then
             xcms_id = $"M{std.Round(mz)}T{std.Round(rt)}"
         End If
 
-        Return $"[{xcms_id}] {mz.ToString("F4")}@[{(rtmin / 60).ToString("F2")}min - {(rtmax / 60).ToString("F2")}min] = {area.ToString("G4")}"
+        Return $"[{xcms_id}] {mz.ToString("F4")}@{rt_range} = {area.ToString("G4")}"
     End Function
 
 End Class

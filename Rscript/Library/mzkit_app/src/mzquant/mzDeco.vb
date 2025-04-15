@@ -763,6 +763,7 @@ Module mzDeco
                             Optional rawfile As String = Nothing,
                             Optional by_id As Boolean = False,
                             Optional C As list = Nothing,
+                            Optional safe_wrap_missing As Boolean = False,
                             Optional env As Environment = Nothing) As Object
 
         Dim refer_points As New List(Of PeakFeature)
@@ -795,9 +796,24 @@ Module mzDeco
                 ' the RI is already has been assigned the peak id
                 ' get peak feature data by its id directly!
                 Dim peak1Index = peakdata.ToDictionary(Function(p1) p1.xcms_id)
+                Dim target As PeakFeature
 
                 For Each refer As RIRefer In ri_refers
-                    Dim target As PeakFeature = peak1Index(refer.xcms_id)
+                    If peak1Index.ContainsKey(refer.xcms_id) Then
+                        target = peak1Index(refer.xcms_id)
+                    ElseIf safe_wrap_missing Then
+                        ' create a fake peak feature at here
+                        Call $"Missing the required RI reference peak feature: {refer.xcms_id}, a fake peak feature is generated as placeholder at here".Warning
+
+                        target = New PeakFeature With {
+                            .xcms_id = refer.xcms_id,
+                            .mz = refer.mz,
+                            .rt = refer.rt,
+                            .rawfile = "Missing Feature"
+                        }
+                    Else
+                        Return RInternal.debug.stop($"Missing the required RI reference peak feature: {refer.xcms_id}, please check of your peaktable input!", env)
+                    End If
 
                     target.RI = refer.RI
                     refer_points.Add(target)
