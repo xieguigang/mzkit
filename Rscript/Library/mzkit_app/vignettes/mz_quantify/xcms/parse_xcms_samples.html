@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>parse_xcms_samples</title>
+    <title>Parse the input file as the mzkit peakset object</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -18,23 +18,38 @@
             </tr>
         </table>
 
-        <h2>parse_xcms_samples</h2>
+        <h2>Parse the input file as the mzkit peakset object</h2>
 
         <h3>Description</h3>
 
-        parse_xcms_samples
+        
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>parse_xcms_samples</strong>(<i>file</i>,
-    <i>group.features</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+    <i>group.features</i> = <span style='color: blue !important;'>FALSE</span>,
+    <i>deli</i> = <span style='color: brown;'><strong>","</strong></span>,
+    <i>normalizeID</i> = <span style='color: blue !important;'>TRUE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
+<dt>file</dt>
+<dd><p>-</p></dd>
+
+
+<dt>group.features</dt>
+<dd><p>This function returns a xcms sample peaks collection for directly mapping of the input tabular file data. 
+ set this parameter to value true, will returns a tuple list object that contains the mzkit
+ peak feature groups, which is group by the sample names. [as boolean]</p></dd>
+
+
+<dt>env</dt>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
+
         </table>
 
 

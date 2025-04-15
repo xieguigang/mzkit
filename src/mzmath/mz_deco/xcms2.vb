@@ -151,6 +151,10 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         End Set
     End Property
 
+    ''' <summary>
+    ''' A value read only property
+    ''' </summary>
+    ''' <returns></returns>
     Private Property intensity As Double Implements IMs1Scan.intensity
         Get
             Return Properties.Values.Sum
@@ -183,6 +187,22 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
 
     Sub New(npeaks As Integer)
         int_npeaks = npeaks
+    End Sub
+
+    ''' <summary>
+    ''' make peak data information and area value copy
+    ''' </summary>
+    ''' <param name="clone"></param>
+    Sub New(clone As xcms2)
+        Me.mz = clone.mz
+        Me.mzmin = clone.mzmin
+        Me.mzmax = clone.mzmax
+        Me.rt = clone.rt
+        Me.rtmin = clone.rtmin
+        Me.rtmax = clone.rtmax
+        Me.ID = clone.ID
+        Me.propertyTable = New Dictionary(Of String, Double)(clone.Properties)
+        Me.RI = clone.RI
     End Sub
 
     ''' <summary>
@@ -275,5 +295,22 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
             .RI = RI,
             .Properties = fill_missing
         }
+    End Function
+
+    Public Shared Function Merge(group As IEnumerable(Of xcms2)) As xcms2
+        Dim topPeaks = group.OrderByDescending(Function(a) a.npeaks).ToArray
+        Dim mergePeak As New xcms2(topPeaks(0))
+
+        For Each peak As xcms2 In topPeaks.Skip(1)
+            For Each name As String In peak.Properties.Keys
+                If mergePeak.HasProperty(name) Then
+                    mergePeak(name) = (mergePeak(name) + peak(name)) / 2
+                Else
+                    mergePeak(name) = peak(name)
+                End If
+            Next
+        Next
+
+        Return mergePeak
     End Function
 End Class
