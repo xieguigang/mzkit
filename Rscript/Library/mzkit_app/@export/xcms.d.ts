@@ -27,10 +27,24 @@ declare namespace xcms {
    */
    function cast_findpeaks_raw(x: object, sample_name?: string): object;
    /**
-     * @param group_features default value Is ``false``.
-     * @param env default value Is ``null``.
+    * Parse the input file as the mzkit peakset object
+    * 
+    * 
+     * @param file -
+     * @param group_features This function returns a xcms sample peaks collection for directly mapping of the input tabular file data. 
+     *  set this parameter to value true, will returns a tuple list object that contains the mzkit
+     *  peak feature groups, which is group by the sample names.
+     * 
+     * + default value Is ``false``.
+     * @param deli 
+     * + default value Is ``','``.
+     * @param normalizeID 
+     * + default value Is ``true``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
-   function parse_xcms_samples(file: any, group_features?: boolean, env?: object): object|object;
+   function parse_xcms_samples(file: any, group_features?: boolean, deli?: string, normalizeID?: boolean, env?: object): object|object;
    /**
     * set annotation to the ion features
     * 
