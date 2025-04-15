@@ -133,7 +133,7 @@ Public Class XcmsSamplePeak
         Dim s As New StreamReader(file)
         Dim pool As IEnumerable(Of XcmsSamplePeak) = ParseTabularStream(s, deli)
 
-        If Not normalizeID Then
+        If normalizeID Then
             Return XcmsSamplePeak.NormalizeID(pool)
         Else
             Return pool
