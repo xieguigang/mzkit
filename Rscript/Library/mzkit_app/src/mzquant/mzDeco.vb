@@ -726,7 +726,9 @@ Module mzDeco
                                  mz As Double(),
                                  rt As Double(),
                                  ri As Double(),
-                                 Optional names As String() = Nothing) As Object
+                                 Optional names As String() = Nothing,
+                                 Optional reference_mz As Double() = Nothing,
+                                 Optional reference_rt As Double() = Nothing) As Object
         Return xcms_id _
             .Select(Function(id, i)
                         Return New RIRefer() With {
@@ -734,7 +736,9 @@ Module mzDeco
                             .mz = mz(i),
                             .rt = rt(i),
                             .RI = ri(i),
-                            .name = names.ElementAtOrNull(i)
+                            .name = names.ElementAtOrNull(i),
+                            .reference_mz = reference_mz.ElementAtOrDefault(i, Double.NaN),
+                            .reference_rt = reference_rt.ElementAtOrDefault(i, Double.NaN)
                         }
                     End Function) _
             .ToArray
