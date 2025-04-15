@@ -129,8 +129,28 @@ Public Class XcmsSamplePeak
     ''' <returns></returns>
     Public Property ID As String
 
-    Public Shared Iterator Function ParseCsv(file As Stream) As IEnumerable(Of XcmsSamplePeak)
+    Public Shared Function ParseFile(file As Stream, Optional deli As Char = ","c, Optional normalizeID As Boolean = True) As IEnumerable(Of XcmsSamplePeak)
         Dim s As New StreamReader(file)
+        Dim pool As IEnumerable(Of XcmsSamplePeak) = ParseTabularStream(s, deli)
+
+        If Not normalizeID Then
+            Return XcmsSamplePeak.NormalizeID(pool)
+        Else
+            Return pool
+        End If
+    End Function
+
+    Private Shared Iterator Function NormalizeID(table As IEnumerable(Of XcmsSamplePeak)) As IEnumerable(Of XcmsSamplePeak)
+        For Each peak As XcmsSamplePeak In table
+            If peak.ID.IsPattern("\d+") Then
+                peak.ID = "Peak" & peak.ID
+            End If
+
+            Yield peak
+        Next
+    End Function
+
+    Private Shared Iterator Function ParseTabularStream(s As StreamReader, deli As Char) As IEnumerable(Of XcmsSamplePeak)
         Dim line As Value(Of String) = s.ReadLine
         Dim headers As Index(Of String) = line.Split(","c)
         Dim mz As Integer = headers!mz
