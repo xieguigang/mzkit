@@ -324,6 +324,19 @@ declare namespace mzDeco {
    */
    function RI_reference(xcms_id: string, mz: number, rt: number, ri: number, names?: string, reference_mz?: number, reference_rt?: number): object;
    /**
+    * Make peaks data group merge by rt directly
+    * 
+    * 
+     * @param peaks -
+     * @param dt -
+     * 
+     * + default value Is ``3``.
+     * @param ppm -
+     * 
+     * + default value Is ``20``.
+   */
+   function rt_groups(peaks: object, dt?: number, ppm?: number): object;
+   /**
     * cast peaktable to expression matrix object
     * 
     * 
