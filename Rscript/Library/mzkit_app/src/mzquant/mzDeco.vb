@@ -202,13 +202,14 @@ Module mzDeco
             .Select(Function(p) p.ID) _
             .ToArray
 
-        table.add(NameOf(xcms2.mz), peakset.Select(Function(a) a.mz))
-        table.add(NameOf(xcms2.mzmin), peakset.Select(Function(a) a.mzmin))
-        table.add(NameOf(xcms2.mzmax), peakset.Select(Function(a) a.mzmax))
-        table.add(NameOf(xcms2.rt), peakset.Select(Function(a) a.rt))
-        table.add(NameOf(xcms2.rtmin), peakset.Select(Function(a) a.rtmin))
-        table.add(NameOf(xcms2.rtmax), peakset.Select(Function(a) a.rtmax))
-        table.add(NameOf(xcms2.npeaks), peakset.Select(Function(a) a.npeaks))
+        Call table.add(NameOf(xcms2.mz), peakset.Select(Function(a) a.mz))
+        Call table.add(NameOf(xcms2.mzmin), peakset.Select(Function(a) a.mzmin))
+        Call table.add(NameOf(xcms2.mzmax), peakset.Select(Function(a) a.mzmax))
+        Call table.add(NameOf(xcms2.rt), peakset.Select(Function(a) a.rt))
+        Call table.add(NameOf(xcms2.rtmin), peakset.Select(Function(a) a.rtmin))
+        Call table.add(NameOf(xcms2.rtmax), peakset.Select(Function(a) a.rtmax))
+        Call table.add(NameOf(xcms2.RI), peakset.Select(Function(a) a.RI))
+        Call table.add(NameOf(xcms2.npeaks), peakset.Select(Function(a) a.npeaks))
 
         For Each name As String In allsampleNames
             Call table.add(name, peakset.Select(Function(i) i(name)))

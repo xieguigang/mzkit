@@ -119,6 +119,9 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     ''' <returns></returns>
     <Category("MS1")> Public Property RI As Double Implements IRetentionIndex.RI
 
+    Public Property RImin As Double
+    Public Property RImax As Double
+
     Dim int_npeaks As Integer?
 
     ''' <summary>
@@ -304,7 +307,7 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         For Each peak As xcms2 In topPeaks.Skip(1)
             For Each name As String In peak.Properties.Keys
                 If mergePeak.HasProperty(name) Then
-                    mergePeak(name) = (mergePeak(name) + peak(name)) / 2
+                    mergePeak(name) = (mergePeak(name) + peak(name))
                 Else
                     mergePeak(name) = peak(name)
                 End If
