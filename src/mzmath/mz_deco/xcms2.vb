@@ -119,8 +119,8 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     ''' <returns></returns>
     <Category("MS1")> Public Property RI As Double Implements IRetentionIndex.RI
 
-    Public Property RImin As Double
-    Public Property RImax As Double
+    <Category("MS1")> Public Property RImin As Double
+    <Category("MS1")> Public Property RImax As Double
 
     Dim int_npeaks As Integer?
 
@@ -142,6 +142,8 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
             End If
         End Get
     End Property
+
+    Public Property groups As Integer
 
     <Category("sample_data")>
     <DisplayName("sample_data")>
@@ -296,7 +298,8 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
             .rtmax = rtmax,
             .rtmin = rtmin,
             .RI = RI,
-            .Properties = fill_missing
+            .Properties = fill_missing,
+            .groups = groups
         }
     End Function
 
@@ -312,6 +315,8 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
                     mergePeak(name) = peak(name)
                 End If
             Next
+
+            mergePeak.groups += peak.groups
         Next
 
         Return mergePeak

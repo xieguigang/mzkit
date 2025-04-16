@@ -159,16 +159,21 @@ Public Module PeakAlignment
                    .mzmin = peak.Select(Function(pi) pi.mz).Min,
                    .mzmax = peak.Select(Function(pi) pi.mz).Max,
                    .rtmax = peak.Select(Function(pi) pi.rt).Max,
-                   .rtmin = peak.Select(Function(pi) pi.rt).Min
+                   .rtmin = peak.Select(Function(pi) pi.rt).Min,
+                   .RImin = peak.Select(Function(pi) pi.RI).Min,
+                   .RImax = peak.Select(Function(pi) pi.RI).Max,
+                   .groups = peak.Length
                 }
 
                 If refer_rt Is Nothing Then
-                    refer_rt = peak.OrderByDescending(Function(p) p.maxInto).First
+                    refer_rt = peak _
+                        .OrderByDescending(Function(p) p.maxInto) _
+                        .First
                 End If
 
                 For Each sample As PeakFeature In peak
                     If peak1.HasProperty(sample.rawfile) Then
-                        peak1(sample.rawfile) = (peak1(sample.rawfile) + sample.area) / 2
+                        peak1(sample.rawfile) = (peak1(sample.rawfile) + sample.area)
                     Else
                         peak1(sample.rawfile) = sample.area
                     End If
