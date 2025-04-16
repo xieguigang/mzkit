@@ -32,6 +32,7 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math
 export class xcms2 extends <a href="/vignettes/clr/System/Double.html">iterates(Double)</a> {
+   groups: integer;
    # the feature unique id
    ID: string;
    # the ion m/z
@@ -45,6 +46,8 @@ export class xcms2 extends <a href="/vignettes/clr/System/Double.html">iterates(
    Properties: list;
    # the retention index value based on the rt transformation
    RI: double;
+   RImax: double;
+   RImin: double;
    # the rt value in max peak data point
    rt: double;
    rtmax: double;
