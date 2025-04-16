@@ -208,6 +208,9 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         Me.ID = clone.ID
         Me.propertyTable = New Dictionary(Of String, Double)(clone.Properties)
         Me.RI = clone.RI
+        Me.RImin = clone.RImin
+        Me.RImax = clone.RImax
+        Me.groups = clone.groups
     End Sub
 
     ''' <summary>
@@ -299,12 +302,16 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
             .rtmin = rtmin,
             .RI = RI,
             .Properties = fill_missing,
-            .groups = groups
+            .groups = groups,
+            .RImax = RImax,
+            .RImin = RImin
         }
     End Function
 
     Public Shared Function Merge(group As IEnumerable(Of xcms2)) As xcms2
-        Dim topPeaks = group.OrderByDescending(Function(a) a.npeaks).ToArray
+        Dim topPeaks As xcms2() = group _
+            .OrderByDescending(Function(a) a.npeaks) _
+            .ToArray
         Dim mergePeak As New xcms2(topPeaks(0))
 
         For Each peak As xcms2 In topPeaks.Skip(1)
