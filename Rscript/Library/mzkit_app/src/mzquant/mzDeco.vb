@@ -73,6 +73,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Tasks
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -1352,10 +1353,10 @@ extract_ms1:
     <ExportAPI("rt_groups")>
     <RApiReturn(GetType(xcms2))>
     Public Function rt_groups_merge(peaks As xcms2(), Optional dt As Double = 3, Optional ppm As Double = 20) As Object
-        Dim ions = peaks.GroupBy(Function(i) i.mz, Function(a, b) PPMmethod.PPM(a, b) <= ppm)
+        Dim ions = peaks.GroupBy(Function(i) i.mz, Function(a, b) PPMmethod.PPM(a, b) <= ppm).ToArray
         Dim merge As New List(Of xcms2)
 
-        For Each ion_group As NamedCollection(Of xcms2) In ions
+        For Each ion_group As NamedCollection(Of xcms2) In TqdmWrapper.Wrap(ions)
             If ion_group.Length > 1 Then
                 Dim rt_groups = ion_group.GroupBy(Function(i) i.rt, Function(a, b) std.Abs(a - b) <= dt)
 
