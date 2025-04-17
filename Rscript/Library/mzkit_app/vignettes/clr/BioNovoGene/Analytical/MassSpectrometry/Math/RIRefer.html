@@ -30,11 +30,19 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math
 export class RIRefer {
+   # the ion m/z value in sample data, debug used only
    mz: double;
+   # the name of current reference RI object
    name: string;
+   # the reference m/z input
+   reference_mz: double;
+   # the reference rt input, the reference rt for find the sample rt, do not use this property value for make RI evaluation.
+   reference_rt: double;
    # the reference retention index value
    RI: double;
+   # the ion rt value in sample data, the sample RI calculation use this sample value
    rt: double;
+   # the unique key reference id in sample data
    xcms_id: string;
 }
 </code>

@@ -1,65 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::15a2867a85f409d6f0d30e6232ca1ebb, Rscript\Library\mzkit_app\src\mzquant\mzDeco.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1376
-    '    Code Lines: 912 (66.28%)
-    ' Comment Lines: 317 (23.04%)
-    '    - Xml Docs: 88.33%
-    ' 
-    '   Blank Lines: 147 (10.68%)
-    '     File Size: 57.63 KB
+' Summaries:
 
 
-    ' Module mzDeco
-    ' 
-    '     Function: adjust_to_seconds, convertDataframeToXcmsPeaks, create_peakset, Deconv, dumpPeaks
-    '               expression, get_ionPeak, getIonPeak, ms1Scans, mz_deco
-    '               mz_groups, peakAlignment, peaksetMatrix, peaksSetMatrix, peakSubset
-    '               peaktable, pull_xic, read_rtshifts, readPeakData, readPeaktable
-    '               readSamples, readXcmsFeaturePeaks, readXcmsPeaks, readXcmsTableFile, readXIC
-    '               RI_batch_join, RI_calc, RI_reference, to_matrix, writePeaktable
-    '               writeSamples, writeXcmsPeaktable, writeXIC, writeXIC1, xcms_peak
-    '               xic_deco, xic_dtw_list, xic_matrix_list, XICpool_func
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1376
+'    Code Lines: 912 (66.28%)
+' Comment Lines: 317 (23.04%)
+'    - Xml Docs: 88.33%
+' 
+'   Blank Lines: 147 (10.68%)
+'     File Size: 57.63 KB
+
+
+' Module mzDeco
+' 
+'     Function: adjust_to_seconds, convertDataframeToXcmsPeaks, create_peakset, Deconv, dumpPeaks
+'               expression, get_ionPeak, getIonPeak, ms1Scans, mz_deco
+'               mz_groups, peakAlignment, peaksetMatrix, peaksSetMatrix, peakSubset
+'               peaktable, pull_xic, read_rtshifts, readPeakData, readPeaktable
+'               readSamples, readXcmsFeaturePeaks, readXcmsPeaks, readXcmsTableFile, readXIC
+'               RI_batch_join, RI_calc, RI_reference, to_matrix, writePeaktable
+'               writeSamples, writeXcmsPeaktable, writeXIC, writeXIC1, xcms_peak
+'               xic_deco, xic_dtw_list, xic_matrix_list, XICpool_func
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -73,6 +73,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Tasks
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -81,6 +82,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -201,13 +203,14 @@ Module mzDeco
             .Select(Function(p) p.ID) _
             .ToArray
 
-        table.add(NameOf(xcms2.mz), peakset.Select(Function(a) a.mz))
-        table.add(NameOf(xcms2.mzmin), peakset.Select(Function(a) a.mzmin))
-        table.add(NameOf(xcms2.mzmax), peakset.Select(Function(a) a.mzmax))
-        table.add(NameOf(xcms2.rt), peakset.Select(Function(a) a.rt))
-        table.add(NameOf(xcms2.rtmin), peakset.Select(Function(a) a.rtmin))
-        table.add(NameOf(xcms2.rtmax), peakset.Select(Function(a) a.rtmax))
-        table.add(NameOf(xcms2.npeaks), peakset.Select(Function(a) a.npeaks))
+        Call table.add(NameOf(xcms2.mz), peakset.Select(Function(a) a.mz))
+        Call table.add(NameOf(xcms2.mzmin), peakset.Select(Function(a) a.mzmin))
+        Call table.add(NameOf(xcms2.mzmax), peakset.Select(Function(a) a.mzmax))
+        Call table.add(NameOf(xcms2.rt), peakset.Select(Function(a) a.rt))
+        Call table.add(NameOf(xcms2.rtmin), peakset.Select(Function(a) a.rtmin))
+        Call table.add(NameOf(xcms2.rtmax), peakset.Select(Function(a) a.rtmax))
+        Call table.add(NameOf(xcms2.RI), peakset.Select(Function(a) a.RI))
+        Call table.add(NameOf(xcms2.npeaks), peakset.Select(Function(a) a.npeaks))
 
         For Each name As String In allsampleNames
             Call table.add(name, peakset.Select(Function(i) i(name)))
@@ -726,7 +729,9 @@ Module mzDeco
                                  mz As Double(),
                                  rt As Double(),
                                  ri As Double(),
-                                 Optional names As String() = Nothing) As Object
+                                 Optional names As String() = Nothing,
+                                 Optional reference_mz As Double() = Nothing,
+                                 Optional reference_rt As Double() = Nothing) As Object
         Return xcms_id _
             .Select(Function(id, i)
                         Return New RIRefer() With {
@@ -734,7 +739,9 @@ Module mzDeco
                             .mz = mz(i),
                             .rt = rt(i),
                             .RI = ri(i),
-                            .name = names.ElementAtOrNull(i)
+                            .name = names.ElementAtOrNull(i),
+                            .reference_mz = reference_mz.ElementAtOrDefault(i, Double.NaN),
+                            .reference_rt = reference_rt.ElementAtOrDefault(i, Double.NaN)
                         }
                     End Function) _
             .ToArray
@@ -759,6 +766,7 @@ Module mzDeco
                             Optional rawfile As String = Nothing,
                             Optional by_id As Boolean = False,
                             Optional C As list = Nothing,
+                            Optional safe_wrap_missing As Boolean = False,
                             Optional env As Environment = Nothing) As Object
 
         Dim refer_points As New List(Of PeakFeature)
@@ -791,9 +799,24 @@ Module mzDeco
                 ' the RI is already has been assigned the peak id
                 ' get peak feature data by its id directly!
                 Dim peak1Index = peakdata.ToDictionary(Function(p1) p1.xcms_id)
+                Dim target As PeakFeature
 
                 For Each refer As RIRefer In ri_refers
-                    Dim target As PeakFeature = peak1Index(refer.xcms_id)
+                    If peak1Index.ContainsKey(refer.xcms_id) Then
+                        target = peak1Index(refer.xcms_id)
+                    ElseIf safe_wrap_missing Then
+                        ' create a fake peak feature at here
+                        Call $"Missing the required RI reference peak feature: {refer.xcms_id}, a fake peak feature is generated as placeholder at here".Warning
+
+                        target = New PeakFeature With {
+                            .xcms_id = refer.xcms_id,
+                            .mz = refer.mz,
+                            .rt = refer.rt,
+                            .rawfile = "Missing Feature"
+                        }
+                    Else
+                        Return RInternal.debug.stop($"Missing the required RI reference peak feature: {refer.xcms_id}, please check of your peaktable input!", env)
+                    End If
 
                     target.RI = refer.RI
                     refer_points.Add(target)
@@ -1318,6 +1341,38 @@ extract_ms1:
         Return ms1Scans(ms1) _
             .GetMzGroups(mzdiff:=Math.getTolerance(mzdiff, env), rtwin:=rtwin) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' Make peaks data group merge by rt directly
+    ''' </summary>
+    ''' <param name="peaks"></param>
+    ''' <param name="dt"></param>
+    ''' <param name="ppm"></param>
+    ''' <returns></returns>
+    <ExportAPI("rt_groups")>
+    <RApiReturn(GetType(xcms2))>
+    Public Function rt_groups_merge(peaks As xcms2(), Optional dt As Double = 3, Optional ppm As Double = 20) As Object
+        Dim ions = peaks.GroupBy(Function(i) i.mz, Function(a, b) PPMmethod.PPM(a, b) <= ppm).ToArray
+        Dim merge As New List(Of xcms2)
+
+        For Each ion_group As NamedCollection(Of xcms2) In TqdmWrapper.Wrap(ions)
+            If ion_group.Length > 1 Then
+                Dim rt_groups = ion_group.GroupBy(Function(i) i.rt, Function(a, b) std.Abs(a - b) <= dt)
+
+                For Each ion As NamedCollection(Of xcms2) In rt_groups
+                    If ion.Length = 1 Then
+                        Call merge.AddRange(ion)
+                    Else
+                        Call merge.Add(xcms2.Merge(ion))
+                    End If
+                Next
+            Else
+                Call merge.AddRange(ion_group)
+            End If
+        Next
+
+        Return merge.ToArray
     End Function
 
     Private Function ms1Scans(ms1 As Object, Optional ByRef source As String = Nothing) As IEnumerable(Of IMs1Scan)

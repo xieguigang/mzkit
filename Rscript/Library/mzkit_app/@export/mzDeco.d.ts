@@ -302,21 +302,40 @@ declare namespace mzDeco {
      * @param C the number of carbon atoms for kovats retention index
      * 
      * + default value Is ``null``.
+     * @param safe_wrap_missing 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function RI_cal(peakdata: object, RI?: any, ppm?: number, dt?: number, rawfile?: string, by_id?: boolean, C?: object, env?: object): any;
+   function RI_cal(peakdata: object, RI?: any, ppm?: number, dt?: number, rawfile?: string, by_id?: boolean, C?: object, safe_wrap_missing?: boolean, env?: object): any;
    /**
     * Create RI reference dataset.
     * 
     * 
      * @param names 
      * + default value Is ``null``.
+     * @param reference_mz 
+     * + default value Is ``null``.
+     * @param reference_rt 
+     * + default value Is ``null``.
      * @return a collection of the mzkit ri reference object model 
      *  which is matched via the xcms peaktable.
    */
-   function RI_reference(xcms_id: string, mz: number, rt: number, ri: number, names?: string): object;
+   function RI_reference(xcms_id: string, mz: number, rt: number, ri: number, names?: string, reference_mz?: number, reference_rt?: number): object;
+   /**
+    * Make peaks data group merge by rt directly
+    * 
+    * 
+     * @param peaks -
+     * @param dt -
+     * 
+     * + default value Is ``3``.
+     * @param ppm -
+     * 
+     * + default value Is ``20``.
+   */
+   function rt_groups(peaks: object, dt?: number, ppm?: number): object;
    /**
     * cast peaktable to expression matrix object
     * 

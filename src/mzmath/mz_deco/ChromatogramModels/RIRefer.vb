@@ -63,8 +63,21 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 ''' </summary>
 Public Class RIRefer : Implements INamedValue, IReadOnlyId, IRetentionIndex, IRetentionTime, IMs1
 
+    ''' <summary>
+    ''' the unique key reference id in sample data
+    ''' </summary>
+    ''' <returns></returns>
     Public Property xcms_id As String Implements INamedValue.Key, IReadOnlyId.Identity
+
+    ''' <summary>
+    ''' the ion m/z value in sample data, debug used only
+    ''' </summary>
+    ''' <returns></returns>
     Public Property mz As Double Implements IMs1.mz
+    ''' <summary>
+    ''' the ion rt value in sample data, the sample RI calculation use this sample value
+    ''' </summary>
+    ''' <returns></returns>
     Public Property rt As Double Implements IMs1.rt
 
     ''' <summary>
@@ -72,6 +85,22 @@ Public Class RIRefer : Implements INamedValue, IReadOnlyId, IRetentionIndex, IRe
     ''' </summary>
     ''' <returns></returns>
     Public Property RI As Double Implements IRetentionIndex.RI
+
+    ''' <summary>
+    ''' the reference m/z input
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property reference_mz As Double
+    ''' <summary>
+    ''' the reference rt input, the reference rt for find the sample rt, <strong>do not use this property value for make RI evaluation</strong>.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property reference_rt As Double
+
+    ''' <summary>
+    ''' the name of current reference RI object
+    ''' </summary>
+    ''' <returns></returns>
     Public Property name As String
 
     Public Overrides Function ToString() As String

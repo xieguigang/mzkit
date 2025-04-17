@@ -72,10 +72,23 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 <Package("xcms")>
 Module xcms
 
+    ''' <summary>
+    ''' Parse the input file as the mzkit peakset object
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="group_features">
+    ''' This function returns a xcms sample peaks collection for directly mapping of the input tabular file data. 
+    ''' set this parameter to value true, will returns a tuple list object that contains the mzkit
+    ''' peak feature groups, which is group by the sample names.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("parse_xcms_samples")>
     <RApiReturn(GetType(XcmsSamplePeak), GetType(PeakFeature))>
     Public Function parse_xcms_samples(<RRawVectorArgument> file As Object,
                                        Optional group_features As Boolean = False,
+                                       Optional deli As Char = ","c,
+                                       Optional normalizeID As Boolean = True,
                                        Optional env As Environment = Nothing) As Object
 
         Dim auto_close As Boolean = False
@@ -86,13 +99,13 @@ Module xcms
             Return s.TryCast(Of Message)
         End If
 
-        Dim peaks As IEnumerable(Of XcmsSamplePeak) = XcmsSamplePeak.ParseCsv(s.TryCast(Of Stream))
+        Dim peaks As IEnumerable(Of XcmsSamplePeak) = XcmsSamplePeak.ParseFile(s.TryCast(Of Stream), deli, normalizeID)
 
         If group_features Then
             Dim samples = peaks.GroupBy(Function(si) si.sample).ToArray
             Dim samplelist As list = list.empty
 
-            For Each sample In samples
+            For Each sample As IGrouping(Of String, XcmsSamplePeak) In samples
                 Call samplelist.add(sample.Key, From si In sample Select New PeakFeature(si))
             Next
 

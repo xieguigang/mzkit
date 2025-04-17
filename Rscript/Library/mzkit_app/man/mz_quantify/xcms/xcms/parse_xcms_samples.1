@@ -1,11 +1,31 @@
 .\" man page create by R# package system.
 .TH XCMS 1 2000-Jan "parse_xcms_samples" "parse_xcms_samples"
 .SH NAME
-parse_xcms_samples \- 
+parse_xcms_samples \- Parse the input file as the mzkit peakset object
 .SH SYNOPSIS
 \fIparse_xcms_samples(\fBfile\fR as any, 
 \fBgroup_features\fR as boolean = FALSE, 
+\fBdeli\fR as string = ,, 
+\fBnormalizeID\fR as boolean = TRUE, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+Parse the input file as the mzkit peakset object
+.PP
+.SH OPTIONS
+.PP
+\fBfile\fB \fR\- -. 
+.PP
+.PP
+\fBgroup_features\fB \fR\- 
+ This function returns a xcms sample peaks collection for directly mapping of the input tabular file data. 
+ set this parameter to value true, will returns a tuple list object that contains the mzkit
+ peak feature groups, which is group by the sample names.
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
 .SH SEE ALSO
 xcms
 .SH FILES

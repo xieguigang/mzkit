@@ -119,6 +119,9 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     ''' <returns></returns>
     <Category("MS1")> Public Property RI As Double Implements IRetentionIndex.RI
 
+    <Category("MS1")> Public Property RImin As Double
+    <Category("MS1")> Public Property RImax As Double
+
     Dim int_npeaks As Integer?
 
     ''' <summary>
@@ -140,6 +143,8 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         End Get
     End Property
 
+    Public Property groups As Integer
+
     <Category("sample_data")>
     <DisplayName("sample_data")>
     Public Overrides Property Properties As Dictionary(Of String, Double)
@@ -151,6 +156,10 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         End Set
     End Property
 
+    ''' <summary>
+    ''' A value read only property
+    ''' </summary>
+    ''' <returns></returns>
     Private Property intensity As Double Implements IMs1Scan.intensity
         Get
             Return Properties.Values.Sum
@@ -183,6 +192,25 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
 
     Sub New(npeaks As Integer)
         int_npeaks = npeaks
+    End Sub
+
+    ''' <summary>
+    ''' make peak data information and area value copy
+    ''' </summary>
+    ''' <param name="clone"></param>
+    Sub New(clone As xcms2)
+        Me.mz = clone.mz
+        Me.mzmin = clone.mzmin
+        Me.mzmax = clone.mzmax
+        Me.rt = clone.rt
+        Me.rtmin = clone.rtmin
+        Me.rtmax = clone.rtmax
+        Me.ID = clone.ID
+        Me.propertyTable = New Dictionary(Of String, Double)(clone.Properties)
+        Me.RI = clone.RI
+        Me.RImin = clone.RImin
+        Me.RImax = clone.RImax
+        Me.groups = clone.groups
     End Sub
 
     ''' <summary>
@@ -273,7 +301,31 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
             .rtmax = rtmax,
             .rtmin = rtmin,
             .RI = RI,
-            .Properties = fill_missing
+            .Properties = fill_missing,
+            .groups = groups,
+            .RImax = RImax,
+            .RImin = RImin
         }
+    End Function
+
+    Public Shared Function Merge(group As IEnumerable(Of xcms2)) As xcms2
+        Dim topPeaks As xcms2() = group _
+            .OrderByDescending(Function(a) a.npeaks) _
+            .ToArray
+        Dim mergePeak As New xcms2(topPeaks(0))
+
+        For Each peak As xcms2 In topPeaks.Skip(1)
+            For Each name As String In peak.Properties.Keys
+                If mergePeak.HasProperty(name) Then
+                    mergePeak(name) = (mergePeak(name) + peak(name))
+                Else
+                    mergePeak(name) = peak(name)
+                End If
+            Next
+
+            mergePeak.groups += peak.groups
+        Next
+
+        Return mergePeak
     End Function
 End Class
