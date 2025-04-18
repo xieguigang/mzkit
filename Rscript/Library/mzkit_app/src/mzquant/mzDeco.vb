@@ -689,14 +689,20 @@ Module mzDeco
     ''' </example>
     <ExportAPI("filter_noise_spectrum")>
     <RApiReturn(GetType(PeakMs2))>
-    Public Function filter_noise_spectrum(peaktable As PeakSet, ions As PeakMs2(),
+    Public Function filter_noise_spectrum(<RRawVectorArgument> ions As Object, peaktable As PeakSet,
                                           Optional mzdiff As Double = 0.1,
-                                          Optional rt_win As Double = 30) As Object
+                                          Optional rt_win As Double = 30,
+                                          Optional env As Environment = Nothing) As Object
 
         Dim filterData As New List(Of PeakMs2)
         Dim noiseData As New List(Of PeakMs2)
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ions, env)
 
-        For Each ion As PeakMs2 In ions
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+        For Each ion As PeakMs2 In pull.populates(Of PeakMs2)(env)
             If peaktable.FindIonSet(ion.mz, ion.rt, mzdiff, rt_win).Any Then
                 Call filterData.Add(ion)
             Else

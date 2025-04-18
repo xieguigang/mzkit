@@ -571,8 +571,16 @@ Module data
     ''' is null or the ``ROI`` id tag is missing from the spectrum object metadata.
     ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A tuple list object that contains the spectrum data grouping by the ROI id.
+    ''' 
+    ''' The key of the tuple list is the ROI id, and the value is a list of spectrum data
+    ''' that belongs to this ROI id.
+    ''' 
+    ''' If no ROI id was assigned, a warning message will be added to the runtime environment.
+    ''' </returns>
     <ExportAPI("groupBy_ROI")>
+    <RApiReturn(GetType(PeakMs2))>
     Public Function groupBy_ROI(<RRawVectorArgument> peakms2 As Object,
                                 Optional default$ = "Not_Assigned",
                                 Optional env As Environment = Nothing) As Object
@@ -983,9 +991,9 @@ Module data
     ''' <param name="name_chrs">If true, returns ROI IDs as strings; otherwise updates PeakMs2 metadata.</param>
     ''' <param name="prefix">Prefix for ROI IDs.</param>
     ''' <param name="env">R environment for error handling.</param>
-    ''' <returns>String array of ROI IDs or modified PeakMs2 objects.</returns>
+    ''' <returns>String array of ROI IDs or modified PeakMs2 objects array.</returns>
     <ExportAPI("make.ROI_names")>
-    <RApiReturn(GetType(PeakMs2))>
+    <RApiReturn(GetType(PeakMs2), GetType(String))>
     Public Function makeROInames(<RRawVectorArgument> ROIlist As Object,
                                  Optional name_chrs As Boolean = False,
                                  Optional prefix As String = "",
