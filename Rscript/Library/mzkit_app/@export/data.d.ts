@@ -66,8 +66,14 @@ declare namespace data {
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return A tuple list object that contains the spectrum data grouping by the ROI id.
+     *  
+     *  The key of the tuple list is the ROI id, and the value is a list of spectrum data
+     *  that belongs to this ROI id.
+     *  
+     *  If no ROI id was assigned, a warning message will be added to the runtime environment.
    */
-   function groupBy_ROI(peakms2: any, default?: string, env?: object): any;
+   function groupBy_ROI(peakms2: any, default?: string, env?: object): object;
    /**
     * Extracts intensity values from MS1 scans or PeakMs2 spectra.
     * 
@@ -134,9 +140,9 @@ declare namespace data {
         * @param env R environment for error handling.
         * 
         * + default value Is ``null``.
-        * @return String array of ROI IDs or modified PeakMs2 objects.
+        * @return String array of ROI IDs or modified PeakMs2 objects array.
       */
-      function ROI_names(ROIlist: any, name_chrs?: boolean, prefix?: string, env?: object): object;
+      function ROI_names(ROIlist: any, name_chrs?: boolean, prefix?: string, env?: object): object|string;
    }
    /**
     * Gets the number of fragments in a spectrum object.

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>make filter of the noise spectrum data</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>filter_noise_spectrum {mzDeco}</td>
+                <td style="text-align: right;">R Documentation</td>
+            </tr>
+        </table>
+
+        <h2>make filter of the noise spectrum data</h2>
+
+        <h3>Description</h3>
+
+        
+
+        <h3>Usage</h3>
+
+        <div style="width: 100%; padding-left: 3%; color: black;">
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>filter_noise_spectrum</strong>(<i>ions</i>, <i>peaktable</i>,
+    <i>mzdiff</i> = <span style='color: green;'>0.1</span>,
+    <i>rt.win</i> = <span style='color: green;'>30</span>);</code></pre>
+        </div>
+
+        <h3>Arguments</h3>
+
+        <table>
+            
+<dt>peaktable</dt>
+<dd><p>the peaktable object, is a collection of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a> object. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a>]</p></dd>
+
+
+<dt>ions</dt>
+<dd><p>a collection of the msn level spectrum data</p></dd>
+
+
+<dt>mzdiff</dt>
+<dd><p>the mass tolerance error in data unit delta dalton, 
+ apply for matches between the peaktable precursor m/z and the given ion mz value. [as double]</p></dd>
+
+
+<dt>rt.win</dt>
+<dd><p>the rt window size for matches the rt. should be in data unit seconds. [as double]</p></dd>
+
+        </table>
+
+
+        <h3 style="display: block;">Details</h3>
+
+        <p>this function will filter the noise spectrum data from the given 
+ msn level spectrum data collection</p>
+
+        <h3 style="display: block">Authors</h3>
+
+        BioNovoGene
+
+        <h3>Value</h3>
+
+        <p>return a vector of clean spectrum object that could find any peak in ms1 table.
+ additionally, the noise spectrum data will be set to the attribute named "noise" 
+ of the return vector value.
+ 
+ the return value is a vector of <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a> object, and the noise
+ spectrum data is set to the attribute named "noise" of the return value.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a></li></ul>
+
+        <h3 style="display: block;">Examples</h3>
+
+        <pre><code id="example_r"> let cleandata = filter_noise_spectrum(peaktable, ions, mzdiff=0.1, rt_win=30);
+ # get the noise spectrum data
+ let noise = cleandata$noise;</code></pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>mzDeco</em> version 1.0.0.0 <a
+                href="../mzDeco.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("example_r");</script>
+
+</html>

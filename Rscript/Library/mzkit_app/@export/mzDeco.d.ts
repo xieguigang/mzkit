@@ -52,6 +52,31 @@ declare namespace mzDeco {
       function peak_set(x: any, env?: object): object;
    }
    /**
+    * make filter of the noise spectrum data
+    * 
+    * > this function will filter the noise spectrum data from the given 
+    * >  msn level spectrum data collection
+    * 
+     * @param ions a collection of the msn level spectrum data
+     * @param peaktable the peaktable object, is a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2`` object.
+     * @param mzdiff the mass tolerance error in data unit delta dalton, 
+     *  apply for matches between the peaktable precursor m/z and the given ion mz value.
+     * 
+     * + default value Is ``0.1``.
+     * @param rt_win the rt window size for matches the rt. should be in data unit seconds.
+     * 
+     * + default value Is ``30``.
+     * @param env 
+     * + default value Is ``null``.
+     * @return return a vector of clean spectrum object that could find any peak in ms1 table.
+     *  additionally, the noise spectrum data will be set to the attribute named "noise" 
+     *  of the return vector value.
+     *  
+     *  the return value is a vector of @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2`` object, and the noise
+     *  spectrum data is set to the attribute named "noise" of the return value.
+   */
+   function filter_noise_spectrum(ions: any, peaktable: object, mzdiff?: number, rt_win?: number, env?: object): object;
+   /**
     * helper function for find ms1 peaks based on the given mz/rt tuple data
     * 
     * 

@@ -20,6 +20,7 @@ Extract peak and signal data from rawdata
 + [peak_subset](mzDeco/peak_subset.1) make sample column projection
 + [xcms_peak](mzDeco/xcms_peak.1) Create a xcms peak data object
 + [find_xcms_ionPeaks](mzDeco/find_xcms_ionPeaks.1) helper function for find ms1 peaks based on the given mz/rt tuple data
++ [filter_noise_spectrum](mzDeco/filter_noise_spectrum.1) make filter of the noise spectrum data
 + [get_xcms_ionPeaks](mzDeco/get_xcms_ionPeaks.1) get ion peaks via the unique reference id
 + [adjust_to_seconds](mzDeco/adjust_to_seconds.1) adjust the reteintion time data to unit seconds
 + [RI_reference](mzDeco/RI_reference.1) Create RI reference dataset.
