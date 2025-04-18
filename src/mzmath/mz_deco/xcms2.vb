@@ -71,7 +71,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
-''' the peak table format table file model of xcms version 2
+''' an ion peak ROI data object, the peak table format table file model of xcms version 2
 ''' </summary>
 ''' <remarks>
 ''' a <see cref="IMs1Scan"/> peak object

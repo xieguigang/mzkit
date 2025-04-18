@@ -135,8 +135,16 @@ Namespace Spectra
             Return index.Search(New MzIndex(mz), tolerance:=mzdiff)
         End Function
 
+        ''' <summary>
+        ''' A wrapper of the <see cref="Search(Double, Double?)"/> function
+        ''' </summary>
+        ''' <param name="mz"></param>
+        ''' <param name="mzdiff"></param>
+        ''' <returns>
+        ''' this function convert the search result <see cref="MzIndex"/> object as tuple value
+        ''' </returns>
         Public Iterator Function Query(mz As Double, Optional mzdiff As Double? = Nothing) As IEnumerable(Of (Double, Integer))
-            For Each hit In index.Search(New MzIndex(mz), tolerance:=mzdiff)
+            For Each hit As MzIndex In index.Search(New MzIndex(mz), tolerance:=mzdiff)
                 Yield (hit.mz, hit.index)
             Next
         End Function
