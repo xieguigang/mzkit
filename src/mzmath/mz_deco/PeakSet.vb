@@ -185,6 +185,22 @@ Public Class PeakSet : Implements Enumeration(Of xcms2)
         Next
     End Function
 
+    ''' <summary>
+    ''' Make grid search of the ion ROI features via a given [mz,rt] coordinate point data
+    ''' within the given mz/rt window size.
+    ''' </summary>
+    ''' <remarks>
+    ''' this function will return a set of the <see cref="xcms2"/> object
+    ''' that is inside the given mz/rt window size.
+    ''' </remarks>
+    ''' <example>
+    ''' Dim ionset As IEnumerable(Of xcms2) = peakset.FindIonSet(mz, rt, mzdiff:=0.005, rt_win:=0.5)
+    ''' </example>
+    ''' <param name="mz"></param>
+    ''' <param name="rt"></param>
+    ''' <param name="mzdiff"></param>
+    ''' <param name="rt_win"></param>
+    ''' <returns></returns>
     Public Iterator Function FindIonSet(mz As Double, rt As Double, mzdiff As Double, rt_win As Double) As IEnumerable(Of xcms2)
         Dim mzset = Me.mz.Search(mz).AsParallel _
             .Where(Function(i) i.index > -1 AndAlso std.Abs(i.mz - mz) <= mzdiff) _

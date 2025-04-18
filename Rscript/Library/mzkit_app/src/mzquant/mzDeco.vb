@@ -70,6 +70,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Tasks
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib
@@ -659,6 +660,52 @@ Module mzDeco
                              std.Abs(a.rt - rt + 0.0001)
                      End Function) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' make filter of the noise spectrum data
+    ''' </summary>
+    ''' <remarks>
+    ''' this function will filter the noise spectrum data from the given 
+    ''' msn level spectrum data collection
+    ''' </remarks>
+    ''' <param name="peaktable">the peaktable object, is a collection of the <see cref="xcms2"/> object.</param>
+    ''' <param name="ions">a collection of the msn level spectrum data</param>
+    ''' <param name="mzdiff">the mass tolerance error in data unit delta dalton, 
+    ''' apply for matches between the peaktable precursor m/z and the given ion mz value.</param>
+    ''' <param name="rt_win">the rt window size for matches the rt. should be in data unit seconds.</param>
+    ''' <returns>
+    ''' return a vector of clean spectrum object that could find any peak in ms1 table.
+    ''' additionally, the noise spectrum data will be set to the attribute named "noise" 
+    ''' of the return vector value.
+    ''' 
+    ''' the return value is a vector of <see cref="PeakMs2"/> object, and the noise
+    ''' spectrum data is set to the attribute named "noise" of the return value.
+    ''' </returns>
+    ''' <example>
+    ''' let cleandata = filter_noise_spectrum(peaktable, ions, mzdiff=0.1, rt_win=30);
+    ''' # get the noise spectrum data
+    ''' let noise = cleandata$noise;
+    ''' </example>
+    <ExportAPI("filter_noise_spectrum")>
+    <RApiReturn(GetType(PeakMs2))>
+    Public Function filter_noise_spectrum(peaktable As PeakSet, ions As PeakMs2(),
+                                          Optional mzdiff As Double = 0.1,
+                                          Optional rt_win As Double = 30) As Object
+
+        Dim filterData As New List(Of PeakMs2)
+        Dim noiseData As New List(Of PeakMs2)
+
+        For Each ion As PeakMs2 In ions
+            If peaktable.FindIonSet(ion.mz, ion.rt, mzdiff, rt_win).Any Then
+                Call filterData.Add(ion)
+            Else
+                Call noiseData.Add(ion)
+            End If
+        Next
+
+        Return New vec(filterData.ToArray, RType.GetRSharpType(GetType(PeakMs2))) _
+            .setAttribute("noise", noiseData.ToArray)
     End Function
 
     ''' <summary>

@@ -480,6 +480,7 @@ Module metaDNAInfer
 
             Call println("set ms2 peak data associated ROI id from the ms1 peaktable data!")
 
+            ' assign ms1 peak id to the ms2 spectrum
             For i As Integer = 0 To pool.Length - 1
                 Dim peak2 As PeakMs2 = pool(i)
                 Dim peak1 = peaksdata.FindIonSet(peak2.mz, peak2.rt, ms1diff, rt_win).ToArray
