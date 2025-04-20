@@ -432,36 +432,41 @@ Module ReferenceTreePkg
     ''' <returns>An array of AnnotationData(Of xref) with metabolite annotations.</returns>
     <ExportAPI("as.annotation_result")>
     Public Function CreateAnnotationSet(hits As ClusterHit(), metadb As LocalRepository) As AnnotationData(Of xref)()
-        Return hits _
-            .SafeQuery _
-            .Select(Function(hit)
-                        Dim metadata As MetaboliteData = metadb.GetMetadata(hit.Id.Split("|"c).First)
-                        Dim data As New AnnotationData(Of xref) With {
-                            .Alignment = New AlignmentOutput With {
-                                .alignments = hit.representive,
-                                .entropy = hit.entropy,
-                                .forward = hit.forward,
-                                .jaccard = hit.jaccard,
-                                .reverse = hit.reverse,
-                                .query = New Meta(hit.queryMz, hit.queryRt, hit.queryIntensity, hit.queryId),
-                                .reference = New Meta(hit.queryMz, hit.ClusterRt.Average, 100, hit.Id)
-                            },
-                            .[class] = metadata.class,
-                            .kingdom = metadata.kingdom,
-                            .molecular_framework = metadata.molecular_framework,
-                            .sub_class = metadata.sub_class,
-                            .super_class = metadata.super_class,
-                            .Xref = metadata.xref,
-                            .Score = New MsScanMatchResult,
-                            .CommonName = metadata.name,
-                            .ExactMass = FormulaScanner.EvaluateExactMass(metadata.formula),
-                            .Formula = metadata.formula,
-                            .ID = metadata.ID
-                        }
+        If hits Is Nothing Then
+            Return {}
+        End If
 
-                        Return data
-                    End Function) _
-            .ToArray()
+        Return CreateAnnotationSetLoop(hits, metadb).ToArray()
+    End Function
+
+    Private Iterator Function CreateAnnotationSetLoop(hits As ClusterHit(), metadb As LocalRepository) As IEnumerable(Of AnnotationData(Of xref))
+        For Each hit As ClusterHit In hits
+            Dim metadata As MetaboliteData = metadb.GetMetadata(hit.Id.Split("|"c).First)
+            Dim data As New AnnotationData(Of xref) With {
+                .Alignment = New AlignmentOutput With {
+                    .alignments = hit.representive,
+                    .entropy = hit.entropy,
+                    .forward = hit.forward,
+                    .jaccard = hit.jaccard,
+                    .reverse = hit.reverse,
+                    .query = New Meta(hit.queryMz, hit.queryRt, hit.queryIntensity, hit.queryId),
+                    .reference = New Meta(hit.queryMz, hit.ClusterRt.Average, 100, hit.Id)
+                },
+                .[class] = metadata.class,
+                .kingdom = metadata.kingdom,
+                .molecular_framework = metadata.molecular_framework,
+                .sub_class = metadata.sub_class,
+                .super_class = metadata.super_class,
+                .Xref = metadata.xref,
+                .Score = New MsScanMatchResult,
+                .CommonName = metadata.name,
+                .ExactMass = FormulaScanner.EvaluateExactMass(metadata.formula),
+                .Formula = metadata.formula,
+                .ID = metadata.ID
+            }
+
+            Yield data
+        Next
     End Function
 
     ''' <summary>
@@ -584,9 +589,15 @@ Module ReferenceTreePkg
             Return Nothing
         End If
         If treeSearch AndAlso TypeOf tree Is TreeSearch Then
-            result = {DirectCast(tree, TreeSearch).Search(centroid, maxdepth:=maxdepth)}
+            result = New ClusterHit() {
+                DirectCast(tree, TreeSearch).Search(centroid, maxdepth:=maxdepth)
+            }
         Else
             result = tree.Search(centroid, mz1:=x.mz).ToArray
+        End If
+
+        If result.Length = 0 Then
+            Return Nothing
         End If
 
         Dim basePeak As ms2 = x.mzInto _
