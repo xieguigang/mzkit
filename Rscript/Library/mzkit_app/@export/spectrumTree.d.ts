@@ -101,7 +101,7 @@ declare namespace spectrumTree {
    */
    function compress(spectrumLib: object, file: any, metadb: object, nspec?: object, xrefDb?: string, test?: object, env?: object): any;
    /**
-    * set @``P:BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib.PackAlignment.discardPrecursorFilter`` to value true, and make cache of the spectrum data
+    * set @``P:BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query.Ms2Search.discardPrecursorFilter`` to value true, and make cache of the spectrum data
     * 
     * 
      * @param pack -
