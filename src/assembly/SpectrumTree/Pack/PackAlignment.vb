@@ -308,7 +308,8 @@ Namespace PackLib
                 .jaccard = jaccard.Average,
                 .ClusterId = desc.Select(Function(i) i.hit.Id).ToArray,
                 .ClusterRt = desc.Select(Function(i) i.hit.rt).ToArray,
-                .representive = max.align
+                .representive = max.align,
+                .theoretical_mz = max.hit.precursor
             }
         End Function
     End Class

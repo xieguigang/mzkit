@@ -112,6 +112,23 @@ Namespace Tree
             End Get
         End Property
 
+        ''' <summary>
+        ''' get the m/z of the reference spectrum of its precursor ion
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this property works for the library reference data pack, not working for tree cluster data
+        ''' </remarks>
+        Public ReadOnly Property precursor As Double
+            Get
+                If mz.Count = 0 OrElse mz.Count > 1 Then
+                    Return 0
+                Else
+                    Return mz(0)
+                End If
+            End Get
+        End Property
+
         Public ReadOnly Property isBlank As Boolean
             Get
                 ' ZERO always is root
