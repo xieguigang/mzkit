@@ -117,12 +117,30 @@ Namespace PackLib
         ''' <returns></returns>
         Public Property parallel As Boolean = True
 
+        ''' <summary>
+        ''' for waters instrument data, the proteowizard has bug about processing the precorsor ion
+        ''' data, so we need to discard the precursor ion filter for the spectrum alignment
+        ''' </summary>
+        ''' <remarks>
+        ''' this is a temporary solution for the proteowizard bug
+        ''' </remarks>
+        ''' <returns></returns>
+        Public Property discardPrecursorFilter As Boolean = False
+
+        Dim cacheAll As BlockNode()
+
         Sub New(pack As SpectrumReader, Optional dotcutoff As Double = 0.6)
-            Call MyBase.New
+            Call MyBase.New()
 
             ' set the reference spectrum library
             Me.spectrum = pack
             Me.dotcutoff = dotcutoff
+        End Sub
+
+        Public Sub Setup()
+            If discardPrecursorFilter Then
+                cacheAll = spectrum.LoadAllNodes.ToArray
+            End If
         End Sub
 
         ''' <summary>
@@ -137,9 +155,16 @@ Namespace PackLib
         ''' threshold condition.
         ''' </returns>
         Public Overrides Iterator Function Search(centroid() As ms2, mz1 As Double) As IEnumerable(Of ClusterHit)
-            ' get spectrum reference via matches the precursor ions
-            Dim candidates As BlockNode() = spectrum.QueryByMz(mz1).ToArray
+            Dim candidates As BlockNode()
             Dim hits As ___tmp()
+
+            If discardPrecursorFilter Then
+                ' aliangment with all library content
+                candidates = cacheAll
+            Else
+                ' get spectrum reference via matches the precursor ions
+                candidates = spectrum.QueryByMz(mz1).ToArray
+            End If
 
             If False Then
                 If centroid Is Nothing OrElse centroid.Any(Function(mzi) mzi Is Nothing) Then

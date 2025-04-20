@@ -291,6 +291,19 @@ Module ReferenceTreePkg
     End Function
 
     ''' <summary>
+    ''' set <see cref="PackAlignment.discardPrecursorFilter"/> to value true, and make cache of the spectrum data
+    ''' </summary>
+    ''' <param name="pack"></param>
+    ''' <returns></returns>
+    <ExportAPI("discard_precursor_filter")>
+    Public Function discard_precursor_filter(pack As PackAlignment) As PackAlignment
+        pack.discardPrecursorFilter = True
+        pack.Setup()
+
+        Return pack
+    End Function
+
+    ''' <summary>
     ''' export all reference spectrum from the given library object
     ''' </summary>
     ''' <param name="pack">The PackAlignment object containing spectral data.</param>
