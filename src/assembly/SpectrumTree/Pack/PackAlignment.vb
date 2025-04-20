@@ -117,16 +117,6 @@ Namespace PackLib
         ''' <returns></returns>
         Public Property parallel As Boolean = True
 
-        ''' <summary>
-        ''' for waters instrument data, the proteowizard has bug about processing the precorsor ion
-        ''' data, so we need to discard the precursor ion filter for the spectrum alignment
-        ''' </summary>
-        ''' <remarks>
-        ''' this is a temporary solution for the proteowizard bug
-        ''' </remarks>
-        ''' <returns></returns>
-        Public Property discardPrecursorFilter As Boolean = False
-
         Dim cacheAll As BlockNode()
 
         Sub New(pack As SpectrumReader, Optional dotcutoff As Double = 0.6)

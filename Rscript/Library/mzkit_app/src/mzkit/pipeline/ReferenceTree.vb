@@ -565,7 +565,7 @@ Module ReferenceTreePkg
         For Each hit As ClusterHit In result
             If Not hit Is Nothing Then
                 hit.queryId = x.name
-                hit.queryMz = x.parentMz
+                hit.queryMz = If(tree.discardPrecursorFilter, hit.theoretical_mz, x.parentMz)
                 hit.basePeak = basePeak.mz
                 hit.queryIntensity = x.totalIon
 
@@ -622,7 +622,7 @@ Module ReferenceTreePkg
         For Each hit As ClusterHit In result
             If Not hit Is Nothing Then
                 hit.queryId = x.lib_guid
-                hit.queryMz = x.mz
+                hit.queryMz = If(tree.discardPrecursorFilter, hit.theoretical_mz, x.mz)
                 hit.queryRt = x.rt
                 hit.basePeak = basePeak.mz
                 hit.queryIntensity = If(x.intensity <= 0.0, x.Ms2Intensity, x.intensity)

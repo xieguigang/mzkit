@@ -67,6 +67,16 @@ Namespace Query
         Protected ReadOnly da As Tolerance
         Protected ReadOnly intocutoff As RelativeIntensityCutoff
 
+        ''' <summary>
+        ''' for waters instrument data, the proteowizard has bug about processing the precorsor ion
+        ''' data, so we need to discard the precursor ion filter for the spectrum alignment
+        ''' </summary>
+        ''' <remarks>
+        ''' this is a temporary solution for the proteowizard bug
+        ''' </remarks>
+        ''' <returns></returns>
+        Public Property discardPrecursorFilter As Boolean = False
+
         Sub New(Optional da As Double = 0.3, Optional intocutoff As Double = 0.05)
             Me.da = Tolerance.DeltaMass(da)
             Me.intocutoff = intocutoff
