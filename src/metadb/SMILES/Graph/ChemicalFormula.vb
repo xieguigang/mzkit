@@ -58,6 +58,7 @@
 #End Region
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemoinformatics.SDF.Models
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Data.GraphTheory.SparseGraph
 Imports EmpiricalFormula = BioNovoGene.BioDeep.Chemoinformatics.Formula.Formula
@@ -193,6 +194,10 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
         Next
 
         Return union
+    End Function
+
+    Public Function CreateStructureGraph() As [Structure]
+
     End Function
 
     ''' <summary>
