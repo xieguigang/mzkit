@@ -449,6 +449,7 @@ Module FormulaTools
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("adduct_ion_formula")>
+    <RApiReturn(GetType(Formula))>
     Public Function MakeIonFormula(formula As Formula, <RRawVectorArgument> adducts As Object,
                                    Optional env As Environment = Nothing) As Object
 
@@ -500,31 +501,10 @@ Module FormulaTools
     ''' <param name="ionFormula"></param>
     ''' <param name="precursor"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>molecule formula</returns>
     <ROperator("-")>
     Public Function minus(ionFormula As Formula, precursor As MzCalculator, Optional env As Environment = Nothing) As Formula
-        Dim ionName As String = precursor.name
-        Dim ion = Parser.Formula(precursor.name)
-
-        If ion Like GetType(String) Then
-            Throw New InvalidExpressionException(ion.TryCast(Of String))
-        Else
-            For Each part In ion.TryCast(Of IEnumerable(Of (sign As Integer, expr As String)))
-                Dim subIon As Formula = FormulaScanner.ScanFormula(part.expr)
-
-                subIon *= std.Abs(part.sign)
-
-                If part.sign > 0 Then
-                    ' delete part
-                    ionFormula -= subIon
-                Else
-                    ' add part
-                    ionFormula += subIon
-                End If
-            Next
-        End If
-
-        Return ionFormula
+        Return FormulaCalculateUtility.GeneralMoleculeFormula(ionFormula, precursor.ToString)
     End Function
 
     <ROperator("-")>
