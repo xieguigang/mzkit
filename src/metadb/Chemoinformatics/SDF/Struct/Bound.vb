@@ -66,6 +66,9 @@ Namespace SDF.Models
     ''' <summary>
     ''' Connection between atoms
     ''' </summary>
+    ''' <remarks>
+    ''' [i,j] index tuple of the connected atoms
+    ''' </remarks>
     Public Class Bound : Implements IndexEdge
 
         ''' <summary>
@@ -98,7 +101,7 @@ Namespace SDF.Models
             Dim t$() = line.StringSplit("\s+")
             Dim i% = t(0)
             Dim j = t(1)
-            Dim type As BoundTypes = CInt(t(2))
+            Dim type As BoundTypes = Byte.Parse(t(2))
             Dim stereo As BoundStereos = CInt(t(3))
 
             Return New Bound With {

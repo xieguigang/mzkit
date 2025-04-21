@@ -28,13 +28,21 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>morgan_fingerprint</strong>(<i>struct</i>,
-    <i>itrs</i> = <span style='color: green;'>3</span>);</code></pre>
+    <i>radius</i> = <span style='color: green;'>3</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
+<dt>struct</dt>
+<dd><p>the molecule structure data, could be <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/SDF/Models/Structure.html">Structure</a> object which is parsed from the sdf file, or
+ the <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/SMILES/ChemicalFormula.html">ChemicalFormula</a> graph object which is parsed from the smiles string.</p></dd>
+
+
+<dt>radius</dt>
+<dd><p>the radius size for evaluate the morgan fingerprint. [as integer]</p></dd>
+
         </table>
 
 

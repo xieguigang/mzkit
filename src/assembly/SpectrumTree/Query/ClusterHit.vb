@@ -127,6 +127,12 @@ Namespace Query
         Public Property ClusterId As String()
 
         ''' <summary>
+        ''' mz value which is evaluated based on the formula and adducts
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property theoretical_mz As Double
+
+        ''' <summary>
         ''' hit size
         ''' </summary>
         ''' <returns></returns>

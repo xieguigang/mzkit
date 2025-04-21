@@ -68,7 +68,7 @@
 
 Namespace SDF.Models
 
-    Public Enum BoundTypes As Integer
+    Public Enum BoundTypes As Byte
         ''' <summary>
         ''' 非碳原子的化学键连接可能会存在其他数量的键
         ''' </summary>

@@ -22,6 +22,15 @@ make a tuple list via grouping of the spectrum data via the ROI id inside the me
 .PP
 \fBenv\fB \fR\- -. 
 .PP
+.SH VALUE
+.PP
+A tuple list object that contains the spectrum data grouping by the ROI id.
+ 
+ The key of the tuple list is the ROI id, and the value is a list of spectrum data
+ that belongs to this ROI id.
+ 
+ If no ROI id was assigned, a warning message will be added to the runtime environment.
+.PP
 .SH SEE ALSO
 data
 .SH FILES

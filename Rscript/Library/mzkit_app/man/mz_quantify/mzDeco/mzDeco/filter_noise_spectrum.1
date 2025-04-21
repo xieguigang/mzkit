@@ -1,0 +1,54 @@
+.\" man page create by R# package system.
+.TH MZDECO 1 2000-Jan "filter_noise_spectrum" "filter_noise_spectrum"
+.SH NAME
+filter_noise_spectrum \- make filter of the noise spectrum data
+.SH SYNOPSIS
+\fIfilter_noise_spectrum(\fBions\fR as any, 
+\fBpeaktable\fR as <generic> PeakSet, 
+\fBmzdiff\fR as double = 0.1, 
+\fBrt_win\fR as double = 30, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+make filter of the noise spectrum data
+.PP
+.SH OPTIONS
+.PP
+\fBpeaktable\fB \fR\- the peaktable object, is a collection of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2\fR object.. 
+.PP
+.PP
+\fBions\fB \fR\- a collection of the msn level spectrum data. 
+.PP
+.PP
+\fBmzdiff\fB \fR\- the mass tolerance error in data unit delta dalton, 
+ apply for matches between the peaktable precursor m/z and the given ion mz value.. 
+.PP
+.PP
+\fBrt_win\fB \fR\- the rt window size for matches the rt. should be in data unit seconds.. 
+.PP
+.SH VALUE
+.PP
+return a vector of clean spectrum object that could find any peak in ms1 table.
+ additionally, the noise spectrum data will be set to the attribute named "noise" 
+ of the return vector value.
+ 
+ the return value is a vector of @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2\fR object, and the noise
+ spectrum data is set to the attribute named "noise" of the return value.
+.PP
+.SH DETAILS
+.PP
+this function will filter the noise spectrum data from the given 
+ msn level spectrum data collection
+.PP
+.SH EXAMPLES
+.PP
+let cleandata = filter_noise_spectrum(peaktable, ions, mzdiff=0.1, rt_win=30);
+ # get the noise spectrum data
+ let noise = cleandata$noise;
+.PP
+.SH SEE ALSO
+mzDeco
+.SH FILES
+.PP
+mz_quantify.dll
+.PP
