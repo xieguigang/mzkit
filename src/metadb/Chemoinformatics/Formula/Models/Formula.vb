@@ -457,11 +457,26 @@ Namespace Formula
             Return mass - f.ExactMass
         End Operator
 
+        ''' <summary>
+        ''' Parse the formula string <paramref name="fs"/> and then substract the element counts from the given formula <paramref name="f"/>.
+        ''' </summary>
+        ''' <param name="f"></param>
+        ''' <param name="fs"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' the generated formula may contains the negative count element
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(f As Formula, fs As String) As Formula
             Return f - FormulaScanner.ScanFormula(fs)
         End Operator
 
+        ''' <summary>
+        ''' Parse the formula string <paramref name="fs"/> and then add the element counts into the given formula <paramref name="f"/>.
+        ''' </summary>
+        ''' <param name="f"></param>
+        ''' <param name="fs"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator +(f As Formula, fs As String) As Formula
             Return f + FormulaScanner.ScanFormula(fs)
