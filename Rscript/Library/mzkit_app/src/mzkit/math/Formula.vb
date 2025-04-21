@@ -91,6 +91,7 @@ Imports RDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal.ConsolePrinter
 Imports std = System.Math
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 
 ''' <summary>
 ''' The chemical formulae toolkit
@@ -428,12 +429,42 @@ Module FormulaTools
         End If
 
         If precursors.Length = 1 Then
-            Return FormulaCalculateUtility.GeneralMoleculeFormula(formula, precursors(0).ToString)
+            Return FormulaCalculateUtility.GeneralMoleculeFormula(New Formula(formula), precursors(0).ToString)
         Else
             Dim list As list = list.empty
 
             For Each type As MzCalculator In precursors
-                Call list.add(type.ToString, FormulaCalculateUtility.GeneralMoleculeFormula(formula, type.ToString))
+                Call list.add(type.ToString, FormulaCalculateUtility.GeneralMoleculeFormula(New Formula(formula), type.ToString))
+            Next
+
+            Return list
+        End If
+    End Function
+
+    ''' <summary>
+    ''' Make molecule formula to adduct ion formula by add a specific adducts ion data
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="adducts"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("adduct_ion_formula")>
+    Public Function MakeIonFormula(formula As Formula, <RRawVectorArgument> adducts As Object,
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim precursors = Math.GetPrecursorTypes(adducts, env)
+
+        If precursors.IsNullOrEmpty Then
+            Return RInternal.debug.stop("no adducts value was given!", env)
+        End If
+
+        If precursors.Length = 1 Then
+            Return FormulaCalculateUtility.ConvertFormulaAdductPairToPrecursorAdduct(New Formula(formula), New AdductIon(precursors(0)))
+        Else
+            Dim list As list = list.empty
+
+            For Each type As MzCalculator In precursors
+                Call list.add(type.ToString, FormulaCalculateUtility.GeneralMoleculeFormula(New Formula(formula), New AdductIon(type)))
             Next
 
             Return list
