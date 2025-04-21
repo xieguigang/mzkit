@@ -409,7 +409,15 @@ Module FormulaTools
         Return Canonical.BuildCanonicalFormula(formula.CountsByElement)
     End Function
 
+    ''' <summary>
+    ''' Evaluate of the molecule formula from the given adduct ion formula
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="adducts"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("formula_calibration")>
+    <RApiReturn(GetType(Formula))>
     Public Function IonFormulaCalibration(formula As Formula, <RRawVectorArgument> adducts As Object,
                                           Optional env As Environment = Nothing) As Object
 
@@ -420,12 +428,12 @@ Module FormulaTools
         End If
 
         If precursors.Length = 1 Then
-            Return formula.IonFormulaCalibration(precursors(0))
+            Return FormulaCalculateUtility.GeneralMoleculeFormula(formula, precursors(0).ToString)
         Else
             Dim list As list = list.empty
 
             For Each type As MzCalculator In precursors
-                Call list.add(type.ToString, formula.IonFormulaCalibration(type))
+                Call list.add(type.ToString, FormulaCalculateUtility.GeneralMoleculeFormula(formula, type.ToString))
             Next
 
             Return list
