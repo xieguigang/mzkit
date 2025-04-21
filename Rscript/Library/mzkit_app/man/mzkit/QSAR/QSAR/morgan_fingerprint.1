@@ -3,8 +3,9 @@
 .SH NAME
 morgan_fingerprint \- Morgan fingerprints, also known as circular fingerprints, are a type of molecular fingerprint
 .SH SYNOPSIS
-\fImorgan_fingerprint(\fBstruct\fR as <generic> Structure, 
-\fBitrs\fR as integer = 3);\fR
+\fImorgan_fingerprint(\fBstruct\fR as any, 
+\fBradius\fR as integer = 3, 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
 Morgan fingerprints, also known as circular fingerprints, are a type of molecular fingerprint 
@@ -48,6 +49,18 @@ Morgan fingerprints, also known as circular fingerprints, are a type of molecula
  environments, meaning that the path taken to reach an atom is not as important as the environment 
  around it. This makes them effective for comparing the similarity of molecules based on their 
  structural features.
+.PP
+.SH OPTIONS
+.PP
+\fBstruct\fB \fR\- 
+ the molecule structure data, could be @\fBT:BioNovoGene.BioDeep.Chemoinformatics.SDF.Models.Structure\fR object which is parsed from the sdf file, or
+ the @\fBT:BioNovoGene.BioDeep.Chemoinformatics.SMILES.ChemicalFormula\fR graph object which is parsed from the smiles string.
+. 
+.PP
+.PP
+\fBradius\fB \fR\- 
+ the radius size for evaluate the morgan fingerprint
+. 
 .PP
 .SH SEE ALSO
 QSAR

@@ -30,6 +30,7 @@ Provides R language interface for mass spectrometry data processing and metaboli
 + [get_testSample](spectrumTree/get_testSample.1) Extract the test sample data for run evaluation of the annotation workflow
 + [readpack](spectrumTree/readpack.1) open the spectrum pack reference database file
 + [open](spectrumTree/open.1) ### open the spectrum reference database
++ [discard_precursor_filter](spectrumTree/discard_precursor_filter.1) set @``P:BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query.Ms2Search.discardPrecursorFilter`` to value true, and make cache of the spectrum data
 + [export_spectrum](spectrumTree/export_spectrum.1) export all reference spectrum from the given library object
 + [dotcutoff](spectrumTree/dotcutoff.1) set dot cutoff parameter for the cos score similarity algorithm
 + [parallel](spectrumTree/parallel.1) Enables or disables parallel processing for spectral searches.

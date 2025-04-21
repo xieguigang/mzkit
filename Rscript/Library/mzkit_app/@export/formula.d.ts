@@ -49,6 +49,17 @@
 */
 declare namespace formula {
    /**
+    * Make molecule formula to adduct ion formula by add a specific adducts ion data
+    * 
+    * 
+     * @param formula -
+     * @param adducts -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function adduct_ion_formula(formula: object, adducts: any, env?: object): object;
+   /**
     * find all of the candidate chemical formulas by a 
     *  specific exact mass value and a specific mass 
     *  tolerance value in ppm
@@ -96,9 +107,16 @@ declare namespace formula {
    */
    function eval(formula: any, env?: object): number;
    /**
-     * @param env default value Is ``null``.
+    * Evaluate of the molecule formula from the given adduct ion formula
+    * 
+    * 
+     * @param formula -
+     * @param adducts -
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
-   function formula_calibration(formula: object, adducts: any, env?: object): any;
+   function formula_calibration(formula: object, adducts: any, env?: object): object;
    /**
    */
    function getElementCount(formula: object, element: string): object;

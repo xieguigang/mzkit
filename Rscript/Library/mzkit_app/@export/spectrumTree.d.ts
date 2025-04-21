@@ -101,6 +101,13 @@ declare namespace spectrumTree {
    */
    function compress(spectrumLib: object, file: any, metadb: object, nspec?: object, xrefDb?: string, test?: object, env?: object): any;
    /**
+    * set @``P:BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query.Ms2Search.discardPrecursorFilter`` to value true, and make cache of the spectrum data
+    * 
+    * 
+     * @param pack -
+   */
+   function discard_precursor_filter(pack: object): object;
+   /**
     * set dot cutoff parameter for the cos score similarity algorithm
     * 
     * 

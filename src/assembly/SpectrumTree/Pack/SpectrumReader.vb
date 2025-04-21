@@ -71,6 +71,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
@@ -201,6 +202,14 @@ Namespace PackLib
 
             For Each file As StreamBlock In ls
                 Yield file.referencePath.FileName.BaseName
+            Next
+        End Function
+
+        Public Iterator Function LoadAllNodes() As IEnumerable(Of BlockNode)
+            Call VBDebugger.EchoLine("Load all spectrum reference entry into memory...")
+
+            For Each key As String In TqdmWrapper.Wrap(ListAllSpectrumId().ToArray)
+                Yield GetSpectrum(key)
             Next
         End Function
 

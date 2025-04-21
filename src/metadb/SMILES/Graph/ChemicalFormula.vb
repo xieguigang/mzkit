@@ -58,8 +58,10 @@
 #End Region
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemoinformatics.SDF.Models
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Data.GraphTheory.SparseGraph
+Imports Microsoft.VisualBasic.Language
 Imports EmpiricalFormula = BioNovoGene.BioDeep.Chemoinformatics.Formula.Formula
 
 ''' <summary>
@@ -193,6 +195,28 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
         Next
 
         Return union
+    End Function
+
+    Public Function CreateStructureGraph() As [Structure]
+        Dim atoms As New Dictionary(Of String, SDF.Models.Atom)
+        Dim offset As New Dictionary(Of String, Integer)
+        Dim links As New List(Of Bound)
+        Dim index As i32 = 0
+
+        For Each group As ChemicalElement In AllElements
+            Call offset.Add(group.label, ++index)
+            Call atoms.Add(group.label, New SDF.Models.Atom(group.group))
+        Next
+
+        For Each bond As ChemicalKey In AllBonds
+            Dim i As Integer = offset(bond.U.label)
+            Dim j As Integer = offset(bond.V.label)
+            Dim link As New Bound(i, i, DirectCast(bond.bond, BoundTypes))
+
+            Call links.Add(link)
+        Next
+
+        Return New [Structure](atoms.Values, links)
     End Function
 
     ''' <summary>

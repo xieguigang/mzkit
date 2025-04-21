@@ -66,7 +66,7 @@ Imports Microsoft.VisualBasic.Linq
 Namespace SDF.Models
 
     ''' <summary>
-    ''' atom element key and its spatial coordinates
+    ''' atom element key with its spatial coordinates
     ''' </summary>
     Public Class Atom : Implements IReadOnlyId
 
@@ -74,7 +74,9 @@ Namespace SDF.Models
         ''' the element atom key
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Overridable Property Atom As String Implements IReadOnlyId.Identity
+        <XmlAttribute>
+        Public Overridable Property Atom As String Implements IReadOnlyId.Identity
+
         <XmlElement("xyz")>
         Public Property Coordination As Point3D
 
