@@ -127,8 +127,20 @@ Namespace Formula
         ''' 
         <Extension>
         Public Function GeneralMoleculeFormula(adductIon As Formula, adduct As AdductIon) As Formula
+            Return adductIon.GeneralMoleculeFormula(adduct.AdductIonName)
+        End Function
+
+        ''' <summary>
+        ''' A general method for restore of the molecule formula from the given adduct ion formula
+        ''' </summary>
+        ''' <param name="adductIon"></param>
+        ''' <param name="adductIonName"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function GeneralMoleculeFormula(adductIon As Formula, adductIonName As String) As Formula
             Dim adducts = Ms1.PrecursorType.Parser _
-                .Formula(adduct.AdductIonName) _
+                .Formula(adductIonName) _
                 .TryCast(Of IEnumerable(Of (sign%, expr$))) _
                 .ToArray
             Dim formula As Formula = adductIon
@@ -144,7 +156,7 @@ Namespace Formula
                 End If
             Next
 
-            Return Formula
+            Return formula
         End Function
 
         ''' <summary>
@@ -156,8 +168,20 @@ Namespace Formula
         ''' 
         <Extension>
         Public Function GeneralAdductFormula(formula As Formula, adduct As AdductIon) As Formula
+            Return formula.GeneralAdductFormula(adduct.AdductIonName)
+        End Function
+
+        ''' <summary>
+        ''' A general method for make conversion from molecule formula to adduct ion formula
+        ''' </summary>
+        ''' <param name="formula"></param>
+        ''' <param name="adductIonName"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function GeneralAdductFormula(formula As Formula, adductIonName As String) As Formula
             Dim adducts = Ms1.PrecursorType.Parser _
-                .Formula(adduct.AdductIonName) _
+                .Formula(adductIonName) _
                 .TryCast(Of IEnumerable(Of (sign%, expr$))) _
                 .ToArray
 
