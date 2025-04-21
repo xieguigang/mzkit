@@ -77,6 +77,7 @@ Namespace Lipidomics
                 Return
             End If
 
+            Dim debug As String = components
             Dim groupInfo As String = components.GetTagValue("-", failureNoName:=False).Value
             Dim tokens As String() = groupInfo.Split("-"c)
             Dim is_empty As Boolean = tokens.Length = 1 AndAlso tokens(Scan0) = ""
@@ -88,14 +89,24 @@ Namespace Lipidomics
                     Dim index = token.Match("\(\d+[a-zA-Z]\)")
                     Dim t As String = index.StringReplace("\d+", "").Trim("("c, ")"c)
 
-                    token = token.Replace(index, "")
+                    ' 20250421 fix of the possible un-matched error:
+                    ' ArgumentException: The value cannot be an empty string. (Parameter 'oldValue')
+                    '
+                    If Not index.StringEmpty() Then
+                        token = token.Replace(index, "")
+                    Else
+                        Call $"lipid structure parser error when deal with: {debug}.".Warning
+                    End If
+
                     index = index.Match("\d+")
 
-                    Yield New Group With {
-                    .groupName = token,
-                    .index = Integer.Parse(index),
-                    .[structure] = t
-                }
+                    If Not index.StringEmpty() Then
+                        Yield New Group With {
+                            .groupName = token,
+                            .index = Integer.Parse(index),
+                            .[structure] = t
+                        }
+                    End If
                 Next
             End If
 
@@ -107,9 +118,9 @@ Namespace Lipidomics
                     Dim t As String = token.StringReplace("\d+", "")
 
                     Yield New BondPosition With {
-                    .index = If(index.StringEmpty, 1, Integer.Parse(index)),
-                    .[structure] = t
-                }
+                        .index = If(index.StringEmpty, 1, Integer.Parse(index)),
+                        .[structure] = t
+                    }
                 Next
             End If
         End Function
