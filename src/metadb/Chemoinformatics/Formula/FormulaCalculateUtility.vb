@@ -63,9 +63,10 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports std = System.Math
 
 Namespace Formula
-
 
     Public Module AtomMass
         Public cMass As Double = 12.0
@@ -139,24 +140,24 @@ Namespace Formula
         ''' 
         <Extension>
         Public Function GeneralMoleculeFormula(adductIon As Formula, adductIonName As String) As Formula
-            Dim adducts = Ms1.PrecursorType.Parser _
-                .Formula(adductIonName) _
-                .TryCast(Of IEnumerable(Of (sign%, expr$))) _
-                .ToArray
+            Dim adducts = Ms1.PrecursorType.Parser.GetAdductParts(adductIonName)
+            Dim f As Formula
             Dim formula As Formula = adductIon
 
-            For Each part As (sign%, expr$) In adducts
-                ' reverse of the adducts
-                If part.sign > 0 Then
-                    ' substract for add
-                    formula -= part.expr
+            For Each part As NamedValue(Of Integer) In adducts
+                f = FormulaScanner.ScanFormula(part.Name)
+                f = f * std.Abs(part.Value)
+
+                ' M+H -> M
+                If part.Value > 0 Then
+                    formula -= f
                 Else
-                    ' add for substract
-                    formula += part.expr
+                    ' M-H -> M
+                    formula += f
                 End If
             Next
 
-            Return formula
+            Return Formula
         End Function
 
         ''' <summary>
@@ -180,16 +181,19 @@ Namespace Formula
         ''' 
         <Extension>
         Public Function GeneralAdductFormula(formula As Formula, adductIonName As String) As Formula
-            Dim adducts = Ms1.PrecursorType.Parser _
-                .Formula(adductIonName) _
-                .TryCast(Of IEnumerable(Of (sign%, expr$))) _
-                .ToArray
+            Dim adducts = Ms1.PrecursorType.Parser.GetAdductParts(adductIonName)
+            Dim f As Formula
 
-            For Each part As (sign%, expr$) In adducts
-                If part.sign > 0 Then
-                    formula += part.expr
+            For Each part As NamedValue(Of Integer) In adducts
+                f = FormulaScanner.ScanFormula(part.Name)
+                f = f * std.Abs(part.Value)
+
+                ' M+H
+                If part.Value > 0 Then
+                    formula += f
                 Else
-                    formula -= part.expr
+                    ' M-H
+                    formula -= f
                 End If
             Next
 
