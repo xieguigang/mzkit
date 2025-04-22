@@ -1,69 +1,72 @@
 ﻿#Region "Microsoft.VisualBasic::9befff8e3fd91d093138e5dc77178bb9, metadb\Chemoinformatics\Formula\FormulaCalculateUtility.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 305
-    '    Code Lines: 272 (89.18%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 33 (10.82%)
-    '     File Size: 17.57 KB
+' Summaries:
 
 
-    '     Module AtomMass
-    ' 
-    ' 
-    ' 
-    '     Module FormulaCalculateUtility
-    ' 
-    '         Function: ConvertFormulaAdductPairToPrecursorAdduct, ConvertTmsMeoxSubtractedFormula, (+5 Overloads) GetExactMass, (+4 Overloads) GetFormulaString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 305
+'    Code Lines: 272 (89.18%)
+' Comment Lines: 0 (0.00%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 33 (10.82%)
+'     File Size: 17.57 KB
+
+
+'     Module AtomMass
+' 
+' 
+' 
+'     Module FormulaCalculateUtility
+' 
+'         Function: ConvertFormulaAdductPairToPrecursorAdduct, ConvertTmsMeoxSubtractedFormula, (+5 Overloads) GetExactMass, (+4 Overloads) GetFormulaString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports std = System.Math
 
 Namespace Formula
-
 
     Public Module AtomMass
         Public cMass As Double = 12.0
@@ -81,38 +84,120 @@ Namespace Formula
 
     Public Module FormulaCalculateUtility
 
-
+        ''' <summary>
+        ''' Convert the molecule formula to the precursor adduct formula.
+        ''' </summary>
+        ''' <param name="formula"></param>
+        ''' <param name="adduct"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' + For example, [M+H]+ => C6H12O6+H
+        ''' + For example, [M-H]- => C6H12O6-H
+        ''' + For example, [M+Na]+ => C6H12O6+Na
+        ''' + For example, [M+NH4]+ => C6H12O6+NH4
+        ''' </remarks>
         Public Function ConvertFormulaAdductPairToPrecursorAdduct(formula As Formula, adduct As AdductIon) As Formula
-
             If adduct.IonMode = IonModes.Positive Then
                 Select Case adduct.AdductIonName
-                    Case "[M+H]+"
-                        Return formula + "H"
-                    Case "[M]+"
-                        Return formula
-                    Case "[M+NH4]+"
-                        Return formula + "NH4"
-                    Case "[M+Na]+"
-                        Return formula
-                    Case "[M+H-H2O]+"
-                        Return formula - "OH"
+                    Case "[M+H]+" : Return formula + "H"
+                    Case "[M]+" : Return formula
+                    Case "[M+NH4]+" : Return formula + "NH4"
+                    Case "[M+Na]+" : Return formula
+                    Case "[M+H-H2O]+" : Return formula - "OH"
                     Case Else
-                        Return formula
+                        Return formula.GeneralAdductFormula(adduct)
                 End Select
             Else
                 Select Case adduct.AdductIonName
-                    Case "[M-H]-"
-                        Return formula - "H"
-                    Case "[M-H2O-H]-"
-                        Return formula - "H3O"
-                    Case "[M+FA-H]-"
-                        Return formula + "CHO2"
-                    Case "[M+Hac-H]-"
-                        Return formula + "C2H3O2"
+                    Case "[M-H]-" : Return formula - "H"
+                    Case "[M-H2O-H]-" : Return formula - "H3O"
+                    Case "[M+FA-H]-" : Return formula + "CHO2"
+                    Case "[M+Hac-H]-" : Return formula + "C2H3O2"
                     Case Else
-                        Return formula
+                        Return formula.GeneralAdductFormula(adduct)
                 End Select
             End If
+        End Function
+
+        ''' <summary>
+        ''' A general method for restore of the molecule formula from the given adduct ion formula
+        ''' </summary>
+        ''' <param name="adductIon"></param>
+        ''' <param name="adduct"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function GeneralMoleculeFormula(adductIon As Formula, adduct As AdductIon) As Formula
+            Return adductIon.GeneralMoleculeFormula(adduct.AdductIonName)
+        End Function
+
+        ''' <summary>
+        ''' A general method for restore of the molecule formula from the given adduct ion formula
+        ''' </summary>
+        ''' <param name="adductIon"></param>
+        ''' <param name="adductIonName"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function GeneralMoleculeFormula(adductIon As Formula, adductIonName As String) As Formula
+            Dim adducts = Ms1.PrecursorType.Parser.GetAdductParts(adductIonName)
+            Dim f As Formula
+            Dim formula As Formula = adductIon
+
+            For Each part As NamedValue(Of Integer) In adducts
+                f = FormulaScanner.ScanFormula(part.Name)
+                f = f * std.Abs(part.Value)
+
+                ' M+H -> M
+                If part.Value > 0 Then
+                    formula -= f
+                Else
+                    ' M-H -> M
+                    formula += f
+                End If
+            Next
+
+            Return Formula
+        End Function
+
+        ''' <summary>
+        ''' A general method for make conversion from molecule formula to adduct ion formula
+        ''' </summary>
+        ''' <param name="formula"></param>
+        ''' <param name="adduct"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function GeneralAdductFormula(formula As Formula, adduct As AdductIon) As Formula
+            Return formula.GeneralAdductFormula(adduct.AdductIonName)
+        End Function
+
+        ''' <summary>
+        ''' A general method for make conversion from molecule formula to adduct ion formula
+        ''' </summary>
+        ''' <param name="formula"></param>
+        ''' <param name="adductIonName"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function GeneralAdductFormula(formula As Formula, adductIonName As String) As Formula
+            Dim adducts = Ms1.PrecursorType.Parser.GetAdductParts(adductIonName)
+            Dim f As Formula
+
+            For Each part As NamedValue(Of Integer) In adducts
+                f = FormulaScanner.ScanFormula(part.Name)
+                f = f * std.Abs(part.Value)
+
+                ' M+H
+                If part.Value > 0 Then
+                    formula += f
+                Else
+                    ' M-H
+                    formula -= f
+                End If
+            Next
+
+            Return formula
         End Function
 
         Public Function ConvertTmsMeoxSubtractedFormula(formula As Formula) As Formula

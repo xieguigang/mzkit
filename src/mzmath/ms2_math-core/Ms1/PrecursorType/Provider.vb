@@ -199,12 +199,19 @@ Namespace Ms1.PrecursorType
             End Get
         End Property
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="precursor_type"></param>
+        ''' <returns>
+        ''' this function will returns nothing if the given string is empty
+        ''' </returns>
         Public Function ParseAdductModel(precursor_type As String) As MzCalculator
             Static cache As New Dictionary(Of String, MzCalculator)
             Return cache.ComputeIfAbsent(
                 key:=precursor_type,
                 lazyValue:=Function(type)
-                               Return Calculators(type).First
+                               Return ParseCalculatorInternal(type, strict:=False)
                            End Function)
         End Function
 
@@ -230,6 +237,41 @@ Namespace Ms1.PrecursorType
 
         Const empty_adducts_input As String = "one of the given precursor adducts type string for parsed is empty!"
 
+        Private Function ParseCalculatorInternal(type As String, strict As Boolean) As MzCalculator
+            type = Strings.Trim(type)
+
+            If type.StringEmpty(, True) Then
+                If strict Then
+                    Throw New NullReferenceException(empty_adducts_input)
+                Else
+                    Call type.Warning
+                    Return Nothing
+                End If
+            End If
+
+            ' get adducts
+            ' and parse adducts object from the string value type
+            ' if the adducts object is not found in the cached data list
+            If type.Last = "+"c Then
+                Return Positive(type)
+            ElseIf type.Last = "-"c Then
+                Return Negative(type)
+            Else
+                If strict Then
+                    ' do nothing?
+                    Throw New InvalidExpressionException($"unknown charge mode that could be parsed from the given adducts string: '{type}'!")
+                Else
+                    Call $"unknown charge mode that could be parsed from the given adducts string: '{type}'! Assuming positive mode for parse adducts model.".Warning
+
+                    If Not (type.First = "["c AndAlso type.Last = "]"c) Then
+                        type = $"[{type}]+"
+                    End If
+
+                    Return Positive(type)
+                End If
+            End If
+        End Function
+
         ''' <summary>
         ''' get internal m/z calculator
         ''' </summary>
@@ -241,38 +283,13 @@ Namespace Ms1.PrecursorType
         ''' the internal cache.
         ''' </remarks>
         Public Iterator Function Calculators(precursor_types As String(), strict As Boolean) As IEnumerable(Of MzCalculator)
+            Dim adduct As MzCalculator
+
             For Each type As String In precursor_types.SafeQuery
-                type = Strings.Trim(type)
+                adduct = ParseCalculatorInternal(type, strict)
 
-                If type.StringEmpty(, True) Then
-                    If strict Then
-                        Throw New NullReferenceException(empty_adducts_input)
-                    Else
-                        Call type.Warning
-                        Continue For
-                    End If
-                End If
-
-                ' get adducts
-                ' and parse adducts object from the string value type
-                ' if the adducts object is not found in the cached data list
-                If type.Last = "+"c Then
-                    Yield Positive(type)
-                ElseIf type.Last = "-"c Then
-                    Yield Negative(type)
-                Else
-                    If strict Then
-                        ' do nothing?
-                        Throw New InvalidExpressionException($"unknown charge mode that could be parsed from the given adducts string: '{type}'!")
-                    Else
-                        Call $"unknown charge mode that could be parsed from the given adducts string: '{type}'! Assuming positive mode for parse adducts model.".Warning
-
-                        If Not (type.First = "["c AndAlso type.Last = "]"c) Then
-                            type = $"[{type}]+"
-                        End If
-
-                        Yield Positive(type)
-                    End If
+                If Not adduct Is Nothing Then
+                    Yield adduct
                 End If
             Next
         End Function

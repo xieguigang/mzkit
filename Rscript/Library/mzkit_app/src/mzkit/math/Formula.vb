@@ -91,6 +91,7 @@ Imports RDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal.ConsolePrinter
 Imports std = System.Math
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 
 ''' <summary>
 ''' The chemical formulae toolkit
@@ -409,7 +410,15 @@ Module FormulaTools
         Return Canonical.BuildCanonicalFormula(formula.CountsByElement)
     End Function
 
+    ''' <summary>
+    ''' Evaluate of the molecule formula from the given adduct ion formula
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="adducts"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("formula_calibration")>
+    <RApiReturn(GetType(Formula))>
     Public Function IonFormulaCalibration(formula As Formula, <RRawVectorArgument> adducts As Object,
                                           Optional env As Environment = Nothing) As Object
 
@@ -420,12 +429,43 @@ Module FormulaTools
         End If
 
         If precursors.Length = 1 Then
-            Return formula.IonFormulaCalibration(precursors(0))
+            Return FormulaCalculateUtility.GeneralMoleculeFormula(New Formula(formula), precursors(0).ToString)
         Else
             Dim list As list = list.empty
 
             For Each type As MzCalculator In precursors
-                Call list.add(type.ToString, formula.IonFormulaCalibration(type))
+                Call list.add(type.ToString, FormulaCalculateUtility.GeneralMoleculeFormula(New Formula(formula), type.ToString))
+            Next
+
+            Return list
+        End If
+    End Function
+
+    ''' <summary>
+    ''' Make molecule formula to adduct ion formula by add a specific adducts ion data
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="adducts"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("adduct_ion_formula")>
+    <RApiReturn(GetType(Formula))>
+    Public Function MakeIonFormula(formula As Formula, <RRawVectorArgument> adducts As Object,
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim precursors = Math.GetPrecursorTypes(adducts, env)
+
+        If precursors.IsNullOrEmpty Then
+            Return RInternal.debug.stop("no adducts value was given!", env)
+        End If
+
+        If precursors.Length = 1 Then
+            Return FormulaCalculateUtility.ConvertFormulaAdductPairToPrecursorAdduct(New Formula(formula), New AdductIon(precursors(0)))
+        Else
+            Dim list As list = list.empty
+
+            For Each type As MzCalculator In precursors
+                Call list.add(type.ToString, FormulaCalculateUtility.GeneralMoleculeFormula(New Formula(formula), New AdductIon(type)))
             Next
 
             Return list
@@ -461,31 +501,10 @@ Module FormulaTools
     ''' <param name="ionFormula"></param>
     ''' <param name="precursor"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>molecule formula</returns>
     <ROperator("-")>
     Public Function minus(ionFormula As Formula, precursor As MzCalculator, Optional env As Environment = Nothing) As Formula
-        Dim ionName As String = precursor.name
-        Dim ion = Parser.Formula(precursor.name)
-
-        If ion Like GetType(String) Then
-            Throw New InvalidExpressionException(ion.TryCast(Of String))
-        Else
-            For Each part In ion.TryCast(Of IEnumerable(Of (sign As Integer, expr As String)))
-                Dim subIon As Formula = FormulaScanner.ScanFormula(part.expr)
-
-                subIon *= std.Abs(part.sign)
-
-                If part.sign > 0 Then
-                    ' delete part
-                    ionFormula -= subIon
-                Else
-                    ' add part
-                    ionFormula += subIon
-                End If
-            Next
-        End If
-
-        Return ionFormula
+        Return FormulaCalculateUtility.GeneralMoleculeFormula(ionFormula, precursor.ToString)
     End Function
 
     <ROperator("-")>
