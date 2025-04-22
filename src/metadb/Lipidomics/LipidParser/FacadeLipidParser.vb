@@ -101,6 +101,7 @@ Public Class FacadeLipidParser : Implements ILipidParser
             Return lipid
         End If
 
+        ' PC(16:0) -> PC 16:0
         parse = lipid.GetTagValue("(")
 
         If map.ContainsKey(parse.Name) Then
