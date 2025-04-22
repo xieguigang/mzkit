@@ -83,6 +83,11 @@ Module LCLipidomics
         Return env.EvaluateFramework(Of String, ILipid)(name, eval:=AddressOf FacadeLipidParser.Default.Parse)
     End Function
 
+    <ExportAPI("lipid_smiles")>
+    Public Function lipid_smiles(lipid As ILipid) As Object
+        Return SmilesInchikeyGenerator.Generate(lipid)
+    End Function
+
     ''' <summary>
     ''' meansrue lipid ions
     ''' </summary>

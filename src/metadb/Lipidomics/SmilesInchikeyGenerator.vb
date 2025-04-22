@@ -1,120 +1,123 @@
 ﻿#Region "Microsoft.VisualBasic::4b4e482f135b1483943e8739349a4643, metadb\Lipidomics\SmilesInchikeyGenerator.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 243
-    '    Code Lines: 191 (78.60%)
-    ' Comment Lines: 36 (14.81%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 16 (6.58%)
-    '     File Size: 17.42 KB
+' Summaries:
 
 
-    ' Class SmilesInchikeyGenerator
-    ' 
-    '     Function: ChainSmilesGen, Generate
-    ' 
-    ' Class SmilesInchikey
-    ' 
-    '     Properties: InchiKey, Smiles
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    ' Class SmilesLipidHeader
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 243
+'    Code Lines: 191 (78.60%)
+' Comment Lines: 36 (14.81%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 16 (6.58%)
+'     File Size: 17.42 KB
+
+
+' Class SmilesInchikeyGenerator
+' 
+'     Function: ChainSmilesGen, Generate
+' 
+' Class SmilesInchikey
+' 
+'     Properties: InchiKey, Smiles
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+' Class SmilesLipidHeader
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+' /********************************************************************************/
 
 #End Region
 
 Public Class SmilesInchikeyGenerator
+
     Public Shared Function Generate(lipid As Lipid) As SmilesInchikey
-        'Dim plChains As PositionLevelChains = TryCast(lipid.Chains, PositionLevelChains)
+        Dim plChains As PositionLevelChains = TryCast(lipid.Chains, PositionLevelChains)
 
-        'If plChains IsNot Nothing Then
-        '    Dim smilesHeaderDict = SmilesLipidHeader.HeaderDictionary
-        '    Dim headerSmiles = smilesHeaderDict(lipid.LipidClass.ToString())
-        '    If Equals(headerSmiles, Nothing) Then Return Nothing
+        ' If plChains IsNot Nothing Then
+        Dim smilesHeaderDict = SmilesLipidHeader.HeaderDictionary
+        Dim headerSmiles = smilesHeaderDict(lipid.LipidClass.ToString())
+        If headerSmiles Is Nothing Then Return Nothing
 
-        '    Dim chainList = New List(Of String)()
-        '    Dim jointPosition = 10
+        Dim chainList = New List(Of String)()
+        Dim jointPosition = 10
 
-        '    For Each chain In lipid.Chains.GetDeterminedChains()
-        '        Dim oxidized = chain.Oxidized
-        '        Dim doubleBond = chain.DoubleBond
-        '        If oxidized.UnDecidedCount > 0 OrElse doubleBond.UnDecidedCount > 0 Then
-        '            Return Nothing
-        '        End If
-        '        Dim smilesInchikeyGenerator = New SmilesInchikeyGenerator()
-        '        Dim chainSmiles = smilesInchikeyGenerator.ChainSmilesGen(chain)
-        '        If TypeOf chain Is SphingoChain Then
-        '            chainSmiles = chainSmiles.Remove(0, 5).Insert(1, "%" & jointPosition.ToString())
-        '        Else
-        '            chainSmiles = chainSmiles.Insert(1, "%" & jointPosition.ToString())
-        '        End If
-        '        chainList.Add(chainSmiles)
-        '        jointPosition = jointPosition + 10
-        '    Next
+        For Each chain In lipid.Chains.GetDeterminedChains()
+            Dim oxidized = chain.Oxidized
+            Dim doubleBond = chain.DoubleBond
+            If oxidized.UnDecidedCount > 0 OrElse doubleBond.UnDecidedCount > 0 Then
+                ' Return Nothing
+            End If
+            Dim smilesInchikeyGenerator = New SmilesInchikeyGenerator()
+            Dim chainSmiles = smilesInchikeyGenerator.ChainSmilesGen(chain)
+            If TypeOf chain Is SphingoChain Then
+                chainSmiles = chainSmiles.Remove(0, 5).Insert(1, "%" & jointPosition.ToString())
+            Else
+                chainSmiles = chainSmiles.Insert(1, "%" & jointPosition.ToString())
+            End If
+            chainList.Add(chainSmiles)
+            jointPosition = jointPosition + 10
+        Next
 
-        '    Dim rawSmiles = headerSmiles & String.Join(".", chainList)
+        Dim rawSmiles = headerSmiles & String.Join(".", chainList)
 
-        '    Dim SmilesParser = New SmilesParser()
-        '    Dim SmilesGenerator = New SmilesGenerator(SmiFlavors.StereoCisTrans)
-        '    Dim iAtomContainer = SmilesParser.ParseSmiles(rawSmiles)
-        '    Dim smiles = SmilesGenerator.Create(iAtomContainer)
-        '    Dim InChIGeneratorFactory = New InChIGeneratorFactory()
-        '    Dim InChIKey = InChIGeneratorFactory.GetInChIGenerator(iAtomContainer).GetInChIKey()
+        'Dim SmilesParser = New SmilesParser()
+        'Dim SmilesGenerator = New SmilesGenerator(SmiFlavors.StereoCisTrans)
+        'Dim iAtomContainer = SmilesParser.ParseSmiles(rawSmiles)
+        'Dim smiles = SmilesGenerator.Create(iAtomContainer)
+        'Dim InChIGeneratorFactory = New InChIGeneratorFactory()
+        'Dim InChIKey = InChIGeneratorFactory.GetInChIGenerator(iAtomContainer).GetInChIKey()
 
-        '    Return New SmilesInchikey() With {
+        'Return New SmilesInchikey() With {
         '        .Smiles = smiles,
         '        .InchiKey = InChIKey
         '    }
-        'End If
+        ' End If
+
         Return Nothing
     End Function
+
     Public Function ChainSmilesGen(chain As IChain) As String
         Dim doubleBond = chain.DoubleBond
         Dim oxidized = chain.Oxidized
 
         If doubleBond.UnDecidedCount > 0 Then
-            Return Nothing
+            ' Return Nothing
         End If
         If Equals(chain.CarbonCount.ToString() & ":" & chain.DoubleBondCount.ToString(), "0:0") Then
             Return "H"
@@ -149,21 +152,16 @@ Public Class SmilesInchikeyGenerator
 
 End Class
 Public Class SmilesInchikey
-    Private smilesField As String
-    Private inchikeyField As String
 
-    Public Sub New()
-        smilesField = Nothing
-        inchikeyField = Nothing
-    End Sub
     Public Property Smiles As String
     Public Property InchiKey As String
+
 End Class
 Public NotInheritable Class SmilesLipidHeader
     Private Sub New()
     End Sub
 
-    Public Shared HeaderDictionary As Dictionary(Of String, String) = New Dictionary(Of String, String)() From {
+    Public Shared ReadOnly HeaderDictionary As New Dictionary(Of String, String)() From {
 {"PC", "C(O%10)C(O%20)COP([O-])(=O)OCC[N+](C)(C)C."},
 {"PA", "C(O%10)C(O%20)COP(O)(O)=O."},
 {"PE", "C(O%10)C(O%20)COP(O)(=O)OCCN."},
