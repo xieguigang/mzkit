@@ -58,7 +58,6 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel
 
 ''' <summary>
 ''' all kinds of the lipid parser wrapper
@@ -93,6 +92,8 @@ Public Class FacadeLipidParser : Implements ILipidParser
         If lipid Is Nothing Then
             lipid = ""
             Return ""
+        Else
+            lipid = Strings.Trim(lipid)
         End If
 
         Dim parse = lipid.GetTagValue(" ")

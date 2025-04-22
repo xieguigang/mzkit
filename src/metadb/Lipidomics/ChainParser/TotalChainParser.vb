@@ -98,9 +98,23 @@ Public Class TotalChainParser
     Private Sub New(chainCount As Integer, capacity As Integer, hasSphingosine As Boolean, hasEther As Boolean, atLeastSpeciesLevel As Boolean)
         Me.ChainCount = chainCount
         Me.Capacity = capacity
-        Dim submolecularLevelPattern = If(hasEther, $"(?<TotalChain>(?<plasm>[de]?[OP]-)?{CarbonPattern}:{DoubleBondPattern}({OxidizedPattern})?)", $"(?<TotalChain>{CarbonPattern}:{DoubleBondPattern}({OxidizedPattern})?)")
-        Dim molecularSpeciesLevelPattern = If(hasSphingosine, $"(?<MolecularSpeciesLevel>(?<Chain>{SphingoChainParser.Pattern})_({ChainsPattern}_?){{{Me.ChainCount - 1}}})", If(hasEther, $"(?<MolecularSpeciesLevel>({ChainsPattern}_?){{{Me.ChainCount}}})", $"(?<MolecularSpeciesLevel>({AcylChainsPattern}_?){{{Me.ChainCount}}})"))
-        Dim positionLevelPattern = If(hasSphingosine, $"(?<PositionLevel>(?<Chain>{SphingoChainParser.Pattern})/({ChainsPattern}/?){{{Me.Capacity - 1}}})", If(hasEther, $"(?<PositionLevel>({ChainsPattern}/?){{{Me.Capacity}}})", $"(?<PositionLevel>({AcylChainsPattern}/?){{{Me.Capacity}}})"))
+        Dim submolecularLevelPattern = If(hasEther,
+            $"(?<TotalChain>(?<plasm>[de]?[OP]-)?{CarbonPattern}:{DoubleBondPattern}({OxidizedPattern})?)",
+            $"(?<TotalChain>{CarbonPattern}:{DoubleBondPattern}({OxidizedPattern})?)"
+        )
+        Dim molecularSpeciesLevelPattern = If(hasSphingosine,
+            $"(?<MolecularSpeciesLevel>(?<Chain>{SphingoChainParser.Pattern})_({ChainsPattern}_?){{{Me.ChainCount - 1}}})",
+            If(hasEther,
+                $"(?<MolecularSpeciesLevel>({ChainsPattern}_?){{{Me.ChainCount}}})",
+                $"(?<MolecularSpeciesLevel>({AcylChainsPattern}_?){{{Me.ChainCount}}})"
+        ))
+        Dim positionLevelPattern = If(hasSphingosine,
+            $"(?<PositionLevel>(?<Chain>{SphingoChainParser.Pattern})/({ChainsPattern}/?){{{Me.Capacity - 1}}})",
+            If(hasEther,
+                $"(?<PositionLevel>({ChainsPattern}/?){{{Me.Capacity}}})",
+                $"(?<PositionLevel>({AcylChainsPattern}/?){{{Me.Capacity}}})"
+        ))
+
         If Me.Capacity = 1 Then
             Dim postionLevelExpression = New Regex(positionLevelPattern, RegexOptions.Compiled)
             Pattern = positionLevelPattern
@@ -112,6 +126,7 @@ Public Class TotalChainParser
             Pattern = totalPattern
             Expression = totalExpression
         End If
+
         Me.HasSphingosine = hasSphingosine
     End Sub
 
