@@ -147,7 +147,7 @@ Friend Class RuleBaseSpectrumGenerator
     Public ReadOnly Property Rules As ISpectrumGenerationRule()
 
     Public Function CanGenerate(lipid As ILipid, adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
-        Return lipid.LipidClass = LipidClass AndAlso Equals(adduct.AdductIonName, adduct.AdductIonName)
+        Return lipid.LipidClass = LipidClass AndAlso Equals(Me.Adduct.AdductIonName, adduct.AdductIonName)
     End Function
 
     Public Function Generate(lipid As Lipid, adduct As AdductIon, Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty Implements ILipidSpectrumGenerator.Generate

@@ -61,8 +61,8 @@
 
 Imports std = System.Math
 
-Public Class ChainGenerator
-    Implements IChainGenerator
+Public Class ChainGenerator : Implements IChainGenerator
+
     Public Sub New(Optional begin As Integer = 3, Optional [end] As Integer = 3, Optional skip As Integer = 3)
         Me.Begin = begin
         Me.End = [end]
