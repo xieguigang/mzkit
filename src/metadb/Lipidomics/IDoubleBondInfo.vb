@@ -86,13 +86,14 @@ Public Enum DoubleBondState
     Z
 End Enum
 
-Public Class DoubleBondInfo
-    Implements IDoubleBondInfo
-    Private Shared ReadOnly CACHE As Dictionary(Of (Integer, DoubleBondState), DoubleBondInfo) = New Dictionary(Of (Integer, DoubleBondState), DoubleBondInfo)()
-    Private Shared ReadOnly LOCKOBJ As Object = New Object()
+Public Class DoubleBondInfo : Implements IDoubleBondInfo
 
     Public Shared Function Create(position As Integer, Optional state As DoubleBondState = DoubleBondState.Unknown) As DoubleBondInfo
         Dim info As DoubleBondInfo = Nothing
+
+        Static CACHE As New Dictionary(Of (Integer, DoubleBondState), DoubleBondInfo)()
+        Static LOCKOBJ As Object = New Object()
+
         SyncLock LOCKOBJ
             If Not CACHE.TryGetValue((position, state), info) Then
                 CACHE((position, state)) = New DoubleBondInfo(position, state)

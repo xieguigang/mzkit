@@ -117,8 +117,8 @@ Public Interface ILipid
     Function GenerateSpectrum(generator As ILipidSpectrumGenerator, adduct As AdductIon, Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty
 End Interface
 
-Public Class Lipid
-    Implements ILipid
+Public Class Lipid : Implements ILipid
+
     Public Sub New(lipidClass As LbmClass, mass As Double, chains As ITotalChain)
         If chains Is Nothing Then
             Throw New ArgumentNullException(NameOf(chains))
