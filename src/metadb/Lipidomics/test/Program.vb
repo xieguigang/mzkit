@@ -3,7 +3,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Lipidomics
 Module Program
 
     Sub Main(args As String())
-        Dim lipid = FacadeLipidParser.Default.Parse("PC 16:1COOH_16:0")
+        Dim lipid = FacadeLipidParser.Default.Parse("PC 16:0_18:1")
 
         Pause()
     End Sub
