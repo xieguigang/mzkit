@@ -66,7 +66,7 @@
 
 Public Class SmilesInchikeyGenerator
 
-    Public Shared Function Generate(lipid As Lipid) As SmilesInchikey
+    Public Shared Function Generate(lipid As Lipid) As String
         Dim plChains As PositionLevelChains = TryCast(lipid.Chains, PositionLevelChains)
 
         ' If plChains IsNot Nothing Then
@@ -94,7 +94,15 @@ Public Class SmilesInchikeyGenerator
             jointPosition = jointPosition + 10
         Next
 
-        Dim rawSmiles = headerSmiles & String.Join(".", chainList)
+        Dim rawSmiles = chainList(0) & headerSmiles
+
+        For Each chain As String In chainList.Skip(1)
+            rawSmiles = rawSmiles & chain
+        Next
+
+        rawSmiles = rawSmiles.Replace("%", "")
+        rawSmiles = rawSmiles.StringReplace("\d+", "")
+        rawSmiles = rawSmiles.Replace(".", "")
 
         'Dim SmilesParser = New SmilesParser()
         'Dim SmilesGenerator = New SmilesGenerator(SmiFlavors.StereoCisTrans)
@@ -109,7 +117,7 @@ Public Class SmilesInchikeyGenerator
         '    }
         ' End If
 
-        Return Nothing
+        Return rawSmiles
     End Function
 
     Public Function ChainSmilesGen(chain As IChain) As String
