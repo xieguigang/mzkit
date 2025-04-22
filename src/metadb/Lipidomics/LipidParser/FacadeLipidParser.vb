@@ -58,6 +58,8 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel
+
 ''' <summary>
 ''' all kinds of the lipid parser wrapper
 ''' </summary>
@@ -71,7 +73,7 @@ Public Class FacadeLipidParser : Implements ILipidParser
     Public ReadOnly Property Target As String = String.Empty Implements ILipidParser.Target
 
     Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
-        Dim key = lipidStr.Split()(0)
+        Dim key = preprocessing(lipidStr).Split()(0)
         Dim parsers As List(Of ILipidParser) = Nothing, lipid As ILipid = Nothing
 
         If map.TryGetValue(key, parsers) Then
@@ -85,6 +87,28 @@ Public Class FacadeLipidParser : Implements ILipidParser
             Next
         End If
         Return Nothing
+    End Function
+
+    Private Function preprocessing(ByRef lipid As String) As String
+        If lipid Is Nothing Then
+            lipid = ""
+            Return ""
+        End If
+
+        Dim parse = lipid.GetTagValue(" ")
+
+        If map.ContainsKey(parse.Name) Then
+            Return lipid
+        End If
+
+        parse = lipid.GetTagValue("(")
+
+        If map.ContainsKey(parse.Name) Then
+            lipid = parse.Name & " " & lipid.GetStackValue("(", ")")
+            Return lipid
+        End If
+
+        Return lipid
     End Function
 
     Public Sub Add(parser As ILipidParser)
@@ -102,8 +126,11 @@ Public Class FacadeLipidParser : Implements ILipidParser
 
     Public Shared ReadOnly Property [Default] As ILipidParser
         Get
+            Static defaultList As ILipidParser
+
             If defaultList Is Nothing Then
                 Dim parser = New FacadeLipidParser()
+
                 Call New ILipidParser() {
                         New BMPLipidParser(),
                         New CLLipidParser(),
@@ -158,11 +185,11 @@ Public Class FacadeLipidParser : Implements ILipidParser
                         New TGd5LipidParser(),
                         New CEd7LipidParser()
                     }.ForEach(Sub(par, nil) parser.Add(par))
+
                 defaultList = parser
             End If
+
             Return defaultList
         End Get
     End Property
-    Private Shared defaultList As ILipidParser
-
 End Class

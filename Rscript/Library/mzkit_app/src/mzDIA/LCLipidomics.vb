@@ -59,6 +59,7 @@ Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
@@ -69,6 +70,18 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 ''' </summary>
 <Package("lipidomics")>
 Module LCLipidomics
+
+    ''' <summary>
+    ''' Parse the lipid name as structure object
+    ''' </summary>
+    ''' <param name="name"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("parse_lipid")>
+    <RApiReturn(GetType(ILipid))>
+    Public Function parse_lipid(<RRawVectorArgument> name As Object, Optional env As Environment = Nothing) As Object
+        Return env.EvaluateFramework(Of String, ILipid)(name, eval:=AddressOf FacadeLipidParser.Default.Parse)
+    End Function
 
     ''' <summary>
     ''' meansrue lipid ions
