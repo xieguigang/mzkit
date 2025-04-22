@@ -1,66 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::f0fc6cfef11e0cb9244848da104231c2, metadb\Lipidomics\LipidClassDictionary.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 76
-    '    Code Lines: 61 (80.26%)
-    ' Comment Lines: 1 (1.32%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 14 (18.42%)
-    '     File Size: 2.68 KB
+' Summaries:
 
 
-    ' Class LipidClassProperty
-    ' 
-    '     Properties: [Class], AcylChain, AlkylChain, DisplayName, SphingoChain
-    '                 TotalChain
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    ' Class LipidClassDictionary
-    ' 
-    '     Properties: [Default], LbmItems
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: ParseDictinary
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 76
+'    Code Lines: 61 (80.26%)
+' Comment Lines: 1 (1.32%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 14 (18.42%)
+'     File Size: 2.68 KB
+
+
+' Class LipidClassProperty
+' 
+'     Properties: [Class], AcylChain, AlkylChain, DisplayName, SphingoChain
+'                 TotalChain
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+' Class LipidClassDictionary
+' 
+'     Properties: [Default], LbmItems
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: ParseDictinary
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -119,24 +119,23 @@ Public Class LipidClassDictionary
         Dim result = New LipidClassDictionary()
         Dim acyl As Integer = Nothing, alkyl As Integer = Nothing, sphingo As Integer = Nothing
 
-        Using stream = My.Resources.ResourceManager.GetStream("LipidClassProperties")
-            Using reader = New StreamReader(stream)
-                Call reader.ReadLine() ' skip header
+        Using reader = New StringReader(My.Resources.LipidClassProperties)
+            Call reader.ReadLine() ' skip header
 
-                While reader.Peek() >= 0
-                    Dim cols = reader.ReadLine().Split(","c)
-                    Dim item = New LipidClassProperty(
-                        System.Enum.Parse(GetType(LbmClass), cols(0)),
-                        cols(1),
-                        If(Integer.TryParse(cols(2), acyl), acyl, 0),
-                        If(Integer.TryParse(cols(3), alkyl), alkyl, 0),
-                        If(Integer.TryParse(cols(4), sphingo), sphingo, 0)
-                    )
+            While reader.Peek() >= 0
+                Dim cols = reader.ReadLine().Split(","c)
+                Dim item = New LipidClassProperty(
+                    System.Enum.Parse(GetType(LbmClass), cols(0)),
+                    cols(1),
+                    If(Integer.TryParse(cols(2), acyl), acyl, 0),
+                    If(Integer.TryParse(cols(3), alkyl), alkyl, 0),
+                    If(Integer.TryParse(cols(4), sphingo), sphingo, 0)
+                )
 
-                    result.m_lbmItems(item.Class) = item
-                End While
-            End Using
+                result.m_lbmItems(item.Class) = item
+            End While
         End Using
+
         Return result
     End Function
 End Class
