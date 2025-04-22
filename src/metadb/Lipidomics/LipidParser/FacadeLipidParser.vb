@@ -93,7 +93,7 @@ Public Class FacadeLipidParser : Implements ILipidParser
             lipid = ""
             Return ""
         Else
-            lipid = Strings.Trim(lipid)
+            lipid = Strings.Trim(lipid).Replace("COOH", "")
         End If
 
         Dim parse = lipid.GetTagValue(" ")
