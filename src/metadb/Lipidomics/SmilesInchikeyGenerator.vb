@@ -94,11 +94,7 @@ Public Class SmilesInchikeyGenerator
             jointPosition = jointPosition + 10
         Next
 
-        Dim rawSmiles = chainList(0) & headerSmiles
-
-        For Each chain As String In chainList.Skip(1)
-            rawSmiles = rawSmiles & chain
-        Next
+        Dim rawSmiles = headerSmiles & chainList.Select(Function(s) $"({s})").JoinBy("")
 
         rawSmiles = rawSmiles.Replace("%", "")
         rawSmiles = rawSmiles.StringReplace("\d+", "")
