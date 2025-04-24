@@ -32,6 +32,9 @@ declare namespace lipidomics {
    */
    function lipid_ions(lipidclass: object, adduct: object, minCarbonCount: object, maxCarbonCount: object, minDoubleBond: object, maxDoubleBond: object, maxOxygen: object): object;
    /**
+   */
+   function lipid_smiles(lipid: object): any;
+   /**
     * create a lipidmaps metabolite data indexer
     * 
     * 
@@ -50,4 +53,14 @@ declare namespace lipidomics {
      * @param fatty_acid the lipidsearch fatty acid data
    */
    function mapping(lipidmaps: object, class: string, fatty_acid: string): string;
+   /**
+    * Parse the lipid name as structure object
+    * 
+    * 
+     * @param name -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function parse_lipid(name: any, env?: object): object;
 }
