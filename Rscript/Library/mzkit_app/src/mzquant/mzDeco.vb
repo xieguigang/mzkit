@@ -86,6 +86,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.Analysis.HTS.DataFrame
@@ -1213,7 +1214,8 @@ extract_ms1:
     ''' <returns></returns>
     ''' <example>
     ''' let peaksdata = lapply(files, function(ms1) {
-    '''     mz_deco(ms1, tolerance = "da:0.01", peak.width = [3,30]);
+    '''     mz_deco(ms1, tolerance = "da:0.01", 
+    '''         peak.width = [3,30]);
     ''' });
     ''' let peaktable = peak_alignment(samples = peaksdata);
     ''' 
@@ -1231,6 +1233,7 @@ extract_ms1:
                                   Optional ri_alignment As Boolean = False,
                                   Optional max_intensity_ion As Boolean = False,
                                   Optional cow_alignment As Boolean = False,
+                                  Optional aggregate As Aggregates = Aggregates.Sum,
                                   Optional env As Environment = Nothing) As Object
 
         Dim sampleData As NamedCollection(Of PeakFeature)() = Nothing
@@ -1270,7 +1273,8 @@ extract_ms1:
                 .RIAlignment(rt_shifts,
                              mzdiff:=mzdiff,
                              ri_offset:=ri_win,
-                             top_ion:=max_intensity_ion) _
+                             top_ion:=max_intensity_ion,
+                             aggregate:=aggregate) _
                 .ToArray
         ElseIf cow_alignment Then
             peaktable = sampleData _
@@ -1320,12 +1324,15 @@ extract_ms1:
     ''' </summary>
     ''' <param name="batch1"></param>
     ''' <param name="batch2"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' the ROI merge result across two sample batch data.
+    ''' </returns>
     <ExportAPI("RI_batch_join")>
     Public Function RI_batch_join(batch1 As PeakSet, batch2 As PeakSet,
                                   Optional mzdiff As Double = 0.01,
                                   Optional ri_win As Double = 10,
-                                  Optional max_intensity_ion As Boolean = False) As Object
+                                  Optional max_intensity_ion As Boolean = False,
+                                  Optional aggregate As Aggregates = Aggregates.Sum) As Object
 
         Dim allpeaks = batch1.ToFeatures _
             .JoinIterates(batch2.ToFeatures) _
@@ -1337,7 +1344,8 @@ extract_ms1:
             .RIAlignment(rt_shifts,
                         mzdiff:=mzdiff,
                         ri_offset:=ri_win,
-                        top_ion:=max_intensity_ion) _
+                        top_ion:=max_intensity_ion,
+                        aggregate:=aggregate) _
             .ToArray
         Dim id As String() = peaktable.Select(Function(i) i.ID).UniqueNames
         Dim sampleNames As String() = allpeaks.Keys.ToArray
@@ -1405,9 +1413,14 @@ extract_ms1:
     ''' <returns></returns>
     <ExportAPI("rt_groups")>
     <RApiReturn(GetType(xcms2))>
-    Public Function rt_groups_merge(peaks As xcms2(), Optional dt As Double = 3, Optional ppm As Double = 20) As Object
+    Public Function rt_groups_merge(peaks As xcms2(),
+                                    Optional dt As Double = 3,
+                                    Optional ppm As Double = 20,
+                                    Optional aggregate As Aggregates = Aggregates.Sum) As Object
+
         Dim ions = peaks.GroupBy(Function(i) i.mz, Function(a, b) PPMmethod.PPM(a, b) <= ppm).ToArray
         Dim merge As New List(Of xcms2)
+        Dim f As Func(Of Double, Double, Double) = aggregate.GetAggregateFunction2
 
         For Each ion_group As NamedCollection(Of xcms2) In TqdmWrapper.Wrap(ions)
             If ion_group.Length > 1 Then
@@ -1415,9 +1428,11 @@ extract_ms1:
 
                 For Each ion As NamedCollection(Of xcms2) In rt_groups
                     If ion.Length = 1 Then
+                        ' is a unique ion
+                        ' merge into the result list directly
                         Call merge.AddRange(ion)
                     Else
-                        Call merge.Add(xcms2.Merge(ion))
+                        Call merge.Add(xcms2.Merge(ion, f))
                     End If
                 Next
             Else
