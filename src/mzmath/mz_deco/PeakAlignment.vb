@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.SignalProcessing.COW
 Imports Microsoft.VisualBasic.Math.Statistics
+Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports std = System.Math
 
 ''' <summary>
@@ -117,7 +118,8 @@ Public Module PeakAlignment
                                          Optional rt_shift As List(Of RtShift) = Nothing,
                                          Optional mzdiff As Double = 0.005,
                                          Optional ri_offset As Double = 1,
-                                         Optional top_ion As Boolean = False) As IEnumerable(Of xcms2)
+                                         Optional top_ion As Boolean = False,
+                                         Optional aggregate As Aggregates = Aggregates.Sum) As IEnumerable(Of xcms2)
         Dim allData = samples.ToArray
         ' make data bins by RI
         Dim RI_rawdata = allData.IteratesAll.GroupBy(Function(i) i.RI, offsets:=ri_offset).ToArray
@@ -125,6 +127,7 @@ Public Module PeakAlignment
         Dim refer As String = allData.PickReferenceSampleMaxIntensity.name
         Dim mz_bin As New GroupBins(Of PeakFeature)(Function(i) i.mz, Function(a, b) std.Abs(a - b) < mzdiff, left_margin_bin:=True)
         Dim ion_mz As Double
+        Dim f As Func(Of Double, Double, Double) = aggregate.GetAggregateFunction2
 
         If rt_shift Is Nothing Then
             rt_shift = New List(Of RtShift)
@@ -152,17 +155,17 @@ Public Module PeakAlignment
                 End If
 
                 Dim peak1 As New xcms2 With {
-                   .ID = mzri,
-                   .mz = ion_mz,
-                   .RI = ri,
-                   .rt = peak.OrderByDescending(Function(pi) pi.maxInto).First.rt,
-                   .mzmin = peak.Select(Function(pi) pi.mz).Min,
-                   .mzmax = peak.Select(Function(pi) pi.mz).Max,
-                   .rtmax = peak.Select(Function(pi) pi.rt).Max,
-                   .rtmin = peak.Select(Function(pi) pi.rt).Min,
-                   .RImin = peak.Select(Function(pi) pi.RI).Min,
-                   .RImax = peak.Select(Function(pi) pi.RI).Max,
-                   .groups = peak.Length
+                    .ID = mzri,
+                    .mz = ion_mz,
+                    .RI = ri,
+                    .rt = peak.OrderByDescending(Function(pi) pi.maxInto).First.rt,
+                    .mzmin = peak.Select(Function(pi) pi.mz).Min,
+                    .mzmax = peak.Select(Function(pi) pi.mz).Max,
+                    .rtmax = peak.Select(Function(pi) pi.rt).Max,
+                    .rtmin = peak.Select(Function(pi) pi.rt).Min,
+                    .RImin = peak.Select(Function(pi) pi.RI).Min,
+                    .RImax = peak.Select(Function(pi) pi.RI).Max,
+                    .groups = peak.Length
                 }
 
                 If refer_rt Is Nothing Then
@@ -173,7 +176,7 @@ Public Module PeakAlignment
 
                 For Each sample As PeakFeature In peak
                     If peak1.HasProperty(sample.rawfile) Then
-                        peak1(sample.rawfile) = (peak1(sample.rawfile) + sample.area)
+                        peak1(sample.rawfile) = f(peak1(sample.rawfile), sample.area)
                     Else
                         peak1(sample.rawfile) = sample.area
                     End If

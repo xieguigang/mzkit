@@ -1003,6 +1003,8 @@ Module MzMath
     ''' let spec = data.frame(mz = [452.7627 67.563 457.336 347.8 242.3], 
     '''    intensity = [312 4353 6664 6765 1119]);
     '''    
+    ''' let f = aggregate(FUN = "max");
+    ''' 
     ''' print(as.data.frame(spec));
     ''' #              mz intensity                   
     ''' # --------------------------                                                                                                 
@@ -1012,6 +1014,8 @@ Module MzMath
     ''' # [3, ]   457.336      6664                                                                                                
     ''' # [4, ]     347.8      6765                                                                                           
     ''' # [5, ]     242.3      1119
+    ''' 
+    ''' print(centroid(spec, tolerance = "da:0.1", aggregate = f));
     ''' </example>
     <ExportAPI("centroid")>
     <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix), GetType(Double))>

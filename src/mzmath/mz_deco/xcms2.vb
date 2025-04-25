@@ -68,6 +68,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
@@ -308,16 +309,20 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         }
     End Function
 
-    Public Shared Function Merge(group As IEnumerable(Of xcms2)) As xcms2
+    Public Shared Function Merge(group As IEnumerable(Of xcms2), Optional aggregate As Func(Of Double, Double, Double) = Nothing) As xcms2
+        Static sum As Func(Of Double, Double, Double) = ParseFlag("sum").GetAggregateFunction2
+
         Dim topPeaks As xcms2() = group _
             .OrderByDescending(Function(a) a.npeaks) _
             .ToArray
         Dim mergePeak As New xcms2(topPeaks(0))
 
+        aggregate = If(aggregate, sum)
+
         For Each peak As xcms2 In topPeaks.Skip(1)
             For Each name As String In peak.Properties.Keys
                 If mergePeak.HasProperty(name) Then
-                    mergePeak(name) = (mergePeak(name) + peak(name))
+                    mergePeak(name) = aggregate(mergePeak(name), peak(name))
                 Else
                     mergePeak(name) = peak(name)
                 End If
