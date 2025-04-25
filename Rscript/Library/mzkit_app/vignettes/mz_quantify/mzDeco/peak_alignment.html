@@ -33,7 +33,8 @@
     <i>norm</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>ri.alignment</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>max.intensity.ion</i> = <span style='color: blue !important;'>FALSE</span>,
-    <i>cow.alignment</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+    <i>cow.alignment</i> = <span style='color: blue !important;'>FALSE</span>,
+    <i>aggregate</i> = Sum);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -73,7 +74,8 @@
         <h3 style="display: block;">Examples</h3>
 
         <pre><code id="example_r"> let peaksdata = lapply(files, function(ms1) {
-     mz_deco(ms1, tolerance = "da:0.01", peak.width = [3,30]);
+     mz_deco(ms1, tolerance = "da:0.01", 
+         peak.width = [3,30]);
  });
  let peaktable = peak_alignment(samples = peaksdata);
  

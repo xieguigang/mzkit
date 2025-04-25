@@ -10,6 +10,7 @@ peak_alignment \- Do COW peak alignment and export peaktable
 \fBri_alignment\fR as boolean = FALSE, 
 \fBmax_intensity_ion\fR as boolean = FALSE, 
 \fBcow_alignment\fR as boolean = FALSE, 
+\fBaggregate\fR as <integer> Aggregates = [Sum], 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -36,7 +37,8 @@ Do COW peak alignment and export peaktable
 .SH EXAMPLES
 .PP
 let peaksdata = lapply(files, function(ms1) {
-     mz_deco(ms1, tolerance = "da:0.01", peak.width = [3,30]);
+     mz_deco(ms1, tolerance = "da:0.01", 
+         peak.width = [3,30]);
  });
  let peaktable = peak_alignment(samples = peaksdata);
  

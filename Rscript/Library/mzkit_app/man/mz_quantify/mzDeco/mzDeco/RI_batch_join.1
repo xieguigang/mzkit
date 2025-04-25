@@ -7,7 +7,8 @@ RI_batch_join \- make peaktable join of two batch data via (mz,RI)
 \fBbatch2\fR as <generic> PeakSet, 
 \fBmzdiff\fR as double = 0.01, 
 \fBri_win\fR as double = 10, 
-\fBmax_intensity_ion\fR as boolean = FALSE);\fR
+\fBmax_intensity_ion\fR as boolean = FALSE, 
+\fBaggregate\fR as <integer> Aggregates = [Sum]);\fR
 .SH DESCRIPTION
 .PP
 make peaktable join of two batch data via (mz,RI)
@@ -18,6 +19,10 @@ make peaktable join of two batch data via (mz,RI)
 .PP
 .PP
 \fBbatch2\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+the ROI merge result across two sample batch data.
 .PP
 .SH SEE ALSO
 mzDeco

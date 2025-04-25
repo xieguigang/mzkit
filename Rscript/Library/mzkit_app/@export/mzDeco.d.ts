@@ -215,11 +215,13 @@ declare namespace mzDeco {
      * + default value Is ``false``.
      * @param cow_alignment 
      * + default value Is ``false``.
+     * @param aggregate 
+     * + default value Is ``null``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function peak_alignment(samples: any, mzdiff?: number, ri_win?: number, norm?: boolean, ri_alignment?: boolean, max_intensity_ion?: boolean, cow_alignment?: boolean, env?: object): object;
+   function peak_alignment(samples: any, mzdiff?: number, ri_win?: number, norm?: boolean, ri_alignment?: boolean, max_intensity_ion?: boolean, cow_alignment?: boolean, aggregate?: object, env?: object): object;
    /**
     * make sample column projection
     * 
@@ -306,8 +308,11 @@ declare namespace mzDeco {
      * + default value Is ``10``.
      * @param max_intensity_ion 
      * + default value Is ``false``.
+     * @param aggregate 
+     * + default value Is ``null``.
+     * @return the ROI merge result across two sample batch data.
    */
-   function RI_batch_join(batch1: object, batch2: object, mzdiff?: number, ri_win?: number, max_intensity_ion?: boolean): any;
+   function RI_batch_join(batch1: object, batch2: object, mzdiff?: number, ri_win?: number, max_intensity_ion?: boolean, aggregate?: object): any;
    /**
     * RI calculation of a speicifc sample data
     * 
@@ -359,8 +364,10 @@ declare namespace mzDeco {
      * @param ppm -
      * 
      * + default value Is ``20``.
+     * @param aggregate 
+     * + default value Is ``null``.
    */
-   function rt_groups(peaks: object, dt?: number, ppm?: number): object;
+   function rt_groups(peaks: object, dt?: number, ppm?: number, aggregate?: object): object;
    /**
     * cast peaktable to expression matrix object
     * 
