@@ -487,11 +487,16 @@ Module mzDeco
         Dim RI As Double() = CLRVector.asNumeric(df!RI)
         Dim ID As String() = df.getRowNames.UniqueNames
         Dim npeaks As Integer() = CLRVector.asInteger(df!npeaks)
+        Dim RImin As Double() = CLRVector.asNumeric(df!RImin)
+        Dim RImax As Double() = CLRVector.asNumeric(df!RImax)
+        Dim groups As Integer() = CLRVector.asInteger(df!groups)
 
         ' 20241029 for avoid the unexpected data updates from the 
         ' R# runtime symbols, we should make a data copy at here
         df = New dataframe(df)
-        df.delete("ID", "mz", "mzmin", "mzmax", "rt", "rtmin", "rtmax", "RI", "npeaks", "xcms_id", "into")
+        df.delete("ID", "mz", "mzmin", "mzmax", "rt", "rtmin", "rtmax",
+                  "RI", "npeaks",
+                  "xcms_id", "into", "RImin", "RImax", "groups")
 
         Dim offset As Integer
         Dim v As Dictionary(Of String, Double)
@@ -523,6 +528,7 @@ Module mzDeco
             With ion
                 .ID = ID(i)
                 .mz = mz(i)
+                .groups = groups.ElementAtOrDefault(i)
 
                 If no_mz_range Then
                     .mzmax = .mz
@@ -535,6 +541,8 @@ Module mzDeco
                     ' do nothing
                 Else
                     .RI = RI(i)
+                    .RImin = RImin.ElementAtOrDefault(i, [default]:= .RI)
+                    .RImax = RImax.ElementAtOrDefault(i, [default]:= .RI)
                 End If
 
                 .rt = rt(i)
