@@ -13,8 +13,9 @@ declare namespace mzkit {
       */
       function graph_table(nodes: any, type?: any): object;
       /**
+        * @param quietly default value Is ``false``.
       */
-      function onLoad(): object;
+      function onLoad(quietly?: any): object;
       /**
         * @param type default value Is ``["genes", "disease", "compounds"]``.
       */
