@@ -10,7 +10,7 @@
 */
 declare namespace mzPack {
    /**
-    * method for write mzpack data object as a mzML file
+    * method for write mzpack data object as a mzXML file
     * 
     * 
      * @param mzpack -
