@@ -169,9 +169,7 @@ Namespace MarkupData.mzXML
                                        Into Sum(m2)
 
             If print Is Nothing Then
-                print = Sub(any)
-                            ' do nothing
-                        End Sub
+                print = AddressOf DoNothing
             End If
 
             mzData = mzData _

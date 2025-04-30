@@ -217,8 +217,8 @@ Namespace Spectra
                     End Sub
                 releaseAction = AddressOf progress.Dispose
             Else
-                tickAction = App.DoNothing
-                releaseAction = App.DoNothing
+                tickAction = AddressOf App.DoNothing
+                releaseAction = AddressOf App.DoNothing
             End If
 
             Call clusterInternal(spectrum, tickAction)

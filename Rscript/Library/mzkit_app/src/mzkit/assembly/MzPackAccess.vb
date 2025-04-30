@@ -362,7 +362,7 @@ Module MzPackAccess
     End Function
 
     ''' <summary>
-    ''' method for write mzpack data object as a mzML file
+    ''' method for write mzpack data object as a mzXML file
     ''' </summary>
     ''' <param name="mzpack"></param>
     ''' <param name="file">the file stream to the target mzXML file to write the data</param>
