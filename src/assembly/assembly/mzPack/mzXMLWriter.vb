@@ -176,9 +176,15 @@ Namespace MarkupData.mzXML
                 .OrderBy(Function(si) si.rt) _
                 .ToArray
 
-            Dim startTime As Double = mzData.First.rt
-            Dim endTime As Double = mzData.Last.rt
+            Dim startTime As Double
+            Dim endTime As Double
             Dim i As i32 = 1
+
+            ' 20250505 the rawdata file may contains no spectrum run data
+            If Not mzData.IsNullOrEmpty Then
+                startTime = mzData.First.rt
+                endTime = mzData.Last.rt
+            End If
 
             Call WriteHeader(scanCount, startTime, endTime)
 
