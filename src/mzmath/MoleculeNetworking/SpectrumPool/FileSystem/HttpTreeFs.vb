@@ -361,7 +361,7 @@ Namespace PoolData
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Function encode(x As IEnumerable(Of Double)) As String
+        Public Shared Function encode(x As IEnumerable(Of Double)) As String
             Return x _
                 .Select(AddressOf NetworkByteOrderBitConvertor.GetBytes) _
                 .IteratesALL _
