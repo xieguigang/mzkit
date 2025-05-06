@@ -141,7 +141,7 @@ Namespace PoolData
         ''' <param name="fs">
         ''' the pool filesystem storage
         ''' </param>
-        Private Sub New(fs As PoolFs, path As String)
+        Public Sub New(fs As PoolFs, path As String)
             Me.fs = fs
             Me.handle = path.StringReplace("/{2,}", "/")
             Me.metadata = fs.LoadMetadata(path)
