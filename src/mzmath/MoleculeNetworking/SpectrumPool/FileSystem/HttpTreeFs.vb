@@ -66,6 +66,7 @@
 Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.My.JavaScript
@@ -75,6 +76,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace PoolData
 
     Public Class HttpTreeFs : Inherits PoolFs
+        Implements IReadOnlyId
 
         ''' <summary>
         ''' the web services base url
@@ -86,7 +88,7 @@ Namespace PoolData
 
         Public Shared ReadOnly Property RootHashIndex As String = "/".MD5.ToLower
 
-        Public ReadOnly Property model_id As String
+        Public ReadOnly Property model_id As String Implements IReadOnlyId.Identity
         Public ReadOnly Property HttpServices As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -359,7 +361,7 @@ Namespace PoolData
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Function encode(x As IEnumerable(Of Double)) As String
+        Public Shared Function encode(x As IEnumerable(Of Double)) As String
             Return x _
                 .Select(AddressOf NetworkByteOrderBitConvertor.GetBytes) _
                 .IteratesALL _

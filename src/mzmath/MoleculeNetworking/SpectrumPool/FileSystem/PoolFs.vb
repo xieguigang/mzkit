@@ -122,7 +122,7 @@ Namespace PoolData
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Friend Sub SetScore(da As Double, intocutoff As Double)
+        Public Sub SetScore(da As Double, intocutoff As Double)
             score = AlignmentProvider.Cosine(Tolerance.DeltaMass(da), New RelativeIntensityCutoff(intocutoff))
         End Sub
 
@@ -133,7 +133,7 @@ Namespace PoolData
         ''' the score threshold for assign the given spectrum as current cluster member
         ''' </param>
         ''' <param name="split">split into n parts</param>
-        Friend Overridable Sub SetLevel(level As Double, split As Integer)
+        Public Overridable Sub SetLevel(level As Double, split As Integer)
             m_level = level
             m_split = split
             _splitDelta = level / split

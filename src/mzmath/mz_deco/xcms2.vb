@@ -144,6 +144,10 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         End Get
     End Property
 
+    ''' <summary>
+    ''' number of the peak groups that merged in this ion ROI
+    ''' </summary>
+    ''' <returns></returns>
     Public Property groups As Integer
 
     <Category("sample_data")>
