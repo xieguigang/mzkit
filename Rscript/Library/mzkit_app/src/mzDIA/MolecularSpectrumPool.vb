@@ -61,7 +61,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking.PoolData
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
@@ -105,6 +107,8 @@ Public Module MolecularSpectrumPool
 
         If TypeOf fs Is HttpTreeFs Then
             Return DirectCast(fs, HttpTreeFs).model_id
+        ElseIf fs.GetType.ImplementInterface(Of IReadOnlyId) Then
+            Return DirectCast(fs, IReadOnlyId).Identity
         Else
             Return Nothing
         End If
