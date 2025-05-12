@@ -56,7 +56,7 @@ declare namespace massbank {
      * @param env -
      * 
      * + default value Is ``null``.
-     * @return a list of the @``T:BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo`` data
+     * @return a list of the @``T:BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo`` data.
    */
    function extract_mona_metabolites(mona: any, env?: object): any;
    module glycosyl {
