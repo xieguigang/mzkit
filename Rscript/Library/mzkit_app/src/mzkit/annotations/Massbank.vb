@@ -431,7 +431,7 @@ Module Massbank
     ''' </summary>
     ''' <param name="mona"></param>
     ''' <param name="env"></param>
-    ''' <returns>a list of the <see cref="MetaInfo"/> data</returns>
+    ''' <returns>a list of the <see cref="MetaInfo"/> data. </returns>
     <ExportAPI("extract_mona_metabolites")>
     Public Function extractMoNAMetabolites(<RRawVectorArgument> mona As Object, Optional env As Environment = Nothing) As Object
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of SpectraSection)(mona, env)
@@ -440,6 +440,7 @@ Module Massbank
             Return pull.getError
         End If
 
+        ' create metabolite groups via the metabolite common name
         Dim unique = CrossReferenceData _
             .UniqueGroups(Of xref, SpectraSection)(pull.populates(Of SpectraSection)(env)) _
             .ToArray
@@ -470,6 +471,7 @@ Module Massbank
             Call list.add(id, union)
         Next
 
+        ' mapping the spectrum reference id to the metabolite reference id
         Call list.setAttribute("mapping", New list(mapping))
 
         Return list

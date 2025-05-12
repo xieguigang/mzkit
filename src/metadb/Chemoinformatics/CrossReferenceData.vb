@@ -196,6 +196,13 @@ Public Module CrossReferenceData
         Return top
     End Function
 
+    ''' <summary>
+    ''' Create metabolite groups by names
+    ''' </summary>
+    ''' <typeparam name="C"></typeparam>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="list"></param>
+    ''' <returns></returns>
     Public Iterator Function UniqueGroups(Of C As ICrossReference, T As IMetabolite(Of C))(list As IEnumerable(Of T)) As IEnumerable(Of NamedCollection(Of T))
         Dim masses = list.GroupBy(Function(a) a.ExactMass, offsets:=0.1).ToArray
 
