@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::958d508974b6c5db67fc51454a789766, mzmath\ms2_math-core\Spectra\Models\Xml\AlignmentOutput.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 221
-    '    Code Lines: 126 (57.01%)
-    ' Comment Lines: 68 (30.77%)
-    '    - Xml Docs: 95.59%
-    ' 
-    '   Blank Lines: 27 (12.22%)
-    '     File Size: 8.36 KB
+' Summaries:
 
 
-    '     Class AlignmentOutput
-    ' 
-    '         Properties: alignment_str, alignments, cosine, entropy, forward
-    '                     jaccard, mean, mirror, nhits, query
-    '                     reference, reverse
-    ' 
-    '         Function: (+2 Overloads) CreateLinearMatrix, GetAlignmentMirror, GetHitsMzPeaks, ParseAlignment, ParseAlignmentLinearMatrix
-    '                   ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 221
+'    Code Lines: 126 (57.01%)
+' Comment Lines: 68 (30.77%)
+'    - Xml Docs: 95.59%
+' 
+'   Blank Lines: 27 (12.22%)
+'     File Size: 8.36 KB
+
+
+'     Class AlignmentOutput
+' 
+'         Properties: alignment_str, alignments, cosine, entropy, forward
+'                     jaccard, mean, mirror, nhits, query
+'                     reference, reverse
+' 
+'         Function: (+2 Overloads) CreateLinearMatrix, GetAlignmentMirror, GetHitsMzPeaks, ParseAlignment, ParseAlignmentLinearMatrix
+'                   ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -272,11 +272,22 @@ Namespace Spectra.Xml
             End If
         End Function
 
+        ''' <summary>
+        ''' Parse the alignment string and then returns the alignment details and the score values
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ParseAlignment(str As String) As AlignmentOutput
-            Return New AlignmentOutput With {
-                .alignments = ParseAlignmentLinearMatrix(str).ToArray
+            Dim result As New AlignmentOutput With {
+                .alignments = ParseAlignmentLinearMatrix(str).ToArray,
+                .entropy = AlignmentProvider.GetEntropyScore(.alignments),
+                .jaccard = AlignmentProvider.GetJaccardIndex(.alignments)
             }
+            Dim cos = AlignmentProvider.GetCosineScore(result.alignments)
+            result.forward = cos.forward
+            result.reverse = cos.reverse
+            Return result
         End Function
 
     End Class

@@ -162,5 +162,21 @@ Namespace Spectra
             }
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function GetCosineScore(align As SSM2MatrixFragment()) As (forward#, reverse#)
+            Static alg As New CosAlignment(Tolerance.DeltaMass(0.3), New RelativeIntensityCutoff(0))
+            Return alg.GetScore(align)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function GetJaccardIndex(align As SSM2MatrixFragment()) As Double
+            Return align.JaccardIndex
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function GetEntropyScore(align As SSM2MatrixFragment()) As Double
+            Return SpectralEntropy.calculate_entropy_similarity(align.StandardizeAlignment.ToArray)
+        End Function
+
     End Class
 End Namespace
