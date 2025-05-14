@@ -133,8 +133,8 @@ Namespace MorganFingerprint
                 MyBase.New(size)
             End Sub
 
-            Protected Overrides Function HashAtom(v As MorganAtom) As Integer
-                Return v.Atom.GetHashCode()
+            Protected Overrides Function HashAtom(v As MorganAtom) As ULong
+                Return HashLabelKey(v.Atom)
             End Function
 
             Protected Overrides Function HashEdge(atoms() As MorganAtom, e As Bound, flip As Boolean) As ULong
