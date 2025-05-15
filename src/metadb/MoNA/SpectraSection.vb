@@ -190,7 +190,10 @@ Public Class SpectraSection : Inherits MetaInfo
             .metlin = "",
             .pubchem = meta.pubchem_cid,
             .SMILES = meta.SMILES.ElementAtOrDefault(0, ""),
-            .Wikipedia = meta.wikipedia
+            .Wikipedia = meta.wikipedia,
+            .extras = New Dictionary(Of String, String()) From {
+                {"MoNA", {Me.ID}}
+            }
         }
     End Function
 

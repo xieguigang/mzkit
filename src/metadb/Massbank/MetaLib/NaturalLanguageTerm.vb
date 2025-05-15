@@ -164,21 +164,21 @@ Namespace MetaLib
 
         <Extension>
         Public Iterator Function EnumerateOdorTerms(info As ChemicalDescriptor) As IEnumerable(Of NamedValue(Of String))
-            For Each odor As UnitValue In info.Odor.SafeQuery
+            For Each odor As UnitValue In From oi As UnitValue In info.Odor.SafeQuery Where Not oi Is Nothing
                 Dim terms As String() = Strings.Trim(odor.condition.TrimNewLine).ToLower.Words
 
                 For Each term As String In stopWords.Removes(terms)
                     Yield New NamedValue(Of String)("odor", term, odor.condition)
                 Next
             Next
-            For Each odor As UnitValue In info.Taste.SafeQuery
+            For Each odor As UnitValue In From oi As UnitValue In info.Taste.SafeQuery Where Not oi Is Nothing
                 Dim terms As String() = Strings.Trim(odor.condition.TrimNewLine).ToLower.Words
 
                 For Each term As String In stopWords.Removes(terms)
                     Yield New NamedValue(Of String)("taste", term, odor.condition)
                 Next
             Next
-            For Each odor As UnitValue In info.Color.SafeQuery
+            For Each odor As UnitValue In From oi As UnitValue In info.Color.SafeQuery Where Not oi Is Nothing
                 Dim terms As String() = Strings.Trim(odor.condition.TrimNewLine).ToLower.Words
 
                 For Each term As String In stopWords.Removes(terms)
