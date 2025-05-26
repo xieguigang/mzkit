@@ -551,6 +551,14 @@ Module PubChemToolKit
     ''' to the mzkit internal metabolite metadata annotation model via the function 
     ''' ``metadata.pugView``.
     ''' </returns>
+    ''' <example>
+    ''' for(metadata in pubchem_kit::resolve_repository("./repo/")) {
+    '''     metadata = metadata.pugView(metadata);
+    '''     
+    '''     # processing on the metabolite metadata
+    '''     # .......
+    ''' }
+    ''' </example>
     <ExportAPI("resolve_repository")>
     <RApiReturn(GetType(PugViewRecord))>
     Public Function readPugViewRepository(repo As String) As Object

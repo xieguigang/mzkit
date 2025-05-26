@@ -194,6 +194,16 @@ Namespace Spectra
             Return intersects.Length / union.Length
         End Function
 
+        <Extension>
+        Public Function JaccardIndex(align As SSM2MatrixFragment()) As Double
+            Dim union As Integer = align.Length
+            Dim intersects As Integer = align _
+                .Where(Function(a) a.query > 0 AndAlso a.ref > 0) _
+                .Count
+
+            Return intersects / union
+        End Function
+
         Public Function MzUnion(mzx As Double(), mzy As Double(), tolerance As Tolerance) As Double()
             Return mzx _
                 .JoinIterates(mzy) _

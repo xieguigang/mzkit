@@ -18,6 +18,15 @@ a collection of the pubchem @\fBT:BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Pug
  to the mzkit internal metabolite metadata annotation model via the function 
  \fBmetadata.pugView\fR.
 .PP
+.SH EXAMPLES
+.PP
+for(metadata in pubchem_kit::resolve_repository("./repo/")) {
+     metadata = metadata.pugView(metadata);
+     
+     # processing on the metabolite metadata
+     # .......
+ }
+.PP
 .SH SEE ALSO
 pubchem_kit
 .SH FILES

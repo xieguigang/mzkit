@@ -197,6 +197,10 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
         Return union
     End Function
 
+    ''' <summary>
+    ''' Make smiles graph model conversion to the basic SDF molecule structure model
+    ''' </summary>
+    ''' <returns>a structure model which could be used for the QSAR analysis</returns>
     Public Function CreateStructureGraph() As [Structure]
         Dim atoms As New Dictionary(Of String, SDF.Models.Atom)
         Dim offset As New Dictionary(Of String, Integer)

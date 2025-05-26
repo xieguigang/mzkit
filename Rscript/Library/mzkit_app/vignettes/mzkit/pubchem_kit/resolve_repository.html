@@ -54,9 +54,14 @@
  to the mzkit internal metabolite metadata annotation model via the function 
  <code>metadata.pugView</code>.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/PugViewRecord.html">PugViewRecord</a></li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> for(metadata in pubchem_kit::resolve_repository("./repo/")) {
+     metadata = metadata.pugView(metadata);
+     
+     # processing on the metabolite metadata
+     # .......
+ }</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>pubchem_kit</em> version 1.0.0.0 <a

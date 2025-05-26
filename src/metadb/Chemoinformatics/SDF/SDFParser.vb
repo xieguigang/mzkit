@@ -152,7 +152,7 @@ Namespace SDF
                 End If
             Next
 
-            Throw New BadImageFormatException
+            Throw New BadImageFormatException("invalid sdf molecule structure text data for parsed")
         End Function
 
         Public Function StreamParser(block$(), parseStruct As Boolean) As SDF
