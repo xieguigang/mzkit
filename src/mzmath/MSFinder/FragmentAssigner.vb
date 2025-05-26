@@ -108,7 +108,7 @@ Public NotInheritable Class FragmentAssigner
 
         Dim minId = -1
 
-        'for precursor annotation
+        ' for precursor annotation
         If std.Abs(mass - exactMass - AdductIon.AdductIonAccurateMass) < massTol Then
             Dim nFormula = FormulaCalculateUtility.ConvertFormulaAdductPairToPrecursorAdduct(formula, AdductIon)
 
