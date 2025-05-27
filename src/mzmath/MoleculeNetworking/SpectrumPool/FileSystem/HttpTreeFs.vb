@@ -316,20 +316,13 @@ Namespace PoolData
 
             Dim npeaks As Integer = Integer.Parse(CStr(data.info!npeaks))
             Dim hashcode As String = data.info!hashcode
-            Dim mz As Double() = decode(CStr(data.info!mz))
-            Dim into As Double() = decode(CStr(data.info!into))
+            Dim spectral As ms2() = decodeSpectrum(CStr(data.info!mz), CStr(data.info!into), npeaks) _
+                .SafeQuery _
+                .ToArray
 
-            If npeaks <> mz.Length Then
-                Return Nothing
-            ElseIf npeaks <> into.Length Then
+            If spectral.Length <> npeaks Then
                 Return Nothing
             End If
-
-            Dim spectral As ms2() = mz _
-                .Select(Function(mzi, i)
-                            Return New ms2 With {.mz = mzi, .intensity = into(i)}
-                        End Function) _
-                .ToArray
 
             Return New PeakMs2 With {
                 .lib_guid = hashcode,
@@ -346,6 +339,24 @@ Namespace PoolData
                 .Split(8) _
                 .Select(Function(b) NetworkByteOrderBitConvertor.ToDouble(b, Scan0)) _
                 .ToArray
+        End Function
+
+        Public Shared Function decodeSpectrum(mz_str As String, intensity_str As String, Optional npeaks As Integer? = Nothing) As IEnumerable(Of ms2)
+            Dim mz As Double() = decode(mz_str)
+            Dim into As Double() = decode(intensity_str)
+
+            If Not npeaks Is Nothing Then
+                If npeaks <> mz.Length Then
+                    Return Nothing
+                ElseIf npeaks <> into.Length Then
+                    Return Nothing
+                End If
+            End If
+
+            Return mz _
+                .Select(Function(mzi, i)
+                            Return New ms2 With {.mz = mzi, .intensity = into(i)}
+                        End Function)
         End Function
 
         Public Shared Function DecodeConsensus(base64 As String) As (mz As Double(), into As Double())
