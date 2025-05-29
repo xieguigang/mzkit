@@ -165,13 +165,13 @@ Namespace Ms1.PrecursorType
         ''' 
         ''' </summary>
         ''' <param name="mass"></param>
-        ''' <param name="precursorMZ"></param>
+        ''' <param name="precursor_mz"></param>
         ''' <param name="calculator">得到某一个离子模式下的计算程序</param>
         ''' <param name="tolerance"></param>
         ''' <returns></returns>
         ''' 
         <Extension>
-        Private Function FindPrecursorType(calculator As IEnumerable(Of MzCalculator), mass#, precursorMZ#, tolerance As Tolerance) As TypeMatch
+        Private Function FindPrecursorType(calculator As IEnumerable(Of MzCalculator), mass#, precursor_mz#, tolerance As Tolerance) As TypeMatch
             ' 每一个模式都计算一遍，然后返回最小的ppm差值结果
             Dim min As Double = Double.MaxValue
             Dim minType As TypeMatch = Nothing
@@ -180,19 +180,19 @@ Namespace Ms1.PrecursorType
             ' 跳过电荷数不匹配的离子模式计算表达式
             For Each calc As MzCalculator In calculator
                 Dim mz As Double = calc.CalcMZ(mass)
-                Dim mzdiff As Double = std.Abs(precursorMZ - mz)
+                Dim mzdiff As Double = std.Abs(precursor_mz - mz)
 
                 If mzdiff < min Then
                     min = mzdiff
                     minType = New TypeMatch With {
-                        .errors = tolerance.MassError(mz, precursorMZ),
+                        .errors = tolerance.MassError(mz, precursor_mz),
                         .precursorType = calc.name,
                         .adducts = calc
                     }
                 End If
             Next
 
-            If minType.adducts IsNot Nothing AndAlso tolerance(minType.adducts.CalcMZ(mass), precursorMZ) Then
+            If minType.adducts IsNot Nothing AndAlso tolerance(minType.adducts.CalcMZ(mass), precursor_mz) Then
                 Return minType
             Else
                 Return New TypeMatch With {
