@@ -13,15 +13,13 @@ Public Module AnthocyaninValidator
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="formula"></param>
+    ''' <param name="elements"></param>
     ''' <returns></returns>
     ''' <remarks>
     ''' cutoff is 30%
     ''' </remarks>
-    Public Function CalculateProbability(formula As String) As Double
+    Public Function CalculateProbability(elements As Dictionary(Of String, Integer)) As Double
         Dim score As Double = 0
-        ' 解析化学式
-        Dim elements As Dictionary(Of String, Integer) = FormulaScanner.ScanFormula(formula)?.CountsByElement
 
         If elements Is Nothing Then Return 0
 
@@ -43,7 +41,7 @@ Public Module AnthocyaninValidator
         score += If(molecularWeight >= 280 AndAlso molecularWeight <= 1500, 1, 0)
 
         ' 规则5：糖基检测（如C6H10O5）
-        If Regex.IsMatch(formula, "C\d+H\d+O5") Then score += 1
+        If Regex.IsMatch(Canonical.BuildCanonicalFormula(elements), "C\d+H\d+O5") Then score += 1
 
         ' 规则6：酚羟基检测（H/O比例）
         Dim h_oRatio = elements("H") / oCount
@@ -58,10 +56,25 @@ Public Module AnthocyaninValidator
     ''' <param name="formula"></param>
     ''' <returns></returns>
     ''' <remarks>
+    ''' cutoff is 40%
+    ''' </remarks>
+    Public Function CheckRules(formula As String) As Double
+        Dim elements = FormulaScanner.ScanFormula(formula).CountsByElement
+        Dim score1 = CalculateProbability(elements) / 100
+        Dim score2 = IsLikelyAnthocyanin(elements) / 100
+        Dim score As Double = 2 * (score1 * score2) * 100
+
+        Return score
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
     ''' cutoff is 50%
     ''' </remarks>
-    Public Function IsLikelyAnthocyanin(formula As String) As Integer
-        Dim elements = FormulaScanner.ScanFormula(formula).CountsByElement
+    Public Function IsLikelyAnthocyanin(elements As Dictionary(Of String, Integer)) As Double
         Dim score As Integer = 0
 
         ' 必须元素检查
@@ -112,6 +125,6 @@ Public Module AnthocyaninValidator
             End If
         Next
 
-        Return std.Max(0, score)
+        Return std.Max(0, score) * 10.0
     End Function
 End Module
