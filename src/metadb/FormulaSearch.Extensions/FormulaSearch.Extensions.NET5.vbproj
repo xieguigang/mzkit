@@ -369,8 +369,11 @@
 
 
   <ItemGroup>
+    <Compile Remove="docs\**" />
     <Compile Remove="test\**" />
+    <EmbeddedResource Remove="docs\**" />
     <EmbeddedResource Remove="test\**" />
+    <None Remove="docs\**" />
     <None Remove="test\**" />
     <None Include="..\..\..\LICENSE">
       <Pack>True</Pack>

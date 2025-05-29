@@ -66,8 +66,13 @@ Namespace Formula.IsotopicPatterns
     ''' </summary>
     Public Class IsotopicPeak
 
-        Public Sub New()
+        Public Property RelativeAbundance As Double
+        Public Property AbsoluteAbundance As Double
+        Public Property Mass As Double
+        Public Property MassDifferenceFromMonoisotopicIon As Double
+        Public Property Comment As String = String.Empty
 
+        Public Sub New()
         End Sub
 
         Public Sub New(source As IsotopicPeak)
@@ -78,15 +83,5 @@ Namespace Formula.IsotopicPatterns
             Comment = source.Comment
         End Sub
 
-
-        Public Property RelativeAbundance As Double
-
-        Public Property AbsoluteAbundance As Double
-
-        Public Property Mass As Double
-
-        Public Property MassDifferenceFromMonoisotopicIon As Double
-
-        Public Property Comment As String = String.Empty
     End Class
 End Namespace
