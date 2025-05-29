@@ -61,6 +61,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
@@ -310,16 +311,22 @@ Module ReferenceTreePkg
     ''' <returns>An array of PeakMs2 objects representing reference spectra.</returns>
     <ExportAPI("export_spectrum")>
     <RApiReturn(GetType(PeakMs2))>
-    Public Function export_reference(pack As Object, Optional env As Environment = Nothing) As Object
+    Public Function export_reference(pack As Object,
+                                     Optional ionMode As IonModes = IonModes.Unknown,
+                                     Optional env As Environment = Nothing) As Object
         If pack Is Nothing Then
             Call "the given spectrum pack object is nothing, empty result collection is returned.".Warning
             Return Nothing
         End If
 
         If TypeOf pack Is PackAlignment Then
-            Return DirectCast(pack, PackAlignment).GetReferenceSpectrum.ToArray
+            Return DirectCast(pack, PackAlignment).GetReferenceSpectrum(ionMode:=ionMode).ToArray
         ElseIf TypeOf pack Is SpectrumReader Then
-            Return PackAlignment.GetReferenceSpectrum(DirectCast(pack, SpectrumReader)).ToArray
+            Return PackAlignment.GetReferenceSpectrum(
+                spectrum:=DirectCast(pack, SpectrumReader),
+                ionMode:=ionMode
+            ) _
+            .ToArray
         Else
             Return Message.InCompatibleType(GetType(SpectrumReader), pack.GetType, env)
         End If
