@@ -659,16 +659,12 @@ Module library
                                   Optional ion_mode As Object = "+",
                                   Optional env As Environment = Nothing) As Object
 
-        Static asserts As New Dictionary(Of IonModes, AdductsRanking) From {
-            {IonModes.Positive, New AdductsRanking(IonModes.Positive)},
-            {IonModes.Negative, New AdductsRanking(IonModes.Negative)}
-        }
+        Static ruler As New AdductsRanking
 
-        Dim ionVal = Math.GetIonMode(ion_mode, env)
-        Dim ruler As AdductsRanking = asserts(ionVal)
         Dim precursors As MzCalculator() = Math.GetPrecursorTypes(adducts, env)
+        Dim sort = ruler.RankAdducts(formula, precursors).ToArray
 
-        Return ruler.RankAdducts(formula, precursors).ToArray
+        Return sort
     End Function
 
     ''' <summary>
