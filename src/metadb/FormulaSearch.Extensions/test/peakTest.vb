@@ -57,6 +57,7 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -104,8 +105,7 @@ m/z	intensity	relative	annotation
     End Sub
 
     Sub peakAnnoFormula()
-        Dim anno As New PeakAnnotation(0.1, True)
-        Dim result = anno.RunAnnotation(90.0555, loadMs2, formula)
+        Dim result = PeakAnnotation.DoPeakAnnotation(New PeakMs2("", loadMs2), Provider.ParseAdductModel("[M+H]+"), FormulaScanner.ScanFormula(formula))
 
         Call Console.WriteLine("With formula test")
         Call Console.WriteLine()
@@ -120,18 +120,18 @@ m/z	intensity	relative	annotation
     End Sub
 
     Sub peakAnnoNoFormula()
-        Dim anno As New PeakAnnotation(0.1, True)
-        Dim result = anno.RunAnnotation(90.0555, loadMs2)
+        'Dim anno As New PeakAnnotation(0.1, True)
+        'Dim result = anno.RunAnnotation(90.0555, loadMs2)
 
-        Call Console.WriteLine("No formula test")
-        Call Console.WriteLine()
+        'Call Console.WriteLine("No formula test")
+        'Call Console.WriteLine()
 
-        For Each row In result.products
-            Call Console.WriteLine(row.ToString)
-        Next
+        'For Each row In result.products
+        '    Call Console.WriteLine(row.ToString)
+        'Next
 
-        Call Console.WriteLine(New String("-"c, 32))
-        Call Console.WriteLine()
-        Call Console.WriteLine()
+        'Call Console.WriteLine(New String("-"c, 32))
+        'Call Console.WriteLine()
+        'Call Console.WriteLine()
     End Sub
 End Module
