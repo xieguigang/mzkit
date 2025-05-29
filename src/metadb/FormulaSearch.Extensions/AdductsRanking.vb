@@ -59,6 +59,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
@@ -133,6 +134,28 @@ Public Class AdductsRanking
             .Select(Function(a)
                         Return a.adduct
                     End Function)
+    End Function
+
+    Public Iterator Function Filter(Of T)(formula As String, data As IEnumerable(Of T), adduct As Func(Of T, String)) As IEnumerable(Of T)
+        Dim formulaObj As Formula = FormulaScanner.ScanFormula(formula)
+        Dim cache As New Dictionary(Of String, Double)
+
+        For Each metabolite As T In data.SafeQuery
+            Dim score As Double = cache.ComputeIfAbsent(adduct(metabolite),
+                lazyValue:=Function(type)
+                               Dim adduct_type As MzCalculator = Provider.ParseAdductModel(type)
+                               Dim ion As IonModes = adduct_type.GetIonMode
+
+                               If ion = IonModes.Positive Then
+                                   Return RankPositive(formulaObj, adduct_type)
+                               Else
+                                   Return RankNegative(formulaObj, adduct_type)
+                               End If
+                           End Function)
+            If score > 0 Then
+                Yield metabolite
+            End If
+        Next
     End Function
 
     ''' <summary>
