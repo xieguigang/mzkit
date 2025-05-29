@@ -71,6 +71,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO
@@ -243,6 +244,12 @@ Namespace PackLib
             Return GetSpectrum(key:=pointer.ToString)
         End Function
 
+        ''' <summary>
+        ''' no adducts info
+        ''' </summary>
+        ''' <param name="node"></param>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         Public Shared Function GetSpectrum(node As BlockNode, Optional file As String = Nothing) As PeakMs2
             Return New PeakMs2 With {
                 .mzInto = node.centroid,
@@ -260,10 +267,21 @@ Namespace PackLib
         ''' </summary>
         ''' <param name="mass"></param>
         ''' <returns></returns>
-        Public Iterator Function GetSpectrum(mass As MassIndex) As IEnumerable(Of PeakMs2)
+        Public Iterator Function GetSpectrum(mass As MassIndex, Optional ionMode As IonModes = IonModes.Unknown) As IEnumerable(Of PeakMs2)
+            Dim exactMass As Double = If(ionMode = IonModes.Unknown, 0, FormulaScanner.EvaluateExactMass(mass.formula))
+            Dim polarity As String = ionMode.Description
+
             For Each i As Integer In mass.spectrum
                 Dim node As BlockNode = GetSpectrum(key:=i.ToString)
                 Dim spectrum As PeakMs2 = GetSpectrum(node, file:=mass.name)
+
+                If ionMode <> IonModes.Unknown Then
+                    With PrecursorType.FindPrecursorType(exactMass, spectrum.mz, 1, polarity)
+                        If Not .errors.IsNaNImaginary Then
+                            spectrum.precursor_type = .precursorType
+                        End If
+                    End With
+                End If
 
                 spectrum.meta = New Dictionary(Of String, String) From {
                     {"name", mass.name},

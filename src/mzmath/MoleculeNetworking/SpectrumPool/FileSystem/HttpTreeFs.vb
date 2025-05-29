@@ -232,7 +232,7 @@ Namespace PoolData
                 key = ClusterHashIndex(dir)
 
                 If Not cluster_data.ContainsKey(key) Then
-                    cluster_data.Add(key, obj)
+                    Call cluster_data.Add(key, obj)
                 End If
 
                 Yield dir

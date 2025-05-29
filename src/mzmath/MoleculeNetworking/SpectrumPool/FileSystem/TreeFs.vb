@@ -208,6 +208,8 @@ Namespace PoolData
                     .JoinBy("/") & "]"
             End If
 
+            Static xref_keys As String() = {"biodeep_id", "xref_id", "db_xref"}
+
             Return New Metadata With {
                 .guid = spectral.lib_guid,
                 .intensity = spectral.intensity,
@@ -216,7 +218,7 @@ Namespace PoolData
                 .rt = spectral.rt,
                 .sample_source = spectral.meta("biosample"),
                 .source_file = spectral.file,
-                .biodeep_id = spectral.meta.TryGetValue("biodeep_id", [default]:="unknown conserved"),
+                .biodeep_id = spectral.meta.TryGetValue(xref_keys, [default]:="unknown conserved"),
                 .formula = spectral.meta.TryGetValue("formula", [default]:="NA"),
                 .name = name,
                 .adducts = If(spectral.precursor_type.StringEmpty, "NA", spectral.precursor_type),
