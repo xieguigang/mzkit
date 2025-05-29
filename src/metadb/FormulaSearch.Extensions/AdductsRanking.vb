@@ -72,6 +72,16 @@ Public Class AdductsRanking
         Me.ion = ion
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="formula_str"></param>
+    ''' <param name="adduct_str"></param>
+    ''' <returns>
+    ''' a score value for the adducts ranking based on current formula composition.
+    ''' zero or negative value means the current given adducts is not a valid adducts
+    ''' mode, should not use this adducts mode for the annotation result.
+    ''' </returns>
     Public Function Rank(formula_str As String, adduct_str As String) As Double
         Dim formula As Formula = FormulaScanner.ScanFormula(formula_str)
         Dim adduct As MzCalculator = Provider.ParseAdductModel(adduct_str)
