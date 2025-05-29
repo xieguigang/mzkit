@@ -186,7 +186,7 @@ Namespace Ms1.PrecursorType
         ''' <returns></returns>
         ''' 
         <Extension>
-        Private Function FindPrecursorType(adducts As IEnumerable(Of MzCalculator), mass#, precursor_mz#, tolerance As Tolerance, firstMatch As Boolean) As TypeMatch
+        Public Function FindPrecursorType(adducts As IEnumerable(Of MzCalculator), mass#, precursor_mz#, tolerance As Tolerance, Optional firstMatch As Boolean = False) As TypeMatch
             ' 每一个模式都计算一遍，然后返回最小的ppm差值结果
             Dim min As Double = Double.MaxValue
             Dim minType As TypeMatch = Nothing
