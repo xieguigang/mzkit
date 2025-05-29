@@ -191,15 +191,20 @@ Public Class AdductsRanking
 
         Dim adduct_str As String = adduct.ToString
 
-        If adduct_str = "[M]+" Then
-            Return 0.5
-        End If
-
         If formula.CheckElement("Cl") Then
             If adduct_str = "[M-Cl]+" Then
                 If formula!Cl = 1 Then
                     Return maxValue
                 End If
+            End If
+        End If
+
+        If adduct_str = "[M]+" Then
+            ' check for Anthocyanin
+            If AnthocyaninValidator.CheckRules(formula.CountsByElement) > 40 Then
+                Return maxValue
+            Else
+                Return 0.5
             End If
         End If
 

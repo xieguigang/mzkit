@@ -1,4 +1,5 @@
-﻿Imports System.Text.RegularExpressions
+﻿Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports std = System.Math
@@ -58,8 +59,17 @@ Public Module AnthocyaninValidator
     ''' <remarks>
     ''' cutoff is 40%
     ''' </remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function CheckRules(formula As String) As Double
-        Dim elements = FormulaScanner.ScanFormula(formula).CountsByElement
+        Return CheckRules(elements:=FormulaScanner.ScanFormula(formula).CountsByElement)
+    End Function
+
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' cutoff is 40%
+    ''' </remarks>
+    Public Function CheckRules(elements As Dictionary(Of String, Integer)) As Double
         Dim score1 = CalculateProbability(elements) / 100
         Dim score2 = IsLikelyAnthocyanin(elements) / 100
         Dim score As Double = 2 * (score1 * score2) * 100
