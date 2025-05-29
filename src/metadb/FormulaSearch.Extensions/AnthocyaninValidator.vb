@@ -40,6 +40,6 @@ Public Module AnthocyaninValidator
         Dim h_oRatio = elements("H") / oCount
         score += If(h_oRatio > 1.2 AndAlso h_oRatio < 2.5, 0.5, 0)
 
-        Return std.Round(score / 4.5 * 100, 1) ' 总分4.5分转换为百分比
+        Return score / 4.5 * 100 ' 总分4.5分转换为百分比
     End Function
 End Module
