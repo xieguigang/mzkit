@@ -64,13 +64,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 ''' </summary>
 Public Class AdductsRanking
 
-    ReadOnly ion As IonModes
-
     Const maxValue As Double = 10
-
-    Sub New(ion As IonModes)
-        Me.ion = ion
-    End Sub
 
     ''' <summary>
     ''' 
@@ -85,6 +79,7 @@ Public Class AdductsRanking
     Public Function Rank(formula_str As String, adduct_str As String) As Double
         Dim formula As Formula = FormulaScanner.ScanFormula(formula_str)
         Dim adduct As MzCalculator = Provider.ParseAdductModel(adduct_str)
+        Dim ion As IonModes = adduct.GetIonMode
 
         If ion = IonModes.Positive Then
             Return RankPositive(formula, adduct)
@@ -100,21 +95,25 @@ Public Class AdductsRanking
     ''' <param name="adducts"></param>
     ''' <returns>
     ''' the function only populates the valid adducts object and
-    ''' sort these adducts object in desc ranking order.
+    ''' sort these adducts object in desc ranking order. top is better.
     ''' </returns>
     Public Function RankAdducts(formula_str As String, adducts As IEnumerable(Of MzCalculator)) As IEnumerable(Of MzCalculator)
         Dim formula As Formula = FormulaScanner.ScanFormula(formula_str)
-        Dim ranks As IEnumerable(Of (rank As Double, adduct As MzCalculator))
+        Dim ranks As IEnumerable(Of (rank As Double, adduct As MzCalculator)) = adducts _
+            .Select(Function(adduct)
+                        Dim ion As IonModes = adduct.GetIonMode
 
-        If ion = IonModes.Positive Then
-            ranks = adducts.Select(Function(adduct) (RankPositive(formula, adduct), adduct))
-        Else
-            ranks = adducts.Select(Function(adduct) (RankNegative(formula, adduct), adduct))
-        End If
+                        If ion = IonModes.Positive Then
+                            Return (rank:=RankPositive(formula, adduct), adduct)
+                        Else
+                            Return (rank:=RankNegative(formula, adduct), adduct)
+                        End If
+                    End Function) _
+            .ToArray
 
         Return ranks _
-            .Where(Function(a) a.Item1 > 0) _
-            .OrderByDescending(Function(a) a.Item1) _
+            .Where(Function(a) a.rank > 0) _
+            .OrderByDescending(Function(a) a.rank) _
             .Select(Function(a)
                         Return a.adduct
                     End Function)
