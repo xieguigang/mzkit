@@ -74,6 +74,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
@@ -270,6 +271,7 @@ Namespace PackLib
         Public Iterator Function GetSpectrum(mass As MassIndex, Optional ionMode As IonModes = IonModes.Unknown) As IEnumerable(Of PeakMs2)
             Dim exactMass As Double = If(ionMode = IonModes.Unknown, 0, FormulaScanner.EvaluateExactMass(mass.formula))
             Dim polarity As String = ionMode.Description
+            Dim ref As NamedValue(Of String) = mass.name.GetTagValue("|")
 
             For Each i As Integer In mass.spectrum
                 Dim node As BlockNode = GetSpectrum(key:=i.ToString)
@@ -284,8 +286,9 @@ Namespace PackLib
                 End If
 
                 spectrum.meta = New Dictionary(Of String, String) From {
-                    {"name", mass.name},
-                    {"formula", mass.formula}
+                    {"name", ref.Value},
+                    {"formula", mass.formula},
+                    {"xref_id", ref.Name}
                 }
 
                 Yield spectrum
