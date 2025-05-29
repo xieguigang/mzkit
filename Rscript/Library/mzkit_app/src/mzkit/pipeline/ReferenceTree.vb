@@ -309,8 +309,20 @@ Module ReferenceTreePkg
     ''' <param name="pack">The PackAlignment object containing spectral data.</param>
     ''' <returns>An array of PeakMs2 objects representing reference spectra.</returns>
     <ExportAPI("export_spectrum")>
-    Public Function export_reference(pack As PackAlignment) As PeakMs2()
-        Return pack.GetReferenceSpectrum.ToArray
+    <RApiReturn(GetType(PeakMs2))>
+    Public Function export_reference(pack As Object, Optional env As Environment = Nothing) As Object
+        If pack Is Nothing Then
+            Call "the given spectrum pack object is nothing, empty result collection is returned.".Warning
+            Return Nothing
+        End If
+
+        If TypeOf pack Is PackAlignment Then
+            Return DirectCast(pack, PackAlignment).GetReferenceSpectrum.ToArray
+        ElseIf TypeOf pack Is SpectrumReader Then
+            Return PackAlignment.GetReferenceSpectrum(DirectCast(pack, SpectrumReader)).ToArray
+        Else
+            Return Message.InCompatibleType(GetType(SpectrumReader), pack.GetType, env)
+        End If
     End Function
 
     ''' <summary>
