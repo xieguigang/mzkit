@@ -172,6 +172,10 @@ Public Class AdductsRanking
             End If
         End If
 
+        If adduct_str = "[M+H]+" Then
+            Return maxValue / 2
+        End If
+
         Return 1
     End Function
 
@@ -228,6 +232,10 @@ Public Class AdductsRanking
                     Return maxValue
                 End If
             End If
+        End If
+
+        If adduct_str = "[M-H]-" Then
+            Return maxValue / 2
         End If
 
         Return 1
