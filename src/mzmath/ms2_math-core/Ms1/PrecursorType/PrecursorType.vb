@@ -106,7 +106,10 @@ Namespace Ms1.PrecursorType
         ''' <param name="chargeMode">极性</param>
         ''' <param name="tolerance">所能够容忍的质量误差</param>
         ''' <returns></returns>
-        Public Function FindPrecursorType(mass#, precursor_mz#, charge%, Optional chargeMode$ = "+", Optional tolerance As Tolerance = Nothing) As TypeMatch
+        Public Function FindPrecursorType(mass#, precursor_mz#, charge%,
+                                          Optional chargeMode$ = "+",
+                                          Optional tolerance As Tolerance = Nothing,
+                                          Optional firstMatch As Boolean = False) As TypeMatch
             If charge = 0 Then
                 Return New TypeMatch With {
                     .errors = Double.NaN,
@@ -148,53 +151,76 @@ Namespace Ms1.PrecursorType
                     .Where(Function(cal)
                                Return cal.charge = charge
                            End Function) _
-                    .FindPrecursorType(mass, precursor_mz, tolerance:=tolerance)
+                    .FindPrecursorType(
+                        mass,
+                        precursor_mz,
+                        tolerance:=tolerance,
+                        firstMatch:=firstMatch
+                    )
             End If
         End Function
 
-        Public Function FindPrecursorType(mass#, precursor_mz#, adducts As String(), Optional tolerance As Tolerance = Nothing) As TypeMatch
+        Public Function FindPrecursorType(mass#, precursor_mz#, adducts As String(),
+                                          Optional tolerance As Tolerance = Nothing,
+                                          Optional firstMatch As Boolean = False) As TypeMatch
+
             Dim listSet As IEnumerable(Of MzCalculator) = adducts _
                 .Select(Function(type)
                             Return Provider.ParseAdductModel(type)
                         End Function)
 
-            Return listSet.FindPrecursorType(mass, precursor_mz, tolerance:=tolerance Or Tolerance.DefaultTolerance)
+            Return listSet.FindPrecursorType(
+                mass, precursor_mz,
+                tolerance:=tolerance Or Tolerance.DefaultTolerance,
+                firstMatch:=firstMatch
+            )
         End Function
 
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="mass"></param>
-        ''' <param name="precursorMZ"></param>
-        ''' <param name="calculator">得到某一个离子模式下的计算程序</param>
+        ''' <param name="precursor_mz"></param>
+        ''' <param name="adducts">得到某一个离子模式下的计算程序</param>
         ''' <param name="tolerance"></param>
         ''' <returns></returns>
         ''' 
         <Extension>
-        Private Function FindPrecursorType(calculator As IEnumerable(Of MzCalculator), mass#, precursorMZ#, tolerance As Tolerance) As TypeMatch
+        Public Function FindPrecursorType(adducts As IEnumerable(Of MzCalculator), mass#, precursor_mz#, tolerance As Tolerance, Optional firstMatch As Boolean = False) As TypeMatch
             ' 每一个模式都计算一遍，然后返回最小的ppm差值结果
-            Dim min = 999999
-            Dim minType$ = Nothing
+            Dim min As Double = Double.MaxValue
+            Dim minType As TypeMatch = Nothing
 
             ' 然后遍历这个模式下的所有离子前体计算
             ' 跳过电荷数不匹配的离子模式计算表达式
-            For Each calc As MzCalculator In calculator
+            For Each calc As MzCalculator In adducts
                 Dim mz As Double = calc.CalcMZ(mass)
+                Dim mzdiff As Double = std.Abs(precursor_mz - mz)
 
-                If tolerance(mz, precursorMZ) Then
-                    Return New TypeMatch With {
-                        .errors = tolerance.MassError(mz, precursorMZ),
+                If mzdiff < min Then
+                    min = mzdiff
+                    minType = New TypeMatch With {
+                        .errors = tolerance.MassError(mz, precursor_mz),
                         .precursorType = calc.name,
                         .adducts = calc
                     }
+
+                    ' just returns the first matched result
+                    If firstMatch AndAlso tolerance(mz, precursor_mz) Then
+                        Return minType
+                    End If
                 End If
             Next
 
-            Return New TypeMatch With {
-                .precursorType = no_result,
-                .errors = Double.NaN,
-                .message = "No match"
-            }
+            If minType.adducts IsNot Nothing AndAlso tolerance(minType.adducts.CalcMZ(mass), precursor_mz) Then
+                Return minType
+            Else
+                Return New TypeMatch With {
+                    .precursorType = no_result,
+                    .errors = Double.NaN,
+                    .message = "No match"
+                }
+            End If
         End Function
     End Module
 End Namespace

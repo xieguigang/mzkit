@@ -1295,7 +1295,6 @@ Module MzMath
     ''' </summary>
     ''' <param name="formula"></param>
     ''' <param name="adducts"></param>
-    ''' <param name="ion"></param>
     ''' <param name="env"></param>
     ''' <returns>
     ''' A ranking score numeric vector
@@ -1305,11 +1304,10 @@ Module MzMath
     Public Function rank_adducts(formula As String,
                                  <RRawVectorArgument>
                                  adducts As Object,
-                                 Optional ion As IonModes = IonModes.Positive,
                                  Optional env As Environment = Nothing) As Object
 
         Dim adducts_str As String() = CLRVector.asCharacter(adducts)
-        Dim rank As New AdductsRanking(ion)
+        Dim rank As New AdductsRanking()
 
         Return adducts_str _
             .Select(Function(precursor_type)

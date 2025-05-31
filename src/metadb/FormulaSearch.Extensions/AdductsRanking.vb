@@ -1,80 +1,88 @@
 ﻿#Region "Microsoft.VisualBasic::b9447c8c6d2f05dd1492ab8db5bb1fc4, metadb\FormulaSearch.Extensions\AdductsRanking.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 176
-    '    Code Lines: 115 (65.34%)
-    ' Comment Lines: 25 (14.20%)
-    '    - Xml Docs: 44.00%
-    ' 
-    '   Blank Lines: 36 (20.45%)
-    '     File Size: 5.60 KB
+' Summaries:
 
 
-    ' Class AdductsRanking
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: GetAdductsFormula, InvalidAdduct, Rank, RankAdducts, RankNegative
-    '               RankPositive
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 176
+'    Code Lines: 115 (65.34%)
+' Comment Lines: 25 (14.20%)
+'    - Xml Docs: 44.00%
+' 
+'   Blank Lines: 36 (20.45%)
+'     File Size: 5.60 KB
+
+
+' Class AdductsRanking
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: GetAdductsFormula, InvalidAdduct, Rank, RankAdducts, RankNegative
+'               RankPositive
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' A helper tools for make adducts ions ranking
 ''' </summary>
 Public Class AdductsRanking
 
-    ReadOnly ion As IonModes
-
     Const maxValue As Double = 10
 
-    Sub New(ion As IonModes)
-        Me.ion = ion
-    End Sub
-
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="formula_str"></param>
+    ''' <param name="adduct_str"></param>
+    ''' <returns>
+    ''' a score value for the adducts ranking based on current formula composition.
+    ''' zero or negative value means the current given adducts is not a valid adducts
+    ''' mode, should not use this adducts mode for the annotation result.
+    ''' </returns>
     Public Function Rank(formula_str As String, adduct_str As String) As Double
         Dim formula As Formula = FormulaScanner.ScanFormula(formula_str)
         Dim adduct As MzCalculator = Provider.ParseAdductModel(adduct_str)
+        Dim ion As IonModes = adduct.GetIonMode
 
         If ion = IonModes.Positive Then
             Return RankPositive(formula, adduct)
@@ -86,28 +94,83 @@ Public Class AdductsRanking
     ''' <summary>
     ''' 
     ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="adducts"></param>
+    ''' <returns>
+    ''' the function only populates the valid adducts object and
+    ''' sort these adducts object in desc ranking order. top is better.
+    ''' </returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function RankAdducts(formula As Formula, adducts As IEnumerable(Of String)) As IEnumerable(Of MzCalculator)
+        Return RankAdducts(formula, adducts:=adducts.SafeQuery.Select(Function(type) Provider.ParseAdductModel(type)))
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="adducts"></param>
+    ''' <returns>
+    ''' the function only populates the valid adducts object and
+    ''' sort these adducts object in desc ranking order. top is better.
+    ''' </returns>
+    Public Function RankAdducts(formula As Formula, adducts As IEnumerable(Of MzCalculator)) As IEnumerable(Of MzCalculator)
+        Dim ranks As IEnumerable(Of (rank As Double, adduct As MzCalculator)) = adducts _
+            .Select(Function(adduct)
+                        Dim ion As IonModes = adduct.GetIonMode
+
+                        If ion = IonModes.Positive Then
+                            Return (rank:=RankPositive(formula, adduct), adduct)
+                        Else
+                            Return (rank:=RankNegative(formula, adduct), adduct)
+                        End If
+                    End Function) _
+            .ToArray
+
+        Return ranks _
+            .Where(Function(a) a.rank > 0) _
+            .OrderByDescending(Function(a) a.rank) _
+            .Select(Function(a)
+                        Return a.adduct
+                    End Function)
+    End Function
+
+    Public Iterator Function Filter(Of T)(formula As String, data As IEnumerable(Of T), adduct As Func(Of T, String)) As IEnumerable(Of T)
+        Dim formulaObj As Formula = FormulaScanner.ScanFormula(formula)
+        Dim cache As New Dictionary(Of String, Double)
+
+        For Each metabolite As T In data.SafeQuery
+            Dim score As Double = cache.ComputeIfAbsent(adduct(metabolite),
+                lazyValue:=Function(type)
+                               Dim adduct_type As MzCalculator = Provider.ParseAdductModel(type)
+                               Dim ion As IonModes = adduct_type.GetIonMode
+
+                               If ion = IonModes.Positive Then
+                                   Return RankPositive(formulaObj, adduct_type)
+                               Else
+                                   Return RankNegative(formulaObj, adduct_type)
+                               End If
+                           End Function)
+            If score > 0 Then
+                Yield metabolite
+            End If
+        Next
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
     ''' <param name="formula_str"></param>
     ''' <param name="adducts"></param>
     ''' <returns>
     ''' the function only populates the valid adducts object and
-    ''' sort these adducts object in desc ranking order.
+    ''' sort these adducts object in desc ranking order. top is better.
     ''' </returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function RankAdducts(formula_str As String, adducts As IEnumerable(Of MzCalculator)) As IEnumerable(Of MzCalculator)
-        Dim formula As Formula = FormulaScanner.ScanFormula(formula_str)
-        Dim ranks As IEnumerable(Of (rank As Double, adduct As MzCalculator))
-
-        If ion = IonModes.Positive Then
-            ranks = adducts.Select(Function(adduct) (RankPositive(formula, adduct), adduct))
-        Else
-            ranks = adducts.Select(Function(adduct) (RankNegative(formula, adduct), adduct))
-        End If
-
-        Return ranks _
-            .Where(Function(a) a.Item1 > 0) _
-            .OrderByDescending(Function(a) a.Item1) _
-            .Select(Function(a)
-                        Return a.adduct
-                    End Function)
+        Return RankAdducts(formula:=FormulaScanner.ScanFormula(formula_str), adducts)
     End Function
 
     Private Function GetAdductsFormula(adduct As MzCalculator) As (sign%, formula As Formula)()
@@ -151,20 +214,25 @@ Public Class AdductsRanking
 
         Dim adduct_str As String = adduct.ToString
 
-        'If adduct_str = "[M]+" Then
-        '    Dim charge As Double = FormalCharge.EvaluateCharge(formula)
-
-        '    If charge = 0 Then
-        '        Return 0
-        '    End If
-        'End If
-
         If formula.CheckElement("Cl") Then
             If adduct_str = "[M-Cl]+" Then
                 If formula!Cl = 1 Then
                     Return maxValue
                 End If
             End If
+        End If
+
+        If adduct_str = "[M]+" Then
+            ' check for Anthocyanin
+            If AnthocyaninValidator.CheckRules(formula.CountsByElement) > 40 Then
+                Return maxValue
+            Else
+                Return 0.5
+            End If
+        End If
+
+        If adduct_str = "[M+H]+" Then
+            Return maxValue / 2
         End If
 
         Return 1
@@ -198,13 +266,9 @@ Public Class AdductsRanking
 
         Dim adduct_str As String = adduct.ToString
 
-        'If adduct_str = "[M]-" Then
-        '    Dim charge As Double = FormalCharge.EvaluateCharge(formula)
-
-        '    If charge = 0 Then
-        '        Return 0
-        '    End If
-        'End If
+        If adduct_str = "[M]-" Then
+            Return 0.5
+        End If
 
         ' deal with some special adducts type situation
         If formula.CheckElement("Na") Then
@@ -227,6 +291,10 @@ Public Class AdductsRanking
                     Return maxValue
                 End If
             End If
+        End If
+
+        If adduct_str = "[M-H]-" Then
+            Return maxValue / 2
         End If
 
         Return 1

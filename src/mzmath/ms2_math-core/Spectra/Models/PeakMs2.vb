@@ -280,5 +280,11 @@ Namespace Spectra
         Public Function GetMatrix() As LibraryMatrix
             Return New LibraryMatrix(lib_guid, mzInto)
         End Function
+
+        Public Iterator Function GetPeaks() As IEnumerable(Of SpectrumPeak)
+            For Each peak As ms2 In mzInto
+                Yield New SpectrumPeak(peak)
+            Next
+        End Function
     End Class
 End Namespace
