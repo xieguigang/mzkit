@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48eab680bc54ff224ec99d4daca39677, Rscript\Library\mzkit_app\src\mzkit\math\Formula.vb"
+﻿#Region "Microsoft.VisualBasic::3c127b073b9eef61d1ad02376d4bf826, Rscript\Library\mzkit_app\src\mzkit\math\Formula.vb"
 
     ' Author:
     ' 
@@ -37,22 +37,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 637
-    '    Code Lines: 399 (62.64%)
-    ' Comment Lines: 149 (23.39%)
-    '    - Xml Docs: 85.91%
+    '   Total Lines: 656
+    '    Code Lines: 404 (61.59%)
+    ' Comment Lines: 161 (24.54%)
+    '    - Xml Docs: 88.20%
     ' 
-    '   Blank Lines: 89 (13.97%)
-    '     File Size: 27.23 KB
+    '   Blank Lines: 91 (13.87%)
+    '     File Size: 28.28 KB
 
 
     ' Module FormulaTools
     ' 
     '     Function: (+5 Overloads) add, canonicalFormula, CreateGraph, divide, EvalFormula
     '               FormulaCompositionString, FormulaFinder, FormulaString, getElementCount, getFormulaResult
-    '               IonFormulaCalibration, IsotopeDistributionSearch, LoadChemicalDescriptorsMatrix, (+6 Overloads) minus, openChemicalDescriptorDatabase
-    '               peakAnnotation_f, printFormulas, readKCF, readSDF, registerAnnotations
-    '               removeElement, (+2 Overloads) repeats, ScanFormula, SDF2KCF
+    '               IonFormulaCalibration, IsotopeDistributionSearch, LoadChemicalDescriptorsMatrix, MakeIonFormula, (+6 Overloads) minus
+    '               openChemicalDescriptorDatabase, peakAnnotation_f, printFormulas, readKCF, readSDF
+    '               registerAnnotations, removeElement, (+2 Overloads) repeats, ScanFormula, SDF2KCF
     ' 
     '     Sub: Main
     ' 
