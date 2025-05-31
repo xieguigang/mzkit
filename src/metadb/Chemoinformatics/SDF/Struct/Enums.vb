@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70a411ee8774a42400005b547f0a2cf8, metadb\Chemoinformatics\SDF\Struct\Enums.vb"
+﻿#Region "Microsoft.VisualBasic::7bb5ffccd0f0ae2904c61c3fc28e814e, metadb\Chemoinformatics\SDF\Struct\Enums.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 2 (5.71%)
-    '     File Size: 798 B
+    '     File Size: 795 B
 
 
     '     Enum BoundTypes

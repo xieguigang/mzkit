@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d68fd5bf7e6dd95e1ac74bcd34b6362, metadb\Chemoinformatics\Formula\Models\Formula.vb"
+﻿#Region "Microsoft.VisualBasic::7541f7642f5b90ada6b9e56e7342f262, metadb\Chemoinformatics\Formula\Models\Formula.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 441
-    '    Code Lines: 251 (56.92%)
-    ' Comment Lines: 136 (30.84%)
-    '    - Xml Docs: 97.79%
+    '   Total Lines: 456
+    '    Code Lines: 251 (55.04%)
+    ' Comment Lines: 151 (33.11%)
+    '    - Xml Docs: 98.01%
     ' 
-    '   Blank Lines: 54 (12.24%)
-    '     File Size: 17.07 KB
+    '   Blank Lines: 54 (11.84%)
+    '     File Size: 17.79 KB
 
 
     '     Class Formula

@@ -1,66 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::4b4e482f135b1483943e8739349a4643, metadb\Lipidomics\SmilesInchikeyGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::55889008ee3bdd0471f7e96ca2ac621a, metadb\Lipidomics\SmilesInchikeyGenerator.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 243
-'    Code Lines: 191 (78.60%)
-' Comment Lines: 36 (14.81%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 16 (6.58%)
-'     File Size: 17.42 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class SmilesInchikeyGenerator
-' 
-'     Function: ChainSmilesGen, Generate
-' 
-' Class SmilesInchikey
-' 
-'     Properties: InchiKey, Smiles
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-' Class SmilesLipidHeader
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 245
+    '    Code Lines: 209 (85.31%)
+    ' Comment Lines: 15 (6.12%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 21 (8.57%)
+    '     File Size: 17.27 KB
+
+
+    ' Class SmilesInchikeyGenerator
+    ' 
+    '     Function: ChainSmilesGen, Generate
+    ' 
+    ' Class SmilesInchikey
+    ' 
+    '     Properties: InchiKey, Smiles
+    ' 
+    ' Class SmilesLipidHeader
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2aafd2b35a8adebbf19faaa2fbd291b, metadb\Lipidomics\ChainParser\TotalChainParser.vb"
+﻿#Region "Microsoft.VisualBasic::675005d62f2be6ecd47583e96bd3e014, metadb\Lipidomics\ChainParser\TotalChainParser.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 133
-    '    Code Lines: 113 (84.96%)
-    ' Comment Lines: 1 (0.75%)
+    '   Total Lines: 148
+    '    Code Lines: 126 (85.14%)
+    ' Comment Lines: 1 (0.68%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 19 (14.29%)
-    '     File Size: 7.47 KB
+    '   Blank Lines: 21 (14.19%)
+    '     File Size: 7.65 KB
 
 
     ' Class TotalChainParser

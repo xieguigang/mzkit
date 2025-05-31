@@ -1,61 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::9befff8e3fd91d093138e5dc77178bb9, metadb\Chemoinformatics\Formula\FormulaCalculateUtility.vb"
+﻿#Region "Microsoft.VisualBasic::8992d918752aff23da7a7e441b9b5fb0, metadb\Chemoinformatics\Formula\FormulaCalculateUtility.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 305
-'    Code Lines: 272 (89.18%)
-' Comment Lines: 0 (0.00%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 33 (10.82%)
-'     File Size: 17.57 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module AtomMass
-' 
-' 
-' 
-'     Module FormulaCalculateUtility
-' 
-'         Function: ConvertFormulaAdductPairToPrecursorAdduct, ConvertTmsMeoxSubtractedFormula, (+5 Overloads) GetExactMass, (+4 Overloads) GetFormulaString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 390
+    '    Code Lines: 306 (78.46%)
+    ' Comment Lines: 44 (11.28%)
+    '    - Xml Docs: 81.82%
+    ' 
+    '   Blank Lines: 40 (10.26%)
+    '     File Size: 21.08 KB
+
+
+    '     Module AtomMass
+    ' 
+    ' 
+    ' 
+    '     Module FormulaCalculateUtility
+    ' 
+    '         Function: ConvertFormulaAdductPairToPrecursorAdduct, ConvertTmsMeoxSubtractedFormula, (+2 Overloads) GeneralAdductFormula, (+2 Overloads) GeneralMoleculeFormula, (+5 Overloads) GetExactMass
+    '                   (+4 Overloads) GetFormulaString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

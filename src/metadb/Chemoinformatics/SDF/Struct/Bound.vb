@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64079ce3a85a1a95a1d689b9bf00de74, metadb\Chemoinformatics\SDF\Struct\Bound.vb"
+﻿#Region "Microsoft.VisualBasic::f85a285019bc083f4da4da0978bbbe46, metadb\Chemoinformatics\SDF\Struct\Bound.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 52
-    '    Code Lines: 33 (63.46%)
-    ' Comment Lines: 11 (21.15%)
+    '   Total Lines: 55
+    '    Code Lines: 33 (60.00%)
+    ' Comment Lines: 14 (25.45%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (15.38%)
-    '     File Size: 1.57 KB
+    '   Blank Lines: 8 (14.55%)
+    '     File Size: 1.67 KB
 
 
     '     Class Bound
