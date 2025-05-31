@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e584a9d0bb921deb67e4cd9b63a042a8, mzmath\mz_deco\ChromatogramModels\PeakFeature.vb"
+﻿#Region "Microsoft.VisualBasic::4aa00db6ecd6381f3916e6e6e8a0059e, mzmath\mz_deco\ChromatogramModels\PeakFeature.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 144
-    '    Code Lines: 67 (46.53%)
-    ' Comment Lines: 59 (40.97%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 152
+    '    Code Lines: 73 (48.03%)
+    ' Comment Lines: 60 (39.47%)
+    '    - Xml Docs: 98.33%
     ' 
-    '   Blank Lines: 18 (12.50%)
-    '     File Size: 4.35 KB
+    '   Blank Lines: 19 (12.50%)
+    '     File Size: 4.58 KB
 
 
     ' Class PeakFeature

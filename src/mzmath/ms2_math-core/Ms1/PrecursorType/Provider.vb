@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c971fa1ae8ca1076a2c3265e725c940, mzmath\ms2_math-core\Ms1\PrecursorType\Provider.vb"
+﻿#Region "Microsoft.VisualBasic::5098426fc64689e1e3e18fcb821a0b76, mzmath\ms2_math-core\Ms1\PrecursorType\Provider.vb"
 
     ' Author:
     ' 
@@ -37,21 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 332
-    '    Code Lines: 166 (50.00%)
-    ' Comment Lines: 126 (37.95%)
-    '    - Xml Docs: 46.83%
+    '   Total Lines: 349
+    '    Code Lines: 173 (49.57%)
+    ' Comment Lines: 133 (38.11%)
+    '    - Xml Docs: 48.87%
     ' 
-    '   Blank Lines: 40 (12.05%)
-    '     File Size: 15.73 KB
+    '   Blank Lines: 43 (12.32%)
+    '     File Size: 16.22 KB
 
 
     '     Module Provider
     ' 
     '         Properties: Negative, Negatives, Positive, Positives
     ' 
-    '         Function: (+2 Overloads) Calculators, (+2 Overloads) GetCalculator, ParseAdductModel, ParseAdducts, (+2 Overloads) ParseIonMode
-    '                   TryAdductPolarityParserInternal
+    '         Function: (+2 Overloads) Calculators, (+2 Overloads) GetCalculator, ParseAdductModel, ParseAdducts, ParseCalculatorInternal
+    '                   (+2 Overloads) ParseIonMode, TryAdductPolarityParserInternal
     ' 
     ' 
     ' /********************************************************************************/

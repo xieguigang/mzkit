@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e217009880b50edc293ed389d31201da, mzmath\mz_deco\xcms2.vb"
+﻿#Region "Microsoft.VisualBasic::8d4367e14cc8c89f5074248afc3c1e0a, mzmath\mz_deco\xcms2.vb"
 
     ' Author:
     ' 
@@ -37,23 +37,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 218
-    '    Code Lines: 145 (66.51%)
-    ' Comment Lines: 46 (21.10%)
-    '    - Xml Docs: 93.48%
+    '   Total Lines: 279
+    '    Code Lines: 185 (66.31%)
+    ' Comment Lines: 58 (20.79%)
+    '    - Xml Docs: 94.83%
     ' 
-    '   Blank Lines: 27 (12.39%)
-    '     File Size: 7.03 KB
+    '   Blank Lines: 36 (12.90%)
+    '     File Size: 9.10 KB
 
 
     ' Class xcms2
     ' 
-    '     Properties: ID, intensity, mz, mzmax, mzmin
-    '                 npeaks, Properties, RI, rt, rtmax
-    '                 rtmin
+    '     Properties: groups, ID, intensity, mz, mzmax
+    '                 mzmin, npeaks, Properties, RI, RImax
+    '                 RImin, rt, rtmax, rtmin
     ' 
-    '     Constructor: (+5 Overloads) Sub New
-    '     Function: Impute, MakeUniqueId, ToString, TotalPeakSum
+    '     Constructor: (+6 Overloads) Sub New
+    '     Function: Impute, MakeUniqueId, Merge, ToString, TotalPeakSum
     ' 
     ' /********************************************************************************/
 

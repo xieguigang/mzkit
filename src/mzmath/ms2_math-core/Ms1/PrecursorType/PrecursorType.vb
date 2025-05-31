@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e06082a625b85b45d669c285919ca2ce, mzmath\ms2_math-core\Ms1\PrecursorType\PrecursorType.vb"
+﻿#Region "Microsoft.VisualBasic::cbd112c9dfa5e7fd396fbc40d1977cef, mzmath\ms2_math-core\Ms1\PrecursorType\PrecursorType.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 143
-    '    Code Lines: 95 (66.43%)
-    ' Comment Lines: 32 (22.38%)
-    '    - Xml Docs: 78.12%
+    '   Total Lines: 169
+    '    Code Lines: 118 (69.82%)
+    ' Comment Lines: 33 (19.53%)
+    '    - Xml Docs: 75.76%
     ' 
-    '   Blank Lines: 16 (11.19%)
-    '     File Size: 6.00 KB
+    '   Blank Lines: 18 (10.65%)
+    '     File Size: 7.09 KB
 
 
     '     Module PrecursorType
