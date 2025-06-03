@@ -431,7 +431,9 @@ Module Massbank
     ''' </summary>
     ''' <param name="mona"></param>
     ''' <param name="env"></param>
-    ''' <returns>a list of the <see cref="MetaInfo"/> data. </returns>
+    ''' <returns>a tuple list of the <see cref="MetaInfo"/> data. andalso an attribute with name ``mapping`` is tagged
+    ''' with the result tuple list that contains mapping from the spectrum id to the metabolite unique 
+    ''' reference id.</returns>
     <ExportAPI("extract_mona_metabolites")>
     Public Function extractMoNAMetabolites(<RRawVectorArgument> mona As Object, Optional env As Environment = Nothing) As Object
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of SpectraSection)(mona, env)
