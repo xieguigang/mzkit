@@ -66,20 +66,39 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 Public Class AdductsRanking
 
-    Const maxValue As Double = 10
+    ReadOnly maxValue As Double = 10
+
+    Sub New(Optional maxScore As Double = 10)
+        maxValue = maxScore
+    End Sub
 
     ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="formula_str"></param>
+    ''' <param name="adduct"></param>
+    ''' <returns>
+    ''' a score value for the adducts ranking based on current formula composition.
+    ''' zero or negative value means the current given adducts is not a valid adducts
+    ''' mode, should not use this adducts mode for the annotation result.
+    ''' </returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function Rank(formula_str As String, adduct As String) As Double
+        Return Rank(FormulaScanner.ScanFormula(formula_str), adduct)
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="formula"></param>
     ''' <param name="adduct_str"></param>
     ''' <returns>
     ''' a score value for the adducts ranking based on current formula composition.
     ''' zero or negative value means the current given adducts is not a valid adducts
     ''' mode, should not use this adducts mode for the annotation result.
     ''' </returns>
-    Public Function Rank(formula_str As String, adduct_str As String) As Double
-        Dim formula As Formula = FormulaScanner.ScanFormula(formula_str)
+    Public Function Rank(formula As Formula, adduct_str As String) As Double
         Dim adduct As MzCalculator = Provider.ParseAdductModel(adduct_str)
         Dim ion As IonModes = adduct.GetIonMode
 
