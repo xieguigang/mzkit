@@ -79,8 +79,24 @@ Public Delegate Function IRankCluster(cluster As PeakMs2()) As Double
 Public Class TreeCluster
 
     Public Property tree As ClusterTree
+
+    ''' <summary>
+    ''' the input spectrum data, keeps the original order with the input sequence 
+    ''' </summary>
+    ''' <returns></returns>
     Public Property spectrum As PeakMs2()
     Public Property clusters As String()
+
+    ''' <summary>
+    ''' does current spectrum cluster tree contains any spectrum data?
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' not empty?
+    ''' </remarks>
+    Public Function Any() As Boolean
+        Return Not spectrum.IsNullOrEmpty
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
@@ -117,7 +133,7 @@ Public Class TreeCluster
 
             i += 1
 
-            If i = n Then
+            If i >= n Then
                 Exit For
             End If
         Next
