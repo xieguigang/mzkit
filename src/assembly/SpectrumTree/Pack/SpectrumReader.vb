@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30b5a6cab764bdbf8c8e0f0b77763040, assembly\SpectrumTree\Pack\SpectrumReader.vb"
+﻿#Region "Microsoft.VisualBasic::1615e7c39307798850f477f9889d70b9, assembly\SpectrumTree\Pack\SpectrumReader.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 393
-    '    Code Lines: 238 (60.56%)
-    ' Comment Lines: 105 (26.72%)
-    '    - Xml Docs: 74.29%
+    '   Total Lines: 423
+    '    Code Lines: 258 (60.99%)
+    ' Comment Lines: 111 (26.24%)
+    '    - Xml Docs: 75.68%
     ' 
-    '   Blank Lines: 50 (12.72%)
-    '     File Size: 16.16 KB
+    '   Blank Lines: 54 (12.77%)
+    '     File Size: 17.60 KB
 
 
     '     Class SpectrumReader
@@ -53,8 +53,8 @@
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: BuildSearchIndex, evalMz, GetAllLibNames, GetMassFiles, (+4 Overloads) GetSpectrum
-    '                   HasMapName, ListAllSpectrumId, LoadMass, QueryByMz, ThrowNoMassIndex
-    '                   ToString
+    '                   HasMapName, ListAllSpectrumId, LoadAllNodes, LoadMass, QueryByMz
+    '                   ThrowNoMassIndex, ToString
     ' 
     '         Sub: (+2 Overloads) Dispose
     ' 

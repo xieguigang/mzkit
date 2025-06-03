@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b0c8faafdb43a9d61c2931af7279984, mzmath\mz_deco\PeakSet.vb"
+﻿#Region "Microsoft.VisualBasic::30882171cc9d138ca1cc3ef0b5c1099a, mzmath\mz_deco\PeakSet.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 207
-    '    Code Lines: 147 (71.01%)
-    ' Comment Lines: 35 (16.91%)
+    '   Total Lines: 223
+    '    Code Lines: 147 (65.92%)
+    ' Comment Lines: 51 (22.87%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 25 (12.08%)
-    '     File Size: 7.03 KB
+    '   Blank Lines: 25 (11.21%)
+    '     File Size: 7.69 KB
 
 
     ' Class PeakSet

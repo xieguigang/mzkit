@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36b64fcd03f7e5d47a88440e0ac69b62, metadb\Lipidomics\IDoubleBondInfo.vb"
+﻿#Region "Microsoft.VisualBasic::729c39b264c92e1024045a507db83a10, metadb\Lipidomics\IDoubleBondInfo.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 78
-    '    Code Lines: 65 (83.33%)
+    '   Total Lines: 79
+    '    Code Lines: 64 (81.01%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 13 (16.67%)
-    '     File Size: 3.03 KB
+    '   Blank Lines: 15 (18.99%)
+    '     File Size: 2.94 KB
 
 
     ' Interface IDoubleBondInfo

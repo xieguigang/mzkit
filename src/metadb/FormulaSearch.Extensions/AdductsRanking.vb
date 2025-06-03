@@ -1,58 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::b9447c8c6d2f05dd1492ab8db5bb1fc4, metadb\FormulaSearch.Extensions\AdductsRanking.vb"
+﻿#Region "Microsoft.VisualBasic::caacd331b1f5ab24387a677458e569ee, metadb\FormulaSearch.Extensions\AdductsRanking.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 176
-'    Code Lines: 115 (65.34%)
-' Comment Lines: 25 (14.20%)
-'    - Xml Docs: 44.00%
-' 
-'   Blank Lines: 36 (20.45%)
-'     File Size: 5.60 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class AdductsRanking
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: GetAdductsFormula, InvalidAdduct, Rank, RankAdducts, RankNegative
-'               RankPositive
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 244
+    '    Code Lines: 161 (65.98%)
+    ' Comment Lines: 44 (18.03%)
+    '    - Xml Docs: 81.82%
+    ' 
+    '   Blank Lines: 39 (15.98%)
+    '     File Size: 8.67 KB
+
+
+    ' Class AdductsRanking
+    ' 
+    '     Function: Filter, GetAdductsFormula, InvalidAdduct, Rank, (+3 Overloads) RankAdducts
+    '               RankNegative, RankPositive
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

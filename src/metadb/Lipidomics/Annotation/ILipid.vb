@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b3c9c0358b7d8919e780dccb7fe5e9e, metadb\Lipidomics\Annotation\ILipid.vb"
+﻿#Region "Microsoft.VisualBasic::7c0729e09a007d23eb079da46b7d9727, metadb\Lipidomics\Annotation\ILipid.vb"
 
     ' Author:
     ' 
@@ -38,11 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 119
-    '    Code Lines: 98 (82.35%)
+    '    Code Lines: 97 (81.51%)
     ' Comment Lines: 1 (0.84%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 20 (16.81%)
+    '   Blank Lines: 21 (17.65%)
     '     File Size: 4.79 KB
 
 

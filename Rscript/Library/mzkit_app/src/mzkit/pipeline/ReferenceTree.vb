@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::966f5365f1705e37f5599d11685bfc86, Rscript\Library\mzkit_app\src\mzkit\pipeline\ReferenceTree.vb"
+﻿#Region "Microsoft.VisualBasic::d3121053af07967e24e0f880885eb08f, Rscript\Library\mzkit_app\src\mzkit\pipeline\ReferenceTree.vb"
 
     ' Author:
     ' 
@@ -37,21 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 791
-    '    Code Lines: 475 (60.05%)
-    ' Comment Lines: 229 (28.95%)
-    '    - Xml Docs: 89.52%
+    '   Total Lines: 834
+    '    Code Lines: 507 (60.79%)
+    ' Comment Lines: 234 (28.06%)
+    '    - Xml Docs: 89.74%
     ' 
-    '   Blank Lines: 87 (11.00%)
-    '     File Size: 34.15 KB
+    '   Blank Lines: 93 (11.15%)
+    '     File Size: 35.68 KB
 
 
     ' Module ReferenceTreePkg
     ' 
-    '     Function: addBucket, candidateIds, compress, CreateAnnotationSet, createJaccardSet
-    '               CreateNew, embedding, export_reference, GetSpectrum, GetTestSample
-    '               open, (+2 Overloads) QuerySingle, (+2 Overloads) QueryTree, ReadPack, set_dotcutoff
-    '               set_parallel, top_candidates
+    '     Function: addBucket, candidateIds, compress, CreateAnnotationSet, CreateAnnotationSetLoop
+    '               createJaccardSet, CreateNew, discard_precursor_filter, embedding, export_reference
+    '               GetSpectrum, GetTestSample, open, (+2 Overloads) QuerySingle, (+2 Overloads) QueryTree
+    '               ReadPack, set_dotcutoff, set_parallel, top_candidates
     ' 
     ' /********************************************************************************/
 

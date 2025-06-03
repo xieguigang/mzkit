@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71051a3406a7ec3115318cb24894336f, mzmath\ms2_math-core\Spectra\Alignment\AlignmentProvider.vb"
+﻿#Region "Microsoft.VisualBasic::86335ede5a43a26f35ef01e1e24c2679, mzmath\ms2_math-core\Spectra\Alignment\AlignmentProvider.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 106
-    '    Code Lines: 67 (63.21%)
-    ' Comment Lines: 20 (18.87%)
+    '   Total Lines: 122
+    '    Code Lines: 80 (65.57%)
+    ' Comment Lines: 20 (16.39%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 19 (17.92%)
-    '     File Size: 3.98 KB
+    '   Blank Lines: 22 (18.03%)
+    '     File Size: 4.79 KB
 
 
     '     Class AlignmentProvider
@@ -51,7 +51,8 @@
     '         Properties: Tolerance
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Cosine, (+3 Overloads) CreateAlignment, GetMeta, ToString
+    '         Function: Cosine, (+3 Overloads) CreateAlignment, GetCosineScore, GetEntropyScore, GetJaccardIndex
+    '                   GetMeta, ToString
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5637fb712f250407ad03b41804ca5218, metadb\FormulaSearch.Extensions\test\peakTest.vb"
+﻿#Region "Microsoft.VisualBasic::85a451192600abb2ed22a3702c0f27ca, metadb\FormulaSearch.Extensions\test\peakTest.vb"
 
     ' Author:
     ' 
@@ -38,12 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 79
-    '    Code Lines: 64 (81.01%)
-    ' Comment Lines: 0 (0.00%)
+    '    Code Lines: 54 (68.35%)
+    ' Comment Lines: 10 (12.66%)
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 15 (18.99%)
-    '     File Size: 2.41 KB
+    '     File Size: 2.53 KB
 
 
     ' Module peakTest

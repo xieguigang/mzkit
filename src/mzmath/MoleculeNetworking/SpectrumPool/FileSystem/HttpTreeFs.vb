@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc861883c13230fc9f65459ae91b86b7, mzmath\MoleculeNetworking\SpectrumPool\FileSystem\HttpTreeFs.vb"
+﻿#Region "Microsoft.VisualBasic::a07b75f532b8ce1f9c7905145caa241c, mzmath\MoleculeNetworking\SpectrumPool\FileSystem\HttpTreeFs.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 321
-    '    Code Lines: 216 (67.29%)
-    ' Comment Lines: 55 (17.13%)
+    '   Total Lines: 334
+    '    Code Lines: 227 (67.96%)
+    ' Comment Lines: 55 (16.47%)
     '    - Xml Docs: 78.18%
     ' 
-    '   Blank Lines: 50 (15.58%)
-    '     File Size: 12.44 KB
+    '   Blank Lines: 52 (15.57%)
+    '     File Size: 13.03 KB
 
 
     '     Class HttpTreeFs
@@ -53,8 +53,8 @@
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: CheckExists, ClusterHashIndex, CreateModel, decode, DecodeConsensus
-    '                   encode, FindRootId, GetCluster, getParentId, GetTreeChilds
-    '                   (+2 Overloads) LoadMetadata, (+2 Overloads) ReadSpectrum, WriteSpectrum
+    '                   decodeSpectrum, encode, FindRootId, GetCluster, getParentId
+    '                   GetTreeChilds, (+2 Overloads) LoadMetadata, (+2 Overloads) ReadSpectrum, WriteSpectrum
     ' 
     '         Sub: Close, CommitMetadata, SetRootId
     ' 

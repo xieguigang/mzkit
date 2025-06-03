@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4d8c3395d9913f922fb82d5bd3dcc4f, mzmath\ms2_math-core\Spectra\SpectrumTree\SpectrumTree.vb"
+﻿#Region "Microsoft.VisualBasic::1c76a5ee98079b2ced028d3ae5d4284b, mzmath\ms2_math-core\Spectra\SpectrumTree\SpectrumTree.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 93.02%
     ' 
     '   Blank Lines: 23 (13.77%)
-    '     File Size: 6.88 KB
+    '     File Size: 6.90 KB
 
 
     '     Class SpectrumTreeCluster
