@@ -117,7 +117,7 @@ Public Class TreeCluster
 
             i += 1
 
-            If i = n Then
+            If i >= n Then
                 Exit For
             End If
         Next
