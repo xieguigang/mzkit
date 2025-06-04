@@ -332,7 +332,7 @@ declare namespace math {
      * + default value Is ``null``.
      * @return A ranking score numeric vector
    */
-   function rank_adducts(formula: string, adducts: any, env?: object): number;
+   function rank_adducts(formula: any, adducts: any, env?: object): number;
    /**
     * removes the missing peaks
     * 
