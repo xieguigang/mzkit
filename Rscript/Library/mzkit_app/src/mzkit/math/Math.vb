@@ -1301,19 +1301,21 @@ Module MzMath
     ''' </returns>
     <ExportAPI("rank_adducts")>
     <RApiReturn(TypeCodes.double)>
-    Public Function rank_adducts(formula As String,
-                                 <RRawVectorArgument>
-                                 adducts As Object,
+    Public Function rank_adducts(<RRawVectorArgument> formula As Object,
+                                 <RRawVectorArgument> adducts As Object,
+                                 Optional max_score As Double = 10,
                                  Optional env As Environment = Nothing) As Object
 
         Dim adducts_str As String() = CLRVector.asCharacter(adducts)
-        Dim rank As New AdductsRanking()
+        Dim formula_str As String() = CLRVector.asCharacter(formula)
+        Dim rank As New AdductsRanking(max_score)
 
-        Return adducts_str _
-            .Select(Function(precursor_type)
-                        Return rank.Rank(formula, precursor_type)
-                    End Function) _
-            .ToArray
+        Return BinaryCoreInternal(Of String, String, Double)(
+            formula_str, adducts_str,
+            do:=Function(sformula, sadduct, envir)
+                    Return rank.Rank(CStr(sformula), CStr(sadduct))
+                End Function,
+            env:=env)
     End Function
 
     <ExportAPI("toMS")>
