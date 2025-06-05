@@ -88,6 +88,12 @@ Public Class UnknownSet
 
     Friend ReadOnly rtmax As Double
 
+    Public ReadOnly Property is_empty As Boolean
+        Get
+            Return spectrumIndex.Count = 0
+        End Get
+    End Property
+
     Private Sub New(rtmax As Double)
         Me.rtmax = rtmax
     End Sub
