@@ -551,6 +551,12 @@ Module metaDNAInfer
         Dim id As String() = DirectCast(seeds, dataframe).getColumnVector(1)
         Dim kegg_id As String() = DirectCast(seeds, dataframe).getColumnVector(2)
         Dim rawFile As UnknownSet = UnknownSet.CreateTree(raw.populates(Of PeakMs2)(env), metaDNA.ms1Err)
+
+        If rawFile.is_empty Then
+            Call VBDebugger.EchoLine("no spectrum feature for run annotation, returns empty result collection!")
+            Return {}
+        End If
+
         Dim annoSet As NamedValue(Of String)() = id _
             .Select(Function(uid, i) (uid, kegg_id(i))) _
             .GroupBy(Function(map) map.uid) _

@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::59a1339fd185065e7b052bcef968e71e, metadna\metaDNA\Models\UnknownSet.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 196
-    '    Code Lines: 136 (69.39%)
-    ' Comment Lines: 33 (16.84%)
-    '    - Xml Docs: 93.94%
-    ' 
-    '   Blank Lines: 27 (13.78%)
-    '     File Size: 7.13 KB
+' Summaries:
 
 
-    ' Class UnknownSet
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: CreateAnnotatedSeeds, CreateTree, EnumerateAllUnknownFeatures, MassQuery, QueryByKey
-    '               QueryByParentMz, ROIid, rtAdjust
-    ' 
-    '     Sub: AddTrace
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 196
+'    Code Lines: 136 (69.39%)
+' Comment Lines: 33 (16.84%)
+'    - Xml Docs: 93.94%
+' 
+'   Blank Lines: 27 (13.78%)
+'     File Size: 7.13 KB
+
+
+' Class UnknownSet
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: CreateAnnotatedSeeds, CreateTree, EnumerateAllUnknownFeatures, MassQuery, QueryByKey
+'               QueryByParentMz, ROIid, rtAdjust
+' 
+'     Sub: AddTrace
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -87,6 +87,12 @@ Public Class UnknownSet
     Dim ms2MapROI As Dictionary(Of String, String)
 
     Friend ReadOnly rtmax As Double
+
+    Public ReadOnly Property is_empty As Boolean
+        Get
+            Return spectrumIndex.Count = 0
+        End Get
+    End Property
 
     Private Sub New(rtmax As Double)
         Me.rtmax = rtmax
@@ -186,9 +192,14 @@ Public Class UnknownSet
             ROIlist(ROI).Item2.Add(product.lib_guid)
         Next
 
-        Dim rtmax As Double = Aggregate peak As PeakMs2
-                              In index.Values
-                              Into Max(peak.rt)
+        Dim rtmax As Double = 0
+
+        If index.Count > 0 Then
+            rtmax = Aggregate peak As PeakMs2
+                    In index.Values
+                    Into Max(peak.rt)
+        End If
+
         Dim ROImaps As Dictionary(Of String, String) = ROIlist _
             .Select(Function(ROI)
                         Return ROI.Value.Item2.Select(Function(peakId) (ROI.Key, peakId))
