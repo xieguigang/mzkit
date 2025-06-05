@@ -113,14 +113,25 @@ Public Module SaveXcms
         Dim npeaks As Integer = headers.GetSynonymOrdinal("npeaks", ".")
         Dim ri As Integer = headers.GetSynonymOrdinal("ri", "RI", "retention_index")
 
+        If ID < 0 AndAlso headers.Objects(0) = "" Then
+            ' row.names = 1
+            ' first column is xcms_id
+            ID = 0
+
+            Call headers.Delete("")
+            Call VBDebugger.EchoLine("use the first column as the xcms_id(row.names = 1).")
+        End If
+
         Call headers.Delete(required_id)
         Call headers.Delete(required_mz)
         Call headers.Delete(required_rt)
         Call headers.Delete("mzmin", "mzmax")
         Call headers.Delete("rtmin", "rtmax")
-        Call headers.Delete("npeaks", ".")
+        Call headers.Delete("npeaks", ".", "")
         Call headers.Delete("maxinto")
         Call headers.Delete("ri", "RI")
+        Call headers.Delete("RImin", "RImax")
+        Call headers.Delete("groups")
 
         If ID < 0 Then
             Throw New InvalidDataException($"the required of the unique id in peaktable could not be found! You should check is there any fields named {required_id.Concatenate()} existed in your data table?")
