@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cfa003438a804035821d038aa428af4, metadb\Lipidomics\LipidSpectrumGeneratorFactory.vb"
+﻿#Region "Microsoft.VisualBasic::1b4ee2516fdff304971053eef3dd95cc, metadb\Lipidomics\LipidSpectrumGeneratorFactory.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 39 (17.33%)
-    '     File Size: 8.71 KB
+    '     File Size: 8.72 KB
 
 
     ' Class LipidSpectrumGeneratorFactory

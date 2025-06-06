@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e682461ab9997cf0a890ae26dca61a7a, metadb\Chemoinformatics\Lipid\BondPosition.vb"
+﻿#Region "Microsoft.VisualBasic::cd351dbd9a73ecff3b37ec71364bdc8f, metadb\Chemoinformatics\Lipid\BondPosition.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 58
-    '    Code Lines: 42 (72.41%)
-    ' Comment Lines: 4 (6.90%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 69
+    '    Code Lines: 49 (71.01%)
+    ' Comment Lines: 7 (10.14%)
+    '    - Xml Docs: 57.14%
     ' 
-    '   Blank Lines: 12 (20.69%)
-    '     File Size: 2.03 KB
+    '   Blank Lines: 13 (18.84%)
+    '     File Size: 2.61 KB
 
 
     '     Class BondPosition

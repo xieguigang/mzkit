@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa11d449530f0f32fa812170a3f6103d, metadb\Massbank\MetaLib\NaturalLanguageTerm.vb"
+﻿#Region "Microsoft.VisualBasic::7e88bc1f083ae3f66aa05abaa845ee87, metadb\Massbank\MetaLib\NaturalLanguageTerm.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 81.25%
     ' 
     '   Blank Lines: 22 (16.54%)
-    '     File Size: 5.43 KB
+    '     File Size: 5.58 KB
 
 
     '     Module NaturalLanguageTerm

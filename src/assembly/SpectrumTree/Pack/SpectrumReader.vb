@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30b5a6cab764bdbf8c8e0f0b77763040, assembly\SpectrumTree\Pack\SpectrumReader.vb"
+﻿#Region "Microsoft.VisualBasic::1615e7c39307798850f477f9889d70b9, assembly\SpectrumTree\Pack\SpectrumReader.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 393
-    '    Code Lines: 238 (60.56%)
-    ' Comment Lines: 105 (26.72%)
-    '    - Xml Docs: 74.29%
+    '   Total Lines: 423
+    '    Code Lines: 258 (60.99%)
+    ' Comment Lines: 111 (26.24%)
+    '    - Xml Docs: 75.68%
     ' 
-    '   Blank Lines: 50 (12.72%)
-    '     File Size: 16.16 KB
+    '   Blank Lines: 54 (12.77%)
+    '     File Size: 17.60 KB
 
 
     '     Class SpectrumReader
@@ -53,8 +53,8 @@
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: BuildSearchIndex, evalMz, GetAllLibNames, GetMassFiles, (+4 Overloads) GetSpectrum
-    '                   HasMapName, ListAllSpectrumId, LoadMass, QueryByMz, ThrowNoMassIndex
-    '                   ToString
+    '                   HasMapName, ListAllSpectrumId, LoadAllNodes, LoadMass, QueryByMz
+    '                   ThrowNoMassIndex, ToString
     ' 
     '         Sub: (+2 Overloads) Dispose
     ' 
@@ -71,8 +71,10 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
@@ -243,6 +245,12 @@ Namespace PackLib
             Return GetSpectrum(key:=pointer.ToString)
         End Function
 
+        ''' <summary>
+        ''' no adducts info
+        ''' </summary>
+        ''' <param name="node"></param>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         Public Shared Function GetSpectrum(node As BlockNode, Optional file As String = Nothing) As PeakMs2
             Return New PeakMs2 With {
                 .mzInto = node.centroid,
@@ -260,14 +268,27 @@ Namespace PackLib
         ''' </summary>
         ''' <param name="mass"></param>
         ''' <returns></returns>
-        Public Iterator Function GetSpectrum(mass As MassIndex) As IEnumerable(Of PeakMs2)
+        Public Iterator Function GetSpectrum(mass As MassIndex, Optional ionMode As IonModes = IonModes.Unknown) As IEnumerable(Of PeakMs2)
+            Dim exactMass As Double = If(ionMode = IonModes.Unknown, 0, FormulaScanner.EvaluateExactMass(mass.formula))
+            Dim polarity As String = ionMode.Description
+            Dim ref As NamedValue(Of String) = mass.name.GetTagValue("|")
+
             For Each i As Integer In mass.spectrum
                 Dim node As BlockNode = GetSpectrum(key:=i.ToString)
                 Dim spectrum As PeakMs2 = GetSpectrum(node, file:=mass.name)
 
+                If ionMode <> IonModes.Unknown Then
+                    With PrecursorType.FindPrecursorType(exactMass, spectrum.mz, 1, polarity)
+                        If Not .errors.IsNaNImaginary Then
+                            spectrum.precursor_type = .precursorType
+                        End If
+                    End With
+                End If
+
                 spectrum.meta = New Dictionary(Of String, String) From {
-                    {"name", mass.name},
-                    {"formula", mass.formula}
+                    {"name", ref.Value},
+                    {"formula", mass.formula},
+                    {"xref_id", ref.Name}
                 }
 
                 Yield spectrum

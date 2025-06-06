@@ -135,9 +135,13 @@ declare namespace spectrumTree {
     * 
     * 
      * @param pack The PackAlignment object containing spectral data.
+     * @param ionMode 
+     * + default value Is ``null``.
+     * @param env 
+     * + default value Is ``null``.
      * @return An array of PeakMs2 objects representing reference spectra.
    */
-   function export_spectrum(pack: object): object;
+   function export_spectrum(pack: any, ionMode?: object, env?: object): object;
    /**
     * Extract the test sample data for run evaluation of the annotation workflow
     * 

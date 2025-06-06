@@ -3,9 +3,9 @@
 .SH NAME
 rank_adducts \- evaluate of the adduct annotation ranking score
 .SH SYNOPSIS
-\fIrank_adducts(\fBformula\fR as string, 
+\fIrank_adducts(\fBformula\fR as any, 
 \fBadducts\fR as any, 
-\fBion\fR as <integer> IonModes = [Positive], 
+\fBmax_score\fR as double = 10, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -17,9 +17,6 @@ evaluate of the adduct annotation ranking score
 .PP
 .PP
 \fBadducts\fB \fR\- -. 
-.PP
-.PP
-\fBion\fB \fR\- -. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 

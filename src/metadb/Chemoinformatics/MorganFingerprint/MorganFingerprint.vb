@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f00485363afe7882e5c5580f191fa5f3, metadb\Chemoinformatics\MorganFingerprint\MorganFingerprint.vb"
+﻿#Region "Microsoft.VisualBasic::54f20c68359af4263fdec455cdc941ba, metadb\Chemoinformatics\MorganFingerprint\MorganFingerprint.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 122
-    '    Code Lines: 60 (49.18%)
-    ' Comment Lines: 44 (36.07%)
-    '    - Xml Docs: 77.27%
+    '   Total Lines: 156
+    '    Code Lines: 60 (38.46%)
+    ' Comment Lines: 78 (50.00%)
+    '    - Xml Docs: 43.59%
     ' 
-    '   Blank Lines: 18 (14.75%)
-    '     File Size: 5.88 KB
+    '   Blank Lines: 18 (11.54%)
+    '     File Size: 8.51 KB
 
 
     '     Module MorganFingerprint

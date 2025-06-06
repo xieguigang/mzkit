@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3654255922d0c06b97ad07d0b8c0dfb5, Rscript\Library\mzkit_app\src\mzDIA\LCLipidomics.vb"
+﻿#Region "Microsoft.VisualBasic::ab7558551002111108214877a458f3ff, Rscript\Library\mzkit_app\src\mzDIA\LCLipidomics.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 97
-    '    Code Lines: 55 (56.70%)
-    ' Comment Lines: 31 (31.96%)
+    '   Total Lines: 115
+    '    Code Lines: 65 (56.52%)
+    ' Comment Lines: 37 (32.17%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (11.34%)
-    '     File Size: 3.99 KB
+    '   Blank Lines: 13 (11.30%)
+    '     File Size: 4.69 KB
 
 
     ' Module LCLipidomics
     ' 
-    '     Function: adductIon, find_lipidmaps, GetLipidIons, lipidmaps_indexer
+    '     Function: adductIon, find_lipidmaps, GetLipidIons, lipid_smiles, lipidmaps_indexer
+    '               parse_lipid
     ' 
     ' /********************************************************************************/
 

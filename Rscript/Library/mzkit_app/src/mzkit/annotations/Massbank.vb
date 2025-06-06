@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26003831b971b334c29d40350ffb7555, Rscript\Library\mzkit_app\src\mzkit\annotations\Massbank.vb"
+﻿#Region "Microsoft.VisualBasic::c7d66adad6bd901cd20facfff83273b8, Rscript\Library\mzkit_app\src\mzkit\annotations\Massbank.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1131
-    '    Code Lines: 748 (66.14%)
-    ' Comment Lines: 238 (21.04%)
-    '    - Xml Docs: 92.86%
+    '   Total Lines: 1133
+    '    Code Lines: 748 (66.02%)
+    ' Comment Lines: 240 (21.18%)
+    '    - Xml Docs: 92.08%
     ' 
-    '   Blank Lines: 145 (12.82%)
-    '     File Size: 45.17 KB
+    '   Blank Lines: 145 (12.80%)
+    '     File Size: 45.32 KB
 
 
     ' Module Massbank
@@ -431,7 +431,9 @@ Module Massbank
     ''' </summary>
     ''' <param name="mona"></param>
     ''' <param name="env"></param>
-    ''' <returns>a list of the <see cref="MetaInfo"/> data. </returns>
+    ''' <returns>a tuple list of the <see cref="MetaInfo"/> data. andalso an attribute with name ``mapping`` is tagged
+    ''' with the result tuple list that contains mapping from the spectrum id to the metabolite unique 
+    ''' reference id.</returns>
     <ExportAPI("extract_mona_metabolites")>
     Public Function extractMoNAMetabolites(<RRawVectorArgument> mona As Object, Optional env As Environment = Nothing) As Object
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of SpectraSection)(mona, env)

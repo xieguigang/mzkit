@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11d519a9d6dabc32823e6fe044ee5792, assembly\SpectrumTree\Query\Ms2Search.vb"
+﻿#Region "Microsoft.VisualBasic::fee5028d311d0ecb96c74228bb3d90b1, assembly\SpectrumTree\Query\Ms2Search.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 17 (70.83%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 34
+    '    Code Lines: 18 (52.94%)
+    ' Comment Lines: 8 (23.53%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (29.17%)
-    '     File Size: 802 B
+    '   Blank Lines: 8 (23.53%)
+    '     File Size: 1.26 KB
 
 
     '     Class Ms2Search
+    ' 
+    '         Properties: discardPrecursorFilter
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: Centroid

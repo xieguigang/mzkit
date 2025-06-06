@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc861883c13230fc9f65459ae91b86b7, mzmath\MoleculeNetworking\SpectrumPool\FileSystem\HttpTreeFs.vb"
+﻿#Region "Microsoft.VisualBasic::a07b75f532b8ce1f9c7905145caa241c, mzmath\MoleculeNetworking\SpectrumPool\FileSystem\HttpTreeFs.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 321
-    '    Code Lines: 216 (67.29%)
-    ' Comment Lines: 55 (17.13%)
+    '   Total Lines: 334
+    '    Code Lines: 227 (67.96%)
+    ' Comment Lines: 55 (16.47%)
     '    - Xml Docs: 78.18%
     ' 
-    '   Blank Lines: 50 (15.58%)
-    '     File Size: 12.44 KB
+    '   Blank Lines: 52 (15.57%)
+    '     File Size: 13.03 KB
 
 
     '     Class HttpTreeFs
@@ -53,8 +53,8 @@
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: CheckExists, ClusterHashIndex, CreateModel, decode, DecodeConsensus
-    '                   encode, FindRootId, GetCluster, getParentId, GetTreeChilds
-    '                   (+2 Overloads) LoadMetadata, (+2 Overloads) ReadSpectrum, WriteSpectrum
+    '                   decodeSpectrum, encode, FindRootId, GetCluster, getParentId
+    '                   GetTreeChilds, (+2 Overloads) LoadMetadata, (+2 Overloads) ReadSpectrum, WriteSpectrum
     ' 
     '         Sub: Close, CommitMetadata, SetRootId
     ' 
@@ -232,7 +232,7 @@ Namespace PoolData
                 key = ClusterHashIndex(dir)
 
                 If Not cluster_data.ContainsKey(key) Then
-                    cluster_data.Add(key, obj)
+                    Call cluster_data.Add(key, obj)
                 End If
 
                 Yield dir
@@ -316,20 +316,13 @@ Namespace PoolData
 
             Dim npeaks As Integer = Integer.Parse(CStr(data.info!npeaks))
             Dim hashcode As String = data.info!hashcode
-            Dim mz As Double() = decode(CStr(data.info!mz))
-            Dim into As Double() = decode(CStr(data.info!into))
+            Dim spectral As ms2() = decodeSpectrum(CStr(data.info!mz), CStr(data.info!into), npeaks) _
+                .SafeQuery _
+                .ToArray
 
-            If npeaks <> mz.Length Then
-                Return Nothing
-            ElseIf npeaks <> into.Length Then
+            If spectral.Length <> npeaks Then
                 Return Nothing
             End If
-
-            Dim spectral As ms2() = mz _
-                .Select(Function(mzi, i)
-                            Return New ms2 With {.mz = mzi, .intensity = into(i)}
-                        End Function) _
-                .ToArray
 
             Return New PeakMs2 With {
                 .lib_guid = hashcode,
@@ -346,6 +339,24 @@ Namespace PoolData
                 .Split(8) _
                 .Select(Function(b) NetworkByteOrderBitConvertor.ToDouble(b, Scan0)) _
                 .ToArray
+        End Function
+
+        Public Shared Function decodeSpectrum(mz_str As String, intensity_str As String, Optional npeaks As Integer? = Nothing) As IEnumerable(Of ms2)
+            Dim mz As Double() = decode(mz_str)
+            Dim into As Double() = decode(intensity_str)
+
+            If Not npeaks Is Nothing Then
+                If npeaks <> mz.Length Then
+                    Return Nothing
+                ElseIf npeaks <> into.Length Then
+                    Return Nothing
+                End If
+            End If
+
+            Return mz _
+                .Select(Function(mzi, i)
+                            Return New ms2 With {.mz = mzi, .intensity = into(i)}
+                        End Function)
         End Function
 
         Public Shared Function DecodeConsensus(base64 As String) As (mz As Double(), into As Double())

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d80d4a8e57eb5bbbcec2fcf4e10c5b0, mzmath\MSFinder\FragmentAssigner.vb"
+﻿#Region "Microsoft.VisualBasic::d73476ec6c6ab1e3c37aeb6e92fc8150, mzmath\MSFinder\FragmentAssigner.vb"
 
     ' Author:
     ' 
@@ -108,7 +108,7 @@ Public NotInheritable Class FragmentAssigner
 
         Dim minId = -1
 
-        'for precursor annotation
+        ' for precursor annotation
         If std.Abs(mass - exactMass - AdductIon.AdductIonAccurateMass) < massTol Then
             Dim nFormula = FormulaCalculateUtility.ConvertFormulaAdductPairToPrecursorAdduct(formula, AdductIon)
 

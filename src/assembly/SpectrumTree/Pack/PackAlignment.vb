@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ca1e497b8c7fef5529afd8c6d4ce86d, assembly\SpectrumTree\Pack\PackAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::6139fdd90c7e1965c9b338832973cd0d, assembly\SpectrumTree\Pack\PackAlignment.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 235
-    '    Code Lines: 141 (60.00%)
-    ' Comment Lines: 70 (29.79%)
-    '    - Xml Docs: 78.57%
+    '   Total Lines: 261
+    '    Code Lines: 161 (61.69%)
+    ' Comment Lines: 72 (27.59%)
+    '    - Xml Docs: 76.39%
     ' 
-    '   Blank Lines: 24 (10.21%)
-    '     File Size: 10.10 KB
+    '   Blank Lines: 28 (10.73%)
+    '     File Size: 11.24 KB
 
 
     '     Class PackAlignment
@@ -51,7 +51,10 @@
     '         Properties: dotcutoff, libnames, parallel, size, spectrum
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetReferenceSpectrum, reportClusterHit, Search, SearchParallel, SearchSequential
+    ' 
+    '         Function: (+2 Overloads) GetReferenceSpectrum, reportClusterHit, Search, SearchParallel, SearchSequential
+    ' 
+    '         Sub: Setup
     '         Structure ___tmp
     ' 
     ' 
@@ -63,6 +66,8 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
@@ -247,7 +252,15 @@ Namespace PackLib
         ''' pull all reference spectrum inside current library object
         ''' </summary>
         ''' <returns></returns>
-        Public Iterator Function GetReferenceSpectrum(Optional tqdm_verbose As Boolean = True) As IEnumerable(Of PeakMs2)
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetReferenceSpectrum(Optional tqdm_verbose As Boolean = True, Optional ionMode As IonModes = IonModes.Unknown) As IEnumerable(Of PeakMs2)
+            Return GetReferenceSpectrum(spectrum, tqdm_verbose, ionMode)
+        End Function
+
+        Public Shared Iterator Function GetReferenceSpectrum(spectrum As SpectrumReader,
+                                                             Optional tqdm_verbose As Boolean = True,
+                                                             Optional ionMode As IonModes = IonModes.Unknown) As IEnumerable(Of PeakMs2)
             Dim offsets As IEnumerable(Of MassIndex)
 
             If tqdm_verbose Then
@@ -259,7 +272,7 @@ Namespace PackLib
             ' load mass returns mass set which already been filter 
             ' by the given target reference id set
             For Each meta As MassIndex In offsets
-                For Each spec As PeakMs2 In spectrum.GetSpectrum(meta)
+                For Each spec As PeakMs2 In spectrum.GetSpectrum(meta, ionMode:=ionMode)
                     Yield spec
                 Next
             Next

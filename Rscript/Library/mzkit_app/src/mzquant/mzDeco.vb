@@ -1,65 +1,66 @@
-﻿#Region "Microsoft.VisualBasic::15a2867a85f409d6f0d30e6232ca1ebb, Rscript\Library\mzkit_app\src\mzquant\mzDeco.vb"
+﻿#Region "Microsoft.VisualBasic::7807d096b9946784429c460a324de86f, Rscript\Library\mzkit_app\src\mzquant\mzDeco.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 1376
-'    Code Lines: 912 (66.28%)
-' Comment Lines: 317 (23.04%)
-'    - Xml Docs: 88.33%
-' 
-'   Blank Lines: 147 (10.68%)
-'     File Size: 57.63 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module mzDeco
-' 
-'     Function: adjust_to_seconds, convertDataframeToXcmsPeaks, create_peakset, Deconv, dumpPeaks
-'               expression, get_ionPeak, getIonPeak, ms1Scans, mz_deco
-'               mz_groups, peakAlignment, peaksetMatrix, peaksSetMatrix, peakSubset
-'               peaktable, pull_xic, read_rtshifts, readPeakData, readPeaktable
-'               readSamples, readXcmsFeaturePeaks, readXcmsPeaks, readXcmsTableFile, readXIC
-'               RI_batch_join, RI_calc, RI_reference, to_matrix, writePeaktable
-'               writeSamples, writeXcmsPeaktable, writeXIC, writeXIC1, xcms_peak
-'               xic_deco, xic_dtw_list, xic_matrix_list, XICpool_func
-' 
-'     Sub: Main
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1507
+    '    Code Lines: 994 (65.96%)
+    ' Comment Lines: 355 (23.56%)
+    '    - Xml Docs: 88.45%
+    ' 
+    '   Blank Lines: 158 (10.48%)
+    '     File Size: 64.19 KB
+
+
+    ' Module mzDeco
+    ' 
+    '     Function: adjust_to_seconds, convertDataframeToXcmsPeaks, create_peakset, Deconv, dumpPeaks
+    '               expression, filter_noise_spectrum, get_ionPeak, getIonPeak, ms1Scans
+    '               mz_deco, mz_groups, peakAlignment, peaksetMatrix, peaksSetMatrix
+    '               peakSubset, peaktable, pull_xic, read_rtshifts, readPeakData
+    '               readPeaktable, readSamples, readXcmsFeaturePeaks, readXcmsPeaks, readXcmsTableFile
+    '               readXIC, RI_batch_join, RI_calc, RI_reference, rt_groups_merge
+    '               to_matrix, writePeaktable, writeSamples, writeXcmsPeaktable, writeXIC
+    '               writeXIC1, xcms_peak, xic_deco, xic_dtw_list, xic_matrix_list
+    '               XICpool_func
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -194,6 +195,7 @@ Module mzDeco
         Dim table As New dataframe With {
            .columns = New Dictionary(Of String, Array)
         }
+        Dim extrac_area As Boolean = args.getValue({"peaks_area", "peaks.area"}, env, [default]:=False)
         Dim allsampleNames = peakset _
             .Select(Function(i) i.Properties.Keys) _
             .IteratesALL _
@@ -205,14 +207,18 @@ Module mzDeco
             .Select(Function(p) p.ID) _
             .ToArray
 
-        Call table.add(NameOf(xcms2.mz), peakset.Select(Function(a) a.mz))
-        Call table.add(NameOf(xcms2.mzmin), peakset.Select(Function(a) a.mzmin))
-        Call table.add(NameOf(xcms2.mzmax), peakset.Select(Function(a) a.mzmax))
-        Call table.add(NameOf(xcms2.rt), peakset.Select(Function(a) a.rt))
-        Call table.add(NameOf(xcms2.rtmin), peakset.Select(Function(a) a.rtmin))
-        Call table.add(NameOf(xcms2.rtmax), peakset.Select(Function(a) a.rtmax))
-        Call table.add(NameOf(xcms2.RI), peakset.Select(Function(a) a.RI))
-        Call table.add(NameOf(xcms2.npeaks), peakset.Select(Function(a) a.npeaks))
+        ' not only extract the peak area data
+        ' andalso includes the peaks metadata
+        If Not extrac_area Then
+            Call table.add(NameOf(xcms2.mz), peakset.Select(Function(a) a.mz))
+            Call table.add(NameOf(xcms2.mzmin), peakset.Select(Function(a) a.mzmin))
+            Call table.add(NameOf(xcms2.mzmax), peakset.Select(Function(a) a.mzmax))
+            Call table.add(NameOf(xcms2.rt), peakset.Select(Function(a) a.rt))
+            Call table.add(NameOf(xcms2.rtmin), peakset.Select(Function(a) a.rtmin))
+            Call table.add(NameOf(xcms2.rtmax), peakset.Select(Function(a) a.rtmax))
+            Call table.add(NameOf(xcms2.RI), peakset.Select(Function(a) a.RI))
+            Call table.add(NameOf(xcms2.npeaks), peakset.Select(Function(a) a.npeaks))
+        End If
 
         For Each name As String In allsampleNames
             Call table.add(name, peakset.Select(Function(i) i(name)))

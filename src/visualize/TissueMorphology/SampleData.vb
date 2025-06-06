@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24be4ba885e5b6e1865c106a688d9c34, visualize\TissueMorphology\SampleData.vb"
+﻿#Region "Microsoft.VisualBasic::64237e6529190024f94715bcdd7b28ea, visualize\TissueMorphology\SampleData.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 172
-    '    Code Lines: 110 (63.95%)
-    ' Comment Lines: 42 (24.42%)
+    '   Total Lines: 173
+    '    Code Lines: 111 (64.16%)
+    ' Comment Lines: 42 (24.28%)
     '    - Xml Docs: 95.24%
     ' 
-    '   Blank Lines: 20 (11.63%)
-    '     File Size: 7.17 KB
+    '   Blank Lines: 20 (11.56%)
+    '     File Size: 7.31 KB
 
 
     ' Module SampleData

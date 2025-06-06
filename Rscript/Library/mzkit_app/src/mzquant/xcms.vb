@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0063de283b55458d089c8eeba2431b5b, Rscript\Library\mzkit_app\src\mzquant\xcms.vb"
+﻿#Region "Microsoft.VisualBasic::7b89876807c897fed6d8a0b6d1c62513, Rscript\Library\mzkit_app\src\mzquant\xcms.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 136
-    '    Code Lines: 91 (66.91%)
-    ' Comment Lines: 28 (20.59%)
-    '    - Xml Docs: 96.43%
+    '   Total Lines: 149
+    '    Code Lines: 93 (62.42%)
+    ' Comment Lines: 39 (26.17%)
+    '    - Xml Docs: 97.44%
     ' 
-    '   Blank Lines: 17 (12.50%)
-    '     File Size: 5.43 KB
+    '   Blank Lines: 17 (11.41%)
+    '     File Size: 6.18 KB
 
 
     ' Module xcms

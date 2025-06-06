@@ -132,9 +132,22 @@ Namespace Blender
         Protected Function DrawBackground(dimension As Size, defaultBackground As Color) As Bitmap
             Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
 
-            Using g As IGraphics = DriverLoad.CreateGraphicsDevice(raw)
-                Call g.Clear(defaultBackground)
+#If NET8_0_OR_GREATER Then
+            Dim buffer As Byte() = raw.MemoryBuffer.RawBuffer
 
+            For i As Integer = 0 To buffer.Length - 1 Step 4
+                ' set background color manually
+                buffer(i + 3) = defaultBackground.A
+                buffer(i + 2) = defaultBackground.R
+                buffer(i + 1) = defaultBackground.G
+                buffer(i + 0) = defaultBackground.B
+            Next
+#End If
+
+            Using g As IGraphics = DriverLoad.CreateGraphicsDevice(raw)
+#If NET48 Then
+                Call g.Clear(defaultBackground)
+#End If
                 If Not overlaps Is Nothing Then
                     Call g.DrawImage(overlaps, New Rectangle(New Point, raw.Size))
                 End If

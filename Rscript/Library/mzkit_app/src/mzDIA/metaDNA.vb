@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2ae0c730c199afb5b73cd01fcdce131, Rscript\Library\mzkit_app\src\mzDIA\metaDNA.vb"
+﻿#Region "Microsoft.VisualBasic::0de4d7c5e6c4f0bfd87d3037befd245f, Rscript\Library\mzkit_app\src\mzDIA\metaDNA.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 782
-    '    Code Lines: 513 (65.60%)
-    ' Comment Lines: 172 (21.99%)
-    '    - Xml Docs: 98.84%
+    '   Total Lines: 783
+    '    Code Lines: 513 (65.52%)
+    ' Comment Lines: 173 (22.09%)
+    '    - Xml Docs: 98.27%
     ' 
-    '   Blank Lines: 97 (12.40%)
-    '     File Size: 34.34 KB
+    '   Blank Lines: 97 (12.39%)
+    '     File Size: 34.39 KB
 
 
     ' Module metaDNAInfer
@@ -551,6 +551,12 @@ Module metaDNAInfer
         Dim id As String() = DirectCast(seeds, dataframe).getColumnVector(1)
         Dim kegg_id As String() = DirectCast(seeds, dataframe).getColumnVector(2)
         Dim rawFile As UnknownSet = UnknownSet.CreateTree(raw.populates(Of PeakMs2)(env), metaDNA.ms1Err)
+
+        If rawFile.is_empty Then
+            Call VBDebugger.EchoLine("no spectrum feature for run annotation, returns empty result collection!")
+            Return {}
+        End If
+
         Dim annoSet As NamedValue(Of String)() = id _
             .Select(Function(uid, i) (uid, kegg_id(i))) _
             .GroupBy(Function(map) map.uid) _

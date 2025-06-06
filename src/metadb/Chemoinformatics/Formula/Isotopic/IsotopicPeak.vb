@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d93fcd0537c1b7fa22852dc64e1af7b1, metadb\Chemoinformatics\Formula\Isotopic\IsotopicPeak.vb"
+﻿#Region "Microsoft.VisualBasic::b6e2938429eadb11aeab7ec05a43157f, metadb\Chemoinformatics\Formula\Isotopic\IsotopicPeak.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 33
-    '    Code Lines: 18 (54.55%)
-    ' Comment Lines: 5 (15.15%)
+    '   Total Lines: 28
+    '    Code Lines: 18 (64.29%)
+    ' Comment Lines: 5 (17.86%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (30.30%)
-    '     File Size: 1.07 KB
+    '   Blank Lines: 5 (17.86%)
+    '     File Size: 1.06 KB
 
 
     '     Class IsotopicPeak
@@ -66,8 +66,13 @@ Namespace Formula.IsotopicPatterns
     ''' </summary>
     Public Class IsotopicPeak
 
-        Public Sub New()
+        Public Property RelativeAbundance As Double
+        Public Property AbsoluteAbundance As Double
+        Public Property Mass As Double
+        Public Property MassDifferenceFromMonoisotopicIon As Double
+        Public Property Comment As String = String.Empty
 
+        Public Sub New()
         End Sub
 
         Public Sub New(source As IsotopicPeak)
@@ -78,15 +83,5 @@ Namespace Formula.IsotopicPatterns
             Comment = source.Comment
         End Sub
 
-
-        Public Property RelativeAbundance As Double
-
-        Public Property AbsoluteAbundance As Double
-
-        Public Property Mass As Double
-
-        Public Property MassDifferenceFromMonoisotopicIon As Double
-
-        Public Property Comment As String = String.Empty
     End Class
 End Namespace

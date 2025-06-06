@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf2bcdb7b430377ce40cd7e7ee7e7bc5, Rscript\Library\mzkit_app\src\mzkit\pipeline\library.vb"
+﻿#Region "Microsoft.VisualBasic::d70b0389345fd6cb65e25c7e10d0a938, Rscript\Library\mzkit_app\src\mzkit\pipeline\library.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1178
-    '    Code Lines: 613 (52.04%)
-    ' Comment Lines: 442 (37.52%)
+    '   Total Lines: 1174
+    '    Code Lines: 609 (51.87%)
+    ' Comment Lines: 442 (37.65%)
     '    - Xml Docs: 93.67%
     ' 
-    '   Blank Lines: 123 (10.44%)
-    '     File Size: 59.67 KB
+    '   Blank Lines: 123 (10.48%)
+    '     File Size: 59.40 KB
 
 
     ' Module library
@@ -659,16 +659,12 @@ Module library
                                   Optional ion_mode As Object = "+",
                                   Optional env As Environment = Nothing) As Object
 
-        Static asserts As New Dictionary(Of IonModes, AdductsRanking) From {
-            {IonModes.Positive, New AdductsRanking(IonModes.Positive)},
-            {IonModes.Negative, New AdductsRanking(IonModes.Negative)}
-        }
+        Static ruler As New AdductsRanking
 
-        Dim ionVal = Math.GetIonMode(ion_mode, env)
-        Dim ruler As AdductsRanking = asserts(ionVal)
         Dim precursors As MzCalculator() = Math.GetPrecursorTypes(adducts, env)
+        Dim sort = ruler.RankAdducts(formula, precursors).ToArray
 
-        Return ruler.RankAdducts(formula, precursors).ToArray
+        Return sort
     End Function
 
     ''' <summary>

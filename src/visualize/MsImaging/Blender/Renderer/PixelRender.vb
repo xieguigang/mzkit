@@ -211,8 +211,8 @@ Namespace Blender
             Dim index As Integer
             Dim level As Double
             ' create a blank canvas image
-            Dim raw As Bitmap = DrawBackground(dimension, Color.Transparent)
             Dim defaultColor As Color = heatmap.defaultFill.TranslateColor
+            Dim raw As Bitmap = DrawBackground(dimension, defaultColor)
             Dim isTransparentFill As Boolean = heatmap.defaultFill.TextEquals("Transparent")
             Dim skipTransparent As Boolean = (Not overlaps Is Nothing) OrElse isTransparentFill
             Dim intensityRange As Double() = colors.ValueMinMax

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ced351bc8d6c81a393469d1a00a4b06a, metadb\Chemoinformatics\SDF\Struct\GraphData.vb"
+﻿#Region "Microsoft.VisualBasic::51308e52bd040598dbb852406f4b55cf, metadb\Chemoinformatics\SDF\Struct\GraphData.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 34
-    '    Code Lines: 24 (70.59%)
-    ' Comment Lines: 3 (8.82%)
+    '   Total Lines: 33
+    '    Code Lines: 23 (69.70%)
+    ' Comment Lines: 3 (9.09%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (20.59%)
-    '     File Size: 1.16 KB
+    '   Blank Lines: 7 (21.21%)
+    '     File Size: 1.12 KB
 
 
     '     Module GraphData

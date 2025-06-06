@@ -122,7 +122,9 @@ Public Class NetworkingTree
     ''' do spectrum tree alignment
     ''' </summary>
     ''' <param name="ions"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' a spectrum tree object
+    ''' </returns>
     Public Function Tree(ions As IEnumerable(Of PeakMs2)) As TreeCluster
         Dim ionsList As New List(Of PeakMs2)
         Dim clustering As New ClusterTree

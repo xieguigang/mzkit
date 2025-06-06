@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cfeae4093ab70404e2747d6d378abf5, metadb\Chemoinformatics\CrossReferenceData.vb"
+﻿#Region "Microsoft.VisualBasic::51dac9601d709b758b240fe8003a672d, metadb\Chemoinformatics\CrossReferenceData.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 245
-    '    Code Lines: 182 (74.29%)
-    ' Comment Lines: 32 (13.06%)
-    '    - Xml Docs: 81.25%
+    '   Total Lines: 252
+    '    Code Lines: 182 (72.22%)
+    ' Comment Lines: 39 (15.48%)
+    '    - Xml Docs: 84.62%
     ' 
-    '   Blank Lines: 31 (12.65%)
-    '     File Size: 11.24 KB
+    '   Blank Lines: 31 (12.30%)
+    '     File Size: 11.47 KB
 
 
     ' Module CrossReferenceData
