@@ -61,6 +61,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
@@ -131,6 +132,20 @@ Namespace MetaLib
             Return refmet_name
         End Function
 
+        Public Function CastModel() As MetaInfo
+            Return New MetaInfo With {
+                .ID = refmet_id,
+                .name = refmet_name,
+                .super_class = super_class,
+                .[class] = main_class,
+                .sub_class = sub_class,
+                .formula = formula,
+                .exact_mass = exactmass,
+                .IUPACName = refmet_name,
+                .xref = CreateReference()
+            }
+        End Function
+
         Public Function CreateReference() As xref
             Return New xref With {
                 .pubchem = pubchem_cid,
@@ -138,7 +153,10 @@ Namespace MetaLib
                 .chebi = "ChEBI:" & chebi_id,
                 .HMDB = hmdb_id,
                 .lipidmaps = lipidmaps_id,
-                .KEGG = kegg_id
+                .KEGG = kegg_id,
+                .extras = New Dictionary(Of String, String()) From {
+                    {NameOf(RefMet), {refmet_id}}
+                }
             }
         End Function
 
