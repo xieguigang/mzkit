@@ -1,67 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::daca9e80f6301b2919b89c56c01b1726, metadb\Massbank\MetaLib\RefMet.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 74
-    '    Code Lines: 34 (45.95%)
-    ' Comment Lines: 34 (45.95%)
-    '    - Xml Docs: 91.18%
-    ' 
-    '   Blank Lines: 6 (8.11%)
-    '     File Size: 4.18 KB
+' Summaries:
 
 
-    '     Class RefMet
-    ' 
-    '         Properties: chebi_id, exactmass, formula, hmdb_id, inchi_key
-    '                     kegg_id, lipidmaps_id, main_class, pubchem_cid, refmet_id
-    '                     refmet_name, smiles, sub_class, super_class
-    ' 
-    '         Function: CreateReference, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 74
+'    Code Lines: 34 (45.95%)
+' Comment Lines: 34 (45.95%)
+'    - Xml Docs: 91.18%
+' 
+'   Blank Lines: 6 (8.11%)
+'     File Size: 4.18 KB
+
+
+'     Class RefMet
+' 
+'         Properties: chebi_id, exactmass, formula, hmdb_id, inchi_key
+'                     kegg_id, lipidmaps_id, main_class, pubchem_cid, refmet_id
+'                     refmet_name, smiles, sub_class, super_class
+' 
+'         Function: CreateReference, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
 Namespace MetaLib
 
@@ -100,7 +102,17 @@ Namespace MetaLib
     ''' Some notes pertaining To different metabolite classes are outlined below.
     ''' </remarks>
     Public Class RefMet : Implements IReadOnlyId, IExactMassProvider, ICompoundNameProvider, IFormulaProvider, INamedValue
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' there is a bug about the column name in the download csv file
+        ''' </remarks>
+        <Column(" refmet_id")>
         Public Property refmet_id As String
+
         Public Property refmet_name As String Implements IReadOnlyId.Identity, ICompoundNameProvider.CommonName, INamedValue.Key
         Public Property super_class As String
         Public Property main_class As String
@@ -120,6 +132,20 @@ Namespace MetaLib
             Return refmet_name
         End Function
 
+        Public Function CastModel() As MetaInfo
+            Return New MetaInfo With {
+                .ID = refmet_id,
+                .name = refmet_name,
+                .super_class = super_class,
+                .[class] = main_class,
+                .sub_class = sub_class,
+                .formula = formula,
+                .exact_mass = exactmass,
+                .IUPACName = refmet_name,
+                .xref = CreateReference()
+            }
+        End Function
+
         Public Function CreateReference() As xref
             Return New xref With {
                 .pubchem = pubchem_cid,
@@ -127,7 +153,10 @@ Namespace MetaLib
                 .chebi = "ChEBI:" & chebi_id,
                 .HMDB = hmdb_id,
                 .lipidmaps = lipidmaps_id,
-                .KEGG = kegg_id
+                .KEGG = kegg_id,
+                .extras = New Dictionary(Of String, String()) From {
+                    {NameOf(RefMet), {refmet_id}}
+                }
             }
         End Function
 
