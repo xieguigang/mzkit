@@ -96,6 +96,8 @@ Namespace ChEBI
                 .ToArray
             Dim properties = obo_data(RawTerm.Key_property_value).ParsePropertyValues
             Dim xref = obo_data(RawTerm.Key_xref).ParseXref
+            Dim kegg_id = xref.TryGetValue("KEGG", [default]:={})
+            Dim formula_str As String = properties.SafeGetString("http://purl.obolibrary.org/obo/chebi/formula")
 
             Return New metadata With {
                 .description = Strings.Trim(def).Trim(""""c, " "c),
@@ -103,12 +105,12 @@ Namespace ChEBI
                 .name = name,
                 .synonym = synonym,
                 .IUPACName = name,
-                .formula = properties.SafeGetString("http://purl.obolibrary.org/obo/chebi/formula"),
+                .formula = formula_str,
                 .exact_mass = FormulaScanner.EvaluateExactMass(.formula),
                 .xref = New xref With {
                     .CAS = xref.TryGetValue("CAS"),
                     .chebi = id,
-                    .KEGG = xref.TryGetValue("KEGG").JoinBy(", "),
+                    .KEGG = kegg_id.Where(Function(cid) cid.StartsWith("C"c)).FirstOrDefault,
                     .InChI = properties.SafeGetString("http://purl.obolibrary.org/obo/chebi/inchi"),
                     .InChIkey = properties.SafeGetString("http://purl.obolibrary.org/obo/chebi/inchikey"),
                     .SMILES = properties.SafeGetString("http://purl.obolibrary.org/obo/chebi/smiles"),
@@ -117,7 +119,8 @@ Namespace ChEBI
                     .Wikipedia = xref.TryGetValue("Wikipedia").JoinBy(", "),
                     .HMDB = xref.TryGetValue("HMDB").JoinBy(", "),
                     .KNApSAcK = xref.TryGetValue("KNApSAcK").JoinBy(", "),
-                    .lipidmaps = xref.TryGetValue("LIPID_MAPS_instance").JoinBy(", ")
+                    .lipidmaps = xref.TryGetValue("LIPID_MAPS_instance").JoinBy(", "),
+                    .KEGGdrug = kegg_id.Where(Function(cid) cid.StartsWith("D"c)).JoinBy(", ")
                 }
             }
         End Function
@@ -133,6 +136,12 @@ Namespace ChEBI
             If properties.ContainsKey(key) Then
                 Return properties(key).First.text
             Else
+                key = key.Split("/"c).Last
+
+                If properties.ContainsKey(key) Then
+                    Return properties(key).First.text
+                End If
+
                 Return Nothing
             End If
         End Function
