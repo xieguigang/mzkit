@@ -890,10 +890,9 @@ Module library
     <ExportAPI("getByKEGG")>
     <RApiReturn(GetType(MetaLib))>
     Public Function getByKEGG(repo As LocalRepository, <RRawVectorArgument> kegg_id As Object, Optional env As Environment = Nothing) As Object
-        Dim kegg_index
         Return env.EvaluateFramework(Of String, MetaLib)(kegg_id,
                eval:=Function(cid)
-
+                         Return repo.GetMetadata(cid)
                      End Function)
     End Function
 
