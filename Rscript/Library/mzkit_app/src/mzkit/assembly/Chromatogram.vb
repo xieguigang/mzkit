@@ -441,9 +441,9 @@ Module ChromatogramTools
         Else
             For Each item As SeqValue(Of Chromatogram) In overlapsData _
                 .populates(Of Chromatogram)(env) _
-                .SeqIterator
+                .SeqIterator(offset:=1)
 
-                result(If(item.value.name.StringEmpty(, True), item.i, item.value.name)) = item
+                result(If(item.value.name.StringEmpty(, True), "chromatogram_" & item.i, item.value.name)) = item
             Next
         End If
 
