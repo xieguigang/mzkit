@@ -70,7 +70,8 @@ for(let meta in as.list(metabolites, byrow = TRUE)) {
         pdf(file = file.path(dir, `XIC-${adduct_types[i]}.pdf`)) {
             plot(xic, size = [2400, 1600],
                title = `${name}_${adduct_types[i]} m/z:${round(mz[i],4)}`, 
-               colors = "paper");
+               colors = "paper",
+               fill = FALSE);
         }
     }    
 }
