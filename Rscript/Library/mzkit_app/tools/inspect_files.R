@@ -68,10 +68,10 @@ for(let meta in as.list(metabolites, byrow = TRUE)) {
         xic = unlist(xic) |> chromatogram::overlaps();
 
         pdf(file = file.path(dir, `XIC-${adduct_types[i]}.pdf`)) {
-            plot(xic, size = [2400, 1600],
+            plot(xic, size = [2700, 1920],
                title = `${name}_${adduct_types[i]} m/z:${round(mz[i],4)}`, 
                colors = "paper",
-               fill = FALSE);
+               fill = FALSE, padding = "padding:15% 5% 10% 15%;");
         }
     }    
 }
