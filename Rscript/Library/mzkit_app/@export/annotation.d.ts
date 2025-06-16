@@ -76,6 +76,17 @@ declare namespace annotation {
    */
    function get_peaktable(workspace: any, env?: object): object;
    /**
+    * get mzkit annotation data via a given set of the kegg id for mapping
+    * 
+    * 
+     * @param repo -
+     * @param kegg_id -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function getByKEGG(repo: object, kegg_id: any, env?: object): object;
+   /**
     * Create spectrum reference library from mona msp file
     * 
     * 

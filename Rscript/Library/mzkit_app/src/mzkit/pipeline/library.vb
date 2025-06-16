@@ -87,6 +87,7 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal
@@ -877,6 +878,22 @@ Module library
         Next
 
         Return flags
+    End Function
+
+    ''' <summary>
+    ''' get mzkit annotation data via a given set of the kegg id for mapping
+    ''' </summary>
+    ''' <param name="repo"></param>
+    ''' <param name="kegg_id"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("getByKEGG")>
+    <RApiReturn(GetType(MetaLib))>
+    Public Function getByKEGG(repo As LocalRepository, <RRawVectorArgument> kegg_id As Object, Optional env As Environment = Nothing) As Object
+        Return env.EvaluateFramework(Of String, MetaLib)(kegg_id,
+               eval:=Function(cid)
+                         Return repo.GetMetadata(cid)
+                     End Function)
     End Function
 
     ''' <summary>
