@@ -370,6 +370,7 @@ Module Visual
         Dim legend_split_size As Integer = args.getValue("legend.split_size", env, [default]:=32)
         Dim overlaps As New List(Of NamedCollection(Of ChromatogramTick))
         Dim data As NamedCollection(Of ChromatogramTick)
+        Dim driver As Drivers = env.getDriver
 
         For Each raw In x.overlaps
             If raw.Value Is Nothing OrElse raw.Value.scan_time.IsNullOrEmpty Then
@@ -413,7 +414,8 @@ Module Visual
                 showLegends:=showLegends,
                 legend_split:=legend_split_size,
                 labelLayoutTicks:=-1,
-                ppi:=args.getValue({"dpi", "ppi"}, env, [default]:=200)
+                ppi:=args.getValue({"dpi", "ppi"}, env, [default]:=200),
+                driver:=driver
             )
     End Function
 
