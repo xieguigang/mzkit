@@ -16,14 +16,14 @@ print(metabolites, max.print = 13);
 
 let rawdata = list.files(rawdir, pattern = ["*.mzXML", "*.mzML"]) 
 |> lapply(function(path) {
-        let cache = file.path(path, `${basename(path)}.mzPack`);
+        let cache = file.path(dirname(path), `${basename(path)}.mzPack`);
 
         if (!file.exists(cache)) {
             let data = open.mzpack(path);
             write.mzPack(data, file = cache);
             data;
         } else {
-            open.mzpack(path);
+            open.mzpack(cache);
         }
     }, 
     names = path -> basename(path)
