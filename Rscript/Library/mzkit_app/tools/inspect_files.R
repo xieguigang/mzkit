@@ -1,6 +1,9 @@
 require(mzkit);
 
 imports "formula" from "mzkit";
+imports "data" from "mzkit";
+imports "chromatogram" from "mzkit";
+imports "visual" from "mzplot";
 
 [@info "the csv table file should contains at least two data field: name and formula, adducts field is optional"]
 let metabolites = ?"--targets" || stop("A csv table data file that contains the target name and target formula is required!");
@@ -29,6 +32,7 @@ let rawdata = list.files(rawdir, pattern = ["*.mzXML", "*.mzML"])
     names = path -> basename(path)
 )
 ;
+let raw_names = names(rawdata);
 let adducts = {
     if (as.integer(ion_mode) > 0) {                    
         ["[M+H]+" "[M-H2O+H]+" "[M-2H2O+H]+" "[M+NH4]+" "[M+Na]+" "[2M+H]+" "[M]+"]             
@@ -39,6 +43,7 @@ let adducts = {
 
 for(let meta in as.list(metabolites, byrow = TRUE)) {
     let [name, formula] = meta$formula;
+    let dir = file.path(outputdir, normalizeFileName(name,alphabetOnly=FALSE));
     let exact_mass = formula::eval(formula);
     let adduct_types = {
         if (is.null(meta$adducts)) {
@@ -49,11 +54,26 @@ for(let meta in as.list(metabolites, byrow = TRUE)) {
     }
     let mz = math::mz(exact_mass, mode = adduct_types);
 
+    adduct_types = as.list(adduct_types, names = adduct_types);
+
     print(mz);
     stop();
 
     let xic = lapply(rawdata, function(file) {
-        
+        let filename = [file]::source;
+        let xic_data = lapply(adduct_types, function(type, i) {
+            file 
+            |> XIC(mz = mz[i], tolerance = "da:0.01") 
+            |> toChromatogram(name = `${filename} - ${type}`)
+            ;
+        }); 
+
+        unlist(xic_data);
     });
 
+    xic = unlist(xic) |> chromatogram::overlaps();
+
+    pdf(file = file.path(dir, "XIC.pdf")) {
+        plot(xic);
+    }
 }
