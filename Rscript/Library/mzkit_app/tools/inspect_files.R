@@ -54,23 +54,21 @@ for(let meta in as.list(metabolites, byrow = TRUE)) {
     }
     let mz = math::mz(exact_mass, mode = adduct_types);
 
-    adduct_types = as.list(adduct_types, names = adduct_types);
-
-    let xic = lapply(rawdata, function(file) {
-        let filename = [file]::source;
-        let xic_data = lapply(adduct_types, function(type, i) {
-            file 
+    for(let i in 1:length(adduct_types)) {
+        let xic = lapply(rawdata, function(file) {
+            let filename = [file]::source;
+            let xic_data = file 
             |> XIC(mz = mz[i], tolerance = "ppm:20") 
-            |> toChromatogram(name = `${filename} - ${type}`)
+            |> toChromatogram(name = filename)
             ;
-        }); 
 
-        unlist(xic_data);
-    });
+            return(xic_data);
+        });
 
-    xic = unlist(xic) |> chromatogram::overlaps();
+        xic = unlist(xic) |> chromatogram::overlaps();
 
-    pdf(file = file.path(dir, "XIC.pdf")) {
-        plot(xic);
-    }
+        pdf(file = file.path(dir, `XIC-${adduct_types[i]}.pdf`)) {
+            plot(xic);
+        }
+    }    
 }
