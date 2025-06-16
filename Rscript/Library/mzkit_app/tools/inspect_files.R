@@ -56,9 +56,6 @@ for(let meta in as.list(metabolites, byrow = TRUE)) {
 
     adduct_types = as.list(adduct_types, names = adduct_types);
 
-    print(mz);
-    stop();
-
     let xic = lapply(rawdata, function(file) {
         let filename = [file]::source;
         let xic_data = lapply(adduct_types, function(type, i) {
