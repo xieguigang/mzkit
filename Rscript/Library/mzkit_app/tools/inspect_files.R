@@ -71,7 +71,7 @@ for(let meta in as.list(metabolites, byrow = TRUE)) {
             plot(xic, size = [2700, 1920],
                title = `${name}_${adduct_types[i]} m/z:${round(mz[i],4)}`, 
                colors = "paper",
-               fill = FALSE, padding = "padding:15% 5% 10% 15%;");
+               fill = FALSE, padding = "padding:10% 5% 10% 10%;");
         }
     }    
 }
