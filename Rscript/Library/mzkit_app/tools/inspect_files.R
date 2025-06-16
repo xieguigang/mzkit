@@ -1,5 +1,7 @@
 require(mzkit);
 
+imports "formula" from "mzkit";
+
 [@info "the csv table file should contains at least two data field: name and formula, adducts field is optional"]
 let metabolites = ?"--targets" || stop("A csv table data file that contains the target name and target formula is required!");
 let rawdir = ?"--rawdir" || stop("A directory that contains the raawdata file is required!");
@@ -13,7 +15,17 @@ print("view of the metabolites target for make inspect:");
 print(metabolites, max.print = 13);
 
 let rawdata = list.files(rawdir, pattern = ["*.mzXML", "*.mzML"]) 
-|> lapply(path -> open.mzpack(path), 
+|> lapply(function(path) {
+        let cache = file.path(path, `${basename(path)}.mzPack`);
+
+        if (!file.exists(cache)) {
+            let data = open.mzpack(path);
+            write.mzPack(data, file = cache);
+            data;
+        } else {
+            open.mzpack(path);
+        }
+    }, 
     names = path -> basename(path)
 )
 ;
