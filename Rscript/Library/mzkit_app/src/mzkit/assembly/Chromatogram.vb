@@ -443,7 +443,7 @@ Module ChromatogramTools
                 .populates(Of Chromatogram)(env) _
                 .SeqIterator
 
-                result(item.i) = item
+                result(If(item.value.name.StringEmpty(, True), item.i, item.value.name)) = item
             Next
         End If
 

@@ -42,7 +42,7 @@ let adducts = {
 };
 
 for(let meta in as.list(metabolites, byrow = TRUE)) {
-    let [name, formula] = meta$formula;
+    let [name, formula] = meta;
     let dir = file.path(outputdir, normalizeFileName(name,alphabetOnly=FALSE));
     let exact_mass = formula::eval(formula);
     let adduct_types = {
@@ -60,7 +60,7 @@ for(let meta in as.list(metabolites, byrow = TRUE)) {
         let filename = [file]::source;
         let xic_data = lapply(adduct_types, function(type, i) {
             file 
-            |> XIC(mz = mz[i], tolerance = "da:0.01") 
+            |> XIC(mz = mz[i], tolerance = "ppm:20") 
             |> toChromatogram(name = `${filename} - ${type}`)
             ;
         }); 
