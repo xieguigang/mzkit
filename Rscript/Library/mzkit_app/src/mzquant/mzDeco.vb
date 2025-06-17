@@ -496,6 +496,7 @@ Module mzDeco
         Dim RImin As Double() = CLRVector.asNumeric(df!RImin)
         Dim RImax As Double() = CLRVector.asNumeric(df!RImax)
         Dim groups As Integer() = CLRVector.asInteger(df!groups)
+        Dim into As Double() = CLRVector.asNumeric(df!into)
 
         ' 20241029 for avoid the unexpected data updates from the 
         ' R# runtime symbols, we should make a data copy at here
@@ -523,7 +524,7 @@ Module mzDeco
                 If no_npeaks Then
                     ion = New xcms2()
                 Else
-                    ion = New xcms2(npeaks(i))
+                    ion = New xcms2(npeaks(i), into:=into.ElementAtOrDefault(i))
                 End If
             Else
                 offset = i

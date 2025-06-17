@@ -124,6 +124,7 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     <Category("MS1")> Public Property RImax As Double
 
     Dim int_npeaks As Integer?
+    Dim intensity As Double?
 
     ''' <summary>
     ''' this feature has n sample data(value should be a positive number)
@@ -162,15 +163,21 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     End Property
 
     ''' <summary>
-    ''' A value read only property
+    ''' 
     ''' </summary>
     ''' <returns></returns>
-    Private Property intensity As Double Implements IMs1Scan.intensity
+    Public Property into As Double Implements IMs1Scan.intensity
         Get
-            Return Properties.Values.Sum
+            If intensity Is Nothing Then
+                intensity = Properties.Values.Sum
+            End If
+
+            Return intensity
         End Get
         Set(value As Double)
-            ' do nothing
+            If value > 0 Then
+                intensity = value
+            End If
         End Set
     End Property
 
@@ -195,7 +202,8 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         Me.Properties = expression
     End Sub
 
-    Sub New(npeaks As Integer)
+    Sub New(npeaks As Integer, Optional into As Double? = Nothing)
+        intensity = into
         int_npeaks = npeaks
     End Sub
 
@@ -216,6 +224,8 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         Me.RImin = clone.RImin
         Me.RImax = clone.RImax
         Me.groups = clone.groups
+        Me.intensity = clone.intensity
+        Me.int_npeaks = clone.int_npeaks
     End Sub
 
     ''' <summary>
