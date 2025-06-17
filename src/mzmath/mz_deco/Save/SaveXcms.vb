@@ -112,6 +112,7 @@ Public Module SaveXcms
         Dim rtmax As Integer = headers("rtmax")
         Dim npeaks As Integer = headers.GetSynonymOrdinal("npeaks", ".")
         Dim ri As Integer = headers.GetSynonymOrdinal("ri", "RI", "retention_index")
+        Dim maxinto As Integer = headers.GetSynonymOrdinal("maxinto", "into")
 
         If ID < 0 AndAlso headers.Objects(0) = "" Then
             ' row.names = 1
@@ -128,7 +129,7 @@ Public Module SaveXcms
         Call headers.Delete("mzmin", "mzmax")
         Call headers.Delete("rtmin", "rtmax")
         Call headers.Delete("npeaks", ".", "")
-        Call headers.Delete("maxinto")
+        Call headers.Delete("maxinto", "into")
         Call headers.Delete("ri", "RI")
         Call headers.Delete("RImin", "RImax")
         Call headers.Delete("groups")
@@ -146,6 +147,7 @@ Public Module SaveXcms
         Dim offsets = headers.ToArray
         Dim peaks As xcms2() = s _
             .GetPeaks(deli, ID, mz, mzmin, mzmax, rt, rtmin, rtmax, ri,
+                      npeaks:=npeaks, maxinto:=maxinto,
                       peaks:=offsets) _
             .ToArray
 
@@ -168,6 +170,7 @@ Public Module SaveXcms
                                        mz As Integer, mzmin As Integer, mzmax As Integer,
                                        rt As Integer, rtmin As Integer, rtmax As Integer,
                                        ri As Integer,
+                                       npeaks As Integer, maxinto As Integer,
                                        peaks As SeqValue(Of String)()) As IEnumerable(Of xcms2)
 
         Dim str As Value(Of String) = ""
@@ -186,6 +189,13 @@ Public Module SaveXcms
                 .rtmin = If(rtmin > -1, Val(t(rtmin)), .rt),
                 .RI = If(ri > -1, Val(t(ri)), 0)
             }
+
+            If npeaks > -1 Then
+                pk.SetPeaks(Val(t(npeaks)))
+            End If
+            If maxinto > -1 Then
+                pk.into = Val(t(maxinto))
+            End If
 
             For Each sample As SeqValue(Of String) In peaks
                 pk(sample.value) = Val(t(sample))

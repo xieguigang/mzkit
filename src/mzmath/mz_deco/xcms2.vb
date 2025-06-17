@@ -256,6 +256,10 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         Next
     End Function
 
+    Public Sub SetPeaks(npeaks As Integer)
+        Me.int_npeaks = npeaks
+    End Sub
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return $"{ID}  {mz.ToString("F4")}@{rt.ToString("F4")}  {npeaks}peaks: {Properties.Keys.GetJson}"
