@@ -73,6 +73,18 @@ declare namespace metadb {
       */
       function metal_ion(formula: any, env?: object): boolean;
    }
+   module is {
+      /**
+       * check of the given formula is metal ion or not?
+       * 
+       * 
+        * @param formula -
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function metal_ion(formula: any, env?: object): boolean;
+   }
    /**
     * cast the given dataframe as the ion feature annotation result
     * 
