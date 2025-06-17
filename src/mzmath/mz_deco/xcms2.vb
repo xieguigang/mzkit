@@ -304,12 +304,23 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     ''' </summary>
     ''' <returns></returns>
     Public Function Impute() As xcms2
-        Dim pos_min As Double = (Aggregate xi As Double In Properties.Values Where xi > 0 Into Min(xi)) / 2
-        Dim fill_missing = Properties _
-            .ToDictionary(Function(k) k.Key,
-                          Function(k)
-                              Return If(k.Value.IsNaNImaginary OrElse k.Value <= 0, pos_min, k.Value)
-                          End Function)
+        Dim is_zero As Boolean = Properties.Values.All(Function(xi) xi = 0.0)
+        Dim fill_missing As Dictionary(Of String, Double)
+
+        If Not is_zero Then
+            Dim pos_min As Double = (Aggregate xi As Double
+                                     In Properties.Values
+                                     Where xi > 0
+                                     Into Min(xi)) / 2
+
+            fill_missing = Properties _
+                .ToDictionary(Function(k) k.Key,
+                              Function(k)
+                                  Return If(k.Value.IsNaNImaginary OrElse k.Value <= 0, pos_min, k.Value)
+                              End Function)
+        Else
+            fill_missing = New Dictionary(Of String, Double)(Properties)
+        End If
 
         Return New xcms2 With {
             .ID = ID,
