@@ -338,6 +338,16 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         }
     End Function
 
+    Public Sub AddSamples(samples As Dictionary(Of String, Double))
+        For Each sample As KeyValuePair(Of String, Double) In samples
+            If propertyTable.ContainsKey(sample.Key) Then
+                propertyTable(sample.Key) = propertyTable(sample.Key) + sample.Value
+            Else
+                propertyTable.Add(sample.Key, sample.Value)
+            End If
+        Next
+    End Sub
+
     Public Shared Function Merge(group As IEnumerable(Of xcms2), Optional aggregate As Func(Of Double, Double, Double) = Nothing) As xcms2
         Static sum As Func(Of Double, Double, Double) = ParseFlag("sum").GetAggregateFunction2
 

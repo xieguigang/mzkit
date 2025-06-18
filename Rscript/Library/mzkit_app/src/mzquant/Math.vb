@@ -57,6 +57,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.Framework.IO
@@ -72,6 +73,7 @@ Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Components.[Interface]
+Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
@@ -359,5 +361,53 @@ Module QuantifyMath
                 joint:=joint
             ) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' merge all peakset tables into one peaktable object
+    ''' </summary>
+    ''' <param name="tables"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' this function merge two peaktable directly via the unique id reference
+    ''' </remarks>
+    <ExportAPI("merge_tables")>
+    <RApiReturn(GetType(PeakSet))>
+    Public Function mergeTables(<RRawVectorArgument> tables As Object, Optional env As Environment = Nothing) As Object
+        Dim peaksets = pipeline.TryCreatePipeline(Of PeakSet)(tables, env)
+
+        If peaksets.isError Then
+            Return peaksets.getError
+        End If
+
+        Dim unions As New Dictionary(Of String, xcms2)
+        Dim annos As New List(Of Dictionary(Of String, MetID))
+
+        For Each part As PeakSet In peaksets.populates(Of PeakSet)(env)
+            If Not part.annotations.IsNullOrEmpty Then
+                Call annos.Add(part.annotations)
+            End If
+
+            For Each peak As xcms2 In part.peaks
+                Dim datapeak As xcms2 = unions.TryGetValue(peak.ID)
+
+                If datapeak Is Nothing Then
+                    Call unions.Add(New xcms2(peak))
+                Else
+                    Call datapeak.AddSamples(peak.Properties)
+                End If
+            Next
+        Next
+
+        Return New PeakSet(unions.Values) With {
+            .annotations = annos _
+                .IteratesALL _
+                .GroupBy(Function(a) a.Key) _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return a.First.Value
+                              End Function)
+        }
     End Function
 End Module
