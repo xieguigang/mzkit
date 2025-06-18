@@ -410,4 +410,32 @@ Module QuantifyMath
                               End Function)
         }
     End Function
+
+    ''' <summary>
+    ''' mapping sample id to sample names
+    ''' </summary>
+    ''' <param name="x">the sample id is used as the sample identifier</param>
+    ''' <param name="samples">the mapping of sample id to sample name</param>
+    ''' <returns>
+    ''' the peaktable that use the sample name as the sample identifier.
+    ''' </returns>
+    <ExportAPI("map_samplenames")>
+    Public Function MapSampleNames(x As PeakSet, samples As SampleInfo()) As PeakSet
+        Dim mapIndex = samples.ToDictionary(Function(a) a.ID)
+        Dim mapNames = x.peaks _
+            .Select(Function(xi)
+                        xi = New xcms2(xi)
+                        xi.Properties = xi.Properties _
+                            .ToDictionary(Function(si)
+                                              Return If(mapIndex.ContainsKey(si.Key), mapIndex(si.Key).sample_name, si.Key)
+                                          End Function,
+                                          Function(si)
+                                              Return si.Value
+                                          End Function)
+                        Return xi
+                    End Function) _
+            .ToArray
+
+        Return New PeakSet(mapNames) With {.annotations = x.annotations}
+    End Function
 End Module
