@@ -213,6 +213,15 @@ declare namespace math {
    */
    function jaccardSet(query: number, ref: number, tolerance?: any, env?: object): object;
    /**
+    * mapping sample id to sample names
+    * 
+    * 
+     * @param x the sample id is used as the sample identifier
+     * @param samples the mapping of sample id to sample name
+     * @return the peaktable that use the sample name as the sample identifier.
+   */
+   function map_samplenames(x: object, samples: object): object;
+   /**
     * merge all peakset tables into one peaktable object
     * 
     * > this function merge two peaktable directly via the unique id reference

@@ -9,3 +9,4 @@
 + [chromatogram](math/chromatogram.1) Create a chromatogram data from a dataframe object
 + [peakROI](math/peakROI.1) ### Peak finding
 + [merge_tables](math/merge_tables.1) merge all peakset tables into one peaktable object
++ [map_samplenames](math/map_samplenames.1) mapping sample id to sample names
