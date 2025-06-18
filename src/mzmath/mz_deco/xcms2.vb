@@ -68,9 +68,16 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+
+Public Enum Imputation
+    None
+    Min
+    Median
+End Enum
 
 ''' <summary>
 ''' an ion peak ROI data object, the peak table format table file model of xcms version 2
@@ -304,15 +311,23 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     ''' impute missing data with half of the min positive value
     ''' </summary>
     ''' <returns></returns>
-    Public Function Impute() As xcms2
+    Public Function Impute(Optional method As Imputation = Imputation.Min) As xcms2
         Dim is_zero As Boolean = Properties.Values.All(Function(xi) xi = 0.0)
         Dim fill_missing As Dictionary(Of String, Double)
 
         If Not is_zero Then
-            Dim pos_min As Double = (Aggregate xi As Double
-                                     In Properties.Values
-                                     Where xi > 0
-                                     Into Min(xi)) / 2
+            Dim pos_min As Double
+
+            If method = Imputation.Min Then
+                pos_min = (Aggregate xi As Double
+                           In Properties.Values
+                           Where xi > 0
+                           Into Min(xi)) / 2
+            Else
+                pos_min = Properties.Values _
+                    .Where(Function(xi) xi > 0) _
+                    .Median
+            End If
 
             fill_missing = Properties _
                 .ToDictionary(Function(k) k.Key,

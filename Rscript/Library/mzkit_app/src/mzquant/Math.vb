@@ -124,17 +124,17 @@ Module QuantifyMath
     ''' <param name="x"></param>
     ''' <returns></returns>
     <ExportAPI("preprocessing")>
-    Public Function impute(x As PeakSet,
-                           Optional scale As Double = 10 ^ 8,
-                           Optional no_impute As Boolean = False) As PeakSet
+    Public Function impute_f(x As PeakSet,
+                             Optional scale As Double = 10 ^ 8,
+                             Optional impute As Imputation = Imputation.Min) As PeakSet
 
         Dim imputes As xcms2() = x.peaks _
             .AsParallel _
             .Select(Function(k)
-                        If no_impute Then
+                        If impute = Imputation.None Then
                             Return New xcms2(k)
                         Else
-                            Return k.Impute
+                            Return k.Impute(impute)
                         End If
                     End Function) _
             .ToArray
