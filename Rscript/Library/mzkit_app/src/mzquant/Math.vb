@@ -57,10 +57,13 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.GraphTheory.KNearNeighbors
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
@@ -119,12 +122,83 @@ Module QuantifyMath
     ''' <param name="x"></param>
     ''' <returns></returns>
     <ExportAPI("preprocessing")>
-    Public Function impute(x As PeakSet, Optional scale As Double = 10 ^ 8) As PeakSet
-        Dim imputes As xcms2() = x.peaks.AsParallel.Select(Function(k) k.Impute).ToArray
+    Public Function impute(x As PeakSet,
+                           Optional scale As Double = 10 ^ 8,
+                           Optional no_impute As Boolean = False) As PeakSet
+
+        Dim imputes As xcms2() = x.peaks _
+            .AsParallel _
+            .Select(Function(k)
+                        If no_impute Then
+                            Return New xcms2(k)
+                        Else
+                            Return k.Impute
+                        End If
+                    End Function) _
+            .ToArray
         Dim norm As xcms2() = xcms2.TotalPeakSum(imputes, scale).ToArray
-        Dim peaktable As New PeakSet With {.peaks = norm}
+        Dim peaktable As New PeakSet With {
+            .peaks = norm,
+            .annotations = x.annotations
+        }
 
         Return peaktable
+    End Function
+
+    <ExportAPI("preprocessing.knn")>
+    Public Function impute_knn(x As PeakSet, Optional scale As Double = 10 ^ 8, Optional k As Integer = 3) As PeakSet
+        Dim samples As Dictionary(Of String, Double()) = x.sampleNames _
+            .ToDictionary(Function(name) name,
+                          Function(name)
+                              Return x.SampleVector(name)
+                          End Function)
+        ' find knn for each sample
+        Dim ksamples = samples.AsParallel _
+            .Select(Function(name)
+                        Dim sample As Double() = name.Value
+                        Dim sortDist = samples _
+                            .Where(Function(other) other.Key <> name.Key) _
+                            .OrderBy(Function(other) sample.EuclideanDistance(other.Value)) _
+                            .Take(k) _
+                            .ToArray
+
+                        Return (name, KNN:=sortDist)
+                    End Function) _
+            .ToArray
+        Dim peaks As xcms2() = x.peaks.Select(Function(clone) New xcms2(clone)).ToArray
+
+        ' fill by knn
+        For Each sample In TqdmWrapper.Wrap(ksamples)
+            Dim v As Double() = sample.name.Value
+            Dim m As Double()() = sample.KNN.Select(Function(a) a.Value).ToArray
+            Dim sample_name As String = sample.name.Key
+
+            For i As Integer = 0 To v.Length - 1
+                Dim offset As Integer = i
+
+                If v(i) <= 0 OrElse v(i).IsNaNImaginary Then
+                    Dim impute As Double() = m _
+                        .Select(Function(si) si(offset)) _
+                        .Where(Function(si) si > 0 AndAlso Not si.IsNaNImaginary) _
+                        .ToArray
+
+                    If impute.Length = 0 Then
+                        v(i) = 0
+                    Else
+                        v(i) = impute.Average
+                    End If
+                End If
+
+                ' update peakset matrix
+                peaks(i)(sample_name) = v(i)
+            Next
+        Next
+
+        Dim norm As xcms2() = xcms2.TotalPeakSum(peaks, scale).ToArray
+
+        Return New PeakSet(peaks) With {
+            .annotations = x.annotations
+        }
     End Function
 
     ''' <summary>
