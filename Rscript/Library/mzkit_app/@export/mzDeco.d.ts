@@ -230,9 +230,11 @@ declare namespace mzDeco {
      *  of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2`` peak feature data.
      * @param sampleNames A character vector of the sample names for make 
      *  the peaktable projection.
+     * @param env 
+     * + default value Is ``null``.
      * @return A sub-table of the input original peaktable data
    */
-   function peak_subset(peaktable: object, sampleNames: string): object;
+   function peak_subset(peaktable: object, sampleNames: any, env?: object): object;
    /**
     * extract a collection of xic data for a specific ion feature
     *  

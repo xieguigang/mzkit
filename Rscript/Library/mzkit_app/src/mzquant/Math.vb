@@ -185,7 +185,7 @@ Module QuantifyMath
                         .ToArray
 
                     If impute.Length = 0 Then
-                        v(i) = 0
+                        v(i) = randf(0.5, 1)
                     Else
                         v(i) = impute.Average
                     End If

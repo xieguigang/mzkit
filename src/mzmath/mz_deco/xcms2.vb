@@ -70,6 +70,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 ''' <summary>
 ''' an ion peak ROI data object, the peak table format table file model of xcms version 2
@@ -319,7 +320,13 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
                                   Return If(k.Value.IsNaNImaginary OrElse k.Value <= 0, pos_min, k.Value)
                               End Function)
         Else
-            fill_missing = New Dictionary(Of String, Double)(Properties)
+            ' random fill for all zero
+            ' no differece in t-test
+            fill_missing = Properties _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return randf.NextDouble(0.5, 1)
+                              End Function)
         End If
 
         Return New xcms2 With {
