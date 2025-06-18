@@ -91,6 +91,7 @@ Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.Analysis.HTS.DataFrame
+Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -618,8 +619,24 @@ Module mzDeco
     ''' <returns>A sub-table of the input original peaktable data</returns>
     <ExportAPI("peak_subset")>
     <RApiReturn(GetType(PeakSet))>
-    Public Function peakSubset(peaktable As PeakSet, sampleNames As String()) As Object
-        Return peaktable.Subset(sampleNames)
+    Public Function peakSubset(peaktable As PeakSet,
+                               <RRawVectorArgument>
+                               sampleNames As Object,
+                               Optional env As Environment = Nothing) As Object
+
+        If sampleNames Is Nothing Then
+            Return Nothing
+        Else
+            sampleNames = UnsafeTryCastGenericArray(CLRVector.asObject(sampleNames))
+        End If
+
+        If TypeOf sampleNames Is String() Then
+            Return peaktable.Subset(DirectCast(sampleNames, String()))
+        ElseIf TypeOf sampleNames Is SampleInfo() Then
+            Return peaktable.Subset(DirectCast(sampleNames, SampleInfo()).Select(Function(si) si.ID).ToArray)
+        Else
+            Return Message.InCompatibleType(GetType(String), sampleNames.GetType, env)
+        End If
     End Function
 
     ''' <summary>
