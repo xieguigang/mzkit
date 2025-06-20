@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>data matrix pre-processing before run data analysis</title>
+    <title>merge all peakset tables into one peaktable object</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>preprocessing {math}</td>
+                <td>merge_tables {math}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>data matrix pre-processing before run data analysis</h2>
+        <h2>merge all peakset tables into one peaktable object</h2>
 
         <h3>Description</h3>
 
@@ -27,24 +27,26 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>preprocessing</strong>(<i>x</i>,
-    <i>scale</i> = <span style='color: green;'>100000000</span>,
-    <i>impute</i> = Min);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>merge_tables</strong>(<i>tables</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>x</dt>
-<dd><p>[as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a>]</p></dd>
+<dt>tables</dt>
+<dd><p>-</p></dd>
+
+
+<dt>env</dt>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
 
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>this function merge two peaktable directly via the unique id reference</p>
 
         <h3 style="display: block">Authors</h3>
 

@@ -245,7 +245,7 @@ Public Class AdductsRanking
             If AnthocyaninValidator.CheckRules(formula.CountsByElement) > 40 Then
                 Return maxValue
             Else
-                Return 0.5
+                Return 0.05
             End If
         End If
 
@@ -285,7 +285,7 @@ Public Class AdductsRanking
         Dim adduct_str As String = adduct.ToString
 
         If adduct_str = "[M]-" Then
-            Return 0.5
+            Return 0.01
         End If
 
         ' deal with some special adducts type situation

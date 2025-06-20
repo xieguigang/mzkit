@@ -244,6 +244,13 @@ Public Class PeakSet : Implements Enumeration(Of xcms2)
         }
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function SampleVector(sampleName As String) As Double()
+        Return m_peaksdata _
+            .Select(Function(roi) roi(sampleName)) _
+            .ToArray
+    End Function
+
     Public Function Subset(sampleNames As String()) As PeakSet
         Dim subpeaks As xcms2() = peaks _
             .Select(Function(pk)

@@ -439,11 +439,15 @@ Module ChromatogramTools
         If overlapsData.isError Then
             Return overlapsData.getError
         Else
+            Dim name As String
+
             For Each item As SeqValue(Of Chromatogram) In overlapsData _
                 .populates(Of Chromatogram)(env) _
-                .SeqIterator
+                .SeqIterator(offset:=1)
 
-                result(item.i) = item
+                name = item.value.name
+                name = If(name.StringEmpty(, True), "chromatogram_" & item.i, name)
+                result(name) = item
             Next
         End If
 

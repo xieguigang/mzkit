@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>data matrix pre-processing before run data analysis</title>
+    <title>mapping sample id to sample names</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>preprocessing {math}</td>
+                <td>map_samplenames {math}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>data matrix pre-processing before run data analysis</h2>
+        <h2>mapping sample id to sample names</h2>
 
         <h3>Description</h3>
 
@@ -27,9 +27,7 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>preprocessing</strong>(<i>x</i>,
-    <i>scale</i> = <span style='color: green;'>100000000</span>,
-    <i>impute</i> = Min);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>map_samplenames</strong>(<i>x</i>, <i>samples</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -37,7 +35,11 @@
         <table>
             
 <dt>x</dt>
-<dd><p>[as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a>]</p></dd>
+<dd><p>the sample id is used as the sample identifier. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a>]</p></dd>
+
+
+<dt>samples</dt>
+<dd><p>the mapping of sample id to sample name. [as <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/ExperimentDesigner/SampleInfo.html">SampleInfo</a>]</p></dd>
 
         </table>
 
@@ -52,7 +54,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a></li></ul>
+        <p>the peaktable that use the sample name as the sample identifier.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

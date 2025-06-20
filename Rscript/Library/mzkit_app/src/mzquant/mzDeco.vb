@@ -91,6 +91,7 @@ Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.Analysis.HTS.DataFrame
+Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -496,6 +497,7 @@ Module mzDeco
         Dim RImin As Double() = CLRVector.asNumeric(df!RImin)
         Dim RImax As Double() = CLRVector.asNumeric(df!RImax)
         Dim groups As Integer() = CLRVector.asInteger(df!groups)
+        Dim into As Double() = CLRVector.asNumeric(df!into)
 
         ' 20241029 for avoid the unexpected data updates from the 
         ' R# runtime symbols, we should make a data copy at here
@@ -523,7 +525,7 @@ Module mzDeco
                 If no_npeaks Then
                     ion = New xcms2()
                 Else
-                    ion = New xcms2(npeaks(i))
+                    ion = New xcms2(npeaks(i), into:=into.ElementAtOrDefault(i))
                 End If
             Else
                 offset = i
@@ -617,8 +619,24 @@ Module mzDeco
     ''' <returns>A sub-table of the input original peaktable data</returns>
     <ExportAPI("peak_subset")>
     <RApiReturn(GetType(PeakSet))>
-    Public Function peakSubset(peaktable As PeakSet, sampleNames As String()) As Object
-        Return peaktable.Subset(sampleNames)
+    Public Function peakSubset(peaktable As PeakSet,
+                               <RRawVectorArgument>
+                               sampleNames As Object,
+                               Optional env As Environment = Nothing) As Object
+
+        If sampleNames Is Nothing Then
+            Return Nothing
+        Else
+            sampleNames = UnsafeTryCastGenericArray(CLRVector.asObject(sampleNames))
+        End If
+
+        If TypeOf sampleNames Is String() Then
+            Return peaktable.Subset(DirectCast(sampleNames, String()))
+        ElseIf TypeOf sampleNames Is SampleInfo() Then
+            Return peaktable.Subset(DirectCast(sampleNames, SampleInfo()).Select(Function(si) si.ID).ToArray)
+        Else
+            Return Message.InCompatibleType(GetType(String), sampleNames.GetType, env)
+        End If
     End Function
 
     ''' <summary>

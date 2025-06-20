@@ -57,10 +57,14 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.GraphTheory.KNearNeighbors
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
@@ -69,6 +73,7 @@ Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Components.[Interface]
+Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
@@ -119,12 +124,83 @@ Module QuantifyMath
     ''' <param name="x"></param>
     ''' <returns></returns>
     <ExportAPI("preprocessing")>
-    Public Function impute(x As PeakSet, Optional scale As Double = 10 ^ 8) As PeakSet
-        Dim imputes As xcms2() = x.peaks.AsParallel.Select(Function(k) k.Impute).ToArray
+    Public Function impute_f(x As PeakSet,
+                             Optional scale As Double = 10 ^ 8,
+                             Optional impute As Imputation = Imputation.Min) As PeakSet
+
+        Dim imputes As xcms2() = x.peaks _
+            .AsParallel _
+            .Select(Function(k)
+                        If impute = Imputation.None Then
+                            Return New xcms2(k)
+                        Else
+                            Return k.Impute(impute)
+                        End If
+                    End Function) _
+            .ToArray
         Dim norm As xcms2() = xcms2.TotalPeakSum(imputes, scale).ToArray
-        Dim peaktable As New PeakSet With {.peaks = norm}
+        Dim peaktable As New PeakSet With {
+            .peaks = norm,
+            .annotations = x.annotations
+        }
 
         Return peaktable
+    End Function
+
+    <ExportAPI("preprocessing.knn")>
+    Public Function impute_knn(x As PeakSet, Optional scale As Double = 10 ^ 8, Optional k As Integer = 3) As PeakSet
+        Dim samples As Dictionary(Of String, Double()) = x.sampleNames _
+            .ToDictionary(Function(name) name,
+                          Function(name)
+                              Return x.SampleVector(name)
+                          End Function)
+        ' find knn for each sample
+        Dim ksamples = samples.AsParallel _
+            .Select(Function(name)
+                        Dim sample As Double() = name.Value
+                        Dim sortDist = samples _
+                            .Where(Function(other) other.Key <> name.Key) _
+                            .OrderBy(Function(other) sample.EuclideanDistance(other.Value)) _
+                            .Take(k) _
+                            .ToArray
+
+                        Return (name, KNN:=sortDist)
+                    End Function) _
+            .ToArray
+        Dim peaks As xcms2() = x.peaks.Select(Function(clone) New xcms2(clone)).ToArray
+
+        ' fill by knn
+        For Each sample In TqdmWrapper.Wrap(ksamples)
+            Dim v As Double() = sample.name.Value
+            Dim m As Double()() = sample.KNN.Select(Function(a) a.Value).ToArray
+            Dim sample_name As String = sample.name.Key
+
+            For i As Integer = 0 To v.Length - 1
+                Dim offset As Integer = i
+
+                If v(i) <= 0 OrElse v(i).IsNaNImaginary Then
+                    Dim impute As Double() = m _
+                        .Select(Function(si) si(offset)) _
+                        .Where(Function(si) si > 0 AndAlso Not si.IsNaNImaginary) _
+                        .ToArray
+
+                    If impute.Length = 0 Then
+                        v(i) = randf(0.5, 1)
+                    Else
+                        v(i) = impute.Average
+                    End If
+                End If
+
+                ' update peakset matrix
+                peaks(i)(sample_name) = v(i)
+            Next
+        Next
+
+        Dim norm As xcms2() = xcms2.TotalPeakSum(peaks, scale).ToArray
+
+        Return New PeakSet(peaks) With {
+            .annotations = x.annotations
+        }
     End Function
 
     ''' <summary>
@@ -285,5 +361,81 @@ Module QuantifyMath
                 joint:=joint
             ) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' merge all peakset tables into one peaktable object
+    ''' </summary>
+    ''' <param name="tables"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' this function merge two peaktable directly via the unique id reference
+    ''' </remarks>
+    <ExportAPI("merge_tables")>
+    <RApiReturn(GetType(PeakSet))>
+    Public Function mergeTables(<RRawVectorArgument> tables As Object, Optional env As Environment = Nothing) As Object
+        Dim peaksets = pipeline.TryCreatePipeline(Of PeakSet)(tables, env)
+
+        If peaksets.isError Then
+            Return peaksets.getError
+        End If
+
+        Dim unions As New Dictionary(Of String, xcms2)
+        Dim annos As New List(Of Dictionary(Of String, MetID))
+
+        For Each part As PeakSet In peaksets.populates(Of PeakSet)(env)
+            If Not part.annotations.IsNullOrEmpty Then
+                Call annos.Add(part.annotations)
+            End If
+
+            For Each peak As xcms2 In part.peaks
+                Dim datapeak As xcms2 = unions.TryGetValue(peak.ID)
+
+                If datapeak Is Nothing Then
+                    Call unions.Add(New xcms2(peak))
+                Else
+                    Call datapeak.AddSamples(peak.Properties)
+                End If
+            Next
+        Next
+
+        Return New PeakSet(unions.Values) With {
+            .annotations = annos _
+                .IteratesALL _
+                .GroupBy(Function(a) a.Key) _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return a.First.Value
+                              End Function)
+        }
+    End Function
+
+    ''' <summary>
+    ''' mapping sample id to sample names
+    ''' </summary>
+    ''' <param name="x">the sample id is used as the sample identifier</param>
+    ''' <param name="samples">the mapping of sample id to sample name</param>
+    ''' <returns>
+    ''' the peaktable that use the sample name as the sample identifier.
+    ''' </returns>
+    <ExportAPI("map_samplenames")>
+    Public Function MapSampleNames(x As PeakSet, samples As SampleInfo()) As PeakSet
+        Dim mapIndex = samples.ToDictionary(Function(a) a.ID)
+        Dim mapNames = x.peaks _
+            .Select(Function(xi)
+                        xi = New xcms2(xi)
+                        xi.Properties = xi.Properties _
+                            .ToDictionary(Function(si)
+                                              Return If(mapIndex.ContainsKey(si.Key), mapIndex(si.Key).sample_name, si.Key)
+                                          End Function,
+                                          Function(si)
+                                              Return si.Value
+                                          End Function)
+                        Return xi
+                    End Function) _
+            .ToArray
+
+        Return New PeakSet(mapNames) With {.annotations = x.annotations}
     End Function
 End Module

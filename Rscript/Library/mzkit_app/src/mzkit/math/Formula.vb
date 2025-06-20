@@ -70,6 +70,7 @@ Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
@@ -89,9 +90,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports any = Microsoft.VisualBasic.Scripting
 Imports RDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal.ConsolePrinter
-Imports std = System.Math
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
-Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 
 ''' <summary>
 ''' The chemical formulae toolkit

@@ -837,8 +837,20 @@ Module MetaDbXref
     ''' <returns></returns>
     <ExportAPI("has.metal_ion")>
     <RApiReturn(GetType(Boolean))>
-    Public Function TestMetaIon(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
+    Public Function TestMetalIon(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
         Return env.EvaluateFramework(Of String, Boolean)(formula, Function(f) MetalIons.HasMetalIon(f))
+    End Function
+
+    ''' <summary>
+    ''' check of the given formula is metal ion or not?
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("is.metal_ion")>
+    <RApiReturn(GetType(Boolean))>
+    Public Function AssertMetalIon(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
+        Return env.EvaluateFramework(Of String, Boolean)(formula, Function(f) MetalIons.IsMetalIon(f))
     End Function
 
     ''' <summary>

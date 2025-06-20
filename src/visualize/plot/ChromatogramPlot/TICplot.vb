@@ -394,6 +394,10 @@ Public Class TICplot : Inherits Plot
 
         If theme.drawLabels Then Call DrawLabels(g, rect, labels, theme, labelLayoutTicks)
         If theme.drawLegend Then Call DrawTICLegends(g, canvas, legends, theme.legendSplitSize, outside:=False)
+
+        If Not main.StringEmpty() Then
+            Call DrawMainTitle(g, canvas.PlotRegion(css))
+        End If
     End Sub
 
     Private Iterator Function GetLabels(g As IGraphics, scaler As DataScaler, peakTimes As IEnumerable(Of NamedValue(Of ChromatogramTick))) As IEnumerable(Of Label)

@@ -241,6 +241,7 @@ Public Module ChromatogramPlot
                             Optional drawParallelAxis As Boolean = False,
                             Optional intensityMax As Double = 0,
                             Optional spline As Single = 0,
+                            Optional title As String = Nothing,
                             Optional ppi As Double = 100,
                             Optional driver As Drivers = Drivers.Default) As GraphicsData
 
@@ -274,7 +275,8 @@ Public Module ChromatogramPlot
                 theme:=theme
             ) With {
                 .xlabel = xlabel,
-                .ylabel = ylabel
+                .ylabel = ylabel,
+                .main = title
             }
         Else
             TIC = New TICplot(
@@ -289,7 +291,8 @@ Public Module ChromatogramPlot
                 bspline:=spline
             ) With {
                 .xlabel = xlabel,
-                .ylabel = ylabel
+                .ylabel = ylabel,
+                .main = title
             }
         End If
 
