@@ -284,7 +284,15 @@ Public Class WiffScanFileReader : Implements IDisposable
 
         Dim msexperiment2 As MSExperiment = Me.wiffExperiments(k)
         Dim details As MSExperimentInfo = msexperiment2.Details
-        Dim massSpectrum As MassSpectrum = msexperiment2.GetMassSpectrum(j)
+        Dim massSpectrum As MassSpectrum
+
+        Try
+            massSpectrum = msexperiment2.GetMassSpectrum(j)
+        Catch ex As Exception
+            Call App.LogException(ex, $"get_mass_spectrum@{j}")
+            Return
+        End Try
+
         Dim massSpectrumInfo As MassSpectrumInfo = msexperiment2.GetMassSpectrumInfo(j)
         Dim isolationCenter As Double = 0.0
         Dim isolationWidth As Double = -1.0
