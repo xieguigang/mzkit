@@ -128,6 +128,13 @@ Public Module ChromatogramReader
         }
     End Function
 
+    ''' <summary>
+    ''' Construct a chromatogram object from the raw chromatogram data.
+    ''' This function will extract the TIC and BPC chromatograms from the raw data
+    ''' and return a new Chromatogram object containing the scan time, TIC, and BPC.
+    ''' </summary>
+    ''' <param name="channels"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function GetIonsChromatogram(channels As IEnumerable(Of RawChromatogram)) As Chromatogram
         Dim allTicks As ChromatogramTick() = channels _
