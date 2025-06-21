@@ -116,7 +116,7 @@ Public Class ScanInfo : Implements IRetentionTime, IMsScanData
         Dim datatitle As String = $"{Me.DataTitle}; {Polarity} {ScanMode} npeaks={PeaksCount}, m/z scan=[{LowMz}, {HighMz}], basepeak={BasePeakMz}({BasePeakIntensity})"
 
         If MSLevel = 1 Then
-            xcms_id = $"RT={RetentionTime / 60}min"
+            xcms_id = $"RT={(RetentionTime / 60).ToString("F2")}min"
         Else
             If nT = 0 Then
                 xcms_id = $" M{stdNum.Round(PrecursorMz)}"
