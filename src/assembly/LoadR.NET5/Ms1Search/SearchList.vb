@@ -31,7 +31,24 @@ Public Class SearchList : Inherits ISearchOp
                 scores = CLRVector.asNumeric(sublist.getByName(field_score))
             End If
 
+            Dim all As New List(Of MzSearch)
 
+            For i As Integer = 0 To mz.Length - 1
+                Dim result = repo.QueryByMz(mz(i)).ToArray
+                Dim offset As Integer = i
+                Dim score As Double = scores(i)
+                Dim searchResult As MzSearch() = result _
+                    .Select(Function(r)
+                                Dim o As New MzSearch(r, offset + 1)
+                                o.score = score * o.score
+                                Return o
+                            End Function) _
+                    .ToArray
+
+                Call all.AddRange(searchResult)
+            Next
+
+            Return all
         Else
             Dim mz As Double() = CLRVector.asNumeric(item.Value)
 
