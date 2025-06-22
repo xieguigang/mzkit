@@ -73,6 +73,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 
@@ -104,6 +105,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
     ReadOnly score As Func(Of Compound, Double)
     ReadOnly xrefs As Func(Of Compound, Dictionary(Of String, String))
     ReadOnly mzIndex As MassSearchIndex(Of IonIndex)
+    ReadOnly reduceMetalIon As Boolean = True
 
     ''' <summary>
     ''' index by unique id
@@ -242,6 +244,14 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
                             Dim rank As Double = ranking.Rank(FormulaScanner.ScanFormula(cpd.Formula), type)
 
                             rank = rank / (ppm + 1) / (i + 1)
+
+                            If reduceMetalIon Then
+                                If MetalIons.IsMetalIon(cpd.Formula) Then
+                                    rank = 0
+                                ElseIf MetalIons.HasMetalIon(cpd.Formula) Then
+                                    rank = rank / 2
+                                End If
+                            End If
 
                             ' 20220426
                             ' precursor type has priority order
