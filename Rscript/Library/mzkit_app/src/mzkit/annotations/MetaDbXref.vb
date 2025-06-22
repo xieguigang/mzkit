@@ -676,58 +676,6 @@ Module MetaDbXref
     End Function
 
     <Extension>
-    Private Function searchMzVector(mz As Double(), queryEngine As IMzQuery, opt As mzOpts) As Object
-        Dim unique As Boolean = opt.unique
-        Dim uniqueByScore As Boolean = opt.uniqueByScore
-
-        If mz.Length = 1 Then
-            Dim all = queryEngine.QueryByMz(mz(Scan0)).ToArray
-
-            If unique Then
-                If uniqueByScore Then
-                    Return all _
-                        .OrderByDescending(Function(d) d.score) _
-                        .FirstOrDefault
-                Else
-                    Return all.OrderBy(Function(d) d.ppm).FirstOrDefault
-                End If
-            Else
-                Return all
-            End If
-        Else
-            Return New list With {
-                .slots = mz _
-                    .Select(Function(mzi, i) (mzi, i)) _
-                    .AsParallel _
-                    .Select(Function(t)
-                                Dim mzi As Double = t.mzi
-                                Dim i As Integer = t.i
-                                Dim result As Object = queryEngine.QueryByMz(mzi).ToArray
-
-                                If unique Then
-                                    If uniqueByScore Then
-                                        result = DirectCast(result, MzQuery()) _
-                                            .OrderByDescending(Function(d) d.score) _
-                                            .FirstOrDefault
-                                    Else
-                                        result = DirectCast(result, MzQuery()) _
-                                            .OrderBy(Function(d) d.ppm) _
-                                            .FirstOrDefault
-                                    End If
-                                End If
-
-                                Return (mzi.ToString, result, i)
-                            End Function) _
-                    .OrderBy(Function(t) t.i) _
-                    .ToDictionary(Function(mzi) mzi.Item1,
-                                  Function(mzi) As Object
-                                      Return mzi.Item2
-                                  End Function)
-            }
-        End If
-    End Function
-
-    <Extension>
     Private Function makeUniqueQuery(query As list,
                                      mzi As String,
                                      uniqueByScore As Boolean,
