@@ -15,6 +15,11 @@ Public Class SearchTable : Inherits ISearchOp
         For Each row As list In table.getRowList
             Dim mzi As Double = CLRVector.asNumeric(row(field_mz)).First
             Dim query As MzQuery() = repo.QueryByMz(mzi).ToArray
+
+            If query.IsNullOrEmpty Then
+                Continue For
+            End If
+
             Dim meta As KeyValuePair(Of String, Object)() = row.slots.ToArray
             Dim score As Double = 1.0
 
