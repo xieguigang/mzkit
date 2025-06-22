@@ -612,14 +612,13 @@ Module MetaDbXref
     End Function
 
     <Extension>
-    Private Function search1(id As KeyValuePair(Of String, Object),
-                             mz As list,
+    Private Function search1(mz As KeyValuePair(Of String, Object),
                              queryEngine As IMzQuery,
                              unique As Boolean,
                              uniqueByScore As Boolean,
                              env As Environment) As Object
 
-        Dim mzi As Double = mz.getValue(Of Double)(id.Key, env)
+        Dim mzi As Object = mz.Value
         Dim all As MzQuery() = queryEngine.QueryByMz(mzi).ToArray
 
         If unique Then
@@ -647,7 +646,7 @@ Module MetaDbXref
             .slots = mz.slots _
                 .ToDictionary(Function(id) id.Key,
                               Function(id)
-                                  Return id.search1(mz, queryEngine, unique, uniqueByScore, env)
+                                  Return id.search1(queryEngine, unique, uniqueByScore, env)
                               End Function)
         }
     End Function
