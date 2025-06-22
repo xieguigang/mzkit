@@ -36,14 +36,14 @@ End Class
 
 Public Class MzSearch : Inherits MzQuery
 
-    Public Property metadata As Dictionary(Of String, Object)
+    Public Property metadata As Dictionary(Of String, String)
 
-    Default Public Property Item(key As String) As Object
+    Default Public Property Item(key As String) As String
         Get
             Return If(metadata.ContainsKey(key), metadata(key), Nothing)
         End Get
-        Set(value As Object)
-            metadata(key) = value
+        Set
+            metadata(key) = Value
         End Set
     End Property
 
@@ -56,7 +56,7 @@ Public Class MzSearch : Inherits MzQuery
     Sub New(copy As MzQuery, index As Integer)
         Call MyBase.New(copy)
 
-        Me.metadata = New Dictionary(Of String, Object) From {
+        Me.metadata = New Dictionary(Of String, String) From {
             {"index", index}
         }
     End Sub

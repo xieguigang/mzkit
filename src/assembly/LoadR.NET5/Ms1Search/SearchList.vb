@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports any = Microsoft.VisualBasic.Scripting
 
 Public Class SearchList : Inherits ISearchOp
 
@@ -32,7 +33,11 @@ Public Class SearchList : Inherits ISearchOp
             End If
 
             Dim all As New List(Of MzSearch)
-            Dim slots = sublist.slots.ToArray
+            Dim slots = sublist.slots _
+                .Select(Function(a)
+                            Return New KeyValuePair(Of String, String)(a.Key, any.ToString(a.Value))
+                        End Function) _
+                .ToArray
 
             For i As Integer = 0 To mz.Length - 1
                 Dim result = repo.QueryByMz(mz(i)).ToArray
