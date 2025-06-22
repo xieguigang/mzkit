@@ -3,8 +3,8 @@
 Metabolite annotation database search engine
 > this library module mainly address of the ion m/z database search problem
 
-+ [mass_search.index](metadb/mass_search.index.1) 
-+ [queryByMass](metadb/queryByMass.1) 
++ [mass_search.index](metadb/mass_search.index.1) A general method for build exact mass search index
++ [queryByMass](metadb/queryByMass.1) A general interface method for query the exact mass search index
 + [verify_cas_number](metadb/verify_cas_number.1) verify that the given cas registry number is correct or not
 + [parseLipidName](metadb/parseLipidName.1) Parse the lipid names
 + [annotationStream](metadb/annotationStream.1) Construct a basic metabolite annotation data collection
