@@ -36,6 +36,14 @@ End Class
 
 Public Class MzSearch : Inherits MzQuery
 
+    ''' <summary>
+    ''' the additional metadata informartin of the search result.
+    ''' this is a key-value pair dictionary that can be used to store
+    ''' additional information about the search result, such as the index
+    ''' of the result in the original data source, or any other metadata
+    ''' that may be relevant to the search result.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property metadata As Dictionary(Of String, String)
 
     Default Public Property Item(key As String) As String
