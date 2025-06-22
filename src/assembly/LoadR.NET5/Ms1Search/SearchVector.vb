@@ -1,3 +1,8 @@
-﻿Public Module SearchVector
+﻿Imports BioNovoGene.BioDeep.MSEngine
 
-End Module
+Public Class SearchVector : Inherits SearchOp
+
+    Public Sub New(repo As IMzQuery)
+        MyBase.New(repo)
+    End Sub
+End Class
