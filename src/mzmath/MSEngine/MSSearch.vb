@@ -1,75 +1,77 @@
 ﻿#Region "Microsoft.VisualBasic::ab653e494d5ed307e7cbc7269ad567cd, mzmath\MSEngine\MSSearch.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 239
-    '    Code Lines: 146 (61.09%)
-    ' Comment Lines: 57 (23.85%)
-    '    - Xml Docs: 66.67%
-    ' 
-    '   Blank Lines: 36 (15.06%)
-    '     File Size: 9.46 KB
+' Summaries:
 
 
-    ' Class MSSearch
-    ' 
-    '     Properties: Calculators, Metadata
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: CreateIndex, DoEvalMz, GetAnnotation, GetCompound, GetDbXref
-    '               GetMetadata, loadIndex, MSetAnnotation, QueryByMz, ToString
-    '     Structure IonIndex
-    ' 
-    '         Properties: mz
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 239
+'    Code Lines: 146 (61.09%)
+' Comment Lines: 57 (23.85%)
+'    - Xml Docs: 66.67%
+' 
+'   Blank Lines: 36 (15.06%)
+'     File Size: 9.46 KB
+
+
+' Class MSSearch
+' 
+'     Properties: Calculators, Metadata
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: CreateIndex, DoEvalMz, GetAnnotation, GetCompound, GetDbXref
+'               GetMetadata, loadIndex, MSetAnnotation, QueryByMz, ToString
+'     Structure IonIndex
+' 
+'         Properties: mz
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ToString
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
@@ -230,29 +232,33 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
                         Return g.First
                     End Function) _
             .ToArray
+        Dim ranking As New AdductsRanking(1000)
 
         For Each cpd As Compound In result
             Dim minppm = precursorTypes _
                 .Select(Function(type, i)
                             Dim mzhit As Double = type.CalcMZ(cpd.ExactMass)
                             Dim ppm As Double = PPMmethod.PPM(mzhit, mz)
+                            Dim rank As Double = ranking.Rank(FormulaScanner.ScanFormula(cpd.Formula), type)
+
+                            rank = rank / (ppm + 1) / (i + 1)
 
                             ' 20220426
                             ' precursor type has priority order
                             ' as its annotation score
-                            Return (type, mzhit, ppm, priority:=i + 1)
+                            Return (type, mzhit, ppm, rank)
                         End Function) _
-                .OrderBy(Function(type) type.Item3) _
+                .OrderByDescending(Function(type) type.rank) _
                 .First
 
             Yield New MzQuery With {
                 .unique_id = cpd.Identity,
                 .precursor_type = minppm.type.ToString,
                 .mz = mz,
-                .ppm = minppm.Item3,
+                .ppm = minppm.ppm,
                 .name = cpd.CommonName,
                 .mz_ref = minppm.mzhit,
-                .score = (score(cpd) / (.ppm + 1)) / minppm.priority
+                .score = score(cpd) * minppm.rank
             }
         Next
     End Function

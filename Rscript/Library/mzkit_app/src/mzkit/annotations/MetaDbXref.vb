@@ -619,7 +619,14 @@ Module MetaDbXref
                              env As Environment) As Object
 
         Dim mzi As Object = mz.Value
-        Dim all As MzQuery() = queryEngine.QueryByMz(mzi).ToArray
+        Dim all As MzQuery()
+
+        If TypeOf mzi Is list Then
+            Dim mzVal As Double = DirectCast(mzi, list).getValue(Of Double)("mz", env)
+            all = queryEngine.QueryByMz(mzVal).ToArray
+        Else
+            all = queryEngine.QueryByMz(CLRVector.asNumeric(mzi).First).ToArray
+        End If
 
         If unique Then
             If uniqueByScore Then
