@@ -627,55 +627,6 @@ Module MetaDbXref
     End Function
 
     <Extension>
-    Private Function search1(mz As KeyValuePair(Of String, Object), queryEngine As IMzQuery, opt As mzOpts) As Object
-        Dim mzi As Object = mz.Value
-        Dim all As MzQuery()
-        Dim unique As Boolean = opt.unique
-        Dim uniqueByScore As Boolean = opt.uniqueByScore
-
-        If TypeOf mzi Is list Then
-            Dim mzVal As Double() = DirectCast(mzi, list).getValue(Of Double())(opt.field_mz, opt.env)
-
-            all = mzVal _
-                .Select(Function(mzz) queryEngine.QueryByMz(mzz)) _
-                .IteratesALL _
-                .ToArray
-        Else
-            all = queryEngine.QueryByMz(CLRVector.asNumeric(mzi).First).ToArray
-        End If
-
-        If unique Then
-            If uniqueByScore Then
-                Return all _
-                   .OrderByDescending(Function(d) d.score) _
-                   .FirstOrDefault
-            Else
-                Return all _
-                   .OrderBy(Function(d) d.ppm) _
-                   .FirstOrDefault
-            End If
-        Else
-            Return all
-        End If
-    End Function
-
-    <Extension>
-    Private Function searchMzTable(mz As dataframe, queryEngine As IMzQuery, opt As mzOpts) As Object
-
-    End Function
-
-    <Extension>
-    Private Function searchMzList(mz As list, queryEngine As IMzQuery, opt As mzOpts) As Object
-        Return New list With {
-            .slots = mz.slots _
-                .ToDictionary(Function(id) id.Key,
-                              Function(id)
-                                  Return id.search1(queryEngine, opt)
-                              End Function)
-        }
-    End Function
-
-    <Extension>
     Private Function makeUniqueQuery(query As list,
                                      mzi As String,
                                      uniqueByScore As Boolean,
