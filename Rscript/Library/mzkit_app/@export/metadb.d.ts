@@ -84,6 +84,18 @@ declare namespace metadb {
         * + default value Is ``null``.
       */
       function metal_ion(formula: any, env?: object): boolean;
+      /**
+       * check of the given formula is organic or not?
+       *  this function will return TRUE if the formula is organic,
+       *  otherwise it returns FALSE.
+       * 
+       * 
+        * @param formula -
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function organic(formula: any, env?: object): boolean;
    }
    /**
     * cast the given dataframe as the ion feature annotation result

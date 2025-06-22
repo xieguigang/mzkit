@@ -17,6 +17,7 @@ Metabolite annotation database search engine
 + [excludeFeatures](metadb/excludeFeatures.1) removes all of the annotation result which is not 
 + [has.metal_ion](metadb/has.metal_ion.1) Check the formula string has metal ion inside?
 + [is.metal_ion](metadb/is.metal_ion.1) check of the given formula is metal ion or not?
++ [is.organic](metadb/is.organic.1) check of the given formula is organic or not?
 + [uniqueFeatures](metadb/uniqueFeatures.1) unique of the peak annotation features
 + [cbind.metainfo](metadb/cbind.metainfo.1) 
 + [load_asQueryHits](metadb/load_asQueryHits.1) cast the given dataframe as the ion feature annotation result
