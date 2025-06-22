@@ -17,7 +17,9 @@ Public Class SearchVector : Inherits ISearchOp
 
         For Each mzi As Double In mz
             Dim all As MzQuery() = repo.QueryByMz(mzi).ToArray
-            Dim pops As MzSearch() = all.Select(Function(i) New MzSearch(i, index)).toarray
+            Dim pops As MzSearch() = all _
+                .Select(Function(i) New MzSearch(i, index)) _
+                .ToArray
 
             index += 1
 
