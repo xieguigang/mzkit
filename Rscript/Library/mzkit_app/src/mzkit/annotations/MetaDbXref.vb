@@ -663,16 +663,6 @@ Module MetaDbXref
 
     End Function
 
-    Private Class mzOpts
-
-        Public unique As Boolean
-        Public uniqueByScore As Boolean
-        Public field_mz As String
-        Public field_score As String
-        Public env As Environment
-
-    End Class
-
     <Extension>
     Private Function searchMzList(mz As list, queryEngine As IMzQuery, opt As mzOpts) As Object
         Return New list With {
