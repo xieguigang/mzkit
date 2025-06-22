@@ -145,7 +145,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
 
         Me.precursorTypes = precursorTypes
         Me.xrefs = xrefs
-        Me.score = If(score, New Func(Of Compound, Double)(Function() 0.0))
+        Me.score = If(score, New Func(Of Compound, Double)(Function() 1.0))
         Me.index = tree _
             .GroupBy(Function(c) c.Identity) _
             .ToDictionary(Function(cpd) cpd.Key,
