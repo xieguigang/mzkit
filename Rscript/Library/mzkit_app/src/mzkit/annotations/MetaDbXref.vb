@@ -437,6 +437,8 @@ Module MetaDbXref
     ''' only works when <paramref name="unique"/> parameter
     ''' value is set to value TRUE.
     ''' </param>
+    ''' <param name="field_mz">the field name of the ion m/z, options for list and dataframe input.</param>
+    ''' <param name="field_score">the field name of the ion score, options for list and dataframe input.</param>
     ''' <returns></returns>
     <ExportAPI("ms1_search")>
     <RApiReturn(GetType(MzQuery))>
@@ -445,6 +447,8 @@ Module MetaDbXref
                               mz As Object,
                               Optional unique As Boolean = False,
                               Optional uniqueByScore As Boolean = False,
+                              Optional field_mz As String = "mz",
+                              Optional field_score As String = "score",
                               Optional env As Environment = Nothing) As Object
 
         Dim queryEngine As IMzQuery
@@ -465,10 +469,20 @@ Module MetaDbXref
             Return Nothing
         End If
 
+        Dim opts As New mzOpts With {
+            .env = env,
+            .field_mz = field_mz,
+            .field_score = field_score,
+            .unique = unique,
+            .uniqueByScore = uniqueByScore
+        }
+
         If TypeOf mz Is list Then
-            Return DirectCast(mz, list).searchMzList(queryEngine, unique, uniqueByScore, env)
+            Return DirectCast(mz, list).searchMzList(queryEngine, opts)
+        ElseIf TypeOf mz Is dataframe Then
+            Return DirectCast(mz, dataframe).searchMzTable(queryEngine, opts)
         Else
-            Return CLRVector.asNumeric(mz).searchMzVector(queryEngine, unique, uniqueByScore)
+            Return CLRVector.asNumeric(mz).searchMzVector(queryEngine, opts)
         End If
     End Function
 
@@ -612,18 +626,19 @@ Module MetaDbXref
     End Function
 
     <Extension>
-    Private Function search1(mz As KeyValuePair(Of String, Object),
-                             queryEngine As IMzQuery,
-                             unique As Boolean,
-                             uniqueByScore As Boolean,
-                             env As Environment) As Object
-
+    Private Function search1(mz As KeyValuePair(Of String, Object), queryEngine As IMzQuery, opt As mzOpts) As Object
         Dim mzi As Object = mz.Value
         Dim all As MzQuery()
+        Dim unique As Boolean = opt.unique
+        Dim uniqueByScore As Boolean = opt.uniqueByScore
 
         If TypeOf mzi Is list Then
-            Dim mzVal As Double = DirectCast(mzi, list).getValue(Of Double)("mz", env)
-            all = queryEngine.QueryByMz(mzVal).ToArray
+            Dim mzVal As Double() = DirectCast(mzi, list).getValue(Of Double())(opt.field_mz, opt.env)
+
+            all = mzVal _
+                .Select(Function(mzz) queryEngine.QueryByMz(mzz)) _
+                .IteratesALL _
+                .ToArray
         Else
             all = queryEngine.QueryByMz(CLRVector.asNumeric(mzi).First).ToArray
         End If
@@ -644,22 +659,36 @@ Module MetaDbXref
     End Function
 
     <Extension>
-    Private Function searchMzList(mz As list,
-                                  queryEngine As IMzQuery,
-                                  unique As Boolean,
-                                  uniqueByScore As Boolean,
-                                  env As Environment) As Object
+    Private Function searchMzTable(mz As dataframe, queryEngine As IMzQuery, opt As mzOpts) As Object
+
+    End Function
+
+    Private Class mzOpts
+
+        Public unique As Boolean
+        Public uniqueByScore As Boolean
+        Public field_mz As String
+        Public field_score As String
+        Public env As Environment
+
+    End Class
+
+    <Extension>
+    Private Function searchMzList(mz As list, queryEngine As IMzQuery, opt As mzOpts) As Object
         Return New list With {
             .slots = mz.slots _
                 .ToDictionary(Function(id) id.Key,
                               Function(id)
-                                  Return id.search1(queryEngine, unique, uniqueByScore, env)
+                                  Return id.search1(queryEngine, opt)
                               End Function)
         }
     End Function
 
     <Extension>
-    Private Function searchMzVector(mz As Double(), queryEngine As IMzQuery, unique As Boolean, uniqueByScore As Boolean) As Object
+    Private Function searchMzVector(mz As Double(), queryEngine As IMzQuery, opt As mzOpts) As Object
+        Dim unique As Boolean = opt.unique
+        Dim uniqueByScore As Boolean = opt.uniqueByScore
+
         If mz.Length = 1 Then
             Dim all = queryEngine.QueryByMz(mz(Scan0)).ToArray
 
