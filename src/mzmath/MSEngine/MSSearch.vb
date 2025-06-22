@@ -249,7 +249,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
                                 If MetalIons.IsMetalIon(cpd.Formula) Then
                                     rank = 0
                                 ElseIf MetalIons.HasMetalIon(cpd.Formula) Then
-                                    rank = rank / 2
+                                    rank = rank / 5
                                 End If
                             End If
 
