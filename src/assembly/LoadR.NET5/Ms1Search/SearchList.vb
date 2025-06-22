@@ -32,6 +32,7 @@ Public Class SearchList : Inherits ISearchOp
             End If
 
             Dim all As New List(Of MzSearch)
+            Dim slots = sublist.slots.ToArray
 
             For i As Integer = 0 To mz.Length - 1
                 Dim result = repo.QueryByMz(mz(i)).ToArray
@@ -41,6 +42,8 @@ Public Class SearchList : Inherits ISearchOp
                     .Select(Function(r)
                                 Dim o As New MzSearch(r, offset + 1)
                                 o.score = score * o.score
+                                o.metadata = o.metadata.AddRange(slots, replaceDuplicated:=True)
+
                                 Return o
                             End Function) _
                     .ToArray
