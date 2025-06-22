@@ -61,6 +61,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
@@ -469,20 +470,20 @@ Module MetaDbXref
             Return Nothing
         End If
 
-        Dim opts As New mzOpts With {
-            .env = env,
-            .field_mz = field_mz,
-            .field_score = field_score,
-            .unique = unique,
-            .uniqueByScore = uniqueByScore
-        }
+        Dim opts As ISearchOp
 
         If TypeOf mz Is list Then
-            Return DirectCast(mz, list).searchMzList(queryEngine, opts)
+            opts = New SearchList(queryEngine, uniqueByScore, field_mz, field_score, env)
         ElseIf TypeOf mz Is dataframe Then
-            Return DirectCast(mz, dataframe).searchMzTable(queryEngine, opts)
+            opts = New SearchTable(queryEngine, uniqueByScore, field_mz, field_score, env)
         Else
-            Return CLRVector.asNumeric(mz).searchMzVector(queryEngine, opts)
+            opts = New SearchVector(queryEngine, uniqueByScore, field_mz, field_score, env)
+        End If
+
+        If unique Then
+            Return opts.SearchUnique(mz).ToArray
+        Else
+            Return opts.SearchAll(mz).ToArray
         End If
     End Function
 

@@ -1,16 +1,17 @@
 ﻿Imports BioNovoGene.BioDeep.MSEngine
+Imports SMRUCC.Rsharp.Runtime
 
-Public Class SearchList : Inherits SearchOp
+Public Class SearchList : Inherits ISearchOp
 
-    Public Sub New(repo As IMzQuery, unique As Boolean, uniqueByScore As Boolean, field_mz As String, field_score As String, env As Environment)
-        MyBase.New(repo, unique, uniqueByScore, field_mz, field_score, env)
+    Public Sub New(repo As IMzQuery, uniqueByScore As Boolean, field_mz As String, field_score As String, env As Environment)
+        MyBase.New(repo, uniqueByScore, field_mz, field_score, env)
     End Sub
 
     Public Overrides Function SearchAll(mz As Object) As IEnumerable(Of MzSearch)
         Throw New NotImplementedException()
     End Function
 
-    Public Overrides Function SearchUnique(mz As Object) As IEnumerable(Of MzSearch)
+    Protected Overrides Function UniqueResult(all As IEnumerable(Of MzSearch)) As IEnumerable(Of MzSearch)
         Throw New NotImplementedException()
     End Function
 End Class
