@@ -804,6 +804,20 @@ Module MetaDbXref
     End Function
 
     ''' <summary>
+    ''' check of the given formula is organic or not?
+    ''' this function will return TRUE if the formula is organic,
+    ''' otherwise it returns FALSE.
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("is.organic")>
+    <RApiReturn(GetType(Boolean))>
+    Public Function AssertOrganic(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
+        Return env.EvaluateFramework(Of String, Boolean)(formula, Function(f) MetalIons.IsOrganic(f))
+    End Function
+
+    ''' <summary>
     ''' unique of the peak annotation features
     ''' </summary>
     ''' <param name="query">
