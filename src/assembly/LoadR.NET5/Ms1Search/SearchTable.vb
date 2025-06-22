@@ -2,6 +2,7 @@
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports any = Microsoft.VisualBasic.Scripting
 
 Public Class SearchTable : Inherits ISearchOp
 
@@ -20,7 +21,11 @@ Public Class SearchTable : Inherits ISearchOp
                 Continue For
             End If
 
-            Dim meta As KeyValuePair(Of String, Object)() = row.slots.ToArray
+            Dim meta As KeyValuePair(Of String, String)() = row.slots _
+                .Select(Function(a)
+                            Return New KeyValuePair(Of String, String)(a.Key, any.ToString(a.Value))
+                        End Function) _
+                .ToArray
             Dim score As Double = 1.0
 
             If Not field_score.StringEmpty(, True) AndAlso row.hasName(field_score) Then
