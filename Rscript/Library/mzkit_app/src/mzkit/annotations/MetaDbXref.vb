@@ -121,10 +121,10 @@ Module MetaDbXref
     End Function
 
     ''' <summary>
-    ''' 
+    ''' A general method for build exact mass search index
     ''' </summary>
     ''' <param name="massSet"></param>
-    ''' <param name="type"></param>
+    ''' <param name="type">the clr type description string of the elements in the given <paramref name="massSet"/> collection</param>
     ''' <param name="tolerance"></param>
     ''' <param name="env"></param>
     ''' <returns>A simple mass index search engine object instance</returns>
@@ -172,6 +172,15 @@ Module MetaDbXref
         Return engine
     End Function
 
+    ''' <summary>
+    ''' A general interface method for query the exact mass search index
+    ''' </summary>
+    ''' <param name="search">the mass search index engine</param>
+    ''' <param name="mass">the target exact mass value</param>
+    ''' <remarks>
+    ''' this function will return a list of the matched results, which it could be empty if no matched results.
+    ''' </remarks>
+    ''' <returns></returns>
     <ExportAPI("queryByMass")>
     Public Function QueryByMass(search As IMassSearch, mass As Double) As Object
         Return search.QueryByMass(mass).ToArray(Of Object)
@@ -381,6 +390,7 @@ Module MetaDbXref
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("ms1_handler")>
+    <RApiReturn(GetType(IMzQuery))>
     Public Function CreateMs1Handler(<RRawVectorArgument> compounds As Object,
                                      <RRawVectorArgument> precursors As Object,
                                      Optional tolerance As Object = "ppm:20",
@@ -417,7 +427,7 @@ Module MetaDbXref
     ''' <summary>
     ''' get duplictaed raw annotation results.
     ''' </summary>
-    ''' <param name="engine"></param>
+    ''' <param name="engine">the ms1 search engine which implements the clr interface <see cref="IMzQuery"/></param>
     ''' <param name="mz">
     ''' a m/z numeric vector or a object list that 
     ''' contains the data mapping of unique id to 
@@ -445,7 +455,10 @@ Module MetaDbXref
         ElseIf engine.GetType.ImplementInterface(Of IMzQuery) Then
             queryEngine = engine
         Else
-            Return RInternal.debug.stop("invalid handler type!", env)
+            Return RInternal.debug.stop({
+                "invalid handler type!",
+                "type: " & engine.GetType.FullName
+            }, env)
         End If
 
         If mz Is Nothing Then
