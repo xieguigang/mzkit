@@ -73,7 +73,7 @@ Namespace MRM
         ''' <param name="ionpairs"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function ScanTPA(raw$, ionpairs As IonPair(), rtshifts As Dictionary(Of String, Double), args As MRMArguments) As IEnumerable(Of IonTPA)
+        Public Function ScanTPA(raw$, ionpairs As IonPair(), ByRef rtshifts As Dictionary(Of String, Double), args As MRMArguments) As IEnumerable(Of IonTPA)
             ' 从原始文件之中读取出所有指定的离子对数据
             Dim ionData As IonChromatogram() = IonPair.GetIsomerism(ionpairs, args.tolerance) _
                 .ExtractIonData(
@@ -82,6 +82,11 @@ Namespace MRM
                     tolerance:=args.tolerance
                 )
 
+            Return ionData.ScanTPA(rtshifts, args)
+        End Function
+
+        <Extension>
+        Public Iterator Function ScanTPA(ionData As IonChromatogram(), rtshifts As Dictionary(Of String, Double), args As MRMArguments) As IEnumerable(Of IonTPA)
             If rtshifts Is Nothing Then
                 rtshifts = New Dictionary(Of String, Double)
             End If
