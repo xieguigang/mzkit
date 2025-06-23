@@ -86,11 +86,21 @@ Namespace Reader
         Dim pixels As Dictionary(Of String, IndexedMzPackMemory())
 
         Sub New(inMemory As IMZPack, Optional verbose As Boolean = True)
+            Dim t0 = Now
+
             Call inMemory.MS _
+                .AsParallel _
+                .WithDegreeOfParallelism(4) _
                 .Select(Function(pixel)
                             Return New IndexedMzPackMemory(pixel)
                         End Function) _
                 .DoCall(Sub(ls) loadPixelsArray(ls, verbose))
+
+            Dim dt = Now - t0
+
+            If verbose Then
+                Call VBDebugger.EchoLine($"build in-memory index of the rawdata used {dt.Lanudry}")
+            End If
 
             Call ReadRawPack.ReadDimensions(mzpack:=inMemory, pixels.Select(Function(pr) pr.Value).IteratesALL, verbose, _resolution, _dimension)
         End Sub
