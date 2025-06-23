@@ -125,7 +125,10 @@ Module MRMkit
 
     <RGenericOverloads("as.data.frame")>
     Private Function peakAreaTable(ions As IonTPA(), args As list, env As Environment) As Rdataframe
-        Dim tbl As New Rdataframe With {.rownames = ions.Select(Function(a) a.name).ToArray}
+        Dim tbl As New Rdataframe With {
+            .rownames = ions.Select(Function(a) a.name).ToArray,
+            .columns = New Dictionary(Of String, Array)
+        }
 
         Call tbl.add("rt", From i As IonTPA In ions Select i.rt)
         Call tbl.add("rtmin", From i As IonTPA In ions Select i.peakROI.Min)
