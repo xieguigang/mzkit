@@ -328,19 +328,36 @@ Module MRMkit
     ''' Extract ion peaks
     ''' </summary>
     ''' <param name="mzML">the file path to a mzML raw data file.</param>
-    ''' <param name="ionpairs">metabolite targets</param>
-    ''' <returns></returns>
+    ''' <param name="ionpairs">metabolite targets, value could be a vector of the <see cref="IonPair"/> or vector of the <see cref="Models.IsomerismIonPairs"/> clr object.</param>
+    ''' <returns>vector of the ion pair corresponding xic data</returns>
     <ExportAPI("extract.ions")>
     <RApiReturn(GetType(IonChromatogram))>
-    Public Function ExtractIonData(mzML$, ionpairs As IonPair(), Optional tolerance As Object = "ppm:20", Optional env As Environment = Nothing) As Object
+    Public Function ExtractIonData(mzML$, <RRawVectorArgument> ionpairs As Object, Optional tolerance As Object = "ppm:20", Optional env As Environment = Nothing) As Object
         Dim mzErrors = Math.getTolerance(tolerance, env)
 
         If mzErrors Like GetType(Message) Then
             Return mzErrors.TryCast(Of Message)
         End If
 
+        Dim ions As IsomerismIonPairs()
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of IsomerismIonPairs)(ionpairs, env, suppress:=True)
+
+        If pull.isError Then
+            pull = pipeline.TryCreatePipeline(Of IonPair)(ionpairs, env)
+
+            If pull.isError Then
+                Return pull.getError
+            End If
+
+            ions = IonPair _
+                .GetIsomerism(pull.populates(Of IonPair)(env).ToArray, mzErrors) _
+                .ToArray
+        Else
+            ions = pull.populates(Of IsomerismIonPairs)(env).ToArray
+        End If
+
         Return MRMSamples.ExtractIonData(
-            ion_pairs:=IonPair.GetIsomerism(ionpairs, mzErrors),
+            ion_pairs:=ions,
             mzML:=mzML,
             assignName:=Function(i) i.accession,
             tolerance:=mzErrors

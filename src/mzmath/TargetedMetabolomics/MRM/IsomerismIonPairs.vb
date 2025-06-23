@@ -62,6 +62,9 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace MRM.Models
 
+    ''' <summary>
+    ''' isomer ion with identical Q1/Q3 ions mz 
+    ''' </summary>
     Public Class IsomerismIonPairs : Implements IEnumerable(Of IonPair)
 
         ''' <summary>
