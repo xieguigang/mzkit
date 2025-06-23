@@ -115,12 +115,27 @@ Module MRMkit
         RInternal.Object.Converts.makeDataframe.addHandler(GetType(RTAlignment()), AddressOf RTShiftSummary)
         RInternal.Object.Converts.makeDataframe.addHandler(GetType(IonPair()), AddressOf ion_pairs_tbl)
         RInternal.Object.Converts.makeDataframe.addHandler(GetType(IonChromatogram), AddressOf castXicTable)
+        RInternal.Object.Converts.makeDataframe.addHandler(GetType(IonTPA()), AddressOf peakAreaTable)
 
         Dim toolkit As AssemblyInfo = GetType(MRMkit).Assembly.FromAssembly
 
         Call VBDebugger.WaitOutput()
         Call toolkit.AppSummary(Nothing, Nothing, App.StdOut)
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Private Function peakAreaTable(ions As IonTPA(), args As list, env As Environment) As Rdataframe
+        Dim tbl As New Rdataframe With {.rownames = ions.Select(Function(a) a.name).ToArray}
+
+        Call tbl.add("rt", From i As IonTPA In ions Select i.rt)
+        Call tbl.add("rtmin", From i As IonTPA In ions Select i.peakROI.Min)
+        Call tbl.add("rtmax", From i As IonTPA In ions Select i.peakROI.Max)
+        Call tbl.add("area", From i As IonTPA In ions Select i.area)
+        Call tbl.add("baseline", From i As IonTPA In ions Select i.baseline)
+        Call tbl.add("maxinto", From i As IonTPA In ions Select i.maxPeakHeight)
+
+        Return tbl
+    End Function
 
     <RGenericOverloads("as.data.frame")>
     Private Function castXicTable(xic As IonChromatogram, args As list, env As Environment) As Rdataframe
@@ -673,6 +688,33 @@ Module MRMkit
             rtshifts:=rtshifts,
             args:=args
         )
+    End Function
+
+    ''' <summary>
+    ''' Extract the peak area data from the given xic data object.
+    ''' 
+    ''' This function is used to extract the peak area data from the given xic data object, 
+    ''' which is usually a result of the <see cref="ExtractIonData"/> function.
+    ''' </summary>
+    ''' <param name="xic"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns>A vector of the <see cref="IonTPA"/> mzkit clr object, and the ``rtshifts`` tuple
+    ''' list data is tagged inside this vector attributes data.</returns>
+    <ExportAPI("MRM.peakarea")>
+    <RApiReturn(GetType(IonTPA))>
+    Public Function ScanPeakTable3(<RRawVectorArgument> xic As Object, args As MRMArguments, Optional env As Environment = Nothing) As Object
+        Dim rtshifts As New Dictionary(Of String, Double)
+        Dim pullIons As pipeline = pipeline.TryCreatePipeline(Of IonChromatogram)(xic, env)
+
+        If pullIons.isError Then
+            Return pullIons.getError
+        End If
+
+        Dim peaks As IonTPA() = pullIons.populates(Of IonChromatogram)(env).ScanTPA(rtshifts, args).ToArray
+        Dim out As vector = vector.asVector(peaks)
+        out.setAttribute("rtshifts", rtshifts)
+        Return out
     End Function
 
     ''' <summary>
