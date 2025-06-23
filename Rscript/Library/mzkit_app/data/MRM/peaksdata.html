@@ -32,7 +32,7 @@
     <!-- Begin page content -->
     <main class="flex-shrink-0">
         <div class="container" style="max-width: 100%;">
-            <h1>View Chromatogram</h1>
+            <h1>View MRM Chromatogram</h1>
 
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -45,8 +45,9 @@
             </nav>
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <br />
                     <div class="row">
-                        <div id="files" class="col">
+                        <div id="files" class="col" style="height:550px; overflow: scroll;">
 
                         </div>
                         <div class="col-10">
@@ -60,13 +61,14 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <br />
                     <div class="row">
-                        <div id="ions" class="col">
+                        <div id="ions" class="col" style="height:550px; overflow: scroll;">
 
                         </div>
                         <div class="col-10">
                             <h3 id="ionname"></h3>
-
+                            <br />
                             <div class="row">
                                 <div id="overlaps" class="col" style="height:500px;">
                                 </div>
@@ -76,6 +78,19 @@
                 </div>
             </div>
 
+            <br />
+            <hr />
+
+            <h1>View Peaks Data</h1>
+            <br />
+            <div class="row">
+                <div id="tpa-pca" class="col" style="height: 500px;">
+
+                </div>
+                <div id="tpa-loading" class="col" style="height: 500px;">
+                </div>
+            </div>
+            <br />
             <div class="row">
                 <div id="tpa-tbl" class="col">
 
@@ -88,11 +103,13 @@
 <script type="plain/text" id="xic-data">{$xic}</script>
 <script type="plain/text" id="area-data">{$area}</script>
 <script type="plain/text" id="pca-data">{$pca}</script>
+<script type="plain/text" id="loading-data">{$loading}</script>
 
 <script type="text/javascript">
     let xic = JSON.parse(base64_decode($ts.text("#xic-data")));
     let tpa = JSON.parse(base64_decode($ts.text("#area-data")));
     let pca = JSON.parse(base64_decode($ts.text("#pca-data")));
+    let loading = JSON.parse(base64_decode($ts.text("#loading-data")));
     let fileset = $ts("<ul>");
     let totalIons = [];
     let show_tic = function (data, tag) {
@@ -146,7 +163,8 @@
     $ts("#files").display(fileset);
 
     // console.log(xic);
-    console.log(tpa);
+    // console.log(tpa);
+    console.log(loading);
 
     for (let name of Object.keys(xic)) {
         let fileLink = $ts("<li>").display($ts("<a>", { href: "#" }).display(name));
@@ -200,6 +218,89 @@
             show_tpa_table(all_tpa.Where(a => a.name == name_short));
         }
     }
+
+    let xy = [];
+    let pc1 = pca.PC1;
+    let pc2 = pca.PC2;
+
+    for (let i = 0; i < pca.sample.length; i++) {
+        xy.push([pc1[i], pc2[i]]);
+    }
+
+    let plot_scatter = function (xy, labels, title, main, id) {
+        let option = {
+            title: {
+                text: main
+            },
+            tooltip: {
+                formatter: function (params) {
+                    let i = params.dataIndex;
+                    let name = labels[i];
+
+                    if (params.value.length > 1) {
+                        return name + ': ' + "(".concat(params.value[0], ", ").concat(params.value[1], ")");
+                    }
+                    else {
+                        return name + ': ' + "(".concat(params.name, ", ").concat(params.value, ")");
+                    }
+                }
+            },
+            legend: {
+                data: [title],
+                show: true,
+                orient: 'vertical',
+                x: 'right',
+                y: 'center'
+            },
+            xAxis: [
+                {
+                    type: 'value',
+                    scale: true,
+                    axisLabel: {
+                        formatter: '{value}'
+                    },
+                    name: "PC1"
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    scale: true,
+                    axisLabel: {
+                        formatter: '{value}'
+                    },
+                    name: "PC2"
+                }
+            ],
+            series: [{
+                name: title,
+                type: 'scatter',
+                emphasis: {
+                    focus: 'series'
+                },
+                symbolSize: 8,
+                // prettier-ignore
+                data: xy
+            }]
+        };
+
+        var chartDom = $ts(id);
+        var myChart = window.echarts.init(chartDom);
+
+        myChart.setOption(option);
+    }
+
+    plot_scatter(xy, pca.sample, "Sample", "Samples PCA Score", "#tpa-pca");
+
+    xy = [];
+    pc1 = loading.PC1;
+    pc2 = loading.PC2;
+
+    for (let i = 0; i < loading.ion.length; i++) {
+        xy.push([pc1[i], pc2[i]]);
+    }
+
+    plot_scatter(xy, loading.ion, "Metabolite", "Metabolites PCA Loading", "#tpa-loading");
 </script>
 
 </html>
