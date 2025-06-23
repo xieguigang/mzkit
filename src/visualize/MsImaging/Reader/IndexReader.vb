@@ -87,13 +87,19 @@ Namespace Reader
 
         Sub New(inMemory As IMZPack, Optional verbose As Boolean = True)
             Dim t0 = Now
+            Dim n_threads As Integer = 4
 
             Call inMemory.MS _
+                .SplitIterator(inMemory.MS.Length / n_threads) _
+                .ToArray _
                 .AsParallel _
-                .WithDegreeOfParallelism(4) _
-                .Select(Function(pixel)
-                            Return New IndexedMzPackMemory(pixel)
+                .WithDegreeOfParallelism(n_threads + 1) _
+                .Select(Function(pixels) As IndexedMzPackMemory()
+                            Return (From i As ScanMS1
+                                    In pixels
+                                    Select New IndexedMzPackMemory(i)).ToArray
                         End Function) _
+                .IteratesALL _
                 .DoCall(Sub(ls) loadPixelsArray(ls, verbose))
 
             Dim dt = Now - t0
