@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Extract ion peaks</title>
+    <title>Extract the peak area data from the given xic data object.</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,34 +13,37 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>extract_mrm {MRMLinear}</td>
+                <td>MRM.peakarea {MRMLinear}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Extract ion peaks</h2>
+        <h2>Extract the peak area data from the given xic data object.</h2>
 
         <h3>Description</h3>
 
-        
+        <p><br /> This function is used to extract the peak area data from the given xic data object, <br /> which is usually a result of the @<code>M:mzkit.MRMkit.ExtractIonData(System.String,System.Double,System.Double,System.Object,SMRUCC.Rsharp.Runtime.Environment)</code> function.</p>
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>extract_mrm</strong>(<i>mzML</i>, <i>q1</i>, <i>q3</i>,
-    <i>tolerance</i> = <span style='color: brown;'><strong>"da:0.1"</strong></span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>MRM.peakarea</strong>(<i>xic</i>, <i>args</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>mzML</dt>
-<dd><p>the file path to a mzML raw data file. [as string]</p></dd>
+<dt>xic</dt>
+<dd><p>-</p></dd>
 
 
-<dt>ionpairs</dt>
-<dd><p>metabolite targets, value could be a vector of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/Models/IonPair.html">IonPair</a> or vector of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/Models/IsomerismIonPairs.html">IsomerismIonPairs</a> clr object.</p></dd>
+<dt>args</dt>
+<dd><p>[as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/MRMArguments.html">MRMArguments</a>]</p></dd>
+
+
+<dt>env</dt>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
 
         </table>
 
@@ -55,7 +58,8 @@
 
         <h3>Value</h3>
 
-        <p>vector of the ion pair corresponding xic data</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/Data/IonChromatogram.html">IonChromatogram</a></li></ul>
+        <p>A vector of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/IonTPA.html">IonTPA</a> mzkit clr object, and the <code>rtshifts</code> tuple
+ list data is tagged inside this vector attributes data.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/IonTPA.html">IonTPA</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

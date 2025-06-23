@@ -16,6 +16,7 @@ MRM Targeted Metabolomics
 + [read.IS](MRMLinear/read.IS.1) Read the definition of internal standards
 + [wiff.rawfiles](MRMLinear/wiff.rawfiles.1) Create model of the MRM raw files
 + [MRM.peak2](MRMLinear/MRM.peak2.1) Get MRM ions peaks data from a given raw data file
++ [MRM.peakarea](MRMLinear/MRM.peakarea.1) Extract the peak area data from the given xic data object.
 + [MRM.peaks](MRMLinear/MRM.peaks.1) Get MRM ions peaks data from a given raw data file
 + [wiff.scan2](MRMLinear/wiff.scan2.1) # Scan the raw file data
 + [wiff.scans](MRMLinear/wiff.scans.1) # Scan the raw file data

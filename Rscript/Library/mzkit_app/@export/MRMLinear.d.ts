@@ -29,13 +29,14 @@ declare namespace MRMLinear {
        * 
        * 
         * @param mzML the file path to a mzML raw data file.
-        * @param ionpairs metabolite targets
+        * @param ionpairs metabolite targets, value could be a vector of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models.IonPair`` or vector of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models.IsomerismIonPairs`` clr object.
         * @param tolerance 
         * + default value Is ``'ppm:20'``.
         * @param env 
         * + default value Is ``null``.
+        * @return vector of the ion pair corresponding xic data
       */
-      function ions(mzML: string, ionpairs: object, tolerance?: any, env?: object): object;
+      function ions(mzML: string, ionpairs: any, tolerance?: any, env?: object): object;
       /**
        * Exact ``regions of interested`` based on the given ion pair as targets.
        * 
@@ -93,6 +94,7 @@ declare namespace MRMLinear {
      * + default value Is ``'da:0.1'``.
      * @param env 
      * + default value Is ``null``.
+     * @return vector of the ion pair corresponding xic data
    */
    function extract_mrm(mzML: string, q1: number, q3: number, tolerance?: any, env?: object): object;
    /**
@@ -195,6 +197,22 @@ declare namespace MRMLinear {
         * + default value Is ``null``.
       */
       function peak2(mzML: string, ions: object, args: object, rtshifts?: object, env?: object): object;
+      /**
+       * Extract the peak area data from the given xic data object.
+       *  
+       *  This function is used to extract the peak area data from the given xic data object, 
+       *  which is usually a result of the @``M:mzkit.MRMkit.ExtractIonData(System.String,System.Double,System.Double,System.Object,SMRUCC.Rsharp.Runtime.Environment)`` function.
+       * 
+       * 
+        * @param xic -
+        * @param args -
+        * @param env -
+        * 
+        * + default value Is ``null``.
+        * @return A vector of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.IonTPA`` mzkit clr object, and the ``rtshifts`` tuple
+        *  list data is tagged inside this vector attributes data.
+      */
+      function peakarea(xic: any, args: object, env?: object): object;
       /**
        * Get MRM ions peaks data from a given raw data file
        * 

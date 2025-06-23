@@ -1,0 +1,38 @@
+.\" man page create by R# package system.
+.TH MRMLINEAR 2 2000-Jan "MRM.peakarea" "MRM.peakarea"
+.SH NAME
+MRM.peakarea \- Extract the peak area data from the given xic data object.
+.SH SYNOPSIS
+\fIMRM.peakarea(\fBxic\fR as any, 
+\fBargs\fR as <generic> MRMArguments, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+Extract the peak area data from the given xic data object.
+ 
+ This function is used to extract the peak area data from the given xic data object, 
+ which is usually a result of the @\fBM:mzkit.MRMkit.ExtractIonData(System.String,System.Double,System.Double,System.Object,SMRUCC.Rsharp.Runtime.Environment)\fR function.
+.PP
+.SH OPTIONS
+.PP
+\fBxic\fB \fR\- -. 
+.PP
+.PP
+\fBargs\fB \fR\- -. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+A vector of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.IonTPA\fR mzkit clr object, and the \fBrtshifts\fR tuple
+ list data is tagged inside this vector attributes data.
+.PP
+.SH SEE ALSO
+MRMLinear
+.SH FILES
+.PP
+mz_quantify.dll
+.PP
+.SH AUTHOR
+Written by \fBBioNovoGene\fR
