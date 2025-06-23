@@ -136,6 +136,7 @@ Module MRMkit
         Call tbl.add("area", From i As IonTPA In ions Select i.area)
         Call tbl.add("baseline", From i As IonTPA In ions Select i.baseline)
         Call tbl.add("maxinto", From i As IonTPA In ions Select i.maxPeakHeight)
+        Call tbl.add("source", From i As IonTPA In ions Select i.source)
 
         Return tbl
     End Function

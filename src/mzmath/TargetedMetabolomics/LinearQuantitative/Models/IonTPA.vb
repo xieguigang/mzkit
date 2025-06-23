@@ -75,6 +75,7 @@ Namespace LinearQuantitative
         Public Property area As Double
         Public Property baseline As Double
         Public Property maxPeakHeight As Double
+        Public Property source As String
 
         Public Overrides Function ToString() As String
             Return $"{name}[{peakROI.Min}, {std.Round(peakROI.Max)}] = {area}"

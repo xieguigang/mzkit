@@ -106,7 +106,7 @@ Namespace MRM
                 ' 进行最大峰的查找，然后计算出净峰面积，用于回归建模
                 Dim factorVal As Double = args.TPAFactors.GetFactor(ion.name)
                 Dim result As IonTPA = ion.ionTPA(factorVal, args)
-
+                result.source = ion.source
                 Yield result
             Next
         End Function

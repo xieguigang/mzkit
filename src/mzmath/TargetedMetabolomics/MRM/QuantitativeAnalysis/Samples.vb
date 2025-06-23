@@ -103,7 +103,8 @@ Namespace MRM
                                 .name = assignName(ion),
                                 .description = note,
                                 .chromatogram = ionData.chromatogram.Ticks,
-                                .ion = ionData.ion
+                                .ion = ionData.ion,
+                                .source = mzML.BaseName
                             }
                         End Function) _
                 .ToArray
