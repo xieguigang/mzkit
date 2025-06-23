@@ -63,8 +63,12 @@
 
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 
 Namespace Reader
 
@@ -76,24 +80,75 @@ Namespace Reader
         Public Overrides ReadOnly Property resolution As Double
         Public Overrides ReadOnly Property dimension As Size
 
-        Sub New(inMemory As IMZPack, Optional verbose As Boolean = True)
+        ''' <summary>
+        ''' [x, y[]]
+        ''' </summary>
+        Dim pixels As Dictionary(Of String, IndexedMzPackMemory())
 
+        Sub New(inMemory As IMZPack, Optional verbose As Boolean = True)
+            Call inMemory.MS _
+                .Select(Function(pixel)
+                            Return New IndexedMzPackMemory(pixel)
+                        End Function) _
+                .DoCall(Sub(ls) loadPixelsArray(ls, verbose))
+
+            Call ReadRawPack.ReadDimensions(mzpack:=inMemory, pixels.Select(Function(pr) pr.Value).IteratesALL, verbose, _resolution, _dimension)
+        End Sub
+
+        ''' <summary>
+        ''' build a [x,y] matrix
+        ''' </summary>
+        ''' <param name="pixels"></param>
+        Private Sub loadPixelsArray(pixels As IEnumerable(Of IndexedMzPackMemory), verbose As Boolean)
+            If verbose Then
+                Call RunSlavePipeline.SendMessage("create grid data...")
+            End If
+
+            Me.pixels = pixels _
+                .GroupBy(Function(p) p.X) _
+                .ToDictionary(Function(p) p.Key.ToString,
+                              Function(p)
+                                  Return p.ToArray
+                              End Function)
         End Sub
 
         Protected Overrides Sub release()
-            Throw New NotImplementedException()
+            Call pixels.Clear()
         End Sub
 
         Public Overrides Function GetPixel(x As Integer, y As Integer) As PixelScan
-            Throw New NotImplementedException()
+            If Not pixels.ContainsKey(x.ToString) Then
+                Return Nothing
+            Else
+                Return (From p As IndexedMzPackMemory
+                        In pixels(key:=x.ToString)
+                        Where p.Y = y).FirstOrDefault
+            End If
         End Function
 
         Public Overrides Function AllPixels() As IEnumerable(Of PixelScan)
-            Throw New NotImplementedException()
+            Return pixels _
+                .Select(Function(x) x.Value) _
+                .IteratesALL _
+                .Select(Function(p)
+                            Return DirectCast(p, PixelScan)
+                        End Function)
         End Function
 
         Public Overrides Function LoadMzArray(ppm As Double) As Double()
-            Throw New NotImplementedException()
+            Dim mzlist As Double() = pixels _
+                .Select(Function(x) x.Value) _
+                .IteratesALL _
+                .Select(Function(p) p.scan.mz) _
+                .IteratesALL _
+                .ToArray
+            Dim groups As Double() = mzlist _
+                .GroupBy(Function(mz) mz, Tolerance.PPM(ppm)) _
+                .Select(Function(mz) Val(mz.name)) _
+                .OrderBy(Function(mzi) mzi) _
+                .ToArray
+
+            Return groups
         End Function
     End Class
 
