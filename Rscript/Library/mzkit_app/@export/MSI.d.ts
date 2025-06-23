@@ -121,6 +121,13 @@ declare namespace MSI {
    */
    function getMatrixIons(raw: any, mzdiff?: number, q?: number, fast_bins?: boolean, verbose?: boolean, env?: object): object;
    /**
+    * create memory index reader for the large profile raw MS data
+    * 
+    * 
+     * @param x -
+   */
+   function index_reader(x: object): object;
+   /**
      * @param env default value Is ``null``.
    */
    function ions_jointmatrix(raw: object, env?: object): object;

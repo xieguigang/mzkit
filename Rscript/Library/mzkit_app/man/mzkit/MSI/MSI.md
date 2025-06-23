@@ -6,6 +6,7 @@ MS-Imaging data handler
  to visualize the spatial distribution of molecules, as biomarkers, 
  metabolites, peptides or proteins by their molecular masses.
 
++ [index_reader](MSI/index_reader.1) create memory index reader for the large profile raw MS data
 + [scale](MSI/scale.1) scale the spatial matrix by column
 + [msi_metadata](MSI/msi_metadata.1) get ms-imaging metadata
 + [as.layer](MSI/as.layer.1) cast the pixel collection to a ion imaging layer data
