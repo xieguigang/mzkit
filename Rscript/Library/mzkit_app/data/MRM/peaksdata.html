@@ -76,6 +76,11 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div id="tpa-tbl" class="col">
+
+                </div>
+            </div>
         </div>
     </main>
 </body>
@@ -107,10 +112,34 @@
         };
         option && myChart.setOption(option);
     };
+    let all_tpa = [];
 
+    for (let name of Object.keys(tpa)) {
+        all_tpa = [...all_tpa, ...tpa[name]];
+    }
+
+    all_tpa = $from(all_tpa).Select(function (i) {
+        return {
+            name: i.name,
+            rt: i.rt,
+            rtmin: i.peakROI.Min,
+            rtmax: i.peakROI.Max,
+            area: i.area,
+            maxinto: i.maxPeakHeight,
+            baseline: i.baseline,
+            source: i.source
+        };
+    });
+
+    let show_tpa_table = function (all_tpa) {
+        $ts("#tpa-tbl").clear();
+        $ts.appendTable(all_tpa, "#tpa-tbl", null, { class: "table" });
+    }
+
+    show_tpa_table(all_tpa);
     $ts("#files").display(fileset);
 
-    console.log(xic);
+    // console.log(xic);
     console.log(tpa);
 
     for (let name of Object.keys(xic)) {
@@ -129,13 +158,14 @@
         totalIons = [...totalIons, ...xic[name]];
         fileset.appendElement(fileLink);
         fileLink.onclick = function () {
-            console.log(fileXic);
+            // console.log(fileXic);
             $ts("#filename").display(name);
             show_tic(xic_data, "xic");
+            show_tpa_table(all_tpa.Where(a => a.source == name));
         }
     }
 
-    console.table(totalIons);
+    // console.table(totalIons);
 
     let ions_menu = $ts("#ions");
     let ions_list = $ts("<ol>");
@@ -160,6 +190,7 @@
         ionLink.onclick = function () {
             $ts("#ionname").display(name);
             show_tic(ionXic, "overlaps");
+            show_tpa_table(all_tpa.Where(a => a.name == name));
         }
     }
 </script>
