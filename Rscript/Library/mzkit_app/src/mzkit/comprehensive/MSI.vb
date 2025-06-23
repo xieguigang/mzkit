@@ -226,6 +226,16 @@ Module MSI
     End Function
 
     ''' <summary>
+    ''' create memory index reader for the large profile raw MS data
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    <ExportAPI("index_reader")>
+    Public Function createIndexReader(x As mzPack) As MemoryIndexReader
+        Return New MemoryIndexReader(x)
+    End Function
+
+    ''' <summary>
     ''' scale the spatial matrix by column
     ''' </summary>
     ''' <param name="m">a dataframe object that contains the spot expression data. 
