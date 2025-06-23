@@ -32,13 +32,47 @@
     <!-- Begin page content -->
     <main class="flex-shrink-0">
         <div class="container" style="max-width: 100%;">
+            <h1>View Chromatogram</h1>
 
-            <div class="row">
-                <div id="files" class="col">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                        type="button" role="tab" aria-controls="nav-home" aria-selected="true">File Viewer</button>
+                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                        type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Ion Viewer</button>
 
                 </div>
-                <div id="xic" class="col-9" style="height:600px;">
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="row">
+                        <div id="files" class="col">
 
+                        </div>
+                        <div class="col-10">
+                            <h3 id="filename"></h3>
+
+                            <div class="row">
+                                <div id="xic" class="col" style="height:500px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div class="row">
+                        <div id="ions" class="col">
+
+                        </div>
+                        <div class="col-10">
+                            <h3 id="ionname"></h3>
+
+                            <div class="row">
+                                <div id="overlaps" class="col" style="height:500px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -53,10 +87,10 @@
     let xic = JSON.parse(base64_decode($ts.text("#xic-data")));
     let tpa = JSON.parse(base64_decode($ts.text("#area-data")));
     let fileset = $ts("<ul>");
-
-    let show_tic = function (data) {
+    let totalIons = [];
+    let show_tic = function (data, tag) {
         var spectrum = pages.spectrum;
-        var chartDom = document.getElementById("xic");
+        var chartDom = document.getElementById(tag);
         var myChart = window.echarts.init(chartDom);
         var option;
         var xic_lines = $from(spectrum.tic_aggregate(data)).Select(function (a) { return spectrum.format_xic(a); });
@@ -92,12 +126,42 @@
             };
         }).ToArray();
 
+        totalIons = [...totalIons, ...xic[name]];
         fileset.appendElement(fileLink);
         fileLink.onclick = function () {
             console.log(fileXic);
-            show_tic(xic_data);
+            $ts("#filename").display(name);
+            show_tic(xic_data, "xic");
         }
-    }    
+    }
+
+    console.table(totalIons);
+
+    let ions_menu = $ts("#ions");
+    let ions_list = $ts("<ol>");
+
+    ions_menu.appendElement(ions_list);
+    totalIons = $from(totalIons).GroupBy(i => i.description);
+
+    for (let ion of totalIons.ToArray()) {
+        let name = ion.Key;
+        let ionLink = $ts("<li>").display($ts("<a>", { href: "#" }).display(name));
+        let ionXic = ion.Select(function (a) {
+            let data = $from(a.chromatogram);
+
+            return {
+                rt: data.Select(i => i.Time).ToArray(),
+                intensity: data.Select(i => i.Intensity).ToArray(),
+                adducts: a.source
+            };
+        }).ToArray();
+
+        ions_list.appendElement(ionLink);
+        ionLink.onclick = function () {
+            $ts("#ionname").display(name);
+            show_tic(ionXic, "overlaps");
+        }
+    }
 </script>
 
 </html>
