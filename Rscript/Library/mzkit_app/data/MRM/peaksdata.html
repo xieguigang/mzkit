@@ -20,6 +20,7 @@
         src="https://query.biodeep.cn/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript"
         src="https://query.biodeep.cn/resources/vendor/echarts-5.5.0/echarts.min.js"></script>
+    <script type="text/javascript" src="https://query.biodeep.cn/resources/js/biodeepdb_v3.js?var=20250613"></script>
 
     <link href="https://query.biodeep.cn/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://query.biodeep.cn/resources/vendor/fontawesome/css/all.min.css" rel="stylesheet" />
@@ -30,24 +31,73 @@
 <body class="d-flex flex-column h-100">
     <!-- Begin page content -->
     <main class="flex-shrink-0">
-        <div class="container">
-            <div id="main-container" class="container my-5">
+        <div class="container" style="max-width: 100%;">
 
-                <div class="row">
-                    <div id="files" class="col">
+            <div class="row">
+                <div id="files" class="col">
 
-                    </div>
-                    <div id="xic" class="col-9">
-
-                    </div>
                 </div>
+                <div id="xic" class="col-9" style="height:600px;">
 
+                </div>
             </div>
+
         </div>
     </main>
 </body>
 
-<script type="plain/text" id="xic">{$xic}</script>
-<script type="plain/text" id="area">{$area}</script>
+<script type="plain/text" id="xic-data">{$xic}</script>
+<script type="plain/text" id="area-data">{$area}</script>
+
+<script type="text/javascript">
+    let xic = JSON.parse(base64_decode($ts.text("#xic-data")));
+    let tpa = JSON.parse(base64_decode($ts.text("#area-data")));
+    let fileset = $ts("<ul>");
+
+    let show_tic = function (data) {
+        var spectrum = pages.spectrum;
+        var chartDom = document.getElementById("xic");
+        var myChart = window.echarts.init(chartDom);
+        var option;
+        var xic_lines = $from(spectrum.tic_aggregate(data)).Select(function (a) { return spectrum.format_xic(a); });
+        option = {
+            xAxis: {},
+            yAxis: {},
+            series: xic_lines.ToArray(),
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                data: xic_lines.Select(function (a) { return a.name; }).ToArray()
+            }
+        };
+        option && myChart.setOption(option);
+    };
+
+    $ts("#files").display(fileset);
+
+    console.log(xic);
+    console.log(tpa);
+
+    for (let name of Object.keys(xic)) {
+        let fileLink = $ts("<li>").display($ts("<a>", { href: "#" }).display(name));
+        let fileXic = $from(xic[name]);
+        let xic_data = fileXic.Select(function (a) {
+            let data = $from(a.chromatogram);
+
+            return {
+                rt: data.Select(i => i.Time).ToArray(),
+                intensity: data.Select(i => i.Intensity).ToArray(),
+                adducts: a.description
+            };
+        }).ToArray();
+
+        fileset.appendElement(fileLink);
+        fileLink.onclick = function () {
+            console.log(fileXic);
+            show_tic(xic_data);
+        }
+    }    
+</script>
 
 </html>

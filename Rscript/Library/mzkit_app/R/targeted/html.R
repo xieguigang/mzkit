@@ -6,8 +6,8 @@ const MRM_dataReport = function(xic, tpa) {
     let template = htmlReport::htmlTemplate(local_res);
 
     template = template + list(
-        xic = base64_encode(JSON::json_encode(xic)),
-        area = base64_encode(JSON::json_encode(tpa))
+        xic = base64(JSON::json_encode(xic)),
+        area = base64(JSON::json_encode(tpa))
     );
 
     .Internal::html(template);
