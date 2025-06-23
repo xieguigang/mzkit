@@ -149,6 +149,7 @@ Module MRMkit
                 .columns = New Dictionary(Of String, Array)
             }
 
+            Call tbl.add("name", From i As IonTPA In ions Select i.name)
             Call tbl.add("rt", From i As IonTPA In ions Select i.rt)
             Call tbl.add("rtmin", From i As IonTPA In ions Select i.peakROI.Min)
             Call tbl.add("rtmax", From i As IonTPA In ions Select i.peakROI.Max)
