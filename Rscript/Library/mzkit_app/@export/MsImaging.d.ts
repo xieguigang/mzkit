@@ -446,10 +446,13 @@ declare namespace MsImaging {
     * > this function will load entire MSI matrix raw data into memory.
     * 
      * @param file *.imzML;*.mzPack
+     * @param memoryIndex read mzpack in-memory rawdata via the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader.MemoryIndexReader`` instead of un-indexed reader @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader.ReadRawPack``.
+     * 
+     * + default value Is ``false``.
      * @param env 
      * + default value Is ``null``.
    */
-   function viewer(file: any, env?: object): object;
+   function viewer(file: any, memoryIndex?: boolean, env?: object): object;
    module write {
       /**
        * write mzImage data file
