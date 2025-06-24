@@ -402,6 +402,18 @@ declare namespace MSI {
       */
       function imzml_metadata(imzML: string): object;
    }
+   /**
+    * re-located of the sample of the ms-imaging for a location which is evaluated by the given **`padding`**.
+    * 
+    * 
+     * @param x -
+     * @param padding -
+     * 
+     * + default value Is ``'padding: 20px 20px 20px 20px;'``.
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function reset_padding(x: object, padding?: any, env?: object): object;
    module row {
       /**
        * each raw data file is a row scan data
