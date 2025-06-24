@@ -1959,4 +1959,21 @@ Module MSI
             }
         Next
     End Function
+
+    ''' <summary>
+    ''' re-located of the sample of the ms-imaging for a location which is evaluated by the given <paramref name="padding"/>.
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="padding"></param>
+    ''' <returns></returns>
+    <ExportAPI("reset_padding")>
+    Public Function resetLocation(x As mzPack,
+                                  <RRawVectorArgument>
+                                  Optional padding As Object = "padding: 20px 20px 20px 20px;",
+                                  Optional env As Environment = Nothing) As mzPack
+
+        Dim padding_str As String = InteropArgumentHelper.getPadding(padding, [default]:="padding: 20px 20px 20px 20px;", env)
+        Dim auto As mzPack = MsImagingRaw.Reset(x, padding_str)
+        Return auto
+    End Function
 End Module
