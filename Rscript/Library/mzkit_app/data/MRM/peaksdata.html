@@ -47,14 +47,14 @@
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <br />
                     <div class="row">
-                        <div id="files" class="col" style="height:550px; overflow: scroll;">
+                        <div id="files" class="col" style="height:650px; overflow: scroll; font-size: 0.9rem;">
 
                         </div>
                         <div class="col-10">
                             <h3 id="filename"></h3>
-
+                            <br />
                             <div class="row">
-                                <div id="xic" class="col" style="height:500px;">
+                                <div id="xic" class="col" style="height:600px;">
                                 </div>
                             </div>
                         </div>
@@ -63,14 +63,14 @@
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                     <br />
                     <div class="row">
-                        <div id="ions" class="col" style="height:550px; overflow: scroll;">
+                        <div id="ions" class="col" style="height:650px; overflow: scroll; font-size: 0.9rem;">
 
                         </div>
                         <div class="col-10">
                             <h3 id="ionname"></h3>
                             <br />
                             <div class="row">
-                                <div id="overlaps" class="col" style="height:500px;">
+                                <div id="overlaps" class="col" style="height:600px;">
                                 </div>
                             </div>
                         </div>
@@ -112,6 +112,7 @@
     let loading = JSON.parse(base64_decode($ts.text("#loading-data")));
     let fileset = $ts("<ul>");
     let totalIons = [];
+    let ion_size = loading.PC1.length;
     let show_tic = function (data, tag) {
         var spectrum = pages.spectrum;
         var chartDom = $ts("#" + tag);
@@ -127,7 +128,19 @@
                 trigger: 'item'
             },
             legend: {
-                data: xic_lines.Select(a => a.name).ToArray()
+                data: xic_lines.Select(a => a.name).ToArray(),
+                textStyle: {
+                    fontSize: 12,  // 设置字体大小（单位：px）
+                    color: '#333'  // 可选：修改文字颜色
+                },
+                itemWidth: 12,  // 图标宽度（px）
+                itemHeight: 12 // 图标高度（px）
+            },
+            grid: {
+                top: ion_size > 20 ? '33%' : "15%",
+                bottom: '3%',
+                left: '7%',
+                right: '3%'
             }
         };
         option && myChart.setOption(option);
