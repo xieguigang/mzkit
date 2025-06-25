@@ -126,6 +126,7 @@ Module MRMkit
     <RGenericOverloads("as.data.frame")>
     Private Function peakAreaTable(ions As IonTPA(), args As list, env As Environment) As Rdataframe
         Dim castPeaktable As Boolean = CLRVector.asLogical(args.getBySynonyms("peaktable")).ElementAtOrDefault(0, [default]:=False)
+        Dim castValue As String = CLRVector.asScalarCharacter(args.getBySynonyms("value"))
 
         If castPeaktable Then
             Dim sourcefiles = ions.GroupBy(Function(a) a.source).ToArray
@@ -134,12 +135,13 @@ Module MRMkit
                 .rownames = sourcefiles.Select(Function(a) a.Key).ToArray,
                 .columns = New Dictionary(Of String, Array)
             }
+            Dim areaData As Boolean = Not castValue.TextEquals("maxinto")
 
             For Each name As String In ionNames
                 Call tbl.add(name, From file As IGrouping(Of String, IonTPA)
                                    In sourcefiles
                                    Let a = file.Where(Function(i) i.name = name).FirstOrDefault
-                                   Select If(a Is Nothing, 0, a.area))
+                                   Select If(a Is Nothing, 0, If(areaData, a.area, a.maxPeakHeight)))
             Next
 
             Return tbl
@@ -151,6 +153,7 @@ Module MRMkit
 
             Call tbl.add("name", From i As IonTPA In ions Select i.name)
             Call tbl.add("rt", From i As IonTPA In ions Select i.rt)
+            Call tbl.add("rt(min)", From i As IonTPA In ions Select (i.rt / 60).ToString("F2"))
             Call tbl.add("rtmin", From i As IonTPA In ions Select i.peakROI.Min)
             Call tbl.add("rtmax", From i As IonTPA In ions Select i.peakROI.Max)
             Call tbl.add("area", From i As IonTPA In ions Select i.area)
