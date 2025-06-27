@@ -104,7 +104,8 @@ Namespace MRM
                 integratorTicks%,
                 peakAreaMethod As PeakAreaMethods,
                 peakwidth As DoubleRange,
-                sn_threshold As Double)
+                sn_threshold As Double,
+                joint_peaks As Boolean)
 
             Me.TPAFactors = TPAFactors
             Me.tolerance = tolerance
@@ -115,6 +116,7 @@ Namespace MRM
             Me.peakAreaMethod = peakAreaMethod
             Me.peakwidth = peakwidth
             Me.sn_threshold = sn_threshold
+            Me.joint_peaks = joint_peaks
         End Sub
 
         Public Shared Function GetDefaultArguments() As MRMArguments
@@ -127,7 +129,8 @@ Namespace MRM
                 integratorTicks:=5000,
                 peakAreaMethod:=PeakAreaMethods.NetPeakSum,
                 peakwidth:=New Double() {8, 30},
-                sn_threshold:=3
+                sn_threshold:=3,
+                joint_peaks:=True
             )
         End Function
 
