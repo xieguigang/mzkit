@@ -68,6 +68,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports chromatogramTicks = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
+Imports std = System.Math
 
 Namespace MRM.Models
 
@@ -135,7 +136,13 @@ Namespace MRM.Models
         End Function
 
         Public Function EqualsTo(other As IonPair, tolerance As Tolerance) As Boolean
-            Return tolerance(other.precursor, precursor) AndAlso tolerance(other.product, product)
+            Dim checkMass = tolerance(other.precursor, precursor) AndAlso tolerance(other.product, product)
+
+            If rt IsNot Nothing AndAlso other.rt IsNot Nothing Then
+                Return checkMass AndAlso std.Abs(CDbl(rt) - CDbl(other.rt)) <= 1
+            Else
+                Return checkMass
+            End If
         End Function
 
         ''' <summary>
