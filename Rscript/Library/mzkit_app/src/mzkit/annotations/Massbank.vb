@@ -161,6 +161,12 @@ Module Massbank
         Call df.add("inchikey", From m In metadata Select m.xref.InChIkey)
         Call df.add("inchi", From m In metadata Select m.xref.InChI)
 
+        Call df.add("kingdom", From m In metadata Select m.kingdom)
+        Call df.add("super_class", From m In metadata Select m.super_class)
+        Call df.add("class", From m In metadata Select m.class)
+        Call df.add("sub_class", From m In metadata Select m.sub_class)
+        Call df.add("molecular_framework", From m In metadata Select m.molecular_framework)
+
         If extras Then
             Dim extra_keys As String() = metadata _
                 .Select(Function(m)
