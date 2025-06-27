@@ -1,67 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::bc581d478fc5e5880aacb060af1eff4a, Rscript\Library\mzkit_app\src\mzkit\comprehensive\MSI.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1885
-    '    Code Lines: 1115 (59.15%)
-    ' Comment Lines: 582 (30.88%)
-    '    - Xml Docs: 90.38%
-    ' 
-    '   Blank Lines: 188 (9.97%)
-    '     File Size: 78.44 KB
+' Summaries:
 
 
-    ' Module MSI
-    ' 
-    '     Function: asMSILayer, asRaster, basePeakMz, castSpatialLayers, Correction
-    '               createMetadataTable, dimension_size, getimzmlMetadata, GetIonsJointMatrix, GetMatrixIons
-    '               GetMSIMetadata, getmzpackFileMetadata, getmzPackMetadata, GetPeakMatrix, getStatTable
-    '               GetXySpatialFilter, IonStats, level_convolution, load_spectrum, loadRowSummary
-    '               LoadSpotVectorDataFrame, moran_index, MSI_summary, MSIScanMatrix, open_imzML
-    '               packDf, packFile, packMatrix, PeakMatrix, peakSamples
-    '               pixelId, PixelIons, PixelMatrix, pixels, pixels2D
-    '               readImzMLMetadata, readPeaklayer, readSummarylayer, rowScans, SampleBootstraping
-    '               scale, scan, spatialConvolution, splice, write_imzML
-    '               writePeaklayer, writeSummarylayer
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1885
+'    Code Lines: 1115 (59.15%)
+' Comment Lines: 582 (30.88%)
+'    - Xml Docs: 90.38%
+' 
+'   Blank Lines: 188 (9.97%)
+'     File Size: 78.44 KB
+
+
+' Module MSI
+' 
+'     Function: asMSILayer, asRaster, basePeakMz, castSpatialLayers, Correction
+'               createMetadataTable, dimension_size, getimzmlMetadata, GetIonsJointMatrix, GetMatrixIons
+'               GetMSIMetadata, getmzpackFileMetadata, getmzPackMetadata, GetPeakMatrix, getStatTable
+'               GetXySpatialFilter, IonStats, level_convolution, load_spectrum, loadRowSummary
+'               LoadSpotVectorDataFrame, moran_index, MSI_summary, MSIScanMatrix, open_imzML
+'               packDf, packFile, packMatrix, PeakMatrix, peakSamples
+'               pixelId, PixelIons, PixelMatrix, pixels, pixels2D
+'               readImzMLMetadata, readPeaklayer, readSummarylayer, rowScans, SampleBootstraping
+'               scale, scan, spatialConvolution, splice, write_imzML
+'               writePeaklayer, writeSummarylayer
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -82,6 +82,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -99,6 +100,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -1835,10 +1837,13 @@ Module MSI
     ''' write.csv(sampleinfo, file = "./sampleinfo.csv");
     ''' </example>
     <ExportAPI("sample_bootstraping")>
-    Public Function SampleBootstraping(x As Object, tissue As TissueRegion(),
+    Public Function SampleBootstraping(x As Object,
+                                       Optional tissue As TissueRegion() = Nothing,
                                        Optional n As Integer = 32,
                                        Optional coverage As Double = 0.3,
                                        Optional scale_by_area As Boolean = True,
+                                       Optional mz As list = Nothing,
+                                       Optional multiple_samples As Boolean = False,
                                        Optional env As Environment = Nothing) As Object
         If x Is Nothing Then
             Return Nothing
@@ -1869,6 +1874,41 @@ Module MSI
                         .color = feature.color.ToHtmlColor
                     })
                     Call data.add(sampleData.name, sampleData.value)
+                Next
+            Next
+
+            Return New list(
+                slot("data") = data,
+                slot("sampleinfo") = samples.ToArray
+            )
+        ElseIf TypeOf x Is mzPack AndAlso multiple_samples Then
+            Dim raw As mzPack = DirectCast(x, mzPack)
+            Dim pixelGroups = raw.MS.GroupBy(Function(i) i.meta(mzStreamWriter.SampleMetaName)).ToArray
+            Dim samples As New List(Of SampleInfo)
+            Dim data As New rDataframe With {
+                .columns = New Dictionary(Of String, Array),
+                .rownames = mz.getNames
+            }
+            Dim mzlist As Double() = data.rownames.Select(Function(name) CLRVector.asNumeric(mz.getByName(name)).First).ToArray
+            Dim mzerr As Tolerance = Tolerance.DeltaMass(0.01)
+
+            For Each group In (pixelGroups)
+                Dim nsize As Integer = group.Count * 0.05
+                Dim bags = Bootstraping.Samples(group, nsize, bags:=n).ToArray
+
+                Call VBDebugger.EchoLine($"processing sample group: {group.Key}...")
+
+                For Each bag As SeqValue(Of ScanMS1()) In TqdmWrapper.Wrap(bags)
+                    Call samples.Add(New SampleInfo With {
+                        .ID = $"{group.Key}.{bag.i}",
+                        .sample_name = .ID,
+                        .sample_info = group.Key
+                    })
+                    Dim col = mzlist.Select(Function(mzi)
+                                                Return bag.value.Select(Function(a) a.GetIntensity(mzi, mzerr)).Sum
+                                            End Function).ToArray
+
+                    Call data.add(samples.Last.ID, col)
                 Next
             Next
 
