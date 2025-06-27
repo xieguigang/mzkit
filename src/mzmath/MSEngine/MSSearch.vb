@@ -233,7 +233,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
                         Return g.First
                     End Function) _
             .ToArray
-        Dim ranking As New AdductsRanking(1000)
+        Dim ranking As New AdductsRanking(10000)
 
         For Each cpd As Compound In result
             Dim minppm = precursorTypes _
