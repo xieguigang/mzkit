@@ -63,8 +63,9 @@ Namespace MRM
 
     Public Class IonLibrary : Implements Enumeration(Of IonPair)
 
-        Dim dadot3 As Tolerance = Tolerance.DeltaMass(0.3)
-        Dim ions As IonPair()
+        Shared ReadOnly dadot3 As Tolerance = Tolerance.DeltaMass(0.3)
+
+        ReadOnly ions As IonPair()
 
         Public ReadOnly Property IsEmpty As Boolean
             Get
@@ -91,6 +92,10 @@ Namespace MRM
             End If
 
             Return refId
+        End Function
+
+        Public Function GetIsomerism() As IEnumerable(Of IsomerismIonPairs)
+            Return IonPair.GetIsomerism(ions, dadot3)
         End Function
 
         Public Function GetIon(precursor As Double, product As Double) As IonPair

@@ -59,6 +59,7 @@
 #End Region
 
 Imports System.ComponentModel
+Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
@@ -81,6 +82,7 @@ Namespace MRM.Models
         ''' <returns></returns>
         <Column(Name:="ID")>
         <Description("The unique reference id of current metabolite ion, example as hmdb id or cas number.")>
+        <XmlAttribute>
         Public Property accession As String
         ''' <summary>
         ''' The display title name
@@ -109,6 +111,7 @@ Namespace MRM.Models
         ''' <returns></returns>
         '''
         <Description("The retention time of the ion pair, should be in time data unit Seconds.")>
+        <XmlAttribute>
         Public Property rt As Double?
 
         Sub New()
