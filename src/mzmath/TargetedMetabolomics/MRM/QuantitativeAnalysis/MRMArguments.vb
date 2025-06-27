@@ -71,7 +71,8 @@ Namespace MRM
     Public Class MRMArguments
 
         ''' <summary>
-        ''' ``{<see cref="Standards.ID"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
+        ''' ``{<see cref="Standards.ID"/>, <see cref="Standards.Factor"/>}``，
+        ''' 这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
         ''' </summary>
         ''' <returns></returns>
         Public Property TPAFactors As Dictionary(Of String, Double)
@@ -91,6 +92,7 @@ Namespace MRM
         Public Property bspline_degree As Integer = 2
         Public Property bspline_density As Integer = 100
 
+        Public Property joint_peaks As Boolean = True
         Public Property strict As Boolean = False
 
         <DebuggerStepThrough>

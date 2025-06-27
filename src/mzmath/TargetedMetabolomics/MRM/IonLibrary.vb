@@ -63,8 +63,11 @@ Namespace MRM
 
     Public Class IonLibrary : Implements Enumeration(Of IonPair)
 
-        Shared ReadOnly dadot3 As Tolerance = Tolerance.DeltaMass(0.3)
+        Dim mzErr As Tolerance = Tolerance.DeltaMass(0.3)
 
+        ''' <summary>
+        ''' A collection of the MRM ion pairs in current library data
+        ''' </summary>
         ReadOnly ions As IonPair()
 
         Public ReadOnly Property IsEmpty As Boolean
@@ -77,6 +80,14 @@ Namespace MRM
             Me.ions = ions.ToArray
         End Sub
 
+        Public Sub SetError(mzErr As Tolerance)
+            If mzErr.Type = MassToleranceType.Da Then
+                Me.mzErr = Tolerance.DeltaMass(mzErr.DeltaTolerance)
+            Else
+                Me.mzErr = Tolerance.PPM(mzErr.DeltaTolerance)
+            End If
+        End Sub
+
         Public Function GetDisplay(ion As IonPair) As String
             If ion Is Nothing Then
                 Call "the given MRM ion pair data is nothing!".Warning
@@ -85,7 +96,7 @@ Namespace MRM
 
             Dim namedIon As IonPair = ions _
                 .Where(Function(i)
-                           Return i.EqualsTo(ion, dadot3)
+                           Return i.EqualsTo(ion, mzErr)
                        End Function) _
                 .FirstOrDefault
             Dim refId As String
@@ -100,13 +111,13 @@ Namespace MRM
         End Function
 
         Public Function GetIsomerism() As IEnumerable(Of IsomerismIonPairs)
-            Return IonPair.GetIsomerism(ions, dadot3)
+            Return IonPair.GetIsomerism(ions, mzErr)
         End Function
 
         Public Function GetIsomerism(q1 As Double, q3 As Double) As IsomerismIonPairs
             Dim iso As IonPair() = ions _
                 .Where(Function(i)
-                           Return dadot3(q1, i.precursor) AndAlso dadot3(q3, i.product)
+                           Return mzErr(q1, i.precursor) AndAlso mzErr(q3, i.product)
                        End Function) _
                 .ToArray
 
@@ -115,11 +126,11 @@ Namespace MRM
 
         Public Function GetIon(precursor As Double, product As Double) As IonPair
             Return ions _
-            .Where(Function(i)
-                       Return dadot3(precursor, i.precursor) AndAlso
-                              dadot3(product, i.product)
-                   End Function) _
-            .FirstOrDefault
+                .Where(Function(i)
+                           Return mzErr(precursor, i.precursor) AndAlso
+                                  mzErr(product, i.product)
+                       End Function) _
+                .FirstOrDefault
         End Function
 
         Public Function GetIonByKey(key As String) As IonPair
