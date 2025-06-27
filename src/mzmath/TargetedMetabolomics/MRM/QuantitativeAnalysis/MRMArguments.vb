@@ -64,6 +64,7 @@ Imports System.Reflection
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MRM
@@ -94,6 +95,9 @@ Namespace MRM
 
         Public Property joint_peaks As Boolean = True
         Public Property strict As Boolean = False
+
+        Sub New()
+        End Sub
 
         <DebuggerStepThrough>
         Sub New(TPAFactors As Dictionary(Of String, Double),
@@ -132,6 +136,39 @@ Namespace MRM
                 sn_threshold:=3,
                 joint_peaks:=True
             )
+        End Function
+
+        Public Function ToJSON() As String
+            Dim json As New Dictionary(Of String, String) From {
+                {"tolerance", tolerance.GetScript},
+                {"timeWindowSize", timeWindowSize},
+                {"angleThreshold", angleThreshold},
+                {"baselineQuantile", baselineQuantile},
+                {"integratorTicks", integratorTicks},
+                {"peakAreaMethod", peakAreaMethod.ToString},
+                {"peakmin", peakwidth.Min},
+                {"peakmax", peakwidth.Max},
+                {"sn_threshold", sn_threshold},
+                {"bspline_degree", bspline_degree},
+                {"bspline_density", bspline_density},
+                {"joint_peaks", joint_peaks.ToString},
+                {"strict", strict.ToString}
+            }
+
+            For Each factor In TPAFactors.SafeQuery
+                json($"factor:{factor.Key}") = factor.Value
+            Next
+
+            Return json.GetJson
+        End Function
+
+        Public Shared Function FromJSON(json_str As String) As MRMArguments
+            Dim json As Dictionary(Of String, String) = json_str.LoadJSON(Of Dictionary(Of String, String))
+            Dim args As New MRMArguments
+
+
+
+            Return args
         End Function
 
         Public Overrides Function ToString() As String
