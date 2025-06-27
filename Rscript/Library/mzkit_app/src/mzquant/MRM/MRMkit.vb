@@ -739,10 +739,22 @@ Module MRMkit
     ''' which is usually a result of the <see cref="ExtractIonData"/> function.
     ''' </summary>
     ''' <param name="xic"></param>
-    ''' <param name="args"></param>
+    ''' <param name="args">the arguments for peak finding</param>
     ''' <param name="env"></param>
     ''' <returns>A vector of the <see cref="IonTPA"/> mzkit clr object, and the ``rtshifts`` tuple
     ''' list data is tagged inside this vector attributes data.</returns>
+    ''' <example>
+    ''' # parse the arguments for peak finding from
+    ''' # a given json file
+    ''' let args = MRMLinear::from_arguments_json(readText("/path/to/arguments.json"));
+    ''' let ions = read.ion_pairs("/path/to/ions.csv") |> isomerism.ion_pairs(tolerance = "ppm:20");
+    ''' # extract xic data for each ion pairs
+    ''' let xic = extract.ions("/path/to/demo.mzML", ionpairs = ions, tolerance = "da:0.01");
+    ''' # make peak finding from each xic data
+    ''' let peaks = sapply(xic, ion -> MRM.peakarea(ion, args));
+    ''' 
+    ''' print(as.data.frame(peaks));
+    ''' </example>
     <ExportAPI("MRM.peakarea")>
     <RApiReturn(GetType(IonTPA))>
     Public Function ScanPeakTable3(<RRawVectorArgument> xic As Object, args As MRMArguments, Optional env As Environment = Nothing) As Object

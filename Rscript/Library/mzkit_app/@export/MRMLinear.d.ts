@@ -216,7 +216,7 @@ declare namespace MRMLinear {
        * 
        * 
         * @param xic -
-        * @param args -
+        * @param args the arguments for peak finding
         * @param env -
         * 
         * + default value Is ``null``.

@@ -18,7 +18,7 @@ Extract the peak area data from the given xic data object.
 \fBxic\fB \fR\- -. 
 .PP
 .PP
-\fBargs\fB \fR\- -. 
+\fBargs\fB \fR\- the arguments for peak finding. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
@@ -27,6 +27,19 @@ Extract the peak area data from the given xic data object.
 .PP
 A vector of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.IonTPA\fR mzkit clr object, and the \fBrtshifts\fR tuple
  list data is tagged inside this vector attributes data.
+.PP
+.SH EXAMPLES
+.PP
+# parse the arguments for peak finding from
+ # a given json file
+ let args = MRMLinear::from_arguments_json(readText("/path/to/arguments.json"));
+ let ions = read.ion_pairs("/path/to/ions.csv") |> isomerism.ion_pairs(tolerance = "ppm:20");
+ # extract xic data for each ion pairs
+ let xic = extract.ions("/path/to/demo.mzML", ionpairs = ions, tolerance = "da:0.01");
+ # make peak finding from each xic data
+ let peaks = sapply(xic, ion -> MRM.peakarea(ion, args));
+ 
+ print(as.data.frame(peaks));
 .PP
 .SH SEE ALSO
 MRMLinear

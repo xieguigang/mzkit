@@ -70,11 +70,13 @@ Namespace LinearQuantitative
     Public Class IonTPA : Implements INamedValue
 
         Public Property name As String Implements INamedValue.Key
+        Public Property refer_rt As Double
         Public Property rt As Double
         Public Property peakROI As DoubleRange
         Public Property area As Double
         Public Property baseline As Double
         Public Property maxPeakHeight As Double
+        Public Property sn As Double
         Public Property source As String
 
         Public Overrides Function ToString() As String

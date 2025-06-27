@@ -39,7 +39,7 @@
 
 
 <dt>args</dt>
-<dd><p>[as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/MRMArguments.html">MRMArguments</a>]</p></dd>
+<dd><p>the arguments for peak finding. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/MRMArguments.html">MRMArguments</a>]</p></dd>
 
 
 <dt>env</dt>
@@ -61,9 +61,18 @@
         <p>A vector of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/IonTPA.html">IonTPA</a> mzkit clr object, and the <code>rtshifts</code> tuple
  list data is tagged inside this vector attributes data.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/IonTPA.html">IonTPA</a></li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> # parse the arguments for peak finding from
+ # a given json file
+ let args = MRMLinear::from_arguments_json(readText("/path/to/arguments.json"));
+ let ions = read.ion_pairs("/path/to/ions.csv") |> isomerism.ion_pairs(tolerance = "ppm:20");
+ # extract xic data for each ion pairs
+ let xic = extract.ions("/path/to/demo.mzML", ionpairs = ions, tolerance = "da:0.01");
+ # make peak finding from each xic data
+ let peaks = sapply(xic, ion -> MRM.peakarea(ion, args));
+ 
+ print(as.data.frame(peaks));</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>MRMLinear</em> version 1.0.0.0 <a
