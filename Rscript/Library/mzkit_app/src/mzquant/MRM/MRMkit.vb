@@ -152,12 +152,14 @@ Module MRMkit
             }
 
             Call tbl.add("name", From i As IonTPA In ions Select i.name)
+            Call tbl.add("refer RT", From i As IonTPA In ions Select i.refer_rt)
             Call tbl.add("rt", From i As IonTPA In ions Select i.rt)
             Call tbl.add("rt(min)", From i As IonTPA In ions Select (i.rt / 60).ToString("F2"))
             Call tbl.add("rtmin", From i As IonTPA In ions Select i.peakROI.Min)
             Call tbl.add("rtmax", From i As IonTPA In ions Select i.peakROI.Max)
             Call tbl.add("area", From i As IonTPA In ions Select i.area)
             Call tbl.add("baseline", From i As IonTPA In ions Select i.baseline)
+            Call tbl.add("sn", From i As IonTPA In ions Select i.sn)
             Call tbl.add("maxinto", From i As IonTPA In ions Select i.maxPeakHeight)
             Call tbl.add("source", From i As IonTPA In ions Select i.source)
 
