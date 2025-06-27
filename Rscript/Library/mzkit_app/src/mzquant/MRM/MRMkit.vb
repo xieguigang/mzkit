@@ -301,6 +301,16 @@ Module MRMkit
     End Function
 
     ''' <summary>
+    ''' Create the MRM peak finding arguments from a json string
+    ''' </summary>
+    ''' <param name="json_str"></param>
+    ''' <returns></returns>
+    <ExportAPI("from_arguments_json")>
+    Public Function fromArgumentsJSON(json_str As String) As MRMArguments
+        Return MRMArgumentSet.FromJSON(json_str)
+    End Function
+
+    ''' <summary>
     ''' Create argument object for run MRM quantification.
     ''' </summary>
     ''' <param name="tolerance"></param>
