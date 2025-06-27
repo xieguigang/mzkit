@@ -92,6 +92,8 @@ Namespace MRM
             If ion Is Nothing Then
                 Call "the given MRM ion pair data is nothing!".Warning
                 Return $"Ion [{ion.precursor}/{ion.product}]"
+            ElseIf Not ion.name.StringEmpty(, True) Then
+                Return ion.name
             End If
 
             Dim namedIon As IonPair = ions _
