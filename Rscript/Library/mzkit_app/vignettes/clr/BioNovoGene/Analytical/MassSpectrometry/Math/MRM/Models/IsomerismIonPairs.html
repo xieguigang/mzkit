@@ -30,11 +30,13 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 export class IsomerismIonPairs {
+   # check of the isomer <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/Models/IsomerismIonPairs.html">IsomerismIonPairs</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/Models/IonPair.html">ions</a> list is empty or not?
    hasIsomerism: boolean;
    # Get the chromatogram overlaps index by rt/ri order
    index: integer;
-   # all isomerism ion list data
+   # all isomerism ion list data that has the identical Q1/Q3 ion data with <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/Models/IsomerismIonPairs.html">IsomerismIonPairs</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/Models/IonPair.html">target</a>
    ions: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/Models/IonPair.html">IonPair[]</a>;
+   # the scalar element
    target: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/Models/IonPair.html">IonPair</a>;
 }
 </code>
