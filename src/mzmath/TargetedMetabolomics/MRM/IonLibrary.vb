@@ -78,11 +78,16 @@ Namespace MRM
         End Sub
 
         Public Function GetDisplay(ion As IonPair) As String
+            If ion Is Nothing Then
+                Call "the given MRM ion pair data is nothing!".Warning
+                Return $"Ion [{ion.precursor}/{ion.product}]"
+            End If
+
             Dim namedIon As IonPair = ions _
-            .Where(Function(i)
-                       Return i.EqualsTo(ion, dadot3)
-                   End Function) _
-            .FirstOrDefault
+                .Where(Function(i)
+                           Return i.EqualsTo(ion, dadot3)
+                       End Function) _
+                .FirstOrDefault
             Dim refId As String
 
             If namedIon Is Nothing Then
@@ -96,6 +101,16 @@ Namespace MRM
 
         Public Function GetIsomerism() As IEnumerable(Of IsomerismIonPairs)
             Return IonPair.GetIsomerism(ions, dadot3)
+        End Function
+
+        Public Function GetIsomerism(q1 As Double, q3 As Double) As IsomerismIonPairs
+            Dim iso As IonPair() = ions _
+                .Where(Function(i)
+                           Return dadot3(q1, i.precursor) AndAlso dadot3(q3, i.product)
+                       End Function) _
+                .ToArray
+
+            Return New IsomerismIonPairs With {.ions = iso}
         End Function
 
         Public Function GetIon(precursor As Double, product As Double) As IonPair
