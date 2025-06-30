@@ -77,7 +77,11 @@ Public Module TPAExtensions
     ''' <returns></returns>
     <Extension>
     Public Function ionTPA(ion As IonChromatogram, TPAFactor As Double, args As MRMArguments) As IonTPA
-        Dim vector As IVector(Of ChromatogramTick) = ion.chromatogram.Shadows
+        Dim vector As IVector(Of ChromatogramTick) = If(
+            args.bspline,
+            ion.GetSplineData(args.bspline_degree, args.bspline_density),
+            ion.chromatogram
+        ).Shadows
         Dim ROIData As ROI()
         Dim result As IonTPA
 
