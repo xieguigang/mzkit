@@ -153,7 +153,8 @@ Namespace MRM
                 {"bspline_degree", bspline_degree},
                 {"bspline_density", bspline_density},
                 {"joint_peaks", joint_peaks.ToString},
-                {"strict", strict.ToString}
+                {"strict", strict.ToString},
+                {"bspline", bspline.ToString}
             }
 
             For Each factor In TPAFactors.SafeQuery
@@ -177,6 +178,7 @@ Namespace MRM
             args.sn_threshold = json!sn_threshold
             args.bspline_degree = json!bspline_degree
             args.bspline_density = json!bspline_density
+            args.bspline = json!bspline.ParseBoolean
             args.joint_peaks = json!joint_peaks.ParseBoolean
             args.strict = json!strict.ParseBoolean
 
