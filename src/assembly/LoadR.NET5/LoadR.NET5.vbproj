@@ -72,7 +72,11 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\studio\RData\RData.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
+    <ProjectReference Include="..\..\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj" />
     <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
+    <ProjectReference Include="..\..\mzmath\MSEngine\MSEngine.vbproj" />
+    <ProjectReference Include="..\..\mzmath\MSFinder\MSFinder.vbproj" />
     <ProjectReference Include="..\..\mzmath\SingleCells\SingleCells.vbproj" />
   </ItemGroup>
 

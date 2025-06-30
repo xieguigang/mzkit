@@ -62,6 +62,7 @@
 
 #End Region
 
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 ''' <summary>
@@ -153,6 +154,10 @@ Public Module MetalIons
     End Function
 
     Public Function IsOrganic(formula As String) As Boolean
-        Return InStr(formula, "C") > 0 AndAlso InStr(formula, "H") > 0
+        Dim atoms As Formula = FormulaScanner.ScanFormula(formula)
+        If atoms Is Nothing Then
+            Return False
+        End If
+        Return atoms.CheckElement("C") AndAlso (atoms.CheckElement("H") OrElse atoms.CheckElement("O"))
     End Function
 End Module

@@ -84,6 +84,18 @@ declare namespace metadb {
         * + default value Is ``null``.
       */
       function metal_ion(formula: any, env?: object): boolean;
+      /**
+       * check of the given formula is organic or not?
+       *  this function will return TRUE if the formula is organic,
+       *  otherwise it returns FALSE.
+       * 
+       * 
+        * @param formula -
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function organic(formula: any, env?: object): boolean;
    }
    /**
     * cast the given dataframe as the ion feature annotation result
@@ -104,10 +116,11 @@ declare namespace metadb {
    function load_asQueryHits(x: object, env?: object): object;
    module mass_search {
       /**
+       * A general method for build exact mass search index
        * 
        * 
         * @param massSet -
-        * @param type -
+        * @param type the clr type description string of the elements in the given **`massSet`** collection
         * @param tolerance -
         * 
         * + default value Is ``'da:0.01'``.
@@ -131,12 +144,12 @@ declare namespace metadb {
      * 
      * + default value Is ``null``.
    */
-   function ms1_handler(compounds: any, precursors: any, tolerance?: any, env?: object): any;
+   function ms1_handler(compounds: any, precursors: any, tolerance?: any, env?: object): object;
    /**
     * get duplictaed raw annotation results.
     * 
     * 
-     * @param engine -
+     * @param engine the ms1 search engine which implements the clr interface @``T:BioNovoGene.BioDeep.MSEngine.IMzQuery``
      * @param mz a m/z numeric vector or a object list that 
      *  contains the data mapping of unique id to 
      *  m/z value.
@@ -146,10 +159,16 @@ declare namespace metadb {
      *  value is set to value TRUE.
      * 
      * + default value Is ``false``.
+     * @param field_mz the field name of the ion m/z, options for list and dataframe input.
+     * 
+     * + default value Is ``'mz'``.
+     * @param field_score the field name of the ion score, options for list and dataframe input.
+     * 
+     * + default value Is ``'score'``.
      * @param env 
      * + default value Is ``null``.
    */
-   function ms1_search(engine: any, mz: any, unique?: boolean, uniqueByScore?: boolean, env?: object): object;
+   function ms1_search(engine: any, mz: any, unique?: boolean, uniqueByScore?: boolean, field_mz?: string, field_score?: string, env?: object): object;
    /**
     * Parse the lipid names
     * 
@@ -171,6 +190,12 @@ declare namespace metadb {
    */
    function precursorIon(ion: string): object;
    /**
+    * A general interface method for query the exact mass search index
+    * 
+    * > this function will return a list of the matched results, which it could be empty if no matched results.
+    * 
+     * @param search the mass search index engine
+     * @param mass the target exact mass value
    */
    function queryByMass(search: object, mass: number): any;
    /**

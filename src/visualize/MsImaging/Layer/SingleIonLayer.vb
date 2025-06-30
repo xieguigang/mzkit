@@ -67,11 +67,28 @@ Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Quantile
 
+Public Interface IMSILayer
+
+    ''' <summary>
+    ''' the spatial spot data collection, that used for create spatial heatmap rendering.
+    ''' </summary>
+    ''' <returns></returns>
+    Property MSILayer As PixelData()
+
+    ''' <summary>
+    ''' the canvas size of the MSI plot output, it indicates the max scan x and 
+    ''' max scan y of the <see cref="MSILayer"/> heatmap.
+    ''' </summary>
+    ''' <returns></returns>
+    Property DimensionSize As Size
+
+End Interface
+
 ''' <summary>
 ''' a collection of the <see cref="PixelData"/> spots, the spot pixel
 ''' data was used to the spatial heatmap rendering.
 ''' </summary>
-Public Class SingleIonLayer
+Public Class SingleIonLayer : Implements IMSILayer
 
     ''' <summary>
     ''' the layer tag label, usually be a single ion m/z value.
@@ -82,14 +99,14 @@ Public Class SingleIonLayer
     ''' the spatial spot data collection, that used for create spatial heatmap rendering.
     ''' </summary>
     ''' <returns></returns>
-    Public Property MSILayer As PixelData()
+    Public Property MSILayer As PixelData() Implements IMSILayer.MSILayer
 
     ''' <summary>
     ''' the canvas size of the MSI plot output, it indicates the max scan x and 
     ''' max scan y of the <see cref="MSILayer"/> heatmap.
     ''' </summary>
     ''' <returns></returns>
-    Public Property DimensionSize As Size
+    Public Property DimensionSize As Size Implements IMSILayer.DimensionSize
 
     ''' <summary>
     ''' check is there some missing spot data inside the <see cref="MSILayer"/> by 

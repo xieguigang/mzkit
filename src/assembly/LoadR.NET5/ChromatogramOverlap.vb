@@ -63,6 +63,12 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Components.Interface
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 
+''' <summary>
+''' the overlaps list of the <see cref="Chromatogram"/> objects.
+''' 
+''' This class is used to store the overlaps of chromatograms, which can be indexed by names.
+''' It implements the <see cref="RNames"/> and <see cref="RNameIndex"/> interfaces for R compatibility.
+''' </summary>
 Public Class ChromatogramOverlap : Inherits ChromatogramOverlapList
     Implements RNames, RNameIndex
 

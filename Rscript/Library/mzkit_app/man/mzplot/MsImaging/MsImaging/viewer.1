@@ -4,6 +4,7 @@
 viewer \- load imzML data into the ms-imaging render
 .SH SYNOPSIS
 \fIviewer(\fBfile\fR as any, 
+\fBmemoryIndex\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -13,6 +14,11 @@ load imzML data into the ms-imaging render
 .PP
 \fBfile\fB \fR\- 
  *.imzML;*.mzPack
+. 
+.PP
+.PP
+\fBmemoryIndex\fB \fR\- 
+ read mzpack in-memory rawdata via the @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader.MemoryIndexReader\fR instead of un-indexed reader @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader.ReadRawPack\fR.
 . 
 .PP
 .SH DETAILS

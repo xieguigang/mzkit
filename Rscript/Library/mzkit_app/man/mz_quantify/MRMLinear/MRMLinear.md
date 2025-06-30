@@ -3,6 +3,7 @@
 MRM Targeted Metabolomics
 
 + [find_untargeted_ionpair](MRMLinear/find_untargeted_ionpair.1) MRM-Ion Pair Finder is used to automatically and systematically define MRM transitions from untargeted metabolomics data. 
++ [from_arguments_json](MRMLinear/from_arguments_json.1) Create the MRM peak finding arguments from a json string
 + [MRM.arguments](MRMLinear/MRM.arguments.1) Create argument object for run MRM quantification.
 + [MRM.rt_alignments](MRMLinear/MRM.rt_alignments.1) 
 + [extract.ions](MRMLinear/extract.ions.1) Extract ion peaks
@@ -16,6 +17,7 @@ MRM Targeted Metabolomics
 + [read.IS](MRMLinear/read.IS.1) Read the definition of internal standards
 + [wiff.rawfiles](MRMLinear/wiff.rawfiles.1) Create model of the MRM raw files
 + [MRM.peak2](MRMLinear/MRM.peak2.1) Get MRM ions peaks data from a given raw data file
++ [MRM.peakarea](MRMLinear/MRM.peakarea.1) Extract the peak area data from the given xic data object.
 + [MRM.peaks](MRMLinear/MRM.peaks.1) Get MRM ions peaks data from a given raw data file
 + [wiff.scan2](MRMLinear/wiff.scan2.1) # Scan the raw file data
 + [wiff.scans](MRMLinear/wiff.scans.1) # Scan the raw file data

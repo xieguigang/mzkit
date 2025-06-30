@@ -29,7 +29,9 @@
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>ms1_search</strong>(<i>engine</i>, <i>mz</i>,
     <i>unique</i> = <span style='color: blue !important;'>FALSE</span>,
-    <i>uniqueByScore</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+    <i>uniqueByScore</i> = <span style='color: blue !important;'>FALSE</span>,
+    <i>field.mz</i> = <span style='color: brown;'><strong>"mz"</strong></span>,
+    <i>field.score</i> = <span style='color: brown;'><strong>"score"</strong></span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -37,7 +39,7 @@
         <table>
             
 <dt>engine</dt>
-<dd><p>-</p></dd>
+<dd><p>the ms1 search engine which implements the clr interface <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/IMzQuery.html">IMzQuery</a></p></dd>
 
 
 <dt>mz</dt>
@@ -49,6 +51,14 @@
 <dt>uniqueByScore</dt>
 <dd><p>only works when <strong>`unique`</strong> parameter
  value is set to value TRUE. [as boolean]</p></dd>
+
+
+<dt>field.mz</dt>
+<dd><p>the field name of the ion m/z, options for list and dataframe input. [as string]</p></dd>
+
+
+<dt>field.score</dt>
+<dd><p>the field name of the ion score, options for list and dataframe input. [as string]</p></dd>
 
         </table>
 
@@ -63,7 +73,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/MzQuery.html">MzQuery</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/MzQuery.html">MzQuery</a></li></ul>
+        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MzSearch.html">MzSearch</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MzSearch.html">MzSearch</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

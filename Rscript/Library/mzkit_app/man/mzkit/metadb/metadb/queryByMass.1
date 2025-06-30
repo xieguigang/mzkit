@@ -1,10 +1,25 @@
 .\" man page create by R# package system.
 .TH METADB 1 2000-Jan "queryByMass" "queryByMass"
 .SH NAME
-queryByMass \- 
+queryByMass \- A general interface method for query the exact mass search index
 .SH SYNOPSIS
 \fIqueryByMass(\fBsearch\fR as <generic> IMassSearch, 
 \fBmass\fR as double);\fR
+.SH DESCRIPTION
+.PP
+A general interface method for query the exact mass search index
+.PP
+.SH OPTIONS
+.PP
+\fBsearch\fB \fR\- the mass search index engine. 
+.PP
+.PP
+\fBmass\fB \fR\- the target exact mass value. 
+.PP
+.SH DETAILS
+.PP
+this function will return a list of the matched results, which it could be empty if no matched results.
+.PP
 .SH SEE ALSO
 metadb
 .SH FILES

@@ -527,6 +527,9 @@ Module MsImaging
     ''' <param name="file">
     ''' *.imzML;*.mzPack
     ''' </param>
+    ''' <param name="memoryIndex">
+    ''' read mzpack in-memory rawdata via the <see cref="MemoryIndexReader"/> instead of un-indexed reader <see cref="ReadRawPack"/>.
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks>
     ''' this function will load entire MSI matrix raw data into memory.
@@ -535,13 +538,16 @@ Module MsImaging
     <ExportAPI("viewer")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <RApiReturn(GetType(Drawer))>
-    Public Function viewer(file As Object, Optional env As Environment = Nothing) As Object
+    Public Function viewer(file As Object,
+                           Optional memoryIndex As Boolean = False,
+                           Optional env As Environment = Nothing) As Object
+
         If file Is Nothing Then
             Return RInternal.debug.stop("the required file data can not be nothing!", env)
         ElseIf TypeOf file Is String Then
             Return New Drawer(file:=DirectCast(file, String))
         ElseIf TypeOf file Is mzPack Then
-            Return New Drawer(DirectCast(file, mzPack))
+            Return New Drawer(DirectCast(file, mzPack), indexMemory:=memoryIndex)
         Else
             Return Message.InCompatibleType(GetType(mzPack), file.GetType, env)
         End If

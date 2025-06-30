@@ -107,6 +107,9 @@ declare namespace mzkit {
    */
    function mesh_model(topics?: any): object;
    /**
+   */
+   function MRM_dataReport(xic: any, tpa: any): object;
+   /**
      * @param mzdiff default value Is ``0.001``.
    */
    function ms1_mz_bins(files: any, mzdiff?: any): object;

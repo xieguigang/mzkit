@@ -95,6 +95,21 @@ Public Class MzQuery : Inherits MetID
         End Get
     End Property
 
+    Sub New()
+    End Sub
+
+    Sub New(copy As MzQuery)
+        Me.intensity = copy.intensity
+        Me.unique_id = copy.unique_id
+        Me.mz = copy.mz
+        Me.ppm = copy.ppm
+        Me.precursor_type = copy.precursor_type
+        Me.score = copy.score
+        Me.name = copy.name
+        Me.mz_ref = copy.mz_ref
+        Me.rt = copy.rt
+    End Sub
+
     ''' <summary>
     ''' make value copy
     ''' </summary>

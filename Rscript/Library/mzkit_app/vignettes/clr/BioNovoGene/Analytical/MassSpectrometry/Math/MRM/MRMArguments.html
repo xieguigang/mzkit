@@ -35,6 +35,7 @@ export class MRMArguments {
    bspline_degree: integer;
    bspline_density: integer;
    integratorTicks: integer;
+   joint_peaks: boolean;
    peakAreaMethod: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/PeakAreaMethods.html">PeakAreaMethods</a>;
    peakwidth: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>;
    sn_threshold: double;
@@ -42,7 +43,8 @@ export class MRMArguments {
    timeWindowSize: double;
    # m/z tolerance for match ion pair
    tolerance: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/Tolerance.html">Tolerance</a>;
-   # <code>{@</code>P:BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Standards.ID<code>, @</code>P:BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Standards.Factor<code>}</code>，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
+   # <code>{@</code>P:BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Standards.ID<code>, @</code>P:BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Standards.Factor<code>}</code>，
+   #  这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
    TPAFactors: list;
 }
 </code>

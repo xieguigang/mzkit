@@ -72,7 +72,23 @@ Namespace MRM.Data
         Public Property name As String
         Public Property description As String
         Public Property chromatogram As ChromatogramTick()
+        ''' <summary>
+        ''' the ion pair data of this ion chromatogram xic data
+        ''' 
+        ''' this is used to record the original ion pair data
+        ''' that this ion chromatogram data is extracted from.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property ion As IsomerismIonPairs
+
+        ''' <summary>
+        ''' the source file of the ion chromatogram xic data
+        ''' 
+        ''' this is used to record the original raw data file name
+        ''' that this ion chromatogram data is extracted from.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property source As String
 
         Public ReadOnly Property hasRTwin As Boolean
             Get

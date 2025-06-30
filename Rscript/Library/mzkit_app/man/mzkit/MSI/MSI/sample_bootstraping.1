@@ -4,10 +4,12 @@
 sample_bootstraping \- make expression bootstrapping of the spatial data
 .SH SYNOPSIS
 \fIsample_bootstraping(\fBx\fR as any, 
-\fBtissue\fR as <generic> TissueRegion[], 
+\fBtissue\fR as <generic> TissueRegion[] = \fB<NULL>\fR, 
 \fBn\fR as integer = 32, 
 \fBcoverage\fR as double = 0.3, 
 \fBscale_by_area\fR as boolean = TRUE, 
+\fBmz\fR as list = \fB<NULL>\fR, 
+\fBmultiple_samples\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP

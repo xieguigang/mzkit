@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Microsoft.VisualBasic.Data.csv.IO.DataSet</title>
+    <title>BioNovoGene.Analytical.MassSpectrometry.MzSearch</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,30 +13,38 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>DataSet {Microsoft.VisualBasic.Data.csv.IO}</td>
+                <td>MzSearch {BioNovoGene.Analytical.MassSpectrometry}</td>
                 <td style="text-align: right;">.NET clr documentation</td>
             </tr>
         </table>
 
-        <h2>DataSet</h2>
+        <h2>MzSearch</h2>
 
         <h3>Description</h3>
 
-        <p>The numeric dataset, <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/DataSourceModel/DynamicPropertyBase`1.html">DynamicPropertyBase`1</a>, double.</p>
-
-<p>(数值类型的数据集合，每一个数据实体对象都有自己的编号以及数据属性)</p>
+        
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
-# namespace Microsoft.VisualBasic.Data.csv.IO
-export class DataSet extends <a href="/vignettes/clr/System/Double.html">iterates(Double)</a> {
-   # 当前的这条数据记录在整个数据集之中的唯一标记符
-   ID: string;
-   Properties: list;
-   # equivalent to <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/DataSourceModel/DynamicPropertyBase`1.html">DynamicPropertyBase`1</a>.<a href="#">Properties</a>.Values.ToArray
-   Vector: double;
+# namespace BioNovoGene.Analytical.MassSpectrometry
+export class MzSearch extends <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/MzQuery.html">MzQuery</a> {
+   intensity: double;
+   # the additional metadata informartin of the search result.
+   #  this is a key-value pair dictionary that can be used to store
+   #  additional information about the search result, such as the index
+   #  of the result in the original data source, or any other metadata
+   #  that may be relevant to the search result.
+   metadata: list;
+   mz: double;
+   mz_ref: double;
+   name: string;
+   ppm: double;
+   precursor_type: string;
+   rt: double;
+   score: double;
+   unique_id: string;
 }
 </code>
         </pre>
@@ -44,8 +52,8 @@ export class DataSet extends <a href="/vignettes/clr/System/Double.html">iterate
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>this class extends from <a href="/vignettes/clr/System/Double.html">iterates(Double)</a> class: <a href="/vignettes/clr/System/Double.html">iterates(Double)</a></li>
-<li>use by <i>property</i> member <code>Properties</code>: list</li>
+<li>this class extends from <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/MzQuery.html">MzQuery</a> class: <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/MzQuery.html">MzQuery</a></li>
+<li>use by <i>property</i> member <code>metadata</code>: list</li>
 </ol>
 
 

@@ -7,6 +7,8 @@ ms1_search \- get duplictaed raw annotation results.
 \fBmz\fR as any, 
 \fBunique\fR as boolean = FALSE, 
 \fBuniqueByScore\fR as boolean = FALSE, 
+\fBfield_mz\fR as string = "mz", 
+\fBfield_score\fR as string = "score", 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -14,7 +16,7 @@ get duplictaed raw annotation results.
 .PP
 .SH OPTIONS
 .PP
-\fBengine\fB \fR\- -. 
+\fBengine\fB \fR\- the ms1 search engine which implements the clr interface @\fBT:BioNovoGene.BioDeep.MSEngine.IMzQuery\fR. 
 .PP
 .PP
 \fBmz\fB \fR\- 
@@ -28,6 +30,12 @@ get duplictaed raw annotation results.
  only works when **`unique`** parameter
  value is set to value TRUE.
 . 
+.PP
+.PP
+\fBfield_mz\fB \fR\- the field name of the ion m/z, options for list and dataframe input.. 
+.PP
+.PP
+\fBfield_score\fB \fR\- the field name of the ion score, options for list and dataframe input.. 
 .PP
 .SH SEE ALSO
 metadb

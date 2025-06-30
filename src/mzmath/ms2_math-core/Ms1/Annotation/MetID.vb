@@ -61,6 +61,7 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
 Namespace Ms1.Annotations
 
@@ -86,7 +87,10 @@ Namespace Ms1.Annotations
         ''' the source ``m/z`` value of current annotated ion feature.
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property mz As Double Implements IMs1.mz
+        <Column("m/z")>
+        <XmlAttribute>
+        Public Property mz As Double Implements IMs1.mz
+
         <XmlAttribute> Public Property rt As Double Implements IRetentionTime.rt
         ''' <summary>
         ''' the metabolite name of current ion that annotated.
