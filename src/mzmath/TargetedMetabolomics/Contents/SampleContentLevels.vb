@@ -90,10 +90,13 @@ Namespace Content
         ''' use the original name as the level key.
         ''' </param>
         Sub New(levels As Dictionary(Of String, Double), Optional directMap As Boolean = False)
+            Dim sorts = levels.OrderBy(Function(L) L.Value) _
+                .Select(Function(L) (If(directMap, L.Key, levelKey(L.Key)), L.Value)) _
+                .ToArray
+
             Me.directMap = directMap
-            Me.levels = levels _
-                .OrderBy(Function(L) L.Value) _
-                .ToDictionary(Function(L) If(directMap, L.Key, levelKey(L.Key)),
+            Me.levels = sorts _
+                .ToDictionary(Function(L) L.Item1,
                               Function(L)
                                   Return L.Value
                               End Function)
