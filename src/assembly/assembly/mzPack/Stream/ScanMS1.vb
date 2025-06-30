@@ -101,6 +101,22 @@ Namespace mzData.mzWebCache
             End Set
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(clone As ScanMS1)
+            Me.BPC = clone.BPC
+            Me.TIC = clone.TIC
+            Me.scan_id = clone.scan_id
+            Me.into = clone.into
+            Me.meta = New Dictionary(Of String, String)(clone.meta)
+            Me.metadata = clone.metadata
+            Me.MRM = clone.MRM
+            Me.mz = clone.mz
+            Me.products = clone.products
+            Me.rt = clone.rt
+        End Sub
+
         ''' <summary>
         ''' get [x, y] pixel point from the scan metadata or scan id data.
         ''' </summary>

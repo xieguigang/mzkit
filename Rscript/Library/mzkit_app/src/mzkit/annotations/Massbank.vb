@@ -93,6 +93,7 @@ Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.WebServices
@@ -125,15 +126,15 @@ Module Massbank
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(LipidMaps.MetaData()), AddressOf createLipidMapTable)
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(RefMet()), AddressOf refMetTable)
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(MetaLib()), AddressOf makeMetaboliteTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(MetaInfo()), AddressOf makeMetaboliteTable2)
 
         Call generic.add("readBin.metalib", GetType(Stream), AddressOf readMetalibMsgPack)
     End Sub
 
     <RGenericOverloads("as.data.frame")>
-    Friend Function makeMetaboliteTable(metadata As MetaLib(), args As list, env As Environment) As Rdataframe
+    Friend Function makeMetaboliteTable2(metadata As MetaInfo(), args As list, env As Environment) As Rdataframe
         Dim idprefix As String = args.getValue("prefix", env, [default]:="")
         Dim synonym As Boolean = args.getValue("synonym", env, [default]:=False)
-        Dim odorInfo As Boolean = args.getValue("odor", env, [default]:=False)
         Dim extras As Boolean = args.getValue("extras", env, [default]:=False)
         Dim df As New Rdataframe With {
             .rownames = metadata _
@@ -159,6 +160,12 @@ Module Massbank
         Call df.add("smiles", From m In metadata Select m.xref.SMILES)
         Call df.add("inchikey", From m In metadata Select m.xref.InChIkey)
         Call df.add("inchi", From m In metadata Select m.xref.InChI)
+
+        Call df.add("kingdom", From m In metadata Select m.kingdom)
+        Call df.add("super_class", From m In metadata Select m.super_class)
+        Call df.add("class", From m In metadata Select m.class)
+        Call df.add("sub_class", From m In metadata Select m.sub_class)
+        Call df.add("molecular_framework", From m In metadata Select m.molecular_framework)
 
         If extras Then
             Dim extra_keys As String() = metadata _
@@ -191,6 +198,14 @@ Module Massbank
         If synonym Then
             Call df.add("synonym", From m In metadata Select m.synonym.JoinBy("; "))
         End If
+
+        Return df
+    End Function
+
+    <RGenericOverloads("as.data.frame")>
+    Friend Function makeMetaboliteTable(metadata As MetaLib(), args As list, env As Environment) As Rdataframe
+        Dim odorInfo As Boolean = args.getValue("odor", env, [default]:=False)
+        Dim df As Rdataframe = makeMetaboliteTable2(metadata.As(Of MetaInfo).ToArray, args, env)
 
         If odorInfo Then
             Call df.add("order", From m In metadata Select m.chemical.Odor.SafeQuery.Select(Function(c) c.condition).JoinBy("; "))

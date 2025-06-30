@@ -6,6 +6,7 @@ MS-Imaging data handler
  to visualize the spatial distribution of molecules, as biomarkers, 
  metabolites, peptides or proteins by their molecular masses.
 
++ [index_reader](MSI/index_reader.1) create memory index reader for the large profile raw MS data
 + [scale](MSI/scale.1) scale the spatial matrix by column
 + [msi_metadata](MSI/msi_metadata.1) get ms-imaging metadata
 + [as.layer](MSI/as.layer.1) cast the pixel collection to a ion imaging layer data
@@ -37,3 +38,4 @@ MS-Imaging data handler
 + [sample_bootstraping](MSI/sample_bootstraping.1) make expression bootstrapping of the spatial data
 + [cast.spatial_layers](MSI/cast.spatial_layers.1) cast the rawdata matrix as the ms-imaging ion layer
 + [raster](MSI/raster.1) cast the ms-imaging layer data to raster object 
++ [reset_padding](MSI/reset_padding.1) re-located of the sample of the ms-imaging for a location which is evaluated by the given **`padding`**.

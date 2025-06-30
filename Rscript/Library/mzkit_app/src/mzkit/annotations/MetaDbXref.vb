@@ -1,66 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::6e056ce52ef3f37ab91a3664033bc6ca, Rscript\Library\mzkit_app\src\mzkit\annotations\MetaDbXref.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1037
-    '    Code Lines: 737 (71.07%)
-    ' Comment Lines: 176 (16.97%)
-    '    - Xml Docs: 89.77%
-    ' 
-    '   Blank Lines: 124 (11.96%)
-    '     File Size: 45.65 KB
+' Summaries:
 
 
-    ' Module MetaDbXref
-    ' 
-    '     Function: (+2 Overloads) AnnotationStream, (+2 Overloads) boundList, cbindMeta, CreateMassSearchIndex, CreateMs1Handler
-    '               createTable, excludeFeatures, getMetadata, getVector, loadQueryHits
-    '               makeUniqueQuery, ms1Search, ParseLipidName, ParseLipidNameList, ParsePrecursorIon
-    '               QueryByMass, search1, searchMz, searchMzList, searchMzVector
-    '               searchTable, TestMetaIon, VerifyCASNumber
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1037
+'    Code Lines: 737 (71.07%)
+' Comment Lines: 176 (16.97%)
+'    - Xml Docs: 89.77%
+' 
+'   Blank Lines: 124 (11.96%)
+'     File Size: 45.65 KB
+
+
+' Module MetaDbXref
+' 
+'     Function: (+2 Overloads) AnnotationStream, (+2 Overloads) boundList, cbindMeta, CreateMassSearchIndex, CreateMs1Handler
+'               createTable, excludeFeatures, getMetadata, getVector, loadQueryHits
+'               makeUniqueQuery, ms1Search, ParseLipidName, ParseLipidNameList, ParsePrecursorIon
+'               QueryByMass, search1, searchMz, searchMzList, searchMzVector
+'               searchTable, TestMetaIon, VerifyCASNumber
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
@@ -121,10 +122,10 @@ Module MetaDbXref
     End Function
 
     ''' <summary>
-    ''' 
+    ''' A general method for build exact mass search index
     ''' </summary>
     ''' <param name="massSet"></param>
-    ''' <param name="type"></param>
+    ''' <param name="type">the clr type description string of the elements in the given <paramref name="massSet"/> collection</param>
     ''' <param name="tolerance"></param>
     ''' <param name="env"></param>
     ''' <returns>A simple mass index search engine object instance</returns>
@@ -172,6 +173,15 @@ Module MetaDbXref
         Return engine
     End Function
 
+    ''' <summary>
+    ''' A general interface method for query the exact mass search index
+    ''' </summary>
+    ''' <param name="search">the mass search index engine</param>
+    ''' <param name="mass">the target exact mass value</param>
+    ''' <remarks>
+    ''' this function will return a list of the matched results, which it could be empty if no matched results.
+    ''' </remarks>
+    ''' <returns></returns>
     <ExportAPI("queryByMass")>
     Public Function QueryByMass(search As IMassSearch, mass As Double) As Object
         Return search.QueryByMass(mass).ToArray(Of Object)
@@ -381,6 +391,7 @@ Module MetaDbXref
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("ms1_handler")>
+    <RApiReturn(GetType(IMzQuery))>
     Public Function CreateMs1Handler(<RRawVectorArgument> compounds As Object,
                                      <RRawVectorArgument> precursors As Object,
                                      Optional tolerance As Object = "ppm:20",
@@ -417,7 +428,7 @@ Module MetaDbXref
     ''' <summary>
     ''' get duplictaed raw annotation results.
     ''' </summary>
-    ''' <param name="engine"></param>
+    ''' <param name="engine">the ms1 search engine which implements the clr interface <see cref="IMzQuery"/></param>
     ''' <param name="mz">
     ''' a m/z numeric vector or a object list that 
     ''' contains the data mapping of unique id to 
@@ -427,14 +438,18 @@ Module MetaDbXref
     ''' only works when <paramref name="unique"/> parameter
     ''' value is set to value TRUE.
     ''' </param>
+    ''' <param name="field_mz">the field name of the ion m/z, options for list and dataframe input.</param>
+    ''' <param name="field_score">the field name of the ion score, options for list and dataframe input.</param>
     ''' <returns></returns>
     <ExportAPI("ms1_search")>
-    <RApiReturn(GetType(MzQuery))>
+    <RApiReturn(GetType(MzSearch))>
     Public Function ms1Search(engine As Object,
                               <RRawVectorArgument>
                               mz As Object,
                               Optional unique As Boolean = False,
                               Optional uniqueByScore As Boolean = False,
+                              Optional field_mz As String = "mz",
+                              Optional field_score As String = "score",
                               Optional env As Environment = Nothing) As Object
 
         Dim queryEngine As IMzQuery
@@ -445,17 +460,42 @@ Module MetaDbXref
         ElseIf engine.GetType.ImplementInterface(Of IMzQuery) Then
             queryEngine = engine
         Else
-            Return RInternal.debug.stop("invalid handler type!", env)
+            Return RInternal.debug.stop({
+                "invalid handler type!",
+                "type: " & engine.GetType.FullName
+            }, env)
         End If
 
         If mz Is Nothing Then
             Return Nothing
         End If
 
+        Dim opts As ISearchOp
+
         If TypeOf mz Is list Then
-            Return DirectCast(mz, list).searchMzList(queryEngine, unique, uniqueByScore, env)
+            opts = New SearchList(queryEngine, uniqueByScore, field_mz, field_score, env)
+        ElseIf TypeOf mz Is dataframe Then
+            opts = New SearchTable(queryEngine, uniqueByScore, field_mz, field_score, env)
         Else
-            Return CLRVector.asNumeric(mz).searchMzVector(queryEngine, unique, uniqueByScore)
+            opts = New SearchVector(queryEngine, uniqueByScore, field_mz, field_score, env)
+        End If
+
+        If unique Then
+            Return opts.SearchUnique(mz) _
+                .Select(Function(m)
+                            Dim info = queryEngine.GetAnnotation(m.unique_id)
+                            m.metadata!formula = info.formula
+                            Return m
+                        End Function) _
+                .ToArray
+        Else
+            Return opts.SearchAll(mz) _
+                .Select(Function(m)
+                            Dim info = queryEngine.GetAnnotation(m.unique_id)
+                            m.metadata!formula = info.formula
+                            Return m
+                        End Function) _
+                .ToArray
         End If
     End Function
 
@@ -593,96 +633,6 @@ Module MetaDbXref
                     .ToDictionary(Function(id) id,
                                   Function(id)
                                       Return queryEngine.GetMetadata(id)
-                                  End Function)
-            }
-        End If
-    End Function
-
-    <Extension>
-    Private Function search1(id As KeyValuePair(Of String, Object),
-                             mz As list,
-                             queryEngine As IMzQuery,
-                             unique As Boolean,
-                             uniqueByScore As Boolean,
-                             env As Environment) As Object
-
-        Dim mzi As Double = mz.getValue(Of Double)(id.Key, env)
-        Dim all As MzQuery() = queryEngine.QueryByMz(mzi).ToArray
-
-        If unique Then
-            If uniqueByScore Then
-                Return all _
-                   .OrderByDescending(Function(d) d.score) _
-                   .FirstOrDefault
-            Else
-                Return all _
-                   .OrderBy(Function(d) d.ppm) _
-                   .FirstOrDefault
-            End If
-        Else
-            Return all
-        End If
-    End Function
-
-    <Extension>
-    Private Function searchMzList(mz As list,
-                                  queryEngine As IMzQuery,
-                                  unique As Boolean,
-                                  uniqueByScore As Boolean,
-                                  env As Environment) As Object
-        Return New list With {
-            .slots = mz.slots _
-                .ToDictionary(Function(id) id.Key,
-                              Function(id)
-                                  Return id.search1(mz, queryEngine, unique, uniqueByScore, env)
-                              End Function)
-        }
-    End Function
-
-    <Extension>
-    Private Function searchMzVector(mz As Double(), queryEngine As IMzQuery, unique As Boolean, uniqueByScore As Boolean) As Object
-        If mz.Length = 1 Then
-            Dim all = queryEngine.QueryByMz(mz(Scan0)).ToArray
-
-            If unique Then
-                If uniqueByScore Then
-                    Return all _
-                        .OrderByDescending(Function(d) d.score) _
-                        .FirstOrDefault
-                Else
-                    Return all.OrderBy(Function(d) d.ppm).FirstOrDefault
-                End If
-            Else
-                Return all
-            End If
-        Else
-            Return New list With {
-                .slots = mz _
-                    .Select(Function(mzi, i) (mzi, i)) _
-                    .AsParallel _
-                    .Select(Function(t)
-                                Dim mzi As Double = t.mzi
-                                Dim i As Integer = t.i
-                                Dim result As Object = queryEngine.QueryByMz(mzi).ToArray
-
-                                If unique Then
-                                    If uniqueByScore Then
-                                        result = DirectCast(result, MzQuery()) _
-                                            .OrderByDescending(Function(d) d.score) _
-                                            .FirstOrDefault
-                                    Else
-                                        result = DirectCast(result, MzQuery()) _
-                                            .OrderBy(Function(d) d.ppm) _
-                                            .FirstOrDefault
-                                    End If
-                                End If
-
-                                Return (mzi.ToString, result, i)
-                            End Function) _
-                    .OrderBy(Function(t) t.i) _
-                    .ToDictionary(Function(mzi) mzi.Item1,
-                                  Function(mzi) As Object
-                                      Return mzi.Item2
                                   End Function)
             }
         End If
@@ -837,8 +787,34 @@ Module MetaDbXref
     ''' <returns></returns>
     <ExportAPI("has.metal_ion")>
     <RApiReturn(GetType(Boolean))>
-    Public Function TestMetaIon(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
+    Public Function TestMetalIon(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
         Return env.EvaluateFramework(Of String, Boolean)(formula, Function(f) MetalIons.HasMetalIon(f))
+    End Function
+
+    ''' <summary>
+    ''' check of the given formula is metal ion or not?
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("is.metal_ion")>
+    <RApiReturn(GetType(Boolean))>
+    Public Function AssertMetalIon(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
+        Return env.EvaluateFramework(Of String, Boolean)(formula, Function(f) MetalIons.IsMetalIon(f))
+    End Function
+
+    ''' <summary>
+    ''' check of the given formula is organic or not?
+    ''' this function will return TRUE if the formula is organic,
+    ''' otherwise it returns FALSE.
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("is.organic")>
+    <RApiReturn(GetType(Boolean))>
+    Public Function AssertOrganic(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
+        Return env.EvaluateFramework(Of String, Boolean)(formula, Function(f) MetalIons.IsOrganic(f))
     End Function
 
     ''' <summary>

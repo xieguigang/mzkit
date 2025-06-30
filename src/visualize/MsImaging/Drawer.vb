@@ -156,8 +156,12 @@ Public Class Drawer : Implements IDisposable
     ''' An abstract interface of the in-memory mzPack data object
     ''' </param>
     ''' <param name="verbose"></param>
-    Sub New(mzpack As IMZPack, Optional verbose As Boolean = True)
-        pixelReader = New ReadRawPack(mzpack, verbose)
+    Sub New(mzpack As IMZPack, Optional verbose As Boolean = True, Optional indexMemory As Boolean = False)
+        If indexMemory Then
+            pixelReader = New MemoryIndexReader(mzpack, verbose)
+        Else
+            pixelReader = New ReadRawPack(mzpack, verbose)
+        End If
     End Sub
 
     ''' <summary>

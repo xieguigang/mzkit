@@ -27,7 +27,8 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>viewer</strong>(<i>file</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>viewer</strong>(<i>file</i>,
+    <i>memoryIndex</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -36,6 +37,10 @@
             
 <dt>file</dt>
 <dd><p><em>.imzML;</em>.mzPack</p></dd>
+
+
+<dt>memoryIndex</dt>
+<dd><p>read mzpack in-memory rawdata via the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/Reader/MemoryIndexReader.html">MemoryIndexReader</a> instead of un-indexed reader <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/Reader/ReadRawPack.html">ReadRawPack</a>. [as boolean]</p></dd>
 
         </table>
 

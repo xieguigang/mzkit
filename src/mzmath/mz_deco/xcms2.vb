@@ -68,8 +68,16 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+
+Public Enum Imputation
+    None
+    Min
+    Median
+End Enum
 
 ''' <summary>
 ''' an ion peak ROI data object, the peak table format table file model of xcms version 2
@@ -124,6 +132,7 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     <Category("MS1")> Public Property RImax As Double
 
     Dim int_npeaks As Integer?
+    Dim intensity As Double?
 
     ''' <summary>
     ''' this feature has n sample data(value should be a positive number)
@@ -162,15 +171,21 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     End Property
 
     ''' <summary>
-    ''' A value read only property
+    ''' 
     ''' </summary>
     ''' <returns></returns>
-    Private Property intensity As Double Implements IMs1Scan.intensity
+    Public Property into As Double Implements IMs1Scan.intensity
         Get
-            Return Properties.Values.Sum
+            If intensity Is Nothing Then
+                intensity = Properties.Values.Sum
+            End If
+
+            Return intensity
         End Get
         Set(value As Double)
-            ' do nothing
+            If value > 0 Then
+                intensity = value
+            End If
         End Set
     End Property
 
@@ -195,7 +210,8 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         Me.Properties = expression
     End Sub
 
-    Sub New(npeaks As Integer)
+    Sub New(npeaks As Integer, Optional into As Double? = Nothing)
+        intensity = into
         int_npeaks = npeaks
     End Sub
 
@@ -216,6 +232,8 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         Me.RImin = clone.RImin
         Me.RImax = clone.RImax
         Me.groups = clone.groups
+        Me.intensity = clone.intensity
+        Me.int_npeaks = clone.int_npeaks
     End Sub
 
     ''' <summary>
@@ -245,6 +263,10 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
             Yield feature
         Next
     End Function
+
+    Public Sub SetPeaks(npeaks As Integer)
+        Me.int_npeaks = npeaks
+    End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
@@ -289,13 +311,38 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     ''' impute missing data with half of the min positive value
     ''' </summary>
     ''' <returns></returns>
-    Public Function Impute() As xcms2
-        Dim pos_min As Double = (Aggregate xi As Double In Properties.Values Where xi > 0 Into Min(xi)) / 2
-        Dim fill_missing = Properties _
-            .ToDictionary(Function(k) k.Key,
-                          Function(k)
-                              Return If(k.Value.IsNaNImaginary OrElse k.Value <= 0, pos_min, k.Value)
-                          End Function)
+    Public Function Impute(Optional method As Imputation = Imputation.Min) As xcms2
+        Dim is_zero As Boolean = Properties.Values.All(Function(xi) xi = 0.0)
+        Dim fill_missing As Dictionary(Of String, Double)
+
+        If Not is_zero Then
+            Dim pos_min As Double
+
+            If method = Imputation.Min Then
+                pos_min = (Aggregate xi As Double
+                           In Properties.Values
+                           Where xi > 0
+                           Into Min(xi)) / 2
+            Else
+                pos_min = Properties.Values _
+                    .Where(Function(xi) xi > 0) _
+                    .Median
+            End If
+
+            fill_missing = Properties _
+                .ToDictionary(Function(k) k.Key,
+                              Function(k)
+                                  Return If(k.Value.IsNaNImaginary OrElse k.Value <= 0, pos_min, k.Value)
+                              End Function)
+        Else
+            ' random fill for all zero
+            ' no differece in t-test
+            fill_missing = Properties _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return randf.NextDouble(0.5, 1)
+                              End Function)
+        End If
 
         Return New xcms2 With {
             .ID = ID,
@@ -312,6 +359,16 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
             .RImin = RImin
         }
     End Function
+
+    Public Sub AddSamples(samples As Dictionary(Of String, Double))
+        For Each sample As KeyValuePair(Of String, Double) In samples
+            If propertyTable.ContainsKey(sample.Key) Then
+                propertyTable(sample.Key) = propertyTable(sample.Key) + sample.Value
+            Else
+                propertyTable.Add(sample.Key, sample.Value)
+            End If
+        Next
+    End Sub
 
     Public Shared Function Merge(group As IEnumerable(Of xcms2), Optional aggregate As Func(Of Double, Double, Double) = Nothing) As xcms2
         Static sum As Func(Of Double, Double, Double) = ParseFlag("sum").GetAggregateFunction2

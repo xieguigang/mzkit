@@ -237,6 +237,7 @@ imzML:      Return LoadimzML(xml, intocutoff,
                 scan.polarity = defaultIon
             End If
 
+            ' filter low intensity noise at here
             If noiseCutoff > 0 AndAlso intensity.Length > 0 Then
                 maxinto = intensity.Max
                 ms = mz _
@@ -263,6 +264,8 @@ imzML:      Return LoadimzML(xml, intocutoff,
                 scan.totalIon = intensity.Sum
             End If
             If make_centroid IsNot Nothing Then
+                ' the noise filter as already be done at the above code block
+                ' so the intensity cutoff at here for centroid is zero
                 ms = ms.Centroid(make_centroid, zero_cutoff).ToArray
             End If
 

@@ -77,6 +77,15 @@ Imports std = System.Math
 ''' </summary>
 Public Module Deconvolution
 
+    ''' <summary>
+    ''' Find the peak features from the given chromatogram data.
+    ''' </summary>
+    ''' <param name="TIC"></param>
+    ''' <param name="peakwidth"></param>
+    ''' <param name="quantile#"></param>
+    ''' <param name="sn_threshold"></param>
+    ''' <param name="joint"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function DeconvPeakGroups(TIC As IEnumerable(Of ChromatogramTick), peakwidth As DoubleRange,
                                               Optional quantile# = 0.65,

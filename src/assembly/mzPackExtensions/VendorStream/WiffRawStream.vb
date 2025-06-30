@@ -69,6 +69,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Clearcore2.Data.DataAccess.SampleData
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -171,8 +172,16 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
 
             If typeCache = FileApplicationClass.LCMSMS Then
                 ' MRM ion pair information is save in the scan1 metadata
+                ' isomer may existed
+                ' contains the same MRM ion pair id
+                ' make the tag name unique at here
+                Dim ion_tags As String() = msData.MRM _
+                    .Select(Function(t) "MRM: " & t.ToString) _
+                    .UniqueNames _
+                    .ToArray
+
                 For i As Integer = 0 To mz.Length - 1
-                    MS1.meta.Add("MRM: " & msData.MRM(i).ToString, CInt(i).ToString)
+                    Call MS1.meta.Add(ion_tags(i), CInt(i).ToString)
                 Next
             End If
         Else

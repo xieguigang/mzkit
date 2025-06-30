@@ -64,13 +64,123 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm
+Imports std = System.Math
 
 Namespace Pixel
+
+    ''' <summary>
+    ''' in-memory data indexed pixel scan data
+    ''' </summary>
+    Public Class IndexedMzPackMemory : Inherits PixelScan
+
+        Public Overrides ReadOnly Property X As Integer
+            Get
+                Return pixel.X
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property Y As Integer
+            Get
+                Return pixel.Y
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property scanId As String
+            Get
+                Return scan.scan_id
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property sampleTag As String
+            Get
+                If scan.hasMetaKeys(mzPackPixel.SampleMetaName) Then
+                    Return scan.meta(mzPackPixel.SampleMetaName)
+                Else
+                    Return Nothing
+                End If
+            End Get
+        End Property
+
+        Public ReadOnly Property scan As ScanMS1
+
+        Dim pixel As Point
+        Dim memoryIndex As BlockSearchFunction(Of ms2)
+
+        ''' <summary>
+        ''' used for evaluate the <see cref="Splash"/>
+        ''' </summary>
+        Sub New()
+        End Sub
+
+        Sub New(scan As ScanMS1, Optional x As Integer = Integer.MinValue, Optional y As Integer = Integer.MinValue)
+            Me.scan = scan
+            Me.memoryIndex = New BlockSearchFunction(Of ms2)(scan.GetPeaks, Function(a) a.mz, tolerance:=1, fuzzy:=True)
+
+            If x = Integer.MinValue OrElse y = Integer.MinValue Then
+                Me.pixel = scan.GetMSIPixel
+            Else
+                Me.pixel = New Point(x, y)
+            End If
+        End Sub
+
+        Protected Overrides Sub SetIons(ions As IEnumerable(Of ms2))
+            With ions.ToArray
+                scan.mz = .Select(Function(m) m.mz).ToArray
+                scan.into = .Select(Function(m) m.intensity).ToArray
+            End With
+
+            Me.memoryIndex = New BlockSearchFunction(Of ms2)(scan.GetPeaks, Function(a) a.mz, tolerance:=1, fuzzy:=True)
+        End Sub
+
+        Protected Friend Overrides Sub release()
+            memoryIndex = Nothing
+        End Sub
+
+        Public Overrides Function HasAnyMzIon() As Boolean
+            Return scan.size > 0
+        End Function
+
+        Public Overrides Function HasAnyMzIon(mz() As Double, tolerance As Tolerance) As Boolean
+            If mz Is Nothing OrElse mz.Length = 0 Then
+                Return False
+            End If
+
+            Dim da As Double = tolerance.GetErrorDalton
+
+            Return mz.Any(Function(mzi) memoryIndex.Search(New ms2(mzi, 0), da).Any)
+        End Function
+
+        Public Overrides Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double
+            Dim da As Double = mzdiff.GetErrorDalton
+            Dim q = memoryIndex _
+                .Search(New ms2(mz, 0), da) _
+                .OrderBy(Function(i) std.Abs(mz - i.mz) <= da) _
+                .ToArray
+
+            If q.Length = 0 Then
+                Return 0
+            Else
+                Return q.Max(Function(i) i.intensity)
+            End If
+        End Function
+
+        Public Overrides Function GetMzIonIntensity() As Double()
+            Return scan.into
+        End Function
+
+        Public Overrides Function SetXY(x As Integer, y As Integer) As mzPackPixel
+            Return New mzPackPixel(New ScanMS1(Me.scan), x, y)
+        End Function
+
+        Protected Friend Overrides Function GetMsPipe() As IEnumerable(Of ms2)
+            Return scan.GetPeaks
+        End Function
+    End Class
 
     Public Class mzPackPixel : Inherits PixelScan
 

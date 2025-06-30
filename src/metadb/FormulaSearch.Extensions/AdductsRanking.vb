@@ -98,8 +98,23 @@ Public Class AdductsRanking
     ''' zero or negative value means the current given adducts is not a valid adducts
     ''' mode, should not use this adducts mode for the annotation result.
     ''' </returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Rank(formula As Formula, adduct_str As String) As Double
-        Dim adduct As MzCalculator = Provider.ParseAdductModel(adduct_str)
+        Return Rank(formula, Provider.ParseAdductModel(adduct_str))
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="adduct"></param>
+    ''' <returns>
+    ''' a score value for the adducts ranking based on current formula composition.
+    ''' zero or negative value means the current given adducts is not a valid adducts
+    ''' mode, should not use this adducts mode for the annotation result.
+    ''' </returns>
+    Public Function Rank(formula As Formula, adduct As MzCalculator) As Double
         Dim ion As IonModes = adduct.GetIonMode
 
         If ion = IonModes.Positive Then
@@ -245,7 +260,7 @@ Public Class AdductsRanking
             If AnthocyaninValidator.CheckRules(formula.CountsByElement) > 40 Then
                 Return maxValue
             Else
-                Return 0.5
+                Return 0.05
             End If
         End If
 
@@ -285,7 +300,7 @@ Public Class AdductsRanking
         Dim adduct_str As String = adduct.ToString
 
         If adduct_str = "[M]-" Then
-            Return 0.5
+            Return 0.01
         End If
 
         ' deal with some special adducts type situation

@@ -213,6 +213,26 @@ declare namespace math {
    */
    function jaccardSet(query: number, ref: number, tolerance?: any, env?: object): object;
    /**
+    * mapping sample id to sample names
+    * 
+    * 
+     * @param x the sample id is used as the sample identifier
+     * @param samples the mapping of sample id to sample name
+     * @return the peaktable that use the sample name as the sample identifier.
+   */
+   function map_samplenames(x: object, samples: object): object;
+   /**
+    * merge all peakset tables into one peaktable object
+    * 
+    * > this function merge two peaktable directly via the unique id reference
+    * 
+     * @param tables -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function merge_tables(tables: any, env?: object): object;
+   /**
     * evaluate all m/z for all known precursor type.
     * 
     * 
@@ -312,15 +332,13 @@ declare namespace math {
      * @return a collection of the ion precursor adducts object.
    */
    function precursor_types(types: any, unsafe?: boolean, env?: object): object;
-   /**
-    * data matrix pre-processing before run data analysis
-    * 
-    * 
-     * @param x -
-     * @param scale 
-     * + default value Is ``100000000``.
-   */
-   function preprocessing(x: object, scale?: number): object;
+   module preprocessing {
+      /**
+        * @param scale default value Is ``100000000``.
+        * @param k default value Is ``3``.
+      */
+      function knn(x: object, scale?: number, k?: object): object;
+   }
    /**
     * evaluate of the adduct annotation ranking score
     * 

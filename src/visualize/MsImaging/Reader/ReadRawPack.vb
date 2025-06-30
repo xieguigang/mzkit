@@ -93,12 +93,12 @@ Namespace Reader
                         End Function) _
                 .DoCall(Sub(ls) loadPixelsArray(ls, verbose))
 
-            Call ReadDimensions(mzpack, verbose)
+            Call ReadDimensions(mzpack, pixels.Select(Function(pr) pr.Value).IteratesALL, verbose, _resolution, _dimension)
         End Sub
 
         Sub New(raw As mzPackPixel(), Optional verbose As Boolean = True)
             Call loadPixelsArray(raw, verbose)
-            Call ReadDimensions(mzpack:=Nothing, verbose)
+            Call ReadDimensions(mzpack:=Nothing, pixels.Select(Function(pr) pr.Value).IteratesALL, verbose, _resolution, _dimension)
         End Sub
 
         ' load from mzpack rawdata file
@@ -157,9 +157,9 @@ Namespace Reader
         ''' the required mzpack object could be nothing
         ''' </summary>
         ''' <param name="mzpack"></param>
-        Private Overloads Sub ReadDimensions(mzpack As IMZPack, verbose As Boolean)
+        Friend Overloads Shared Sub ReadDimensions(mzpack As IMZPack, pixels As IEnumerable(Of PixelScan), verbose As Boolean, ByRef resolution As Double, ByRef dimension As Size)
             Dim metadata As Dictionary(Of String, String)
-            Dim polygon As New Polygon2D(pixels.Select(Function(pr) pr.Value).IteratesALL.Select(Function(p) New Point(p.X, p.Y)))
+            Dim polygon As New Polygon2D(pixels.Select(Function(p) New Point(p.X, p.Y)))
 
             If mzpack Is Nothing OrElse mzpack.metadata.IsNullOrEmpty Then
                 metadata = New Dictionary(Of String, String)
@@ -173,10 +173,9 @@ Namespace Reader
 
             Dim width As Integer = Val(metadata.TryGetValue("width", [default]:=polygon.xpoints.Max))
             Dim height As Integer = Val(metadata.TryGetValue("height", [default]:=polygon.ypoints.Max))
-            Dim resolution As Double = Val(metadata.TryGetValue("resolution", [default]:=17))
 
-            _resolution = resolution
-            _dimension = New Size(width, height)
+            resolution = Val(metadata.TryGetValue("resolution", [default]:=17))
+            dimension = New Size(width, height)
         End Sub
 
         Protected Overrides Sub release()
