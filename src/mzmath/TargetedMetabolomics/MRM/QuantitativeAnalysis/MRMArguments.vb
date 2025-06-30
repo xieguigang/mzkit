@@ -91,7 +91,7 @@ Namespace MRM
         Public Property sn_threshold As Double = 3
 
         Public Property bspline_degree As Integer = 2
-        Public Property bspline_density As Integer = 100
+        Public Property bspline_density As Integer = 5
         Public Property bspline As Boolean = False
 
         Public Property joint_peaks As Boolean = True
