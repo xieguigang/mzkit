@@ -449,6 +449,8 @@ declare namespace MSI {
      *  @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer``, or the @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix`` data matrix for 
      *  extract the sample dataframe.
      * @param tissue A collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion`` object.
+     * 
+     * + default value Is ``null``.
      * @param n Get n sample points for each tissue region
      * 
      * + default value Is ``32``.
@@ -457,6 +459,10 @@ declare namespace MSI {
      * + default value Is ``0.3``.
      * @param scale_by_area 
      * + default value Is ``true``.
+     * @param mz 
+     * + default value Is ``null``.
+     * @param multiple_samples 
+     * + default value Is ``false``.
      * @param env 
      * + default value Is ``null``.
      * @return For a single ion data layer, this function generates A tuple list object that contains 
@@ -474,7 +480,7 @@ declare namespace MSI {
      *  2. data - a dataframe that contains the bootstrapping expression data, ion features in rows
      *            and spatial features sample in columns.
    */
-   function sample_bootstraping(x: any, tissue: object, n?: object, coverage?: number, scale_by_area?: boolean, env?: object): any;
+   function sample_bootstraping(x: any, tissue?: object, n?: object, coverage?: number, scale_by_area?: boolean, mz?: object, multiple_samples?: boolean, env?: object): any;
    /**
     * scale the spatial matrix by column
     * 
