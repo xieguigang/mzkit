@@ -60,15 +60,16 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace LinearQuantitative
 
     ''' <summary>
     ''' model for a single rawdata file
     ''' </summary>
-    Public Class DataFile
+    Public Class DataFile : Implements INamedValue
 
-        <XmlAttribute> Public Property filename As String
+        <XmlAttribute> Public Property filename As String Implements INamedValue.Key
 
         ''' <summary>
         ''' the multiple ion peak area data
