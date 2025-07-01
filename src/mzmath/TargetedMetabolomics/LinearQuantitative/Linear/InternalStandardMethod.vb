@@ -57,7 +57,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports Microsoft.VisualBasic.Data.Bootstrapping
