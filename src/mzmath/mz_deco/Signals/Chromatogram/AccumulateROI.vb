@@ -125,7 +125,7 @@ Namespace Chromatogram
                                              Optional joint As Boolean = False,
                                              Optional nticks As Integer = 6) As IEnumerable(Of ROI)
             ' 先计算出基线和累加线
-            Dim baseline# = chromatogram.Baseline(baselineQuantile)
+            Dim baseline# = chromatogram.SignalBaseline(baselineQuantile)
             Dim time As Vector = chromatogram!time
             Dim peaks As SignalPeak() = New ElevationAlgorithm(angleThreshold, baselineQuantile) _
                 .FindAllSignalPeaks(chromatogram.As(Of ITimeSignal)) _
@@ -145,7 +145,7 @@ Namespace Chromatogram
                     Continue For
                 End If
 
-                Dim max# = peak.Max(Function(a) a.Intensity)
+                Dim max# = peak.Max(Function(a) a.Intensity) - window.baseline
                 Dim rt# = window(which.Max(window.region.Select(Function(a) a.intensity))).time
                 Dim ROI As New ROI With {
                     .ticks = peak,
