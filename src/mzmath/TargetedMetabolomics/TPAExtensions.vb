@@ -74,7 +74,9 @@ Public Module TPAExtensions
     ''' 对某一个色谱区域进行峰面积的积分计算
     ''' </summary>
     ''' <param name="ion"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' peak data with baseline noised removed
+    ''' </returns>
     <Extension>
     Public Function ionTPA(ion As IonChromatogram, TPAFactor As Double, args As MRMArguments) As IonTPA
         Dim vector As IVector(Of ChromatogramTick) = If(
@@ -255,7 +257,7 @@ Public Module TPAExtensions
     ''' <param name="peakAreaMethod"></param>
     ''' <param name="integratorTicks%"></param>
     ''' <param name="TPAFactor#"></param>
-    ''' <returns></returns>
+    ''' <returns>peak data with baseline noised removed</returns>
     <Extension>
     Private Function ProcessingIonPeakArea(ion As IonChromatogram, vector As IVector(Of ChromatogramTick), ROIData As ROI(),
                                            baselineQuantile#,
@@ -307,6 +309,7 @@ Public Module TPAExtensions
             bsplineDensity:=bsplineDensity,
             TPAFactor:=TPAFactor
         )
+            ' data with baseline noise removed
             data = (.Item1, .Item2, .Item3)
         End With
 
@@ -355,7 +358,7 @@ Public Module TPAExtensions
             Case PeakAreaMethods.SumAll
                 area = vector.SumAll
             Case PeakAreaMethods.MaxPeakHeight
-                area = vector.MaxPeakHeight
+                area = vector.MaxPeakHeight - baseline
             Case Else
                 ' 默认是使用积分器方法
                 area = vector.PeakAreaIntegrator(
@@ -369,6 +372,6 @@ Public Module TPAExtensions
 
         area *= TPAFactor
 
-        Return (area, baseline, vector.PickArea(range:=peak).MaxPeakHeight)
+        Return (area, baseline, vector.PickArea(range:=peak).MaxPeakHeight - baseline)
     End Function
 End Module
