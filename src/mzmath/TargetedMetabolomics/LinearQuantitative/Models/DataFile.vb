@@ -61,6 +61,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Linq
 
 Namespace LinearQuantitative
 
@@ -112,7 +113,11 @@ Namespace LinearQuantitative
             Dim ions = ionPeaks.ToDictionary(Function(a) a.ID)
             Dim contents As New Dictionary(Of String, Double)
 
-            For Each line As StandardCurve In linears
+            If linears Is Nothing Then
+                Call "Missing linear model for make sample data quantification.".Warning
+            End If
+
+            For Each line As StandardCurve In linears.SafeQuery
                 If ions.ContainsKey(line.name) Then
                     If line.IS Is Nothing OrElse line.IS.CheckIsEmpty Then
                         ' use peak area
