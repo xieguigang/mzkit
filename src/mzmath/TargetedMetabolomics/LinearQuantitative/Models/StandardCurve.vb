@@ -131,6 +131,17 @@ Namespace LinearQuantitative
             Return $"[{name}] {linear}"
         End Function
 
+        Public Function GetModelFlip() As Formula
+            Dim fx = linear.Polynomial
+            Dim a = fx.Factors(0)
+            Dim b = fx.Factors(1)
+            Dim flip_a = -a / b
+            Dim flip_b = 1 / b
+            Dim flip_linear As New Polynomial(flip_a, flip_b)
+
+            Return flip_linear
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function CreateLinearRegression(points As IEnumerable(Of PointF), maxDeletions%, ByRef removed As List(Of PointF)) As IFitted
             Dim deletes As New List(Of PointF)(removed.SafeQuery)
