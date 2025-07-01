@@ -112,6 +112,7 @@ Namespace LinearQuantitative
         Public Function CreateQuantifyData(linears As IEnumerable(Of StandardCurve)) As Dictionary(Of String, Double)
             Dim ions = ionPeaks.ToDictionary(Function(a) a.ID)
             Dim contents As New Dictionary(Of String, Double)
+            Dim val As Double
 
             If linears Is Nothing Then
                 Call "Missing linear model for make sample data quantification.".Warning
@@ -121,16 +122,22 @@ Namespace LinearQuantitative
                 If ions.ContainsKey(line.name) Then
                     If line.IS Is Nothing OrElse line.IS.CheckIsEmpty Then
                         ' use peak area
-                        Call contents.Add(line.name, line.GetModelFlip.Evaluate(ions(line.name).TPA))
+                        val = line.GetModelFlip.Evaluate(ions(line.name).TPA)
                     ElseIf ions(line.name).TPA_IS <= 0 Then
-                        Call contents.Add(line.name, Double.NaN)
+                        val = Double.NaN
                     Else
                         ' use the A/IS ratio
-                        Call contents.Add(line.name, line.GetModelFlip.Evaluate(ions(line.name).TPA / ions(line.name).TPA_IS))
+                        val = line.GetModelFlip.Evaluate(ions(line.name).TPA / ions(line.name).TPA_IS)
                     End If
                 Else
-                    Call contents.Add(line.name, 0)
+                    val = 0
                 End If
+
+                If val < 0 Then
+                    val = 0
+                End If
+
+                Call contents.Add(line.name, val)
             Next
 
             Return contents
