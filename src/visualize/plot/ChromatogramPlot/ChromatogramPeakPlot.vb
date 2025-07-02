@@ -73,6 +73,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 
@@ -129,7 +130,7 @@ Public Class ChromatogramPeakPlot : Inherits Plot
 
         Me.chromatogram = TIC
         Me.MRM_ROIs = MRM_ROIs
-        Me.base = chromatogram.Baseline(baselineQuantile)
+        Me.base = chromatogram.SignalBaseline(baselineQuantile)
         Me.showAccumulateLine = showAccumulateLine
         Me.ROI_styleCSS = ROI_styleCSS
         Me.baseLine_styleCSS = baseLine_styleCSS

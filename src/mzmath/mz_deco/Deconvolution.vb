@@ -111,7 +111,7 @@ Public Module Deconvolution
                 .rtmax = ROI.time.Max,
                 .rtmin = ROI.time.Min,
                 .nticks = ROI.ticks.Length,
-                .area = ROI.ticks.Select(Function(t) t.Intensity).Sum,
+                .area = ROI.ticks.Select(Function(t) t.Intensity - .baseline).Sum,
                 .xcms_id = ROI.rt / 60
             }
             Yield peakdata

@@ -121,7 +121,7 @@ Namespace Chromatogram
             Get
                 Dim signal As Double = Aggregate tick As ChromatogramTick
                                        In ticks
-                                       Into Sum(tick.Intensity)
+                                       Into Sum(tick.Intensity - baseline)
                 Dim sn As Double = SignalProcessing.SNRatio(signal, noise)
 
                 Return sn

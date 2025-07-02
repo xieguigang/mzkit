@@ -91,7 +91,8 @@ Namespace MRM
         Public Property sn_threshold As Double = 3
 
         Public Property bspline_degree As Integer = 2
-        Public Property bspline_density As Integer = 100
+        Public Property bspline_density As Integer = 5
+        Public Property bspline As Boolean = False
 
         Public Property joint_peaks As Boolean = True
         Public Property strict As Boolean = False
@@ -152,7 +153,8 @@ Namespace MRM
                 {"bspline_degree", bspline_degree},
                 {"bspline_density", bspline_density},
                 {"joint_peaks", joint_peaks.ToString},
-                {"strict", strict.ToString}
+                {"strict", strict.ToString},
+                {"bspline", bspline.ToString}
             }
 
             For Each factor In TPAFactors.SafeQuery
@@ -176,6 +178,7 @@ Namespace MRM
             args.sn_threshold = json!sn_threshold
             args.bspline_degree = json!bspline_degree
             args.bspline_density = json!bspline_density
+            args.bspline = json!bspline.ParseBoolean
             args.joint_peaks = json!joint_peaks.ParseBoolean
             args.strict = json!strict.ParseBoolean
 

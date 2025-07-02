@@ -134,6 +134,24 @@ Namespace LinearQuantitative
         ''' <returns></returns>
         Public Property raw As String
 
+        Sub New()
+        End Sub
+
+        Sub New(clone As IonPeakTableRow)
+            ID = clone.ID
+            Name = clone.Name
+            rtmin = clone.rtmin
+            rtmax = clone.rtmax
+            content = clone.content
+            maxinto = clone.maxinto
+            maxinto_IS = clone.maxinto_IS
+            TPA = clone.TPA
+            TPA_IS = clone.TPA_IS
+            [IS] = clone.IS
+            base = clone.base
+            raw = clone.raw
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Name
         End Function

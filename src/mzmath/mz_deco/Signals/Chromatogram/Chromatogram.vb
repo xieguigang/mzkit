@@ -89,20 +89,6 @@ Namespace Chromatogram
         End Function
 
         ''' <summary>
-        ''' Detection of the signal base line based on the quantile method.
-        ''' </summary>
-        ''' <param name="chromatogram"></param>
-        ''' <param name="quantile#"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function Baseline(chromatogram As IEnumerable(Of ChromatogramTick), Optional quantile# = 0.65) As Double
-            Dim q As QuantileEstimationGK = chromatogram.Shadows!Intensity.GKQuantile
-            Dim baseValue = q.Query(quantile)
-
-            Return baseValue
-        End Function
-
-        ''' <summary>
         ''' Quantile summary of the chromatogram tick <see cref="ChromatogramTick.Intensity"/>
         ''' </summary>
         ''' <param name="chromatogram"></param>

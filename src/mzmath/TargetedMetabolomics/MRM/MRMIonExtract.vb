@@ -71,6 +71,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
 Imports chromatogramTicks = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 Imports std = System.Math
 
@@ -129,7 +130,7 @@ Namespace MRM
 
             Dim peak As New ROIPeak With {
                 .window = peakWin,
-                .base = ticks.Baseline(0.65),
+                .base = ticks.SignalBaseline(args.baselineQuantile),
                 .peakHeight = ticks _
                     .Select(Function(t) t.Intensity) _
                     .Max,
