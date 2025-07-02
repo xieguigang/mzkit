@@ -68,6 +68,7 @@ Imports Microsoft.VisualBasic.Math.Calculus
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
+Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
 Imports std = System.Math
 
 Namespace LinearQuantitative
@@ -94,7 +95,9 @@ Namespace LinearQuantitative
         ''' <summary>
         ''' ``B + A = S``
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' area data with baseline noise removed
+        ''' </returns>
         ''' <remarks>
         ''' 简单的净峰法计算出峰面积
         ''' </remarks>
@@ -134,6 +137,13 @@ Namespace LinearQuantitative
             Return region
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="chromatogram"></param>
+        ''' <returns>
+        ''' area data with add all intensity data
+        ''' </returns>
         <Extension>
         Public Function SumAll(chromatogram As IVector(Of ChromatogramTick)) As Double
             Return Aggregate t As ChromatogramTick
@@ -214,7 +224,7 @@ Namespace LinearQuantitative
             End If
 
             Dim points As PointF() = B_Spline.BSpline(rawPoints, bsplineDegree, bsplineDensity).ToArray
-            Dim baseline# = chromatogram.Baseline(baselineQuantile)
+            Dim baseline# = chromatogram.SignalBaseline(baselineQuantile)
             Dim windows = points.SlideWindows(2).ToArray
             Dim p As i32 = 0
             Dim current As DoubleRange = Nothing
@@ -243,7 +253,7 @@ Namespace LinearQuantitative
                                    Call moveNext()
                                End If
 
-                               y = tangent(x) '- baseline
+                               y = tangent(x) - baseline
 
                                Return y
                            End Function

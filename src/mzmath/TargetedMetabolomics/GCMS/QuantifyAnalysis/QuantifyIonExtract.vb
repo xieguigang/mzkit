@@ -65,13 +65,10 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.DataStorage.netCDF
-Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
-Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
-Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace GCMS.QuantifyAnalysis
 
@@ -101,8 +98,8 @@ Namespace GCMS.QuantifyAnalysis
         End Sub
 
         Public Function FindIon(tmin As Double, tmax As Double) As QuantifyIon
-            Dim rtmin As Vector = ions.Select(Function(i) stdNum.Abs(i.rt.Min - tmin)).AsVector
-            Dim rtmax As Vector = ions.Select(Function(i) stdNum.Abs(i.rt.Max - tmax)).AsVector
+            Dim rtmin As Vector = ions.Select(Function(i) std.Abs(i.rt.Min - tmin)).AsVector
+            Dim rtmax As Vector = ions.Select(Function(i) std.Abs(i.rt.Max - tmax)).AsVector
             Dim zero As Vector = Double.MinValue
             Dim ion As QuantifyIon
 
@@ -159,7 +156,7 @@ Namespace GCMS.QuantifyAnalysis
             Dim cos As Vector = MS _
                 .Select(Function(spectra)
                             With GlobalAlignment.TwoDirectionSSM(ion.ms, spectra, dadot3)
-                                Return stdNum.Min(.forward, .reverse)
+                                Return std.Min(.forward, .reverse)
                             End With
                         End Function) _
                 .ToArray

@@ -89,14 +89,30 @@ Namespace Content
         ''' if this parameter is set to TRUE, then it means do not parse the level name into integer number level
         ''' use the original name as the level key.
         ''' </param>
-        Sub New(levels As Dictionary(Of String, Double), Optional directMap As Boolean = False)
+        Sub New(levels As Dictionary(Of String, Double),
+                Optional directMap As Boolean = False,
+                Optional resolve_duplication As Boolean = False)
+
+            Dim sorts = levels.OrderBy(Function(L) L.Value) _
+                .Select(Function(L) (If(directMap, L.Key, levelKey(L.Key)), L.Value)) _
+                .ToArray
+
             Me.directMap = directMap
-            Me.levels = levels _
-                .OrderBy(Function(L) L.Value) _
-                .ToDictionary(Function(L) If(directMap, L.Key, levelKey(L.Key)),
-                              Function(L)
-                                  Return L.Value
-                              End Function)
+
+            If resolve_duplication Then
+                Me.levels = sorts _
+                    .GroupBy(Function(a) a.Item1) _
+                    .ToDictionary(Function(L) L.Key,
+                                  Function(L)
+                                      Return L.Average(Function(a) a.Value)
+                                  End Function)
+            Else
+                Me.levels = sorts _
+                    .ToDictionary(Function(L) L.Item1,
+                                  Function(L)
+                                      Return L.Value
+                                  End Function)
+            End If
         End Sub
 
         ''' <summary>

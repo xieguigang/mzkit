@@ -144,6 +144,19 @@ Namespace Content
             Dim minName As String = names.MinLengthString
             Dim index As Integer
 
+            Static cals As String() = {"L[-_]?\d+", "R[-_]?\d+", "S[-_]?\d+", "cal[-_]?\d+"}
+
+            ' check of the original clas reference name
+            For Each pattern As String In cals
+                If names.All(Function(s) s.IsPattern(pattern)) Then
+                    Return names _
+                        .Select(Function(cal_name)
+                                    Return New NamedValue(Of String)(cal_name, cal_name)
+                                End Function) _
+                        .ToArray
+                End If
+            Next
+
             For i As Integer = 0 To minName.Length - 1
                 index = i
 

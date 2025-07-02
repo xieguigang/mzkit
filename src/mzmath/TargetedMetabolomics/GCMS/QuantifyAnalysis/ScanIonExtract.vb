@@ -61,7 +61,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace GCMS.QuantifyAnalysis
 
@@ -85,7 +85,7 @@ Namespace GCMS.QuantifyAnalysis
             '    .First.mz
             Dim maxMz As Double = spectra.OrderByDescending(Function(mz) mz.intensity).First.mz
             Dim tick As ChromatogramTick() = spectra _
-                .Where(Function(scan) stdNum.Abs(scan.mz - maxMz) <= 0.3) _
+                .Where(Function(scan) std.Abs(scan.mz - maxMz) <= 0.3) _
                 .Select(Function(mzi)
                             Return New ChromatogramTick With {
                                 .Time = mzi.scan_time,

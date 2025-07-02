@@ -61,6 +61,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 
 Namespace MRM.Data
 
@@ -107,6 +108,13 @@ Namespace MRM.Data
             Else
                 Return Nothing
             End If
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetSplineData(degree As Double, res As Integer) As ChromatogramTick()
+            Return chromatogram _
+                .BSpline(Function(t, i) New ChromatogramTick(t, i), degree, res) _
+                .ToArray
         End Function
 
         Public Overrides Function ToString() As String
