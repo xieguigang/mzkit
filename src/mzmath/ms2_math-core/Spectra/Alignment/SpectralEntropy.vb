@@ -138,6 +138,20 @@ Namespace Spectra
         End Function
 
         <Extension>
+        Public Function StandardizeSpectrum(ms As ms2()) As ms2()
+            Dim sum As Double = ms.Sum(Function(a) a.intensity)
+            Dim norm = ms _
+                .Select(Function(a)
+                            Return New ms2(a.mz, a.intensity / sum) With {
+                                .Annotation = a.Annotation
+                            }
+                        End Function) _
+                .ToArray
+
+            Return norm
+        End Function
+
+        <Extension>
         Public Iterator Function StandardizeAlignment(align As SSM2MatrixFragment()) As IEnumerable(Of SSM2MatrixFragment)
             Dim qsum As Double = align.Sum(Function(a) a.query)
             Dim rsum As Double = align.Sum(Function(a) a.ref)

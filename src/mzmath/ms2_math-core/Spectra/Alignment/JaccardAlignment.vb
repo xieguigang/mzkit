@@ -111,5 +111,17 @@ Namespace Spectra
 
             Return J
         End Function
+
+        Public Shared Function JaccardRankScore(spectrum As ms2(), matches As Double(), mzdiff As Tolerance) As Double
+            Dim norm = spectrum.StandardizeSpectrum()
+            Dim aligns = matches _
+                .Select(Function(mzi)
+                            Return norm.Where(Function(i) mzdiff(i.mz, mzi)).OrderByDescending(Function(a) a.intensity).FirstOrDefault
+                        End Function) _
+                .Where(Function(p) Not p Is Nothing) _
+                .ToArray
+
+            Return (aligns.Length / matches.Length) * aligns.Sum(Function(a) a.intensity)
+        End Function
     End Class
 End Namespace
