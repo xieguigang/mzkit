@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5eb72360508d25fb99cf8f0b1a3a978a, visualize\MsImaging\Reader\PixelScan\mzPackPixel.vb"
+﻿#Region "Microsoft.VisualBasic::8ce9c096b02fe9f6f10f72caf3ff25bc, visualize\MsImaging\Reader\PixelScan\mzPackPixel.vb"
 
     ' Author:
     ' 
@@ -37,15 +37,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 161
-    '    Code Lines: 126 (78.26%)
-    ' Comment Lines: 9 (5.59%)
-    '    - Xml Docs: 33.33%
+    '   Total Lines: 271
+    '    Code Lines: 208 (76.75%)
+    ' Comment Lines: 15 (5.54%)
+    '    - Xml Docs: 60.00%
     ' 
-    '   Blank Lines: 26 (16.15%)
-    '     File Size: 5.67 KB
+    '   Blank Lines: 48 (17.71%)
+    '     File Size: 9.36 KB
 
 
+    '     Class IndexedMzPackMemory
+    ' 
+    '         Properties: sampleTag, scan, scanId, X, Y
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: GetMsPipe, (+2 Overloads) GetMzIonIntensity, (+2 Overloads) HasAnyMzIon, SetXY
+    ' 
+    '         Sub: release, SetIons
+    ' 
     '     Class mzPackPixel
     ' 
     '         Properties: mz, sampleTag, scan, scanId, X

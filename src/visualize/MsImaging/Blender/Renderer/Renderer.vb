@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62576d644d8a701f14f25a8b3addd832, visualize\MsImaging\Blender\Renderer\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::ef86af696b3d13c1c92acb5ddaf1bc40, visualize\MsImaging\Blender\Renderer\Renderer.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 225
-    '    Code Lines: 134 (59.56%)
-    ' Comment Lines: 61 (27.11%)
-    '    - Xml Docs: 91.80%
+    '   Total Lines: 238
+    '    Code Lines: 145 (60.92%)
+    ' Comment Lines: 62 (26.05%)
+    '    - Xml Docs: 90.32%
     ' 
-    '   Blank Lines: 30 (13.33%)
-    '     File Size: 9.10 KB
+    '   Blank Lines: 31 (13.03%)
+    '     File Size: 9.56 KB
 
 
     '     Class Renderer

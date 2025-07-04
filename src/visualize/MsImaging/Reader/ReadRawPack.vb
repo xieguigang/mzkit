@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d3cf8a99b6051a3f43b7a287b2a1900, visualize\MsImaging\Reader\ReadRawPack.vb"
+﻿#Region "Microsoft.VisualBasic::bd0aaa370450230e8c349a283d30232a, visualize\MsImaging\Reader\ReadRawPack.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 155
-    '    Code Lines: 104 (67.10%)
-    ' Comment Lines: 26 (16.77%)
+    '   Total Lines: 154
+    '    Code Lines: 103 (66.88%)
+    ' Comment Lines: 26 (16.88%)
     '    - Xml Docs: 53.85%
     ' 
-    '   Blank Lines: 25 (16.13%)
-    '     File Size: 6.00 KB
+    '   Blank Lines: 25 (16.23%)
+    '     File Size: 6.15 KB
 
 
     '     Class ReadRawPack

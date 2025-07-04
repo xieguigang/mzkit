@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a3ff9e966dd8a06def929c886bc5528, visualize\MsImaging\Layer\SingleIonLayer.vb"
+﻿#Region "Microsoft.VisualBasic::fb7ebb1a02709a749d10788382856a01, visualize\MsImaging\Layer\SingleIonLayer.vb"
 
     ' Author:
     ' 
@@ -37,15 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 253
-    '    Code Lines: 155 (61.26%)
-    ' Comment Lines: 69 (27.27%)
+    '   Total Lines: 270
+    '    Code Lines: 159 (58.89%)
+    ' Comment Lines: 78 (28.89%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 29 (11.46%)
-    '     File Size: 8.65 KB
+    '   Blank Lines: 33 (12.22%)
+    '     File Size: 9.23 KB
 
 
+    ' Interface IMSILayer
+    ' 
+    '     Properties: DimensionSize, MSILayer
+    ' 
     ' Class SingleIonLayer
     ' 
     '     Properties: DimensionSize, hasMultipleSamples, hasZeroPixels, IonMz, Item
