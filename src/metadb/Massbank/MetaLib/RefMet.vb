@@ -1,61 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::daca9e80f6301b2919b89c56c01b1726, metadb\Massbank\MetaLib\RefMet.vb"
+﻿#Region "Microsoft.VisualBasic::8ce53fe7ff93f69f65d8ed6792671287, metadb\Massbank\MetaLib\RefMet.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 74
-'    Code Lines: 34 (45.95%)
-' Comment Lines: 34 (45.95%)
-'    - Xml Docs: 91.18%
-' 
-'   Blank Lines: 6 (8.11%)
-'     File Size: 4.18 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class RefMet
-' 
-'         Properties: chebi_id, exactmass, formula, hmdb_id, inchi_key
-'                     kegg_id, lipidmaps_id, main_class, pubchem_cid, refmet_id
-'                     refmet_name, smiles, sub_class, super_class
-' 
-'         Function: CreateReference, ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 103
+    '    Code Lines: 53 (51.46%)
+    ' Comment Lines: 41 (39.81%)
+    '    - Xml Docs: 90.24%
+    ' 
+    '   Blank Lines: 9 (8.74%)
+    '     File Size: 5.19 KB
+
+
+    '     Class RefMet
+    ' 
+    '         Properties: chebi_id, exactmass, formula, hmdb_id, inchi_key
+    '                     kegg_id, lipidmaps_id, main_class, pubchem_cid, refmet_id
+    '                     refmet_name, smiles, sub_class, super_class
+    ' 
+    '         Function: CastModel, CreateReference, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

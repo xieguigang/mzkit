@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::caacd331b1f5ab24387a677458e569ee, metadb\FormulaSearch.Extensions\AdductsRanking.vb"
+﻿#Region "Microsoft.VisualBasic::648b374dd8be2e8a627b7df890f2c927, metadb\FormulaSearch.Extensions\AdductsRanking.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 244
-    '    Code Lines: 161 (65.98%)
-    ' Comment Lines: 44 (18.03%)
+    '   Total Lines: 278
+    '    Code Lines: 170 (61.15%)
+    ' Comment Lines: 66 (23.74%)
     '    - Xml Docs: 81.82%
     ' 
-    '   Blank Lines: 39 (15.98%)
-    '     File Size: 8.67 KB
+    '   Blank Lines: 42 (15.11%)
+    '     File Size: 9.91 KB
 
 
     ' Class AdductsRanking
     ' 
-    '     Function: Filter, GetAdductsFormula, InvalidAdduct, Rank, (+3 Overloads) RankAdducts
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Filter, GetAdductsFormula, InvalidAdduct, (+3 Overloads) Rank, (+3 Overloads) RankAdducts
     '               RankNegative, RankPositive
     ' 
     ' /********************************************************************************/
