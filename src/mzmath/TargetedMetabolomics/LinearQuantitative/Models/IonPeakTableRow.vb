@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ce813865a476f0027b93dee5bd91e59, mzmath\TargetedMetabolomics\LinearQuantitative\Models\IonPeakTableRow.vb"
+﻿#Region "Microsoft.VisualBasic::5aca48bfef023b70511da622ef980d55, mzmath\TargetedMetabolomics\LinearQuantitative\Models\IonPeakTableRow.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 81
-    '    Code Lines: 24 (29.63%)
-    ' Comment Lines: 51 (62.96%)
+    '   Total Lines: 99
+    '    Code Lines: 40 (40.40%)
+    ' Comment Lines: 51 (51.52%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (7.41%)
-    '     File Size: 2.54 KB
+    '   Blank Lines: 8 (8.08%)
+    '     File Size: 3.04 KB
 
 
     '     Class IonPeakTableRow
@@ -52,6 +52,7 @@
     '                     maxinto_IS, Name, raw, rtmax, rtmin
     '                     TPA, TPA_IS
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
     ' 
     ' 

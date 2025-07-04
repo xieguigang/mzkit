@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf907aa587e492b5d6bb10668eb39c4f, mzmath\ms2_math-core\Ms1\Annotation\MetID.vb"
+﻿#Region "Microsoft.VisualBasic::fdc6074c87c8f9446aeb5c9e1b81190d, mzmath\ms2_math-core\Ms1\Annotation\MetID.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 42
-    '    Code Lines: 17 (40.48%)
-    ' Comment Lines: 19 (45.24%)
+    '   Total Lines: 46
+    '    Code Lines: 20 (43.48%)
+    ' Comment Lines: 19 (41.30%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (14.29%)
-    '     File Size: 1.65 KB
+    '   Blank Lines: 7 (15.22%)
+    '     File Size: 1.76 KB
 
 
     '     Class MetID

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e550b20354014b00e412a43c17e5feb, mzmath\mz_deco\Save\SaveXcms.vb"
+﻿#Region "Microsoft.VisualBasic::fab8fa719e1f6feb2c0c3b19f296a45c, mzmath\mz_deco\Save\SaveXcms.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 234
-    '    Code Lines: 164 (70.09%)
-    ' Comment Lines: 35 (14.96%)
-    '    - Xml Docs: 85.71%
+    '   Total Lines: 255
+    '    Code Lines: 180 (70.59%)
+    ' Comment Lines: 37 (14.51%)
+    '    - Xml Docs: 81.08%
     ' 
-    '   Blank Lines: 35 (14.96%)
-    '     File Size: 8.99 KB
+    '   Blank Lines: 38 (14.90%)
+    '     File Size: 9.79 KB
 
 
     ' Module SaveXcms

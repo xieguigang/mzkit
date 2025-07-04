@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9c7cc20da021dc012c6fe8b39cd1d66, mzmath\TargetedMetabolomics\TPAExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::9bf5984cb276a367fb4fd7c0472ab9f1, mzmath\TargetedMetabolomics\TPAExtensions.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 313
-    '    Code Lines: 219 (69.97%)
-    ' Comment Lines: 66 (21.09%)
-    '    - Xml Docs: 68.18%
+    '   Total Lines: 320
+    '    Code Lines: 223 (69.69%)
+    ' Comment Lines: 69 (21.56%)
+    '    - Xml Docs: 68.12%
     ' 
-    '   Blank Lines: 28 (8.95%)
-    '     File Size: 12.45 KB
+    '   Blank Lines: 28 (8.75%)
+    '     File Size: 12.75 KB
 
 
     ' Module TPAExtensions

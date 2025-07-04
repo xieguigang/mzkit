@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ade7b876836eb28bc6be393846c18943, mzmath\TargetedMetabolomics\LinearQuantitative\Linear\InternalStandardMethod.vb"
+﻿#Region "Microsoft.VisualBasic::05f86e9099b77002c915cb6d7c4801d7, mzmath\TargetedMetabolomics\LinearQuantitative\Linear\InternalStandardMethod.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 190
-    '    Code Lines: 136 (71.58%)
-    ' Comment Lines: 31 (16.32%)
+    '   Total Lines: 189
+    '    Code Lines: 135 (71.43%)
+    ' Comment Lines: 31 (16.40%)
     '    - Xml Docs: 90.32%
     ' 
-    '   Blank Lines: 23 (12.11%)
-    '     File Size: 7.97 KB
+    '   Blank Lines: 23 (12.17%)
+    '     File Size: 7.93 KB
 
 
     '     Class InternalStandardMethod
