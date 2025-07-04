@@ -7,6 +7,7 @@
 
         Public Property ID As String
         Public Property name As String
+        Public Property ISTD As String
         Public Property linear As String
         Public Property R2 As Double
         Public Property samples As Dictionary(Of String, Double)
