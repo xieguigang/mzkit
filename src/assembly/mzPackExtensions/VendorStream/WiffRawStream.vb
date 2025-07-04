@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32eee997d7561fa881193e24de30fd9e, assembly\mzPackExtensions\VendorStream\WiffRawStream.vb"
+﻿#Region "Microsoft.VisualBasic::edde5d79cfc70f1629b30fd587559e2d, assembly\mzPackExtensions\VendorStream\WiffRawStream.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 153
-    '    Code Lines: 124 (81.05%)
-    ' Comment Lines: 4 (2.61%)
-    '    - Xml Docs: 75.00%
+    '   Total Lines: 162
+    '    Code Lines: 129 (79.63%)
+    ' Comment Lines: 7 (4.32%)
+    '    - Xml Docs: 42.86%
     ' 
-    '   Blank Lines: 25 (16.34%)
-    '     File Size: 5.41 KB
+    '   Blank Lines: 26 (16.05%)
+    '     File Size: 5.80 KB
 
 
     ' Class WiffRawStream

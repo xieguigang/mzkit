@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e034050c18daf7ef900b0e7ab4617b0, assembly\LoadR.NET5\ChromatogramOverlap.vb"
+﻿#Region "Microsoft.VisualBasic::62e62c81fc637c817f3a4fe7906400f3, assembly\LoadR.NET5\ChromatogramOverlap.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 113
-    '    Code Lines: 84 (74.34%)
-    ' Comment Lines: 8 (7.08%)
-    '    - Xml Docs: 75.00%
+    '   Total Lines: 119
+    '    Code Lines: 84 (70.59%)
+    ' Comment Lines: 14 (11.76%)
+    '    - Xml Docs: 78.57%
     ' 
-    '   Blank Lines: 21 (18.58%)
-    '     File Size: 3.76 KB
+    '   Blank Lines: 21 (17.65%)
+    '     File Size: 4.06 KB
 
 
     ' Class ChromatogramOverlap

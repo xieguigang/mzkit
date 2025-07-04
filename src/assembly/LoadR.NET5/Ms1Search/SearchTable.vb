@@ -1,4 +1,61 @@
-﻿Imports BioNovoGene.BioDeep.MSEngine
+﻿#Region "Microsoft.VisualBasic::2ebf26fe0c350ed41c0c83ad36b77da7, assembly\LoadR.NET5\Ms1Search\SearchTable.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 58
+    '    Code Lines: 46 (79.31%)
+    ' Comment Lines: 2 (3.45%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 10 (17.24%)
+    '     File Size: 2.40 KB
+
+
+    ' Class SearchTable
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: SearchAll, UniqueResult
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports BioNovoGene.BioDeep.MSEngine
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Vectorization
@@ -56,3 +113,4 @@ Public Class SearchTable : Inherits ISearchOp
         Next
     End Function
 End Class
+
