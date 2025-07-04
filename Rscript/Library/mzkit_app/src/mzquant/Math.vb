@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c70d033e41a988c3805a9683603a503, Rscript\Library\mzkit_app\src\mzquant\Math.vb"
+﻿#Region "Microsoft.VisualBasic::e2433a5c6b909d4cfb113b6ffc60db4a, Rscript\Library\mzkit_app\src\mzquant\Math.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 232
-    '    Code Lines: 157 (67.67%)
-    ' Comment Lines: 47 (20.26%)
-    '    - Xml Docs: 87.23%
+    '   Total Lines: 383
+    '    Code Lines: 269 (70.23%)
+    ' Comment Lines: 67 (17.49%)
+    '    - Xml Docs: 86.57%
     ' 
-    '   Blank Lines: 28 (12.07%)
-    '     File Size: 9.78 KB
+    '   Blank Lines: 47 (12.27%)
+    '     File Size: 15.86 KB
 
 
     ' Module QuantifyMath
     ' 
-    '     Function: asChromatogram, combineVector, GetPeakROIList, impute, removes_missing
-    '               resample
+    '     Function: asChromatogram, combineVector, GetPeakROIList, impute_f, impute_knn
+    '               MapSampleNames, mergeTables, removes_missing, resample
     ' 
     ' /********************************************************************************/
 

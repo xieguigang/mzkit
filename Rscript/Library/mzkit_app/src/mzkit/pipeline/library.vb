@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d70b0389345fd6cb65e25c7e10d0a938, Rscript\Library\mzkit_app\src\mzkit\pipeline\library.vb"
+﻿#Region "Microsoft.VisualBasic::e5da6824fcb03986080b01804c73c2ee, Rscript\Library\mzkit_app\src\mzkit\pipeline\library.vb"
 
     ' Author:
     ' 
@@ -37,22 +37,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1174
-    '    Code Lines: 609 (51.87%)
-    ' Comment Lines: 442 (37.65%)
-    '    - Xml Docs: 93.67%
+    '   Total Lines: 1191
+    '    Code Lines: 618 (51.89%)
+    ' Comment Lines: 449 (37.70%)
+    '    - Xml Docs: 93.76%
     ' 
-    '   Blank Lines: 123 (10.48%)
-    '     File Size: 59.40 KB
+    '   Blank Lines: 124 (10.41%)
+    '     File Size: 60.11 KB
 
 
     ' Module library
     ' 
     '     Function: assertAdducts, checkInSourceFragments, create_reportTable, create_table, create_workspace
-    '               createAnnotation, filter_unique, GetAnnotations, ionsFromPeaktable, loadAll
-    '               LoadLocalDatabase, loadPeaktable, loadWorkspace, MakeMoNALibrary, openRepository
-    '               OpenResultPack, PopulateIonData, readResultPack, Save, set_xicCache
-    '               tohtmlString, uniqueAnnotations, writeResultPack, writeWorkspace, xref
+    '               createAnnotation, filter_unique, GetAnnotations, getByKEGG, ionsFromPeaktable
+    '               loadAll, LoadLocalDatabase, loadPeaktable, loadWorkspace, MakeMoNALibrary
+    '               openRepository, OpenResultPack, PopulateIonData, readResultPack, Save
+    '               set_xicCache, tohtmlString, uniqueAnnotations, writeResultPack, writeWorkspace
+    '               xref
     ' 
     '     Sub: commit, Main, peak_assign, push_temp, saveAnnotation
     ' 
