@@ -124,7 +124,12 @@ Namespace LinearQuantitative
                         ' use peak area
                         val = line.GetModelFlip.Evaluate(ions(line.name).TPA)
                     ElseIf ions(line.name).TPA_IS <= 0 Then
-                        val = Double.NaN
+                        If ions.ContainsKey(line.IS.ID) Then
+                            ' use the A/IS ratio
+                            val = line.GetModelFlip.Evaluate(ions(line.name).TPA / ions(line.IS.ID).TPA)
+                        Else
+                            val = Double.NaN
+                        End If
                     Else
                         ' use the A/IS ratio
                         val = line.GetModelFlip.Evaluate(ions(line.name).TPA / ions(line.name).TPA_IS)
