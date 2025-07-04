@@ -121,7 +121,7 @@ Public Class TreeCluster
             .OrderByDescending(Function(c)
                                    Return ranking(c.Value.Select(Function(a) specIndex(a)).ToArray)
                                End Function)
-        Dim i As Integer = 1
+        Dim i As Integer = 0
 
         For Each top As KeyValuePair(Of String, String()) In rank_desc
             Yield New SeqValue(Of PeakMs2()) With {
