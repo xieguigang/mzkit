@@ -133,6 +133,7 @@ Namespace Blender.Scaler
             Yield GetType(SoftenScaler)       ' $"soften()"
             Yield GetType(TrIQClip)           ' $"TrIQ_clip({threshold},{N})"
             Yield GetType(TrIQScaler)         ' $"TrIQ({threshold.ToString("F4")})"
+            Yield GetType(ZScoreScaler)       ' $"zscore_norm()"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -155,6 +156,7 @@ Namespace Blender.Scaler
                 Case "power" : Return New PowerScaler(pars.next(2.0))
                 Case "triq_clip" : Return New TrIQClip(pars.next(0.8), pars.next(100))
                 Case "cut" : Return New IntensityCutScaler(pars.next(0.05), pars.next(False))
+                Case "zscore_norm" : Return New ZScoreScaler
                 Case Else
                     Throw New NotImplementedException(line & ": " & config.Name)
             End Select
