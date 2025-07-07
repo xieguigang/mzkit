@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be65ac552e7f9a1c08131b39d7920102, mzmath\TargetedMetabolomics\LinearQuantitative\Models\StandardCurve.vb"
+﻿#Region "Microsoft.VisualBasic::8cf89ebdba210387bf2780af3bcdbaea, mzmath\TargetedMetabolomics\LinearQuantitative\Models\StandardCurve.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 117
-    '    Code Lines: 74 (63.25%)
-    ' Comment Lines: 27 (23.08%)
+    '   Total Lines: 128
+    '    Code Lines: 83 (64.84%)
+    ' Comment Lines: 27 (21.09%)
     '    - Xml Docs: 85.19%
     ' 
-    '   Blank Lines: 16 (13.68%)
-    '     File Size: 4.41 KB
+    '   Blank Lines: 18 (14.06%)
+    '     File Size: 4.75 KB
 
 
     '     Class StandardCurve
@@ -51,7 +51,7 @@
     '         Properties: [IS], arguments, blankControls, isValid, isWeighted
     '                     linear, name, points, requireISCalibration
     ' 
-    '         Function: CreateLinearRegression, ToString
+    '         Function: CreateLinearRegression, GetModelFlip, ToString
     ' 
     ' 
     ' /********************************************************************************/

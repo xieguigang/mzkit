@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25098a7e2e186cc9b9d44c0d86221bc3, mzmath\MoleculeNetworking\Tree\TreeCluster.vb"
+﻿#Region "Microsoft.VisualBasic::5c09e126e2f65d09c196df47728f0c3d, mzmath\MoleculeNetworking\Tree\TreeCluster.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 155
-    '    Code Lines: 106 (68.39%)
-    ' Comment Lines: 22 (14.19%)
-    '    - Xml Docs: 81.82%
+    '   Total Lines: 171
+    '    Code Lines: 109 (63.74%)
+    ' Comment Lines: 33 (19.30%)
+    '    - Xml Docs: 87.88%
     ' 
-    '   Blank Lines: 27 (17.42%)
-    '     File Size: 5.15 KB
+    '   Blank Lines: 29 (16.96%)
+    '     File Size: 5.60 KB
 
 
     ' Delegate Function
@@ -53,7 +53,7 @@
     ' 
     '     Properties: clusters, spectrum, tree
     ' 
-    '     Function: (+2 Overloads) GetTopCluster, GetTree, ToString, Union
+    '     Function: Any, (+2 Overloads) GetTopCluster, GetTree, ToString, Union
     ' 
     '     Sub: GetTree
     ' 
@@ -121,7 +121,7 @@ Public Class TreeCluster
             .OrderByDescending(Function(c)
                                    Return ranking(c.Value.Select(Function(a) specIndex(a)).ToArray)
                                End Function)
-        Dim i As Integer = 1
+        Dim i As Integer = 0
 
         For Each top As KeyValuePair(Of String, String()) In rank_desc
             Yield New SeqValue(Of PeakMs2()) With {

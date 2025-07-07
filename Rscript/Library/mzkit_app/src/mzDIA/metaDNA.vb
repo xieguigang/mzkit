@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0de4d7c5e6c4f0bfd87d3037befd245f, Rscript\Library\mzkit_app\src\mzDIA\metaDNA.vb"
+﻿#Region "Microsoft.VisualBasic::b908336dff318d0aa20b15e7c8fa703c, Rscript\Library\mzkit_app\src\mzDIA\metaDNA.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 783
-    '    Code Lines: 513 (65.52%)
-    ' Comment Lines: 173 (22.09%)
+    '   Total Lines: 789
+    '    Code Lines: 517 (65.53%)
+    ' Comment Lines: 173 (21.93%)
     '    - Xml Docs: 98.27%
     ' 
-    '   Blank Lines: 97 (12.39%)
-    '     File Size: 34.39 KB
+    '   Blank Lines: 99 (12.55%)
+    '     File Size: 34.58 KB
 
 
     ' Module metaDNAInfer

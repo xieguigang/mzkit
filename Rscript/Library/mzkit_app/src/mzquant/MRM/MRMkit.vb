@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc3e81d45ad09036add89848d286c5f4, Rscript\Library\mzkit_app\src\mzquant\MRM\MRMkit.vb"
+﻿#Region "Microsoft.VisualBasic::96ad6d473a2725a47e2358013bfcdbca, Rscript\Library\mzkit_app\src\mzquant\MRM\MRMkit.vb"
 
     ' Author:
     ' 
@@ -37,23 +37,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 915
-    '    Code Lines: 610 (66.67%)
-    ' Comment Lines: 206 (22.51%)
-    '    - Xml Docs: 89.81%
+    '   Total Lines: 1036
+    '    Code Lines: 689 (66.51%)
+    ' Comment Lines: 234 (22.59%)
+    '    - Xml Docs: 90.17%
     ' 
-    '   Blank Lines: 99 (10.82%)
-    '     File Size: 40.06 KB
+    '   Blank Lines: 113 (10.91%)
+    '     File Size: 46.18 KB
 
 
     ' Module MRMkit
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: asIonPair, castXicTable, (+2 Overloads) ExtractIonData, ExtractIonPairs, ExtractPeakROI
-    '               FindUntargetedIonPair, GetRTAlignments, ion_pairs_tbl, IsomerismIonPairs, Linears
-    '               MRMarguments, printIonPairs, R2, readCompoundReference, readIonPairs
-    '               readIS, RTShiftSummary, (+2 Overloads) SampleQuantify, ScanPeakTable, ScanPeakTable2
-    '               (+2 Overloads) ScanWiffRaw, WiffRawFile
+    '               FindUntargetedIonPair, fromArgumentsJSON, GetRTAlignments, ion_pairs_tbl, IsomerismIonPairs
+    '               Linears, MRMarguments, peakAreaTable, printIonPairs, R2
+    '               readCompoundReference, readIonPairs, readIS, RTShiftSummary, (+2 Overloads) SampleQuantify
+    '               ScanPeakTable, ScanPeakTable2, ScanPeakTable3, (+2 Overloads) ScanWiffRaw, WiffRawFile
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::901a4ee8945c05750877b0e8a0a8a5a4, mzmath\TargetedMetabolomics\LinearQuantitative\Models\DataFile.vb"
+﻿#Region "Microsoft.VisualBasic::9be0b57483e6d366d475b1443a58d154, mzmath\TargetedMetabolomics\LinearQuantitative\Models\DataFile.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 78
-    '    Code Lines: 55 (70.51%)
-    ' Comment Lines: 9 (11.54%)
-    '    - Xml Docs: 77.78%
+    '   Total Lines: 96
+    '    Code Lines: 69 (71.88%)
+    ' Comment Lines: 10 (10.42%)
+    '    - Xml Docs: 70.00%
     ' 
-    '   Blank Lines: 14 (17.95%)
-    '     File Size: 2.84 KB
+    '   Blank Lines: 17 (17.71%)
+    '     File Size: 3.53 KB
 
 
     '     Class DataFile
@@ -124,7 +124,12 @@ Namespace LinearQuantitative
                         ' use peak area
                         val = line.GetModelFlip.Evaluate(ions(line.name).TPA)
                     ElseIf ions(line.name).TPA_IS <= 0 Then
-                        val = Double.NaN
+                        If ions.ContainsKey(line.IS.ID) Then
+                            ' use the A/IS ratio
+                            val = line.GetModelFlip.Evaluate(ions(line.name).TPA / ions(line.IS.ID).TPA)
+                        Else
+                            val = Double.NaN
+                        End If
                     Else
                         ' use the A/IS ratio
                         val = line.GetModelFlip.Evaluate(ions(line.name).TPA / ions(line.name).TPA_IS)

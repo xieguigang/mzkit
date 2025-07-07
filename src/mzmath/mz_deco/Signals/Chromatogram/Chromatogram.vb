@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78af973eada1d1b7a274e0d275da0e6e, mzmath\mz_deco\Signals\Chromatogram\Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::6bf50ac7c97b7cce111a2af036e16f43, mzmath\mz_deco\Signals\Chromatogram\Chromatogram.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 40 (61.54%)
-    ' Comment Lines: 16 (24.62%)
+    '   Total Lines: 51
+    '    Code Lines: 34 (66.67%)
+    ' Comment Lines: 10 (19.61%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 9 (13.85%)
-    '     File Size: 2.62 KB
+    '   Blank Lines: 7 (13.73%)
+    '     File Size: 2.04 KB
 
 
     '     Module ChromatogramMath
     ' 
-    '         Function: Baseline, IntensityArray, Summary, TimeArray, TimeRange
+    '         Function: IntensityArray, Summary, TimeArray, TimeRange
     ' 
     ' 
     ' /********************************************************************************/

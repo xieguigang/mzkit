@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea9e5a711da2fe6b8a9a1a199f3125b2, mzmath\TargetedMetabolomics\LinearQuantitative\Models\IonTPA.vb"
+﻿#Region "Microsoft.VisualBasic::b42a2d93e27c9855228cbd8efb369dd9, mzmath\TargetedMetabolomics\LinearQuantitative\Models\IonTPA.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 16 (66.67%)
-    ' Comment Lines: 3 (12.50%)
+    '   Total Lines: 27
+    '    Code Lines: 19 (70.37%)
+    ' Comment Lines: 3 (11.11%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (20.83%)
-    '     File Size: 792 B
+    '   Blank Lines: 5 (18.52%)
+    '     File Size: 916 B
 
 
     '     Class IonTPA
     ' 
     '         Properties: area, baseline, maxPeakHeight, name, peakROI
-    '                     rt
+    '                     refer_rt, rt, sn, source
     ' 
     '         Function: ToString
     ' 

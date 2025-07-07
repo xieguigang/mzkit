@@ -1,64 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::b1faf444d28c3bcbd4fe6859f761e74b, mzmath\MSEngine\IMzQuery.vb"
+﻿#Region "Microsoft.VisualBasic::b4d7e46fc422ccb55ac0d20a175780d5, mzmath\MSEngine\IMzQuery.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 76
-'    Code Lines: 40 (52.63%)
-' Comment Lines: 24 (31.58%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 12 (15.79%)
-'     File Size: 2.31 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Interface IMzQuery
-' 
-'     Function: MSetAnnotation, QueryByMz
-' 
-' Interface IMetaDb
-' 
-'     Function: GetAnnotation, GetDbXref, GetMetadata
-' 
-' Module MetalIons
-' 
-'     Function: HasMetalIon, IsOrganic
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 99
+    '    Code Lines: 50 (50.51%)
+    ' Comment Lines: 35 (35.35%)
+    '    - Xml Docs: 97.14%
+    ' 
+    '   Blank Lines: 14 (14.14%)
+    '     File Size: 3.16 KB
+
+
+    ' Interface IMzQuery
+    ' 
+    '     Function: MSetAnnotation, QueryByMz
+    ' 
+    ' Interface IMetaDb
+    ' 
+    '     Function: GetAnnotation, GetDbXref, GetMetadata
+    ' 
+    ' Module MetalIons
+    ' 
+    '     Function: HasMetalIon, IsMetalIon, IsOrganic
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

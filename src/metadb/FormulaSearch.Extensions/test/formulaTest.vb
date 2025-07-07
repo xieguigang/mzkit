@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f8977b84bdb2f3f203940dd97a23ef1, metadb\FormulaSearch.Extensions\test\formulaTest.vb"
+﻿#Region "Microsoft.VisualBasic::18c86ac5c15d097b83421c227b3c94f4, metadb\FormulaSearch.Extensions\test\formulaTest.vb"
 
     ' Author:
     ' 
@@ -15635,4 +15635,3 @@ C24H34O9
         Call Console.WriteLine(New DoubleRange(union_scores).MinMax.GetJson)
     End Sub
 End Module
-

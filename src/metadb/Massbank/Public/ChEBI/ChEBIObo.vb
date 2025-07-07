@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80ce347c57fcf32e7efdae15f09547ce, metadb\Massbank\Public\ChEBI\ChEBIObo.vb"
+﻿#Region "Microsoft.VisualBasic::27ae7507f30b350dd6ba38153453aa92, metadb\Massbank\Public\ChEBI\ChEBIObo.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 83
-    '    Code Lines: 61 (73.49%)
-    ' Comment Lines: 16 (19.28%)
+    '   Total Lines: 92
+    '    Code Lines: 68 (73.91%)
+    ' Comment Lines: 16 (17.39%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (7.23%)
-    '     File Size: 3.85 KB
+    '   Blank Lines: 8 (8.70%)
+    '     File Size: 4.27 KB
 
 
     '     Module ChEBIObo

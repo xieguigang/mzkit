@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d40da8d06cf12797a3d1951183b5ff23, mzmath\mz_deco\Signals\Chromatogram\AccumulateROI.vb"
+﻿#Region "Microsoft.VisualBasic::b85955ef614e224ad0e3712b3887b78d, mzmath\mz_deco\Signals\Chromatogram\AccumulateROI.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 74.47%
     ' 
     '   Blank Lines: 27 (12.80%)
-    '     File Size: 8.50 KB
+    '     File Size: 8.52 KB
 
 
     '     Module AccumulateROI

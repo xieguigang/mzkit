@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::953687bb3110fcdc2c685acaf36fc8dc, assembly\mzPack\Converter.vb"
+﻿#Region "Microsoft.VisualBasic::7f623284c071ba6ba701d3f77d8e0cb3, assembly\mzPack\Converter.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 378
-    '    Code Lines: 296 (78.31%)
-    ' Comment Lines: 37 (9.79%)
-    '    - Xml Docs: 97.30%
+    '   Total Lines: 381
+    '    Code Lines: 296 (77.69%)
+    ' Comment Lines: 40 (10.50%)
+    '    - Xml Docs: 90.00%
     ' 
-    '   Blank Lines: 45 (11.90%)
-    '     File Size: 16.14 KB
+    '   Blank Lines: 45 (11.81%)
+    '     File Size: 16.34 KB
 
 
     ' Module Converter

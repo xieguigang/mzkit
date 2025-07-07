@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7d395e54043e8330c780cdff7c2f091, mzkit\src\mzkit\Task\IonLibrary.vb"
+﻿#Region "Microsoft.VisualBasic::98a7e652db9374d67b6491e17b7058b5, mzmath\TargetedMetabolomics\MRM\IonLibrary.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 79
-    '    Code Lines: 67
-    ' Comment Lines: 0
-    '   Blank Lines: 12
-    '     File Size: 2.68 KB
-
-
-    ' Class IonLibrary
+    '   Total Lines: 131
+    '    Code Lines: 106 (80.92%)
+    ' Comment Lines: 3 (2.29%)
+    '    - Xml Docs: 100.00%
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: GenericEnumerator, GetDisplay, GetEnumerator, GetIon, GetIonByKey
-    '               ToString
+    '   Blank Lines: 22 (16.79%)
+    '     File Size: 4.58 KB
+
+
+    '     Class IonLibrary
+    ' 
+    '         Properties: IsEmpty
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GenericEnumerator, GetDisplay, GetIon, GetIonByKey, (+2 Overloads) GetIsomerism
+    '                   LoadFile, ToString
+    ' 
+    '         Sub: SetError
+    ' 
     ' 
     ' /********************************************************************************/
 

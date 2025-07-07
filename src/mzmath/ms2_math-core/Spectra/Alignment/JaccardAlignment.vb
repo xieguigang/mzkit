@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8f5242b68044171ba568544a2d8cd2e, mzmath\ms2_math-core\Spectra\Alignment\JaccardAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::4a449d399413353fe33a0cc95817bb52, mzmath\ms2_math-core\Spectra\Alignment\JaccardAlignment.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 57
-    '    Code Lines: 46 (80.70%)
+    '   Total Lines: 69
+    '    Code Lines: 56 (81.16%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 11 (19.30%)
-    '     File Size: 2.29 KB
+    '   Blank Lines: 13 (18.84%)
+    '     File Size: 2.91 KB
 
 
     '     Class JaccardAlignment
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetJaccardScore, (+2 Overloads) GetScore
+    '         Function: GetJaccardScore, (+2 Overloads) GetScore, JaccardRankScore
     ' 
     ' 
     ' /********************************************************************************/

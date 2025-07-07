@@ -1,60 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::6752693422b268d31864701dbbc7ba67, mzmath\TargetedMetabolomics\MRM\IonPair.vb"
+﻿#Region "Microsoft.VisualBasic::2f52b3865e33c3224f88f25b01c356de, mzmath\TargetedMetabolomics\MRM\IonPair.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 125
-'    Code Lines: 77 (61.60%)
-' Comment Lines: 33 (26.40%)
-'    - Xml Docs: 96.97%
-' 
-'   Blank Lines: 15 (12.00%)
-'     File Size: 4.82 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class IonPair
-' 
-'         Properties: accession, name, precursor, product, rt
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: (+2 Overloads) Assert, EqualsTo, GetIsomerism, populateGroupElement, ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 149
+    '    Code Lines: 92 (61.74%)
+    ' Comment Lines: 41 (27.52%)
+    '    - Xml Docs: 87.80%
+    ' 
+    '   Blank Lines: 16 (10.74%)
+    '     File Size: 5.74 KB
+
+
+    '     Class IonPair
+    ' 
+    '         Properties: accession, name, precursor, product, rt
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: (+2 Overloads) Assert, EqualsTo, GetIsomerism, populateGroupElement, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

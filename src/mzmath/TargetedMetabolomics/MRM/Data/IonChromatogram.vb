@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3046f5638bc7fc2163a77f2dcb97547d, mzmath\TargetedMetabolomics\MRM\Data\IonChromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::0c03cea7b7a590909d916fc062ddc296, mzmath\TargetedMetabolomics\MRM\Data\IonChromatogram.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 42
-    '    Code Lines: 32 (76.19%)
-    ' Comment Lines: 3 (7.14%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 66
+    '    Code Lines: 40 (60.61%)
+    ' Comment Lines: 17 (25.76%)
+    '    - Xml Docs: 88.24%
     ' 
-    '   Blank Lines: 7 (16.67%)
-    '     File Size: 1.30 KB
+    '   Blank Lines: 9 (13.64%)
+    '     File Size: 2.29 KB
 
 
     '     Structure IonChromatogram
     ' 
     '         Properties: chromatogram, description, hasRTwin, ion, name
+    '                     source
     ' 
-    '         Function: GetTimeWindow, ToString
+    '         Function: GetSplineData, GetTimeWindow, ToString
     ' 
     ' 
     ' /********************************************************************************/
