@@ -339,6 +339,7 @@ Module MRMkit
                                  Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                  Optional sn_threshold As Double = 3,
                                  Optional joint_peaks As Boolean = True,
+                                 Optional time_shift_method As Boolean = False,
                                  Optional env As Environment = Nothing) As Object
 
         Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, Nothing)
@@ -360,7 +361,8 @@ Module MRMkit
             peakAreaMethod:=peakAreaMethod,
             peakwidth:=_peakwidth.TryCast(Of DoubleRange),
             sn_threshold:=sn_threshold,
-            joint_peaks:=joint_peaks
+            joint_peaks:=joint_peaks,
+            time_shift_method:=time_shift_method
         )
     End Function
 
@@ -496,6 +498,7 @@ Module MRMkit
                                    Optional sn_threshold As Double = 3,
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                    Optional joint_peaks As Boolean = True,
+                                   Optional time_shift_method As Boolean = False,
                                    Optional env As Environment = Nothing) As Object
 
         If TPAFactors Is Nothing Then
@@ -522,7 +525,8 @@ Module MRMkit
                 peakAreaMethod:=peakAreaMethod,
                 peakwidth:=_peakwidth,
                 sn_threshold:=sn_threshold,
-                joint_peaks:=joint_peaks
+                joint_peaks:=joint_peaks,
+                time_shift_method:=time_shift_method
             )
         ).ToArray
     End Function
@@ -803,6 +807,7 @@ Module MRMkit
                                   Optional peakwidth As Object = "8,30",
                                   Optional sn_threshold As Double = 3,
                                   Optional joint_peaks As Boolean = True,
+                                  Optional time_shift_method As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
 
         Dim mzErrors = Math.getTolerance(tolerance, env)
@@ -834,7 +839,8 @@ Module MRMkit
                 peakAreaMethod:=peakAreaMethod,
                 peakwidth:=_peakwidth,
                 sn_threshold:=sn_threshold,
-                joint_peaks:=joint_peaks
+                joint_peaks:=joint_peaks,
+                time_shift_method:=time_shift_method
             ),
             env:=env
         )
@@ -909,6 +915,7 @@ Module MRMkit
                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                 Optional sn_threshold As Double = 3,
                                 Optional joint_peaks As Boolean = True,
+                                Optional time_shift_method As Boolean = False,
                                 Optional env As Environment = Nothing) As Object
 
         Dim mzErrors = Math.getTolerance(tolerance, env)
@@ -961,7 +968,8 @@ Module MRMkit
                 peakAreaMethod:=peakAreaMethod,
                 peakwidth:=_peakwidth,
                 sn_threshold:=sn_threshold,
-                joint_peaks:=joint_peaks
+                joint_peaks:=joint_peaks,
+                time_shift_method:=time_shift_method
             ),
             env:=env
         )
@@ -1064,6 +1072,7 @@ Module MRMkit
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                    Optional sn_threshold As Double = 3,
                                    Optional joint_peaks As Boolean = True,
+                                   Optional time_shift_method As Boolean = False,
                                    Optional env As Environment = Nothing) As Object
 
         Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, "8,30")
@@ -1089,7 +1098,8 @@ Module MRMkit
                 peakAreaMethod:=peakAreaMethod,
                 peakwidth:=_peakwidth,
                 sn_threshold:=sn_threshold,
-                joint_peaks:=joint_peaks
+                joint_peaks:=joint_peaks,
+                time_shift_method:=time_shift_method
             ),
             rtshifts:=New Dictionary(Of String, Double)
         )
