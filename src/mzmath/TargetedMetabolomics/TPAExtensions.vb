@@ -62,7 +62,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports std = System.Math
@@ -182,55 +181,10 @@ Public Module TPAExtensions
             .Take(ionOrders.Length) _
             .OrderBy(Function(r) r.rt) _
             .ToArray
-        Dim rt As Double
-        Dim dt As Double
-        Dim index As i32
-        Dim peakIndex As Integer()
-        Dim rt_alignments As New List(Of Integer())
+        Dim index As Integer = ion.index
+        Dim roi As ROI = ROIData(index)
 
-        ' 计算保留时间漂移
-        For pi As Integer = 0 To peakOrders.Length - 1
-            peakIndex = New Integer(ionOrders.Length - 1) {}
-
-            For i As Integer = 0 To peakIndex.Length - 1
-                peakIndex(i) = -1
-            Next
-
-            rt = peakOrders(pi).rt
-            dt = ionOrders(Scan0).rt - rt
-            index = 1
-            peakIndex(Scan0) = pi
-
-            For Each target In ionOrders.Skip(1)
-                For j As Integer = pi + 1 To peakOrders.Length - 1
-                    ' dt1 - dt2 <= tolerance
-                    If std.Abs((CDbl(target.rt) - peakOrders(j).rt) - dt) <= timeWindowSize Then
-                        peakIndex(CInt(++index) - 1) = j
-                    End If
-                Next
-            Next
-
-            If peakIndex.Count(Function(x) x >= 0) >= 1 Then
-                rt_alignments.Add(peakIndex)
-            End If
-        Next
-
-        If rt_alignments.Count > 0 Then
-            With rt_alignments _
-                .OrderByDescending(Function(r)
-                                       Return r.Count(Function(x) x >= 0)
-                                   End Function) _
-                .First
-
-                If DirectCast(.GetValue(ion.index), Integer) = -1 Then
-                    Return Nothing
-                Else
-                    Return peakOrders(.GetValue(ion.index))
-                End If
-            End With
-        Else
-            Return Nothing
-        End If
+        Return roi
     End Function
 
     ''' <summary>
