@@ -130,6 +130,7 @@ Public Module TPAExtensions
         Return result
     End Function
 
+    <Extension>
     Private Function isContactWith(a As DoubleRange, b As DoubleRange) As Boolean
         Return a.IsOverlapping(b) OrElse b.IsOverlapping(a) OrElse a.Contains(b) OrElse b.Contains(a)
     End Function
@@ -177,14 +178,36 @@ Public Module TPAExtensions
     Private Function findPeakWithRtRange(ion As IsomerismIonPairs, ROIData As ROI(), timeWindowSize#) As ROI
         Dim ionOrders = ion.OrderBy(Function(i) i.rt).ToArray
         Dim peakOrders = ROIData _
+            .Where(Function(i) ion.ROImatches(i, timeWindowSize)) _
             .OrderByDescending(Function(r) r.maxInto) _
             .Take(ionOrders.Length) _
             .OrderBy(Function(r) r.rt) _
             .ToArray
-        Dim index As Integer = ion.index
-        Dim roi As ROI = ROIData(index)
+        Dim roi As ROI
+
+        If peakOrders.Length = 0 Then
+            Return Nothing
+        End If
+
+        If peakOrders.Length < ionOrders.Length Then
+            Dim t As New DoubleRange(ion.target.rt - timeWindowSize, ion.target.rt + timeWindowSize)
+
+            roi = ROIData _
+                .Where(Function(i) t.isContactWith(i.time)) _
+                .OrderByDescending(Function(a)
+                                       Return a.maxInto / (1 + std.Abs(CDbl(ion.target.rt) - a.rt))
+                                   End Function) _
+                .FirstOrDefault
+        Else
+            roi = ROIData(ion.index)
+        End If
 
         Return roi
+    End Function
+
+    <Extension>
+    Private Function ROImatches(ion As IsomerismIonPairs, roi As ROI, timeWindowSize#) As Boolean
+        Return ion.AsEnumerable.Any(Function(i) New DoubleRange(i.rt - timeWindowSize, i.rt + timeWindowSize).isContactWith(roi.time))
     End Function
 
     ''' <summary>
