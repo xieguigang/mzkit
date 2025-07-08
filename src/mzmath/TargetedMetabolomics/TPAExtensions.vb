@@ -124,7 +124,7 @@ Public Module TPAExtensions
                 timeWindowSize:=args.timeWindowSize,
                 bsplineDensity:=args.bspline_density,
                 bsplineDegree:=args.bspline_degree,
-                timeshiftMethod:=False
+                timeshiftMethod:=args.time_shift_method
             )
         End If
 
@@ -275,20 +275,19 @@ Public Module TPAExtensions
         Dim peak As DoubleRange
 
         If ionTarget.hasIsomerism Then
-            'If ionTarget _
-            '    .Where(Function(i)
-            '               Return Not ROIData.Where(Function(r) stdNum.Abs(CDbl(i.rt) - r.rt) <= timeWindowSize).FirstOrDefault Is Nothing
-            '           End Function) _
-            '    .Count > 1 Then
             If Not timeshiftMethod Then
                 region = ionTarget.target.findPeakWithRtRange(ROIData, timeWindowSize)
             Else
                 region = ionTarget.findPeakWithRtRange(ROIData, timeWindowSize)
             End If
         Else
+            ' no isomerism ion
             If ionTarget.target.rt Is Nothing Then
+                ' use the max intensity peak as target ROI
                 region = ROIData.findPeakWithoutRtRange
             Else
+                ' filter peaks with rt as reference
+                ' and then pick from the filtered data with rule of the max intensity peak as target ROI
                 region = ionTarget.target.findPeakWithRtRange(ROIData, timeWindowSize)
             End If
         End If

@@ -96,6 +96,7 @@ Namespace MRM
 
         Public Property joint_peaks As Boolean = True
         Public Property strict As Boolean = False
+        Public Property time_shift_method As Boolean = False
 
         Sub New()
         End Sub
@@ -110,7 +111,8 @@ Namespace MRM
                 peakAreaMethod As PeakAreaMethods,
                 peakwidth As DoubleRange,
                 sn_threshold As Double,
-                joint_peaks As Boolean)
+                joint_peaks As Boolean,
+                time_shift_method As Boolean)
 
             Me.TPAFactors = TPAFactors
             Me.tolerance = tolerance
@@ -122,6 +124,7 @@ Namespace MRM
             Me.peakwidth = peakwidth
             Me.sn_threshold = sn_threshold
             Me.joint_peaks = joint_peaks
+            Me.time_shift_method = time_shift_method
         End Sub
 
         Public Shared Function GetDefaultArguments() As MRMArguments
@@ -135,7 +138,8 @@ Namespace MRM
                 peakAreaMethod:=PeakAreaMethods.NetPeakSum,
                 peakwidth:=New Double() {8, 30},
                 sn_threshold:=3,
-                joint_peaks:=True
+                joint_peaks:=True,
+                time_shift_method:=False
             )
         End Function
 
@@ -154,7 +158,8 @@ Namespace MRM
                 {"bspline_density", bspline_density},
                 {"joint_peaks", joint_peaks.ToString},
                 {"strict", strict.ToString},
-                {"bspline", bspline.ToString}
+                {"bspline", bspline.ToString},
+                {"time_shift_method", time_shift_method.ToString}
             }
 
             For Each factor In TPAFactors.SafeQuery
@@ -181,6 +186,7 @@ Namespace MRM
             args.bspline = json!bspline.ParseBoolean
             args.joint_peaks = json!joint_peaks.ParseBoolean
             args.strict = json!strict.ParseBoolean
+            args.time_shift_method = json!time_shift_method.ParseBoolean
 
             Return args
         End Function
