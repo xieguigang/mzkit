@@ -99,7 +99,7 @@ Namespace Content
                 .ToArray
 
             If sorts.All(Function(a) a.Item1 = sorts(0).Item1) Then
-                Throw New InvalidDataException($"all level tag is parsed as the '{sorts(0).Item1}', please check of the identical number part in your input sample names: {levels.Keys.GetJson}")
+                Throw New InvalidDataException($"all level tag is parsed as the '{sorts(0).Item1}', please removes the identical number prefix part in your input sample names: {levels.Keys.GetJson}")
             End If
 
             Me.directMap = directMap
