@@ -177,7 +177,11 @@ Public Module TPAExtensions
     <Extension>
     Private Function findPeakWithRtRange(ion As IsomerismIonPairs, ROIData As ROI(), timeWindowSize#) As ROI
         Dim ionOrders = ion.OrderBy(Function(i) i.rt).ToArray
-        Dim peakOrders = ROIData.OrderBy(Function(r) r.rt).ToArray
+        Dim peakOrders = ROIData _
+            .OrderByDescending(Function(r) r.maxInto) _
+            .Take(ionOrders.Length) _
+            .OrderBy(Function(r) r.rt) _
+            .ToArray
         Dim rt As Double
         Dim dt As Double
         Dim index As i32
