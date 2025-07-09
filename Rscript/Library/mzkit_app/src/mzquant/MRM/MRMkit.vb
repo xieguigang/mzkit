@@ -85,7 +85,6 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
-Imports MRMArgumentSet = BioNovoGene.Analytical.MassSpectrometry.Math.MRM.MRMArguments
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
@@ -309,7 +308,7 @@ Module MRMkit
     ''' <returns></returns>
     <ExportAPI("from_arguments_json")>
     Public Function fromArgumentsJSON(json_str As String) As MRMArguments
-        Return MRMArgumentSet.FromJSON(json_str)
+        Return MRMArguments.FromJSON(json_str)
     End Function
 
     ''' <summary>
@@ -328,19 +327,19 @@ Module MRMkit
     ''' <returns></returns>
     <ExportAPI("MRM.arguments")>
     <RApiReturn(GetType(MRMArguments))>
-    Public Function MRMarguments(Optional tolerance As Object = "da:0.3",
-                                 Optional timeWindowSize# = 5,
-                                 Optional angleThreshold# = 5,
-                                 Optional baselineQuantile# = 0.65,
-                                 Optional integratorTicks% = 5000,
-                                 Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
-                                 <RRawVectorArgument>
-                                 Optional peakwidth As Object = "8,30",
-                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
-                                 Optional sn_threshold As Double = 3,
-                                 Optional joint_peaks As Boolean = True,
-                                 Optional time_shift_method As Boolean = False,
-                                 Optional env As Environment = Nothing) As Object
+    Public Function new_MRMarguments(Optional tolerance As Object = "da:0.3",
+                                     Optional timeWindowSize# = 5,
+                                     Optional angleThreshold# = 5,
+                                     Optional baselineQuantile# = 0.65,
+                                     Optional integratorTicks% = 5000,
+                                     Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
+                                     <RRawVectorArgument>
+                                     Optional peakwidth As Object = "8,30",
+                                     Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
+                                     Optional sn_threshold As Double = 3,
+                                     Optional joint_peaks As Boolean = True,
+                                     Optional time_shift_method As Boolean = False,
+                                     Optional env As Environment = Nothing) As Object
 
         Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, Nothing)
         Dim mzErrors = Math.getTolerance(tolerance, env)
@@ -351,7 +350,7 @@ Module MRMkit
             Return mzErrors.TryCast(Of Message)
         End If
 
-        Return New MRMArgumentSet(
+        Return New MRMArguments(
             TPAFactors:=TPAFactors,
             tolerance:=mzErrors,
             timeWindowSize:=timeWindowSize,
@@ -377,7 +376,7 @@ Module MRMkit
         Dim ionPairs As IonPair() = REnv.asVector(Of IonPair)(ions)
 
         If args Is Nothing Then
-            args = MRMArgumentSet.GetDefaultArguments
+            args = MRMArguments.GetDefaultArguments
         End If
 
         Return RTAlignmentProcessor.AcquireRT(references, ionPairs, args)
@@ -391,11 +390,20 @@ Module MRMkit
     ''' <returns>vector of the ion pair corresponding xic data</returns>
     <ExportAPI("extract.ions")>
     <RApiReturn(GetType(IonChromatogram))>
-    Public Function ExtractIonData(mzML$, <RRawVectorArgument> ionpairs As Object, Optional tolerance As Object = "ppm:20", Optional env As Environment = Nothing) As Object
-        Dim mzErrors = Math.getTolerance(tolerance, env)
+    Public Function ExtractIonData(mzML$,
+                                   <RRawVectorArgument>
+                                   ionpairs As Object,
+                                   Optional tolerance As Object = "ppm:20",
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim mzErrors = Math.getTolerance(tolerance, env, supressErr:=True)
 
         If mzErrors Like GetType(Message) Then
-            Return mzErrors.TryCast(Of Message)
+            If TypeOf tolerance Is MRMArguments Then
+                mzErrors = DirectCast(tolerance, MRMArguments).tolerance
+            Else
+                Return mzErrors.TryCast(Of Message)
+            End If
         End If
 
         Dim ions As IsomerismIonPairs()

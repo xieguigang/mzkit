@@ -73,7 +73,7 @@ Namespace MRM
         Function GetArgument(id As String) As MRMArguments
     End Interface
 
-    Public Class ArgumentSet : Implements IArgumentSet
+    Public Class MRMArgumentSet : Implements IArgumentSet
 
         Public Property args As Dictionary(Of String, MRMArguments)
         ''' <summary>

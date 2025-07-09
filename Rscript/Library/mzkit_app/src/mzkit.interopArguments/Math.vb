@@ -89,7 +89,7 @@ Module Math
     ''' apply for throw exception message
     ''' </param>
     ''' <returns></returns>
-    Public Function getTolerance(val As Object, env As Environment, Optional default$ = "ppm:20") As [Variant](Of Tolerance, Message)
+    Public Function getTolerance(val As Object, env As Environment, Optional default$ = "ppm:20", Optional supressErr As Boolean = False) As [Variant](Of Tolerance, Message)
         If val Is Nothing Then
             Return Tolerance.DefaultTolerance.DefaultValue
         ElseIf val.GetType.IsInheritsFrom(GetType(Tolerance)) Then
@@ -104,7 +104,7 @@ Module Math
             Dim errMsg As String = $"mzdiff tolerance value can not be '{val.GetType.FullName}', [{val}]!"
             Dim ex As New NotImplementedException(errMsg)
 
-            Return debug.stop(ex, env)
+            Return debug.stop(ex, env, suppress:=supressErr)
         End If
     End Function
 
