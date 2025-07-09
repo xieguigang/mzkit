@@ -401,6 +401,8 @@ Module MRMkit
         If mzErrors Like GetType(Message) Then
             If TypeOf tolerance Is MRMArguments Then
                 mzErrors = DirectCast(tolerance, MRMArguments).tolerance
+            ElseIf TypeOf tolerance Is MRMArgumentSet Then
+                mzErrors = DirectCast(tolerance, MRMArgumentSet).globals.tolerance
             Else
                 Return mzErrors.TryCast(Of Message)
             End If
@@ -771,7 +773,7 @@ Module MRMkit
     ''' </example>
     <ExportAPI("MRM.peakarea")>
     <RApiReturn(GetType(IonTPA))>
-    Public Function ScanPeakTable3(<RRawVectorArgument> xic As Object, args As MRMArguments, Optional env As Environment = Nothing) As Object
+    Public Function ScanPeakTable3(<RRawVectorArgument> xic As Object, args As IArgumentSet, Optional env As Environment = Nothing) As Object
         Dim rtshifts As New Dictionary(Of String, Double)
         Dim pullIons As pipeline = pipeline.TryCreatePipeline(Of IonChromatogram)(xic, env)
 

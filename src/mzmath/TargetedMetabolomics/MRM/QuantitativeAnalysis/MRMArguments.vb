@@ -61,6 +61,7 @@
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -69,6 +70,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MRM
 
+    ''' <summary>
+    ''' A wrapper for the <see cref="MRMArgumentSet"/> and <see cref="MRMArguments"/>
+    ''' </summary>
     Public Interface IArgumentSet
         Function GetArgument(id As String) As MRMArguments
     End Interface
@@ -82,6 +86,38 @@ Namespace MRM
         ''' <returns></returns>
         Public Property globals As MRMArguments
 
+        Public Function ToJSON() As String
+            Dim json As New Dictionary(Of String, Dictionary(Of String, String)) From {
+                {"__globals", globals.ToJSONData}
+            }
+
+            For Each ion In args.SafeQuery
+                Call json.Add(ion.Key, ion.Value.ToJSONData)
+            Next
+
+            Return json.GetJson
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function FromJSON(json_str As String) As MRMArgumentSet
+            Dim json As Dictionary(Of String, Dictionary(Of String, String)) = json_str.LoadJSON(Of Dictionary(Of String, Dictionary(Of String, String)))
+            Dim argSet As New MRMArgumentSet
+
+            If json.ContainsKey("__globals") Then
+                argSet.globals = MRMArguments.FromJSON(json!__globals)
+                json.Remove("__globals")
+            Else
+                argSet.globals = New MRMArguments
+            End If
+
+            For Each id As String In json.Keys
+                argSet.args.Add(id, MRMArguments.FromJSON(json(id)))
+            Next
+
+            Return argSet
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetArgument(id As String) As MRMArguments Implements IArgumentSet.GetArgument
             Return args.TryGetValue(id, [default]:=globals)
         End Function
@@ -145,6 +181,7 @@ Namespace MRM
             Me.time_shift_method = time_shift_method
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function GetDefaultArguments() As MRMArguments
             Return New MRMArguments(
                 TPAFactors:=Nothing,
@@ -161,7 +198,12 @@ Namespace MRM
             )
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ToJSON() As String
+            Return ToJSONData.GetJson
+        End Function
+
+        Friend Function ToJSONData() As Dictionary(Of String, String)
             Dim json As New Dictionary(Of String, String) From {
                 {"tolerance", tolerance.GetScript},
                 {"timeWindowSize", timeWindowSize},
@@ -184,11 +226,15 @@ Namespace MRM
                 json($"factor:{factor.Key}") = factor.Value
             Next
 
-            Return json.GetJson
+            Return json
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function FromJSON(json_str As String) As MRMArguments
-            Dim json As Dictionary(Of String, String) = json_str.LoadJSON(Of Dictionary(Of String, String))
+            Return FromJSON(json_str.LoadJSON(Of Dictionary(Of String, String)))
+        End Function
+
+        Friend Shared Function FromJSON(json As Dictionary(Of String, String)) As MRMArguments
             Dim args As New MRMArguments
 
             args.tolerance = Tolerance.ParseScript(json!tolerance)
@@ -225,6 +271,8 @@ Namespace MRM
         ''' </summary>
         ''' <param name="id"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetArgument(id As String) As MRMArguments Implements IArgumentSet.GetArgument
             Return Me
         End Function
