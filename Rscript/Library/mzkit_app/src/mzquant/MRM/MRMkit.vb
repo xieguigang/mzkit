@@ -305,10 +305,18 @@ Module MRMkit
     ''' Create the MRM peak finding arguments from a json string
     ''' </summary>
     ''' <param name="json_str"></param>
+    ''' <param name="parse_single">
+    ''' this function will try to parse the given json string as <see cref="MRMArguments"/> if <paramref name="parse_single"/> is set to true,
+    ''' otherwise a set of the ion parameters <see cref="MRMArgumentSet"/> will be parsed if <paramref name="parse_single"/> is set to false.
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("from_arguments_json")>
-    Public Function fromArgumentsJSON(json_str As String) As MRMArguments
-        Return MRMArguments.FromJSON(json_str)
+    Public Function fromArgumentsJSON(json_str As String, Optional parse_single As Boolean = True) As IArgumentSet
+        If parse_single Then
+            Return MRMArguments.FromJSON(json_str)
+        Else
+            Return MRMArgumentSet.FromJSON(json_str)
+        End If
     End Function
 
     ''' <summary>
