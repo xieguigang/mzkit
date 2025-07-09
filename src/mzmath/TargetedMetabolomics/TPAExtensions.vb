@@ -64,6 +64,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports std = System.Math
 
 <HideModuleName>
@@ -80,7 +81,7 @@ Public Module TPAExtensions
     Public Function ionTPA(ion As IonChromatogram, TPAFactor As Double, args As MRMArguments) As IonTPA
         Dim vector As IVector(Of ChromatogramTick) = If(
             args.bspline,
-            ion.GetSplineData(args.bspline_degree, args.bspline_density),
+            ion.GetResampleSignal(args.baselineQuantile).BSpline(Function(t, i) New ChromatogramTick(t, i), args.bspline_degree, args.bspline_density).ToArray,
             ion.chromatogram
         ).Shadows
         Dim ROIData As ROI()
