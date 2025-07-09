@@ -139,6 +139,11 @@ Namespace MRM
         Public Property timeWindowSize As Double
         Public Property angleThreshold#
         Public Property baselineQuantile# = 0.65
+        ''' <summary>
+        ''' measure the baseline with <see cref="baselineQuantile"/> in percentage threshold method?
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property percentage_threshold As Boolean = False
         Public Property integratorTicks% = 5000
         Public Property peakAreaMethod As PeakAreaMethods = PeakAreaMethods.Integrator
         Public Property peakwidth As DoubleRange = Nothing
@@ -166,7 +171,8 @@ Namespace MRM
                 peakwidth As DoubleRange,
                 sn_threshold As Double,
                 joint_peaks As Boolean,
-                time_shift_method As Boolean)
+                time_shift_method As Boolean,
+                percentage_threshold As Boolean)
 
             Me.TPAFactors = TPAFactors
             Me.tolerance = tolerance
@@ -179,6 +185,7 @@ Namespace MRM
             Me.sn_threshold = sn_threshold
             Me.joint_peaks = joint_peaks
             Me.time_shift_method = time_shift_method
+            Me.percentage_threshold = percentage_threshold
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -194,7 +201,8 @@ Namespace MRM
                 peakwidth:=New Double() {8, 30},
                 sn_threshold:=3,
                 joint_peaks:=True,
-                time_shift_method:=False
+                time_shift_method:=False,
+                percentage_threshold:=False
             )
         End Function
 
@@ -219,7 +227,8 @@ Namespace MRM
                 {"joint_peaks", joint_peaks.ToString},
                 {"strict", strict.ToString},
                 {"bspline", bspline.ToString},
-                {"time_shift_method", time_shift_method.ToString}
+                {"time_shift_method", time_shift_method.ToString},
+                {"percentage_threshold", percentage_threshold.ToString}
             }
 
             For Each factor In TPAFactors.SafeQuery
@@ -251,6 +260,7 @@ Namespace MRM
             args.joint_peaks = json!joint_peaks.ParseBoolean
             args.strict = json!strict.ParseBoolean
             args.time_shift_method = json!time_shift_method.ParseBoolean
+            args.percentage_threshold = json!percentage_threshold.ParseBoolean
 
             Return args
         End Function
