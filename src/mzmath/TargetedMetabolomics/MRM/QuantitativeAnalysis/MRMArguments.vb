@@ -79,7 +79,7 @@ Namespace MRM
 
     Public Class MRMArgumentSet : Implements IArgumentSet
 
-        Public Property args As Dictionary(Of String, MRMArguments)
+        Public Property args As New Dictionary(Of String, MRMArguments)
         ''' <summary>
         ''' unify globals argument set
         ''' </summary>
