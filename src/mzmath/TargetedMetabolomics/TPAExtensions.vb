@@ -232,7 +232,6 @@ Public Module TPAExtensions
     ''' 
     ''' </summary>
     ''' <param name="ion"></param>
-    ''' <param name="vector"></param>
     ''' <param name="ROIData">The largest ROI is the first element.</param>
     ''' <param name="baselineQuantile#"></param>
     ''' <param name="peakAreaMethod"></param>
@@ -240,7 +239,7 @@ Public Module TPAExtensions
     ''' <param name="TPAFactor#"></param>
     ''' <returns>peak data with baseline noised removed</returns>
     <Extension>
-    Private Function ProcessingIonPeakArea(ion As IonChromatogram, vector As IVector(Of ChromatogramTick), ROIData As ROI(),
+    Private Function ProcessingIonPeakArea(ion As IonChromatogram, ROIData As ROI(),
                                            baselineQuantile#,
                                            peakAreaMethod As PeakAreaMethods,
                                            integratorTicks%,
@@ -248,7 +247,8 @@ Public Module TPAExtensions
                                            timeWindowSize#,
                                            bsplineDensity%,
                                            bsplineDegree%,
-                                           timeshiftMethod As Boolean) As IonTPA
+                                           timeshiftMethod As Boolean,
+                                           percentageBaseline As Boolean) As IonTPA
 
         Dim ionTarget As IsomerismIonPairs = ion.ion
         Dim region As ROI = Nothing
@@ -281,6 +281,8 @@ Public Module TPAExtensions
         Else
             peak = region.time
         End If
+
+        Dim vector As IVector(Of ChromatogramTick) = region.ticks.Shadows
 
         With vector.TPAIntegrator(
             peak, baselineQuantile, peakAreaMethod,

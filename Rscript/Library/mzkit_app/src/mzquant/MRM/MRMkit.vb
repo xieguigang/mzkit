@@ -347,6 +347,7 @@ Module MRMkit
                                      Optional sn_threshold As Double = 3,
                                      Optional joint_peaks As Boolean = True,
                                      Optional time_shift_method As Boolean = False,
+                                     Optional percentage_threshold As Boolean = False,
                                      Optional env As Environment = Nothing) As Object
 
         Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, Nothing)
@@ -369,7 +370,8 @@ Module MRMkit
             peakwidth:=_peakwidth.TryCast(Of DoubleRange),
             sn_threshold:=sn_threshold,
             joint_peaks:=joint_peaks,
-            time_shift_method:=time_shift_method
+            time_shift_method:=time_shift_method,
+            percentage_threshold:=percentage_threshold
         )
     End Function
 
@@ -517,6 +519,7 @@ Module MRMkit
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                    Optional joint_peaks As Boolean = True,
                                    Optional time_shift_method As Boolean = False,
+                                   Optional percentage_threshold As Boolean = False,
                                    Optional env As Environment = Nothing) As Object
 
         If TPAFactors Is Nothing Then
@@ -544,7 +547,8 @@ Module MRMkit
                 peakwidth:=_peakwidth,
                 sn_threshold:=sn_threshold,
                 joint_peaks:=joint_peaks,
-                time_shift_method:=time_shift_method
+                time_shift_method:=time_shift_method,
+                percentage_threshold:=percentage_threshold
             )
         ).ToArray
     End Function
@@ -826,6 +830,7 @@ Module MRMkit
                                   Optional sn_threshold As Double = 3,
                                   Optional joint_peaks As Boolean = True,
                                   Optional time_shift_method As Boolean = False,
+                                  Optional percentage_threshold As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
 
         Dim mzErrors = Math.getTolerance(tolerance, env)
@@ -858,7 +863,8 @@ Module MRMkit
                 peakwidth:=_peakwidth,
                 sn_threshold:=sn_threshold,
                 joint_peaks:=joint_peaks,
-                time_shift_method:=time_shift_method
+                time_shift_method:=time_shift_method,
+                percentage_threshold:=percentage_threshold
             ),
             env:=env
         )
@@ -934,6 +940,7 @@ Module MRMkit
                                 Optional sn_threshold As Double = 3,
                                 Optional joint_peaks As Boolean = True,
                                 Optional time_shift_method As Boolean = False,
+                                Optional percentage_threshold As Boolean = False,
                                 Optional env As Environment = Nothing) As Object
 
         Dim mzErrors = Math.getTolerance(tolerance, env)
@@ -987,7 +994,8 @@ Module MRMkit
                 peakwidth:=_peakwidth,
                 sn_threshold:=sn_threshold,
                 joint_peaks:=joint_peaks,
-                time_shift_method:=time_shift_method
+                time_shift_method:=time_shift_method,
+                percentage_threshold:=percentage_threshold
             ),
             env:=env
         )
@@ -1091,6 +1099,7 @@ Module MRMkit
                                    Optional sn_threshold As Double = 3,
                                    Optional joint_peaks As Boolean = True,
                                    Optional time_shift_method As Boolean = False,
+                                   Optional percentage_threshold As Boolean = False,
                                    Optional env As Environment = Nothing) As Object
 
         Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, "8,30")
@@ -1117,7 +1126,8 @@ Module MRMkit
                 peakwidth:=_peakwidth,
                 sn_threshold:=sn_threshold,
                 joint_peaks:=joint_peaks,
-                time_shift_method:=time_shift_method
+                time_shift_method:=time_shift_method,
+                percentage_threshold:=percentage_threshold
             ),
             rtshifts:=New Dictionary(Of String, Double)
         )
