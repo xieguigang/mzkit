@@ -114,7 +114,6 @@ Public Module TPAExtensions
             }
         Else
             result = ion.ProcessingIonPeakArea(
-                vector:=vector,
                 ROIData:=ROIData,
                 baselineQuantile:=args.baselineQuantile,
                 peakAreaMethod:=args.peakAreaMethod,
@@ -123,7 +122,8 @@ Public Module TPAExtensions
                 timeWindowSize:=args.timeWindowSize,
                 bsplineDensity:=args.bspline_density,
                 bsplineDegree:=args.bspline_degree,
-                timeshiftMethod:=args.time_shift_method
+                timeshiftMethod:=args.time_shift_method,
+                percentageBaseline:=args.percentage_threshold
             )
         End If
 
