@@ -73,10 +73,12 @@ declare namespace MRMLinear {
         * + default value Is ``true``.
         * @param time_shift_method 
         * + default value Is ``false``.
+        * @param percentage_threshold 
+        * + default value Is ``false``.
         * @param env 
         * + default value Is ``null``.
       */
-      function peakROI(mzML: string, ionpairs: object, tolerance?: string, timeWindowSize?: number, baselineQuantile?: number, integratorTicks?: object, peakAreaMethod?: object, angleThreshold?: number, peakwidth?: any, rtshift?: object, bsplineDensity?: object, bsplineDegree?: object, sn_threshold?: number, TPAFactors?: object, joint_peaks?: boolean, time_shift_method?: boolean, env?: object): object;
+      function peakROI(mzML: string, ionpairs: object, tolerance?: string, timeWindowSize?: number, baselineQuantile?: number, integratorTicks?: object, peakAreaMethod?: object, angleThreshold?: number, peakwidth?: any, rtshift?: object, bsplineDensity?: object, bsplineDegree?: object, sn_threshold?: number, TPAFactors?: object, joint_peaks?: boolean, time_shift_method?: boolean, percentage_threshold?: boolean, env?: object): object;
    }
    /**
     * Extract all ion pairs information from the given rawdata file
@@ -198,11 +200,13 @@ declare namespace MRMLinear {
         * + default value Is ``true``.
         * @param time_shift_method 
         * + default value Is ``false``.
+        * @param percentage_threshold 
+        * + default value Is ``false``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function arguments(tolerance?: any, timeWindowSize?: number, angleThreshold?: number, baselineQuantile?: number, integratorTicks?: object, peakAreaMethod?: object, peakwidth?: any, TPAFactors?: object, sn_threshold?: number, joint_peaks?: boolean, time_shift_method?: boolean, env?: object): object;
+      function arguments(tolerance?: any, timeWindowSize?: number, angleThreshold?: number, baselineQuantile?: number, integratorTicks?: object, peakAreaMethod?: object, peakwidth?: any, TPAFactors?: object, sn_threshold?: number, joint_peaks?: boolean, time_shift_method?: boolean, percentage_threshold?: boolean, env?: object): object;
       /**
        * Get MRM ions peaks data from a given raw data file
        * 
@@ -265,11 +269,13 @@ declare namespace MRMLinear {
         * + default value Is ``true``.
         * @param time_shift_method 
         * + default value Is ``false``.
+        * @param percentage_threshold 
+        * + default value Is ``false``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function peaks(mzML: string, ions: object, peakAreaMethod?: object, tolerance?: string, timeWindowSize?: number, angleThreshold?: number, baselineQuantile?: number, rtshifts?: object, TPAFactors?: object, peakwidth?: any, sn_threshold?: number, joint_peaks?: boolean, time_shift_method?: boolean, env?: object): object;
+      function peaks(mzML: string, ions: object, peakAreaMethod?: object, tolerance?: string, timeWindowSize?: number, angleThreshold?: number, baselineQuantile?: number, rtshifts?: object, TPAFactors?: object, peakwidth?: any, sn_threshold?: number, joint_peaks?: boolean, time_shift_method?: boolean, percentage_threshold?: boolean, env?: object): object;
       /**
         * @param args default value Is ``null``.
       */
@@ -338,10 +344,12 @@ declare namespace MRMLinear {
         * + default value Is ``true``.
         * @param time_shift_method 
         * + default value Is ``false``.
+        * @param percentage_threshold 
+        * + default value Is ``false``.
         * @param env 
         * + default value Is ``null``.
       */
-      function quantify(model: object, file: string, ions: object, peakAreaMethod?: object, tolerance?: string, timeWindowSize?: number, angleThreshold?: number, baselineQuantile?: number, peakwidth?: any, TPAFactors?: object, sn_threshold?: number, joint_peaks?: boolean, time_shift_method?: boolean, env?: object): object;
+      function quantify(model: object, file: string, ions: object, peakAreaMethod?: object, tolerance?: string, timeWindowSize?: number, angleThreshold?: number, baselineQuantile?: number, peakwidth?: any, TPAFactors?: object, sn_threshold?: number, joint_peaks?: boolean, time_shift_method?: boolean, percentage_threshold?: boolean, env?: object): object;
       /**
        * Do sample quantify
        * 
@@ -441,9 +449,11 @@ declare namespace MRMLinear {
         * + default value Is ``true``.
         * @param time_shift_method 
         * + default value Is ``false``.
+        * @param percentage_threshold 
+        * + default value Is ``false``.
         * @param env 
         * + default value Is ``null``.
       */
-      function scans(wiffConverts: string, ions: object, peakAreaMethod?: object, tolerance?: string, angleThreshold?: number, baselineQuantile?: number, removesWiffName?: boolean, timeWindowSize?: number, rtshifts?: object, bsplineDensity?: object, bsplineDegree?: object, resolution?: object, peakwidth?: any, TPAFactors?: object, sn_threshold?: number, joint_peaks?: boolean, time_shift_method?: boolean, env?: object): object;
+      function scans(wiffConverts: string, ions: object, peakAreaMethod?: object, tolerance?: string, angleThreshold?: number, baselineQuantile?: number, removesWiffName?: boolean, timeWindowSize?: number, rtshifts?: object, bsplineDensity?: object, bsplineDegree?: object, resolution?: object, peakwidth?: any, TPAFactors?: object, sn_threshold?: number, joint_peaks?: boolean, time_shift_method?: boolean, percentage_threshold?: boolean, env?: object): object;
    }
 }
