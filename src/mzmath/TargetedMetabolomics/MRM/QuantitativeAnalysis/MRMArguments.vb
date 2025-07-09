@@ -69,7 +69,25 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MRM
 
-    Public Class MRMArguments
+    Public Interface IArgumentSet
+        Function GetArgument(id As String) As MRMArguments
+    End Interface
+
+    Public Class ArgumentSet : Implements IArgumentSet
+
+        Public Property args As Dictionary(Of String, MRMArguments)
+        ''' <summary>
+        ''' unify globals argument set
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property globals As MRMArguments
+
+        Public Function GetArgument(id As String) As MRMArguments Implements IArgumentSet.GetArgument
+            Return args.TryGetValue(id, [default]:=globals)
+        End Function
+    End Class
+
+    Public Class MRMArguments : Implements IArgumentSet
 
         ''' <summary>
         ''' ``{<see cref="Standards.ID"/>, <see cref="Standards.Factor"/>}``，
@@ -200,6 +218,15 @@ Namespace MRM
             Next
 
             Return json.GetJson
+        End Function
+
+        ''' <summary>
+        ''' unify globals argument set
+        ''' </summary>
+        ''' <param name="id"></param>
+        ''' <returns></returns>
+        Public Function GetArgument(id As String) As MRMArguments Implements IArgumentSet.GetArgument
+            Return Me
         End Function
     End Class
 End Namespace
