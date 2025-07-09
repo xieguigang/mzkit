@@ -3,7 +3,8 @@
 .SH NAME
 from_arguments_json \- Create the MRM peak finding arguments from a json string
 .SH SYNOPSIS
-\fIfrom_arguments_json(\fBjson_str\fR as string);\fR
+\fIfrom_arguments_json(\fBjson_str\fR as string, 
+\fBparse_single\fR as boolean = TRUE);\fR
 .SH DESCRIPTION
 .PP
 Create the MRM peak finding arguments from a json string
@@ -11,6 +12,12 @@ Create the MRM peak finding arguments from a json string
 .SH OPTIONS
 .PP
 \fBjson_str\fB \fR\- -. 
+.PP
+.PP
+\fBparse_single\fB \fR\- 
+ this function will try to parse the given json string as @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.MRMArguments\fR if **`parse_single`** is set to true,
+ otherwise a set of the ion parameters @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.MRMArgumentSet\fR will be parsed if **`parse_single`** is set to false.
+. 
 .PP
 .SH SEE ALSO
 MRMLinear

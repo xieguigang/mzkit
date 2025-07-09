@@ -130,8 +130,12 @@ declare namespace MRMLinear {
     * 
     * 
      * @param json_str -
+     * @param parse_single this function will try to parse the given json string as @``T:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.MRMArguments`` if **`parse_single`** is set to true,
+     *  otherwise a set of the ion parameters @``T:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.MRMArgumentSet`` will be parsed if **`parse_single`** is set to false.
+     * 
+     * + default value Is ``true``.
    */
-   function from_arguments_json(json_str: string): object;
+   function from_arguments_json(json_str: string, parse_single?: boolean): object;
    module isomerism {
       /**
         * @param tolerance default value Is ``'ppm:20'``.
