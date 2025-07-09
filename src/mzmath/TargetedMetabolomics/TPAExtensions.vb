@@ -341,6 +341,8 @@ Public Module TPAExtensions
                 area = vector.SumAll
             Case PeakAreaMethods.MaxPeakHeight
                 area = vector.MaxPeakHeight - baseline
+            Case PeakAreaMethods.TriangleArea
+                area = peak.Length * vector.MaxPeakHeight / 2
             Case Else
                 ' 默认是使用积分器方法
                 area = vector.PeakAreaIntegrator(

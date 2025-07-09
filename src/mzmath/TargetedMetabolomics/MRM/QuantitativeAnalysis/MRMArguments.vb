@@ -145,7 +145,7 @@ Namespace MRM
         ''' <returns></returns>
         Public Property percentage_threshold As Boolean = False
         Public Property integratorTicks% = 5000
-        Public Property peakAreaMethod As PeakAreaMethods = PeakAreaMethods.Integrator
+        Public Property peakAreaMethod As PeakAreaMethods = PeakAreaMethods.TriangleArea
         Public Property peakwidth As DoubleRange = Nothing
         Public Property sn_threshold As Double = 3
 
