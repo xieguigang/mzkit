@@ -123,8 +123,7 @@ Namespace MRM.Data
         Public Function GetResampleSignal(q As Double) As ChromatogramTick()
             Dim baseline As Double = chromatogram.SignalBaseline(q)
             Dim reshape = New BinSampler(chromatogram.TimeArray, (chromatogram.IntensityArray - baseline).Select(Function(i) If(i < 0, 0, i)).ToArray)
-            Dim dt As Double = chromatogram.TimeArray.Range.Length / 2500
-            Dim preprocess = reshape.AggregateSignal(dt, Function(t, i) New ChromatogramTick(t, i), Function(x) x.Sum).ToArray
+            Dim preprocess = reshape.AggregateSignal(2500, Function(t, i) New ChromatogramTick(t, i), Function(x) x.Sum).ToArray
             Return preprocess
         End Function
 
