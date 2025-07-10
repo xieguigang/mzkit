@@ -89,7 +89,11 @@ Namespace LinearQuantitative
         ''' <returns></returns>
         Public Property linear As IFitted
         Public Property points As ReferencePoint()
-
+        ''' <summary>
+        ''' the weight expression string of the linear regression
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property weight As String = "n/a"
         Public Property blankControls As Double()
 
         ''' <summary>
@@ -155,6 +159,8 @@ Namespace LinearQuantitative
 
             Dim rawPoints As PointF() = points.ToArray
             Dim best As IFitted = Nothing
+
+            weight = "n/a"
 
             For Each w In weights
                 Dim result As IFitted = CreateLinearRegression(rawPoints, maxDeletions, w.Value, removed)

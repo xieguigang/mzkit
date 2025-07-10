@@ -143,7 +143,10 @@ Namespace LinearQuantitative.Linear
             Dim line As PointF() = QuantificationWorker _
                 .CreateModelPoints(C, A, ISTPA, CIS, ionKey, define.Name, linearSamples, points) _
                 .ToArray
-            Dim fit As IFitted = StandardCurve.CreateLinearRegression(line, maxDeletions, removed:=invalids)
+            Dim weight As String = Nothing
+            Dim fit As IFitted = StandardCurve.CreateLinearRegression(line, maxDeletions,
+                                                                      removed:=invalids,
+                                                                      weight:=weight)
 
             ' get points that removed from linear modelling
             For Each ptRef As ReferencePoint In points
@@ -161,7 +164,8 @@ Namespace LinearQuantitative.Linear
                 .points = points _
                     .OrderBy(Function(p) contents(p.level, ionKey)) _
                     .ToArray,
-                .[IS] = contents.GetIS(define.ISTD)
+                .[IS] = contents.GetIS(define.ISTD),
+                .weight = weight
             }
             Dim fy As Func(Of Double, Double) = out.ReverseModelFunction
             Dim ptY#
