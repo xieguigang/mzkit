@@ -71,6 +71,7 @@ Namespace LinearQuantitative
         Public Property name As String
         Public Property ISTD As String
         Public Property linear As String
+        Public Property weight As String
         Public Property R2 As Double
         Public ReadOnly Property R As Double
             Get
