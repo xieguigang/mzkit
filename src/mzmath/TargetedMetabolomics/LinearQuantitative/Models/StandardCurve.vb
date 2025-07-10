@@ -142,12 +142,40 @@ Namespace LinearQuantitative
             Return flip_linear
         End Function
 
+        Shared ReadOnly weights As New Dictionary(Of String, Weights) From {
+            {"1/x2", New Weights(Function(X) 1 / (X ^ 2))},
+            {"1/x", New Weights(Function(X) 1 / X)},
+            {"exp(-x)", New Weights(Function(X) Vector.Exp(-X))}
+        }
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function CreateLinearRegression(points As IEnumerable(Of PointF), maxDeletions%, ByRef removed As List(Of PointF)) As IFitted
-            Dim deletes As New List(Of PointF)(removed.SafeQuery)
+        Public Shared Function CreateLinearRegression(points As IEnumerable(Of PointF), maxDeletions%,
+                                                      ByRef removed As List(Of PointF),
+                                                      ByRef weight As String) As IFitted
+
             Dim rawPoints As PointF() = points.ToArray
+            Dim best As IFitted = Nothing
+
+            For Each w In weights
+                Dim result As IFitted = CreateLinearRegression(rawPoints, maxDeletions, w.Value, removed)
+
+                If best Is Nothing OrElse best.R2 < result.R2 Then
+                    best = result
+                    weight = w.Key
+
+                    If best.R2 > 0.999 Then
+                        Exit For
+                    End If
+                End If
+            Next
+
+            Return best
+        End Function
+
+        Private Shared Function CreateLinearRegression(rawPoints As PointF(), maxDeletions%, w As Weights, ByRef removed As List(Of PointF)) As IFitted
+            Dim deletes As New List(Of PointF)(removed.SafeQuery)
             Dim fit As IFitted = rawPoints.AutoPointDeletion(
-                weighted:=Function(X) 1 / (X ^ 2),
+                weighted:=w,
                 max:=maxDeletions,
                 removed:=deletes,
                 keepsLowestPoint:=True,
@@ -155,7 +183,6 @@ Namespace LinearQuantitative
             )
 
             If fit Is Nothing Then
-
                 ' 完全没有线性
                 Return New FitResult With {
                     .ErrorTest = rawPoints _
@@ -168,11 +195,10 @@ Namespace LinearQuantitative
                     .SSR = 9999999,
                     .Polynomial = New Polynomial With {.Factors = New Double() {0, 0}}
                 }
-
             ElseIf fit.R2 < 0.95 Then
                 deletes = New List(Of PointF)(removed.SafeQuery)
                 fit = rawPoints.AutoPointDeletion(
-                    weighted:=Function(X) 1 / (X ^ 2),
+                    weighted:=w,
                     max:=maxDeletions,
                     removed:=deletes,
                     keepsLowestPoint:=False,
