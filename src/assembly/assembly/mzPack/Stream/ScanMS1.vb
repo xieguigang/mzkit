@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db68ec86c5124cda3262fb32d87e7ddf, assembly\assembly\mzPack\Stream\ScanMS1.vb"
+﻿#Region "Microsoft.VisualBasic::aab6af05136a40897704273725108c0f, assembly\assembly\mzPack\Stream\ScanMS1.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 120
-    '    Code Lines: 68 (56.67%)
-    ' Comment Lines: 40 (33.33%)
+    '   Total Lines: 136
+    '    Code Lines: 82 (60.29%)
+    ' Comment Lines: 40 (29.41%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 12 (10.00%)
-    '     File Size: 4.24 KB
+    '   Blank Lines: 14 (10.29%)
+    '     File Size: 4.72 KB
 
 
     '     Class ScanMS1
     ' 
     '         Properties: BPC, meta, products, rt, TIC
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) GetMs1Scans, GetMSIPixel, hasMetaKeys
     ' 
     ' 

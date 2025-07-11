@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a59e50bd6c4d9e9cfdedb696e365a65, Rscript\Library\mzkit_app\src\mzplot\MsImaging.vb"
+﻿#Region "Microsoft.VisualBasic::98922b4de1cc72731914f45151b48b4a, Rscript\Library\mzkit_app\src\mzplot\MsImaging.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1283
-    '    Code Lines: 806 (62.82%)
-    ' Comment Lines: 340 (26.50%)
-    '    - Xml Docs: 94.41%
+    '   Total Lines: 1289
+    '    Code Lines: 808 (62.68%)
+    ' Comment Lines: 343 (26.61%)
+    '    - Xml Docs: 94.46%
     ' 
-    '   Blank Lines: 137 (10.68%)
-    '     File Size: 54.81 KB
+    '   Blank Lines: 138 (10.71%)
+    '     File Size: 55.12 KB
 
 
     ' Module MsImaging

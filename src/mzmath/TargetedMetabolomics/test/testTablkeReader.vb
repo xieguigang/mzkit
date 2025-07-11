@@ -56,7 +56,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
-Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module testTablkeReader

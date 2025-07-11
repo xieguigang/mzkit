@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdf4f15e0645a7c2d64fb8c28fa80858, visualize\MsImaging\Blender\Renderer\PixelRender.vb"
+﻿#Region "Microsoft.VisualBasic::1d4d280c9b2a7f8780b81fb0d203a19f, visualize\MsImaging\Blender\Renderer\PixelRender.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 66.67%
     ' 
     '   Blank Lines: 29 (14.72%)
-    '     File Size: 9.09 KB
+    '     File Size: 9.08 KB
 
 
     '     Class PixelRender

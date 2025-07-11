@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3046f5638bc7fc2163a77f2dcb97547d, mzmath\TargetedMetabolomics\MRM\Data\IonChromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::0c03cea7b7a590909d916fc062ddc296, mzmath\TargetedMetabolomics\MRM\Data\IonChromatogram.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 42
-    '    Code Lines: 32 (76.19%)
-    ' Comment Lines: 3 (7.14%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 66
+    '    Code Lines: 40 (60.61%)
+    ' Comment Lines: 17 (25.76%)
+    '    - Xml Docs: 88.24%
     ' 
-    '   Blank Lines: 7 (16.67%)
-    '     File Size: 1.30 KB
+    '   Blank Lines: 9 (13.64%)
+    '     File Size: 2.29 KB
 
 
     '     Structure IonChromatogram
     ' 
     '         Properties: chromatogram, description, hasRTwin, ion, name
+    '                     source
     ' 
-    '         Function: GetTimeWindow, ToString
+    '         Function: GetSplineData, GetTimeWindow, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -58,10 +59,12 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Math.SignalProcessing
+Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
 
 Namespace MRM.Data
 
@@ -115,6 +118,13 @@ Namespace MRM.Data
             Return chromatogram _
                 .BSpline(Function(t, i) New ChromatogramTick(t, i), degree, res) _
                 .ToArray
+        End Function
+
+        Public Function GetResampleSignal(q As Double) As ChromatogramTick()
+            Dim baseline As Double = chromatogram.SignalBaseline(q)
+            Dim reshape = New BinSampler(chromatogram.TimeArray, (chromatogram.IntensityArray - baseline).Select(Function(i) If(i < 0, 0, i)).ToArray)
+            Dim preprocess = reshape.AggregateSignal(2500, Function(t, i) New ChromatogramTick(t, i), Function(x) x.Sum).ToArray
+            Return preprocess
         End Function
 
         Public Overrides Function ToString() As String

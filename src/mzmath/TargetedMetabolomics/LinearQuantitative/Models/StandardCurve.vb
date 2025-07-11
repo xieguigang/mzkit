@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be65ac552e7f9a1c08131b39d7920102, mzmath\TargetedMetabolomics\LinearQuantitative\Models\StandardCurve.vb"
+﻿#Region "Microsoft.VisualBasic::8cf89ebdba210387bf2780af3bcdbaea, mzmath\TargetedMetabolomics\LinearQuantitative\Models\StandardCurve.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 117
-    '    Code Lines: 74 (63.25%)
-    ' Comment Lines: 27 (23.08%)
+    '   Total Lines: 128
+    '    Code Lines: 83 (64.84%)
+    ' Comment Lines: 27 (21.09%)
     '    - Xml Docs: 85.19%
     ' 
-    '   Blank Lines: 16 (13.68%)
-    '     File Size: 4.41 KB
+    '   Blank Lines: 18 (14.06%)
+    '     File Size: 4.75 KB
 
 
     '     Class StandardCurve
@@ -51,7 +51,7 @@
     '         Properties: [IS], arguments, blankControls, isValid, isWeighted
     '                     linear, name, points, requireISCalibration
     ' 
-    '         Function: CreateLinearRegression, ToString
+    '         Function: CreateLinearRegression, GetModelFlip, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -89,7 +89,11 @@ Namespace LinearQuantitative
         ''' <returns></returns>
         Public Property linear As IFitted
         Public Property points As ReferencePoint()
-
+        ''' <summary>
+        ''' the weight expression string of the linear regression
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property weight As String = "n/a"
         Public Property blankControls As Double()
 
         ''' <summary>
@@ -142,12 +146,42 @@ Namespace LinearQuantitative
             Return flip_linear
         End Function
 
+        Shared ReadOnly weights As New Dictionary(Of String, Weights) From {
+            {"1/x2", New Weights(Function(X) 1 / (X ^ 2))},
+            {"1/x", New Weights(Function(X) 1 / X)},
+            {"exp(-x)", New Weights(Function(X) Vector.Exp(-X))}
+        }
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function CreateLinearRegression(points As IEnumerable(Of PointF), maxDeletions%, ByRef removed As List(Of PointF)) As IFitted
-            Dim deletes As New List(Of PointF)(removed.SafeQuery)
+        Public Shared Function CreateLinearRegression(points As IEnumerable(Of PointF), maxDeletions%,
+                                                      ByRef removed As List(Of PointF),
+                                                      ByRef weight As String) As IFitted
+
             Dim rawPoints As PointF() = points.ToArray
+            Dim best As IFitted = Nothing
+
+            weight = "n/a"
+
+            For Each w In weights
+                Dim result As IFitted = CreateLinearRegression(rawPoints, maxDeletions, w.Value, removed)
+
+                If best Is Nothing OrElse best.R2 < result.R2 Then
+                    best = result
+                    weight = w.Key
+
+                    If best.R2 > 0.999 Then
+                        Exit For
+                    End If
+                End If
+            Next
+
+            Return best
+        End Function
+
+        Private Shared Function CreateLinearRegression(rawPoints As PointF(), maxDeletions%, w As Weights, ByRef removed As List(Of PointF)) As IFitted
+            Dim deletes As New List(Of PointF)(removed.SafeQuery)
             Dim fit As IFitted = rawPoints.AutoPointDeletion(
-                weighted:=Function(X) 1 / (X ^ 2),
+                weighted:=w,
                 max:=maxDeletions,
                 removed:=deletes,
                 keepsLowestPoint:=True,
@@ -155,7 +189,6 @@ Namespace LinearQuantitative
             )
 
             If fit Is Nothing Then
-
                 ' 完全没有线性
                 Return New FitResult With {
                     .ErrorTest = rawPoints _
@@ -168,11 +201,10 @@ Namespace LinearQuantitative
                     .SSR = 9999999,
                     .Polynomial = New Polynomial With {.Factors = New Double() {0, 0}}
                 }
-
             ElseIf fit.R2 < 0.95 Then
                 deletes = New List(Of PointF)(removed.SafeQuery)
                 fit = rawPoints.AutoPointDeletion(
-                    weighted:=Function(X) 1 / (X ^ 2),
+                    weighted:=w,
                     max:=maxDeletions,
                     removed:=deletes,
                     keepsLowestPoint:=False,

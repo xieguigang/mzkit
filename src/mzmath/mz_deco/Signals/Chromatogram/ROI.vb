@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::becbd5622a6a72cd485e1a82218927c8, mzmath\mz_deco\Signals\Chromatogram\ROI.vb"
+﻿#Region "Microsoft.VisualBasic::bf7eac60609895c8e96dfe697388fbd7, mzmath\mz_deco\Signals\Chromatogram\ROI.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 13 (11.50%)
-    '     File Size: 4.18 KB
+    '     File Size: 4.19 KB
 
 
     '     Class ROI

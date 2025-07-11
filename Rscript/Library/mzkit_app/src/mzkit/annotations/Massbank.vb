@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7d66adad6bd901cd20facfff83273b8, Rscript\Library\mzkit_app\src\mzkit\annotations\Massbank.vb"
+﻿#Region "Microsoft.VisualBasic::8456dbd551e0358e1b590c17adb41677, Rscript\Library\mzkit_app\src\mzkit\annotations\Massbank.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1133
-    '    Code Lines: 748 (66.02%)
-    ' Comment Lines: 240 (21.18%)
-    '    - Xml Docs: 92.08%
+    '   Total Lines: 1150
+    '    Code Lines: 760 (66.09%)
+    ' Comment Lines: 242 (21.04%)
+    '    - Xml Docs: 92.15%
     ' 
-    '   Blank Lines: 145 (12.80%)
-    '     File Size: 45.32 KB
+    '   Blank Lines: 148 (12.87%)
+    '     File Size: 46.34 KB
 
 
     ' Module Massbank
@@ -52,10 +52,11 @@
     '               createLipidMapTable, ExtractChebiCompounds, extractMoNAMetabolites, GlycosylNameSolver, GlycosylTokens
     '               HERB_ingredient_info, hmdbSecondary2Main, isPositive, KEGGPathwayCoverages, lipidClassReader
     '               lipidmaps_data, lipidmaps_id, lipidnameMapping, lipidNameReader, lipidProfiles
-    '               load_herbs, load_herbs_list, loadLotus, makeMetaboliteTable, makeOdorDataframe
-    '               meta_anno, monaMSP, name2, ParseChebiEntity, rankingNames
-    '               readLipidMapsRepo, readMetalibMsgPack, (+2 Overloads) readMoNA, readRefMet, readSDF
-    '               refMetTable, saveIDMapping, toLipidMaps, writeLipidMapsRepo, writeMetalib
+    '               load_herbs, load_herbs_list, loadLotus, makeMetaboliteTable, makeMetaboliteTable2
+    '               makeOdorDataframe, meta_anno, monaMSP, name2, ParseChebiEntity
+    '               rankingNames, readLipidMapsRepo, readMetalibMsgPack, (+2 Overloads) readMoNA, readRefMet
+    '               readSDF, refMetTable, saveIDMapping, toLipidMaps, writeLipidMapsRepo
+    '               writeMetalib
     ' 
     '     Sub: Main, writeMoNA
     ' 

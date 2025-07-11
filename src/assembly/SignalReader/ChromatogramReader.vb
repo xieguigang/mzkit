@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fb02a313751062fc2fd279d2ca5de9b, assembly\SignalReader\ChromatogramReader.vb"
+﻿#Region "Microsoft.VisualBasic::75823069f513c2e61697634482c25235, assembly\SignalReader\ChromatogramReader.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 151
-    '    Code Lines: 111 (73.51%)
-    ' Comment Lines: 22 (14.57%)
+    '   Total Lines: 158
+    '    Code Lines: 111 (70.25%)
+    ' Comment Lines: 29 (18.35%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 18 (11.92%)
-    '     File Size: 6.65 KB
+    '   Blank Lines: 18 (11.39%)
+    '     File Size: 7.00 KB
 
 
     ' Module ChromatogramReader

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e5ec6be0e8d4b68c8e26bf9a6b5f414, visualize\MsImaging\Drawer.vb"
+﻿#Region "Microsoft.VisualBasic::7da91995b55118846a95531d5ec895f4, visualize\MsImaging\Drawer.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 362
-    '    Code Lines: 215 (59.39%)
-    ' Comment Lines: 98 (27.07%)
+    '   Total Lines: 366
+    '    Code Lines: 219 (59.84%)
+    ' Comment Lines: 98 (26.78%)
     '    - Xml Docs: 86.73%
     ' 
-    '   Blank Lines: 49 (13.54%)
-    '     File Size: 14.81 KB
+    '   Blank Lines: 49 (13.39%)
+    '     File Size: 14.98 KB
 
 
     ' Class Drawer

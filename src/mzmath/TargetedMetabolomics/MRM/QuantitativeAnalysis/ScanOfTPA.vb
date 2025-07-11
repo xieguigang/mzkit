@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::f69665f732e5bd26905ef0333b778d09, mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\ScanOfTPA.vb"
+﻿#Region "Microsoft.VisualBasic::e8a4453ef6f85229c142b2ea08af5557, mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\ScanOfTPA.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 73
-'    Code Lines: 48 (65.75%)
-' Comment Lines: 12 (16.44%)
-'    - Xml Docs: 50.00%
-' 
-'   Blank Lines: 13 (17.81%)
-'     File Size: 3.02 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module ScanOfTPA
-' 
-'         Function: GetFactor, ScanTPA
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 56 (67.47%)
+    ' Comment Lines: 12 (14.46%)
+    '    - Xml Docs: 50.00%
+    ' 
+    '   Blank Lines: 15 (18.07%)
+    '     File Size: 3.52 KB
+
+
+    '     Module ScanOfTPA
+    ' 
+    '         Function: GetFactor, (+2 Overloads) ScanTPA
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -87,13 +87,14 @@ Namespace MRM
         End Function
 
         <Extension>
-        Public Iterator Function ScanTPA(ionData As IEnumerable(Of IonChromatogram), rtshifts As Dictionary(Of String, Double), args As MRMArguments) As IEnumerable(Of IonTPA)
+        Public Iterator Function ScanTPA(ionData As IEnumerable(Of IonChromatogram), rtshifts As Dictionary(Of String, Double), argList As IArgumentSet) As IEnumerable(Of IonTPA)
             If rtshifts Is Nothing Then
                 rtshifts = New Dictionary(Of String, Double)
             End If
 
             For Each ion As IonChromatogram In ionData
                 Dim shiftVal As Double = rtshifts.TryGetValue(ion.ion.target.accession)
+                Dim args As MRMArguments = argList.GetArgument(ion.ion.target.accession)
 
                 If std.Abs(shiftVal) > args.timeWindowSize Then
                     ' required rt calibration

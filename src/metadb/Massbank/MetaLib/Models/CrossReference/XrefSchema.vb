@@ -170,6 +170,10 @@ Namespace MetaLib.CrossReference
             If Not xref.extras.IsNullOrEmpty Then
                 For Each extra In xref.extras
                     For Each id As String In extra.Value.SafeQuery
+                        If CrossReference.IsEmptyXrefId(id) AndAlso CrossReference.IsEmptyIdString(id) Then
+                            Continue For
+                        End If
+
                         Yield New NamedValue(Of String)(extra.Key, id)
                     Next
                 Next

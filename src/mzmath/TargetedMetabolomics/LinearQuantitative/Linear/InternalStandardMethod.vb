@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ade7b876836eb28bc6be393846c18943, mzmath\TargetedMetabolomics\LinearQuantitative\Linear\InternalStandardMethod.vb"
+﻿#Region "Microsoft.VisualBasic::05f86e9099b77002c915cb6d7c4801d7, mzmath\TargetedMetabolomics\LinearQuantitative\Linear\InternalStandardMethod.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 190
-    '    Code Lines: 136 (71.58%)
-    ' Comment Lines: 31 (16.32%)
+    '   Total Lines: 189
+    '    Code Lines: 135 (71.43%)
+    ' Comment Lines: 31 (16.40%)
     '    - Xml Docs: 90.32%
     ' 
-    '   Blank Lines: 23 (12.11%)
-    '     File Size: 7.97 KB
+    '   Blank Lines: 23 (12.17%)
+    '     File Size: 7.93 KB
 
 
     '     Class InternalStandardMethod
@@ -143,7 +143,10 @@ Namespace LinearQuantitative.Linear
             Dim line As PointF() = QuantificationWorker _
                 .CreateModelPoints(C, A, ISTPA, CIS, ionKey, define.Name, linearSamples, points) _
                 .ToArray
-            Dim fit As IFitted = StandardCurve.CreateLinearRegression(line, maxDeletions, removed:=invalids)
+            Dim weight As String = Nothing
+            Dim fit As IFitted = StandardCurve.CreateLinearRegression(line, maxDeletions,
+                                                                      removed:=invalids,
+                                                                      weight:=weight)
 
             ' get points that removed from linear modelling
             For Each ptRef As ReferencePoint In points
@@ -161,7 +164,8 @@ Namespace LinearQuantitative.Linear
                 .points = points _
                     .OrderBy(Function(p) contents(p.level, ionKey)) _
                     .ToArray,
-                .[IS] = contents.GetIS(define.ISTD)
+                .[IS] = contents.GetIS(define.ISTD),
+                .weight = weight
             }
             Dim fy As Func(Of Double, Double) = out.ReverseModelFunction
             Dim ptY#

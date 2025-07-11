@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9c7cc20da021dc012c6fe8b39cd1d66, mzmath\TargetedMetabolomics\TPAExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::9bf5984cb276a367fb4fd7c0472ab9f1, mzmath\TargetedMetabolomics\TPAExtensions.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 313
-    '    Code Lines: 219 (69.97%)
-    ' Comment Lines: 66 (21.09%)
-    '    - Xml Docs: 68.18%
+    '   Total Lines: 320
+    '    Code Lines: 223 (69.69%)
+    ' Comment Lines: 69 (21.56%)
+    '    - Xml Docs: 68.12%
     ' 
-    '   Blank Lines: 28 (8.95%)
-    '     File Size: 12.45 KB
+    '   Blank Lines: 28 (8.75%)
+    '     File Size: 12.75 KB
 
 
     ' Module TPAExtensions
@@ -62,9 +62,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports std = System.Math
 
 <HideModuleName>
@@ -81,7 +81,7 @@ Public Module TPAExtensions
     Public Function ionTPA(ion As IonChromatogram, TPAFactor As Double, args As MRMArguments) As IonTPA
         Dim vector As IVector(Of ChromatogramTick) = If(
             args.bspline,
-            ion.GetSplineData(args.bspline_degree, args.bspline_density),
+            ion.GetResampleSignal(args.baselineQuantile).BSpline(Function(t, i) New ChromatogramTick(t, i), args.bspline_degree, args.bspline_density).ToArray,
             ion.chromatogram
         ).Shadows
         Dim ROIData As ROI()
@@ -115,7 +115,6 @@ Public Module TPAExtensions
             }
         Else
             result = ion.ProcessingIonPeakArea(
-                vector:=vector,
                 ROIData:=ROIData,
                 baselineQuantile:=args.baselineQuantile,
                 peakAreaMethod:=args.peakAreaMethod,
@@ -124,13 +123,15 @@ Public Module TPAExtensions
                 timeWindowSize:=args.timeWindowSize,
                 bsplineDensity:=args.bspline_density,
                 bsplineDegree:=args.bspline_degree,
-                timeshiftMethod:=False
+                timeshiftMethod:=args.time_shift_method,
+                percentageBaseline:=args.percentage_threshold
             )
         End If
 
         Return result
     End Function
 
+    <Extension>
     Private Function isContactWith(a As DoubleRange, b As DoubleRange) As Boolean
         Return a.IsOverlapping(b) OrElse b.IsOverlapping(a) OrElse a.Contains(b) OrElse b.Contains(a)
     End Function
@@ -177,56 +178,37 @@ Public Module TPAExtensions
     <Extension>
     Private Function findPeakWithRtRange(ion As IsomerismIonPairs, ROIData As ROI(), timeWindowSize#) As ROI
         Dim ionOrders = ion.OrderBy(Function(i) i.rt).ToArray
-        Dim peakOrders = ROIData.OrderBy(Function(r) r.rt).ToArray
-        Dim rt As Double
-        Dim dt As Double
-        Dim index As i32
-        Dim peakIndex As Integer()
-        Dim rt_alignments As New List(Of Integer())
+        Dim peakOrders = ROIData _
+            .Where(Function(i) ion.ROImatches(i, timeWindowSize)) _
+            .OrderByDescending(Function(r) r.maxInto) _
+            .Take(ionOrders.Length) _
+            .OrderBy(Function(r) r.rt) _
+            .ToArray
+        Dim roi As ROI
 
-        ' 计算保留时间漂移
-        For pi As Integer = 0 To peakOrders.Length - 1
-            peakIndex = New Integer(ionOrders.Length - 1) {}
-
-            For i As Integer = 0 To peakIndex.Length - 1
-                peakIndex(i) = -1
-            Next
-
-            rt = peakOrders(pi).rt
-            dt = ionOrders(Scan0).rt - rt
-            index = 1
-            peakIndex(Scan0) = pi
-
-            For Each target In ionOrders.Skip(1)
-                For j As Integer = pi + 1 To peakOrders.Length - 1
-                    ' dt1 - dt2 <= tolerance
-                    If std.Abs((CDbl(target.rt) - peakOrders(j).rt) - dt) <= timeWindowSize Then
-                        peakIndex(CInt(++index) - 1) = j
-                    End If
-                Next
-            Next
-
-            If peakIndex.Count(Function(x) x >= 0) >= 1 Then
-                rt_alignments.Add(peakIndex)
-            End If
-        Next
-
-        If rt_alignments.Count > 0 Then
-            With rt_alignments _
-                .OrderByDescending(Function(r)
-                                       Return r.Count(Function(x) x >= 0)
-                                   End Function) _
-                .First
-
-                If DirectCast(.GetValue(ion.index), Integer) = -1 Then
-                    Return Nothing
-                Else
-                    Return peakOrders(.GetValue(ion.index))
-                End If
-            End With
-        Else
+        If peakOrders.Length = 0 Then
             Return Nothing
         End If
+
+        If peakOrders.Length < ionOrders.Length Then
+            Dim t As New DoubleRange(ion.target.rt - timeWindowSize, ion.target.rt + timeWindowSize)
+
+            roi = ROIData _
+                .Where(Function(i) t.isContactWith(i.time)) _
+                .OrderByDescending(Function(a)
+                                       Return a.maxInto / (1 + std.Abs(CDbl(ion.target.rt) - a.rt))
+                                   End Function) _
+                .FirstOrDefault
+        Else
+            roi = ROIData(ion.index)
+        End If
+
+        Return roi
+    End Function
+
+    <Extension>
+    Private Function ROImatches(ion As IsomerismIonPairs, roi As ROI, timeWindowSize#) As Boolean
+        Return ion.AsEnumerable.Any(Function(i) New DoubleRange(i.rt - timeWindowSize, i.rt + timeWindowSize).isContactWith(roi.time))
     End Function
 
     ''' <summary>
@@ -251,7 +233,6 @@ Public Module TPAExtensions
     ''' 
     ''' </summary>
     ''' <param name="ion"></param>
-    ''' <param name="vector"></param>
     ''' <param name="ROIData">The largest ROI is the first element.</param>
     ''' <param name="baselineQuantile#"></param>
     ''' <param name="peakAreaMethod"></param>
@@ -259,7 +240,7 @@ Public Module TPAExtensions
     ''' <param name="TPAFactor#"></param>
     ''' <returns>peak data with baseline noised removed</returns>
     <Extension>
-    Private Function ProcessingIonPeakArea(ion As IonChromatogram, vector As IVector(Of ChromatogramTick), ROIData As ROI(),
+    Private Function ProcessingIonPeakArea(ion As IonChromatogram, ROIData As ROI(),
                                            baselineQuantile#,
                                            peakAreaMethod As PeakAreaMethods,
                                            integratorTicks%,
@@ -267,7 +248,8 @@ Public Module TPAExtensions
                                            timeWindowSize#,
                                            bsplineDensity%,
                                            bsplineDegree%,
-                                           timeshiftMethod As Boolean) As IonTPA
+                                           timeshiftMethod As Boolean,
+                                           percentageBaseline As Boolean) As IonTPA
 
         Dim ionTarget As IsomerismIonPairs = ion.ion
         Dim region As ROI = Nothing
@@ -275,20 +257,19 @@ Public Module TPAExtensions
         Dim peak As DoubleRange
 
         If ionTarget.hasIsomerism Then
-            'If ionTarget _
-            '    .Where(Function(i)
-            '               Return Not ROIData.Where(Function(r) stdNum.Abs(CDbl(i.rt) - r.rt) <= timeWindowSize).FirstOrDefault Is Nothing
-            '           End Function) _
-            '    .Count > 1 Then
             If Not timeshiftMethod Then
                 region = ionTarget.target.findPeakWithRtRange(ROIData, timeWindowSize)
             Else
                 region = ionTarget.findPeakWithRtRange(ROIData, timeWindowSize)
             End If
         Else
+            ' no isomerism ion
             If ionTarget.target.rt Is Nothing Then
+                ' use the max intensity peak as target ROI
                 region = ROIData.findPeakWithoutRtRange
             Else
+                ' filter peaks with rt as reference
+                ' and then pick from the filtered data with rule of the max intensity peak as target ROI
                 region = ionTarget.target.findPeakWithRtRange(ROIData, timeWindowSize)
             End If
         End If
@@ -301,6 +282,8 @@ Public Module TPAExtensions
         Else
             peak = region.time
         End If
+
+        Dim vector As IVector(Of ChromatogramTick) = region.ticks.Shadows
 
         With vector.TPAIntegrator(
             peak, baselineQuantile, peakAreaMethod,
@@ -359,6 +342,8 @@ Public Module TPAExtensions
                 area = vector.SumAll
             Case PeakAreaMethods.MaxPeakHeight
                 area = vector.MaxPeakHeight - baseline
+            Case PeakAreaMethods.TriangleArea
+                area = peak.Length * vector.MaxPeakHeight / 2
             Case Else
                 ' 默认是使用积分器方法
                 area = vector.PeakAreaIntegrator(

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc3e81d45ad09036add89848d286c5f4, Rscript\Library\mzkit_app\src\mzquant\MRM\MRMkit.vb"
+﻿#Region "Microsoft.VisualBasic::96ad6d473a2725a47e2358013bfcdbca, Rscript\Library\mzkit_app\src\mzquant\MRM\MRMkit.vb"
 
     ' Author:
     ' 
@@ -37,23 +37,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 915
-    '    Code Lines: 610 (66.67%)
-    ' Comment Lines: 206 (22.51%)
-    '    - Xml Docs: 89.81%
+    '   Total Lines: 1036
+    '    Code Lines: 689 (66.51%)
+    ' Comment Lines: 234 (22.59%)
+    '    - Xml Docs: 90.17%
     ' 
-    '   Blank Lines: 99 (10.82%)
-    '     File Size: 40.06 KB
+    '   Blank Lines: 113 (10.91%)
+    '     File Size: 46.18 KB
 
 
     ' Module MRMkit
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: asIonPair, castXicTable, (+2 Overloads) ExtractIonData, ExtractIonPairs, ExtractPeakROI
-    '               FindUntargetedIonPair, GetRTAlignments, ion_pairs_tbl, IsomerismIonPairs, Linears
-    '               MRMarguments, printIonPairs, R2, readCompoundReference, readIonPairs
-    '               readIS, RTShiftSummary, (+2 Overloads) SampleQuantify, ScanPeakTable, ScanPeakTable2
-    '               (+2 Overloads) ScanWiffRaw, WiffRawFile
+    '               FindUntargetedIonPair, fromArgumentsJSON, GetRTAlignments, ion_pairs_tbl, IsomerismIonPairs
+    '               Linears, MRMarguments, peakAreaTable, printIonPairs, R2
+    '               readCompoundReference, readIonPairs, readIS, RTShiftSummary, (+2 Overloads) SampleQuantify
+    '               ScanPeakTable, ScanPeakTable2, ScanPeakTable3, (+2 Overloads) ScanWiffRaw, WiffRawFile
     ' 
     ' /********************************************************************************/
 
@@ -85,7 +85,6 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
-Imports MRMArgumentSet = BioNovoGene.Analytical.MassSpectrometry.Math.MRM.MRMArguments
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
@@ -306,10 +305,18 @@ Module MRMkit
     ''' Create the MRM peak finding arguments from a json string
     ''' </summary>
     ''' <param name="json_str"></param>
+    ''' <param name="parse_single">
+    ''' this function will try to parse the given json string as <see cref="MRMArguments"/> if <paramref name="parse_single"/> is set to true,
+    ''' otherwise a set of the ion parameters <see cref="MRMArgumentSet"/> will be parsed if <paramref name="parse_single"/> is set to false.
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("from_arguments_json")>
-    Public Function fromArgumentsJSON(json_str As String) As MRMArguments
-        Return MRMArgumentSet.FromJSON(json_str)
+    Public Function fromArgumentsJSON(json_str As String, Optional parse_single As Boolean = True) As IArgumentSet
+        If parse_single Then
+            Return MRMArguments.FromJSON(json_str)
+        Else
+            Return MRMArgumentSet.FromJSON(json_str)
+        End If
     End Function
 
     ''' <summary>
@@ -328,18 +335,20 @@ Module MRMkit
     ''' <returns></returns>
     <ExportAPI("MRM.arguments")>
     <RApiReturn(GetType(MRMArguments))>
-    Public Function MRMarguments(Optional tolerance As Object = "da:0.3",
-                                 Optional timeWindowSize# = 5,
-                                 Optional angleThreshold# = 5,
-                                 Optional baselineQuantile# = 0.65,
-                                 Optional integratorTicks% = 5000,
-                                 Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
-                                 <RRawVectorArgument>
-                                 Optional peakwidth As Object = "8,30",
-                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
-                                 Optional sn_threshold As Double = 3,
-                                 Optional joint_peaks As Boolean = True,
-                                 Optional env As Environment = Nothing) As Object
+    Public Function new_MRMarguments(Optional tolerance As Object = "da:0.3",
+                                     Optional timeWindowSize# = 5,
+                                     Optional angleThreshold# = 5,
+                                     Optional baselineQuantile# = 0.65,
+                                     Optional integratorTicks% = 5000,
+                                     Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
+                                     <RRawVectorArgument>
+                                     Optional peakwidth As Object = "8,30",
+                                     Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
+                                     Optional sn_threshold As Double = 3,
+                                     Optional joint_peaks As Boolean = True,
+                                     Optional time_shift_method As Boolean = False,
+                                     Optional percentage_threshold As Boolean = False,
+                                     Optional env As Environment = Nothing) As Object
 
         Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, Nothing)
         Dim mzErrors = Math.getTolerance(tolerance, env)
@@ -350,7 +359,7 @@ Module MRMkit
             Return mzErrors.TryCast(Of Message)
         End If
 
-        Return New MRMArgumentSet(
+        Return New MRMArguments(
             TPAFactors:=TPAFactors,
             tolerance:=mzErrors,
             timeWindowSize:=timeWindowSize,
@@ -360,7 +369,9 @@ Module MRMkit
             peakAreaMethod:=peakAreaMethod,
             peakwidth:=_peakwidth.TryCast(Of DoubleRange),
             sn_threshold:=sn_threshold,
-            joint_peaks:=joint_peaks
+            joint_peaks:=joint_peaks,
+            time_shift_method:=time_shift_method,
+            percentage_threshold:=percentage_threshold
         )
     End Function
 
@@ -375,7 +386,7 @@ Module MRMkit
         Dim ionPairs As IonPair() = REnv.asVector(Of IonPair)(ions)
 
         If args Is Nothing Then
-            args = MRMArgumentSet.GetDefaultArguments
+            args = MRMArguments.GetDefaultArguments
         End If
 
         Return RTAlignmentProcessor.AcquireRT(references, ionPairs, args)
@@ -389,11 +400,22 @@ Module MRMkit
     ''' <returns>vector of the ion pair corresponding xic data</returns>
     <ExportAPI("extract.ions")>
     <RApiReturn(GetType(IonChromatogram))>
-    Public Function ExtractIonData(mzML$, <RRawVectorArgument> ionpairs As Object, Optional tolerance As Object = "ppm:20", Optional env As Environment = Nothing) As Object
-        Dim mzErrors = Math.getTolerance(tolerance, env)
+    Public Function ExtractIonData(mzML$,
+                                   <RRawVectorArgument>
+                                   ionpairs As Object,
+                                   Optional tolerance As Object = "ppm:20",
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim mzErrors = Math.getTolerance(tolerance, env, supressErr:=True)
 
         If mzErrors Like GetType(Message) Then
-            Return mzErrors.TryCast(Of Message)
+            If TypeOf tolerance Is MRMArguments Then
+                mzErrors = DirectCast(tolerance, MRMArguments).tolerance
+            ElseIf TypeOf tolerance Is MRMArgumentSet Then
+                mzErrors = DirectCast(tolerance, MRMArgumentSet).globals.tolerance
+            Else
+                Return mzErrors.TryCast(Of Message)
+            End If
         End If
 
         Dim ions As IsomerismIonPairs()
@@ -496,6 +518,8 @@ Module MRMkit
                                    Optional sn_threshold As Double = 3,
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                    Optional joint_peaks As Boolean = True,
+                                   Optional time_shift_method As Boolean = False,
+                                   Optional percentage_threshold As Boolean = False,
                                    Optional env As Environment = Nothing) As Object
 
         If TPAFactors Is Nothing Then
@@ -522,7 +546,9 @@ Module MRMkit
                 peakAreaMethod:=peakAreaMethod,
                 peakwidth:=_peakwidth,
                 sn_threshold:=sn_threshold,
-                joint_peaks:=joint_peaks
+                joint_peaks:=joint_peaks,
+                time_shift_method:=time_shift_method,
+                percentage_threshold:=percentage_threshold
             )
         ).ToArray
     End Function
@@ -759,7 +785,7 @@ Module MRMkit
     ''' </example>
     <ExportAPI("MRM.peakarea")>
     <RApiReturn(GetType(IonTPA))>
-    Public Function ScanPeakTable3(<RRawVectorArgument> xic As Object, args As MRMArguments, Optional env As Environment = Nothing) As Object
+    Public Function ScanPeakTable3(<RRawVectorArgument> xic As Object, args As IArgumentSet, Optional env As Environment = Nothing) As Object
         Dim rtshifts As New Dictionary(Of String, Double)
         Dim pullIons As pipeline = pipeline.TryCreatePipeline(Of IonChromatogram)(xic, env)
 
@@ -803,6 +829,8 @@ Module MRMkit
                                   Optional peakwidth As Object = "8,30",
                                   Optional sn_threshold As Double = 3,
                                   Optional joint_peaks As Boolean = True,
+                                  Optional time_shift_method As Boolean = False,
+                                  Optional percentage_threshold As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
 
         Dim mzErrors = Math.getTolerance(tolerance, env)
@@ -834,7 +862,9 @@ Module MRMkit
                 peakAreaMethod:=peakAreaMethod,
                 peakwidth:=_peakwidth,
                 sn_threshold:=sn_threshold,
-                joint_peaks:=joint_peaks
+                joint_peaks:=joint_peaks,
+                time_shift_method:=time_shift_method,
+                percentage_threshold:=percentage_threshold
             ),
             env:=env
         )
@@ -909,6 +939,8 @@ Module MRMkit
                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                 Optional sn_threshold As Double = 3,
                                 Optional joint_peaks As Boolean = True,
+                                Optional time_shift_method As Boolean = False,
+                                Optional percentage_threshold As Boolean = False,
                                 Optional env As Environment = Nothing) As Object
 
         Dim mzErrors = Math.getTolerance(tolerance, env)
@@ -961,7 +993,9 @@ Module MRMkit
                 peakAreaMethod:=peakAreaMethod,
                 peakwidth:=_peakwidth,
                 sn_threshold:=sn_threshold,
-                joint_peaks:=joint_peaks
+                joint_peaks:=joint_peaks,
+                time_shift_method:=time_shift_method,
+                percentage_threshold:=percentage_threshold
             ),
             env:=env
         )
@@ -1064,6 +1098,8 @@ Module MRMkit
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                    Optional sn_threshold As Double = 3,
                                    Optional joint_peaks As Boolean = True,
+                                   Optional time_shift_method As Boolean = False,
+                                   Optional percentage_threshold As Boolean = False,
                                    Optional env As Environment = Nothing) As Object
 
         Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, "8,30")
@@ -1089,7 +1125,9 @@ Module MRMkit
                 peakAreaMethod:=peakAreaMethod,
                 peakwidth:=_peakwidth,
                 sn_threshold:=sn_threshold,
-                joint_peaks:=joint_peaks
+                joint_peaks:=joint_peaks,
+                time_shift_method:=time_shift_method,
+                percentage_threshold:=percentage_threshold
             ),
             rtshifts:=New Dictionary(Of String, Double)
         )

@@ -1,67 +1,67 @@
-﻿#Region "Microsoft.VisualBasic::bc581d478fc5e5880aacb060af1eff4a, Rscript\Library\mzkit_app\src\mzkit\comprehensive\MSI.vb"
+﻿#Region "Microsoft.VisualBasic::d328c716b70f449463e81619edacc8d8, Rscript\Library\mzkit_app\src\mzkit\comprehensive\MSI.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 1885
-'    Code Lines: 1115 (59.15%)
-' Comment Lines: 582 (30.88%)
-'    - Xml Docs: 90.38%
-' 
-'   Blank Lines: 188 (9.97%)
-'     File Size: 78.44 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module MSI
-' 
-'     Function: asMSILayer, asRaster, basePeakMz, castSpatialLayers, Correction
-'               createMetadataTable, dimension_size, getimzmlMetadata, GetIonsJointMatrix, GetMatrixIons
-'               GetMSIMetadata, getmzpackFileMetadata, getmzPackMetadata, GetPeakMatrix, getStatTable
-'               GetXySpatialFilter, IonStats, level_convolution, load_spectrum, loadRowSummary
-'               LoadSpotVectorDataFrame, moran_index, MSI_summary, MSIScanMatrix, open_imzML
-'               packDf, packFile, packMatrix, PeakMatrix, peakSamples
-'               pixelId, PixelIons, PixelMatrix, pixels, pixels2D
-'               readImzMLMetadata, readPeaklayer, readSummarylayer, rowScans, SampleBootstraping
-'               scale, scan, spatialConvolution, splice, write_imzML
-'               writePeaklayer, writeSummarylayer
-' 
-'     Sub: Main
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1952
+    '    Code Lines: 1163 (59.58%)
+    ' Comment Lines: 593 (30.38%)
+    '    - Xml Docs: 90.56%
+    ' 
+    '   Blank Lines: 196 (10.04%)
+    '     File Size: 81.65 KB
+
+
+    ' Module MSI
+    ' 
+    '     Function: asMSILayer, asRaster, basePeakMz, castSpatialLayers, Correction
+    '               createIndexReader, createMetadataTable, dimension_size, getimzmlMetadata, GetIonsJointMatrix
+    '               GetMatrixIons, GetMSIMetadata, getmzpackFileMetadata, getmzPackMetadata, GetPeakMatrix
+    '               getStatTable, GetXySpatialFilter, IonStats, level_convolution, load_spectrum
+    '               loadRowSummary, LoadSpotVectorDataFrame, moran_index, MSI_summary, MSIScanMatrix
+    '               open_imzML, packDf, packFile, packMatrix, PeakMatrix
+    '               peakSamples, pixelId, PixelIons, PixelMatrix, pixels
+    '               pixels2D, readImzMLMetadata, readPeaklayer, readSummarylayer, resetLocation
+    '               rowScans, SampleBootstraping, scale, scan, spatialConvolution
+    '               splice, write_imzML, writePeaklayer, writeSummarylayer
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

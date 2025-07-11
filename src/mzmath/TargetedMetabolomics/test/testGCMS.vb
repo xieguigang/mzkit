@@ -58,10 +58,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.QuantifyAnalysis
-Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
-Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text

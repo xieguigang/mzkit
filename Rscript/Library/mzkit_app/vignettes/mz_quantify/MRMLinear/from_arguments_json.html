@@ -5,7 +5,7 @@
     <title>Create the MRM peak finding arguments from a json string</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
 </head>
 
 <body>
@@ -27,7 +27,8 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>from_arguments_json</strong>(<i>json.str</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>from_arguments_json</strong>(<i>json.str</i>,
+    <i>parse.single</i> = <span style='color: blue !important;'>TRUE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -36,6 +37,11 @@
             
 <dt>json.str</dt>
 <dd><p>[as string]</p></dd>
+
+
+<dt>parse.single</dt>
+<dd><p>this function will try to parse the given json string as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/MRMArguments.html">MRMArguments</a> if <strong>`parse_single`</strong> is set to true,
+ otherwise a set of the ion parameters <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/MRMArgumentSet.html">MRMArgumentSet</a> will be parsed if <strong>`parse_single`</strong> is set to false. [as boolean]</p></dd>
 
         </table>
 
@@ -50,7 +56,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/MRMArguments.html">MRMArguments</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/MRMArguments.html">MRMArguments</a></li></ul>
+        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/IArgumentSet.html">IArgumentSet</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/IArgumentSet.html">IArgumentSet</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 
@@ -63,8 +69,8 @@
     </div>
 </body>
 
-<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
-<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("example_r");</script>
 
 </html>
