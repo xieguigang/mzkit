@@ -222,7 +222,7 @@ Namespace MarkupData.imzML
         End Sub
 
         Public Function AsList() As Dictionary(Of String, String)
-            Dim metadata As NamedValue(Of String)() = Me.AsEnumerable.UniqueNames.ToArray
+            Dim metadata As NamedValue(Of String)() = Me.AsEnumerable.UniqueNames().ToArray
             Dim list As New Dictionary(Of String, String)
 
             For Each prop As NamedValue(Of String) In metadata
