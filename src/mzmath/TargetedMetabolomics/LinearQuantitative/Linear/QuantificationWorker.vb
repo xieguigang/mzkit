@@ -59,6 +59,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports std = System.Math
 
@@ -156,8 +157,18 @@ Namespace LinearQuantitative.Linear
             Next
         End Function
 
+        ''' <summary>
+        ''' Create a lambda function for make measure of the x content based on the given linear regression model
+        ''' </summary>
+        ''' <param name="model"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' when do modelling of the target linear, x is the content data and y is peak area
+        ''' so if we want to make measure of the content value from the sample peak area,
+        ''' we needs to flip the equation for make peak area as x input
+        ''' </remarks>
         <Extension>
-        Friend Function ReverseModelFunction(model As StandardCurve) As Func(Of Double, Double)
+        Public Function ReverseModelFunction(model As StandardCurve) As Func(Of Double, Double)
             Dim fx As Polynomial = model.linear.Polynomial
             Dim a As Double = fx.Factors(1)
             Dim b As Double = fx.Factors(Scan0)
@@ -171,6 +182,17 @@ Namespace LinearQuantitative.Linear
                        End If
 
                        Return y
+                   End Function
+        End Function
+
+        <Extension>
+        Public Function ContentVectorLambda(model As StandardCurve) As Func(Of IEnumerable(Of Double), IEnumerable(Of Double))
+            Dim fx As Func(Of Double, Double) = model.ReverseModelFunction
+
+            Return Iterator Function(x)
+                       For Each xi As Double In x.SafeQuery
+                           Yield fx(xi)
+                       Next
                    End Function
         End Function
 

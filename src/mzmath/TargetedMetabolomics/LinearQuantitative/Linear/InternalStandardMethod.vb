@@ -245,8 +245,14 @@ Namespace LinearQuantitative.Linear
             End If
 
             Dim line As StandardCurve = CreateModel(linearPoints, A, ISTPA, define, range:=Nothing)
+            Dim fy = line.ContentVectorLambda
+            ' measure sample range
+            Dim y = If(sampleIS Is Nothing, sampleA, SIMD.Divide.f64_op_divide_f64(sampleA, sampleIS))
+            Dim x = fy(y).ToArray
+            Dim range As New DoubleRange(x)
+            Dim secondLine As StandardCurve = CreateModel(linearPoints, A, ISTPA, define, range)
 
-            Return line
+            Return secondLine
         End Function
 
         ''' <summary>
