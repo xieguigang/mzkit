@@ -1,68 +1,70 @@
 ﻿#Region "Microsoft.VisualBasic::5aca48bfef023b70511da622ef980d55, mzmath\TargetedMetabolomics\LinearQuantitative\Models\IonPeakTableRow.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 99
-    '    Code Lines: 40 (40.40%)
-    ' Comment Lines: 51 (51.52%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 8 (8.08%)
-    '     File Size: 3.04 KB
+' Summaries:
 
 
-    '     Class IonPeakTableRow
-    ' 
-    '         Properties: [IS], base, content, ID, maxinto
-    '                     maxinto_IS, Name, raw, rtmax, rtmin
-    '                     TPA, TPA_IS
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 99
+'    Code Lines: 40 (40.40%)
+' Comment Lines: 51 (51.52%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 8 (8.08%)
+'     File Size: 3.04 KB
+
+
+'     Class IonPeakTableRow
+' 
+'         Properties: [IS], base, content, ID, maxinto
+'                     maxinto_IS, Name, raw, rtmax, rtmin
+'                     TPA, TPA_IS
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 
 Namespace LinearQuantitative
@@ -155,6 +157,34 @@ Namespace LinearQuantitative
 
         Public Overrides Function ToString() As String
             Return Name
+        End Function
+
+        Public Shared Iterator Function CastPoints(peak As IonPeakTableRow, filename As String) As IEnumerable(Of TargetPeakPoint)
+            Yield New TargetPeakPoint() With {
+                .Name = peak.ID,
+                .SampleName = filename,
+                .Peak = New ROIPeak() With {
+                    .base = peak.base,
+                    .ticks = {New ChromatogramTick((peak.rtmax + peak.rtmin) / 2, peak.TPA)},
+                    .peakHeight = peak.maxinto,
+                    .window = New DoubleRange(peak.rtmin, peak.rtmax)
+                },
+                .ChromatogramSummary = {}
+            }
+
+            If Strings.Len(peak.IS) > 0 Then
+                Yield New TargetPeakPoint() With {
+                    .Name = peak.IS,
+                    .SampleName = filename,
+                    .Peak = New ROIPeak() With {
+                        .base = peak.base,
+                        .ticks = {New ChromatogramTick((peak.rtmax + peak.rtmin) / 2, peak.TPA_IS)},
+                        .peakHeight = peak.maxinto_IS,
+                        .window = New DoubleRange(peak.rtmin, peak.rtmax)
+                    },
+                    .ChromatogramSummary = {}
+                }
+            End If
         End Function
 
     End Class
