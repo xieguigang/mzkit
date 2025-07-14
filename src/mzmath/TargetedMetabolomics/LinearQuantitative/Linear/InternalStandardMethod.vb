@@ -59,6 +59,7 @@
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -99,11 +100,7 @@ Namespace LinearQuantitative.Linear
                               Function(samples)
                                   Return samples.ToArray
                               End Function)
-            Dim linearSamples As String() = ionGroups.Values _
-                .IteratesALL _
-                .Select(Function(p) p.SampleName) _
-                .Distinct _
-                .ToArray
+            Dim linearSamples As String() = TargetPeakPoint.GetSampleNames(ionGroups.Values.IteratesALL)
 
             For Each featureId As String In ionGroups.Keys
                 If contents.hasDefined(featureId) Then
@@ -131,10 +128,10 @@ Namespace LinearQuantitative.Linear
             Dim ISTPA As Double() = compound.Select(Function(i) i.TPA_IS).ToArray
             Dim linearSamples As String() = compound.Select(Function(i) i.raw).ToArray
 
-            Return CreateModel(linearSamples, A, ISTPA, define)
+            Return CreateModel(linearSamples, A, ISTPA, define, range:=Nothing)
         End Function
 
-        Private Function CreateModel(linearSamples As String(), A#(), ISTPA#(), define As Standards) As StandardCurve
+        Private Function CreateModel(linearSamples As String(), A#(), ISTPA#(), define As Standards, range As DoubleRange) As StandardCurve
             Dim ionKey As String = define.ID
             Dim C As Double() = linearSamples.Select(Function(level) contents(level, ionKey)).ToArray
             Dim CIS As Double = 1
@@ -211,7 +208,45 @@ Namespace LinearQuantitative.Linear
                 ISTPA = Nothing
             End If
 
-            Return CreateModel(linearSamples, A, ISTPA, define)
+            Return CreateModel(linearSamples, A, ISTPA, define, range:=Nothing)
+        End Function
+
+        ''' <summary>
+        ''' A method of create linear with samples content as reference range
+        ''' </summary>
+        ''' <param name="marker"></param>
+        ''' <param name="istd"></param>
+        ''' <param name="id"></param>
+        ''' <param name="samples"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' delete linear points use sample content range as reference data
+        ''' </remarks>
+        Public Function ToLinear(marker As TargetPeakPoint(), istd As TargetPeakPoint(), id As String, samples As TargetPeakPoint()) As StandardCurve
+            Dim define As Standards = contents.GetStandards(id)
+            Dim linearPoints = TargetPeakPoint.GetSampleNames(marker.JoinIterates(istd))
+            Dim samplePoints = TargetPeakPoint.GetSampleNames(samples)
+            Dim points As New List(Of ReferencePoint)
+            Dim A As Double() = TPA(linearPoints, marker)
+            Dim ISTPA As Double()
+            Dim sampleA As Double() = TPA(samplePoints, samples.Where(Function(i) i.Name <> id))
+            Dim sampleIS As Double() = Nothing
+
+            If (Not define.ISTD.StringEmpty(, True)) AndAlso Not define.ISTD.TextEquals("None") Then
+                If istd.IsNullOrEmpty Then
+                    Call $"target linear required IS reference '{define.ISTD}', but ion is missing in sample data!".Warning
+                    ISTPA = Nothing
+                Else
+                    ISTPA = TPA(linearPoints, istd)
+                    sampleIS = TPA(samplePoints, samples.Where(Function(i) i.Name = id))
+                End If
+            Else
+                ISTPA = Nothing
+            End If
+
+            Dim line As StandardCurve = CreateModel(linearPoints, A, ISTPA, define, range:=Nothing)
+
+            Return line
         End Function
 
         ''' <summary>
