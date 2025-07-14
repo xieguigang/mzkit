@@ -246,6 +246,12 @@ Namespace LinearQuantitative.Linear
             End If
 
             Dim line As StandardCurve = CreateModel(linearPoints, A, ISTPA, define, range:=Nothing)
+
+            ' no sample data range for make secondary linear fitting
+            If sampleA.IsNullOrEmpty Then
+                Return line
+            End If
+
             Dim fy = line.ContentVectorLambda
             ' measure sample range
             Dim y = If(sampleIS Is Nothing, sampleA, SIMD.Divide.f64_op_divide_f64(sampleA, sampleIS))
