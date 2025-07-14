@@ -80,6 +80,7 @@ Namespace LinearQuantitative
         End Property
         Public Property invalids As String()
         Public Property [variant] As Double
+        Public Property range As Double()
         Public Property samples As Dictionary(Of String, Double)
 
         Default Public Property Value(name As String) As Double
@@ -92,7 +93,11 @@ Namespace LinearQuantitative
         End Property
 
         Public Overrides Function ToString() As String
-            Return $"f({ID}) = {linear}"
+            If range.Length > 0 Then
+                Return $"f({ID}) = {linear}  [{range.Min} ~ {range.Max}]"
+            Else
+                Return $"f({ID}) = {linear}"
+            End If
         End Function
 
     End Class

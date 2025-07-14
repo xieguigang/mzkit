@@ -105,6 +105,12 @@ Namespace LinearQuantitative
 
         Public Property arguments As Object
 
+        Public ReadOnly Property range As DoubleRange
+            Get
+                Return New DoubleRange(From pt As ReferencePoint In points Select pt.Cti)
+            End Get
+        End Property
+
         ''' <summary>
         ''' This linear model is required calibration by internal standards or not?
         ''' (在进行线性回归计算的时候是否需要内标校正？)
