@@ -191,7 +191,8 @@ Namespace LinearQuantitative
                 max:=maxDeletions,
                 removed:=deletes,
                 keepsLowestPoint:=True,
-                removesZeroY:=True
+                removesZeroY:=True,
+                range:=range
             )
 
             If fit Is Nothing Then
@@ -214,7 +215,8 @@ Namespace LinearQuantitative
                     max:=maxDeletions,
                     removed:=deletes,
                     keepsLowestPoint:=False,
-                    removesZeroY:=True
+                    removesZeroY:=True,
+                    range:=range
                 )
             End If
 
