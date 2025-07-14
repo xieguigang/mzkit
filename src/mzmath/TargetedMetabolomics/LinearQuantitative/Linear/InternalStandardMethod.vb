@@ -141,10 +141,11 @@ Namespace LinearQuantitative.Linear
                 .CreateModelPoints(C, A, ISTPA, CIS, ionKey, define.Name, linearSamples, points) _
                 .ToArray
             Dim weight As String = Nothing
+            ' do linear regression fitting
             Dim fit As IFitted = StandardCurve.CreateLinearRegression(line, maxDeletions,
                                                                       removed:=invalids,
-                                                                      weight:=weight)
-
+                                                                      weight:=weight,
+                                                                      range:=range)
             ' get points that removed from linear modelling
             For Each ptRef As ReferencePoint In points
                 For Each invalid In invalids

@@ -63,6 +63,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -155,15 +156,17 @@ Namespace LinearQuantitative
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function CreateLinearRegression(points As IEnumerable(Of PointF), maxDeletions%,
                                                       ByRef removed As List(Of PointF),
-                                                      ByRef weight As String) As IFitted
+                                                      ByRef weight As String,
+                                                      Optional range As DoubleRange = Nothing) As IFitted
 
             Dim rawPoints As PointF() = points.ToArray
             Dim best As IFitted = Nothing
 
             weight = "n/a"
 
-            For Each w In weights
-                Dim result As IFitted = CreateLinearRegression(rawPoints, maxDeletions, w.Value, removed)
+            ' test for each weight and pick for the best
+            For Each w As KeyValuePair(Of String, Weights) In weights
+                Dim result As IFitted = CreateLinearRegression(rawPoints, maxDeletions, w.Value, removed, range)
 
                 If best Is Nothing OrElse best.R2 < result.R2 Then
                     best = result
@@ -178,7 +181,10 @@ Namespace LinearQuantitative
             Return best
         End Function
 
-        Private Shared Function CreateLinearRegression(rawPoints As PointF(), maxDeletions%, w As Weights, ByRef removed As List(Of PointF)) As IFitted
+        Private Shared Function CreateLinearRegression(rawPoints As PointF(), maxDeletions%, w As Weights,
+                                                       ByRef removed As List(Of PointF),
+                                                       ByRef range As DoubleRange) As IFitted
+
             Dim deletes As New List(Of PointF)(removed.SafeQuery)
             Dim fit As IFitted = rawPoints.AutoPointDeletion(
                 weighted:=w,
