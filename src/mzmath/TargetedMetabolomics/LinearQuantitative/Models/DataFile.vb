@@ -109,8 +109,13 @@ Namespace LinearQuantitative
             Return ionPeaks.ToDictionary(Function(a) a.ID, Function(a) a.TPA)
         End Function
 
+        ''' <summary>
+        ''' evaluate the peak area rawdata as the content data
+        ''' </summary>
+        ''' <param name="linears"></param>
+        ''' <returns></returns>
         Public Function CreateQuantifyData(linears As IEnumerable(Of StandardCurve)) As Dictionary(Of String, Double)
-            Dim ions = ionPeaks.ToDictionary(Function(a) a.ID)
+            Dim ions As Dictionary(Of String, IonPeakTableRow) = ionPeaks.ToDictionary(Function(a) a.ID)
             Dim contents As New Dictionary(Of String, Double)
             Dim val As Double
 
