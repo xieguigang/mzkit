@@ -193,6 +193,7 @@ Namespace MRM
                 Dim line As PointF()
                 Dim fit As IFitted
                 Dim invalids As New List(Of PointF)
+                Dim weight As String = Nothing
 
                 If blankPoints.Length > 0 Then
                     Dim baseline = blankPoints.Average
@@ -212,12 +213,12 @@ Namespace MRM
                     line = LinearQuantificationWorker _
                         .CreateModelPoints(C, nA, ISTPA, CIS, ion.ID, ion.Name,, points) _
                         .ToArray
-                    fit = StandardCurve.CreateLinearRegression(line, maxDeletions, removed:=invalids)
+                    fit = StandardCurve.CreateLinearRegression(line, maxDeletions, removed:=invalids, weight:=weight)
                 Else
                     line = LinearQuantificationWorker _
                         .CreateModelPoints(C, A, ISTPA, CIS, ion.ID, ion.Name,, points) _
                         .ToArray
-                    fit = StandardCurve.CreateLinearRegression(line, maxDeletions, removed:=invalids)
+                    fit = StandardCurve.CreateLinearRegression(line, maxDeletions, removed:=invalids, weight:=weight)
                 End If
 
                 If fit Is Nothing Then
@@ -239,7 +240,8 @@ Namespace MRM
                     .name = ion.ID,
                     .linear = fit,
                     .points = points.PopAll,
-                    .[IS] = IsIon
+                    .[IS] = IsIon,
+                    .weight = weight
                 }
                 Dim fy As Func(Of Double, Double) = out.ReverseModelFunction
                 Dim ptY#

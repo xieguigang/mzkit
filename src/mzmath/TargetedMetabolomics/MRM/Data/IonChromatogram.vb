@@ -59,10 +59,12 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Math.SignalProcessing
+Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
 
 Namespace MRM.Data
 
@@ -116,6 +118,13 @@ Namespace MRM.Data
             Return chromatogram _
                 .BSpline(Function(t, i) New ChromatogramTick(t, i), degree, res) _
                 .ToArray
+        End Function
+
+        Public Function GetResampleSignal(q As Double) As ChromatogramTick()
+            Dim baseline As Double = chromatogram.SignalBaseline(q)
+            Dim reshape = New BinSampler(chromatogram.TimeArray, (chromatogram.IntensityArray - baseline).Select(Function(i) If(i < 0, 0, i)).ToArray)
+            Dim preprocess = reshape.AggregateSignal(2500, Function(t, i) New ChromatogramTick(t, i), Function(x) x.Sum).ToArray
+            Return preprocess
         End Function
 
         Public Overrides Function ToString() As String

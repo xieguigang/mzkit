@@ -87,13 +87,14 @@ Namespace MRM
         End Function
 
         <Extension>
-        Public Iterator Function ScanTPA(ionData As IEnumerable(Of IonChromatogram), rtshifts As Dictionary(Of String, Double), args As MRMArguments) As IEnumerable(Of IonTPA)
+        Public Iterator Function ScanTPA(ionData As IEnumerable(Of IonChromatogram), rtshifts As Dictionary(Of String, Double), argList As IArgumentSet) As IEnumerable(Of IonTPA)
             If rtshifts Is Nothing Then
                 rtshifts = New Dictionary(Of String, Double)
             End If
 
             For Each ion As IonChromatogram In ionData
                 Dim shiftVal As Double = rtshifts.TryGetValue(ion.ion.target.accession)
+                Dim args As MRMArguments = argList.GetArgument(ion.ion.target.accession)
 
                 If std.Abs(shiftVal) > args.timeWindowSize Then
                     ' required rt calibration

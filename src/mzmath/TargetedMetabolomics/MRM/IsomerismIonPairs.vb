@@ -90,6 +90,7 @@ Namespace MRM.Models
                 If ions.IsNullOrEmpty Then
                     Return Scan0
                 Else
+                    ' already sort by rt
                     Dim vec As IonPair() = Me.ToArray
 
                     For i As Integer = 0 To vec.Length - 1
@@ -138,7 +139,7 @@ Namespace MRM.Models
         ''' </summary>
         ''' <returns></returns>
         Public Iterator Function GetEnumerator() As IEnumerator(Of IonPair) Implements IEnumerable(Of IonPair).GetEnumerator
-            For Each i In ions.Join(target).OrderBy(Function(ion) ion.rt)
+            For Each i As IonPair In ions.Join(target).OrderBy(Function(ion) ion.rt)
                 Yield i
             Next
         End Function

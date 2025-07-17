@@ -27,7 +27,8 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>from_arguments_json</strong>(<i>json.str</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>from_arguments_json</strong>(<i>json.str</i>,
+    <i>parse.single</i> = <span style='color: blue !important;'>TRUE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -36,6 +37,11 @@
             
 <dt>json.str</dt>
 <dd><p>[as string]</p></dd>
+
+
+<dt>parse.single</dt>
+<dd><p>this function will try to parse the given json string as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/MRMArguments.html">MRMArguments</a> if <strong>`parse_single`</strong> is set to true,
+ otherwise a set of the ion parameters <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/MRMArgumentSet.html">MRMArgumentSet</a> will be parsed if <strong>`parse_single`</strong> is set to false. [as boolean]</p></dd>
 
         </table>
 
@@ -50,7 +56,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/MRMArguments.html">MRMArguments</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/MRMArguments.html">MRMArguments</a></li></ul>
+        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/IArgumentSet.html">IArgumentSet</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/IArgumentSet.html">IArgumentSet</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

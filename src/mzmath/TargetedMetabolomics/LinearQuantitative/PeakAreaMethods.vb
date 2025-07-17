@@ -86,5 +86,6 @@ Namespace LinearQuantitative
         ''' 如果色谱柱的压力非常大，出峰非常的集中，可以直接使用最大的峰高度来近似为峰面积
         ''' </summary>
         MaxPeakHeight
+        TriangleArea
     End Enum
 End Namespace
