@@ -1,66 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::16967c7b8e151456c67ab62091622afa, metadb\Chemoinformatics\Formula\Models\Element.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 320
-    '    Code Lines: 273 (85.31%)
-    ' Comment Lines: 34 (10.62%)
-    '    - Xml Docs: 94.12%
-    ' 
-    '   Blank Lines: 13 (4.06%)
-    '     File Size: 28.98 KB
+' Summaries:
 
 
-    '     Class Element
-    ' 
-    '         Properties: charge, id, isotopes, isotopic, meta
-    '                     name, symbol, z
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: Isotope, MemoryLoadElements, MemoryPopulateElements, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 320
+'    Code Lines: 273 (85.31%)
+' Comment Lines: 34 (10.62%)
+'    - Xml Docs: 94.12%
+' 
+'   Blank Lines: 13 (4.06%)
+'     File Size: 28.98 KB
+
+
+'     Class Element
+' 
+'         Properties: charge, id, isotopes, isotopic, meta
+'                     name, symbol, z
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: Isotope, MemoryLoadElements, MemoryPopulateElements, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
+Imports Microsoft.VisualBasic.Math
 
 Namespace Formula
 
@@ -105,6 +106,16 @@ Namespace Formula
         ''' <returns></returns>
         Public Property isotopic As Double
         Public Property isotopes As Isotope()
+
+        Public ReadOnly Property AverageMolecularMass As Double
+            Get
+                If isotopes.Length = 1 Then
+                    Return isotopes(0).Mass
+                Else
+                    Return isotopes.Select(Function(a) a.Mass).WeighedAverage(isotopes.Select(Function(a) a.Prob).ToArray)
+                End If
+            End Get
+        End Property
 
         Sub New()
         End Sub

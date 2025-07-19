@@ -196,6 +196,45 @@ Namespace Formula
             End If
         End Function
 
+        Public Shared Function EvaluateAverageMolecularMass(formula As Formula) As Double
+            Return Aggregate element As KeyValuePair(Of String, Integer)
+                   In formula.CountsByElement
+                   Let mean As Double = Formula.AllAtomElements(element.Key).AverageMolecularMass
+                   Let mass As Double = mean * element.Value
+                   Into Sum(mass)
+        End Function
+
+        Public Shared Function EvaluateAverageMolecularMass(formula As String, Optional n As Integer = 9999) As Double
+            Static cache As New Dictionary(Of String, Double)
+
+            Dim key As String = $"{formula} ~ {n}"
+            Dim mass As Double
+
+            If cache.ContainsKey(key) Then
+                Return cache(key)
+            Else
+                Try
+                    Dim elements As Formula = ScanFormula(formula, n)
+
+                    If elements Is Nothing OrElse elements.CountsByElement.IsNullOrEmpty Then
+                        mass = 0
+                    Else
+                        mass = EvaluateAverageMolecularMass(elements)
+                    End If
+                Catch ex As Exception
+                    Throw New Exception($"the given formula string is: '{formula}'", ex)
+                End Try
+
+                SyncLock cache
+                    If Not cache.ContainsKey(key) Then
+                        Call cache.Add(key, mass)
+                    End If
+                End SyncLock
+
+                Return mass
+            End If
+        End Function
+
         Public Const Pattern As String = "([A-Z][a-z]?\d*)+"
 
         ' H2O
