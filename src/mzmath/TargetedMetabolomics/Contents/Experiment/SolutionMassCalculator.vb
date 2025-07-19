@@ -179,7 +179,7 @@ Namespace Content
                                   Return c.Item2
                               End Function)
 
-            Return str_reps.TryGetValue(Strings.Trim(desc).ToLower, [default])
+            Return str_reps.TryGetValue(Strings.Trim(desc).ToLower, [default]:=[default])
         End Function
     End Class
 End Namespace
