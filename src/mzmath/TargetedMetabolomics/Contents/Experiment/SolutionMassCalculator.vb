@@ -1,5 +1,6 @@
 ﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Content
 
@@ -113,9 +114,8 @@ Namespace Content
         ''' <summary>
         ''' Calculates the required masses of chemical components to prepare a target solution with specified volume and concentration.
         ''' </summary>
-        ''' <param name="target">Dictionary containing chemical component names as keys and their target concentrations as values</param>
+        ''' <param name="chemicals">Dictionary containing chemical component names as keys and their target concentrations as values</param>
         ''' <param name="VL">Target volume of solution to be prepared, expressed in milliliters (ml)</param>
-        ''' <param name="unitType">Concentration unit type for the target solution (mol/L or g/L), specified by the ConcentrationType enum</param>
         ''' <returns>An enumerable sequence of <see cref="NamedValue(Of Double)"/> structures,
         ''' where each entry contains a chemical component name and its calculated mass in grams</returns>
         ''' <exception cref="KeyNotFoundException">Thrown when a chemical component in the target dictionary 
@@ -134,33 +134,36 @@ Namespace Content
         ''' </list>
         ''' <para>Internal volume conversion: Automatically converts input volume from milliliters (ml) to liters (L) using VL/1000</para>
         ''' </remarks>
-        Public Iterator Function CalculateSolutionMasses(target As Dictionary(Of String, Double), VL As Double, unitType As ConcentrationType) As IEnumerable(Of NamedValue(Of Double))
-            ' Converts milliliters to liters
-            Dim volumeLiters As Double = VL / 1000
-
-            For Each component As KeyValuePair(Of String, Double) In target
-                Dim reagentName As String = component.Key
-                Dim concentration As Double = component.Value
-
-                If Chemical_reagents.ContainsKey(reagentName) Then
-                    Dim molecularWeight As Double = Chemical_reagents(reagentName)
-                    Dim mass As Double
-
-                    Select Case unitType
-                        Case ConcentrationType.molL
-                            ' 计算公式：质量(g) = 浓度(mol/L) × 分子量(g/mol) × 体积(L)
-                            mass = concentration * molecularWeight * volumeLiters
-
-                        Case ConcentrationType.gL
-                            ' 计算公式：质量(g) = 浓度(g/L) × 体积(L)
-                            mass = concentration * volumeLiters
-
-                    End Select
-
-                    Yield New NamedValue(Of Double)(reagentName, mass)
-                Else
-                    Throw New KeyNotFoundException("Molecular weight for reagent '{reagentName}' not found in chemical reagent database.")
+        Public Iterator Function CalculateSolutionMasses(chemicals As IEnumerable(Of SolutionChemical), VL As Double) As IEnumerable(Of NamedValue(Of Double))
+            For Each chem In chemicals
+                If Not Chemical_reagents.ContainsKey(chem.name) Then
+                    Throw New ArgumentException($"试剂 {chem.name} 的分子量未在Chemical_reagents中定义")
                 End If
+
+                Dim molecularWeight = Chemical_reagents(chem.name)
+                Dim mass As Double = 0
+
+                ' 根据浓度类型执行不同计算
+                Select Case chem.type
+                    Case ConcentrationType.molL  ' mol/L 摩尔浓度
+                        ' 质量(g) = 浓度(mol/L) * 体积(L) * 分子量(g/mol)
+                        ' VL/1000 将毫升转换为升
+                        mass = chem.content * (VL / 1000) * molecularWeight
+
+                    Case ConcentrationType.gL    ' g/L 质量浓度
+                        ' 质量(g) = 浓度(g/L) * 体积(L)
+                        mass = chem.content * (VL / 1000)
+
+                    Case ConcentrationType.percentage  ' % 质量百分比浓度
+                        ' 质量(g) = 浓度(%) * 目标溶液总质量 / 100
+                        ' 假设密度≈1g/ml，则总质量≈VL(g)
+                        mass = chem.content * VL / 100
+
+                    Case Else
+                        Throw New ArgumentException($"不支持的浓度类型: {chem.type}")
+                End Select
+
+                Yield New NamedValue(Of Double)(chem.name, mass, chem.GetJson)
             Next
         End Function
     End Class
