@@ -3,6 +3,11 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace Content
 
+    ''' <summary>
+    ''' Provides functionality to calculate the required masses of chemical reagents 
+    ''' to prepare solution mixtures at specified concentrations and volumes. 
+    ''' Supports both exact molecular mass and average molecular mass calculations.
+    ''' </summary>
     Public Class SolutionMassCalculator
 
         ReadOnly Chemical_reagents As Dictionary(Of String, Double)
@@ -10,7 +15,10 @@ Namespace Content
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="Chemical_reagents"></param>
+        ''' <param name="Chemical_reagents">
+        ''' Dictionary containing chemical reagent names as keys and their molecular formulas as string values.
+        ''' Formula strings must be compatible with FormulaScanner parsing methods.
+        ''' </param>
         ''' <param name="useExactMass">
         ''' use the exact mass for the calculation? default false means use the average molecular mass for the calculation.
         ''' 
@@ -109,7 +117,7 @@ Namespace Content
         ''' <param name="VL">Target volume of solution to be prepared, expressed in milliliters (ml)</param>
         ''' <param name="unitType">Concentration unit type for the target solution (mol/L or g/L), specified by the ConcentrationType enum</param>
         ''' <returns>An enumerable sequence of <see cref="NamedValue(Of Double)"/> structures,
-        ''' where each entry contains a chemical component name and its calculated mass in grams</returns>>
+        ''' where each entry contains a chemical component name and its calculated mass in grams</returns>
         ''' <exception cref="KeyNotFoundException">Thrown when a chemical component in the target dictionary 
         ''' is not found in the global Chemical_reagents database</exception>
         ''' <remarks>
