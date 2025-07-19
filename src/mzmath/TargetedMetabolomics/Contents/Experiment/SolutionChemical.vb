@@ -18,5 +18,11 @@
         ''' <returns></returns>
         Public Property type As ConcentrationType
 
+        Public Property mass As Double
+
+        Public Overrides Function ToString() As String
+            Return $"{name} {mass.ToString("F4")}g ({content} {type.Description})"
+        End Function
+
     End Class
 End Namespace

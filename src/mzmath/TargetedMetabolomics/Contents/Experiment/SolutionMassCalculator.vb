@@ -1,5 +1,6 @@
 ﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Content
@@ -134,8 +135,8 @@ Namespace Content
         ''' </list>
         ''' <para>Internal volume conversion: Automatically converts input volume from milliliters (ml) to liters (L) using VL/1000</para>
         ''' </remarks>
-        Public Iterator Function CalculateSolutionMasses(chemicals As IEnumerable(Of SolutionChemical), VL As Double) As IEnumerable(Of NamedValue(Of Double))
-            For Each chem In chemicals
+        Public Iterator Function CalculateSolutionMasses(chemicals As IEnumerable(Of SolutionChemical), VL As Double) As IEnumerable(Of SolutionChemical)
+            For Each chem As SolutionChemical In chemicals
                 If Not Chemical_reagents.ContainsKey(chem.name) Then
                     Throw New ArgumentException($"试剂 {chem.name} 的分子量未在Chemical_reagents中定义")
                 End If
@@ -163,8 +164,22 @@ Namespace Content
                         Throw New ArgumentException($"不支持的浓度类型: {chem.type}")
                 End Select
 
-                Yield New NamedValue(Of Double)(chem.name, mass, chem.GetJson)
+                chem.mass = mass
+
+                Yield chem
             Next
+        End Function
+
+        Public Shared Function ParseConcentrationType(desc As String, Optional [default] As ConcentrationType = ConcentrationType.molL) As ConcentrationType
+            Static str_reps As Dictionary(Of String, ConcentrationType) = Enums(Of ConcentrationType) _
+                .Select(Function(c) (c.Description, c)) _
+                .JoinIterates(Enums(Of ConcentrationType).Select(Function(c) (c.ToString, c))) _
+                .ToDictionary(Function(c) c.Item1.ToLower,
+                              Function(c)
+                                  Return c.Item2
+                              End Function)
+
+            Return str_reps.TryGetValue(Strings.Trim(desc).ToLower, [default])
         End Function
     End Class
 End Namespace
