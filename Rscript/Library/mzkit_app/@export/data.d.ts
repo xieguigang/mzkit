@@ -125,6 +125,16 @@ declare namespace data {
      * @return String array formatted as "mz:intensity" for top ions.
    */
    function linearMatrix(data: object, topIons?: object): string;
+   /**
+    * use log foldchange for compares two spectrum
+    * 
+    * 
+     * @param spec1 -
+     * @param spec2 -
+     * @param da 
+     * + default value Is ``0.03``.
+   */
+   function logfc(spec1: object, spec2: object, da?: number): any;
    module make {
       /**
        * Generates unique ROI (Region of Interest) IDs for spectra.

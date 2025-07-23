@@ -35,3 +35,4 @@ Provides core functionality for mass spectrometry data processing and analysis w
 + [make.ROI_names](data/make.ROI_names.1) Generates unique ROI (Region of Interest) IDs for spectra.
 + [read.MsMatrix](data/read.MsMatrix.1) Reads a spectral matrix from a CSV file.
 + [linearMatrix](data/linearMatrix.1) Generates a string representation of top intensity ions from spectra.
++ [logfc](data/logfc.1) use log foldchange for compares two spectrum
