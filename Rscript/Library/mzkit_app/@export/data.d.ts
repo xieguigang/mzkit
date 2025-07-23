@@ -289,7 +289,9 @@ declare namespace data {
     * Union and merge the given multiple spectrum data into one single spectrum
     * 
     * 
-     * @param peaks A collection of the spectrum object that going to merge into single one
+     * @param peaks A collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2`` spectrum object that going to merge into single one
+     * @param norm 
+     * + default value Is ``false``.
      * @param matrix this parameter will affects the data type of the value returns of this function:
      *  
      *  1. default false, returns a peak ms2 data object
@@ -299,9 +301,13 @@ declare namespace data {
      * @param massDiff the mass error for merge two spectra peak
      * 
      * + default value Is ``0.1``.
+     * @param aggreate_sum default false means use the max intensity for the union merged peaks, 
+     *  or use the sum value of the intensity if this parameter value is set as TRUE.
+     * 
+     * + default value Is ``false``.
      * @return a single ms spectrum data object, its data type depeneds on the **`matrix`** parameter.
    */
-   function unionPeaks(peaks: object, matrix?: boolean, massDiff?: number): object|object;
+   function unionPeaks(peaks: object, norm?: boolean, matrix?: boolean, massDiff?: number, aggreate_sum?: boolean): object|object;
    /**
     * Extracts chromatogram data for a specific m/z from MS1 scans.
     * 

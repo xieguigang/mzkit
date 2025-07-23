@@ -51,3 +51,14 @@ Prostate_cancer = lapply(tqdm(Prostate_cancer), file -> read.cache(file)) |> unl
 
 print(NC);
 print(Prostate_cancer);
+
+NC = unionPeaks(NC, norm = TRUE, aggreate.sum =TRUE ,matrix = TRUE) |> as.data.frame();
+NC = NC[order(NC$intensity ,decreasing=TRUE),];
+Prostate_cancer = unionPeaks(Prostate_cancer, norm = TRUE, aggreate.sum =TRUE ,matrix = TRUE) |> as.data.frame();
+Prostate_cancer= Prostate_cancer[order(Prostate_cancer$intensity ,decreasing=TRUE),];
+
+print(NC, max.print = 13);
+print(Prostate_cancer, max.print = 13);
+
+write.csv(NC, file = "./NC.csv");
+write.csv(Prostate_cancer, file = "./Prostate_cancer.csv");
