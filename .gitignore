@@ -290,3 +290,5 @@ Rscript/Library/mzkit_app/test/decode20231219/demo.dat
 Rscript/Library/mzkit_app/test/pubchem/invalid_json.json
 /Rscript/Library/mzkit_app/data/hmdb.msgpack
 /Rscript/Library/mzkit_app/data/hmdb.csv
+/Rscript/Library/mzkit_app/.pkg/NC.csv
+/Rscript/Library/mzkit_app/.pkg/Prostate_cancer.csv
