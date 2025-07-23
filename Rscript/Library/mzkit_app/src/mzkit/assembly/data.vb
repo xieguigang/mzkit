@@ -1,63 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::cac80d88839d01af49f030b44065ccce, Rscript\Library\mzkit_app\src\mzkit\assembly\data.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1005
-    '    Code Lines: 644 (64.08%)
-    ' Comment Lines: 236 (23.48%)
-    '    - Xml Docs: 94.92%
-    ' 
-    '   Blank Lines: 125 (12.44%)
-    '     File Size: 43.85 KB
+' Summaries:
 
 
-    ' Module data
-    ' 
-    '     Function: createPeakMs2, getAlignmentReference, getIntensity, getIonsSummaryTable, getMSMSTable
-    '               getRawXICSet, getScantime, getXICPoints, groupBy_ROI, libraryMatrix
-    '               LibraryTable, linearMatrix, makeAlignmentString, makeROInames, MsdataFromDf
-    '               nfragments, rawXIC, readMatrix, representative_spectrum, RtSlice
-    '               simpleSearch, (+2 Overloads) splashId, TICTable, toString, unionPeaks
-    '               XIC, XICGroups, XICTable
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1005
+'    Code Lines: 644 (64.08%)
+' Comment Lines: 236 (23.48%)
+'    - Xml Docs: 94.92%
+' 
+'   Blank Lines: 125 (12.44%)
+'     File Size: 43.85 KB
+
+
+' Module data
+' 
+'     Function: createPeakMs2, getAlignmentReference, getIntensity, getIonsSummaryTable, getMSMSTable
+'               getRawXICSet, getScantime, getXICPoints, groupBy_ROI, libraryMatrix
+'               LibraryTable, linearMatrix, makeAlignmentString, makeROInames, MsdataFromDf
+'               nfragments, rawXIC, readMatrix, representative_spectrum, RtSlice
+'               simpleSearch, (+2 Overloads) splashId, TICTable, toString, unionPeaks
+'               XIC, XICGroups, XICTable
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -1082,5 +1082,51 @@ Module data
                             .JoinBy("; ")
                     End Function) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' use log foldchange for compares two spectrum
+    ''' </summary>
+    ''' <param name="spec1"></param>
+    ''' <param name="spec2"></param>
+    ''' <returns></returns>
+    <ExportAPI("logfc")>
+    Public Function logfc_f(spec1 As LibraryMatrix, spec2 As LibraryMatrix, Optional da As Double = 0.03) As Object
+        Dim label1 = If(spec1.name.StringEmpty(, True), NameOf(spec1), spec1.name)
+        Dim label2 = If(spec2.name.StringEmpty(, True), NameOf(spec2), spec2.name)
+
+        If label1 = label2 Then
+            label1 = $"{label1}_1"
+            label2 = $"{label2}_2"
+        End If
+
+        Dim s1 = spec1.ms2.Select(Function(a) New ms2(a, label1)).ToArray
+        Dim s2 = spec2.ms2.Select(Function(a) New ms2(a, label2)).ToArray
+        Dim merge = s1.JoinIterates(s2).GroupBy(Function(m) m.mz, da).ToArray
+        Dim mz As Double() = merge.Select(Function(i) Val(i.name)).ToArray
+        Dim i1 As Double() = merge.Select(Function(i) i.Where(Function(m) m.Annotation = label1).Sum(Function(a) a.intensity)).ToArray
+        Dim i2 As Double() = merge.Select(Function(i) i.Where(Function(m) m.Annotation = label2).Sum(Function(a) a.intensity)).ToArray
+        Dim logfc As Double() = i1 _
+            .Select(Function(into1, i)
+                        Dim into2 As Double = i2(i)
+
+                        If into1 <= 0.0 Then
+                            Return 0
+                        ElseIf into2 <= 0 Then
+                            Return Double.PositiveInfinity
+                        Else
+                            Return Double.Log(into1 / into2, 2)
+                        End If
+                    End Function) _
+            .ToArray
+
+        Return New rDataframe With {
+            .columns = New Dictionary(Of String, Array) From {
+                {"m/z", mz},
+                {label1, i1},
+                {label2, i2},
+                {"logfc", logfc}
+            }
+        }
     End Function
 End Module
