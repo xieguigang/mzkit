@@ -89,6 +89,7 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
+Imports std = System.Math
 
 ''' <summary>
 ''' Provides core functionality for mass spectrometry data processing and analysis within the mzkit framework.
@@ -1132,7 +1133,8 @@ Module data
                 {"m/z", mz},
                 {label1, i1},
                 {label2, i2},
-                {"logfc", logfc}
+                {"logfc", logfc},
+                {"abs_logfc", logfc.Select(Function(a) std.Abs(a)).ToArray}
             }
         }
     End Function

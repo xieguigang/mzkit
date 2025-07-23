@@ -64,6 +64,8 @@ Prostate_cancer= Prostate_cancer[order(Prostate_cancer$intensity ,decreasing=TRU
 
 print(NC, max.print = 13);
 print(Prostate_cancer, max.print = 13);
+print(logfc, max.print = 13);
 
 write.csv(NC, file = "./NC.csv");
 write.csv(Prostate_cancer, file = "./Prostate_cancer.csv");
+write.csv(logfc, file = "./logfc.csv");
