@@ -55,7 +55,7 @@ print(Prostate_cancer);
 NC = unionPeaks(NC, norm = TRUE, aggreate.sum =TRUE ,matrix = TRUE);
 Prostate_cancer = unionPeaks(Prostate_cancer, norm = TRUE, aggreate.sum =TRUE ,matrix = TRUE);
 
-let logfc = data::logfc(Prostate_cancer, NC);
+let logfc = data::logfc(Prostate_cancer, NC, lb1 = "Prostate_cancer", lb2 = "NC");
 
 NC = NC |> as.data.frame();
 NC = NC[order(NC$intensity ,decreasing=TRUE),];

@@ -133,8 +133,12 @@ declare namespace data {
      * @param spec2 -
      * @param da 
      * + default value Is ``0.03``.
+     * @param lb1 
+     * + default value Is ``null``.
+     * @param lb2 
+     * + default value Is ``null``.
    */
-   function logfc(spec1: object, spec2: object, da?: number): any;
+   function logfc(spec1: object, spec2: object, da?: number, lb1?: string, lb2?: string): any;
    module make {
       /**
        * Generates unique ROI (Region of Interest) IDs for spectra.
