@@ -1091,9 +1091,16 @@ Module data
     ''' <param name="spec2"></param>
     ''' <returns></returns>
     <ExportAPI("logfc")>
-    Public Function logfc_f(spec1 As LibraryMatrix, spec2 As LibraryMatrix, Optional da As Double = 0.03) As Object
+    Public Function logfc_f(spec1 As LibraryMatrix, spec2 As LibraryMatrix,
+                            Optional da As Double = 0.03,
+                            Optional lb1 As String = Nothing,
+                            Optional lb2 As String = Nothing) As Object
+
         Dim label1 = If(spec1.name.StringEmpty(, True), NameOf(spec1), spec1.name)
         Dim label2 = If(spec2.name.StringEmpty(, True), NameOf(spec2), spec2.name)
+
+        label1 = If(lb1.StringEmpty(, True), label1, lb1)
+        label2 = If(lb2.StringEmpty(, True), label2, lb2)
 
         If label1 = label2 Then
             label1 = $"{label1}_1"
