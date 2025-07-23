@@ -306,7 +306,7 @@ Module data
     ''' <summary>
     ''' Union and merge the given multiple spectrum data into one single spectrum
     ''' </summary>
-    ''' <param name="peaks">A collection of the spectrum object that going to merge into single one</param>
+    ''' <param name="peaks">A collection of the <see cref="PeakMs2"/> spectrum object that going to merge into single one</param>
     ''' <param name="matrix">
     ''' this parameter will affects the data type of the value returns of this function:
     ''' 
@@ -314,22 +314,40 @@ Module data
     ''' 2. true, returns a library matrix data object
     ''' </param>
     ''' <param name="massDiff">the mass error for merge two spectra peak</param>
+    ''' <param name="aggreate_sum">
+    ''' default false means use the max intensity for the union merged peaks, 
+    ''' or use the sum value of the intensity if this parameter value is set as TRUE.
+    ''' </param>
     ''' <returns>
     ''' a single ms spectrum data object, its data type depeneds on the <paramref name="matrix"/> parameter.
     ''' </returns>
     <ExportAPI("unionPeaks")>
     <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix))>
     Public Function unionPeaks(peaks As PeakMs2(),
+                               Optional norm As Boolean = False,
                                Optional matrix As Boolean = False,
-                               Optional massDiff As Double = 0.1) As Object
+                               Optional massDiff As Double = 0.1,
+                               Optional aggreate_sum As Boolean = False) As Object
 
         Dim fragments As ms2() = peaks _
-            .Select(Function(i) i.mzInto) _
+            .Select(Function(i) As IEnumerable(Of ms2)
+                        If (Not i.mzInto.IsNullOrEmpty) AndAlso norm Then
+                            Dim maxinto As Double = i.mzInto.Max(Function(a) a.intensity)
+                            Dim normInto = i.mzInto.Select(Function(a) New ms2(a.mz, a.intensity / maxinto, a.Annotation))
+                            Return normInto
+                        Else
+                            Return i.mzInto
+                        End If
+                    End Function) _
             .IteratesALL _
             .GroupBy(Function(i) i.mz, offsets:=massDiff) _
             .Select(Function(i)
                         Dim mz As Double = i.OrderByDescending(Function(x) x.intensity).First.mz
-                        Dim into = i.Max(Function(x) x.intensity)
+                        Dim into As Double = If(
+                            aggreate_sum,
+                            i.Sum(Function(x) x.intensity),
+                            i.Max(Function(x) x.intensity)
+                        )
 
                         Return New ms2 With {
                             .mz = mz,

@@ -111,9 +111,10 @@ Namespace Spectra
         ''' </summary>
         ''' <param name="mz"></param>
         ''' <param name="intensity"></param>
-        Sub New(mz As Double, intensity As Double)
+        Sub New(mz As Double, intensity As Double, Optional anno As String = Nothing)
             Me.mz = mz
             Me.intensity = intensity
+            Me.Annotation = anno
         End Sub
 
         ''' <summary>
