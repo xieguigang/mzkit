@@ -6,6 +6,7 @@ Metabolite annotation database search engine
 + [mass_search.index](metadb/mass_search.index.1) A general method for build exact mass search index
 + [queryByMass](metadb/queryByMass.1) A general interface method for query the exact mass search index
 + [verify_cas_number](metadb/verify_cas_number.1) verify that the given cas registry number is correct or not
++ [select_cas_number](metadb/select_cas_number.1) take the valid cas number from a collection of the given id set
 + [parseLipidName](metadb/parseLipidName.1) Parse the lipid names
 + [annotationStream](metadb/annotationStream.1) Construct a basic metabolite annotation data collection
 + [annotationStream.compounds](metadb/annotationStream.compounds.1) Construct a basic metabolite annotation data collection

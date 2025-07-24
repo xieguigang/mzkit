@@ -216,6 +216,13 @@ declare namespace metadb {
    */
    function searchMz(mz: any, exactMass: number, adducts: object, mzdiff?: any, env?: object): object;
    /**
+    * take the valid cas number from a collection of the given id set
+    * 
+    * 
+     * @param x the target id collection set for taks the valid cas number.
+   */
+   function select_cas_number(x: any): string;
+   /**
     * unique of the peak annotation features
     * 
     * 

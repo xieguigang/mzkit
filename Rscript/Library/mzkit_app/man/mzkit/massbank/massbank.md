@@ -26,7 +26,7 @@ Metabolite annotation database toolkit
 + [hmdb.secondary2main.mapping](massbank/hmdb.secondary2main.mapping.1) 
 + [secondary2main.mapping](massbank/secondary2main.mapping.1) Create SecondaryIDSolver object from mapping file or mapping dictionary object data.
 + [save.mapping](massbank/save.mapping.1) Save id mapping file in json file format
-+ [glycosyl.tokens](massbank/glycosyl.tokens.1) 
++ [glycosyl.tokens](massbank/glycosyl.tokens.1) Parse the glycosyl compound name
 + [glycosyl.solver](massbank/glycosyl.solver.1) 
 + [parse.ChEBI_entity](massbank/parse.ChEBI_entity.1) 
 + [extract_chebi_compounds](massbank/extract_chebi_compounds.1) extract the chebi annotation data from the chebi ontology data
