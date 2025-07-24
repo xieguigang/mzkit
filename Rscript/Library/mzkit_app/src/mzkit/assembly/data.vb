@@ -1,75 +1,78 @@
 ﻿#Region "Microsoft.VisualBasic::cac80d88839d01af49f030b44065ccce, Rscript\Library\mzkit_app\src\mzkit\assembly\data.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1005
-    '    Code Lines: 644 (64.08%)
-    ' Comment Lines: 236 (23.48%)
-    '    - Xml Docs: 94.92%
-    ' 
-    '   Blank Lines: 125 (12.44%)
-    '     File Size: 43.85 KB
+' Summaries:
 
 
-    ' Module data
-    ' 
-    '     Function: createPeakMs2, getAlignmentReference, getIntensity, getIonsSummaryTable, getMSMSTable
-    '               getRawXICSet, getScantime, getXICPoints, groupBy_ROI, libraryMatrix
-    '               LibraryTable, linearMatrix, makeAlignmentString, makeROInames, MsdataFromDf
-    '               nfragments, rawXIC, readMatrix, representative_spectrum, RtSlice
-    '               simpleSearch, (+2 Overloads) splashId, TICTable, toString, unionPeaks
-    '               XIC, XICGroups, XICTable
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1005
+'    Code Lines: 644 (64.08%)
+' Comment Lines: 236 (23.48%)
+'    - Xml Docs: 94.92%
+' 
+'   Blank Lines: 125 (12.44%)
+'     File Size: 43.85 KB
+
+
+' Module data
+' 
+'     Function: createPeakMs2, getAlignmentReference, getIntensity, getIonsSummaryTable, getMSMSTable
+'               getRawXICSet, getScantime, getXICPoints, groupBy_ROI, libraryMatrix
+'               LibraryTable, linearMatrix, makeAlignmentString, makeROInames, MsdataFromDf
+'               nfragments, rawXIC, readMatrix, representative_spectrum, RtSlice
+'               simpleSearch, (+2 Overloads) splashId, TICTable, toString, unionPeaks
+'               XIC, XICGroups, XICTable
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports BioNovoGene.BioDeep.MetaDNA
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -89,6 +92,7 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
+Imports std = System.Math
 
 ''' <summary>
 ''' Provides core functionality for mass spectrometry data processing and analysis within the mzkit framework.
@@ -306,7 +310,7 @@ Module data
     ''' <summary>
     ''' Union and merge the given multiple spectrum data into one single spectrum
     ''' </summary>
-    ''' <param name="peaks">A collection of the spectrum object that going to merge into single one</param>
+    ''' <param name="peaks">A collection of the <see cref="PeakMs2"/> spectrum object that going to merge into single one</param>
     ''' <param name="matrix">
     ''' this parameter will affects the data type of the value returns of this function:
     ''' 
@@ -314,22 +318,40 @@ Module data
     ''' 2. true, returns a library matrix data object
     ''' </param>
     ''' <param name="massDiff">the mass error for merge two spectra peak</param>
+    ''' <param name="aggreate_sum">
+    ''' default false means use the max intensity for the union merged peaks, 
+    ''' or use the sum value of the intensity if this parameter value is set as TRUE.
+    ''' </param>
     ''' <returns>
     ''' a single ms spectrum data object, its data type depeneds on the <paramref name="matrix"/> parameter.
     ''' </returns>
     <ExportAPI("unionPeaks")>
     <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix))>
     Public Function unionPeaks(peaks As PeakMs2(),
+                               Optional norm As Boolean = False,
                                Optional matrix As Boolean = False,
-                               Optional massDiff As Double = 0.1) As Object
+                               Optional massDiff As Double = 0.1,
+                               Optional aggreate_sum As Boolean = False) As Object
 
         Dim fragments As ms2() = peaks _
-            .Select(Function(i) i.mzInto) _
+            .Select(Function(i) As IEnumerable(Of ms2)
+                        If (Not i.mzInto.IsNullOrEmpty) AndAlso norm Then
+                            Dim maxinto As Double = i.mzInto.Max(Function(a) a.intensity)
+                            Dim normInto = i.mzInto.Select(Function(a) New ms2(a.mz, a.intensity / maxinto, a.Annotation))
+                            Return normInto
+                        Else
+                            Return i.mzInto
+                        End If
+                    End Function) _
             .IteratesALL _
             .GroupBy(Function(i) i.mz, offsets:=massDiff) _
             .Select(Function(i)
                         Dim mz As Double = i.OrderByDescending(Function(x) x.intensity).First.mz
-                        Dim into = i.Max(Function(x) x.intensity)
+                        Dim into As Double = If(
+                            aggreate_sum,
+                            i.Sum(Function(x) x.intensity),
+                            i.Max(Function(x) x.intensity)
+                        )
 
                         Return New ms2 With {
                             .mz = mz,
@@ -1064,5 +1086,79 @@ Module data
                             .JoinBy("; ")
                     End Function) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' use log foldchange for compares two spectrum
+    ''' </summary>
+    ''' <param name="spec1"></param>
+    ''' <param name="spec2"></param>
+    ''' <returns></returns>
+    <ExportAPI("logfc")>
+    Public Function logfc_f(spec1 As LibraryMatrix, spec2 As LibraryMatrix,
+                            Optional da As Double = 0.03,
+                            Optional lb1 As String = Nothing,
+                            Optional lb2 As String = Nothing) As Object
+
+        Dim label1 = If(spec1.name.StringEmpty(, True), NameOf(spec1), spec1.name)
+        Dim label2 = If(spec2.name.StringEmpty(, True), NameOf(spec2), spec2.name)
+
+        label1 = If(lb1.StringEmpty(, True), label1, lb1)
+        label2 = If(lb2.StringEmpty(, True), label2, lb2)
+
+        If label1 = label2 Then
+            label1 = $"{label1}_1"
+            label2 = $"{label2}_2"
+        End If
+
+        Dim s1 = spec1.ms2.Select(Function(a) New ms2(a, label1)).ToArray
+        Dim s2 = spec2.ms2.Select(Function(a) New ms2(a, label2)).ToArray
+        Dim merge = s1.JoinIterates(s2).GroupBy(Function(m) m.mz, da).ToArray
+        Dim mz As Double() = merge.Select(Function(i) Val(i.name)).ToArray
+        Dim i1 As Double() = merge.Select(Function(i) i.Where(Function(m) m.Annotation = label1).Sum(Function(a) a.intensity)).ToArray
+        Dim i2 As Double() = merge.Select(Function(i) i.Where(Function(m) m.Annotation = label2).Sum(Function(a) a.intensity)).ToArray
+        Dim logfc As Double() = i1 _
+            .Select(Function(into1, i)
+                        Dim into2 As Double = i2(i)
+
+                        If into1 <= 0.0 Then
+                            Return 0
+                        ElseIf into2 <= 0 Then
+                            Return Double.PositiveInfinity
+                        Else
+                            Return Double.Log(into1 / into2, 2)
+                        End If
+                    End Function) _
+            .ToArray
+
+        Return New rDataframe With {
+            .columns = New Dictionary(Of String, Array) From {
+                {"m/z", mz},
+                {label1, i1},
+                {label2, i2},
+                {"logfc", logfc},
+                {"abs_logfc", logfc.Select(Function(a) std.Abs(a)).ToArray}
+            }
+        }
+    End Function
+
+    <ExportAPI("msn_matrix")>
+    <RApiReturn(GetType(MzMatrix))>
+    Public Function msn_matrix(<RRawVectorArgument> raw As Object,
+                               Optional mzdiff As Double = 0.01,
+                               Optional q As Double = 0.01,
+                               Optional env As Environment = Nothing) As Object
+
+        Dim rawdata As pipeline = pipeline.TryCreatePipeline(Of mzPack)(raw, env)
+
+        If rawdata.isError Then
+            Return rawdata.getError
+        End If
+
+        Dim pooldata As MSnFragmentProvider() = rawdata.populates(Of mzPack)(env) _
+            .Select(Function(s) New MSnFragmentProvider(s)) _
+            .ToArray
+
+        Return MassFragmentPool.CreateMatrix(pooldata, mzdiff, q)
     End Function
 End Module

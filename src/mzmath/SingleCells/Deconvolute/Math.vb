@@ -136,6 +136,7 @@ Namespace Deconvolute
             End If
         End Function
 
+        <Extension>
         Public Function GetMzIndexFastBin(scanMz As List(Of Double()), mzdiff As Double, freq As Double, Optional verbose As Boolean = False) As MassWindow()
             Dim par As New IndexTask(scanMz, mzdiff, verbose)
             Dim subgroups = DirectCast(par.Run(), IndexTask).groups

@@ -111,9 +111,10 @@ Namespace Spectra
         ''' </summary>
         ''' <param name="mz"></param>
         ''' <param name="intensity"></param>
-        Sub New(mz As Double, intensity As Double)
+        Sub New(mz As Double, intensity As Double, Optional anno As String = Nothing)
             Me.mz = mz
             Me.intensity = intensity
+            Me.Annotation = anno
         End Sub
 
         ''' <summary>
@@ -129,10 +130,13 @@ Namespace Spectra
         ''' make value copy
         ''' </summary>
         ''' <param name="data"></param>
-        Sub New(data As ms2)
+        ''' <param name="anno">
+        ''' overrides of the <see cref="Annotation"/> string inside the source <paramref name="data"/> object.
+        ''' </param>
+        Sub New(data As ms2, Optional anno As String = Nothing)
             mz = data.mz
             intensity = data.intensity
-            Annotation = data.Annotation
+            Annotation = If(anno, data.Annotation)
         End Sub
 
         Public Overrides Function ToString() As String

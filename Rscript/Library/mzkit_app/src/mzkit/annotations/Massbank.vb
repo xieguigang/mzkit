@@ -284,6 +284,7 @@ Module Massbank
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("write.metalib")>
+    <RApiReturn(TypeCodes.boolean)>
     Public Function writeMetalib(<RRawVectorArgument> metadb As Object, file As Object, Optional env As Environment = Nothing) As Object
         Dim pull = pipeline.TryCreatePipeline(Of MetaLib)(metadb, env)
         Dim is_path As Boolean = False
@@ -451,6 +452,7 @@ Module Massbank
     ''' with the result tuple list that contains mapping from the spectrum id to the metabolite unique 
     ''' reference id.</returns>
     <ExportAPI("extract_mona_metabolites")>
+    <RApiReturn(GetType(MetaInfo))>
     Public Function extractMoNAMetabolites(<RRawVectorArgument> mona As Object, Optional env As Environment = Nothing) As Object
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of SpectraSection)(mona, env)
 
@@ -538,6 +540,7 @@ Module Massbank
     ''' save the lipidmaps data object into file in messagepack format
     ''' </remarks>
     <ExportAPI("write.lipidmaps")>
+    <RApiReturn(TypeCodes.boolean)>
     Public Function writeLipidMapsRepo(<RRawVectorArgument>
                                        lipidmaps As Object,
                                        file As Object,
@@ -1031,6 +1034,13 @@ Module Massbank
         Return mapping.GetJson.SaveTo(file)
     End Function
 
+    ''' <summary>
+    ''' Parse the glycosyl compound name
+    ''' </summary>
+    ''' <param name="glycosyl"></param>
+    ''' <param name="rules"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("glycosyl.tokens")>
     Public Function GlycosylTokens(glycosyl As String,
                                    Optional rules As list = Nothing,
