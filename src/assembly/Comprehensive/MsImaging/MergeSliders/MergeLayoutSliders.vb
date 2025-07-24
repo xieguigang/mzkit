@@ -76,7 +76,8 @@ Public Module MergeLayoutSliders
     <Extension>
     Public Function MergeDataWithLayout(raw As Dictionary(Of String, mzPack), layout As String()(),
                                         Optional merge As MergeLinear = Nothing,
-                                        Optional ByRef offsets As Dictionary(Of String, Integer()) = Nothing) As mzPack
+                                        Optional ByRef offsets As Dictionary(Of String, Integer()) = Nothing,
+                                        Optional normalize As Boolean = True) As mzPack
 
         Dim polygons = raw.ToDictionary(
             Function(m) m.Key,
@@ -86,7 +87,7 @@ Public Module MergeLayoutSliders
 
         merge = If(merge, New MergeSMSlides(
             relativePos:=True,
-            norm:=True,
+            norm:=normalize,
             println:=AddressOf RunSlavePipeline.SendMessage
         ))
 

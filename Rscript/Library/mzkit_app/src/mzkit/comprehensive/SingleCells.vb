@@ -107,7 +107,7 @@ Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 <Package("SingleCells")>
 Module SingleCells
 
-    Sub New()
+    Sub Main()
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(SingleCellIonStat()), AddressOf cellStatsTable)
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(MzMatrix), AddressOf mzMatrixDf)
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(SpatialMatrixReader), AddressOf mzMatrixDf)

@@ -4,15 +4,17 @@
 unionPeaks \- Union and merge the given multiple spectrum data into one single spectrum
 .SH SYNOPSIS
 \fIunionPeaks(\fBpeaks\fR as <generic> PeakMs2[], 
+\fBnorm\fR as boolean = FALSE, 
 \fBmatrix\fR as boolean = FALSE, 
-\fBmassDiff\fR as double = 0.1);\fR
+\fBmassDiff\fR as double = 0.1, 
+\fBaggreate_sum\fR as boolean = FALSE);\fR
 .SH DESCRIPTION
 .PP
 Union and merge the given multiple spectrum data into one single spectrum
 .PP
 .SH OPTIONS
 .PP
-\fBpeaks\fB \fR\- A collection of the spectrum object that going to merge into single one. 
+\fBpeaks\fB \fR\- A collection of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2\fR spectrum object that going to merge into single one. 
 .PP
 .PP
 \fBmatrix\fB \fR\- 
@@ -24,6 +26,12 @@ Union and merge the given multiple spectrum data into one single spectrum
 .PP
 .PP
 \fBmassDiff\fB \fR\- the mass error for merge two spectra peak. 
+.PP
+.PP
+\fBaggreate_sum\fB \fR\- 
+ default false means use the max intensity for the union merged peaks, 
+ or use the sum value of the intensity if this parameter value is set as TRUE.
+. 
 .PP
 .SH VALUE
 .PP

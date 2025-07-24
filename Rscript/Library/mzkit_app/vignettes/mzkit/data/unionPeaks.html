@@ -28,8 +28,10 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>unionPeaks</strong>(<i>peaks</i>,
+    <i>norm</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>matrix</i> = <span style='color: blue !important;'>FALSE</span>,
-    <i>massDiff</i> = <span style='color: green;'>0.1</span>);</code></pre>
+    <i>massDiff</i> = <span style='color: green;'>0.1</span>,
+    <i>aggreate.sum</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -37,7 +39,7 @@
         <table>
             
 <dt>peaks</dt>
-<dd><p>A collection of the spectrum object that going to merge into single one. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a>]</p></dd>
+<dd><p>A collection of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a> spectrum object that going to merge into single one. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a>]</p></dd>
 
 
 <dt>matrix</dt>
@@ -49,6 +51,11 @@
 
 <dt>massDiff</dt>
 <dd><p>the mass error for merge two spectra peak. [as double]</p></dd>
+
+
+<dt>aggreate.sum</dt>
+<dd><p>default false means use the max intensity for the union merged peaks, 
+ or use the sum value of the intensity if this parameter value is set as TRUE. [as boolean]</p></dd>
 
         </table>
 

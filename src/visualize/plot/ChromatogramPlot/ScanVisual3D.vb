@@ -306,7 +306,7 @@ Public Class ScanVisual3D : Inherits Plot
             ) With {
                 .xlabel = xlabel,
                 .ylabel = ylabel,
-                .main = main
+                .main = ""
             }.RunPlot(g, parallelCanvas, labels, legends)
 
             Call labelList.AddRange(labels)
@@ -338,5 +338,7 @@ Public Class ScanVisual3D : Inherits Plot
 
         If Me.theme.drawLabels Then Call TICplot.DrawLabels(g, canvas.PlotRegion(css), labelList.ToArray, theme, 1500)
         If Me.theme.drawLegend Then Call TICplot.DrawTICLegends(g, canvas, legendList.ToArray, 100, outside:=True)
+
+        Call DrawMainTitle(g, plotRegion:=canvas.PlotRegion(css))
     End Sub
 End Class

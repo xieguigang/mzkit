@@ -60,6 +60,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -200,6 +201,24 @@ Module xcms
         peaktable.annotations = list
 
         Return peaktable
+    End Function
+
+    ''' <summary>
+    ''' Create the expression dataframe for a specific ion peak data
+    ''' </summary>
+    ''' <param name="ion"></param>
+    ''' <param name="sampleinfo"></param>
+    ''' <returns></returns>
+    <ExportAPI("expression_df")>
+    Public Function expression_df(ion As xcms2, sampleinfo As SampleInfo()) As Object
+        Dim df As New dataframe With {.columns = New Dictionary(Of String, Array)}
+
+        Call df.add("id", sampleinfo.Select(Function(si) si.ID))
+        Call df.add("name", sampleinfo.Select(Function(si) si.sample_name))
+        Call df.add("group", sampleinfo.Select(Function(si) si.sample_info))
+        Call df.add("expr", sampleinfo.Select(Function(si) ion(si.ID)))
+
+        Return df
     End Function
 
 End Module

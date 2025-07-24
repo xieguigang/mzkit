@@ -27,6 +27,14 @@ declare namespace xcms {
    */
    function cast_findpeaks_raw(x: object, sample_name?: string): object;
    /**
+    * Create the expression dataframe for a specific ion peak data
+    * 
+    * 
+     * @param ion -
+     * @param sampleinfo -
+   */
+   function expression_df(ion: object, sampleinfo: object): any;
+   /**
     * Parse the input file as the mzkit peakset object
     * 
     * 
