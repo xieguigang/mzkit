@@ -60,15 +60,23 @@ declare namespace massbank {
      *  with the result tuple list that contains mapping from the spectrum id to the metabolite unique 
      *  reference id.
    */
-   function extract_mona_metabolites(mona: any, env?: object): any;
+   function extract_mona_metabolites(mona: any, env?: object): object;
    module glycosyl {
       /**
         * @param rules default value Is ``null``.
       */
       function solver(rules?: object): object;
       /**
-        * @param rules default value Is ``null``.
-        * @param env default value Is ``null``.
+       * Parse the glycosyl compound name
+       * 
+       * 
+        * @param glycosyl -
+        * @param rules -
+        * 
+        * + default value Is ``null``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
       */
       function tokens(glycosyl: string, rules?: object, env?: object): string;
    }
@@ -163,8 +171,10 @@ declare namespace massbank {
      * + default value Is ``null``.
      * @param desc 
      * + default value Is ``null``.
+     * @param organism_source 
+     * + default value Is ``null``.
    */
-   function metabo_anno(id: string, formula: string, name: string, iupac_name?: string, xref?: object, synonym?: any, desc?: any): object;
+   function metabo_anno(id: string, formula: string, name: string, iupac_name?: string, xref?: object, synonym?: any, desc?: any, organism_source?: any): object;
    module mona {
       /**
        * Extract the annotation metadata from the MONA comment data
@@ -315,7 +325,7 @@ declare namespace massbank {
         * 
         * + default value Is ``null``.
       */
-      function lipidmaps(lipidmaps: any, file: any, env?: object): any;
+      function lipidmaps(lipidmaps: any, file: any, env?: object): boolean;
       /**
        * write the metabolite annotation data collection as messagepack
        * 
@@ -326,7 +336,7 @@ declare namespace massbank {
         * 
         * + default value Is ``null``.
       */
-      function metalib(metadb: any, file: any, env?: object): any;
+      function metalib(metadb: any, file: any, env?: object): boolean;
    }
    /**
    */

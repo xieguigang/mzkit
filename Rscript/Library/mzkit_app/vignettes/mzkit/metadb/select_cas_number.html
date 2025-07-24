@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Extract the unique metabolite information from the mona database</title>
+    <title>take the valid cas number from a collection of the given id set</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>extract_mona_metabolites {massbank}</td>
+                <td>select_cas_number {metadb}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Extract the unique metabolite information from the mona database</h2>
+        <h2>take the valid cas number from a collection of the given id set</h2>
 
         <h3>Description</h3>
 
@@ -27,19 +27,15 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>extract_mona_metabolites</strong>(<i>mona</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>select_cas_number</strong>(<i>x</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>mona</dt>
-<dd><p>-</p></dd>
-
-
-<dt>env</dt>
-<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
+<dt>x</dt>
+<dd><p>the target id collection set for taks the valid cas number.</p></dd>
 
         </table>
 
@@ -54,17 +50,15 @@
 
         <h3>Value</h3>
 
-        <p>a tuple list of the <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaInfo.html">MetaInfo</a> data. andalso an attribute with name <code>mapping</code> is tagged
- with the result tuple list that contains mapping from the spectrum id to the metabolite unique 
- reference id.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaInfo.html">MetaInfo</a></li></ul>
+        this function returns data object of type string.<h4>clr value class</h4><ul><li>string</li></ul>
 
         <h3 style="display: none;">Examples</h3>
 
         
 
         <hr />
-        <div style="text-align: center;">[Package <em>massbank</em> version 1.0.0.0 <a
-                href="../massbank.html">Index</a>]
+        <div style="text-align: center;">[Package <em>metadb</em> version 1.0.0.0 <a
+                href="../metadb.html">Index</a>]
         </div>
     </div>
 </body>

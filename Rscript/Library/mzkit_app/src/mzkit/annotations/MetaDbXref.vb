@@ -203,6 +203,19 @@ Module MetaDbXref
     End Function
 
     ''' <summary>
+    ''' take the valid cas number from a collection of the given id set
+    ''' </summary>
+    ''' <param name="x">the target id collection set for taks the valid cas number.</param>
+    ''' <returns></returns>
+    <ExportAPI("select_cas_number")>
+    Public Function selectCASNumber(<RRawVectorArgument> x As Object) As String()
+        Return CLRVector.asCharacter(x) _
+            .SafeQuery _
+            .Where(Function(id) CASNumber.Verify(id)) _
+            .ToArray
+    End Function
+
+    ''' <summary>
     ''' Parse the lipid names
     ''' </summary>
     ''' <param name="name">a character vector of the lipid names</param>
