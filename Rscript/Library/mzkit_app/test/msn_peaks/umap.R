@@ -4,10 +4,9 @@ imports "clustering" from "MLkit";
 
 let data = read.csv(relative_work("msn.csv"), row.names = 1, check.names = FALSE);
 
-data = t(data);
 str(data);
 
-let scatter = umap(data, numberOfNeighbors = 64, dimension = 9);
+let scatter = umap(data, numberOfNeighbors = 128, dimension = 9);
 
 scatter = as.data.frame(scatter$umap, labels = scatter$labels);
 scatter = kmeans(scatter, centers = 9,

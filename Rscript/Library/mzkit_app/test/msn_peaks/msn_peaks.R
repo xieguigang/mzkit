@@ -50,10 +50,11 @@ let Prostate_cancer = [
 
 
 
-let data = lapply(tqdm(append(NC, Prostate_cancer)), file -> open.mzpack(file));
+let data = lapply(tqdm(append(NC, Prostate_cancer)), file -> open.mzpack(file,verbose =FALSE));
 
-data = msn_matrix(data);
+data = msn_matrix(data, mzdiff = 0.1, q = 0);
 data = as.data.frame(data, singlecell = TRUE);
+data = t(data);
 
 print(data);
 
