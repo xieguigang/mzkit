@@ -1149,13 +1149,13 @@ Module data
                                Optional q As Double = 0.01,
                                Optional env As Environment = Nothing) As Object
 
-        Dim rawdata As pipeline = pipeline.TryCreatePipeline(Of IMZPack)(raw, env)
+        Dim rawdata As pipeline = pipeline.TryCreatePipeline(Of mzPack)(raw, env)
 
         If rawdata.isError Then
             Return rawdata.getError
         End If
 
-        Dim pooldata As MSnFragmentProvider() = rawdata.populates(Of IMZPack)(env) _
+        Dim pooldata As MSnFragmentProvider() = rawdata.populates(Of mzPack)(env) _
             .Select(Function(s) New MSnFragmentProvider(s)) _
             .ToArray
 
