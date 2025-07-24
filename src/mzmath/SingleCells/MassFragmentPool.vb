@@ -78,7 +78,9 @@ Public Class MSnFragmentProvider
             Return raw.MS _
                 .Select(Function(m1) m1.products) _
                 .IteratesALL _
-                .Select(Function(m2) m2.GetMs) _
+                .Select(Function(m2)
+                            Return m2.GetMs.OrderByDescending(Function(a) a.intensity).Take(3)
+                        End Function) _
                 .IteratesALL _
                 .ToArray
         End Get
