@@ -64,7 +64,6 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
@@ -144,7 +143,7 @@ Module data
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(ms2()), AddressOf getMSMSTable)
     End Sub
 
-    Private Function TICTable(TIC As ChromatogramTick(), args As List, env As Environment) As rDataframe
+    Private Function TICTable(TIC As ChromatogramTick(), args As list, env As Environment) As rDataframe
         Dim table As New rDataframe With {.columns = New Dictionary(Of String, Array)}
 
         table.columns("time") = TIC.Select(Function(t) t.Time).ToArray
@@ -163,7 +162,7 @@ Module data
     ''' 
     <RGenericOverloads("as.data.frame")>
     <Extension>
-    Private Function getMSMSTable(matrix As ms2(), args As List, env As Environment) As rDataframe
+    Private Function getMSMSTable(matrix As ms2(), args As list, env As Environment) As rDataframe
         Dim table As New rDataframe With {.columns = New Dictionary(Of String, Array)}
 
         table.columns("mz") = matrix.Select(Function(m) m.mz).ToArray
@@ -174,11 +173,11 @@ Module data
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Function LibraryTable(matrix As LibraryMatrix, args As List, env As Environment) As rDataframe
+    Private Function LibraryTable(matrix As LibraryMatrix, args As list, env As Environment) As rDataframe
         Return getMSMSTable(matrix.ms2, args, env)
     End Function
 
-    Private Function XICTable(XIC As ms1_scan(), args As List, env As Environment) As rDataframe
+    Private Function XICTable(XIC As ms1_scan(), args As list, env As Environment) As rDataframe
         Dim table As New rDataframe With {.columns = New Dictionary(Of String, Array)}
 
         table.columns("mz") = XIC.Select(Function(a) a.mz).ToArray
@@ -188,7 +187,7 @@ Module data
         Return table
     End Function
 
-    Private Function getIonsSummaryTable(peaks As PeakMs2(), args As List, env As Environment) As rDataframe
+    Private Function getIonsSummaryTable(peaks As PeakMs2(), args As list, env As Environment) As rDataframe
         Dim df As New rDataframe With {
             .columns = New Dictionary(Of String, Array)
         }
@@ -265,10 +264,10 @@ Module data
             spec = DirectCast(spec, vector).data
         End If
 
-        If TypeOf spec Is List Then
-            Dim id As New List With {.slots = New Dictionary(Of String, Object)}
+        If TypeOf spec Is list Then
+            Dim id As New list With {.slots = New Dictionary(Of String, Object)}
 
-            For Each spec_item In DirectCast(spec, List).slots
+            For Each spec_item In DirectCast(spec, list).slots
                 Call id.add(spec_item.Key, splashId(spec_item.Value, hash, env))
 
                 If Program.isException(id(spec_item.Key)) Then
@@ -509,7 +508,7 @@ Module data
     <RApiReturn("query", "reference")>
     Public Function getAlignmentReference(align As AlignmentOutput, Optional query$ = "Query", Optional reference$ = "Reference") As Object
         Dim tuple = align.GetAlignmentMirror
-        Dim list As New List(
+        Dim list As New list(
             slot("query") = tuple.query,
             slot("reference") = tuple.ref
         )
@@ -564,7 +563,7 @@ Module data
                                   Optional libname As String = Nothing,
                                   Optional precursor_type As String = Nothing,
                                   <RListObjectArgument>
-                                  Optional meta As List = Nothing,
+                                  Optional meta As list = Nothing,
                                   Optional env As Environment = Nothing) As PeakMs2
 
         Return New PeakMs2 With {
@@ -631,7 +630,7 @@ Module data
             Call env.AddMessage("No peak ROI id was assigned with the given spectrum data!")
         End If
 
-        Return New List With {.slots = ROI_groups}
+        Return New list With {.slots = ROI_groups}
     End Function
 
     ''' <summary>
@@ -658,7 +657,7 @@ Module data
                                   Optional parentMz As Double = -1,
                                   Optional centroid As Boolean = False,
                                   <RListObjectArgument>
-                                  Optional args As List = Nothing,
+                                  Optional args As list = Nothing,
                                   Optional env As Environment = Nothing) As Object
         Dim MS As ms2()
 
@@ -747,7 +746,7 @@ Module data
             If list.Length = 1 Then
                 Return list(Scan0).getRawXICSet(mzdiff)
             Else
-                Dim output As New List With {
+                Dim output As New list With {
                     .slots = New Dictionary(Of String, Object)
                 }
 
@@ -766,9 +765,9 @@ Module data
     End Function
 
     <Extension>
-    Private Function getXICPoints(Of T As IMs1)(ms1_scans As IEnumerable(Of T), mzdiff As Tolerance) As List
+    Private Function getXICPoints(Of T As IMs1)(ms1_scans As IEnumerable(Of T), mzdiff As Tolerance) As list
         Dim mzgroups = ms1_scans.GroupBy(Function(x) x.mz, mzdiff).ToArray
-        Dim xic As New List With {.slots = New Dictionary(Of String, Object)}
+        Dim xic As New list With {.slots = New Dictionary(Of String, Object)}
 
         For Each mzi As NamedCollection(Of T) In mzgroups
             xic.add(Val(mzi.name).ToString("F4"), mzi.OrderBy(Function(ti) ti.rt).ToArray)
@@ -778,7 +777,7 @@ Module data
     End Function
 
     <Extension>
-    Private Function getRawXICSet(raw As mzPack, tolerance As Tolerance) As List
+    Private Function getRawXICSet(raw As mzPack, tolerance As Tolerance) As list
         Dim allPoints = raw.GetAllScanMs1().ToArray
         Dim pack = allPoints.getXICPoints(tolerance)
 
@@ -817,7 +816,7 @@ Module data
                 If all.Length = 1 Then
                     Return all(Scan0).rawXIC(mz, mzdiff)
                 Else
-                    Dim list As New List With {.slots = New Dictionary(Of String, Object)}
+                    Dim list As New list With {.slots = New Dictionary(Of String, Object)}
 
                     For i As Integer = 0 To all.Length - 1
                         Call list.add($"#{i + 1}", all(i).rawXIC(mz, mzdiff))
@@ -856,10 +855,10 @@ Module data
                                 End Function) _
                         .ToArray
 
-                    overlaps.overlaps(name) = New chromatogram With {
-                        .bpc = bpc,
+                    overlaps.overlaps(name) = New Chromatogram With {
+                        .BPC = bpc,
                         .scan_time = rt,
-                        .tic = tic
+                        .TIC = tic
                     }
                 Next
 
@@ -1022,9 +1021,9 @@ Module data
                                  Optional prefix As String = "",
                                  Optional env As Environment = Nothing) As Object
 
-        If TypeOf ROIlist Is List AndAlso {"mz", "rt"}.All(AddressOf DirectCast(ROIlist, List).hasName) Then
-            Dim mz As Double() = DirectCast(ROIlist, List).getValue(Of Double())("mz", env)
-            Dim rt As Double() = DirectCast(ROIlist, List).getValue(Of Double())("rt", env)
+        If TypeOf ROIlist Is list AndAlso {"mz", "rt"}.All(AddressOf DirectCast(ROIlist, list).hasName) Then
+            Dim mz As Double() = DirectCast(ROIlist, list).getValue(Of Double())("mz", env)
+            Dim rt As Double() = DirectCast(ROIlist, list).getValue(Of Double())("rt", env)
 
             Return xcms_id(mz, rt, prefix:=prefix)
         End If
