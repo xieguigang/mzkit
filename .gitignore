@@ -294,3 +294,4 @@ Rscript/Library/mzkit_app/test/pubchem/invalid_json.json
 /Rscript/Library/mzkit_app/.pkg/Prostate_cancer.csv
 /Rscript/Library/mzkit_app/.pkg/logfc.csv
 Rscript/Library/mzkit_app/test/msn.csv
+Rscript/Library/mzkit_app/test/msn_peaks/msn.csv
