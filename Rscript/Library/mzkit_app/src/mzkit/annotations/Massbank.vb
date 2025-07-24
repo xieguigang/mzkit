@@ -1178,7 +1178,8 @@ Module Massbank
                               Optional iupac_name As String = Nothing,
                               Optional xref As xref = Nothing,
                               <RRawVectorArgument> Optional synonym As Object = Nothing,
-                              <RRawVectorArgument> Optional desc As Object = Nothing) As Object
+                              <RRawVectorArgument> Optional desc As Object = Nothing,
+                              <RRawVectorArgument> Optional organism_source As Object = Nothing) As Object
 
         Return New MetaLib With {
             .ID = id,
@@ -1188,7 +1189,8 @@ Module Massbank
             .synonym = CLRVector.asCharacter(synonym),
             .description = CLRVector.asCharacter(desc).JoinBy(vbCrLf),
             .xref = xref,
-            .exact_mass = FormulaScanner.EvaluateExactMass(formula)
+            .exact_mass = FormulaScanner.EvaluateExactMass(formula),
+            .organism = CLRVector.asCharacter(organism_source)
         }
     End Function
 
