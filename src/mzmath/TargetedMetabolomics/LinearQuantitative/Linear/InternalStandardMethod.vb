@@ -148,8 +148,6 @@ Namespace LinearQuantitative.Linear
                                                                       removed:=invalids,
                                                                       weight:=weight,
                                                                       range:=range)
-            Dim missingIndex As Index(Of String) = missingPoints.Indexing
-
             ' get points that removed from linear modelling
             For Each ptRef As ReferencePoint In points
                 For Each invalid As PointF In invalids
@@ -158,11 +156,24 @@ Namespace LinearQuantitative.Linear
                         Exit For
                     End If
                 Next
-
-                If ptRef.level Like missingIndex Then
-                    ptRef.valid = False
-                End If
             Next
+
+            If missingPoints.Any Then
+                For Each id As String In missingPoints
+                    Call points.Add(New ReferencePoint With {
+                            .AIS = 0,
+                            .Ati = 0,
+                            .cIS = 0,
+                            .Cti = 0,
+                            .ID = ionKey,
+                            .level = id,
+                            .Name = define.Name,
+                            .valid = False,
+                            .yfit = 0
+                        }
+                    )
+                Next
+            End If
 
             Dim out As New StandardCurve With {
                 .name = ionKey,
