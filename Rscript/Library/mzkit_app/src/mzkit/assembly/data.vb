@@ -1146,7 +1146,8 @@ Module data
     <RApiReturn(GetType(MzMatrix))>
     Public Function msn_matrix(<RRawVectorArgument> raw As Object,
                                Optional mzdiff As Double = 0.01,
-                               Optional q As Double = 0.01,
+                               Optional q As Double = 0.0,
+                               Optional top As Integer = 5,
                                Optional env As Environment = Nothing) As Object
 
         Dim rawdata As pipeline = pipeline.TryCreatePipeline(Of mzPack)(raw, env)
@@ -1155,8 +1156,9 @@ Module data
             Return rawdata.getError
         End If
 
-        Dim pooldata As MSnFragmentProvider() = rawdata.populates(Of mzPack)(env) _
-            .Select(Function(s) New MSnFragmentProvider(s)) _
+        Dim pooldata As MSnFragmentProvider() = rawdata _
+            .populates(Of mzPack)(env) _
+            .Select(Function(s) New MSnFragmentProvider(s, top)) _
             .ToArray
 
         Return MassFragmentPool.CreateMatrix(pooldata, mzdiff, q)

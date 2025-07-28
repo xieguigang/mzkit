@@ -160,10 +160,11 @@ declare namespace data {
    }
    /**
      * @param mzdiff default value Is ``0.01``.
-     * @param q default value Is ``0.01``.
+     * @param q default value Is ``0``.
+     * @param top default value Is ``5``.
      * @param env default value Is ``null``.
    */
-   function msn_matrix(raw: any, mzdiff?: number, q?: number, env?: object): object;
+   function msn_matrix(raw: any, mzdiff?: number, q?: number, top?: object, env?: object): object;
    /**
     * Gets the number of fragments in a spectrum object.
     * 
