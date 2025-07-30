@@ -87,7 +87,8 @@ Namespace LinearQuantitative.Linear
                                                    Optional id$ = Nothing,
                                                    Optional name$ = Nothing,
                                                    Optional levelFactors As String() = Nothing,
-                                                   Optional points As List(Of ReferencePoint) = Nothing) As IEnumerable(Of PointF)
+                                                   Optional points As List(Of ReferencePoint) = Nothing,
+                                                   Optional missing As List(Of String) = Nothing) As IEnumerable(Of PointF)
             Dim AIS#
             Dim factorName = LevelFactorName(levelFactors)
 
@@ -95,6 +96,11 @@ Namespace LinearQuantitative.Linear
                 points = New List(Of ReferencePoint)
             Else
                 points *= 0
+            End If
+            If missing Is Nothing Then
+                missing = New List(Of String)
+            Else
+                missing *= 0
             End If
 
             If ISA.IsNullOrEmpty Then
@@ -110,7 +116,12 @@ Namespace LinearQuantitative.Linear
                 Dim At_i = std.Round(A(i))
 
                 If At_i <= 0 Then
-                    Call $"missing peak area data of {factorName(i)} in build reference line: {name}".Warning
+                    Dim inputLevel As String = levelFactors(i)
+                    Dim factor As String = factorName(i)
+
+                    Call $"missing peak area data of {factor}(input:={inputLevel}) in build reference line: {name}".Warning
+                    Call missing.Add(inputLevel)
+
                     Continue For
                 End If
 

@@ -59,6 +59,7 @@
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Language
@@ -136,9 +137,10 @@ Namespace LinearQuantitative.Linear
             Dim C As Double() = linearSamples.Select(Function(level) contents(level, ionKey)).ToArray
             Dim CIS As Double = 1
             Dim invalids As New List(Of PointF)
+            Dim missingPoints As New List(Of String)
             Dim points As New List(Of ReferencePoint)
             Dim line As PointF() = QuantificationWorker _
-                .CreateModelPoints(C, A, ISTPA, CIS, ionKey, define.Name, linearSamples, points) _
+                .CreateModelPoints(C, A, ISTPA, CIS, ionKey, define.Name, linearSamples, points, missingPoints) _
                 .ToArray
             Dim weight As String = Nothing
             ' do linear regression fitting
@@ -148,13 +150,30 @@ Namespace LinearQuantitative.Linear
                                                                       range:=range)
             ' get points that removed from linear modelling
             For Each ptRef As ReferencePoint In points
-                For Each invalid In invalids
+                For Each invalid As PointF In invalids
                     If std.Abs(invalid.X - ptRef.Cti) <= 0.0001 AndAlso std.Abs(invalid.Y - ptRef.Px) <= 0.0001 Then
                         ptRef.valid = False
                         Exit For
                     End If
                 Next
             Next
+
+            If missingPoints.Any Then
+                For Each id As String In missingPoints
+                    Call points.Add(New ReferencePoint With {
+                            .AIS = 0,
+                            .Ati = 0,
+                            .cIS = 0,
+                            .Cti = 0,
+                            .ID = ionKey,
+                            .level = id,
+                            .Name = define.Name,
+                            .valid = False,
+                            .yfit = 0
+                        }
+                    )
+                Next
+            End If
 
             Dim out As New StandardCurve With {
                 .name = ionKey,

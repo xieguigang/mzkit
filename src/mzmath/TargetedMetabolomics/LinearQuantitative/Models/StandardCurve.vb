@@ -191,7 +191,7 @@ Namespace LinearQuantitative
                                                        ByRef removed As List(Of PointF),
                                                        ByRef range As DoubleRange) As IFitted
 
-            Dim deletes As New List(Of PointF)(removed.SafeQuery)
+            Dim deletes As New List(Of PointF)()
             Dim fit As IFitted = rawPoints.AutoPointDeletion(
                 weighted:=w,
                 max:=maxDeletions,
@@ -215,7 +215,7 @@ Namespace LinearQuantitative
                     .Polynomial = New Polynomial With {.Factors = New Double() {0, 0}}
                 }
             ElseIf fit.R2 < 0.95 Then
-                deletes = New List(Of PointF)(removed.SafeQuery)
+                deletes = New List(Of PointF)()
                 fit = rawPoints.AutoPointDeletion(
                     weighted:=w,
                     max:=maxDeletions,
