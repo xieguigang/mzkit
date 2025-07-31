@@ -59,7 +59,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Linq
 
 Module Module1
@@ -81,7 +81,7 @@ Module Module1
             samples.Add(New NamedCollection(Of PeakFeature)(file.BaseName, SaveSample.ReadSample(file.Open(FileMode.Open, doClear:=False, [readOnly]:=True))))
         Next
 
-        Dim xcms_peaks = PeakAlignment.CreateMatrix(samples).ToArray
+        Dim xcms_peaks = PeakAlignment.CowAlignment(samples).ToArray
 
         Call xcms_peaks.SaveTo("G:\tmp\pos.csv")
     End Sub
