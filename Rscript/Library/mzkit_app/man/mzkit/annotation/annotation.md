@@ -13,6 +13,7 @@ the metabolite annotation toolkit
 + [checkInSourceFragments](annotation/checkInSourceFragments.1) Check the ms1 parent ion is generated via the in-source fragment or not
 + [getByKEGG](annotation/getByKEGG.1) get mzkit annotation data via a given set of the kegg id for mapping
 + [open_repository](annotation/open_repository.1) open the annotation database file
++ [config_mapping](annotation/config_mapping.1) config spectrum lib reference id mapping to metabolite id
 + [write_metadata](annotation/write_metadata.1) 
 + [open.annotation_workspace](annotation/open.annotation_workspace.1) 
 + [read.annotationPack](annotation/read.annotationPack.1) 
