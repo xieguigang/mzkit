@@ -74,13 +74,13 @@ Public Class CASNumber
     ''' 第一部分有2到7位数字，第二部分有2位数字，第三部分有1位数字作为校验码
     ''' </remarks>
     Public Shared Function Verify(cas As String) As Boolean
-        If cas.StringEmpty Then
+        If cas.StringEmpty(, True) Then
             Return False
         End If
 
         Dim tokens As String() = cas.Split("-"c)
 
-        If Not tokens.Any(Function(si) si.IsInteger) Then
+        If tokens.Length <> 3 OrElse tokens.Any(Function(si) Not si.IsInteger) Then
             Return False
         End If
 

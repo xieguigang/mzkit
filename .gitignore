@@ -295,3 +295,13 @@ Rscript/Library/mzkit_app/test/pubchem/invalid_json.json
 /Rscript/Library/mzkit_app/.pkg/logfc.csv
 Rscript/Library/mzkit_app/test/msn.csv
 Rscript/Library/mzkit_app/test/msn_peaks/msn.csv
+Rscript/Library/mzkit_app/test/msn_peaks/msn_norm.csv
+Rscript/Library/mzkit_app/test/msn_peaks/class_1.csv
+Rscript/Library/mzkit_app/test/msn_peaks/class_2.csv
+Rscript/Library/mzkit_app/test/msn_peaks/class_3.csv
+Rscript/Library/mzkit_app/test/msn_peaks/class_4.csv
+Rscript/Library/mzkit_app/test/msn_peaks/class_5.csv
+Rscript/Library/mzkit_app/test/msn_peaks/class_6.csv
+Rscript/Library/mzkit_app/test/msn_peaks/class_7.csv
+Rscript/Library/mzkit_app/test/msn_peaks/class_8.csv
+Rscript/Library/mzkit_app/test/msn_peaks/class_9.csv

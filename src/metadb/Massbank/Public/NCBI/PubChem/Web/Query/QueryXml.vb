@@ -78,7 +78,7 @@ Namespace NCBI.PubChem.Web
     ' {"download":"*","collection":"compound","order":["relevancescore,desc"],"start":1,"limit":10000000,"downloadfilename":"PubChem_compound_text_kegg","where":{"ands":[{"*":"kegg"}]}}
 
     ''' <summary>
-    ''' result data set for pubchem query summary
+    ''' result data set for pubchem query summary, download in xml format
     ''' </summary>
     ''' <remarks>
     ''' [Download]

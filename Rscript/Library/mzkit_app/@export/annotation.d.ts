@@ -53,6 +53,14 @@ declare namespace annotation {
    */
    function commit(workspace: object, xref_id: string, mz: number, rt: number, adducts: string, biodeep_id: string, name: string, formula: string): ;
    /**
+    * config spectrum lib reference id mapping to metabolite id
+    * 
+    * 
+     * @param libs -
+     * @param mapping -
+   */
+   function config_mapping(libs: object, mapping: object): object;
+   /**
    */
    function filter(pack: object, filter: any): object;
    /**

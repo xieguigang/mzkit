@@ -78,16 +78,20 @@ Public Class MSnFragmentProvider
             Return raw.MS _
                 .Select(Function(m1) m1.products) _
                 .IteratesALL _
-                .Select(Function(m2) m2.GetMs) _
+                .Select(Function(m2)
+                            Return m2.GetMs.OrderByDescending(Function(a) a.intensity).Take(top)
+                        End Function) _
                 .IteratesALL _
                 .ToArray
         End Get
     End Property
 
     ReadOnly raw As IMZPack
+    ReadOnly top As Integer
 
-    Sub New(raw As IMZPack)
+    Sub New(raw As IMZPack, Optional top As Integer = 5)
         Me.raw = raw
+        Me.top = top
     End Sub
 
     Public Overrides Function ToString() As String
