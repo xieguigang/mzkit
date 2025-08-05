@@ -121,6 +121,10 @@ Namespace MorganFingerprint
     ''' </summary>
     Public Module MorganFingerprint
 
+        ''' <summary>
+        ''' default size is 4096
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property FingerprintLength As Integer
             Get
                 Return m_hashBuilder.FingerprintLength
