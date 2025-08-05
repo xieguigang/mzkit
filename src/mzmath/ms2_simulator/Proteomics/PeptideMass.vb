@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.SequenceModel
 Imports SMRUCC.genomics.SequenceModel.Polypeptides
+Imports std = System.Math
 
 Public Class PeptideMass
 
@@ -41,7 +42,7 @@ Public Class PeptideMass
             .ToArray
 
         Return New PeptideMass With {
-            .exact_mass = peptide.ExactMass,
+            .exact_mass = std.Round(peptide.ExactMass, 4),
             .formula = peptide.Formula,
             .id = peptide.Id,
             .name = peptide.CommonName,
@@ -58,9 +59,9 @@ Public Class PeptideMass
         Static adductSet As New Dictionary(Of String, MzCalculator)
 
         For Each type As String In adductTypes
-            adducts(type) = adductSet _
+            adducts(type) = std.Round(adductSet _
                 .ComputeIfAbsent(type, Function(name) Provider.ParseAdductModel(name)) _
-                .CalcMZ(peptide)
+                .CalcMZ(peptide), 4)
         Next
 
         Return adducts
@@ -71,7 +72,7 @@ Public Class PeptideMass
             .id = seq,
             .name = seq,
             .sequence = seq,
-            .exact_mass = MolecularWeightCalculator.CalcMW_Polypeptide(seq),
+            .exact_mass = std.Round(MolecularWeightCalculator.CalcMW_Polypeptide(seq), 4),
             .formula = MolecularWeightCalculator.PolypeptideFormula(seq).ToString,
             .intensity = n,
             .precursors = CalculateMass(.exact_mass, adductTypes)
