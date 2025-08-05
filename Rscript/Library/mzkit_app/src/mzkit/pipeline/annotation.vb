@@ -934,13 +934,25 @@ Module library
             Dim libs As New LocalRepository(buf.TryCast(Of Stream))
 
             If Not mapping Is Nothing AndAlso mapping.length > 0 Then
-                Call libs.SetIdMapping(mapping.slots.AsCharacter)
+                Call configMapping(libs, mapping)
             End If
 
             Return libs
         Else
             Return New RepositoryWriter(buf.TryCast(Of Stream))
         End If
+    End Function
+
+    ''' <summary>
+    ''' config spectrum lib reference id mapping to metabolite id
+    ''' </summary>
+    ''' <param name="libs"></param>
+    ''' <param name="mapping"></param>
+    ''' <returns></returns>
+    <ExportAPI("config_mapping")>
+    Public Function configMapping(libs As LocalRepository, mapping As list) As LocalRepository
+        Call libs.SetIdMapping(mapping.slots.AsCharacter)
+        Return libs
     End Function
 
     <ExportAPI("write_metadata")>
