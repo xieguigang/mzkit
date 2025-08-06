@@ -85,6 +85,7 @@ Namespace NCBI.PubChem.ExtensionModels
         Public Property ecs As String()
         Public Property pmids As String()
         Public Property annotation As String()
+        Public Property citations As String()
 
         Public Overrides Function ToString() As String
             Return $"{pwacc}: {name}"
