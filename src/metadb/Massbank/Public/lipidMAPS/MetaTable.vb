@@ -58,8 +58,11 @@
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports lipidMetab = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 
 Namespace LipidMaps
 
@@ -102,9 +105,42 @@ Namespace LipidMaps
             Return True
         End Function
 
+        ''' <summary>
+        ''' read the msgpack file that contains the lipidmaps annotation data
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function ReadRepository(file As Stream) As MetaData()
             Return MsgPackSerializer.Deserialize(Of MetaData())(file)
+        End Function
+
+        <Extension>
+        Public Function CreateMetabolite(lipid As MetaData) As lipidMetab
+            Return New lipidMetab With {
+                .ID = lipid.LM_ID,
+                .name = lipid.COMMON_NAME,
+                .IUPACName = lipid.SYSTEMATIC_NAME,
+                .description = lipid.NAME,
+                .[class] = lipid.MAIN_CLASS,
+                .formula = lipid.FORMULA,
+                .exact_mass = FormulaScanner.EvaluateExactMass(.formula),
+                .sub_class = lipid.SUB_CLASS,
+                .super_class = lipid.CATEGORY,
+                .molecular_framework = lipid.CLASS_LEVEL4,
+                .synonym = lipid.SYNONYMS,
+                .xref = New xref With {
+                    .CAS = {},
+                    .chebi = lipid.CHEBI_ID,
+                    .HMDB = lipid.HMDB_ID,
+                    .KEGG = lipid.KEGG_ID,
+                    .SMILES = lipid.SMILES,
+                    .lipidmaps = lipid.LM_ID,
+                    .pubchem = lipid.PUBCHEM_CID,
+                    .InChI = lipid.INCHI,
+                    .InChIkey = lipid.INCHI_KEY
+                }
+            }
         End Function
     End Module
 End Namespace

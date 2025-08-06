@@ -561,7 +561,7 @@ Module Massbank
     ''' <summary>
     ''' read lipidmaps messagepack repository file
     ''' </summary>
-    ''' <param name="file"></param>
+    ''' <param name="file">the file path to the message pack file that contains the lipidmaps annotation data</param>
     ''' <param name="env"></param>
     ''' <param name="gsea_background">
     ''' and also cast the lipidmaps metabolite metadata to the gsea background model?
