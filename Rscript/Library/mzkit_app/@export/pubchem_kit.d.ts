@@ -190,11 +190,13 @@ declare namespace pubchem_kit {
         *  content into memory at once?
         * 
         * + default value Is ``true``.
+        * @param parse_json 
+        * + default value Is ``false``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function pubmed(file: string, lazy?: boolean, env?: object): object;
+      function pubmed(file: string, lazy?: boolean, parse_json?: boolean, env?: object): object;
       /**
        * read xml text and then parse as pugview record data object
        * 
