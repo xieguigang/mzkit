@@ -119,7 +119,7 @@ Namespace LipidMaps
         Public Function CreateMetabolite(lipid As MetaData) As lipidMetab
             Return New lipidMetab With {
                 .ID = lipid.LM_ID,
-                .name = lipid.COMMON_NAME,
+                .name = If(lipid.COMMON_NAME.StringEmpty(, True), lipid.NAME, lipid.COMMON_NAME),
                 .IUPACName = lipid.SYSTEMATIC_NAME,
                 .description = lipid.NAME,
                 .[class] = lipid.MAIN_CLASS,
