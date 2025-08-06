@@ -56,6 +56,7 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Insilicon
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -63,8 +64,10 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 
 ''' <summary>
 ''' the package tools for the DIA spectrum data annotation
@@ -185,6 +188,18 @@ Public Module DIASpectrumAnnotations
         Call list.setAttribute("ionpeaks_composition", ionpeaks_composition)
 
         Return list
+    End Function
+
+    <ExportAPI("peptide_lib")>
+    <RApiReturn(GetType(PeptideMass))>
+    Public Function createPeptideLib(len As Integer, <RRawVectorArgument(TypeCodes.string)> Optional adducts As Object = "[M+H]+|[M+Na]+|[M+K]+|[M+NH4]+|[M-H]-|[M+Acetate]-|[M+HCOO]-") As Object
+        Dim precursors As String() = CLRVector.asCharacter(adducts)
+        Dim seqs = PeptideMass.CreateLibrary(len).ToArray
+        Dim libs = seqs.AsParallel _
+            .Select(Function(si) PeptideMass.CalculateMass(si, precursors)) _
+            .ToArray
+
+        Return libs
     End Function
 
 End Module

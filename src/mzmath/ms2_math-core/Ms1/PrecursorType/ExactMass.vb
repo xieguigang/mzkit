@@ -110,6 +110,7 @@ Namespace Ms1.PrecursorType
             {"ACN", 41.04746},      ' Acetonitrile (CH3CN)
             {"CH3OH", C + H * 3 + O + H},
             {"C2H3O2", C * 2 + H * 3 + O * 2},     ' Acetate
+            {"Acetate", C * 2 + H * 3 + O * 2},
             {"DMSO", 78.12089},     ' dimethyl sulfoxide (CH3)2SO 
             {"IsoProp", 60.058064}, ' Unknown
             {"Cl", 35.446},
