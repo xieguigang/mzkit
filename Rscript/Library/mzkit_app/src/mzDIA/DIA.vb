@@ -73,7 +73,12 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 ''' the package tools for the DIA spectrum data annotation
 ''' </summary>
 <Package("DIA")>
+<RTypeExport("peptide_mass", GetType(PeptideMass))>
 Public Module DIASpectrumAnnotations
+
+    Sub Main()
+
+    End Sub
 
     Private Function pullMatrix(pull As pipeline, env As Environment) As pipeline
         Dim libs = pull _
