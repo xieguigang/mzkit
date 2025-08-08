@@ -22,6 +22,8 @@ Namespace NCBI.PubChem.DataSources
         Public Property TOCHeading As TOCHeading
         Public Property Name As String
         Public Property Value As Value
+        Public Property URL As String
+        Public Property Description As String
 
     End Class
 
@@ -37,6 +39,7 @@ Namespace NCBI.PubChem.DataSources
     Public Class LinkedRecords
 
         Public Property CID As String()
+        Public Property SID As String()
 
     End Class
 
