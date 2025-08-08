@@ -1,17 +1,19 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.SequenceModel
 Imports SMRUCC.genomics.SequenceModel.Polypeptides
 Imports std = System.Math
 
-Public Class PeptideMass
+Public Class PeptideMass : Implements IReadOnlyId, ICompoundNameProvider, IExactMassProvider, IFormulaProvider, GenericCompound
 
-    Public Property id As String
-    Public Property name As String
-    Public Property formula As String
-    Public Property exact_mass As Double
+    Public Property id As String Implements IReadOnlyId.Identity
+    Public Property name As String Implements ICompoundNameProvider.CommonName
+    Public Property formula As String Implements IFormulaProvider.Formula
+    Public Property exact_mass As Double Implements IExactMassProvider.ExactMass
     Public Property sequence As String
     Public Property precursors As Dictionary(Of String, Double)
     Public Property fragments As PeptideMass()
