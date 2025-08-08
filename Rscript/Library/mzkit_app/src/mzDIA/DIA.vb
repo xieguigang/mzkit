@@ -58,9 +58,11 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Insilicon
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp.Runtime
@@ -197,7 +199,10 @@ Public Module DIASpectrumAnnotations
 
     <ExportAPI("peptide_lib")>
     <RApiReturn(GetType(PeptideMass))>
-    Public Function createPeptideLib(len As Integer, <RRawVectorArgument(TypeCodes.string)> Optional adducts As Object = "[M+H]+|[M+Na]+|[M+K]+|[M+NH4]+|[M-H]-|[M+Acetate]-|[M+HCOO]-") As Object
+    Public Function createPeptideLib(len As Integer,
+                                     <RRawVectorArgument(TypeCodes.string)>
+                                     Optional adducts As Object = "[M+H]+|[M+Na]+|[M+K]+|[M+NH4]+|[M-H]-|[M+Acetate]-|[M+HCOO]-") As Object
+
         Dim precursors As String() = CLRVector.asCharacter(adducts)
         Dim seqs = PeptideMass.CreateLibrary(len).ToArray
         Dim libs = seqs.AsParallel _
@@ -205,6 +210,24 @@ Public Module DIASpectrumAnnotations
             .ToArray
 
         Return libs
+    End Function
+
+    <ExportAPI("peptide_q3")>
+    <RApiReturn(GetType(MetaboliteAnnotation))>
+    Public Function peptideQ3(peptides As PeptideMass()) As Object
+        Return peptides _
+            .Select(Iterator Function(p) As IEnumerable(Of MetaboliteAnnotation)
+                        For Each frag As PeptideMass In p.fragments
+                            Yield New MetaboliteAnnotation With {
+                                .CommonName = $"{p.id}->{frag.id}",
+                                .ExactMass = frag.exact_mass,
+                                .Formula = frag.formula,
+                                .Id = .CommonName
+                            }
+                        Next
+                    End Function) _
+            .IteratesALL _
+            .ToArray
     End Function
 
 End Module
