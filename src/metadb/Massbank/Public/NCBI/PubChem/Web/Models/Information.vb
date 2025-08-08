@@ -102,6 +102,9 @@ Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace NCBI.PubChem
 
+    ''' <summary>
+    ''' A common value model between the json/xml file
+    ''' </summary>
     Public Class Value
 
         <XmlElement("StringWithMarkup")>
