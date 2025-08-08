@@ -631,6 +631,18 @@ Module PubChemToolKit
         Return pugView.GetMetaInfo
     End Function
 
+    <ExportAPI("read.annotations")>
+    <RApiReturn(GetType(DataSources.Annotation))>
+    Public Function readAnnotations(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim s = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+        If s Like GetType(Message) Then
+            Return s.TryCast(Of Message)
+        End If
+
+        Return PubChem.DataSources.AnnotationJSON.GetAnnotations(s.TryCast(Of Stream)).ToArray
+    End Function
+
     ''' <summary>
     ''' Parse the mesh ontology tree
     ''' </summary>
