@@ -435,6 +435,12 @@ Module MetaDbXref
             Return MSSearch(Of MetaboliteAnnotation).CreateIndex(metabolites.populates(Of MetaboliteAnnotation)(env), mz1, mzdiff)
         End If
 
+        metabolites = pipeline.TryCreatePipeline(Of GenericCompound)(compounds, env, suppress:=True)
+
+        If Not metabolites.isError Then
+            Return MSSearch(Of GenericCompound).CreateIndex(metabolites.populates(Of GenericCompound)(env), mz1, mzdiff)
+        End If
+
         Return metabolites.getError
     End Function
 

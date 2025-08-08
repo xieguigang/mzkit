@@ -56,6 +56,7 @@
 #End Region
 
 Imports BioNovoGene.BioDeep.MSEngine
+Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 
@@ -66,7 +67,7 @@ Public Class SearchVector : Inherits ISearchOp
     End Sub
 
     Public Overrides Function SearchAll(mz As Object) As IEnumerable(Of MzSearch)
-        Return QueryMz(CLRVector.asNumeric(mz))
+        Return QueryMz(CLRVector.asNumeric(mz)).IteratesALL
     End Function
 
     Private Iterator Function QueryMz(mz As Double()) As IEnumerable(Of MzSearch())

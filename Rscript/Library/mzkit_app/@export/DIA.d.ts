@@ -33,4 +33,7 @@ declare namespace DIA {
      * @param adducts default value Is ``["[M+H]+","[M+Na]+","[M+K]+","[M+NH4]+","[M-H]-","[M+Acetate]-","[M+HCOO]-"]``.
    */
    function peptide_lib(len: object, adducts?: any): object;
+   /**
+   */
+   function peptide_q3(peptides: object): object;
 }
