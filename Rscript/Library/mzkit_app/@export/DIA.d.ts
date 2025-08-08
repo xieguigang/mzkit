@@ -29,4 +29,8 @@ declare namespace DIA {
      * @return a set of the decomposed spectrum object
    */
    function dia_nmf(spectrum: any, n: object, maxItrs?: object, tolerance?: number, eps?: number, env?: object): object;
+   /**
+     * @param adducts default value Is ``["[M+H]+","[M+Na]+","[M+K]+","[M+NH4]+","[M-H]-","[M+Acetate]-","[M+HCOO]-"]``.
+   */
+   function peptide_lib(len: object, adducts?: any): object;
 }
