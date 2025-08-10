@@ -172,6 +172,10 @@ declare namespace pubchem_kit {
    }
    module read {
       /**
+        * @param env default value Is ``null``.
+      */
+      function annotations(file: any, env?: object): object;
+      /**
        * Parse the mesh ontology tree
        * 
        * 
