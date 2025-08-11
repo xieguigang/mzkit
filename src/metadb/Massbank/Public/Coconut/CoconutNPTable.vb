@@ -1,5 +1,8 @@
 ﻿Imports System.IO
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Metab = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
 
 Namespace Coconut
 
@@ -26,6 +29,36 @@ Namespace Coconut
         Public Property organisms As String()
         Public Property synonyms As String()
         Public Property cas As String()
+
+        Public Overrides Function ToString() As String
+            Return $"({identifier}) {name}"
+        End Function
+
+        Public Function GetMetaboliteData() As Metab
+            Return New Metab With {
+                .ID = identifier,
+                .name = name,
+                .IUPACName = iupac_name,
+                .[class] = np_classifier_class,
+                .formula = molecular_formula,
+                .exact_mass = FormulaScanner.EvaluateExactMass(.formula),
+                .molecular_framework = murcko_framework,
+                .organism = organisms,
+                .pathways = {np_classifier_pathway},
+                .sub_class = direct_parent_classification,
+                .super_class = np_classifier_superclass,
+                .synonym = synonyms,
+                .xref = New xref With {
+                    .CAS = cas,
+                    .SMILES = canonical_smiles,
+                    .InChI = standard_inchi,
+                    .InChIkey = standard_inchi_key,
+                    .extras = New Dictionary(Of String, String()) From {
+                        {NameOf(Coconut), {identifier}}
+                    }
+                }
+            }
+        End Function
 
         Public Shared Iterator Function ParseTable(s As Stream) As IEnumerable(Of CoconutNPTable)
             Dim df As DataFrameResolver = DataFrameResolver.Load(s)
