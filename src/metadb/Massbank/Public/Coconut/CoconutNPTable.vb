@@ -48,7 +48,7 @@ Namespace Coconut
                 .pathways = {np_classifier_pathway},
                 .sub_class = direct_parent_classification,
                 .super_class = np_classifier_superclass,
-                .synonym = synonyms.SafeQuery.Where(Function(s) Len(s) > 3).ToArray,
+                .synonym = synonyms.SafeQuery.Where(Function(s) Len(s) > 4).ToArray,
                 .xref = New xref With {
                     .CAS = cas,
                     .SMILES = canonical_smiles,
