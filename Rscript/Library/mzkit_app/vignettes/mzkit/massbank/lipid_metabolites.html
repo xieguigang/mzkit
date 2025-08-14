@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>read pubmed data table files</title>
+    <title>cast lipidmaps data to metabolites</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>read.pubmed {pubchem_kit}</td>
+                <td>lipid_metabolites {massbank}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>read pubmed data table files</h2>
+        <h2>cast lipidmaps data to metabolites</h2>
 
         <h3>Description</h3>
 
@@ -27,26 +27,21 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>read.pubmed</strong>(<i>file</i>,
-    <i>lazy</i> = <span style='color: blue !important;'>TRUE</span>,
-    <i>parse.json</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>lipid_metabolites</strong>(<i>x</i>,
+    <i>lazy</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>file</dt>
-<dd><p>A collection of the pubmed database ascii text file. [as string]</p></dd>
+<dt>x</dt>
+<dd><p>should be a collection of the sdf data object that parsed from the lipidmaps sdf file, 
+ or a collection of the lipidmaps messagepack metadata object.</p></dd>
 
 
 <dt>lazy</dt>
-<dd><p>just create a lazy loader instead of read all 
- content into memory at once?. [as boolean]</p></dd>
-
-
-<dt>env</dt>
-<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
+<dd><p>[as boolean]</p></dd>
 
         </table>
 
@@ -61,15 +56,15 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/PubMed/PubMedTextTable.html">PubMedTextTable</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/PubMed/PubMedTextTable.html">PubMedTextTable</a></li></ul>
+        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaLib.html">MetaLib</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaLib.html">MetaLib</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 
         
 
         <hr />
-        <div style="text-align: center;">[Package <em>pubchem_kit</em> version 1.0.0.0 <a
-                href="../pubchem_kit.html">Index</a>]
+        <div style="text-align: center;">[Package <em>massbank</em> version 1.0.0.0 <a
+                href="../massbank.html">Index</a>]
         </div>
     </div>
 </body>

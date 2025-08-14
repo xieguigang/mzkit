@@ -56,21 +56,31 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Insilicon
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 
 ''' <summary>
 ''' the package tools for the DIA spectrum data annotation
 ''' </summary>
 <Package("DIA")>
+<RTypeExport("peptide_mass", GetType(PeptideMass))>
 Public Module DIASpectrumAnnotations
+
+    Sub Main()
+
+    End Sub
 
     Private Function pullMatrix(pull As pipeline, env As Environment) As pipeline
         Dim libs = pull _
@@ -185,6 +195,39 @@ Public Module DIASpectrumAnnotations
         Call list.setAttribute("ionpeaks_composition", ionpeaks_composition)
 
         Return list
+    End Function
+
+    <ExportAPI("peptide_lib")>
+    <RApiReturn(GetType(PeptideMass))>
+    Public Function createPeptideLib(len As Integer,
+                                     <RRawVectorArgument(TypeCodes.string)>
+                                     Optional adducts As Object = "[M+H]+|[M+Na]+|[M+K]+|[M+NH4]+|[M-H]-|[M+Acetate]-|[M+HCOO]-") As Object
+
+        Dim precursors As String() = CLRVector.asCharacter(adducts)
+        Dim seqs = PeptideMass.CreateLibrary(len).ToArray
+        Dim libs = seqs.AsParallel _
+            .Select(Function(si) PeptideMass.CalculateMass(si, precursors)) _
+            .ToArray
+
+        Return libs
+    End Function
+
+    <ExportAPI("peptide_q3")>
+    <RApiReturn(GetType(MetaboliteAnnotation))>
+    Public Function peptideQ3(peptides As PeptideMass()) As Object
+        Return peptides _
+            .Select(Iterator Function(p) As IEnumerable(Of MetaboliteAnnotation)
+                        For Each frag As PeptideMass In p.fragments
+                            Yield New MetaboliteAnnotation With {
+                                .CommonName = $"{p.id}->{frag.id}",
+                                .ExactMass = frag.exact_mass,
+                                .Formula = frag.formula,
+                                .Id = .CommonName
+                            }
+                        Next
+                    End Function) _
+            .IteratesALL _
+            .ToArray
     End Function
 
 End Module

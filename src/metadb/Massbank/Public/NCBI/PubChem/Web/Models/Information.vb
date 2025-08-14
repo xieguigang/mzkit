@@ -102,6 +102,9 @@ Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace NCBI.PubChem
 
+    ''' <summary>
+    ''' A common value model between the json/xml file
+    ''' </summary>
     Public Class Value
 
         <XmlElement("StringWithMarkup")>
@@ -112,14 +115,16 @@ Namespace NCBI.PubChem
         Public Property Unit As String
         Public Property DateISO8601 As String
         Public Property [Boolean] As Boolean
+        Public Property ExternalTableName As String
 
     End Class
 
     Public Class StringWithMarkup
 
         Public Property [String] As String
+
         <XmlElement("Markup")>
-        Public Property Markups As Markup()
+        Public Property Markup As Markup()
 
         Public Overrides Function ToString() As String
             Return Me.String

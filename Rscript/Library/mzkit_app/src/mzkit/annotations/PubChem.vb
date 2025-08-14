@@ -190,16 +190,27 @@ Module PubChemToolKit
     ''' <returns></returns>
     <ExportAPI("read.pubmed")>
     <RApiReturn(GetType(PubMedTextTable))>
-    Public Function readPubmed(file As String(), Optional lazy As Boolean = True, Optional env As Environment = Nothing) As Object
-        If lazy Then
-            Return file.Select(Function(path) DataStream.OpenHandle(path, trim:=True) _
-                .AsLinq(Of PubMedTextTable)(silent:=True)).IteratesALL _
-                .DoCall(AddressOf pipeline.CreateFromPopulator)
+    Public Function readPubmed(file As String(), Optional lazy As Boolean = True, Optional parse_json As Boolean = False, Optional env As Environment = Nothing) As Object
+        If parse_json Then
+            Dim stream = file.Select(Function(path) PubMedTextTable.ParseJSON(path)).IteratesALL
+
+            If lazy Then
+                Return pipeline.CreateFromPopulator(stream)
+            Else
+                Return stream.ToArray
+            End If
         Else
-            Return file _
-                .Select(Function(path) path.LoadCsv(Of PubMedTextTable)(mute:=True)) _
-                .IteratesALL _
-                .ToArray
+            ' csv table
+            If lazy Then
+                Return file.Select(Function(path) DataStream.OpenHandle(path, trim:=True) _
+                    .AsLinq(Of PubMedTextTable)(silent:=True)).IteratesALL _
+                    .DoCall(AddressOf pipeline.CreateFromPopulator)
+            Else
+                Return file _
+                    .Select(Function(path) path.LoadCsv(Of PubMedTextTable)(mute:=True)) _
+                    .IteratesALL _
+                    .ToArray
+            End If
         End If
     End Function
 
@@ -618,6 +629,18 @@ Module PubChemToolKit
     <ExportAPI("metadata.pugView")>
     Public Function GetMetaInfo(pugView As PugViewRecord) As MetaLib
         Return pugView.GetMetaInfo
+    End Function
+
+    <ExportAPI("read.annotations")>
+    <RApiReturn(GetType(DataSources.Annotation))>
+    Public Function readAnnotations(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim s = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+        If s Like GetType(Message) Then
+            Return s.TryCast(Of Message)
+        End If
+
+        Return PubChem.DataSources.AnnotationJSON.GetAnnotations(s.TryCast(Of Stream)).ToArray
     End Function
 
     ''' <summary>
