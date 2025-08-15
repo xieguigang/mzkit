@@ -3,7 +3,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.MorganFingerprint
 
 Public Class MolecularFingerprint
 
-    Public Property Length As Integer
+    Public Shared Property Length As Integer
         Get
             Return MorganFingerprint.FingerprintLength
         End Get
