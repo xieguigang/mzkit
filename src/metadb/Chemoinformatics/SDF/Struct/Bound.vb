@@ -102,7 +102,7 @@ Namespace SDF.Models
             Dim i% = t(0)
             Dim j = t(1)
             Dim type As BoundTypes = Byte.Parse(t(2))
-            Dim stereo As BoundStereos = CInt(t(3))
+            Dim stereo As BoundStereos = CInt(t.ElementAtOrDefault(3, "0"))
 
             Return New Bound With {
                 .i = i,

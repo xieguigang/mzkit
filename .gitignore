@@ -305,3 +305,7 @@ Rscript/Library/mzkit_app/test/msn_peaks/class_6.csv
 Rscript/Library/mzkit_app/test/msn_peaks/class_7.csv
 Rscript/Library/mzkit_app/test/msn_peaks/class_8.csv
 Rscript/Library/mzkit_app/test/msn_peaks/class_9.csv
+/Rscript/Library/mzkit_app/tools/peptide_2aa.bson
+/Rscript/Library/mzkit_app/tools/peptide_3aa.bson
+/Rscript/Library/mzkit_app/tools/peptide_4aa.bson
+/Rscript/Library/mzkit_app/tools/peptide_5aa.bson

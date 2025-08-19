@@ -561,7 +561,7 @@ Module Massbank
     ''' <summary>
     ''' read lipidmaps messagepack repository file
     ''' </summary>
-    ''' <param name="file"></param>
+    ''' <param name="file">the file path to the message pack file that contains the lipidmaps annotation data</param>
     ''' <param name="env"></param>
     ''' <param name="gsea_background">
     ''' and also cast the lipidmaps metabolite metadata to the gsea background model?
@@ -710,6 +710,38 @@ Module Massbank
                 .ToArray
         Else
             Return Message.InCompatibleType(GetType(LipidClassReader), lipidmaps.GetType, env)
+        End If
+    End Function
+
+    ''' <summary>
+    ''' cast lipidmaps data to metabolites
+    ''' </summary>
+    ''' <param name="x">
+    ''' should be a collection of the sdf data object that parsed from the lipidmaps sdf file, 
+    ''' or a collection of the lipidmaps messagepack metadata object.
+    ''' </param>
+    ''' <param name="lazy"></param>
+    ''' <returns></returns>
+    <ExportAPI("lipid_metabolites")>
+    <RApiReturn(GetType(MetaLib))>
+    Public Function lipidMetabolites(<RRawVectorArgument> x As Object, Optional lazy As Boolean = False, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of SDF)(x, env, suppress:=True)
+
+        If pull.isError Then
+            pull = pipeline.TryCreatePipeline(Of LipidMaps.MetaData)(x, env)
+        Else
+            pull = pipeline.CreateFromPopulator(pull.populates(Of SDF)(env).CreateMeta.ToArray)
+        End If
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+        Dim stream = pull.populates(Of LipidMaps.MetaData)(env).Select(Function(lipid) lipid.CreateMetabolite)
+
+        If lazy Then
+            Return pipeline.CreateFromPopulator(stream)
+        Else
+            Return stream.ToArray
         End If
     End Function
 

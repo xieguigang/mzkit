@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>Unsafe memory pointer of the <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Bitmap.html">Bitmap</a> data buffer.</p>
+        <p>Unsafe memory pointer of the <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Bitmap.html">Bitmap</a> data buffer. buffer image object in java</p>
 
 <p>(线程不安全的图片数据对象)</p>
 
@@ -44,6 +44,7 @@ export class BitmapBuffer extends <a href="/vignettes/clr/Microsoft/VisualBasic/
    #  it is constructed via the <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/BitmapImage/BitmapBuffer.html">BitmapBuffer</a>.<a href="#">Width</a> and 
    #  <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/BitmapImage/BitmapBuffer.html">BitmapBuffer</a>.<a href="#">Height</a> data.
    Size: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a>;
+   SortBins: list;
    # Stride is the number of bytes your code must iterate past to reach the next vertical pixel.
    Stride: integer;
    UBound: integer;
@@ -61,6 +62,7 @@ export class BitmapBuffer extends <a href="/vignettes/clr/Microsoft/VisualBasic/
 <li>use by <i>property</i> member <code>RawBuffer</code>: <a href="/vignettes/clr/System/Byte.html">Byte</a></li>
 <li>use by <i>property</i> member <code>Scan0</code>: <a href="/vignettes/clr/System/IntPtr.html">IntPtr</a></li>
 <li>use by <i>property</i> member <code>Size</code>: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a></li>
+<li>use by <i>property</i> member <code>SortBins</code>: list</li>
 </ol>
 
 

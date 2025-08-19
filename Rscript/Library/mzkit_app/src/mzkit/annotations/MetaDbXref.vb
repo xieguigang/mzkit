@@ -103,8 +103,44 @@ Module MetaDbXref
 
     Sub Main()
         Call makeDataframe.addHandler(GetType(MzQuery()), AddressOf createTable)
+        Call makeDataframe.addHandler(GetType(MzSearch()), AddressOf createSearchTable)
     End Sub
 
+    <RGenericOverloads("as.data.frame")>
+    Private Function createSearchTable(query As MzSearch(), args As list, env As Environment) As dataframe
+        Dim df As New dataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = query.Select(Function(a) a.unique_id).ToArray
+        }
+
+        Call df.add(NameOf(MzSearch.unique_id), From q As MzSearch In query Select q.unique_id)
+        Call df.add(NameOf(MzSearch.precursor_type), From q As MzSearch In query Select q.precursor_type)
+        Call df.add(NameOf(MzSearch.intensity), From q As MzSearch In query Select q.intensity)
+        Call df.add(NameOf(MzSearch.mz), From q As MzSearch In query Select q.mz)
+        Call df.add(NameOf(MzSearch.name), From q As MzSearch In query Select q.name)
+        Call df.add(NameOf(MzSearch.mz_ref), From q As MzSearch In query Select q.mz_ref)
+        Call df.add(NameOf(MzSearch.ppm), From q As MzSearch In query Select q.ppm)
+        Call df.add(NameOf(MzSearch.score), From q As MzSearch In query Select q.score)
+
+        Dim allKeys As String() = query _
+            .Select(Function(m)
+                        If m.metadata Is Nothing Then
+                            Return New String() {}
+                        End If
+                        Return DirectCast(m.metadata.Keys, IEnumerable(Of String))
+                    End Function) _
+            .IteratesALL _
+            .Distinct _
+            .ToArray
+
+        For Each key As String In allKeys
+            Call df.add(key, From q As MzSearch In query Select q(key))
+        Next
+
+        Return df
+    End Function
+
+    <RGenericOverloads("as.data.frame")>
     Private Function createTable(query As MzQuery(), args As list, env As Environment) As dataframe
         Dim columns As New Dictionary(Of String, Array) From {
             {NameOf(MzQuery.unique_id), query.Select(Function(q) q.unique_id).ToArray},
@@ -433,6 +469,12 @@ Module MetaDbXref
 
         If Not metabolites.isError Then
             Return MSSearch(Of MetaboliteAnnotation).CreateIndex(metabolites.populates(Of MetaboliteAnnotation)(env), mz1, mzdiff)
+        End If
+
+        metabolites = pipeline.TryCreatePipeline(Of GenericCompound)(compounds, env, suppress:=True)
+
+        If Not metabolites.isError Then
+            Return MSSearch(Of GenericCompound).CreateIndex(metabolites.populates(Of GenericCompound)(env), mz1, mzdiff)
         End If
 
         Return metabolites.getError

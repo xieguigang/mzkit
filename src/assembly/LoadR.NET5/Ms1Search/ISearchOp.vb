@@ -111,6 +111,9 @@ Public Class MzSearch : Inherits MzQuery
 
     Default Public Property Item(key As String) As String
         Get
+            If metadata Is Nothing Then
+                Return Nothing
+            End If
             Return If(metadata.ContainsKey(key), metadata(key), Nothing)
         End Get
         Set

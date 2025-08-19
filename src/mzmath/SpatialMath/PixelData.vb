@@ -86,7 +86,16 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel, RasterPix
 
     Public Property x As Integer Implements IMSIPixel.x, IPoint2D.X, RasterPixel.X
     Public Property y As Integer Implements IMSIPixel.y, IPoint2D.Y, RasterPixel.Y
+
+    ''' <summary>
+    ''' the raw intensity data of current pixel
+    ''' </summary>
+    ''' <returns></returns>
     Public Property intensity As Double Implements IMSIPixel.intensity, HeatMapPixel.Scale
+    ''' <summary>
+    ''' the scaled <see cref="intensity"/> level of current pixel
+    ''' </summary>
+    ''' <returns></returns>
     Public Property level As Double
 
     ''' <summary>
@@ -231,7 +240,7 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel, RasterPix
             If level > 1 Then
                 point.level = 1
             ElseIf level <= 0 Then
-                level = -1
+                point.level = -1
             Else
                 point.level = level
             End If

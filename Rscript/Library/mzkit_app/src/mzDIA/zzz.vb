@@ -63,5 +63,6 @@ Public Class zzz
     Public Shared Sub onLoad()
         Call metaDNAInfer.Main()
         Call MoleculeNetworking.Main()
+        Call DIASpectrumAnnotations.Main()
     End Sub
 End Class

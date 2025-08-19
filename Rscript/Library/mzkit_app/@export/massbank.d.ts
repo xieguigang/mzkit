@@ -126,6 +126,19 @@ declare namespace massbank {
    */
    function lipid_classprofiles(lipid_class: object): object;
    /**
+    * cast lipidmaps data to metabolites
+    * 
+    * 
+     * @param x should be a collection of the sdf data object that parsed from the lipidmaps sdf file, 
+     *  or a collection of the lipidmaps messagepack metadata object.
+     * @param lazy -
+     * 
+     * + default value Is ``false``.
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function lipid_metabolites(x: any, lazy?: boolean, env?: object): object;
+   /**
    */
    function lipid_profiles(categry: object, enrich: object): object;
    /**
@@ -215,7 +228,7 @@ declare namespace massbank {
        * read lipidmaps messagepack repository file
        * 
        * 
-        * @param file -
+        * @param file the file path to the message pack file that contains the lipidmaps annotation data
         * @param gsea_background and also cast the lipidmaps metabolite metadata to the gsea background model?
         * 
         * + default value Is ``false``.
