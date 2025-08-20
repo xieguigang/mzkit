@@ -700,7 +700,7 @@ Module ReferenceTreePkg
     End Function
 
     Const no_biodeep_id As String = "No metabolite uuid or biodeep id was provided!"
-    Const no_formula As String = "A valid formula string text for evaluate the positive exact mass value of the target metabolite must be provided!"
+    Const no_formula As String = "the given formula is empty, a valid formula string text for evaluate the positive exact mass value of the target metabolite must be provided!"
 
     ''' <summary>
     ''' push the reference spectrum data into the spectrum reference tree library
