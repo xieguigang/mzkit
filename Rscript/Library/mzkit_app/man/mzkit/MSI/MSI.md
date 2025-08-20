@@ -27,6 +27,7 @@ MS-Imaging data handler
 + [scans2D](MSI/scans2D.1) combine each row scan raw data files as the pixels 2D matrix
 + [scanMatrix](MSI/scanMatrix.1) combine each row scan summary vector as the pixels 2D matrix
 + [peakMatrix](MSI/peakMatrix.1) Extract the ion data matrix
++ [peakMatrix_stream](MSI/peakMatrix_stream.1) create the peak matrix alignment in stream mode
 + [peakSamples](MSI/peakSamples.1) split the raw MSI 2D data into multiple parts with given resolution parts
 + [pixelIons](MSI/pixelIons.1) get number of ions in each pixel scans
 + [getMatrixIons](MSI/getMatrixIons.1) get matrix ions feature m/z vector

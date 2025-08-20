@@ -291,6 +291,21 @@ declare namespace MSI {
    */
    function peakMatrix(raw: object, topN?: object, mzError?: any, ionSet?: any, raw_matrix?: boolean, env?: object): object|object;
    /**
+    * create the peak matrix alignment in stream mode
+    * 
+    * 
+     * @param raw -
+     * @param ionSet -
+     * @param out stream file to save the matrix data file
+     * @param mzErr -
+     * 
+     * + default value Is ``'da:0.05'``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function peakMatrix_stream(raw: object, ionSet: any, out: any, mzErr?: any, env?: object): any;
+   /**
     * split the raw MSI 2D data into multiple parts with given resolution parts
     * 
     * 
