@@ -1,67 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::d328c716b70f449463e81619edacc8d8, Rscript\Library\mzkit_app\src\mzkit\comprehensive\MSI.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1952
-    '    Code Lines: 1163 (59.58%)
-    ' Comment Lines: 593 (30.38%)
-    '    - Xml Docs: 90.56%
-    ' 
-    '   Blank Lines: 196 (10.04%)
-    '     File Size: 81.65 KB
+' Summaries:
 
 
-    ' Module MSI
-    ' 
-    '     Function: asMSILayer, asRaster, basePeakMz, castSpatialLayers, Correction
-    '               createIndexReader, createMetadataTable, dimension_size, getimzmlMetadata, GetIonsJointMatrix
-    '               GetMatrixIons, GetMSIMetadata, getmzpackFileMetadata, getmzPackMetadata, GetPeakMatrix
-    '               getStatTable, GetXySpatialFilter, IonStats, level_convolution, load_spectrum
-    '               loadRowSummary, LoadSpotVectorDataFrame, moran_index, MSI_summary, MSIScanMatrix
-    '               open_imzML, packDf, packFile, packMatrix, PeakMatrix
-    '               peakSamples, pixelId, PixelIons, PixelMatrix, pixels
-    '               pixels2D, readImzMLMetadata, readPeaklayer, readSummarylayer, resetLocation
-    '               rowScans, SampleBootstraping, scale, scan, spatialConvolution
-    '               splice, write_imzML, writePeaklayer, writeSummarylayer
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1952
+'    Code Lines: 1163 (59.58%)
+' Comment Lines: 593 (30.38%)
+'    - Xml Docs: 90.56%
+' 
+'   Blank Lines: 196 (10.04%)
+'     File Size: 81.65 KB
+
+
+' Module MSI
+' 
+'     Function: asMSILayer, asRaster, basePeakMz, castSpatialLayers, Correction
+'               createIndexReader, createMetadataTable, dimension_size, getimzmlMetadata, GetIonsJointMatrix
+'               GetMatrixIons, GetMSIMetadata, getmzpackFileMetadata, getmzPackMetadata, GetPeakMatrix
+'               getStatTable, GetXySpatialFilter, IonStats, level_convolution, load_spectrum
+'               loadRowSummary, LoadSpotVectorDataFrame, moran_index, MSI_summary, MSIScanMatrix
+'               open_imzML, packDf, packFile, packMatrix, PeakMatrix
+'               peakSamples, pixelId, PixelIons, PixelMatrix, pixels
+'               pixels2D, readImzMLMetadata, readPeaklayer, readSummarylayer, resetLocation
+'               rowScans, SampleBootstraping, scale, scan, spatialConvolution
+'               splice, write_imzML, writePeaklayer, writeSummarylayer
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -1247,24 +1247,39 @@ Module MSI
     End Function
 
     ''' <summary>
-    ''' 
+    ''' create the peak matrix alignment in stream mode
     ''' </summary>
     ''' <param name="raw"></param>
-    ''' <param name="ionSet"></param>
-    ''' <param name="err"></param>
-    ''' <param name="rawMatrix">
-    ''' true for returns the raw <see cref="MzMatrix"/> object, and
-    ''' false for returns a collection of the <see cref="DataSet"/> rows.
+    ''' <param name="out">
+    ''' stream file to save the matrix data file
     ''' </param>
+    ''' <param name="ionSet"></param>
+    ''' <param name="mzErr"></param>
     ''' <param name="env"></param>
-    ''' <returns>
-    ''' feature elements inside the generated matrix object keeps the same order with the input ion features.
-    ''' </returns>
-    <Extension>
-    Private Function GetPeakMatrix(raw As mzPack, ionSet As Object, err As Tolerance,
-                                   rawMatrix As Boolean,
-                                   env As Environment) As Object
+    ''' <returns></returns>
+    <ExportAPI("peakMatrix_stream")>
+    <RApiReturn(GetType(IonStat))>
+    Public Function peakMatrixStream(raw As mzPack, <RRawVectorArgument> ionSet As Object, out As Object,
+                                     Optional mzErr As Object = "da:0.05",
+                                     Optional env As Environment = Nothing) As Object
 
+        Dim s = SMRUCC.Rsharp.GetFileStream(out, FileAccess.Write, env)
+        Dim ions = loadIonSet(ionSet, env)
+        Dim err = Math.getTolerance(mzErr, env)
+        Dim println = env.WriteLineHandler
+
+        If s Like GetType(Message) Then
+            Return s.TryCast(Of Message)
+        End If
+        If err Like GetType(Message) Then
+            Return err.TryCast(Of Message)
+        End If
+
+        Call println($"extract ion feature data with mass tolerance: {err.TryCast(Of Tolerance).ToString}")
+
+    End Function
+
+    Private Function loadIonSet(ionSet As Object, env As Environment) As Dictionary(Of String, Double)
         Dim ions As Dictionary(Of String, Double)
 
         If TypeOf ionSet Is list Then
@@ -1289,23 +1304,48 @@ Module MSI
                 Dim massSet As MassWindow() = pull _
                     .populates(Of MassWindow)(env) _
                     .ToArray
+                Dim mz As Double() = massSet.Mass
+                Dim keys As String() = mz _
+                    .Select(Function(m) m.ToString) _
+                    .UniqueNames
 
-                If rawMatrix Then
-                    Return Deconvolute.PeakMatrix.CreateMatrix(raw, massSet, err.GetErrorDalton)
-                Else
-                    Dim mz As Double() = massSet.Mass
-                    Dim keys As String() = mz _
-                        .Select(Function(m) m.ToString) _
-                        .UniqueNames
-
-                    ions = keys.Zip(second:=mz) _
-                        .ToDictionary(Function(m) m.First,
-                                      Function(m)
-                                          Return m.Second
-                                      End Function)
-                End If
+                ions = keys.Zip(second:=mz) _
+                    .ToDictionary(Function(m) m.First,
+                                  Function(m)
+                                      Return m.Second
+                                  End Function)
             End If
         End If
+
+        Return ions
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="ionSet"></param>
+    ''' <param name="err"></param>
+    ''' <param name="rawMatrix">
+    ''' true for returns the raw <see cref="MzMatrix"/> object, and
+    ''' false for returns a collection of the <see cref="DataSet"/> rows.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' feature elements inside the generated matrix object keeps the same order with the input ion features.
+    ''' </returns>
+    <Extension>
+    Private Function GetPeakMatrix(raw As mzPack, ionSet As Object, err As Tolerance,
+                                   rawMatrix As Boolean,
+                                   env As Environment) As Object
+
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of MassWindow)(ionSet, env, suppress:=True)
+
+        If rawMatrix AndAlso Not pull.isError Then
+            Return Deconvolute.PeakMatrix.CreateMatrix(raw, pull.populates(Of MassWindow)(env).ToArray, err.GetErrorDalton)
+        End If
+
+        Dim ions = loadIonSet(ionSet, env)
 
         If rawMatrix Then
             ' 20250404
