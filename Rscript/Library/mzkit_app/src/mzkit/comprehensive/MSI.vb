@@ -1261,12 +1261,11 @@ Module MSI
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("peakMatrix_stream")>
-    <RApiReturn(GetType(IonStat))>
     Public Function peakMatrixStream(raw As mzPack, <RRawVectorArgument> ionSet As Object, out As Object,
                                      Optional mzErr As Object = "da:0.05",
                                      Optional env As Environment = Nothing) As Object
-
-        Dim s = SMRUCC.Rsharp.GetFileStream(out, FileAccess.Write, env)
+        Dim is_file As Boolean = False
+        Dim s = SMRUCC.Rsharp.GetFileStream(out, FileAccess.Write, env, is_filepath:=is_file)
         Dim ions = loadIonSet(ionSet, env)
         Dim err = Math.getTolerance(mzErr, env)
         Dim println = env.WriteLineHandler
@@ -1290,19 +1289,24 @@ Module MSI
             .numSpots = raw.MS.Length,
             .tolerance = err.TryCast(Of Tolerance).GetScript
         }
-        Dim ionStats As New List(Of IonStat)
         Dim resolvePeak As Func(Of IEnumerable(Of BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PixelData)) =
             Iterator Function() As IEnumerable(Of BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PixelData)
                 Dim bar As Tqdm.ProgressBar = Nothing
+                Dim mzIndex As New MzPool(mzVals)
+                Dim len As Integer = mzVals.Length
 
-                For Each ion As KeyValuePair(Of String, Double) In Tqdm.Wrap(ions, bar:=bar)
-
+                For Each scan As ScanMS1 In Tqdm.Wrap(raw.MS, bar:=bar)
+                    Yield scan.DeconvoluteMatrix(len, mzIndex)
                 Next
             End Function
 
         Call MatrixWriter.StreamWriter(s.TryCast(Of Stream), header, resolvePeak)
 
-        Return ionStats.ToArray
+        If is_file Then
+            Call s.TryCast(Of Stream).Dispose()
+        End If
+
+        Return True
     End Function
 
     Private Function loadIonSet(ionSet As Object, env As Environment) As Dictionary(Of String, Double)
