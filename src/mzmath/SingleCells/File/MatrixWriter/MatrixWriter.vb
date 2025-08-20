@@ -93,8 +93,13 @@ Namespace File
         ''' </summary>
         ''' <param name="s">target file to save the matrix data</param>
         Public Sub Write(s As Stream)
+            Call StreamWriter(s, m.GetHeader, Function() m.matrix.SafeQuery)
+        End Sub
+
+        Public Shared Sub StreamWriter(s As Stream, header As MatrixHeader, spots As Func(Of IEnumerable(Of PixelData)))
+            Dim check As Integer = 0
             Dim bin As New BinaryWriter(s, encoding:=Encoding.ASCII)
-            Dim offset As Long = WriteHeader(bin, m.GetHeader)
+            Dim offset As Long = WriteHeader(bin, header)
 
             ' write index placeholder
             Call bin.Write(0&)
@@ -103,9 +108,14 @@ Namespace File
             Dim writeSpots As New SpotWriter(bin)
             Dim offset1, offset2 As Long
 
-            For Each spot As PixelData In m.matrix.SafeQuery
-                Call writeSpots.AddSpot(spot)
+            For Each spot As PixelData In spots()
+                check += 1
+                writeSpots.AddSpot(spot)
             Next
+
+            If check <> header.numSpots Then
+                Throw New InvalidDataException($"the number of spots in the header {header.numSpots} is not match the real data {check}!")
+            End If
 
             Call WriteIndex(bin, writeSpots, offset1, offset2)
 
