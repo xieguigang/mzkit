@@ -82,6 +82,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.File
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
@@ -124,6 +126,7 @@ Imports SingleCellMath = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Dec
 Imports SingleCellMatrix = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PeakMatrix
 Imports SpotVector = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PixelData
 Imports std = System.Math
+Imports stdvec = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 
 ''' <summary>
 ''' MS-Imaging data handler
@@ -1277,6 +1280,29 @@ Module MSI
 
         Call println($"extract ion feature data with mass tolerance: {err.TryCast(Of Tolerance).ToString}")
 
+        Dim mzVals As New stdvec(ions.Values)
+        Dim da As Double = err.TryCast(Of Tolerance).GetErrorDalton
+        Dim header As New MatrixHeader With {
+            .matrixType = FileApplicationClass.MSImaging,
+            .mz = mzVals,
+            .mzmin = mzVals - da,
+            .mzmax = mzVals + da,
+            .numSpots = raw.MS.Length,
+            .tolerance = err.TryCast(Of Tolerance).GetScript
+        }
+        Dim ionStats As New List(Of IonStat)
+        Dim resolvePeak As Func(Of IEnumerable(Of BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PixelData)) =
+            Iterator Function() As IEnumerable(Of BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PixelData)
+                Dim bar As Tqdm.ProgressBar = Nothing
+
+                For Each ion As KeyValuePair(Of String, Double) In Tqdm.Wrap(ions, bar:=bar)
+
+                Next
+            End Function
+
+        Call MatrixWriter.StreamWriter(s.TryCast(Of Stream), header, resolvePeak)
+
+        Return ionStats.ToArray
     End Function
 
     Private Function loadIonSet(ionSet As Object, env As Environment) As Dictionary(Of String, Double)
