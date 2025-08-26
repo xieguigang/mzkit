@@ -170,7 +170,7 @@ Namespace Blender
             ' 计算最适配的单位索引
             Dim exp As Integer
 
-            If micrometers >= factors(0) * 1000000000.0 Then  ' 处理超大值（>1000km）
+            If micrometers >= (1 / factors(0)) * 1000 Then  ' 处理超大值（>1000km）
                 exp = 0
             Else
                 exp = CInt(std.Floor(std.Log(micrometers) / std.Log(1000)))  ' 对数确定量级
