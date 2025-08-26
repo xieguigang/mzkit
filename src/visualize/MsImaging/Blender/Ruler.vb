@@ -157,32 +157,30 @@ Namespace Blender
             If micrometers <= 0 Then Return "0 μm"
             If micrometers.IsNaNImaginary Then Return "n/a μm"
 
-            ' 定义单位及换算系数（基于1米=10^6微米）
-            Dim units As String() = {"km", "m", "cm", "mm", "μm"}
-            Dim factors As Double() = {
-                0.000000001,  ' 1 km = 10^9 μm
-                0.000001,  ' 1 m  = 10^6 μm
-                0.0001,  ' 1 cm = 10^4 μm
-                0.001,  ' 1 mm = 10^3 μm
-                1      ' 1 μm = 1 μm
-            }
-
-            ' 计算最适配的单位索引
-            Dim exp As Integer
-
-            If micrometers >= (1 / factors(0)) * 1000 Then  ' 处理超大值（>1000km）
-                exp = 0
-            Else
-                exp = CInt(std.Floor(std.Log(micrometers) / std.Log(1000)))  ' 对数确定量级
-                exp = std.Max(0, std.Min(exp, factors.Length - 1))  ' 限制索引范围
+            If micrometers < 1000 Then
+                Return $"{micrometers.ToString("F2")} μm"
             End If
 
-            ' 换算到目标单位
-            Dim value As Double = micrometers * factors(exp)
-            ' 动态选择格式：大单位保留小数，小单位取整
-            Dim formatStr As String = If(exp <= 1, "N2", "N0")  ' km/m保留2位小数，其余取整
+            ' mm
+            micrometers = micrometers / 1000
 
-            Return $"{value.ToString(formatStr)} {units(exp)}"    ' 组合结果
+            If micrometers < 100 Then
+                Return $"{(micrometers / 10).ToString("F2")} mm"
+            End If
+
+            Dim cm = micrometers / 10
+
+            If cm < 80 Then
+                Return $"{cm.ToString("F2")} cm"
+            End If
+
+            Dim m = cm / 100
+
+            If m < 1000 Then
+                Return $"{m.ToString("F2")} m"
+            Else
+                Return $"{(m / 1000).ToString("F2")} km"
+            End If
         End Function
     End Class
 End Namespace
