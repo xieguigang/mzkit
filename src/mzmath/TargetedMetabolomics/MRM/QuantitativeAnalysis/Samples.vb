@@ -194,7 +194,7 @@ Namespace MRM
                            Return Not basename Like nameIndex AndAlso Not isBlank(basename)
                        End Function)
 
-                Call file.ToFileURL.__INFO_ECHO
+                Call file.ToFileURL.info
 
                 scan = model.SampleQuantify(
                     file:=file,

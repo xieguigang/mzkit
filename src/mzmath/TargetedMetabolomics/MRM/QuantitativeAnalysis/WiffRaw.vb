@@ -141,7 +141,7 @@ Namespace MRM
                 .First _
                 .Key
 
-            Call $"The wiff raw file name is: {wiffName}".__DEBUG_ECHO
+            Call $"The wiff raw file name is: {wiffName}".debug
 
             For Each ion As IonPair In ions
                 ionTPAs(ion.accession) = New Dictionary(Of String, Double)

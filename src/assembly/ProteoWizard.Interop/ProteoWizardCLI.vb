@@ -258,7 +258,7 @@ Public Class ProteoWizardCLI : Inherits InteropService
         If Not IsAvaiable() Then
             Call WARN.FormatString(bin).Warning
         Else
-            Call $"msconvert={bin}".__INFO_ECHO
+            Call $"msconvert={bin}".info
         End If
     End Sub
 
@@ -293,7 +293,7 @@ Public Class ProteoWizardCLI : Inherits InteropService
         Dim std$ = ""
         Dim args$ = cli(input, output, type, filters.SafeQuery.ToArray, verbose)
 
-        Call input.__INFO_ECHO
+        Call input.info
         Call args.InlineCopy(args.TrimNewLine(" "))
 
         std = CommandLine.Call(ProteoWizardCLI.BIN, args)

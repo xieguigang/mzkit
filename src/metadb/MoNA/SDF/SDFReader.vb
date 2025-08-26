@@ -226,7 +226,7 @@ Public Module SDFReader
             ' 默认为阳离子
             If ion_mode = "0" Then
                 ion_mode = "+"
-                Call $"[{info.ion_mode}] is invalid, use positive mode as default".__DEBUG_ECHO
+                Call $"[{info.ion_mode}] is invalid, use positive mode as default".debug
             End If
         End If
 
@@ -247,7 +247,7 @@ Public Module SDFReader
                     info.ion_mode = ion_mode
                 End With
             Else
-                Call $"Recalculate m/z precursor_type for [{info.precursor_type}]".__DEBUG_ECHO
+                Call $"Recalculate m/z precursor_type for [{info.precursor_type}]".debug
 
                 ' 对于其他的类型,则重新计算为[M+H]+或者[M-H]-类型的数据
                 If ion_mode = "1" Then

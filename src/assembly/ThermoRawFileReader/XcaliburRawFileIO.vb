@@ -815,7 +815,7 @@ Public Class XcaliburRawFileIO : Implements IDisposable
 
         Try
             If TraceMode Then
-                Call "Enumerating device data in the file".__DEBUG_ECHO
+                Call "Enumerating device data in the file".debug
             End If
 
             ' Discover the devices with data in the .raw file
@@ -847,16 +847,16 @@ Public Class XcaliburRawFileIO : Implements IDisposable
     Private Function LoadFileInfoInternal() As Boolean
         FileInfo.CreationDate = Date.MinValue
         FileInfo.CreationDate = mXRawFileHeader.CreationDate
-        If TraceMode Then Call "Checking mXRawFile.IsError".__DEBUG_ECHO
+        If TraceMode Then Call "Checking mXRawFile.IsError".debug
 
         If mXRawFile.IsError Then
             Return False
         End If
 
-        If TraceMode Then Call "mXRawFile.IsError reports true".__DEBUG_ECHO
-        If TraceMode Then Call "Accessing mXRawFileHeader.WhoCreatedId".__DEBUG_ECHO
+        If TraceMode Then Call "mXRawFile.IsError reports true".debug
+        If TraceMode Then Call "Accessing mXRawFileHeader.WhoCreatedId".debug
         FileInfo.CreatorID = mXRawFileHeader.WhoCreatedId
-        If TraceMode Then Call "Accessing mXRawFile.GetInstrumentData".__DEBUG_ECHO
+        If TraceMode Then Call "Accessing mXRawFile.GetInstrumentData".debug
         Dim instData = mXRawFile.GetInstrumentData()
         FileInfo.InstFlags = instData.Flags
         FileInfo.InstHardwareVersion = instData.HardwareVersion
@@ -867,13 +867,13 @@ Public Class XcaliburRawFileIO : Implements IDisposable
             LoadMethodInfo()
         End If
 
-        If TraceMode Then Call "Defining the model, name, description, and serial number".__DEBUG_ECHO
+        If TraceMode Then Call "Defining the model, name, description, and serial number".debug
         FileInfo.InstModel = instData.Model
         FileInfo.InstName = instData.Name
         FileInfo.InstrumentDescription = mXRawFileHeader.FileDescription
         FileInfo.InstSerialNumber = instData.SerialNumber
         FileInfo.VersionNumber = mXRawFileHeader.Revision
-        If TraceMode Then Call "Accessing mXRawFile.RunHeaderEx".__DEBUG_ECHO
+        If TraceMode Then Call "Accessing mXRawFile.RunHeaderEx".debug
         Dim runData = mXRawFile.RunHeaderEx
         FileInfo.MassResolution = runData.MassResolution
         FileInfo.ScanStart = runData.FirstSpectrum
@@ -1704,19 +1704,19 @@ Public Class XcaliburRawFileIO : Implements IDisposable
 
     Private Sub LoadMethodInfo()
         If TraceMode Then
-            Call "Accessing mXRawFile.InstrumentMethodsCount".__DEBUG_ECHO
+            Call "Accessing mXRawFile.InstrumentMethodsCount".debug
         End If
 
         Try
             Dim methodCount As Integer = mXRawFile.InstrumentMethodsCount
 
             If TraceMode Then
-                Call String.Format("File has {0} methods", methodCount).__DEBUG_ECHO
+                Call String.Format("File has {0} methods", methodCount).debug
             End If
 
             For methodIndex As Integer = 0 To methodCount - 1
                 If TraceMode Then
-                    Call ("Retrieving method from index " & methodIndex).__DEBUG_ECHO
+                    Call ("Retrieving method from index " & methodIndex).debug
                 End If
 
                 Dim methodText = mXRawFile.GetInstrumentMethod(methodIndex)
@@ -2460,13 +2460,13 @@ Public Class XcaliburRawFileIO : Implements IDisposable
             RawFilePath = String.Empty
 
             If TraceMode Then
-                Call ("Initializing RawFileReaderAdapter.FileFactory for " & dataFile.FullName).__DEBUG_ECHO
+                Call ("Initializing RawFileReaderAdapter.FileFactory for " & dataFile.FullName).debug
             End If
 
             mXRawFile = RawFileReaderAdapter.FileFactory(dataFile.FullName)
 
             If TraceMode Then
-                Call "Accessing mXRawFile.FileHeader".__DEBUG_ECHO
+                Call "Accessing mXRawFile.FileHeader".debug
             End If
 
             mXRawFileHeader = mXRawFile.FileHeader
