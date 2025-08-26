@@ -114,7 +114,7 @@ Namespace MetaLib
             Dim drugs = DrugParser.ParseStream(input.keggDrug).ToArray
             Dim idMaps As New Dictionary(Of String, String)
 
-            Call "Convert drug id to compound id...".__DEBUG_ECHO
+            Call "Convert drug id to compound id...".debug
 
             For Each d As Medical.Drug In drugs
                 Dim CId As String() = d.CompoundID
@@ -128,7 +128,7 @@ Namespace MetaLib
                 .Where(Function(f) f.BaseName.IsPattern("G\d+")) _
                 .Select(AddressOf LoadXml(Of Glycan))
 
-            Call "Scan glycan and convert glucan id to compound id...".__DEBUG_ECHO
+            Call "Scan glycan and convert glucan id to compound id...".debug
 
             For Each glycan As Glycan In gl
                 Dim CId = glycan.CompoundId

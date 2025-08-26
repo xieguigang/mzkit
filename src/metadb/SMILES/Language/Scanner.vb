@@ -210,7 +210,7 @@ Namespace Language
 
                         If buf(Scan0) = "["c Then
                             openIonStack = True
-                            Call Debug.WriteLine("[")
+                            Call System.Diagnostics.Debug.WriteLine("[")
                         Else
                             Yield MeasureElement(New String(buf.PopAllChars))
                         End If

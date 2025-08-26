@@ -171,9 +171,9 @@ Namespace Spectra.SplashID
 
             'create prefilter block
             Dim filteredSpec = filterSpectrum(spectrum, 10, 0.1)
-            Call Debug.WriteLine("filtered spectrum: " & filteredSpec.ToString())
+            Call System.Diagnostics.Debug.WriteLine("filtered spectrum: " & filteredSpec.ToString())
             Dim preFilterHistogram = getHistoBlock(filteredSpec, PREFILTER_BASE, PREFILTER_LENGTH, PREFILTER_BIN_SIZE)
-            Debug.WriteLine("prefilter block: " & preFilterHistogram)
+            System.Diagnostics.Debug.WriteLine("prefilter block: " & preFilterHistogram)
             Dim translated = translateBase(preFilterHistogram, PREFILTER_BASE, 36, 4)
 
             hash.Append(translated)
@@ -196,7 +196,7 @@ Namespace Spectra.SplashID
         ''' <returns>the version block as a string</returns>
         Private Function getFirstBlock(specType As SpectrumType) As String
             Dim s As String = (PREFIX & CInt(specType).ToString() & VERSION.ToString())
-            Call Debug.WriteLine(String.Format("version block: {0}", s))
+            Call System.Diagnostics.Debug.WriteLine(String.Format("version block: {0}", s))
             Return s
         End Function
 
@@ -233,7 +233,7 @@ Namespace Spectra.SplashID
                 histogram.Append(INTENSITY_MAP.ElementAt(CInt(bin + EPSILON)))
             Next
 
-            Call Debug.WriteLine(String.Format("{1} block: {0}", histogram.ToString(), If(length = 10, "histogram", "similarity")))
+            Call System.Diagnostics.Debug.WriteLine(String.Format("{1} block: {0}", histogram.ToString(), If(length = 10, "histogram", "similarity")))
             Return histogram.ToString()
         End Function
 
@@ -264,7 +264,7 @@ Namespace Spectra.SplashID
             Dim hash = BitConverter.ToString(hashString.Hash)
             hash = hash.Replace("-", "").Substring(0, maxCharactersForSpectrumBlockTruncation).ToLower()
 
-            Debug.WriteLine(String.Format("hash block: {0}", hash))
+            System.Diagnostics.Debug.WriteLine(String.Format("hash block: {0}", hash))
 
             Return hash
         End Function
@@ -291,7 +291,7 @@ Namespace Spectra.SplashID
                 result.Insert(0, "0"c)
             End While
 
-            Call Debug.WriteLine("prefilter: " & result.ToString())
+            Call System.Diagnostics.Debug.WriteLine("prefilter: " & result.ToString())
             Return result.ToString()
         End Function
 
@@ -309,12 +309,12 @@ Namespace Spectra.SplashID
         Public Shared Function ToBase10(number As String, start_base As Integer) As Integer
             Dim sum = 0
             Dim power = 0
-            Debug.WriteLine("before base10: " & number)
+            System.Diagnostics.Debug.WriteLine("before base10: " & number)
             For Each c In number.Reverse()
                 sum += CInt(INTENSITY_MAP.IndexOf(c) * std.Pow(start_base, power))
                 power += 1
             Next
-            Call Debug.WriteLine("after base10: " & sum.ToString())
+            Call System.Diagnostics.Debug.WriteLine("after base10: " & sum.ToString())
 
             Return sum
         End Function

@@ -243,7 +243,7 @@ Namespace SDF
 
             For Each path As String In list
                 If echo Then
-                    Call path.__INFO_ECHO
+                    Call path.info
                 End If
 
                 For Each model As SDF In SDFParser.IterateParser(path, parseStruct)
