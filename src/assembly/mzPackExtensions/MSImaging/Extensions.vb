@@ -81,6 +81,10 @@ Public Module Extensions
                 allscans = wiffRaw.LoadFromWiffRaw(checkNoise:=False, println:=println)
                 n = allscans.size
 #End If
+            Case "mzml", "mzxml"
+                Dim raw As mzPack = Converter.LoadRawFileAuto(fileName)
+                n = raw.MS.Length
+                allscans = raw
             Case Else
                 Throw New NotImplementedException(fileName.ExtensionSuffix)
         End Select
