@@ -61,6 +61,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
 ''' <summary>
@@ -100,6 +101,8 @@ Public Class Metadata
     ''' </summary>
     ''' <returns></returns>
     Public Property [class] As String
+
+    Public Property polarity As IonModes = IonModes.Unknown
 
     ''' <summary>
     ''' the calculated physical width of the sample slider data
