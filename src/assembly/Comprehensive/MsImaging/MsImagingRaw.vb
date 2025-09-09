@@ -314,6 +314,8 @@ Namespace MsImaging
             End If
 
             Dim polarity As New List(Of String)
+            Dim notes As New Dictionary(Of String, String)
+            Dim i As i32 = 1
 
             ' each row is a small sample in current sample batch
             For Each row As mzPack In src
@@ -325,6 +327,7 @@ Namespace MsImaging
                     mzmax.Add(mzvals.Max)
                 End If
 
+                Call notes.Add(If(row.source, $"sf{++i}"), row.note)
                 Call polarity.Add(row.GetMetadata("polarity"))
             Next
 
@@ -352,7 +355,10 @@ Namespace MsImaging
                 .source = Strings _
                     .Trim(labelPrefix) _
                     .Trim("-"c, " "c, CChar(vbTab), "_"c),
-                .metadata = metadata.GetMetadata
+                .metadata = metadata.GetMetadata,
+                .note = notes _
+                    .Select(Function(t) $"{t.Key}:{vbCrLf}{t.Value}") _
+                    .JoinBy(vbCrLf)
             }
         End Function
 

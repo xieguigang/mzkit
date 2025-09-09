@@ -171,7 +171,7 @@ Namespace MarkupData.imzML
                                          <cvParam cvRef="MS" accession="MS:1000563" name="Thermo RAW format"/>
                                          <cvParam cvRef="MS" accession="MS:1000768" name="Thermo nativeID format"/>
                                          <cvParam cvRef="MS" accession="MS:1000569" name="SHA-1" value=<%= Guid.NewGuid.ToString.MD5.ToUpper %>/>
-                                     </sourceFile>)
+                                     </sourceFile>.ToString)
             Next
 
             Call imzML.WriteLine(
@@ -188,8 +188,8 @@ Namespace MarkupData.imzML
                         %s
                     </sourceFileList>
                     <contact>
-                        <cvParam cvRef="MS" accession="MS:1000586" name="contact name" value="Xieguigang"/>
-                        <cvParam cvRef="MS" accession="MS:1000590" name="contact affiliation" value="BioNovoGene Corporation"/>
+                        <cvParam cvRef="MS" accession="MS:1000586" name="contact name" value="xieguigang@metabolomics.ac.cn"/>
+                        <cvParam cvRef="MS" accession="MS:1000590" name="contact affiliation" value="PANOMIX Ltd"/>
                         <cvParam cvRef="MS" accession="MS:1000587" name="contact address" value="Building 2, 388 Xinping Street, Suzhou Industrial Park, Jiangsu Province, China"/>
                         <cvParam cvRef="MS" accession="MS:1000589" name="contact email" value="gg.xie@bionovogene.com"/>
                     </contact>
@@ -359,7 +359,7 @@ Namespace MarkupData.imzML
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub WriteScan(scan As ScanMS1)
-            Call scans.Add(DataWriter.WriteMzPack(scan, ibd))
+            Call scans.Add(DataWriter.WriteMzPack(scan, ibd, CType(scan_type, IonModes)))
         End Sub
 
         ''' <summary>

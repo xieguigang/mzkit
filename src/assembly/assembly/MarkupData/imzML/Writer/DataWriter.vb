@@ -58,6 +58,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.Data.IO
 
 Namespace MarkupData.imzML
@@ -68,14 +69,15 @@ Namespace MarkupData.imzML
     Module DataWriter
 
         <Extension>
-        Public Function WriteMzPack(mzpack As ScanMS1, ibd As BinaryDataWriter) As ScanData
+        Public Function WriteMzPack(mzpack As ScanMS1, ibd As BinaryDataWriter, ionMode As IonModes) As ScanData
             Dim pixel As Point = mzpack.GetMSIPixel
             Dim scan As New ScanData With {
                 .x = pixel.X,
                 .y = pixel.Y,
                 .totalIon = mzpack.into.Sum,
                 .MzPtr = WriteArray(mzpack.mz, ibd),
-                .IntPtr = WriteArray(mzpack.into, ibd)
+                .IntPtr = WriteArray(mzpack.into, ibd),
+                .polarity = ionMode
             }
 
             Return scan
