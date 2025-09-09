@@ -185,7 +185,7 @@ Namespace MarkupData.imzML
                         <cvParam cvRef="IMS" accession="IMS:1000031" name="processed"/>
                     </fileContent>
                     <sourceFileList count=<%= sourceFiles.Count %>>
-                        %s
+%s
                     </sourceFileList>
                     <contact>
                         <cvParam cvRef="MS" accession="MS:1000586" name="contact name" value="xieguigang@metabolomics.ac.cn"/>
