@@ -159,6 +159,7 @@ Public Class Metadata
             min:=Val(list.TryGetValue("mzmin")),
             max:=Val(list.TryGetValue("mzmax"))
         )
+        polarity = Provider.ParseIonMode(list.TryGetValue("polarity"), allowsUnknown:=True)
     End Sub
 
     ''' <summary>
@@ -190,7 +191,8 @@ Public Class Metadata
             {"width", scan_x},
             {"height", scan_y},
             {"z", scan_z},
-            {"resolution", resolution}
+            {"resolution", resolution},
+            {"polarity", polarity.ToString.ToLower}
         }
 
         If Not mass_range Is Nothing Then
