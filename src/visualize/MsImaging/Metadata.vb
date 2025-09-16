@@ -61,6 +61,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
 ''' <summary>
@@ -100,6 +101,8 @@ Public Class Metadata
     ''' </summary>
     ''' <returns></returns>
     Public Property [class] As String
+
+    Public Property polarity As IonModes = IonModes.Unknown
 
     ''' <summary>
     ''' the calculated physical width of the sample slider data
@@ -156,6 +159,7 @@ Public Class Metadata
             min:=Val(list.TryGetValue("mzmin")),
             max:=Val(list.TryGetValue("mzmax"))
         )
+        polarity = Provider.ParseIonMode(list.TryGetValue("polarity"), allowsUnknown:=True)
     End Sub
 
     ''' <summary>
@@ -187,7 +191,8 @@ Public Class Metadata
             {"width", scan_x},
             {"height", scan_y},
             {"z", scan_z},
-            {"resolution", resolution}
+            {"resolution", resolution},
+            {"polarity", polarity.ToString.ToLower}
         }
 
         If Not mass_range Is Nothing Then

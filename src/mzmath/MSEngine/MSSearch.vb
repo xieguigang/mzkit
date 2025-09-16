@@ -242,7 +242,11 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
                             Dim ppm As Double = PPMmethod.PPM(mzhit, mz)
                             Dim rank As Double = ranking.Rank(FormulaScanner.ScanFormula(cpd.Formula), type)
 
-                            rank = rank / (ppm + 1) / (i + 1)
+                            If ppm > mzIndex.tolerance.GetErrorPPM Then
+                                rank = 0
+                            Else
+                                rank = rank / (ppm + 1) / (i + 1)
+                            End If
 
                             If reduceMetalIon Then
                                 If MetalIons.IsMetalIon(cpd.Formula) Then

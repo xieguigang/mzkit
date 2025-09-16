@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::bd98940f14fafade561058d18b78b12f, assembly\Comprehensive\MsImaging\MsImagingRaw.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 347
-    '    Code Lines: 260 (74.93%)
-    ' Comment Lines: 50 (14.41%)
-    '    - Xml Docs: 90.00%
-    ' 
-    '   Blank Lines: 37 (10.66%)
-    '     File Size: 14.66 KB
+' Summaries:
 
 
-    '     Module MsImagingRaw
-    ' 
-    '         Function: (+3 Overloads) GetMSIMetadata, MeasureRow, MSICombineRowScans, ParseRowNumber, PixelScanPadding
-    '                   Reset, Summary, WriteRegionPoints
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 347
+'    Code Lines: 260 (74.93%)
+' Comment Lines: 50 (14.41%)
+'    - Xml Docs: 90.00%
+' 
+'   Blank Lines: 37 (10.66%)
+'     File Size: 14.66 KB
+
+
+'     Module MsImagingRaw
+' 
+'         Function: (+3 Overloads) GetMSIMetadata, MeasureRow, MSICombineRowScans, ParseRowNumber, PixelScanPadding
+'                   Reset, Summary, WriteRegionPoints
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,6 +60,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
@@ -312,6 +313,10 @@ Namespace MsImaging
                            End Sub
             End If
 
+            Dim polarity As New List(Of String)
+            Dim notes As New Dictionary(Of String, String)
+            Dim i As i32 = 1
+
             ' each row is a small sample in current sample batch
             For Each row As mzPack In src
                 pixels += row.MeasureRow(yscale, correction, cutoff, sumNorm, labelPrefix, progress)
@@ -321,6 +326,9 @@ Namespace MsImaging
                     mzmin.Add(mzvals.Min)
                     mzmax.Add(mzvals.Max)
                 End If
+
+                Call notes.Add(If(row.source, $"sf{++i}"), row.note)
+                Call polarity.Add(row.GetMetadata("polarity"))
             Next
 
             Dim polygon As New Polygon2D(pixels.Select(Function(scan) scan.GetMSIPixel))
@@ -329,13 +337,28 @@ Namespace MsImaging
             metadata.scan_y = polygon.ypoints.Max
             metadata.mass_range = New DoubleRange(mzmin.Min, mzmax.Max)
 
+            Dim checkIon = polarity.Distinct.ToArray
+
+            If checkIon.Length = 1 Then
+                If checkIon(0) Is Nothing Then
+                    metadata.polarity = IonModes.Unknown
+                Else
+                    metadata.polarity = Provider.ParseIonMode(checkIon(0), allowsUnknown:=True)
+                End If
+            Else
+                metadata.polarity = IonModes.Unknown
+            End If
+
             Return New mzPack With {
                 .MS = pixels.ToArray,
                 .Application = FileApplicationClass.MSImaging,
                 .source = Strings _
                     .Trim(labelPrefix) _
                     .Trim("-"c, " "c, CChar(vbTab), "_"c),
-                .metadata = metadata.GetMetadata
+                .metadata = metadata.GetMetadata,
+                .note = notes _
+                    .Select(Function(t) $"{t.Key}:{vbCrLf}{t.Value}") _
+                    .JoinBy(vbCrLf)
             }
         End Function
 

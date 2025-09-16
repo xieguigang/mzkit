@@ -145,6 +145,12 @@ Public Class mzPack : Implements IMZPack, IMsAssemblyPack
     ''' </remarks>
     Public Property Annotations As Dictionary(Of String, String)
 
+    ''' <summary>
+    ''' the description note about this raw data file
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property note As String
+
     Public ReadOnly Property rtmin As Double
         Get
             If MS.IsNullOrEmpty Then
@@ -209,6 +215,14 @@ Public Class mzPack : Implements IMZPack, IMsAssemblyPack
             .IteratesALL _
             .OrderByDescending(Function(mzi) mzi.intensity) _
             .FirstOrDefault
+    End Function
+
+    Public Function GetMetadata(key As String) As String
+        If metadata Is Nothing OrElse Not metadata.ContainsKey(key) Then
+            Return Nothing
+        Else
+            Return metadata(key)
+        End If
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -166,7 +166,7 @@ Public Class XcaliburRawFileIO : Implements IDisposable
     ''' <summary>
     ''' File info for the currently loaded .raw file
     ''' </summary>
-    Public ReadOnly Property FileInfo As RawFileInfo = New RawFileInfo()
+    Public ReadOnly Property FileInfo As New RawFileInfo()
 
     ''' <summary>
     ''' Thermo reader options
@@ -230,6 +230,21 @@ Public Class XcaliburRawFileIO : Implements IDisposable
     ''' When true, additional messages are reported via Debug events
     ''' </summary>
     Public Property TraceMode As Boolean
+
+    Public ReadOnly Property Polarity As IonModes
+        Get
+            Dim ionModes As IonModes() = mCachedScanInfo.Values _
+                .Select(Function(si) si.IonMode) _
+                .Distinct _
+                .ToArray
+
+            If ionModes.Length = 1 Then
+                Return ionModes(Scan0)
+            Else
+                Return Ms1.PrecursorType.IonModes.Unknown
+            End If
+        End Get
+    End Property
 
 #End Region
 
