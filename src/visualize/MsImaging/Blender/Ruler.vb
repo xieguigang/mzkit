@@ -157,30 +157,40 @@ Namespace Blender
             If micrometers <= 0 Then Return "0 μm"
             If micrometers.IsNaNImaginary Then Return "n/a μm"
 
-            If micrometers < 1000 Then
-                Return $"{micrometers.ToString("F2")} μm"
+            Const MicrometersPerMillimeter As Double = 1000.0
+            Const MillimetersPerCentimeter As Double = 10.0
+            Const CentimetersPerMeter As Double = 100.0
+            Const MetersPerKilometer As Double = 1000.0
+
+            ' 保留原始微米值，用于所有计算，避免变量重用
+            Dim absoluteValue As Double = std.Abs(micrometers)
+
+            ' 1. 千米判断
+            If absoluteValue >= MicrometersPerMillimeter * MillimetersPerCentimeter * CentimetersPerMeter * MetersPerKilometer Then
+                Dim kilometers = absoluteValue / (MicrometersPerMillimeter * MillimetersPerCentimeter * CentimetersPerMeter * MetersPerKilometer)
+                Return $"{kilometers.ToString("F2")} km"
             End If
 
-            ' mm
-            micrometers = micrometers / 1000
-
-            If micrometers < 100 Then
-                Return $"{(micrometers / 10).ToString("F2")} mm"
+            ' 2. 米判断
+            If absoluteValue >= MicrometersPerMillimeter * MillimetersPerCentimeter * CentimetersPerMeter Then
+                Dim meters = absoluteValue / (MicrometersPerMillimeter * MillimetersPerCentimeter * CentimetersPerMeter)
+                Return $"{meters.ToString("F2")} m"
             End If
 
-            Dim cm = micrometers / 10
-
-            If cm < 80 Then
-                Return $"{cm.ToString("F2")} cm"
+            ' 3. 厘米判断
+            If absoluteValue >= MicrometersPerMillimeter * MillimetersPerCentimeter Then
+                Dim centimeters = absoluteValue / (MicrometersPerMillimeter * MillimetersPerCentimeter)
+                Return $"{centimeters.ToString("F2")} cm"
             End If
 
-            Dim m = cm / 100
-
-            If m < 1000 Then
-                Return $"{m.ToString("F2")} m"
-            Else
-                Return $"{(m / 1000).ToString("F2")} km"
+            ' 4. 毫米判断
+            If absoluteValue >= MicrometersPerMillimeter Then
+                Dim millimeters = absoluteValue / MicrometersPerMillimeter
+                Return $"{millimeters.ToString("F2")} mm"
             End If
+
+            ' 5. 默认返回微米
+            Return $"{absoluteValue.ToString("F2")} μm"
         End Function
     End Class
 End Namespace
