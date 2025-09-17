@@ -61,6 +61,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices
@@ -87,6 +88,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     ReadOnly libraries As New Dictionary(Of String, Integer)
     ReadOnly samplefiles As New List(Of String)
     ReadOnly source As String
+    ReadOnly wrap_tqdmConsole As Boolean = True
 
     Private disposedValue As Boolean
 
@@ -110,10 +112,12 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     ''' <param name="source_file"></param>
     Sub New(file As Stream,
             Optional source_file As String = Nothing,
-            Optional meta_allocated As Long = 32 * ByteSize.MB)
+            Optional meta_allocated As Long = 32 * ByteSize.MB,
+            Optional wrap_tqdm As Boolean? = Nothing)
 
         source = source_file
         pack = New StreamPack(file, meta_size:=meta_allocated)
+        wrap_tqdmConsole = If(wrap_tqdm Is Nothing, App.EnableTqdm, CBool(wrap_tqdm))
 
         If pack.FileExists("/libraries.json", ZERO_Nonexists:=True) Then
             libraries = pack.ReadText("/libraries.json").LoadJSON(Of Dictionary(Of String, Integer))
@@ -198,20 +202,13 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         Dim pool As mzPack() = files.ToArray
 
         For i As Integer = 0 To pool.Length - 1
-            If pool(i).source.StringEmpty Then
-                Throw New InvalidDataException("Missing sample source file name for the mzpack rawdata object!")
-            End If
-
-            pool(i).source = pool(i).source _
-                .Replace(".mzPack", "") _
-                .Replace(".mzpack", "") _
-                .Replace(".MZPACK", "")
+            Call SourceTagCheck(pool(i))
         Next
 
         ' commit current data pool
         Call Flush()
         ' and then load the peaktable back from the filesystem
-        For Each peak As xcms2 In TqdmWrapper.Wrap(LoadPeakTable.ToArray, wrap_console:=App.EnableTqdm)
+        For Each peak As xcms2 In TqdmWrapper.Wrap(LoadPeakTable.ToArray, wrap_console:=wrap_tqdmConsole)
             Dim scatter = pool.AsParallel _
                 .Select(Function(file)
                             Return New NamedCollection(Of ms1_scan)(file.source, file.PickIonScatter(peak.mz, peak.rt, mass_da, rt_win))
@@ -224,6 +221,33 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
                     Call s.Flush()
                 End Using
             Next
+        Next
+    End Sub
+
+    Private Sub SourceTagCheck(<Out> ByRef raw As IMsAssemblyPack)
+        If raw.source.StringEmpty() Then
+            Throw New InvalidDataException("Missing sample source file name for the mzpack rawdata object!")
+        Else
+            raw.source = raw.source _
+               .Replace(".mzPack", "") _
+               .Replace(".mzpack", "") _
+               .Replace(".MZPACK", "")
+        End If
+    End Sub
+
+    Public Sub CacheXicTable(Of mzPack As IMsAssemblyPack)(file As mzPack, Optional mass_da As Double = 0.5, Optional rt_win As Double = 15)
+        Call SourceTagCheck(file)
+
+        ' commit current data pool
+        Call Flush()
+        ' and then load the peaktable back from the filesystem
+        For Each peak As xcms2 In TqdmWrapper.Wrap(LoadPeakTable.ToArray, wrap_console:=wrap_tqdmConsole)
+            Dim xicScatter As ms1_scan() = file.PickIonScatter(peak.mz, peak.rt, mass_da, rt_win).ToArray
+
+            Using s As Stream = pack.OpenFile($"/xic_table/{file.source}/{peak.ID}.xic",, FileAccess.Write)
+                Call xicScatter.SaveDataFrame(s)
+                Call s.Flush()
+            End Using
         Next
     End Sub
 
