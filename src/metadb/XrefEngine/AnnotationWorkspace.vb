@@ -235,6 +235,13 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         End If
     End Sub
 
+    ''' <summary>
+    ''' Make cache xic data from a given raw data file
+    ''' </summary>
+    ''' <typeparam name="mzPack"></typeparam>
+    ''' <param name="file"></param>
+    ''' <param name="mass_da"></param>
+    ''' <param name="rt_win"></param>
     Public Sub CacheXicTable(Of mzPack As IMsAssemblyPack)(file As mzPack, Optional mass_da As Double = 0.5, Optional rt_win As Double = 15)
         Call SourceTagCheck(file)
 
