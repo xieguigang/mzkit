@@ -106,7 +106,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     End Property
 
     ''' <summary>
-    ''' construct of the workspace file reader/writer
+    ''' construct of the <see cref="AnnotationPack"/> file reader/writer
     ''' </summary>
     ''' <param name="file"></param>
     ''' <param name="source_file"></param>
