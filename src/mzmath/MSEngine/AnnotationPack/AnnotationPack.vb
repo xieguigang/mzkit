@@ -176,6 +176,7 @@ Public Class AnnotationPack : Implements IWorkspaceReader, IDisposable
 
                 ' clear all annotation data
                 Call libraries.Clear()
+                Call XIC.Clear()
             End If
 
             ' TODO: 释放未托管的资源(未托管的对象)并重写终结器

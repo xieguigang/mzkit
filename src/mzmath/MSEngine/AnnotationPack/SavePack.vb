@@ -58,7 +58,11 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
+''' <summary>
+''' helper function for save the ms2 alignment data
+''' </summary>
 Public Module SavePack
 
     <Extension>
@@ -90,6 +94,12 @@ Public Module SavePack
                 Call bin.Write(buf.ToArray)
             End Using
         Next
+
+        If align.samplesRI Is Nothing Then align.samplesRI = New Dictionary(Of String, Double)
+        If align.samplesRT Is Nothing Then align.samplesRT = New Dictionary(Of String, Double)
+
+        Call bin.Write(align.samplesRI.GetJson)
+        Call bin.Write(align.samplesRT.GetJson)
 
         Return ms
     End Function
