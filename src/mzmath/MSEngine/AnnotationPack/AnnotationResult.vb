@@ -117,11 +117,20 @@ Public Class AlignmentHit
     ''' </remarks>
     Public Property samplefiles As Dictionary(Of String, Ms2Score)
 
+    ''' <summary>
+    ''' get/set the ms2 alignment details for a specific data sample
+    ''' </summary>
+    ''' <param name="sampleName">the data sample name</param>
+    ''' <returns></returns>
     Default Public Property SampleAlignment(sampleName As String) As Ms2Score
         Get
             Return samplefiles.TryGetValue(sampleName)
         End Get
         Set
+            If samplefiles Is Nothing Then
+                samplefiles = New Dictionary(Of String, Ms2Score)
+            End If
+
             samplefiles(sampleName) = Value
         End Set
     End Property
