@@ -1,14 +1,10 @@
 ﻿// export R# package module type define for javascript/typescript language
 //
-//    imports "GCMS" from "mzkit";
 //    imports "GCMS" from "mz_quantify";
 //
-// ref=mzkit.GCMSData@mzkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // ref=mzkit.GCMSLinear@mz_quantify, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**
- * GC-MS rawdata handler package module
- * 
  * the targetted GCMS sim data quantification module
  * 
 */
@@ -26,14 +22,6 @@ declare namespace GCMS {
      * @param env default value Is ``null``.
    */
    function contentTable(ions: any, contentVector: any, IS?: any, env?: object): object;
-   /**
-    * Create gc-ms features data object
-    * 
-    * 
-     * @param raw -
-     * @param peaks -
-   */
-   function gcms_features(raw: object, peaks: object): object;
    /**
     * create linear model handler
     * 
