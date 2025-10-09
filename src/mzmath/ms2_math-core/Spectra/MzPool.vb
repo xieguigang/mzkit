@@ -115,7 +115,9 @@ Namespace Spectra
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(mz As IEnumerable(Of Double), Optional win_size As Double = 1, Optional verbose As Boolean = True)
-            index = mz.ToArray.CreateMzIndex(win_size, verbose:=verbose)
+            index = mz _
+                .ToArray _
+                .CreateMzIndex(win_size, verbose:=verbose)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
