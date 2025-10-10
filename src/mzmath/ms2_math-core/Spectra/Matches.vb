@@ -35,7 +35,12 @@ Namespace Spectra
         <Extension>
         Public Function BinarySearch(sortMz As ms2(), mz As Double, tolerance As ComparesMz) As ms2
             Dim i As Integer = Collections.binarySearch(sortMz, New ms2(mz, 0), tolerance)
-            Return sortMz(i)
+
+            If i < 0 Then
+                Return Nothing
+            Else
+                Return sortMz(i)
+            End If
         End Function
     End Module
 
