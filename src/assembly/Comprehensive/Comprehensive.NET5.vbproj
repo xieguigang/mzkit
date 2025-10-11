@@ -143,6 +143,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\Erica\src\STRaid\STRaid.vbproj" />
+		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\Darwinism\src\data\CDF.PInvoke\CDF.PInvoke.vbproj" />
+		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\Darwinism\src\data\HDF.PInvoke\HDF.PInvoke.Core.csproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\HDSPack\HDSPack.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj" />
