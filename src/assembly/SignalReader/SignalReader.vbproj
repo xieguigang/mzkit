@@ -5,7 +5,7 @@
 	  <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.SignalReader</AssemblyName>
     <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
 	  <Platforms>AnyCPU;x64</Platforms>
-	  <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release;mzkit_win32</Configurations>
+	  <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release;mzkit_win32;MEMI-Desktop</Configurations>
 	  <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 	  <Company>BioNovoGene</Company>
 	  <Product>BioDeep</Product>
