@@ -69,6 +69,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Chromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 
@@ -241,6 +242,7 @@ Public Module ChromatogramPlot
                             Optional drawParallelAxis As Boolean = False,
                             Optional intensityMax As Double = 0,
                             Optional spline As Single = 0,
+                            Optional spline_resolution As Integer = 10,
                             Optional title As String = Nothing,
                             Optional ppi As Double = 100,
                             Optional driver As Drivers = Drivers.Default) As GraphicsData
@@ -288,7 +290,7 @@ Public Module ChromatogramPlot
                 fillAlpha:=fillAlpha,
                 labelLayoutTicks:=labelLayoutTicks,
                 theme:=theme,
-                bspline:=spline
+                bspline:=If(spline > 1, New BSpline(spline, spline_resolution), Nothing)
             ) With {
                 .xlabel = xlabel,
                 .ylabel = ylabel,
