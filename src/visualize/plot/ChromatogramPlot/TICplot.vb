@@ -121,7 +121,7 @@ Public Class TICplot : Inherits Plot
     ReadOnly fillCurve As Boolean
     ReadOnly fillAlpha As Integer
     ReadOnly labelLayoutTicks As Integer = 100
-    ReadOnly bspline As Single = 0!
+    ReadOnly bspline As BSpline
     ''' <summary>
     ''' 当两个滑窗点的时间距离过长的时候，就不进行连接线的绘制操作了
     ''' （插入两个零值的点）
@@ -149,7 +149,7 @@ Public Class TICplot : Inherits Plot
             fillCurve As Boolean,
             fillAlpha As Integer,
             labelLayoutTicks As Integer,
-            bspline As Single,
+            bspline As BSpline,
             theme As Theme)
 
         Call Me.New({tic},
@@ -170,7 +170,7 @@ Public Class TICplot : Inherits Plot
                    fillCurve As Boolean,
                    fillAlpha As Integer,
                    labelLayoutTicks As Integer,
-                   bspline As Single,
+                   bspline As BSpline,
                    theme As Theme)
 
         MyBase.New(theme)
@@ -300,18 +300,8 @@ Public Class TICplot : Inherits Plot
             If chromatogram.IsNullOrEmpty Then
                 Call $"ion not found in raw file: '{line.name}'".Warning
                 Continue For
-            ElseIf bspline > 0 Then
-                Dim raw As PointF() = chromatogram.Select(Function(t) New PointF(t.Time, t.Intensity)).ToArray
-                Dim interpolate = B_Spline.BSpline(raw, bspline, 10).ToArray
-
-                chromatogram = interpolate _
-                    .Select(Function(pi)
-                                Return New ChromatogramTick With {
-                                    .Time = pi.X,
-                                    .Intensity = pi.Y
-                                }
-                            End Function) _
-                    .ToArray
+            ElseIf bspline IsNot Nothing AndAlso bspline.degree > 1 Then
+                chromatogram = ChromatogramTick.Bspline(chromatogram, bspline.degree, bspline.resolution)
             End If
 
             legendList += New LegendObject With {
