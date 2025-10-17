@@ -113,6 +113,8 @@ Public Module SaveXcms
         Dim npeaks As Integer = headers.GetSynonymOrdinal("npeaks", ".")
         Dim ri As Integer = headers.GetSynonymOrdinal("ri", "RI", "retention_index")
         Dim maxinto As Integer = headers.GetSynonymOrdinal("maxinto", "into")
+        Dim RImin As Integer = headers("RImin")
+        Dim RImax As Integer = headers("RImax")
 
         If ID < 0 AndAlso headers.Objects(0) = "" Then
             ' row.names = 1
@@ -146,7 +148,10 @@ Public Module SaveXcms
 
         Dim offsets = headers.ToArray
         Dim peaks As xcms2() = s _
-            .GetPeaks(deli, ID, mz, mzmin, mzmax, rt, rtmin, rtmax, ri,
+            .GetPeaks(deli, ID,
+                      mz, mzmin, mzmax,
+                      rt, rtmin, rtmax,
+                      ri, RImin, RImax,
                       npeaks:=npeaks, maxinto:=maxinto,
                       peaks:=offsets) _
             .ToArray
@@ -169,7 +174,7 @@ Public Module SaveXcms
                                        ID As Integer,
                                        mz As Integer, mzmin As Integer, mzmax As Integer,
                                        rt As Integer, rtmin As Integer, rtmax As Integer,
-                                       ri As Integer,
+                                       ri As Integer, rimin As Integer, rimax As Integer,
                                        npeaks As Integer, maxinto As Integer,
                                        peaks As SeqValue(Of String)()) As IEnumerable(Of xcms2)
 
@@ -187,7 +192,9 @@ Public Module SaveXcms
                 .rt = Double.Parse(t(rt)),
                 .rtmax = If(rtmax > -1, Val(t(rtmax)), .rt),
                 .rtmin = If(rtmin > -1, Val(t(rtmin)), .rt),
-                .RI = If(ri > -1, Val(t(ri)), 0)
+                .RI = If(ri > -1, Val(t(ri)), 0),
+                .RImax = If(rimax > -1, Val(t(rimax)), 0),
+                .RImin = If(rimin > -1, Val(t(rimin)), 0)
             }
 
             If npeaks > -1 Then
