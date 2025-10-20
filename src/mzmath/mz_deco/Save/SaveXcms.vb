@@ -306,7 +306,7 @@ Public Module SaveXcms
                 .RI = rd.ReadDouble,
                 .RImin = rd.ReadDouble,
                 .RImax = rd.ReadDouble,
-                .groups = rd.ReadDouble
+                .groups = rd.ReadInt32
             }
 
             For offset As Integer = 0 To samples - 1
