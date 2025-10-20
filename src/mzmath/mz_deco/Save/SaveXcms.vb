@@ -254,6 +254,10 @@ Public Module SaveXcms
             Call bin.Write(pk.mzmax)
             Call bin.Write(pk.rtmin)
             Call bin.Write(pk.rtmax)
+            Call bin.Write(pk.RI)
+            Call bin.Write(pk.RImin)
+            Call bin.Write(pk.RImax)
+            Call bin.Write(pk.groups)
 
             For Each name As String In sampleNames
                 Call bin.Write(pk(name))
@@ -294,7 +298,11 @@ Public Module SaveXcms
                 .mzmin = rd.ReadDouble,
                 .mzmax = rd.ReadDouble,
                 .rtmin = rd.ReadDouble,
-                .rtmax = rd.ReadDouble
+                .rtmax = rd.ReadDouble,
+                .RI = rd.ReadDouble,
+                .RImin = rd.ReadDouble,
+                .RImax = rd.ReadDouble,
+                .groups = rd.ReadDouble
             }
 
             For offset As Integer = 0 To samples - 1
