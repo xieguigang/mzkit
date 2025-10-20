@@ -111,6 +111,7 @@ Public Module SaveXcms
         Dim rtmin As Integer = headers("rtmin")
         Dim rtmax As Integer = headers("rtmax")
         Dim npeaks As Integer = headers.GetSynonymOrdinal("npeaks", ".")
+        Dim groups As Integer = headers("groups")
         Dim ri As Integer = headers.GetSynonymOrdinal("ri", "RI", "retention_index")
         Dim maxinto As Integer = headers.GetSynonymOrdinal("maxinto", "into")
         Dim RImin As Integer = headers("RImin")
@@ -152,7 +153,7 @@ Public Module SaveXcms
                       mz, mzmin, mzmax,
                       rt, rtmin, rtmax,
                       ri, RImin, RImax,
-                      npeaks:=npeaks, maxinto:=maxinto,
+                      npeaks:=npeaks, groups:=groups, maxinto:=maxinto,
                       peaks:=offsets) _
             .ToArray
 
@@ -175,7 +176,7 @@ Public Module SaveXcms
                                        mz As Integer, mzmin As Integer, mzmax As Integer,
                                        rt As Integer, rtmin As Integer, rtmax As Integer,
                                        ri As Integer, rimin As Integer, rimax As Integer,
-                                       npeaks As Integer, maxinto As Integer,
+                                       npeaks As Integer, groups As Integer, maxinto As Integer,
                                        peaks As SeqValue(Of String)()) As IEnumerable(Of xcms2)
 
         Dim str As Value(Of String) = ""
@@ -197,6 +198,9 @@ Public Module SaveXcms
                 .RImin = If(rimin > -1, Val(t(rimin)), 0)
             }
 
+            If groups > -1 Then
+                pk.groups = Val(t(groups))
+            End If
             If npeaks > -1 Then
                 pk.SetPeaks(Val(t(npeaks)))
             End If
@@ -254,6 +258,10 @@ Public Module SaveXcms
             Call bin.Write(pk.mzmax)
             Call bin.Write(pk.rtmin)
             Call bin.Write(pk.rtmax)
+            Call bin.Write(pk.RI)
+            Call bin.Write(pk.RImin)
+            Call bin.Write(pk.RImax)
+            Call bin.Write(pk.groups)
 
             For Each name As String In sampleNames
                 Call bin.Write(pk(name))
@@ -294,7 +302,11 @@ Public Module SaveXcms
                 .mzmin = rd.ReadDouble,
                 .mzmax = rd.ReadDouble,
                 .rtmin = rd.ReadDouble,
-                .rtmax = rd.ReadDouble
+                .rtmax = rd.ReadDouble,
+                .RI = rd.ReadDouble,
+                .RImin = rd.ReadDouble,
+                .RImax = rd.ReadDouble,
+                .groups = rd.ReadDouble
             }
 
             For offset As Integer = 0 To samples - 1
