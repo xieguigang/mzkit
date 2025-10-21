@@ -126,6 +126,8 @@ Public Class PlotMassWindowXIC : Inherits Plot
     ReadOnly rtmax As Double
     ReadOnly ROI As PeakFeature
 
+    Public Property ROIFillColor As Brush
+
     ''' <summary>
     ''' Construct a plot that combined of XIC with the scatter density heatmap
     ''' </summary>
@@ -272,14 +274,17 @@ Public Class PlotMassWindowXIC : Inherits Plot
             }
             Dim scaler = linePlot.GetDataScaler(g, Scatter2D.EvaluateLayout(g, part1))
 
+            theme.gridFill = NameOf(Color.Transparent)
+
             If Not ROI Is Nothing Then
                 Dim left As Single = scaler.X(ROI.rtmin)
                 Dim right As Single = scaler.X(ROI.rtmax)
                 Dim top As Single = part1.Top
                 Dim bottom As Single = scaler.TranslateY(0)
                 Dim roi_region As New RectangleF(left, top, right - left, bottom - top)
+                Dim fill As Brush = If(ROIFillColor, New SolidBrush(Color.Blue.Alpha(150)))
 
-                Call g.FillRectangle(New SolidBrush(Color.Blue.Alpha(200)), roi_region)
+                Call g.FillRectangle(fill, roi_region)
             End If
 
             Call linePlot.Plot(g, layout:=part1)
