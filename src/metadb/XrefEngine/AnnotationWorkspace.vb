@@ -149,6 +149,14 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         End If
     End Sub
 
+    Public Sub SetExperimentLabel(chromatographic As String, polarity As String)
+        _Chromatographic = chromatographic
+        _Polarity = polarity
+
+        Call pack.WriteText(chromatographic, "/chromatographic.txt", allocate:=False)
+        Call pack.WriteText(polarity, "/polarity.txt", allocate:=False)
+    End Sub
+
     ''' <summary>
     ''' Load in-memory data pack from the pack file stream
     ''' </summary>
