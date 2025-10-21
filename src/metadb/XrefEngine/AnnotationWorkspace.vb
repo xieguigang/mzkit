@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::d72c94acf61ee05e4d3c26cc136dd02b, metadb\XrefEngine\AnnotationWorkspace.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 306
-    '    Code Lines: 186 (60.78%)
-    ' Comment Lines: 71 (23.20%)
-    '    - Xml Docs: 81.69%
-    ' 
-    '   Blank Lines: 49 (16.01%)
-    '     File Size: 11.63 KB
+' Summaries:
 
 
-    ' Class AnnotationWorkspace
-    ' 
-    '     Properties: file
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: CheckXicCache, GetLibraryHits, LoadMemory, LoadPeakTable, LoadXicGroup
-    ' 
-    '     Sub: CacheXicTable, CreateLibraryResult, (+2 Overloads) Dispose, Flush, SetPeakTable
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 306
+'    Code Lines: 186 (60.78%)
+' Comment Lines: 71 (23.20%)
+'    - Xml Docs: 81.69%
+' 
+'   Blank Lines: 49 (16.01%)
+'     File Size: 11.63 KB
+
+
+' Class AnnotationWorkspace
+' 
+'     Properties: file
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: CheckXicCache, GetLibraryHits, LoadMemory, LoadPeakTable, LoadXicGroup
+' 
+'     Sub: CacheXicTable, CreateLibraryResult, (+2 Overloads) Dispose, Flush, SetPeakTable
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -105,6 +105,9 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         End Get
     End Property
 
+    Public ReadOnly Property Chromatographic As String = "*"
+    Public ReadOnly Property Polarity As String = "*"
+
     ''' <summary>
     ''' construct of the <see cref="AnnotationPack"/> file reader/writer
     ''' </summary>
@@ -119,6 +122,12 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         pack = New StreamPack(file, meta_size:=meta_allocated)
         wrap_tqdmConsole = If(wrap_tqdm Is Nothing, App.EnableTqdm, CBool(wrap_tqdm))
 
+        If pack.FileExists("/chromatographic.txt", ZERO_Nonexists:=True) Then
+            Chromatographic = Strings.Trim(pack.ReadText("/chromatographic.txt")).TrimNewLine.Trim
+        End If
+        If pack.FileExists("/polarity.txt", ZERO_Nonexists:=True) Then
+            Polarity = Strings.Trim(pack.ReadText("/polarity.txt")).TrimNewLine.Trim
+        End If
         If pack.FileExists("/libraries.json", ZERO_Nonexists:=True) Then
             libraries = pack.ReadText("/libraries.json").LoadJSON(Of Dictionary(Of String, Integer))
         End If
@@ -138,6 +147,14 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
                                   End Function)
             End If
         End If
+    End Sub
+
+    Public Sub SetExperimentLabel(chromatographic As String, polarity As String)
+        _Chromatographic = Strings.Trim(chromatographic).TrimNewLine.Trim
+        _Polarity = Strings.Trim(polarity).TrimNewLine.Trim
+
+        Call pack.WriteText(chromatographic, "/chromatographic.txt", allocate:=False)
+        Call pack.WriteText(polarity, "/polarity.txt", allocate:=False)
     End Sub
 
     ''' <summary>
@@ -331,7 +348,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
             i += 1
 
             If peak_result Is Nothing Then
-                Call $"found null alignment hit result value for '{library}' at index offset [{i}]!".Warning
+                Call $"found null alignment hit result value for '{library}' at index offset [{i}]!".warning
                 Continue For
             End If
 
@@ -346,7 +363,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         Next
 
         If library = "missing!" Then
-            Call $"missing library reference name for {tags.Take(10).JoinBy(", ")}...".Warning
+            Call $"missing library reference name for {tags.Take(10).JoinBy(", ")}...".warning
         End If
 
         If libraries.ContainsKey(library) Then
