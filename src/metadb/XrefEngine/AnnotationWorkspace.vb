@@ -123,10 +123,10 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         wrap_tqdmConsole = If(wrap_tqdm Is Nothing, App.EnableTqdm, CBool(wrap_tqdm))
 
         If pack.FileExists("/chromatographic.txt", ZERO_Nonexists:=True) Then
-            Chromatographic = Strings.Trim(pack.ReadText("/chromatographic.txt"))
+            Chromatographic = Strings.Trim(pack.ReadText("/chromatographic.txt")).TrimNewLine.Trim
         End If
         If pack.FileExists("/polarity.txt", ZERO_Nonexists:=True) Then
-            Polarity = Strings.Trim(pack.ReadText("/polarity.txt"))
+            Polarity = Strings.Trim(pack.ReadText("/polarity.txt")).TrimNewLine.Trim
         End If
         If pack.FileExists("/libraries.json", ZERO_Nonexists:=True) Then
             libraries = pack.ReadText("/libraries.json").LoadJSON(Of Dictionary(Of String, Integer))
@@ -150,8 +150,8 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     End Sub
 
     Public Sub SetExperimentLabel(chromatographic As String, polarity As String)
-        _Chromatographic = chromatographic
-        _Polarity = polarity
+        _Chromatographic = Strings.Trim(chromatographic).TrimNewLine.Trim
+        _Polarity = Strings.Trim(polarity).TrimNewLine.Trim
 
         Call pack.WriteText(chromatographic, "/chromatographic.txt", allocate:=False)
         Call pack.WriteText(polarity, "/polarity.txt", allocate:=False)
