@@ -282,9 +282,20 @@ Public Class PlotMassWindowXIC : Inherits Plot
                 Dim top As Single = part1.Top
                 Dim bottom As Single = scaler.TranslateY(0)
                 Dim roi_region As New RectangleF(left, top, right - left, bottom - top)
-                Dim fill As Brush = If(ROIFillColor, New SolidBrush(Color.Blue.Alpha(150)))
 
-                Call g.FillRectangle(fill, roi_region)
+                ' 20251022 fix the bug of multi-thread brush resource conflict
+                ' when do drawing on windows form graphic canvas
+                If ROIFillColor IsNot Nothing Then
+                    SyncLock ROIFillColor
+                        Call g.FillRectangle(ROIFillColor, roi_region)
+                    End SyncLock
+                Else
+                    Dim fill As Brush = New SolidBrush(Color.Blue.Alpha(150))
+
+                    SyncLock fill
+                        Call g.FillRectangle(fill, roi_region)
+                    End SyncLock
+                End If
             End If
 
             Call linePlot.Plot(g, layout:=part1)
