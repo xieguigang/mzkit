@@ -1450,7 +1450,12 @@ extract_ms1:
                                     Optional ppm As Double = 20,
                                     Optional aggregate As Aggregates = Aggregates.Sum) As Object
 
-        Dim ions = peaks.GroupBy(Function(i) i.mz, Function(a, b) PPMmethod.PPM(a, b) <= ppm).ToArray
+        Dim ions As NamedCollection(Of xcms2)() = peaks _
+            .GroupBy(Function(i) i.mz,
+                     Function(a, b)
+                         Return PPMmethod.PPM(a, b) <= ppm
+                     End Function) _
+            .ToArray
         Dim merge As New List(Of xcms2)
         Dim f As Func(Of Double, Double, Double) = aggregate.GetAggregateFunction2
 
