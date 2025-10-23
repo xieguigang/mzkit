@@ -258,15 +258,17 @@ Public Class AdductsRanking
 
         If adduct_str = "[M]+" Then
             ' check for Anthocyanin
-            If AnthocyaninValidator.CheckRules(formula.CountsByElement) > 40 Then
-                Return maxValue
+            Dim check As Double = AnthocyaninValidator.CheckRules(formula.CountsByElement) / 200
+
+            If check > 0.4 Then
+                Return maxValue * check
             Else
                 Return 0.05
             End If
         End If
 
         If adduct_str = "[M+H]+" Then
-            Return maxValue / 2
+            Return maxValue
         End If
 
         Return 1
@@ -328,7 +330,7 @@ Public Class AdductsRanking
         End If
 
         If adduct_str = "[M-H]-" Then
-            Return maxValue / 2
+            Return maxValue
         End If
 
         Return 1
