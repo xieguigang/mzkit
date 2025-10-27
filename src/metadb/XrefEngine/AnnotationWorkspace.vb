@@ -173,7 +173,8 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         Return New AnnotationPack With {
             .libraries = libraries,
             .file = file,
-            .peaks = LoadPeakTable.ToArray
+            .peaks = LoadPeakTable.ToArray,
+            .RI = ReadRI()
         }
     End Function
 
@@ -240,7 +241,8 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     End Function
 
     ''' <summary>
-    ''' Extract the XIC cache data from a given set of rawdata objects based on the peaktable information inside the workspace file
+    ''' Extract the XIC cache data from a given set of rawdata objects based on 
+    ''' the peaktable information inside the workspace file
     ''' </summary>
     ''' <param name="files"></param>
     ''' <param name="mass_da">
