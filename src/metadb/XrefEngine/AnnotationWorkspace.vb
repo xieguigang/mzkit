@@ -208,33 +208,20 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
 
     Public Sub SaveRIReference(RI As Dictionary(Of String, RIRefer()))
         For Each name As String In RI.Keys
-            Using s As Stream = pack.OpenFile($"/RI/{name}.jsonl",, FileAccess.Write)
-                Using jsonl As New StreamWriter(s)
-                    For Each data As RIRefer In RI(name)
-                        Call jsonl.WriteLine(data.GetJson)
-                    Next
-
-                    Call jsonl.Flush()
-                End Using
-            End Using
+            Call pack.WriteText((From data As RIRefer In RI(name) Select data.GetJson), $"/RI/{name}.jsonl", allocate:=False)
         Next
     End Sub
 
     Public Function ReadRI() As Dictionary(Of String, RIRefer())
         Dim table As New Dictionary(Of String, RIRefer())
-        Dim line As Value(Of String) = ""
-        Dim list As New List(Of RIRefer)
 
         For Each file As StreamBlock In pack.ListFiles("/RI/", recursive:=False)
-            Using s As Stream = pack.OpenBlock(file, loadMemory:=True)
-                Using jsonl As New StreamReader(s)
-                    Do While (line = jsonl.ReadLine) IsNot Nothing
-                        Call list.Add(CStr(line).LoadJSON(Of RIRefer))
-                    Loop
-
-                    Call table.Add(file.fileName.BaseName, list.PopAll)
-                End Using
-            End Using
+            table(file.fileName.BaseName) = pack _
+                .ReadText(file) _
+                .LineTokens _
+                .Where(Function(line) Not line.StringEmpty(, True)) _
+                .Select(Function(line) line.LoadJSON(Of RIRefer)) _
+                .ToArray
         Next
 
         Return table
