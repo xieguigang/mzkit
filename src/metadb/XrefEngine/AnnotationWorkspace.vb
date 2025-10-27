@@ -219,6 +219,26 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         Next
     End Sub
 
+    Public Function ReadRI() As Dictionary(Of String, RIRefer())
+        Dim table As New Dictionary(Of String, RIRefer())
+        Dim line As Value(Of String) = ""
+        Dim list As New List(Of RIRefer)
+
+        For Each file As StreamBlock In pack.ListFiles("/RI/", recursive:=False)
+            Using s As Stream = pack.OpenBlock(file, loadMemory:=True)
+                Using jsonl As New StreamReader(s)
+                    Do While (line = jsonl.ReadLine) IsNot Nothing
+                        Call list.Add(CStr(line).LoadJSON(Of RIRefer))
+                    Loop
+
+                    Call table.Add(file.fileName.BaseName, list.PopAll)
+                End Using
+            End Using
+        Next
+
+        Return table
+    End Function
+
     ''' <summary>
     ''' Extract the XIC cache data from a given set of rawdata objects based on the peaktable information inside the workspace file
     ''' </summary>
