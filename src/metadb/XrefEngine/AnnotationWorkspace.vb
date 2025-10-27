@@ -173,7 +173,8 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         Return New AnnotationPack With {
             .libraries = libraries,
             .file = file,
-            .peaks = LoadPeakTable.ToArray
+            .peaks = LoadPeakTable.ToArray,
+            .RI = ReadRI()
         }
     End Function
 
@@ -205,8 +206,30 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
 
     Const peaktablefile As String = "/peaktable.dat"
 
+    Public Sub SaveRIReference(RI As Dictionary(Of String, RIRefer()))
+        For Each name As String In RI.Keys
+            Call pack.WriteText((From data As RIRefer In RI(name) Select data.GetJson), $"/RI/{name}.jsonl", allocate:=False)
+        Next
+    End Sub
+
+    Public Function ReadRI() As Dictionary(Of String, RIRefer())
+        Dim table As New Dictionary(Of String, RIRefer())
+
+        For Each file As StreamBlock In pack.ListFiles("/RI/", recursive:=False)
+            table(file.fileName.BaseName) = pack _
+                .ReadText(file) _
+                .LineTokens _
+                .Where(Function(line) Not line.StringEmpty(, True)) _
+                .Select(Function(line) line.LoadJSON(Of RIRefer)) _
+                .ToArray
+        Next
+
+        Return table
+    End Function
+
     ''' <summary>
-    ''' Extract the XIC cache data from a given set of rawdata objects based on the peaktable information inside the workspace file
+    ''' Extract the XIC cache data from a given set of rawdata objects based on 
+    ''' the peaktable information inside the workspace file
     ''' </summary>
     ''' <param name="files"></param>
     ''' <param name="mass_da">

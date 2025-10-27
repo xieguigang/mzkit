@@ -129,6 +129,8 @@ Public Class TICplot : Inherits Plot
     ReadOnly leapTimeWinSize As Double = 30
 
     Public Property sampleColors As Dictionary(Of String, Pen)
+    Public Property ROIFill As Brush = Nothing
+    Public Property ROI As PeakFeature
 
     ''' <summary>
     ''' 
@@ -281,6 +283,28 @@ Public Class TICplot : Inherits Plot
         Dim fillColor As Brush
         Dim legendList As New List(Of LegendObject)
         Dim curvePen As Pen
+
+        If Not ROI Is Nothing Then
+            Dim left As Single = scaler.X(ROI.rtmin)
+            Dim right As Single = scaler.X(ROI.rtmax)
+            Dim top As Single = rect.Top
+            Dim bottom As Single = scaler.TranslateY(0)
+            Dim roi_region As New RectangleF(left, top, right - left, bottom - top)
+
+            ' 20251022 fix the bug of multi-thread brush resource conflict
+            ' when do drawing on windows form graphic canvas
+            If ROIFill IsNot Nothing Then
+                SyncLock ROIFill
+                    Call g.FillRectangle(ROIFill, roi_region)
+                End SyncLock
+            Else
+                Dim fill As Brush = New SolidBrush(Color.Blue.Alpha(150))
+
+                SyncLock fill
+                    Call g.FillRectangle(fill, roi_region)
+                End SyncLock
+            End If
+        End If
 
         For i As Integer = 0 To ionData.Length - 1
             Dim line As NamedCollection(Of ChromatogramTick) = ionData(i)
