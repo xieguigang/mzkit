@@ -95,7 +95,7 @@ Public Class MzGroup
     ''' the retention index of each tick points in <see cref="XIC"/>.
     ''' </summary>
     ''' <returns></returns>
-    Public Property RI As Double()
+    <XmlAttribute> Public Property RI As Double()
 
     ''' <summary>
     ''' get point counts of <see cref="XIC"/>.
