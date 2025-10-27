@@ -205,6 +205,20 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
 
     Const peaktablefile As String = "/peaktable.dat"
 
+    Public Sub SaveRIReference(RI As Dictionary(Of String, RIRefer()))
+        For Each name As String In RI.Keys
+            Using s As Stream = pack.OpenFile($"/RI/{name}.jsonl",, FileAccess.Write)
+                Using jsonl As New StreamWriter(s)
+                    For Each data As RIRefer In RI(name)
+                        Call jsonl.WriteLine(data.GetJson)
+                    Next
+
+                    Call jsonl.Flush()
+                End Using
+            End Using
+        Next
+    End Sub
+
     ''' <summary>
     ''' Extract the XIC cache data from a given set of rawdata objects based on the peaktable information inside the workspace file
     ''' </summary>

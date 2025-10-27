@@ -85,6 +85,12 @@ Public Class AnnotationPack : Implements IWorkspaceReader, IDisposable
     Public Property XIC As Dictionary(Of String, MzGroup())
 
     ''' <summary>
+    ''' RI reference point 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property RI As Dictionary(Of String, RIRefer())
+
+    ''' <summary>
     ''' the ms1 peaktable
     ''' </summary>
     ''' <returns></returns>
