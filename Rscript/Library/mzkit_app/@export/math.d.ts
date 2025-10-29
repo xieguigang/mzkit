@@ -1,14 +1,11 @@
 ﻿// export R# package module type define for javascript/typescript language
 //
 //    imports "math" from "mzkit";
-//    imports "math" from "mz_quantify";
 //
 // ref=mzkit.MzMath@mzkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// ref=mzkit.QuantifyMath@mz_quantify, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**
  * mass spectrometry data math toolkit
- * 
  * 
 */
 declare namespace math {
@@ -48,25 +45,6 @@ declare namespace math {
      * @return Peaks data in centroid mode or a new m/z vector in centroid.
    */
    function centroid(ions: any, tolerance?: any, intoCutoff?: number, parallel?: boolean, aggregate?: object, env?: object): object|object|number;
-   /**
-    * Create a chromatogram data from a dataframe object
-    * 
-    * 
-     * @param x Should be a dataframe object that contains 
-     *  the required data field for construct the chromatogram data.
-     * 
-     * + default value Is ``null``.
-     * @param time the column name for get the rt field vector data
-     * 
-     * + default value Is ``'Time'``.
-     * @param into the column name for get the signal intensity field vector data
-     * 
-     * + default value Is ``'Intensity'``.
-     * @param env -
-     * 
-     * + default value Is ``null``.
-   */
-   function chromatogram(x?: any, time?: any, into?: any, env?: object): object;
    module cluster {
       /**
        * get all nodes from the spectrum tree cluster result
@@ -213,26 +191,6 @@ declare namespace math {
    */
    function jaccardSet(query: number, ref: number, tolerance?: any, env?: object): object;
    /**
-    * mapping sample id to sample names
-    * 
-    * 
-     * @param x the sample id is used as the sample identifier
-     * @param samples the mapping of sample id to sample name
-     * @return the peaktable that use the sample name as the sample identifier.
-   */
-   function map_samplenames(x: object, samples: object): object;
-   /**
-    * merge all peakset tables into one peaktable object
-    * 
-    * > this function merge two peaktable directly via the unique id reference
-    * 
-     * @param tables -
-     * @param env -
-     * 
-     * + default value Is ``null``.
-   */
-   function merge_tables(tables: any, env?: object): object;
-   /**
     * evaluate all m/z for all known precursor type.
     * 
     * 
@@ -280,32 +238,6 @@ declare namespace math {
    */
    function norm_msdata(msdata: any, sum?: boolean, env?: object): object;
    /**
-    * ### Peak finding
-    *  
-    *  Extract the peak ROI data from the chromatogram data
-    * 
-    * 
-     * @param chromatogram -
-     * @param baselineQuantile -
-     * 
-     * + default value Is ``0.65``.
-     * @param angleThreshold -
-     * 
-     * + default value Is ``5``.
-     * @param peakwidth -
-     * 
-     * + default value Is ``'8,30'``.
-     * @param sn_threshold -
-     * 
-     * + default value Is ``3``.
-     * @param joint 
-     * + default value Is ``false``.
-     * @param env -
-     * 
-     * + default value Is ``null``.
-   */
-   function peakROI(chromatogram: any, baselineQuantile?: number, angleThreshold?: number, peakwidth?: any, sn_threshold?: number, joint?: boolean, env?: object): object;
-   /**
     * calculate ppm value between two mass vector
     * 
     * 
@@ -332,13 +264,6 @@ declare namespace math {
      * @return a collection of the ion precursor adducts object.
    */
    function precursor_types(types: any, unsafe?: boolean, env?: object): object;
-   module preprocessing {
-      /**
-        * @param scale default value Is ``100000000``.
-        * @param k default value Is ``3``.
-      */
-      function knn(x: object, scale?: number, k?: object): object;
-   }
    /**
     * evaluate of the adduct annotation ranking score
     * 
@@ -353,35 +278,6 @@ declare namespace math {
      * @return A ranking score numeric vector
    */
    function rank_adducts(formula: any, adducts: any, max_score?: number, env?: object): number;
-   /**
-    * removes the missing peaks
-    * 
-    * 
-     * @param x -
-     * @param sampleinfo a sample info data vector for provides the sample group information about each sample. 
-     *  if this parameter value is omit missing then the missing feature will be checked across all sample files, 
-     *  otherwise the missing will be check across the multiple sample groups
-     * 
-     * + default value Is ``null``.
-     * @param percent the missing percentage threshold
-     * 
-     * + default value Is ``0.5``.
-   */
-   function removes_missing(x: object, sampleinfo?: object, percent?: number): object;
-   /**
-    * Do resample of the chromatogram data
-    * 
-    * 
-     * @param TIC -
-     * @param dt -
-     * 
-     * + default value Is ``1``.
-     * @param aggregate 
-     * + default value Is ``null``.
-     * @param env 
-     * + default value Is ``null``.
-   */
-   function resample(TIC: object, dt?: number, aggregate?: any, env?: object): any;
    /**
     * reorder scan points into a sequence for downstream data analysis
     * 
