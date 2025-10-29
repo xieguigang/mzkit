@@ -420,7 +420,8 @@ Public Class TICplot : Inherits Plot
 
         For Each ion As NamedValue(Of ChromatogramTick) In peakTimes
             Dim labelSize As SizeF = g.MeasureString(ion.Name, labelFont)
-            Dim location As PointF = scaler.Translate(ion.Value)
+            Dim tick As ChromatogramTick = ion.Value
+            Dim location As PointF = scaler.Translate(tick.Time, tick.Intensity)
 
             location = New PointF With {
                 .X = location.X - labelSize.Width / 2,
