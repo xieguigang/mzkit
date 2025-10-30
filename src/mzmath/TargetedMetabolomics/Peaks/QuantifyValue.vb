@@ -35,7 +35,7 @@ End Class
 Public Class QuantifyStringParser : Implements IParser
 
     Public Overloads Function ToString(obj As Object) As String Implements IParser.ToString
-        Return If(obj Is Nothing, "", obj.ToString)
+        Return If(obj Is Nothing, "", DirectCast(obj, QuantifyValue).Value)
     End Function
 
     Public Function TryParse(content As String) As Object Implements IParser.TryParse
