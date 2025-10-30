@@ -72,7 +72,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 
@@ -83,19 +83,19 @@ Public Class ScalarPeakReport
     Public Property Type As String
     Public Property Filename As String
     <Column("m/z (Expected)")> Public Property mz_Expected As Double
-    <Column("%Diff")> Public Property Diff As Double
-    <Column("Calculated Amt")> Public Property CalculatedAmt As Double
+    <Column("%Diff", GetType(QuantifyStringParser))> Public Property Diff As QuantifyValue
+    <Column("Calculated Amt", GetType(QuantifyStringParser))> Public Property CalculatedAmt As QuantifyValue
     Public Property Status As String
     <Column("Sample Type")> Public Property SampleType As String
     Public Property Level As String
-    Public Property Height As Double
-    Public Property Area As Double
-    <Column("Response Ratio")> Public Property ResponseRatio As Double
-    <Column("ISTD Response")> Public Property ISTDResponse As Double
-    <Column("Actual RT")> Public Property ActualRT As Double
+    <Column("Height", GetType(QuantifyStringParser))> Public Property Height As QuantifyValue
+    <Column("Area", GetType(QuantifyStringParser))> Public Property Area As QuantifyValue
+    <Column("Response Ratio", GetType(QuantifyStringParser))> Public Property ResponseRatio As QuantifyValue
+    <Column("ISTD Response", GetType(QuantifyStringParser))> Public Property ISTDResponse As QuantifyValue
+    <Column("Actual RT", GetType(QuantifyStringParser))> Public Property ActualRT As QuantifyValue
     <Column("%RSD")> Public Property RSD As Double
     <Column("% CV")> Public Property CV As Double
-    <Column("S/N")> Public Property SN As Double
+    <Column("S/N", GetType(QuantifyStringParser))> Public Property SN As QuantifyValue
     <Column("Theoretical Amt")> Public Property TheoreticalAmt As Double
     <Column("Batch Order")> Public Property BatchOrder As Integer
     <Column("Sample Amt")> Public Property SampleAmt As Double
@@ -146,6 +146,8 @@ Public Class ScalarPeakReport
     <Column("Relative RT")> Public Property RelativeRT As String
     <Column("Flag Details")> Public Property FlagDetails As String
 
+    Public Property Metadata As Dictionary(Of String, String)
+
     Public Overrides Function ToString() As String
         Return $"{Compound} ({Area})"
     End Function
@@ -163,9 +165,9 @@ Public Class ScalarPeakReport
             .maxinto = Height,
             .Name = Compound,
             .TPA = Area,
-            .rtmin = ActualRT - RTDelta,
-            .rtmax = ActualRT + RTDelta,
-            .base = Area.GetNoise(SN)
+            .rtmin = CDbl(ActualRT) - RTDelta,
+            .rtmax = CDbl(ActualRT) + RTDelta,
+            .base = CDbl(Area).GetNoise(SN)
         }
     End Function
 
