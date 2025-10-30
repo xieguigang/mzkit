@@ -146,6 +146,8 @@ Public Class ScalarPeakReport
     <Column("Relative RT")> Public Property RelativeRT As String
     <Column("Flag Details")> Public Property FlagDetails As String
 
+    Public Property Metadata As Dictionary(Of String, String)
+
     Public Overrides Function ToString() As String
         Return $"{Compound} ({Area})"
     End Function
