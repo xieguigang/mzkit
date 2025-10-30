@@ -165,9 +165,9 @@ Public Class ScalarPeakReport
             .maxinto = Height,
             .Name = Compound,
             .TPA = Area,
-            .rtmin = ActualRT - RTDelta,
-            .rtmax = ActualRT + RTDelta,
-            .base = Area.GetNoise(SN)
+            .rtmin = CDbl(ActualRT) - RTDelta,
+            .rtmax = CDbl(ActualRT) + RTDelta,
+            .base = CDbl(Area).GetNoise(SN)
         }
     End Function
 
