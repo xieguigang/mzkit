@@ -18,6 +18,10 @@ Public Class QuantifyValue : Inherits Value(Of String)
         Value = data
     End Sub
 
+    Public Function IsNaNImaginary() As Boolean
+        Return CDbl(Me).IsNaNImaginary
+    End Function
+
     Public Overrides Function ToString() As String
         Return Value
     End Function
