@@ -82,6 +82,8 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -208,7 +210,7 @@ Public Class TICplot : Inherits Plot
 
             If palette.StringEmpty(, True) Then
                 palette = "paper"
-                Call $"the color set for TIC overlaps plot is empty, use the default color set 'paper' for the plot rendering.".Warning
+                Call $"the color set for TIC overlaps plot is empty, use the default color set 'paper' for the plot rendering.".warning
             End If
 
             Return Designer _
@@ -226,16 +228,16 @@ Public Class TICplot : Inherits Plot
     Friend Sub RunPlot(ByRef g As IGraphics, canvas As GraphicsRegion, ByRef labels As Label(), ByRef legends As LegendObject())
         Dim colors As LoopArray(Of Pen) = colorProvider(g.LoadEnvironment)
         Dim defaultPen As Pen = newPen(g.LoadEnvironment, theme.colorSet.TranslateColor(False) Or Color.DeepSkyBlue.AsDefault)
-        Dim XTicks As Double() = ionData _
+        Dim rawTime = ionData _
             .Select(Function(ion)
                         Return ion.value.TimeArray
                     End Function) _
             .IteratesALL _
-            .JoinIterates(timeRange) _
-            .AsVector _
-            .Range _
-            .CreateAxisTicks  ' time
-
+            .OrderBy(Function(xi) xi) _
+            .ToArray
+        Dim timeRange = Me.timeRange
+        timeRange = New DoubleRange(rawTime.JoinIterates(timeRange)).MinMax
+        Dim XTicks As Double() = timeRange.CreateAxisTicks  ' time
         Dim YTicks = ionData _
             .Select(Function(ion)
                         Return ion.value.IntensityArray
