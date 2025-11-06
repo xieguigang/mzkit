@@ -84,7 +84,6 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
-
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
 Imports Pens = System.Drawing.Pens
