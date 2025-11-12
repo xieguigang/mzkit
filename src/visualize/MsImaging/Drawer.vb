@@ -301,7 +301,7 @@ Public Class Drawer : Implements IDisposable
 
         Dim tolerance As Tolerance = Tolerance.ParseScript(toleranceErr)
 
-        Call $"loading pixel datas [m/z={mz.ToString("F4")}] with tolerance {tolerance}...".__INFO_ECHO
+        Call $"loading pixel datas [m/z={mz.ToString("F4")}] with tolerance {tolerance}...".info
 
         Dim pixels As PixelData() = pixelReader.LoadPixels({mz}, tolerance).ToArray
         Dim engine As New RectangleRender(driver, heatmapRender:=False)
@@ -311,7 +311,7 @@ Public Class Drawer : Implements IDisposable
             pixels = filter.DoIntensityScale(pixels, dimSize:=dimension)
         End If
 
-        Call $"rendering {pixels.Length} pixel blocks...".__INFO_ECHO
+        Call $"rendering {pixels.Length} pixel blocks...".info
 
         Return engine.RenderPixels(
             pixels:=pixels,
@@ -376,7 +376,7 @@ Public Class Drawer : Implements IDisposable
         Dim rawPixels As PixelData()
         Dim tolerance As Tolerance = Tolerance.ParseScript(toleranceErr)
 
-        Call $"loading pixel datas [m/z={mz.Select(Function(mzi) mzi.ToString("F4")).JoinBy(", ")}] with tolerance {tolerance}...".__INFO_ECHO
+        Call $"loading pixel datas [m/z={mz.Select(Function(mzi) mzi.ToString("F4")).JoinBy(", ")}] with tolerance {tolerance}...".info
 
         rawPixels = pixelReader.LoadPixels(mz, tolerance).ToArray
 
@@ -386,13 +386,13 @@ Public Class Drawer : Implements IDisposable
 
         rawPixels = ScalePixels(rawPixels, tolerance)
 
-        Call $"building pixel matrix from {rawPixels.Length} raw pixels...".__INFO_ECHO
+        Call $"building pixel matrix from {rawPixels.Length} raw pixels...".info
 
         Dim matrix As PixelData() = GetPixelsMatrix(rawPixels)
         Dim engine As Renderer = New RectangleRender(driver, heatmapRender:=False)
         Dim heatmap As New HeatMapParameters(colorSet, mapLevels, background)
 
-        Call $"rendering {matrix.Length} pixel blocks...".__INFO_ECHO
+        Call $"rendering {matrix.Length} pixel blocks...".info
 
         Return engine.RenderPixels(
             pixels:=matrix,

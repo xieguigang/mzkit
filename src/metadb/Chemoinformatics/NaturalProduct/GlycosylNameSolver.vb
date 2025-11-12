@@ -327,7 +327,7 @@ Namespace NaturalProduct
                 If buf > 0 Then
                     Dim message As String = $"name is broken: {buf.Select(Function(t) t.text).JoinBy(" ")}"
 
-                    Call message.__DEBUG_ECHO
+                    Call message.debug
 
                     Do While stack.Count > 0
                         stack.Pop()

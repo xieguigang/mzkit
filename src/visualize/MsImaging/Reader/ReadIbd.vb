@@ -105,14 +105,14 @@ Namespace Reader
             }
 
             If memoryCache Then
-                Call "loading raw data into memory cache...".__DEBUG_ECHO
+                Call "loading raw data into memory cache...".debug
 
                 For Each p As ibdPixel In pixels
                     Call p.GetMs()
                 Next
 
                 Call ibd.Dispose()
-                Call "cache done!".__DEBUG_ECHO
+                Call "cache done!".debug
             End If
         End Sub
 
