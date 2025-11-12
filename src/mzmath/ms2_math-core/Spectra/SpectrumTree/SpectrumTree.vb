@@ -186,9 +186,7 @@ Namespace Spectra
             tree = New AVLTree(Of PeakMs2, PeakMs2)(Ms2Compares, Function(x) x.ToString)
 
             For Each ms2 As PeakMs2 In Tqdm.Wrap(ms2list)
-                matrix = ms2.mzInto _
-                    .Centroid(mzWidth, intocutoff) _
-                    .ToArray
+                matrix = ms2.mzInto.Centroid(mzWidth, intocutoff).ToArray
                 simply = New PeakMs2 With {
                     .mz = ms2.mz,
                     .file = ms2.file,
