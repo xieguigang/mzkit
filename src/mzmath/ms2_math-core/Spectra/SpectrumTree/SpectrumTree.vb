@@ -178,14 +178,14 @@ Namespace Spectra
             End If
         End Function
 
-        Private Sub clusterInternal(ms2list As PeakMs2(), tick As Action)
+        Private Sub clusterInternal(ms2list As PeakMs2())
             Dim matrix As ms2()
             Dim simply As PeakMs2
 
             ' simple => raw
             tree = New AVLTree(Of PeakMs2, PeakMs2)(Ms2Compares, Function(x) x.ToString)
 
-            For Each ms2 As PeakMs2 In ms2list
+            For Each ms2 As PeakMs2 In Tqdm.Wrap(ms2list)
                 matrix = ms2.mzInto.Centroid(mzWidth, intocutoff).ToArray
                 simply = New PeakMs2 With {
                     .mz = ms2.mz,
@@ -197,32 +197,12 @@ Namespace Spectra
 
                 Call allMs2Scans.Add(ms2)
                 Call tree.Add(simply, ms2)
-                Call tick()
             Next
         End Sub
 
         Public Function doCluster(spectrum As PeakMs2()) As SpectrumTreeCluster
-            Dim tickAction As Action
-            Dim releaseAction As Action
-
-            If showReport Then
-                Dim progress As New ProgressBar("Create spectrum tree", 2, True)
-                Dim tick As New ProgressProvider(progress, spectrum.Length)
-                Dim message$
-
-                tickAction =
-                    Sub()
-                        message = $"ETA: {tick.ETA().FormatTime}"
-                        progress.SetProgress(tick.StepProgress, message)
-                    End Sub
-                releaseAction = AddressOf progress.Dispose
-            Else
-                tickAction = AddressOf App.DoNothing
-                releaseAction = AddressOf App.DoNothing
-            End If
-
-            Call clusterInternal(spectrum, tickAction)
-            Call releaseAction()
+            Call "Create spectrum tree".info
+            Call clusterInternal(spectrum)
 
             Return Me
         End Function
