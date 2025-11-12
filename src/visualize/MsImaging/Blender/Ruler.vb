@@ -1,63 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::bf6e2f5bd469d952f0177d3d235ccd00, visualize\MsImaging\Blender\Ruler.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 87
-    '    Code Lines: 67 (77.01%)
-    ' Comment Lines: 2 (2.30%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 18 (20.69%)
-    '     File Size: 3.26 KB
+' Summaries:
 
 
-    '     Class Ruler
-    ' 
-    '         Properties: width
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: eval
-    ' 
-    '         Sub: DrawOnCanvas, DrawOnImage, layout
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 87
+'    Code Lines: 67 (77.01%)
+' Comment Lines: 2 (2.30%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 18 (20.69%)
+'     File Size: 3.26 KB
+
+
+'     Class Ruler
+' 
+'         Properties: width
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: eval
+' 
+'         Sub: DrawOnCanvas, DrawOnImage, layout
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -68,6 +68,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports std = System.Math
 
 Namespace Blender
 
@@ -127,9 +128,9 @@ Namespace Blender
             Dim rulerWidth As Double = 0
             Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim pen As Pen = css.GetPen(Stroke.TryParse(theme.lineStroke))
-            Dim font As Font = CSS.GetFont(CSSFont.TryParse(theme.tagCSS))
+            Dim font As Font = css.GetFont(CSSFont.TryParse(theme.tagCSS))
             ' width of the ruler standards for
-            Dim physical As String = eval(rect, dimsize, resolution, rulerWidth).ToString("F2") & " um"
+            Dim physical As String = AutoLengthFormat(eval(rect, dimsize, resolution, rulerWidth))
             Dim fontsize As SizeF = g.MeasureString(physical, font)
             Dim left, right As PointF
             Dim bottom As Double = rect.Bottom - fontsize.Height * 2
@@ -146,5 +147,50 @@ Namespace Blender
 #Enable Warning
         End Sub
 
+        ''' <summary>
+        ''' 对微米单位的距离值进行自动格式化优化显示
+        ''' </summary>
+        ''' <param name="micrometers">以微米为单位的距离值</param>
+        ''' <returns>格式化后的距离字符串（单位：km/m/cm/mm/μm）</returns>
+        Public Shared Function AutoLengthFormat(micrometers As Double) As String
+            ' 处理无效值
+            If micrometers <= 0 Then Return "0 μm"
+            If micrometers.IsNaNImaginary Then Return "n/a μm"
+
+            Const MicrometersPerMillimeter As Double = 1000.0
+            Const MillimetersPerCentimeter As Double = 10.0
+            Const CentimetersPerMeter As Double = 100.0
+            Const MetersPerKilometer As Double = 1000.0
+
+            ' 保留原始微米值，用于所有计算，避免变量重用
+            Dim absoluteValue As Double = std.Abs(micrometers)
+
+            ' 1. 千米判断
+            If absoluteValue >= MicrometersPerMillimeter * MillimetersPerCentimeter * CentimetersPerMeter * MetersPerKilometer Then
+                Dim kilometers = absoluteValue / (MicrometersPerMillimeter * MillimetersPerCentimeter * CentimetersPerMeter * MetersPerKilometer)
+                Return $"{kilometers.ToString("F2")} km"
+            End If
+
+            ' 2. 米判断
+            If absoluteValue >= MicrometersPerMillimeter * MillimetersPerCentimeter * CentimetersPerMeter Then
+                Dim meters = absoluteValue / (MicrometersPerMillimeter * MillimetersPerCentimeter * CentimetersPerMeter)
+                Return $"{meters.ToString("F2")} m"
+            End If
+
+            ' 3. 厘米判断
+            If absoluteValue >= MicrometersPerMillimeter * MillimetersPerCentimeter Then
+                Dim centimeters = absoluteValue / (MicrometersPerMillimeter * MillimetersPerCentimeter)
+                Return $"{centimeters.ToString("F2")} cm"
+            End If
+
+            ' 4. 毫米判断
+            If absoluteValue >= MicrometersPerMillimeter Then
+                Dim millimeters = absoluteValue / MicrometersPerMillimeter
+                Return $"{millimeters.ToString("F2")} mm"
+            End If
+
+            ' 5. 默认返回微米
+            Return $"{absoluteValue.ToString("F2")} μm"
+        End Function
     End Class
 End Namespace

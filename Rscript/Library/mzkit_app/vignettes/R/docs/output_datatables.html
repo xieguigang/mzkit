@@ -38,9 +38,23 @@
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>this function will output 4 tables in the target <code>output_dir</code> folder.
+the 4 tables that saved in target folder contains:
+<ul>
+<li><code>quantify.csv</code> the linear quantify content result table</li>
+<li><code>rawX.csv</code> the raw peak area data table, if the metabolite has <code>IS</code> calibration,</li>
+</ul></p>
+
+<p>then the value of this table will be the peak area to IS peak area ratio
+values.
+<ul>
+<li><code>linears.csv</code> the linear equation table.</li>
+<li><code>ionPeaks.csv</code> all ions peak ROI in all samples files, data in this table contains</li>
+</ul></p>
+
+<p><code>rt</code> range and peak area, etc.</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -65,4 +79,4 @@
 <script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("example_r");</script>
 
-</html>
+</html>

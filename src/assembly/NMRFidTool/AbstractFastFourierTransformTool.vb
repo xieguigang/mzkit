@@ -1,65 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::5cd1426f924d71c156fab95a65aa3004, assembly\NMRFidTool\AbstractFastFourierTransformTool.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 171
-    '    Code Lines: 98 (57.31%)
-    ' Comment Lines: 47 (27.49%)
-    '    - Xml Docs: 27.66%
-    ' 
-    '   Blank Lines: 26 (15.20%)
-    '     File Size: 6.67 KB
+' Summaries:
 
 
-    ' Class AbstractFastFourierTransformTool
-    ' 
-    '     Properties: Acquisition, Data, Fid, Processing
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: computeFFT, getRealPart
-    ' 
-    '     Sub: applyRedfieldOnSequentialData, initDataFormat, setData, shiftData, tdRelatedNonUnderstoodRearrangementForSequential
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 171
+'    Code Lines: 98 (57.31%)
+' Comment Lines: 47 (27.49%)
+'    - Xml Docs: 27.66%
+' 
+'   Blank Lines: 26 (15.20%)
+'     File Size: 6.67 KB
+
+
+' Class AbstractFastFourierTransformTool
+' 
+'     Properties: Acquisition, Data, Fid, Processing
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: computeFFT, getRealPart
+' 
+'     Sub: applyRedfieldOnSequentialData, initDataFormat, setData, shiftData, tdRelatedNonUnderstoodRearrangementForSequential
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports BioNovoGene.Analytical.NMRFidTool.fidMath.Apodization
 Imports std = System.Math
 
 ' 
@@ -91,10 +92,14 @@ Imports std = System.Math
 ''' </summary>
 Public MustInherit Class AbstractFastFourierTransformTool
 
-
-    Friend dataField As Double() 'proc_buffer   apodization::transform::do_fft
-    'proc_buffer   apodization::transform::do_fft
-    Friend fidField As Spectrum
+    ''' <summary>
+    ''' proc_buffer   apodization::transform::do_fft
+    ''' </summary>
+    Friend m_data As Double()
+    ''' <summary>
+    ''' proc_buffer   apodization::transform::do_fft
+    ''' </summary>
+    Friend m_fid As Spectrum
 
 
     Public Sub New()
@@ -102,10 +107,10 @@ Public MustInherit Class AbstractFastFourierTransformTool
 
     Friend Overridable Sub applyRedfieldOnSequentialData()
         ' for sequential data apply Redfield trick: multiply data by 1 -1 -1 1
-        If fidField.Acqu.getAcquisitionMode Is (Acqu.AcquisitionMode.SEQUENTIAL) Then
-            For i = 0 To fidField.Proc.TdEffective - 1 Step 4
-                dataField(i + 1) = -dataField(i + 1)
-                dataField(i + 2) = -dataField(i + 2)
+        If m_fid.Acqu.getAcquisitionMode Is (Acqu.AcquisitionMode.SEQUENTIAL) Then
+            For i = 0 To m_fid.Proc.TdEffective - 1 Step 4
+                m_data(i + 1) = -m_data(i + 1)
+                m_data(i + 2) = -m_data(i + 2)
             Next
         End If
     End Sub
@@ -115,19 +120,13 @@ Public MustInherit Class AbstractFastFourierTransformTool
         shiftData()
         applyRedfieldOnSequentialData()
         tdRelatedNonUnderstoodRearrangementForSequential()
-        Dim signals As Integer
-        fidField.Proc.LineBroadening = 0.3
+
+        m_fid.Proc.LineBroadening = 0.3
         ' applyWindowFunctions //window function need to be applied before FT
         'TODO adapt the FFT to the new object Spectrum
-        '        Apodizator apodization = new ExponentialApodizator(data, acquisition.getAcquisitionMode(), processing);
-        Dim apodizedData As Double() = Nothing
+        'Dim apodization As New ExponentialApodizator(Data, Acquisition.getAcquisitionMode(), Processing)
+        Dim apodizedData As Double() ' = apodization.calculate()
 
-        '            apodizedData = apodization.calculate();
-        Try
-        Catch e As Exception
-            Console.WriteLine(e.ToString())
-            Console.Write(e.StackTrace) 'To change body of catch statement use File | Settings | File Templates.
-        End Try
         Return implementedFFT(apodizedData)
     End Function
 
@@ -144,16 +143,16 @@ Public MustInherit Class AbstractFastFourierTransformTool
 
     Public Overridable Property Data As Double()
         Get
-            Return dataField
+            Return m_data
         End Get
         Set(value As Double())
-            dataField = value
+            m_data = value
         End Set
     End Property
 
     Public Overridable ReadOnly Property Fid As Double()
         Get
-            Return fidField.Fid
+            Return m_fid.Fid
         End Get
     End Property
 
@@ -167,37 +166,37 @@ Public MustInherit Class AbstractFastFourierTransformTool
 
     Friend Overridable Sub initDataFormat()
         ' instanciating the array where the fourier transformed spectra will be stored....
-        Dim mode = fidField.Acqu.getAcquisitionMode
+        Dim mode = m_fid.Acqu.getAcquisitionMode
 
         If mode Is Acqu.AcquisitionMode.DISP OrElse mode Is Acqu.AcquisitionMode.SIMULTANIOUS Then
             ' allocate space for processing
-            dataField = New Double(2 * fidField.Proc.TransformSize - 1) {} ' allocate space for processing
+            m_data = New Double(2 * m_fid.Proc.TransformSize - 1) {} ' allocate space for processing
         ElseIf mode Is Acqu.AcquisitionMode.SEQUENTIAL Then
             ' allocate space for processing
-            dataField = New Double(4 * fidField.Proc.TransformSize - 1) {} ' allocate space for processing
+            m_data = New Double(4 * m_fid.Proc.TransformSize - 1) {} ' allocate space for processing
         Else
         End If
     End Sub
 
 
     Public Overridable Sub setData(index As Integer, point As Double)
-        dataField(index) = point
+        m_data(index) = point
     End Sub
 
     Friend Overridable Sub shiftData()
         ' perform a left or right shift of the data (ignoring the corresponding portion of the data)
         ' the code from cuteNMR was simplified
-        For i As Integer = 0 To fidField.Proc.TdEffective - std.Abs(fidField.Proc.Shift) - 1
-            Dim dataIndex = If(fidField.Proc.Shift >= 0, i, i - fidField.Proc.Shift) ' or shift the placement of the data to the right
+        For i As Integer = 0 To m_fid.Proc.TdEffective - std.Abs(m_fid.Proc.Shift) - 1
+            Dim dataIndex = If(m_fid.Proc.Shift >= 0, i, i - m_fid.Proc.Shift) ' or shift the placement of the data to the right
             ' or shift the placement of the data to the right
-            Dim fidIndex = If(fidField.Proc.Shift >= 0, i + fidField.Proc.Shift, i) ' start in the correct order
+            Dim fidIndex = If(m_fid.Proc.Shift >= 0, i + m_fid.Proc.Shift, i) ' start in the correct order
             ' start in the correct order
-            Dim type = fidField.Acqu.FidType
+            Dim type = m_fid.Acqu.FidType
 
             If type Is Acqu.FidData.INT32 Then
-                dataField(dataIndex) = fidField.Fid(fidIndex)
+                m_data(dataIndex) = m_fid.Fid(fidIndex)
             ElseIf type Is Acqu.FidData.[DOUBLE] Then
-                dataField(dataIndex) = fidField.Fid(fidIndex)
+                m_data(dataIndex) = m_fid.Fid(fidIndex)
             ElseIf type Is Acqu.FidData.FLOAT Then
             ElseIf type Is Acqu.FidData.INT16 Then
             Else
@@ -208,12 +207,12 @@ Public MustInherit Class AbstractFastFourierTransformTool
     Friend Overridable Sub tdRelatedNonUnderstoodRearrangementForSequential()
         ' try to understand this bit of code!!!!
         'nonsense case if SI is set to be less than TD/2
-        Dim td = If(fidField.Proc.TdEffective > 2 * fidField.Proc.TransformSize, 2 * fidField.Proc.TransformSize, fidField.Proc.TdEffective)
+        Dim td = If(m_fid.Proc.TdEffective > 2 * m_fid.Proc.TransformSize, 2 * m_fid.Proc.TransformSize, m_fid.Proc.TdEffective)
         ' move the data from position i to position 2*i, why?
-        If fidField.Acqu.getAcquisitionMode Is (Acqu.AcquisitionMode.SEQUENTIAL) Then
+        If m_fid.Acqu.getAcquisitionMode Is (Acqu.AcquisitionMode.SEQUENTIAL) Then
             For i = td - 1 To 1 Step -1
-                dataField(2 * i) = dataField(i)
-                dataField(i) = 0
+                m_data(2 * i) = m_data(i)
+                m_data(i) = 0
             Next
         End If
         ''''''''''''''''''''''''''''''''''''''''''''
@@ -221,13 +220,13 @@ Public MustInherit Class AbstractFastFourierTransformTool
 
     Public Overridable ReadOnly Property Processing As Proc
         Get
-            Return fidField.Proc
+            Return m_fid.Proc
         End Get
     End Property
 
     Public Overridable ReadOnly Property Acquisition As Acqu
         Get
-            Return fidField.Acqu
+            Return m_fid.Acqu
         End Get
     End Property
 End Class

@@ -725,7 +725,7 @@ Module MzWeb
 
         ElseIf file.ExtensionSuffix("raw") Then
             Using msRaw As New MSFileReader(file)
-                Return msRaw.LoadFromXRaw
+                Return msRaw.LoadFromXcaliburRaw
             End Using
 
         ElseIf file.ExtensionSuffix("cdf") Then

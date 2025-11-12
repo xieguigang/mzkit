@@ -72,9 +72,28 @@ Public Module RawStream
     End Function
 #End If
 
+    ''' <summary>
+    ''' Load mzpack raw data object from Xcalibur raw data file object
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="println"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function LoadFromXRaw(raw As MSFileReader, Optional println As Action(Of String) = Nothing) As mzPack
+    Public Function LoadFromXcaliburRaw(raw As MSFileReader, Optional println As Action(Of String) = Nothing) As mzPack
         Return New XRawStream(raw).StreamTo(println:=println)
+    End Function
+
+    ''' <summary>
+    ''' Load mzpack raw data object from Xcalibur raw data file
+    ''' </summary>
+    ''' <param name="path">the file path to a given Xcalibur raw data file</param>
+    ''' <param name="println"></param>
+    ''' <returns></returns>
+    Public Function LoadFromXcaliburRaw(path As String, Optional println As Action(Of String) = Nothing) As mzPack
+        Dim raw As New MSFileReader(path)
+        Dim data As mzPack = LoadFromXcaliburRaw(raw, println)
+
+        Return data
     End Function
 
 

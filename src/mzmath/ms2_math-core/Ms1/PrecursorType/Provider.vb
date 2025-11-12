@@ -322,6 +322,11 @@ Namespace Ms1.PrecursorType
                                      Optional allowsUnknown As Boolean = False,
                                      Optional allowAdductParser As Boolean = False,
                                      Optional verbose As Boolean = True) As IonModes
+
+            If allowsUnknown AndAlso (mode Is Nothing OrElse mode.StringEmpty(, True)) Then
+                Return IonModes.Unknown
+            End If
+
             Select Case LCase(mode)
                 Case "+", "1", "p", "pos", "positive"
                     Return IonModes.Positive

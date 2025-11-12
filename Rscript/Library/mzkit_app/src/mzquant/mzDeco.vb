@@ -100,7 +100,6 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports dataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
-Imports deco_math = BioNovoGene.Analytical.MassSpectrometry.Math.Extensions
 Imports Matrix = SMRUCC.genomics.Analysis.HTS.DataFrame.Matrix
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Imports std = System.Math
@@ -931,76 +930,13 @@ Module mzDeco
             End If
         End If
 
-        ' order raw data by rt
-        peakdata = peakdata.OrderBy(Function(i) i.rt).ToArray
-        refer_points = refer_points.OrderBy(Function(i) i.rt).AsList
-        ' add a fake point
-        refer_points.Add(New PeakFeature With {
-            .RI = refer_points.Last.RI + 100,
-            .rt = peakdata.Last.rt,
-            .xcms_id = peakdata.Last.xcms_id
-        })
-
-        Dim a As (rt As Double, ri As Double)
-        Dim b As (rt As Double, ri As Double)
-        Dim offset As Integer = 0
-        Dim id_a, id_b As String
-        Dim c_atoms As Dictionary(Of String, Integer) = Nothing
+        Dim C_atoms As Dictionary(Of String, Integer) = Nothing
 
         If Not C Is Nothing Then
-            c_atoms = C.AsGeneric(Of Integer)(env)
-
-            If Not map_RI_id.IsNullOrEmpty Then
-                ' some reference data peak maybe missing from the lcms experiment data.
-                c_atoms = c_atoms _
-                    .Where(Function(t) map_RI_id.ContainsKey(t.Key)) _
-                    .ToDictionary(Function(t) map_RI_id(t.Key),
-                                  Function(t)
-                                      Return t.Value
-                                  End Function)
-            End If
-
-            If Not c_atoms.ContainsKey(peakdata(0).xcms_id) Then
-                Call c_atoms.Add(peakdata(0).xcms_id, 0)
-            End If
-            If Not c_atoms.ContainsKey(peakdata.Last.xcms_id) Then
-                Call c_atoms.Add(peakdata.Last.xcms_id, c_atoms.Values.Max + 1)
-            End If
+            C_atoms = C.AsGeneric(Of Integer)(env)
         End If
 
-        If peakdata(0).RI > 0 Then
-            a = (peakdata(0).rt, peakdata(0).RI)
-            id_a = peakdata(0).xcms_id
-            offset = 1
-            b = (refer_points(1).rt, refer_points(1).RI)
-            id_b = refer_points(1).xcms_id
-        Else
-            a = (peakdata(0).rt, 0)
-            b = (refer_points(0).rt, refer_points(0).RI)
-            id_a = peakdata(0).xcms_id
-            id_b = refer_points(0).xcms_id
-        End If
-
-        For i As Integer = offset To peakdata.Length - 1
-            peakdata(i).rawfile = If(rawfile, peakdata(i).rawfile)
-
-            If peakdata(i).RI = 0 Then
-                If c_atoms Is Nothing Then
-                    peakdata(i).RI = deco_math.RetentionIndex(peakdata(i), a, b)
-                Else
-                    peakdata(i).RI = deco_math.KovatsRI(c_atoms(id_a), c_atoms(id_b), peakdata(i).rt, a.rt, b.rt)
-                End If
-            Else
-                a = b
-                id_a = id_b
-                offset += 1
-                b = (refer_points(offset).rt, refer_points(offset).RI)
-                id_b = refer_points(offset).xcms_id
-            End If
-        Next
-
-        ' and then evaluate the ri for each peak points
-        Return peakdata
+        Return peakdata.ConvertRI(refer_points, C_atoms, map_RI_id, rawfile)
     End Function
 
     ''' <summary>
@@ -1450,7 +1386,12 @@ extract_ms1:
                                     Optional ppm As Double = 20,
                                     Optional aggregate As Aggregates = Aggregates.Sum) As Object
 
-        Dim ions = peaks.GroupBy(Function(i) i.mz, Function(a, b) PPMmethod.PPM(a, b) <= ppm).ToArray
+        Dim ions As NamedCollection(Of xcms2)() = peaks _
+            .GroupBy(Function(i) i.mz,
+                     Function(a, b)
+                         Return PPMmethod.PPM(a, b) <= ppm
+                     End Function) _
+            .ToArray
         Dim merge As New List(Of xcms2)
         Dim f As Func(Of Double, Double, Double) = aggregate.GetAggregateFunction2
 

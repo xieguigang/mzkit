@@ -239,8 +239,8 @@ Public Class ScanVisual3D : Inherits Plot
 
         parallelCanvas = parallelCanvas.Offset2D(dx, -dy)
 
-        Dim firstFrame As GraphicsRegion
-        Dim lastFrame As GraphicsRegion
+        Dim firstFrame As GraphicsRegion = Nothing
+        Dim lastFrame As GraphicsRegion = Nothing
         Dim parallelXAxisPen As Pen = CSS.GetPen(Stroke.TryParse(theme.gridStrokeX))
         Dim maxinto As Double = Aggregate scan As NamedCollection(Of ChromatogramTick)
                                 In scans
@@ -302,7 +302,7 @@ Public Class ScanVisual3D : Inherits Plot
                 fillAlpha:=fillAlpha,
                 labelLayoutTicks:=-1,
                 theme:=theme,
-                bspline:=0
+                bspline:=Nothing
             ) With {
                 .xlabel = xlabel,
                 .ylabel = ylabel,

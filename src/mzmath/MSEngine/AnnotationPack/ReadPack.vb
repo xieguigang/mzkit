@@ -55,9 +55,9 @@
 #End Region
 
 Imports System.IO
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module ReadPack
 
@@ -86,6 +86,9 @@ Public Module ReadPack
         For i As Integer = 0 To n - 1
             result(bin.ReadString) = ReadScore(bin)
         Next
+
+        result.samplesRI = bin.ReadString.LoadJSON(Of Dictionary(Of String, Double))
+        result.samplesRT = bin.ReadString.LoadJSON(Of Dictionary(Of String, Double))
 
         Return result
     End Function

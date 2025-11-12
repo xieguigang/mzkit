@@ -253,6 +253,14 @@ Namespace DataObjects
             ScanEnd = 0
             CorruptFile = False
         End Sub
+
+        ''' <summary>
+        ''' show instrument methods
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function ToString() As String
+            Return InstMethods.JoinBy(vbCrLf & vbCrLf)
+        End Function
     End Class
 
 End Namespace

@@ -1,4 +1,4 @@
-﻿.TH PREPROCESSING_EXPRESSION 1 2025-Aug "" "Normalize matrix sample data"
+﻿.TH PREPROCESSING_EXPRESSION 1 2025-Nov "" "Normalize matrix sample data"
 .SH NAME
 preprocessing_expression \- preprocessing_expression(x,
     <i>sampleinfo</i> = <span style='color: blue !important;'>NULL</span>,
@@ -14,7 +14,13 @@ preprocessing_expression \- preprocessing_expression(x,
 \fBx\fB \fR\- . 
 .PP
 .PP
-\fBsampleinfo\fB \fR\- NULL. 
+\fBsampleinfo\fB \fR\- NULL. the sample information for the missing impute. this parameter
+value could be a file path to the sampleinfo dataframe file, or a dataframe
+object that contains the required fields for the sample info:
++ ``id`` is the sample id and used for the sample file name association;
++ ``name`` is the sample name and used for the sample name display;
++ ``group`` is the sample group information and used for the missing row data
+impute and data filter in the processing.
 .PP
 .PP
 \fBfactor\fB \fR\- 100000000. 
@@ -24,7 +30,8 @@ preprocessing_expression \- preprocessing_expression(x,
 .PP
 .SH VALUE
 .PP
-a result data matrix has been normalized via total sum of the peak area.
+a result data matrix has been normalized
+via total sum of the peak area.
 .PP
 .SH FILES
 .PP

@@ -83,7 +83,8 @@ Public Class MassSearchIndex(Of T As IExactMassProvider) : Implements IMassSearc
     ''' <summary>
     ''' mass tolerance value for match sample mz and threocal mz
     ''' </summary>
-    ReadOnly tolerance As Tolerance
+    Public ReadOnly Property tolerance As Tolerance
+
     ReadOnly massIndex As BlockSearchFunction(Of T)
     ReadOnly activator As Func(Of Double, Object)
 

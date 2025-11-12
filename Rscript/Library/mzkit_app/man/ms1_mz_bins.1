@@ -1,4 +1,4 @@
-﻿.TH MS1_MZ_BINS 1 2025-Aug "" "Extract the ion m/z features"
+﻿.TH MS1_MZ_BINS 1 2025-Nov "" "Extract the ion m/z features"
 .SH NAME
 ms1_mz_bins \- ms1_mz_bins(files,
     <i>mzdiff</i> = <span style='color: green;'>0.001</span>)
@@ -7,14 +7,18 @@ ms1_mz_bins \- ms1_mz_bins(files,
     <i>mzdiff</i> = <span style='color: green;'>0.001</span>)\fR
 .SH OPTIONS
 .PP
-\fBfiles\fB \fR\- . 
+\fBfiles\fB \fR\- . a character vector of file path of the XIC data files which
+are extract from the rawdata file via the ``ms1_xic_bins`` function.
 .PP
 .PP
 \fBmzdiff\fB \fR\- 0.001. 
 .PP
 .SH VALUE
 .PP
-a dataframe object that contains the ion m/z features, data fields are included inside this result table: 1. mz: the ion m/z feature numeric vector 2. into: the max intensity value of current ion feature
+a dataframe object that contains the ion m/z features, data
+fields are included inside this result table:
+1. mz: the ion m/z feature numeric vector
+2. into: the max intensity value of current ion feature
 .PP
 .SH FILES
 .PP

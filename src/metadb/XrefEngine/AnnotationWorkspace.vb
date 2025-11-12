@@ -1,66 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::d72c94acf61ee05e4d3c26cc136dd02b, metadb\XrefEngine\AnnotationWorkspace.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 306
-    '    Code Lines: 186 (60.78%)
-    ' Comment Lines: 71 (23.20%)
-    '    - Xml Docs: 81.69%
-    ' 
-    '   Blank Lines: 49 (16.01%)
-    '     File Size: 11.63 KB
+' Summaries:
 
 
-    ' Class AnnotationWorkspace
-    ' 
-    '     Properties: file
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: CheckXicCache, GetLibraryHits, LoadMemory, LoadPeakTable, LoadXicGroup
-    ' 
-    '     Sub: CacheXicTable, CreateLibraryResult, (+2 Overloads) Dispose, Flush, SetPeakTable
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 306
+'    Code Lines: 186 (60.78%)
+' Comment Lines: 71 (23.20%)
+'    - Xml Docs: 81.69%
+' 
+'   Blank Lines: 49 (16.01%)
+'     File Size: 11.63 KB
+
+
+' Class AnnotationWorkspace
+' 
+'     Properties: file
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: CheckXicCache, GetLibraryHits, LoadMemory, LoadPeakTable, LoadXicGroup
+' 
+'     Sub: CacheXicTable, CreateLibraryResult, (+2 Overloads) Dispose, Flush, SetPeakTable
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
+Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices
@@ -87,6 +88,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     ReadOnly libraries As New Dictionary(Of String, Integer)
     ReadOnly samplefiles As New List(Of String)
     ReadOnly source As String
+    ReadOnly wrap_tqdmConsole As Boolean = True
 
     Private disposedValue As Boolean
 
@@ -103,18 +105,29 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         End Get
     End Property
 
+    Public ReadOnly Property Chromatographic As String = "*"
+    Public ReadOnly Property Polarity As String = "*"
+
     ''' <summary>
-    ''' construct of the workspace file reader/writer
+    ''' construct of the <see cref="AnnotationPack"/> file reader/writer
     ''' </summary>
     ''' <param name="file"></param>
     ''' <param name="source_file"></param>
     Sub New(file As Stream,
             Optional source_file As String = Nothing,
-            Optional meta_allocated As Long = 32 * ByteSize.MB)
+            Optional meta_allocated As Long = 32 * ByteSize.MB,
+            Optional wrap_tqdm As Boolean? = Nothing)
 
         source = source_file
         pack = New StreamPack(file, meta_size:=meta_allocated)
+        wrap_tqdmConsole = If(wrap_tqdm Is Nothing, App.EnableTqdm, CBool(wrap_tqdm))
 
+        If pack.FileExists("/chromatographic.txt", ZERO_Nonexists:=True) Then
+            Chromatographic = Strings.Trim(pack.ReadText("/chromatographic.txt")).TrimNewLine.Trim
+        End If
+        If pack.FileExists("/polarity.txt", ZERO_Nonexists:=True) Then
+            Polarity = Strings.Trim(pack.ReadText("/polarity.txt")).TrimNewLine.Trim
+        End If
         If pack.FileExists("/libraries.json", ZERO_Nonexists:=True) Then
             libraries = pack.ReadText("/libraries.json").LoadJSON(Of Dictionary(Of String, Integer))
         End If
@@ -136,6 +149,14 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         End If
     End Sub
 
+    Public Sub SetExperimentLabel(chromatographic As String, polarity As String)
+        _Chromatographic = Strings.Trim(chromatographic).TrimNewLine.Trim
+        _Polarity = Strings.Trim(polarity).TrimNewLine.Trim
+
+        Call pack.WriteText(chromatographic, "/chromatographic.txt", allocate:=False)
+        Call pack.WriteText(polarity, "/polarity.txt", allocate:=False)
+    End Sub
+
     ''' <summary>
     ''' Load in-memory data pack from the pack file stream
     ''' </summary>
@@ -152,7 +173,8 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         Return New AnnotationPack With {
             .libraries = libraries,
             .file = file,
-            .peaks = LoadPeakTable.ToArray
+            .peaks = LoadPeakTable.ToArray,
+            .RI = ReadRI()
         }
     End Function
 
@@ -184,8 +206,30 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
 
     Const peaktablefile As String = "/peaktable.dat"
 
+    Public Sub SaveRIReference(RI As Dictionary(Of String, RIRefer()))
+        For Each name As String In RI.Keys
+            Call pack.WriteText((From data As RIRefer In RI(name) Select data.GetJson), $"/RI/{name}.jsonl", allocate:=False)
+        Next
+    End Sub
+
+    Public Function ReadRI() As Dictionary(Of String, RIRefer())
+        Dim table As New Dictionary(Of String, RIRefer())
+
+        For Each file As StreamBlock In pack.ListFiles("/RI/", recursive:=False)
+            table(file.fileName.BaseName) = pack _
+                .ReadText(file) _
+                .LineTokens _
+                .Where(Function(line) Not line.StringEmpty(, True)) _
+                .Select(Function(line) line.LoadJSON(Of RIRefer)) _
+                .ToArray
+        Next
+
+        Return table
+    End Function
+
     ''' <summary>
-    ''' Extract the XIC cache data from a given set of rawdata objects based on the peaktable information inside the workspace file
+    ''' Extract the XIC cache data from a given set of rawdata objects based on 
+    ''' the peaktable information inside the workspace file
     ''' </summary>
     ''' <param name="files"></param>
     ''' <param name="mass_da">
@@ -198,20 +242,13 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         Dim pool As mzPack() = files.ToArray
 
         For i As Integer = 0 To pool.Length - 1
-            If pool(i).source.StringEmpty Then
-                Throw New InvalidDataException("Missing sample source file name for the mzpack rawdata object!")
-            End If
-
-            pool(i).source = pool(i).source _
-                .Replace(".mzPack", "") _
-                .Replace(".mzpack", "") _
-                .Replace(".MZPACK", "")
+            Call SourceTagCheck(pool(i))
         Next
 
         ' commit current data pool
         Call Flush()
         ' and then load the peaktable back from the filesystem
-        For Each peak As xcms2 In TqdmWrapper.Wrap(LoadPeakTable.ToArray, wrap_console:=App.EnableTqdm)
+        For Each peak As xcms2 In TqdmWrapper.Wrap(LoadPeakTable.ToArray, wrap_console:=wrap_tqdmConsole)
             Dim scatter = pool.AsParallel _
                 .Select(Function(file)
                             Return New NamedCollection(Of ms1_scan)(file.source, file.PickIonScatter(peak.mz, peak.rt, mass_da, rt_win))
@@ -224,6 +261,40 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
                     Call s.Flush()
                 End Using
             Next
+        Next
+    End Sub
+
+    Private Sub SourceTagCheck(<Out> ByRef raw As IMsAssemblyPack)
+        If raw.source.StringEmpty() Then
+            Throw New InvalidDataException("Missing sample source file name for the mzpack rawdata object!")
+        Else
+            raw.source = raw.source _
+               .Replace(".mzPack", "") _
+               .Replace(".mzpack", "") _
+               .Replace(".MZPACK", "")
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' Make cache xic data from a given raw data file
+    ''' </summary>
+    ''' <typeparam name="mzPack"></typeparam>
+    ''' <param name="file"></param>
+    ''' <param name="mass_da"></param>
+    ''' <param name="rt_win"></param>
+    Public Sub CacheXicTable(Of mzPack As IMsAssemblyPack)(file As mzPack, Optional mass_da As Double = 0.5, Optional rt_win As Double = 15)
+        Call SourceTagCheck(file)
+
+        ' commit current data pool
+        Call Flush()
+        ' and then load the peaktable back from the filesystem
+        For Each peak As xcms2 In TqdmWrapper.Wrap(LoadPeakTable.ToArray, wrap_console:=wrap_tqdmConsole)
+            Dim xicScatter As ms1_scan() = file.PickIonScatter(peak.mz, peak.rt, mass_da, rt_win).ToArray
+
+            Using s As Stream = pack.OpenFile($"/xic_table/{file.source}/{peak.ID}.xic",, FileAccess.Write)
+                Call xicScatter.SaveDataFrame(s)
+                Call s.Flush()
+            End Using
         Next
     End Sub
 
@@ -300,7 +371,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
             i += 1
 
             If peak_result Is Nothing Then
-                Call $"found null alignment hit result value for '{library}' at index offset [{i}]!".Warning
+                Call $"found null alignment hit result value for '{library}' at index offset [{i}]!".warning
                 Continue For
             End If
 
@@ -315,7 +386,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         Next
 
         If library = "missing!" Then
-            Call $"missing library reference name for {tags.Take(10).JoinBy(", ")}...".Warning
+            Call $"missing library reference name for {tags.Take(10).JoinBy(", ")}...".warning
         End If
 
         If libraries.ContainsKey(library) Then

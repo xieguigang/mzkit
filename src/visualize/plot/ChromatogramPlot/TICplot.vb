@@ -82,6 +82,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -121,7 +122,7 @@ Public Class TICplot : Inherits Plot
     ReadOnly fillCurve As Boolean
     ReadOnly fillAlpha As Integer
     ReadOnly labelLayoutTicks As Integer = 100
-    ReadOnly bspline As Single = 0!
+    ReadOnly bspline As BSpline
     ''' <summary>
     ''' 当两个滑窗点的时间距离过长的时候，就不进行连接线的绘制操作了
     ''' （插入两个零值的点）
@@ -129,6 +130,8 @@ Public Class TICplot : Inherits Plot
     ReadOnly leapTimeWinSize As Double = 30
 
     Public Property sampleColors As Dictionary(Of String, Pen)
+    Public Property ROIFill As Brush = Nothing
+    Public Property ROI As PeakFeature
 
     ''' <summary>
     ''' 
@@ -149,7 +152,7 @@ Public Class TICplot : Inherits Plot
             fillCurve As Boolean,
             fillAlpha As Integer,
             labelLayoutTicks As Integer,
-            bspline As Single,
+            bspline As BSpline,
             theme As Theme)
 
         Call Me.New({tic},
@@ -170,7 +173,7 @@ Public Class TICplot : Inherits Plot
                    fillCurve As Boolean,
                    fillAlpha As Integer,
                    labelLayoutTicks As Integer,
-                   bspline As Single,
+                   bspline As BSpline,
                    theme As Theme)
 
         MyBase.New(theme)
@@ -206,7 +209,7 @@ Public Class TICplot : Inherits Plot
 
             If palette.StringEmpty(, True) Then
                 palette = "paper"
-                Call $"the color set for TIC overlaps plot is empty, use the default color set 'paper' for the plot rendering.".Warning
+                Call $"the color set for TIC overlaps plot is empty, use the default color set 'paper' for the plot rendering.".warning
             End If
 
             Return Designer _
@@ -224,16 +227,16 @@ Public Class TICplot : Inherits Plot
     Friend Sub RunPlot(ByRef g As IGraphics, canvas As GraphicsRegion, ByRef labels As Label(), ByRef legends As LegendObject())
         Dim colors As LoopArray(Of Pen) = colorProvider(g.LoadEnvironment)
         Dim defaultPen As Pen = newPen(g.LoadEnvironment, theme.colorSet.TranslateColor(False) Or Color.DeepSkyBlue.AsDefault)
-        Dim XTicks As Double() = ionData _
+        Dim rawTime = ionData _
             .Select(Function(ion)
                         Return ion.value.TimeArray
                     End Function) _
             .IteratesALL _
-            .JoinIterates(timeRange) _
-            .AsVector _
-            .Range _
-            .CreateAxisTicks  ' time
-
+            .OrderBy(Function(xi) xi) _
+            .ToArray
+        Dim timeRange = Me.timeRange
+        timeRange = New DoubleRange(rawTime.JoinIterates(timeRange)).MinMax
+        Dim XTicks As Double() = timeRange.CreateAxisTicks  ' time
         Dim YTicks = ionData _
             .Select(Function(ion)
                         Return ion.value.IntensityArray
@@ -282,6 +285,28 @@ Public Class TICplot : Inherits Plot
         Dim legendList As New List(Of LegendObject)
         Dim curvePen As Pen
 
+        If Not ROI Is Nothing Then
+            Dim left As Single = scaler.X(ROI.rtmin)
+            Dim right As Single = scaler.X(ROI.rtmax)
+            Dim top As Single = rect.Top
+            Dim bottom As Single = scaler.TranslateY(0)
+            Dim roi_region As New RectangleF(left, top, right - left, bottom - top)
+
+            ' 20251022 fix the bug of multi-thread brush resource conflict
+            ' when do drawing on windows form graphic canvas
+            If ROIFill IsNot Nothing Then
+                SyncLock ROIFill
+                    Call g.FillRectangle(ROIFill, roi_region)
+                End SyncLock
+            Else
+                Dim fill As Brush = New SolidBrush(Color.Blue.Alpha(150))
+
+                SyncLock fill
+                    Call g.FillRectangle(fill, roi_region)
+                End SyncLock
+            End If
+        End If
+
         For i As Integer = 0 To ionData.Length - 1
             Dim line As NamedCollection(Of ChromatogramTick) = ionData(i)
             Dim chromatogram = line.value
@@ -300,18 +325,8 @@ Public Class TICplot : Inherits Plot
             If chromatogram.IsNullOrEmpty Then
                 Call $"ion not found in raw file: '{line.name}'".Warning
                 Continue For
-            ElseIf bspline > 0 Then
-                Dim raw As PointF() = chromatogram.Select(Function(t) New PointF(t.Time, t.Intensity)).ToArray
-                Dim interpolate = B_Spline.BSpline(raw, bspline, 10).ToArray
-
-                chromatogram = interpolate _
-                    .Select(Function(pi)
-                                Return New ChromatogramTick With {
-                                    .Time = pi.X,
-                                    .Intensity = pi.Y
-                                }
-                            End Function) _
-                    .ToArray
+            ElseIf bspline IsNot Nothing AndAlso bspline.degree > 1 Then
+                chromatogram = ChromatogramTick.Bspline(chromatogram, bspline.degree, bspline.resolution)
             End If
 
             legendList += New LegendObject With {
@@ -406,7 +421,8 @@ Public Class TICplot : Inherits Plot
 
         For Each ion As NamedValue(Of ChromatogramTick) In peakTimes
             Dim labelSize As SizeF = g.MeasureString(ion.Name, labelFont)
-            Dim location As PointF = scaler.Translate(ion.Value)
+            Dim tick As ChromatogramTick = ion.Value
+            Dim location As PointF = scaler.Translate(tick.Time, tick.Intensity)
 
             location = New PointF With {
                 .X = location.X - labelSize.Width / 2,

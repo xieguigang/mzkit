@@ -69,13 +69,13 @@ Namespace Chromatogram
     ''' <summary>
     ''' The chromatogram signal ticks (``{time => intensity}``)
     ''' </summary>
-    Public Class ChromatogramTick : Implements ITimeSignal
+    Public Class ChromatogramTick : Implements ITimeSignal, IRetentionTime
 
         ''' <summary>
         ''' The signal tick time in second
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property Time As Double Implements ITimeSignal.time
+        <XmlAttribute> Public Property Time As Double Implements ITimeSignal.time, IRetentionTime.rt
 
         ''' <summary>
         ''' number of detector counts

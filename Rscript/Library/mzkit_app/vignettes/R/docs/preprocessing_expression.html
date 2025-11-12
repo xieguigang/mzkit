@@ -37,6 +37,18 @@
 
         <table>
             
+<dt>sampleinfo</dt>
+<dd><p><p>the sample information for the missing impute. this parameter
+value could be a file path to the sampleinfo dataframe file, or a dataframe
+object that contains the required fields for the sample info:
+<ul>
+<li><code>id</code> is the sample id and used for the sample file name association;</li>
+<li><code>name</code> is the sample name and used for the sample name display;</li>
+<li><code>group</code> is the sample group information and used for the missing row data</li>
+</ul></p>
+
+<p>impute and data filter in the processing.</p></p></dd>
+
         </table>
 
 
@@ -50,7 +62,8 @@
 
         <h3>Value</h3>
 
-        <p>a result data matrix has been normalized via total sum of the peak area.</p>
+        <p>a result data matrix has been normalized
+via total sum of the peak area.</p>
 
         <h3 style="display: none;">Examples</h3>
 
@@ -67,4 +80,4 @@
 <script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("example_r");</script>
 
-</html>
+</html>

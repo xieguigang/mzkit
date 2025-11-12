@@ -37,6 +37,8 @@ export class AnnotationPack {
    libraries: list;
    # the ms1 peaktable
    peaks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2[]</a>;
+   # RI reference point
+   RI: list;
    # [xcms_id => XIC across multiple sample files]
    XIC: list;
 }
@@ -48,6 +50,7 @@ export class AnnotationPack {
         <ol>
 <li>use by <i>property</i> member <code>libraries</code>: list</li>
 <li>use by <i>property</i> member <code>peaks</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a></li>
+<li>use by <i>property</i> member <code>RI</code>: list</li>
 <li>use by <i>property</i> member <code>XIC</code>: list</li>
 </ol>
 
@@ -63,4 +66,4 @@ export class AnnotationPack {
 <script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
-</html>
+</html>

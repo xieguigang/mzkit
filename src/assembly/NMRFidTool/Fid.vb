@@ -79,6 +79,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.nmrML
 Imports Microsoft.VisualBasic.Linq
+
 ''' <summary>
 ''' Data structure for the fid
 ''' 
@@ -91,66 +92,49 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 Public Class Fid
 
-    Private dataField As Double()
-    Private realField As Double()
-    Private imaginaryField As Double()
+    ''' <summary>
+    ''' the raw input data
+    ''' </summary>
+    ''' <returns></returns>
+    Public Overridable ReadOnly Property Data As Double()
+    Public Overridable ReadOnly Property Real As Double()
+    Public Overridable ReadOnly Property Imaginary As Double()
 
     Public Sub New(fid As IList(Of Integer?))
         Me.New(fid.Select(Function(i) CDbl(i)).ToArray())
     End Sub
 
     Public Sub New(fid As Double())
-        dataField = fid
+        Data = fid
         splitData()
 
     End Sub
 
     Private Sub splitData()
-        realField = New Double(dataField.Length / 2 - 1) {}
-        imaginaryField = New Double(dataField.Length / 2 - 1) {}
-        For i = 0 To dataField.Length - 1 Step 2
-            realField(i / 2) = dataField(i) ' real are in even positions
-            imaginaryField(i / 2) = dataField(i + 1) ' imaginary are in odd positions
+        _Real = New Double(Data.Length / 2 - 1) {}
+        _Imaginary = New Double(Data.Length / 2 - 1) {}
+
+        For i = 0 To Data.Length - 1 Step 2
+            _Real(i / 2) = Data(i) ' real are in even positions
+            _Imaginary(i / 2) = Data(i + 1) ' imaginary are in odd positions
         Next
     End Sub
 
     Public Sub New(fid As Integer())
-        dataField = New Double(fid.Length - 1) {}
+        Data = New Double(fid.Length - 1) {}
         For i = 0 To fid.Length - 1
-            dataField(i) = fid(i)
+            _Data(i) = fid(i)
         Next
         splitData()
     End Sub
 
     Public Sub New(fid As Single())
-        dataField = New Double(fid.Length - 1) {}
+        Data = New Double(fid.Length - 1) {}
         For i = 0 To fid.Length - 1
-            dataField(i) = fid(i)
+            _Data(i) = fid(i)
         Next
         splitData()
     End Sub
-
-    ''' <summary>
-    ''' the raw input data
-    ''' </summary>
-    ''' <returns></returns>
-    Public Overridable ReadOnly Property Data As Double()
-        Get
-            Return dataField
-        End Get
-    End Property
-
-    Public Overridable ReadOnly Property Real As Double()
-        Get
-            Return realField
-        End Get
-    End Property
-
-    Public Overridable ReadOnly Property Imaginary As Double()
-        Get
-            Return imaginaryField
-        End Get
-    End Property
 
     Public Shared Function Create(acquisition As acquisition) As Fid
         Dim cplx128 = acquisition.ParseMatrix()

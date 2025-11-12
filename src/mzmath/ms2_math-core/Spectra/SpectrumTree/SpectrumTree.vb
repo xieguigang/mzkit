@@ -201,7 +201,7 @@ Namespace Spectra
         End Sub
 
         Public Function doCluster(spectrum As PeakMs2()) As SpectrumTreeCluster
-            Call "Create spectrum tree".info
+            Call "create spectrum tree".info
             Call clusterInternal(spectrum)
 
             Return Me

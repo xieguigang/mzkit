@@ -85,6 +85,12 @@ Public Class AnnotationPack : Implements IWorkspaceReader, IDisposable
     Public Property XIC As Dictionary(Of String, MzGroup())
 
     ''' <summary>
+    ''' RI reference point 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property RI As Dictionary(Of String, RIRefer())
+
+    ''' <summary>
     ''' the ms1 peaktable
     ''' </summary>
     ''' <returns></returns>
@@ -176,6 +182,7 @@ Public Class AnnotationPack : Implements IWorkspaceReader, IDisposable
 
                 ' clear all annotation data
                 Call libraries.Clear()
+                Call XIC.Clear()
             End If
 
             ' TODO: 释放未托管的资源(未托管的对象)并重写终结器

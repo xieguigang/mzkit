@@ -65,6 +65,9 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
 Imports std = System.Math
 
+''' <summary>
+''' the file reader wrapper of the Xcalibur raw data file
+''' </summary>
 Public Class MSFileReader : Implements IDisposable
 
     Public Const GET_SCAN_DATA_WARNING As String = "GetScanData2D returned no data for scan"

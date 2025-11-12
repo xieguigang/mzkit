@@ -124,6 +124,9 @@ Public Class PlotMassWindowXIC : Inherits Plot
     ReadOnly xic As ChromatogramTick()
     ReadOnly rtmin As Double
     ReadOnly rtmax As Double
+    ReadOnly ROI As PeakFeature
+
+    Public Property ROIFillColor As Brush
 
     ''' <summary>
     ''' Construct a plot that combined of XIC with the scatter density heatmap
@@ -141,7 +144,8 @@ Public Class PlotMassWindowXIC : Inherits Plot
     ''' </param>
     Sub New(xic As IEnumerable(Of ms1_scan), mz As Double, xicErr As Tolerance, theme As Theme,
             Optional mzdiff As Double = 0.001,
-            Optional mzErr As Tolerance = Nothing)
+            Optional mzErr As Tolerance = Nothing,
+            Optional roi As PeakFeature = Nothing)
 
         Call MyBase.New(theme)
 
@@ -161,6 +165,7 @@ Public Class PlotMassWindowXIC : Inherits Plot
         End If
 
         Me.xic = loadXIC(pool, mz, xicErr).ToArray
+        Me.ROI = roi
         Me.mass_windows = pool _
             .Where(Function(mzi) mzErr(mzi.mz, mz)) _
             .GroupBy(Function(m) m.mz, offsets:=mzdiff) _
@@ -263,10 +268,37 @@ Public Class PlotMassWindowXIC : Inherits Plot
         theme.YaxisTickFormat = "G2"
 
         If Not xic_dat.pts.IsNullOrEmpty Then
-            Call New Scatter2D({xic_dat}, theme) With {
+            Dim linePlot As New Scatter2D({xic_dat}, theme) With {
                 .xlabel = "Retention Time(s)",
                 .ylabel = "Intensity"
-            }.Plot(g, layout:=part1)
+            }
+            Dim scaler = linePlot.GetDataScaler(g, Scatter2D.EvaluateLayout(g, part1))
+
+            theme.gridFill = NameOf(Color.Transparent)
+
+            If Not ROI Is Nothing Then
+                Dim left As Single = scaler.X(ROI.rtmin)
+                Dim right As Single = scaler.X(ROI.rtmax)
+                Dim top As Single = part1.Top
+                Dim bottom As Single = scaler.TranslateY(0)
+                Dim roi_region As New RectangleF(left, top, right - left, bottom - top)
+
+                ' 20251022 fix the bug of multi-thread brush resource conflict
+                ' when do drawing on windows form graphic canvas
+                If ROIFillColor IsNot Nothing Then
+                    SyncLock ROIFillColor
+                        Call g.FillRectangle(ROIFillColor, roi_region)
+                    End SyncLock
+                Else
+                    Dim fill As Brush = New SolidBrush(Color.Blue.Alpha(150))
+
+                    SyncLock fill
+                        Call g.FillRectangle(fill, roi_region)
+                    End SyncLock
+                End If
+            End If
+
+            Call linePlot.Plot(g, layout:=part1)
         Else
             Call "No Xic data points!".Warning
         End If

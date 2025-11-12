@@ -82,6 +82,7 @@ Namespace Spectra
     ''' </remarks>
     Public Class ms2 : Implements IMzAnnotation, INumericKey, ISpectrumPeak
         Implements IComparable
+        Implements IComparable(Of ms2)
 
         ''' <summary>
         ''' Molecular fragment m/z.(or the mass value)
@@ -152,23 +153,25 @@ Namespace Spectra
         End Function
 
         ''' <summary>
-        ''' compares by mz value
+        ''' compares by fragment intensity and mz value
         ''' </summary>
         ''' <param name="other"></param>
         ''' <returns></returns>
         Public Function CompareTo(other As Object) As Integer Implements IComparable.CompareTo
-            If [GetType]() IsNot other.GetType() Then
+            If Me.GetType() IsNot other.GetType() Then
                 Throw New ArgumentException(String.Format("Can't compare {0} with {1}.", [GetType](), other.GetType()))
+            Else
+                Return CompareTo(DirectCast(other, ms2))
             End If
+        End Function
 
-            Dim otherCpy = DirectCast(other, ms2)
-
-            If intensity < otherCpy.intensity Then
+        Public Function CompareTo(other As ms2) As Integer Implements IComparable(Of ms2).CompareTo
+            If intensity < other.intensity Then
                 Return -1
-            ElseIf intensity > otherCpy.intensity Then
+            ElseIf intensity > other.intensity Then
                 Return 1
             Else
-                Return otherCpy.mz.CompareTo(mz)
+                Return other.mz.CompareTo(mz)
             End If
         End Function
 

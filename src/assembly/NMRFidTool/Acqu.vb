@@ -163,7 +163,7 @@ Public Class Acqu
     Private fidTypeField As FidData 'fid_type      define in class data_par
     Private byteOrderField As ByteOrder 'bytorda       byte order (0 -> Little endian, 1 -> Big Endian)
 
-    Private spectrometerField As Spectrometer
+    Private m_spectrometer As Spectrometer
 
     Public Enum Spectrometer
         BRUKER
@@ -172,7 +172,7 @@ Public Class Acqu
     End Enum
 
     Public Sub New(spectrometer As Spectrometer)
-        spectrometerField = spectrometer
+        m_spectrometer = spectrometer
     End Sub
 
     Public Overridable Property TransmiterFreq As Double
@@ -537,6 +537,6 @@ Public Class Acqu
 
 
     Public Overridable Function getSpectrometer() As Spectrometer
-        Return spectrometerField
+        Return m_spectrometer
     End Function
 End Class

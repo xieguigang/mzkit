@@ -55,8 +55,8 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
-Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework
+Imports Microsoft.VisualBasic.Data.Framework.IO
 
 Module Module2
 

@@ -72,7 +72,7 @@ Namespace Ms1.PrecursorType
     <CLSCompliant(True)>
     Public Enum IonModes As Integer
         ''' <summary>
-        ''' Unknown Ion Mode
+        ''' Unknown Ion Mode or Raw data file contains both positive data and negative data
         ''' </summary>
         Unknown = 0
 

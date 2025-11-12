@@ -67,11 +67,27 @@ Public Class AlignmentHit
 
     Public Property xcms_id As String
     Public Property libname As String
+    ''' <summary>
+    ''' mz value that read from the sample raw data file
+    ''' </summary>
+    ''' <returns></returns>
     Public Property mz As Double
     Public Property rt As Double
+    ''' <summary>
+    ''' the reference RI value
+    ''' </summary>
+    ''' <returns></returns>
     Public Property RI As Double
+    ''' <summary>
+    ''' theoretical m/z that calculated from the formula data
+    ''' </summary>
+    ''' <returns></returns>
     Public Property theoretical_mz As Double
     Public Property exact_mass As Double
+    ''' <summary>
+    ''' the adducts precursor type that combined with the formula data for calculate the theoretical m/z value
+    ''' </summary>
+    ''' <returns></returns>
     Public Property adducts As String
     Public Property ppm As Double
     Public Property occurrences As Integer
@@ -82,6 +98,17 @@ Public Class AlignmentHit
     Public Property pvalue As Double
 
     ''' <summary>
+    ''' the RI value in each sample data files
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property samplesRI As Dictionary(Of String, Double)
+    ''' <summary>
+    ''' the RT value in each sample data files
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property samplesRT As Dictionary(Of String, Double)
+
+    ''' <summary>
     ''' sample hits of current library reference
     ''' </summary>
     ''' <returns></returns>
@@ -90,11 +117,20 @@ Public Class AlignmentHit
     ''' </remarks>
     Public Property samplefiles As Dictionary(Of String, Ms2Score)
 
+    ''' <summary>
+    ''' get/set the ms2 alignment details for a specific data sample
+    ''' </summary>
+    ''' <param name="sampleName">the data sample name</param>
+    ''' <returns></returns>
     Default Public Property SampleAlignment(sampleName As String) As Ms2Score
         Get
             Return samplefiles.TryGetValue(sampleName)
         End Get
         Set
+            If samplefiles Is Nothing Then
+                samplefiles = New Dictionary(Of String, Ms2Score)
+            End If
+
             samplefiles(sampleName) = Value
         End Set
     End Property
@@ -122,7 +158,16 @@ Public Class AlignmentHit
         formula = copy.formula
         npeaks = copy.npeaks
         pvalue = copy.pvalue
-        samplefiles = New Dictionary(Of String, Ms2Score)(copy.samplefiles)
+
+        If Not copy.samplefiles.IsNullOrEmpty Then
+            samplefiles = New Dictionary(Of String, Ms2Score)(copy.samplefiles)
+        End If
+        If Not copy.samplesRI.IsNullOrEmpty Then
+            samplesRI = New Dictionary(Of String, Double)(copy.samplesRI)
+        End If
+        If Not copy.samplesRT.IsNullOrEmpty Then
+            samplesRT = New Dictionary(Of String, Double)(copy.samplesRT)
+        End If
     End Sub
 
     Public Overrides Function ToString() As String
