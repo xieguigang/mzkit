@@ -149,6 +149,9 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         End If
     End Sub
 
+    Protected Sub New()
+    End Sub
+
     Public Sub SetExperimentLabel(chromatographic As String, polarity As String)
         _Chromatographic = Strings.Trim(chromatographic).TrimNewLine.Trim
         _Polarity = Strings.Trim(polarity).TrimNewLine.Trim
@@ -161,7 +164,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     ''' Load in-memory data pack from the pack file stream
     ''' </summary>
     ''' <returns></returns>
-    Public Function LoadMemory() As AnnotationPack Implements IWorkspaceReader.LoadMemory
+    Public Overridable Function LoadMemory() As AnnotationPack Implements IWorkspaceReader.LoadMemory
         Dim libraries As New Dictionary(Of String, AlignmentHit())
 
         For Each name As String In Me.libraries.Keys
@@ -182,7 +185,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     ''' load ms1 peaktable data
     ''' </summary>
     ''' <returns></returns>
-    Public Function LoadPeakTable() As IEnumerable(Of xcms2)
+    Public Overridable Function LoadPeakTable() As IEnumerable(Of xcms2)
         If Not pack.FileExists(peaktablefile, ZERO_Nonexists:=True) Then
             Return New xcms2() {}
         End If
@@ -193,7 +196,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         Return peaks
     End Function
 
-    Public Iterator Function GetLibraryHits(library As String) As IEnumerable(Of AlignmentHit)
+    Public Overridable Iterator Function GetLibraryHits(library As String) As IEnumerable(Of AlignmentHit)
         Dim dir As StreamGroup = pack.GetObject($"/result/{library}/")
 
         For Each file As StreamBlock In dir.ListFiles(recursive:=True).OfType(Of StreamBlock)
@@ -212,7 +215,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         Next
     End Sub
 
-    Public Function ReadRI() As Dictionary(Of String, RIRefer())
+    Public Overridable Function ReadRI() As Dictionary(Of String, RIRefer())
         Dim table As New Dictionary(Of String, RIRefer())
 
         For Each file As StreamBlock In pack.ListFiles("/RI/", recursive:=False)
@@ -302,7 +305,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     ''' Check of the xic cache data is existed inside current workspace file
     ''' </summary>
     ''' <returns></returns>
-    Public Function CheckXicCache() As Boolean
+    Public Overridable Function CheckXicCache() As Boolean
         Dim dir As StreamGroup = pack.GetObject("/xic_table/")
 
         If dir Is Nothing Then
@@ -320,7 +323,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     ''' </summary>
     ''' <param name="ion"></param>
     ''' <returns></returns>
-    Public Iterator Function LoadXicGroup(ion As String) As IEnumerable(Of NamedCollection(Of ms1_scan))
+    Public Overridable Iterator Function LoadXicGroup(ion As String) As IEnumerable(Of NamedCollection(Of ms1_scan))
         Dim dir As StreamGroup = pack.GetObject("/xic_table/")
 
         For Each file As StreamGroup In dir.ListFiles(recursive:=False).OfType(Of StreamGroup)
@@ -399,7 +402,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     ''' <summary>
     ''' Commit the memory cache data into filesystem
     ''' </summary>
-    Public Sub Flush()
+    Public Overridable Sub Flush()
         Call pack.WriteText(libraries.GetJson, "/libraries.json", allocate:=False)
         Call pack.WriteText(samplefiles.ToArray.GetJson, "/samplefiles.json", allocate:=False)
 
