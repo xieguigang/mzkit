@@ -18,6 +18,7 @@
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<UseApplicationFramework>True</UseApplicationFramework>
 		<Title>Comprehensive Mass Spectrum Tools</Title>
+		<PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

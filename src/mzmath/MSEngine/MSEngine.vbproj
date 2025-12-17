@@ -18,6 +18,7 @@
 	  <OutputPath>../../../Rscript\Library\mzkit_app\assembly\</OutputPath>
 	  <UseApplicationFramework>True</UseApplicationFramework>
 	  <Title>Reference spectrum search</Title>
+	  <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

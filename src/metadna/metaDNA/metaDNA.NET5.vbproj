@@ -18,6 +18,7 @@
 	  <Product>MZKit</Product>
 	  <Copyright>Copyright © BioNovoGene 2023</Copyright>
 	  <PackageProjectUrl>https://github.com/xieguigang/mzkit</PackageProjectUrl>
+	  <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

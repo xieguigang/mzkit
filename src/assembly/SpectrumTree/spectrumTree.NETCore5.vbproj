@@ -18,6 +18,7 @@
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <Description>Spectrum tree reference library for run metabolite annotation workflow</Description>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
   
  
   </PropertyGroup>
