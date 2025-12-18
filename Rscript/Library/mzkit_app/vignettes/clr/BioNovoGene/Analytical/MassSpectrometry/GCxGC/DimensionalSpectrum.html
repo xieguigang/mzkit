@@ -30,9 +30,13 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.GCxGC
 export class DimensionalSpectrum {
+   # the base peak intensity value of current dimension 1 ms1 scan data
    baseIntensity: double;
+   # the dimension 2 spectrum data
    ms2: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2[]</a>;
+   # the rt of dimension 1
    rt1: double;
+   # total ion of current dimension 1 ms1 scan data
    totalIon: double;
 }
 </code>
