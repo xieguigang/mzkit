@@ -11,6 +11,8 @@
 	  <Platforms>AnyCPU;x64</Platforms>
 	  <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;MEMI-Desktop</Configurations>
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	  <PackageIcon>Flask.png</PackageIcon>
+	  <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
@@ -102,6 +104,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\..\..\.pkg\Flask.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="..\..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

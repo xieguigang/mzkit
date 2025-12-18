@@ -6,7 +6,19 @@
     <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.GCxGC</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;mzkit;Rsharp_app_release;MEMI-Desktop</Configurations>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageIcon>Flask.png</PackageIcon>
+    <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\.pkg\Flask.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Buffers" Version="4.6.1" />

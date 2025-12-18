@@ -18,6 +18,8 @@
 	  <Authors>xieguigang@metabolomics.ac.cn</Authors>
 	  <Title>Single Cells Expression Matrix Builder</Title>
 	  <Product>MZKit</Product>
+	  <PackageIcon>Flask.png</PackageIcon>
+	  <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
 
   </PropertyGroup>
 
@@ -220,6 +222,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\..\..\.pkg\Flask.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="..\..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
