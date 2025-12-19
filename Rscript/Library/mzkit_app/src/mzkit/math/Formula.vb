@@ -343,7 +343,10 @@ Module FormulaTools
         Next
 
         Dim oMwtWin As New FormulaSearch(opts)
-        Dim results As FormulaComposition() = oMwtWin.SearchByExactMass(mass).ToArray
+        Dim results As FormulaComposition() = oMwtWin _
+            .SearchByExactMass(mass) _
+            .OrderBy(Function(c) c.EmpiricalFormula) _
+            .ToArray
 
         Return results
     End Function
