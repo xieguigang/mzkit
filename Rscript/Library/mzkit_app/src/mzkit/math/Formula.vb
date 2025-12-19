@@ -321,6 +321,10 @@ Module FormulaTools
 
         Dim opts As New SearchOption(-9999, 9999, ppm)
 
+        If candidateElements.length = 1 AndAlso TypeOf candidateElements.data.First Is list Then
+            candidateElements = DirectCast(candidateElements.data.First, list)
+        End If
+
         For Each element As String In candidateElements.getNames
             Dim value As Object = candidateElements.getByName(element)
 
