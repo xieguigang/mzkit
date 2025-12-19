@@ -57,7 +57,7 @@
 
 Namespace Formula
 
-    Friend Structure ElementNumType
+    Public Structure ElementNumType
 
         Public H As Integer
         Public C As Integer

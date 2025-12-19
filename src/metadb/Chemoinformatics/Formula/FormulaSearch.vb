@@ -75,14 +75,14 @@ Namespace Formula
             Me.opts = opts
             Me.progressReport = progress
             Me.elements = Element.MemoryLoadElements
-            Me.candidateElements = reorderCandidateElements(enableHCRatioCheck)
+            Me.candidateElements = ReorderCandidateElements(enableHCRatioCheck)
         End Sub
 
         ''' <summary>
         ''' 为了方便计算HC比例以及加速计算，在这里总是将C放在第一位，H放在第二位
         ''' </summary>
         ''' <returns></returns>
-        Private Function reorderCandidateElements(ByRef enableHCRatioCheck As Boolean) As ElementSearchCandiate()
+        Private Function ReorderCandidateElements(ByRef enableHCRatioCheck As Boolean) As ElementSearchCandiate()
             Dim list As ElementSearchCandiate() = opts.candidateElements.ToArray
             Dim C As Integer = which(list.Select(Function(e) e.Element = "C")).DefaultFirst(-1)
             Dim H As Integer = which(list.Select(Function(e) e.Element = "H")).DefaultFirst(-1)
@@ -122,21 +122,10 @@ Namespace Formula
 
             For Each formula As FormulaComposition In SearchByExactMass(exact_mass, seed, atoms, cancel)
                 If doVerify Then
-                    Dim counts As New ElementNumType(formula)
-                    Dim checked As Boolean = False
+                    formula = VerifyFormula(formula, chargeMin, chargeMax)
 
-                    If ConstructAndVerifyCompoundWork(counts) Then
-                        ' formula.charge = FormalCharge.CorrectChargeEmpirical(formula.charge, counts)
-                        formula.charge = FormalCharge.EvaluateCharge(formula)
-
-                        If formula.charge >= chargeMin AndAlso formula.charge <= chargeMax Then
-                            checked = True
-                        End If
-                    End If
-
-                    If Not checked Then
+                    If formula Is Nothing Then
                         Continue For
-                    ElseIf Not SevenGoldenRulesCheck.Check(formula, True, CoverRange.CommonRange, True) Then
                     End If
                 End If
 
@@ -150,7 +139,30 @@ Namespace Formula
             Next
         End Function
 
-        Private Shared Function ConstructAndVerifyCompoundWork(elementNum As ElementNumType) As Boolean
+        Private Function VerifyFormula(formula As FormulaComposition, chargeMin As Double, chargeMax As Double) As FormulaComposition
+            Dim counts As New ElementNumType(formula)
+            Dim checked As Boolean = True
+
+            'If ConstructAndVerifyCompoundWork(counts) Then
+            '    ' formula.charge = FormalCharge.CorrectChargeEmpirical(formula.charge, counts)
+            '    formula.charge = FormalCharge.EvaluateCharge(formula)
+
+            '    If formula.charge >= chargeMin AndAlso formula.charge <= chargeMax Then
+            '        checked = True
+            '    End If
+            'End If
+
+            If Not checked Then
+                Return Nothing
+            End If
+            If Not SevenGoldenRulesCheck.Check(formula, True, CoverRange.CommonRange, True) Then
+                Return Nothing
+            End If
+
+            Return formula
+        End Function
+
+        Public Shared Function ConstructAndVerifyCompoundWork(elementNum As ElementNumType) As Boolean
             Dim maxH As Integer = 0
 
             ' Compute maximum number of hydrogens
