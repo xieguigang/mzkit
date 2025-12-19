@@ -106,23 +106,35 @@ Namespace Formula
             Return reorders.ToArray
         End Function
 
-        Public Iterator Function SearchByExactMass(exact_mass As Double,
-                                                   Optional doVerify As Boolean = True,
-                                                   Optional cancel As Value(Of Boolean) = Nothing) As IEnumerable(Of FormulaComposition)
+        Public Function SearchByExactMass(exact_mass As Double,
+                                          Optional doVerify As Boolean = True,
+                                          Optional cancel As Value(Of Boolean) = Nothing,
+                                          Optional parallel As Integer = 8) As IEnumerable(Of FormulaComposition)
 
-            Dim atoms As New Stack(Of ElementSearchCandiate)(candidateElements.OrderBy(Function(c) elements(c.Element).isotopic))
-            Dim seed As New FormulaComposition(New Dictionary(Of String, Integer), "")
-
+            Dim atoms As New Stack(Of ElementSearchCandiate)(From c As ElementSearchCandiate
+                                                             In candidateElements
+                                                             Let isto As Double = elements(c.Element).isotopic
+                                                             Order By isto
+                                                             Select c)
             If cancel Is Nothing Then
                 cancel = False
             End If
 
-            Dim chargeMin As Double = opts.chargeRange.Min
-            Dim chargeMax As Double = opts.chargeRange.Max
+            If parallel > 1 Then
+                Return ParallelSearchByExactMass(atoms, exact_mass, doVerify, cancel, n_threads:=parallel)
+            Else
+                Return SingleThreadSearchByExactMass(atoms, exact_mass, doVerify, cancel)
+            End If
+        End Function
 
-            For Each formula As FormulaComposition In SearchByExactMass(exact_mass, seed, atoms, cancel)
+        Private Iterator Function SingleThreadSearchByExactMass(atoms As Stack(Of ElementSearchCandiate),
+                                                                exact_mass As Double,
+                                                                doVerify As Boolean,
+                                                                cancel As Value(Of Boolean)) As IEnumerable(Of FormulaComposition)
+
+            For Each formula As FormulaComposition In SearchByExactMass(exact_mass, FormulaComposition.EmptyComposition, atoms, cancel)
                 If doVerify Then
-                    formula = VerifyFormula(formula, chargeMin, chargeMax)
+                    formula = VerifyFormula(formula)
 
                     If formula Is Nothing Then
                         Continue For
@@ -139,7 +151,15 @@ Namespace Formula
             Next
         End Function
 
-        Private Function VerifyFormula(formula As FormulaComposition, chargeMin As Double, chargeMax As Double) As FormulaComposition
+        Private Iterator Function ParallelSearchByExactMass(atoms As Stack(Of ElementSearchCandiate),
+                                                            exact_mass As Double,
+                                                            doVerify As Boolean,
+                                                            cancel As Value(Of Boolean),
+                                                            n_threads As Integer) As IEnumerable(Of FormulaComposition)
+
+        End Function
+
+        Private Function VerifyFormula(formula As FormulaComposition) As FormulaComposition
             Dim counts As New ElementNumType(formula)
             Dim checked As Boolean = True
 
@@ -175,7 +195,8 @@ Namespace Formula
                 ' Only O and S
                 maxH = 3
             Else
-                ' Formula is: [#C*2 + 3 - (2 if N or P present)] + [#N + 3 - (1 if C or Si present)] + [#other elements * 4 + 3], where we assume other elements can have a coordination Number of up to 7
+                ' Formula is: [#C*2 + 3 - (2 if N or P present)] + [#N + 3 - (1 if C or Si present)] + [#other elements * 4 + 3],
+                ' where we assume other elements can have a coordination Number of up to 7
                 If elementNum.C > 0 Or elementNum.Si > 0 Then
                     maxH += (elementNum.C + elementNum.Si) * 2 + 3
                     ' If udtElementNum.N > 0 Or udtElementNum.P > 0 Then maxh = maxh - 2

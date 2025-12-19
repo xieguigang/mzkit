@@ -97,6 +97,10 @@ Namespace Formula
             Call MyBase.New(counts, formula)
         End Sub
 
+        Public Overloads Shared Function EmptyComposition() As FormulaComposition
+            Return New FormulaComposition(New Dictionary(Of String, Integer), "")
+        End Function
+
         Public Function Ratio(element1 As String, element2 As String) As Double
             If Not CountsByElement.ContainsKey(element1) Then
                 Return 0
