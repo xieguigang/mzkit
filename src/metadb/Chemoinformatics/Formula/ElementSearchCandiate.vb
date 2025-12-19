@@ -81,5 +81,9 @@ Namespace Formula
             Return $"{Element} [{MinCount}, {MaxCount}]"
         End Function
 
+        Public Function AsEnumerable() As IEnumerable(Of Integer)
+            Return Enumerable.Range(MinCount, MaxCount - MinCount + 1)
+        End Function
+
     End Class
 End Namespace

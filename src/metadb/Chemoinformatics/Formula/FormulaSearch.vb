@@ -57,6 +57,7 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports Microsoft.VisualBasic.Data.GraphTheory.Dijkstra.PQDijkstra.DijkstraFast
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
@@ -151,12 +152,48 @@ Namespace Formula
             Next
         End Function
 
-        Private Iterator Function ParallelSearchByExactMass(atoms As Stack(Of ElementSearchCandiate),
-                                                            exact_mass As Double,
-                                                            doVerify As Boolean,
-                                                            cancel As Value(Of Boolean),
-                                                            n_threads As Integer) As IEnumerable(Of FormulaComposition)
+        Private Function ParallelSearchByExactMass(atoms As Stack(Of ElementSearchCandiate),
+                                                   exact_mass As Double,
+                                                   doVerify As Boolean,
+                                                   cancel As Value(Of Boolean),
+                                                   n_threads As Integer) As IEnumerable(Of FormulaComposition)
+            ' 获取第一个元素，它的循环将作为并行任务
+            Dim topElement As ElementSearchCandiate = atoms.Pop
+            Dim opt As New ParallelOptions With {.MaxDegreeOfParallelism = n_threads}
+            Dim result As New List(Of FormulaComposition)
 
+            Call Parallel.ForEach(topElement.AsEnumerable,
+                 body:=Sub(n)
+                           ' 为每个线程创建独立的父化学式，避免线程间竞争
+                           Dim parentFormula As FormulaComposition = FormulaComposition.EmptyComposition()
+                           Dim bag As New List(Of FormulaComposition)
+                           Dim atomsCopy As New Stack(Of ElementSearchCandiate)(atoms)
+
+                           parentFormula = parentFormula.AppendElement(topElement.Element, n)
+
+                           For Each formula As FormulaComposition In SearchByExactMass(exact_mass, parentFormula, atomsCopy, cancel)
+                               If doVerify Then
+                                   formula = VerifyFormula(formula)
+
+                                   If formula Is Nothing Then
+                                       Continue For
+                                   End If
+                               End If
+
+                               If Not progressReport Is Nothing Then
+                                   Call progressReport($"find {formula} with tolerance error {formula.ppm} ppm!")
+                               End If
+
+                               formula.massdiff = std.Abs(formula.ExactMass - exact_mass)
+                               bag.Add(formula)
+                           Next
+
+                           SyncLock result
+                               Call result.AddRange(bag)
+                           End SyncLock
+                       End Sub)
+
+            Return result
         End Function
 
         Private Function VerifyFormula(formula As FormulaComposition) As FormulaComposition
