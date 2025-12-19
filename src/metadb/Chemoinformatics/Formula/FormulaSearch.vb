@@ -110,7 +110,7 @@ Namespace Formula
                                                    Optional doVerify As Boolean = True,
                                                    Optional cancel As Value(Of Boolean) = Nothing) As IEnumerable(Of FormulaComposition)
 
-            Dim elements As New Stack(Of ElementSearchCandiate)(candidateElements.AsEnumerable.Reverse)
+            Dim atoms As New Stack(Of ElementSearchCandiate)(candidateElements.OrderBy(Function(c) elements(c.Element).isotopic))
             Dim seed As New FormulaComposition(New Dictionary(Of String, Integer), "")
 
             If cancel Is Nothing Then
@@ -120,7 +120,7 @@ Namespace Formula
             Dim chargeMin As Double = opts.chargeRange.Min
             Dim chargeMax As Double = opts.chargeRange.Max
 
-            For Each formula As FormulaComposition In SearchByExactMass(exact_mass, seed, elements, cancel, doVerify:=doVerify)
+            For Each formula As FormulaComposition In SearchByExactMass(exact_mass, seed, atoms, cancel)
                 If doVerify Then
                     Dim counts As New ElementNumType(formula)
                     Dim checked As Boolean = False
@@ -214,11 +214,18 @@ Namespace Formula
             Return blnHOK
         End Function
 
+        ''' <summary>
+        ''' Search all formula that its exact mass value is identical to target <paramref name="exact_mass"/> input. 
+        ''' </summary>
+        ''' <param name="exact_mass">target exact mass value for matches</param>
+        ''' <param name="parent">parent formula tree</param>
+        ''' <param name="candidates">cancidate atom elements and the corresponding search range</param>
+        ''' <param name="cancel">cancel token of current search task</param>
+        ''' <returns></returns>
         Private Iterator Function SearchByExactMass(exact_mass As Double,
-                                                    parent As FormulaComposition,
-                                                    candidates As Stack(Of ElementSearchCandiate),
-                                                    cancel As Value(Of Boolean),
-                                                    doVerify As Boolean) As IEnumerable(Of FormulaComposition)
+                                            parent As FormulaComposition,
+                                            candidates As Stack(Of ElementSearchCandiate),
+                                            cancel As Value(Of Boolean)) As IEnumerable(Of FormulaComposition)
             If candidates.Count = 0 Then
                 Return
             End If
@@ -227,6 +234,8 @@ Namespace Formula
             Dim isto As Double = elements(current.Element).isotopic
 
             For n As Integer = current.MinCount To current.MaxCount
+                ' make a copy of the formula element count dictionary data 
+                ' and then append new element inside
                 Dim formula As FormulaComposition = parent.AppendElement(current.Element, n)
                 Dim ppm As Double = PPMmethod.PPM(formula.ExactMass, exact_mass)
 
@@ -234,6 +243,7 @@ Namespace Formula
                     Exit For
                 End If
 
+                ' current candidate search result its exact mass is identical to the target exact mass
                 If ppm <= opts.ppm Then
                     formula.ppm = ppm
                     ' populate current formula that match exact mass ppm condition
@@ -243,16 +253,15 @@ Namespace Formula
                         ' 还可以再增加分子质量
                         ' stack必须要在这里进行重新初始化
                         ' 否则会被其他的循环所修改产生bug
-                        For Each subtree In SearchByExactMass(
-                            exact_mass:=exact_mass,
-                            parent:=formula,
-                            candidates:=New Stack(Of ElementSearchCandiate)(candidates.AsEnumerable.Reverse),
-                            cancel:=cancel,
-                            doVerify:=doVerify
-                        )
+                        For Each subtree As FormulaComposition In SearchByExactMass(exact_mass:=exact_mass,
+                                                                                    parent:=formula,
+                                                                                    candidates:=New Stack(Of ElementSearchCandiate)(candidates.AsEnumerable.Reverse),
+                                                                                    cancel:=cancel)
                             Yield subtree
                         Next
                     End If
+                Else
+                    Exit For
                 End If
             Next
         End Function
