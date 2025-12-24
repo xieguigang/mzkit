@@ -28,12 +28,14 @@
 
 <p>该文件每一行都是一个键值对， 基本格式为
 
+
 <pre><code class=""> 键: 值!注释
 </code></pre>
 
 </p>
 
 <p>##### 总体结构
+
 
 <pre><code class=""> 文件头
  !包含若干行总体说明
@@ -46,9 +48,10 @@
  !OBO文件中可以在任意地方插入注释， 其注释以'!'开头
 </code></pre>
 
+</p>
 
- 
- ##### 文件头
+<p>##### 文件头
+
 
 <pre><code class=""> format-version:  1.2    !本文件所使用的OBO版本。本条目是必需的，以下文件头说明是可选的。
  data-version:  2012-12-09    !当前ontology的版本
@@ -73,6 +76,7 @@
 <p>##### 词条：词条类型包括[Term]、[Typedef]、[Instance]</p>
 
 <p>###### [Term]
+
 
 <pre><code class=""> [Term]
  id: GO : 0000001    !一个id即一个对象。一般情况下，id是全局性的，即唯一对应的，在任何地方都是一样的
@@ -102,9 +106,10 @@
  creation_date: !术语创造时间
 </code></pre>
 
+</p>
 
- 
- ###### [Typedef]
+<p>###### [Typedef]
+
 
 <pre><code class=""> [Typedef]
  id: !通常是有一定含义的字符串， 而不是数字
@@ -133,9 +138,10 @@
  consider
 </code></pre>
 
+</p>
 
- 
- ###### [Instance]
+<p>###### [Instance]
+
 
 <pre><code class=""> [Instance]
  id
@@ -153,9 +159,10 @@
  consider
 </code></pre>
 
+</p>
 
- 
- ##### 缺省的词条定义
+<p>##### 缺省的词条定义
+
 
 <pre><code class=""> [Typedef]
  id: is_a
