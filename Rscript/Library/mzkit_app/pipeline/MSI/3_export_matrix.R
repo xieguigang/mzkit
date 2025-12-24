@@ -3,6 +3,7 @@ require(mzkit);
 imports "MSI" from "mzkit";
 imports "math" from "mzkit";
 imports "SingleCells" from "mzkit";
+imports "mzweb" from "mzkit";
 
 let rawdata = open.mzpack("D:/demo/test.mzPack");
 let ionsList = load.csv("D:/demo/test_ions.csv", type = "mass_window");
