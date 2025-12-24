@@ -464,13 +464,19 @@ Module SingleCells
     <RApiReturn(TypeCodes.boolean)>
     Public Function writeMatrix(x As MzMatrix, file As Object, Optional env As Environment = Nothing) As Object
         Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+        Dim is_csv As Boolean = TypeOf file Is String AndAlso CStr(file).ExtensionSuffix("csv")
 
         If buf Like GetType(Message) Then
             Return buf.TryCast(Of Message)
         End If
 
-        ' save
-        Call New MatrixWriter(x).Write(buf.TryCast(Of Stream))
+        If is_csv Then
+
+        Else
+            ' save
+            Call New MatrixWriter(x).Write(buf.TryCast(Of Stream))
+        End If
+
         Call buf.TryCast(Of Stream).Flush()
 
         If TypeOf file Is String Then
