@@ -471,7 +471,7 @@ Module SingleCells
         End If
 
         If is_csv Then
-
+            Call x.ExportCsvSheet(buf.TryCast(Of Stream))
         Else
             ' save
             Call New MatrixWriter(x).Write(buf.TryCast(Of Stream))
