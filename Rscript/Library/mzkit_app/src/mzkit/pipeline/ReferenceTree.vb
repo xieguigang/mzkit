@@ -81,6 +81,7 @@ Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -315,7 +316,7 @@ Module ReferenceTreePkg
                                      Optional ionMode As IonModes = IonModes.Unknown,
                                      Optional env As Environment = Nothing) As Object
         If pack Is Nothing Then
-            Call "the given spectrum pack object is nothing, empty result collection is returned.".Warning
+            Call "the given spectrum pack object is nothing, empty result collection is returned.".warning
             Return Nothing
         End If
 
@@ -472,18 +473,28 @@ Module ReferenceTreePkg
     End Function
 
     Private Iterator Function CreateAnnotationSetLoop(hits As ClusterHit(), metadb As LocalRepository) As IEnumerable(Of AnnotationData(Of xref))
+        Dim missing As New List(Of String)
+
         For Each hit As ClusterHit In hits
-            Dim metadata As MetaboliteData = metadb.GetMetadata(hit.Id.Split("|"c).First)
+            Dim hit_id As String = hit.Id.Split("|"c).First
+            Dim metadata As MetaboliteData = metadb.GetMetadata(hit_id)
+
+            If metadata Is Nothing Then
+                missing.Add(hit_id)
+                Continue For
+            End If
+
+            Dim ms2_alignment As New AlignmentOutput With {
+                .alignments = hit.representive,
+                .entropy = hit.entropy,
+                .forward = hit.forward,
+                .jaccard = hit.jaccard,
+                .reverse = hit.reverse,
+                .query = New Meta(hit.queryMz, hit.queryRt, hit.queryIntensity, hit.queryId),
+                .reference = New Meta(hit.queryMz, hit.ClusterRt.Average, 100, hit.Id)
+            }
             Dim data As New AnnotationData(Of xref) With {
-                .Alignment = New AlignmentOutput With {
-                    .alignments = hit.representive,
-                    .entropy = hit.entropy,
-                    .forward = hit.forward,
-                    .jaccard = hit.jaccard,
-                    .reverse = hit.reverse,
-                    .query = New Meta(hit.queryMz, hit.queryRt, hit.queryIntensity, hit.queryId),
-                    .reference = New Meta(hit.queryMz, hit.ClusterRt.Average, 100, hit.Id)
-                },
+                .Alignment = ms2_alignment,
                 .[class] = metadata.class,
                 .kingdom = metadata.kingdom,
                 .molecular_framework = metadata.molecular_framework,
@@ -499,6 +510,10 @@ Module ReferenceTreePkg
 
             Yield data
         Next
+
+        If missing.Any Then
+            Call $"Missing metabolite data for source reference id: {missing.GetJson}".warning
+        End If
     End Function
 
     ''' <summary>

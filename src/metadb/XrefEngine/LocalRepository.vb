@@ -128,7 +128,7 @@ Public Class LocalRepository : Implements IDisposable, IMetaDb
     ''' 
     ''' </summary>
     ''' <param name="uniqueId"></param>
-    ''' <returns>the metabolite annotation data model <see cref="metadata"/>.</returns>
+    ''' <returns>the metabolite annotation data model <see cref="metadata"/>. this function will returns nothing if the id is not hit in the library.</returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetMetadata(uniqueId As String) As Object Implements IMetaDb.GetMetadata
         Return cache.ComputeIfAbsent(uniqueId,
