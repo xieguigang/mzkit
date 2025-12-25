@@ -155,7 +155,7 @@ Public Class LocalRepository : Implements IDisposable, IMetaDb
             End If
         End If
 
-        Dim ref = offset(id)
+        Dim ref As (id$, BufferRegion) = offset(id)
         Dim s As Stream = blocks(ref.id)
         Dim buf As Byte() = New Byte(ref.Item2.size - 1) {}
 
