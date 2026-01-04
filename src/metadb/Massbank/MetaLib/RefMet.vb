@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::8ce53fe7ff93f69f65d8ed6792671287, metadb\Massbank\MetaLib\RefMet.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 103
-    '    Code Lines: 53 (51.46%)
-    ' Comment Lines: 41 (39.81%)
-    '    - Xml Docs: 90.24%
-    ' 
-    '   Blank Lines: 9 (8.74%)
-    '     File Size: 5.19 KB
+' Summaries:
 
 
-    '     Class RefMet
-    ' 
-    '         Properties: chebi_id, exactmass, formula, hmdb_id, inchi_key
-    '                     kegg_id, lipidmaps_id, main_class, pubchem_cid, refmet_id
-    '                     refmet_name, smiles, sub_class, super_class
-    ' 
-    '         Function: CastModel, CreateReference, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 103
+'    Code Lines: 53 (51.46%)
+' Comment Lines: 41 (39.81%)
+'    - Xml Docs: 90.24%
+' 
+'   Blank Lines: 9 (8.74%)
+'     File Size: 5.19 KB
+
+
+'     Class RefMet
+' 
+'         Properties: chebi_id, exactmass, formula, hmdb_id, inchi_key
+'                     kegg_id, lipidmaps_id, main_class, pubchem_cid, refmet_id
+'                     refmet_name, smiles, sub_class, super_class
+' 
+'         Function: CastModel, CreateReference, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -135,25 +135,25 @@ Namespace MetaLib
         Public Function CastModel() As MetaInfo
             Return New MetaInfo With {
                 .ID = refmet_id,
-                .name = refmet_name,
-                .super_class = super_class,
-                .[class] = main_class,
-                .sub_class = sub_class,
-                .formula = formula,
+                .name = Strings.Trim(refmet_name).Trim(""""c).Trim("'"c).Trim,
+                .super_class = Strings.Trim(super_class).Trim(""""c).Trim("'"c).Trim,
+                .[class] = Strings.Trim(main_class).Trim(""""c).Trim("'"c).Trim,
+                .sub_class = Strings.Trim(sub_class).Trim(""""c).Trim("'"c).Trim,
+                .formula = Strings.Trim(formula).Trim(""""c).Trim("'"c).Trim,
                 .exact_mass = exactmass,
-                .IUPACName = refmet_name,
+                .IUPACName = .name,
                 .xref = CreateReference()
             }
         End Function
 
         Public Function CreateReference() As xref
             Return New xref With {
-                .pubchem = pubchem_cid,
-                .SMILES = smiles,
-                .chebi = "ChEBI:" & chebi_id,
-                .HMDB = hmdb_id,
-                .lipidmaps = lipidmaps_id,
-                .KEGG = kegg_id,
+                .pubchem = Strings.Trim(pubchem_cid).Trim(""""c).Trim("'"c).Trim,
+                .SMILES = Strings.Trim(smiles).Trim(""""c).Trim("'"c).Trim,
+                .chebi = "ChEBI:" & Strings.Trim(chebi_id).Trim(""""c).Trim("'"c).Trim,
+                .HMDB = Strings.Trim(hmdb_id).Trim(""""c).Trim("'"c).Trim,
+                .lipidmaps = Strings.Trim(lipidmaps_id).Trim(""""c).Trim("'"c).Trim,
+                .KEGG = Strings.Trim(kegg_id).Trim(""""c).Trim("'"c).Trim,
                 .extras = New Dictionary(Of String, String()) From {
                     {NameOf(RefMet), {refmet_id}}
                 }
