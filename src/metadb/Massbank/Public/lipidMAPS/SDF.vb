@@ -127,6 +127,11 @@ Namespace LipidMaps
         Public Shared Function Data(sdf As SDF) As MetaData
             Dim obj As MetaData = sdf.Data(Of MetaData)(properties)
             obj.SYNONYMS = obj.SYNONYMS.ElementAtOrDefault(Scan0).StringSplit(";\s+")
+
+            If obj.NAME.StringEmpty Then
+                obj.NAME = obj.SYSTEMATIC_NAME
+            End If
+
             Return obj
         End Function
 
