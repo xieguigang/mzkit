@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>get number of ions in each pixel scans</title>
+    <title>get number of ions in each pixel scans or get ion peaks data for specific pixels</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -18,7 +18,7 @@
             </tr>
         </table>
 
-        <h2>get number of ions in each pixel scans</h2>
+        <h2>get number of ions in each pixel scans or get ion peaks data for specific pixels</h2>
 
         <h3>Description</h3>
 
@@ -27,7 +27,9 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>pixelIons</strong>(<i>raw</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>pixelIons</strong>(<i>raw</i>,
+    <i>x</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>y</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -35,7 +37,7 @@
         <table>
             
 <dt>raw</dt>
-<dd><p>should be a mzpack object that contains multiple spatial spot scans data. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzPack.html">mzPack</a>]</p></dd>
+<dd><p>should be a mzpack object that contains multiple spatial spot scans data.</p></dd>
 
         </table>
 

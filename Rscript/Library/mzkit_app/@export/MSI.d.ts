@@ -341,13 +341,19 @@ declare namespace MSI {
    */
    function pixelId(raw: object, mz: number, tolerance?: any, env?: object): string;
    /**
-    * get number of ions in each pixel scans
+    * get number of ions in each pixel scans or get ion peaks data for specific pixels
     * 
     * 
      * @param raw should be a mzpack object that contains multiple spatial spot scans data.
+     * @param x 
+     * + default value Is ``null``.
+     * @param y 
+     * + default value Is ``null``.
+     * @param env 
+     * + default value Is ``null``.
      * @return an integer vector of the number of ions in each spatial spot scans
    */
-   function pixelIons(raw: object): object;
+   function pixelIons(raw: any, x?: any, y?: any, env?: object): object;
    /**
     * dumping raw data matrix as text table file.
     * 

@@ -1,12 +1,15 @@
 .\" man page create by R# package system.
 .TH MSI 1 2000-Jan "pixelIons" "pixelIons"
 .SH NAME
-pixelIons \- get number of ions in each pixel scans
+pixelIons \- get number of ions in each pixel scans or get ion peaks data for specific pixels
 .SH SYNOPSIS
-\fIpixelIons(\fBraw\fR as <generic> mzPack);\fR
+\fIpixelIons(\fBraw\fR as any, 
+\fBx\fR as any = \fB<NULL>\fR, 
+\fBy\fR as any = \fB<NULL>\fR, 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
-get number of ions in each pixel scans
+get number of ions in each pixel scans or get ion peaks data for specific pixels
 .PP
 .SH OPTIONS
 .PP

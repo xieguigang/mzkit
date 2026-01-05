@@ -29,7 +29,7 @@ MS-Imaging data handler
 + [peakMatrix](MSI/peakMatrix.1) Extract the ion data matrix
 + [peakMatrix_stream](MSI/peakMatrix_stream.1) create the peak matrix alignment in stream mode
 + [peakSamples](MSI/peakSamples.1) split the raw MSI 2D data into multiple parts with given resolution parts
-+ [pixelIons](MSI/pixelIons.1) get number of ions in each pixel scans
++ [pixelIons](MSI/pixelIons.1) get number of ions in each pixel scans or get ion peaks data for specific pixels
 + [getMatrixIons](MSI/getMatrixIons.1) get matrix ions feature m/z vector
 + [pixelMatrix](MSI/pixelMatrix.1) dumping raw data matrix as text table file.
 + [levels.convolution](MSI/levels.convolution.1) sum pixels for create pixel spot convolution
