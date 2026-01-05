@@ -1427,7 +1427,7 @@ Module MSI
     End Function
 
     ''' <summary>
-    ''' get number of ions in each pixel scans
+    ''' get number of ions in each pixel scans or get ion peaks data for specific pixels
     ''' </summary>
     ''' <param name="raw">
     ''' should be a mzpack object that contains multiple spatial spot scans data.
@@ -1435,10 +1435,24 @@ Module MSI
     ''' <returns>an integer vector of the number of ions in each spatial spot scans</returns>
     <ExportAPI("pixelIons")>
     <RApiReturn(TypeCodes.integer)>
-    Public Function PixelIons(raw As mzPack) As Object
-        Return raw.MS _
-            .Select(Function(scan) scan.size) _
-            .ToArray
+    Public Function PixelIons(raw As Object,
+                              <RRawVectorArgument> Optional x As Object = Nothing,
+                              <RRawVectorArgument> Optional y As Object = Nothing,
+                              Optional env As Environment = Nothing) As Object
+        If TypeOf raw Is mzPack Then
+            Return DirectCast(raw, mzPack).MS _
+                .Select(Function(scan) scan.size) _
+                .ToArray
+        ElseIf TypeOf raw Is MzMatrix Then
+            Dim m As MzMatrix = DirectCast(raw, MzMatrix)
+            Dim xidx As Integer() = CLRVector.asInteger(x)
+            Dim yidx As Integer() = CLRVector.asInteger(y)
+            Dim pixels As String() = GetVectorElement.Zip(xidx, yidx).Select(Function(i) $"{i.Item1},{i.Item2}").ToArray
+
+            m = m(pixels)
+
+            Return m
+        End If
     End Function
 
     ''' <summary>

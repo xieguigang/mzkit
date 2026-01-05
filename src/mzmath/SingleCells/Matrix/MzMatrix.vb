@@ -131,6 +131,22 @@ Namespace Deconvolute
             End Get
         End Property
 
+        Default Public ReadOnly Property Intensity(pixels As String()) As MzMatrix
+            Get
+                Dim index As Index(Of String) = pixels.Indexing
+                Dim submat As PixelData() = matrix.Where(Function(s) $"{s.X},{s.Y}" Like index).ToArray
+
+                Return New MzMatrix With {
+                    .matrix = submat,
+                    .matrixType = matrixType,
+                    .mz = mz.ToArray,
+                    .mzmax = mzmax.ToArray,
+                    .mzmin = mzmin.ToArray,
+                    .tolerance = tolerance
+                }
+            End Get
+        End Property
+
         ''' <summary>
         ''' get count of the ion feature size under current mass <see cref="tolerance"/>
         ''' </summary>
