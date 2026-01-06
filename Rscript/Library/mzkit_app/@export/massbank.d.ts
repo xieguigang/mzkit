@@ -22,6 +22,7 @@ declare namespace massbank {
         * @param env -
         * 
         * + default value Is ``null``.
+        * @return cast the lipidmaps sdf data as lipidmaps data model
       */
       function lipidmaps(sdf: any, asList?: boolean, lazy?: boolean, env?: object): object;
    }

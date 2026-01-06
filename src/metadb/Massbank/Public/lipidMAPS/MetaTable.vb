@@ -139,7 +139,8 @@ Namespace LipidMaps
                     .pubchem = lipid.PUBCHEM_CID,
                     .InChI = lipid.INCHI,
                     .InChIkey = lipid.INCHI_KEY
-                }
+                },
+                .kingdom = "Lipid"
             }
         End Function
     End Module
