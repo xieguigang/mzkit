@@ -736,6 +736,7 @@ Module Massbank
             Return pull.getError
         End If
 
+        ' cast to mzkit standard metabolite model 
         Dim stream = pull.populates(Of LipidMaps.MetaData)(env).Select(Function(lipid) lipid.CreateMetabolite)
 
         If lazy Then
@@ -752,7 +753,7 @@ Module Massbank
     ''' a sequence of sdf molecular data which can be read from the ``read.SDF`` function. 
     ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>cast the lipidmaps sdf data as lipidmaps data model</returns>
     ''' <example>
     ''' # cast sdf dataset to lipidmaps data object
     ''' let dataset = read.SDF(file = "./example.sdf", lazy = FALSE);
