@@ -1439,6 +1439,12 @@ Module MSI
                               <RRawVectorArgument> Optional x As Object = Nothing,
                               <RRawVectorArgument> Optional y As Object = Nothing,
                               Optional env As Environment = Nothing) As Object
+
+        If raw Is Nothing Then
+            Call "the given raw data object is nothing for extract of the pixel ion data.".warning
+            Return Nothing
+        End If
+
         If TypeOf raw Is mzPack Then
             Return DirectCast(raw, mzPack).MS _
                 .Select(Function(scan) scan.size) _
@@ -1452,6 +1458,8 @@ Module MSI
             m = m(pixels)
 
             Return m
+        Else
+            Return Message.InCompatibleType(GetType(mzPack), raw.GetType, env)
         End If
     End Function
 
