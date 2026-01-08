@@ -462,7 +462,10 @@ Module SingleCells
     ''' </example>
     <ExportAPI("write.matrix")>
     <RApiReturn(TypeCodes.boolean)>
-    Public Function writeMatrix(x As MzMatrix, file As Object, Optional env As Environment = Nothing) As Object
+    Public Function writeMatrix(x As MzMatrix, file As Object,
+                                Optional write_label As Boolean = False,
+                                Optional env As Environment = Nothing) As Object
+
         Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
         Dim is_csv As Boolean = TypeOf file Is String AndAlso CStr(file).ExtensionSuffix("csv")
 
@@ -471,7 +474,7 @@ Module SingleCells
         End If
 
         If is_csv Then
-            Call x.ExportCsvSheet(buf.TryCast(Of Stream))
+            Call x.ExportCsvSheet(buf.TryCast(Of Stream), write_label:=write_label)
         Else
             ' save
             Call New MatrixWriter(x).Write(buf.TryCast(Of Stream))

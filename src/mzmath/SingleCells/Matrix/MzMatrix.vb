@@ -131,10 +131,36 @@ Namespace Deconvolute
             End Get
         End Property
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="pixels"></param>
+        ''' <returns>
+        ''' the generated sub-matrix data spot rows keeps the same order with the input spot <paramref name="pixels"/>.
+        ''' </returns>
         Default Public ReadOnly Property Intensity(pixels As String()) As MzMatrix
             Get
-                Dim index As Index(Of String) = pixels.Indexing
-                Dim submat As PixelData() = matrix.Where(Function(s) $"{s.X},{s.Y}" Like index).ToArray
+                Dim matrixIndex As New Dictionary(Of String, PixelData)
+
+                For Each s As PixelData In matrix
+                    matrixIndex($"{s.X},{s.Y}") = s
+                Next
+
+                Dim submat As PixelData() = pixels _
+                    .Select(Function(id)
+                                If matrixIndex.ContainsKey(id) Then
+                                    Return matrixIndex(id)
+                                Else
+                                    Dim xy As String() = id.Split(","c)
+
+                                    Return New PixelData With {
+                                        .X = xy(0),
+                                        .Y = xy(1),
+                                        .intensity = New Double(mz.Length - 1) {}
+                                    }
+                                End If
+                            End Function) _
+                    .ToArray
 
                 Return New MzMatrix With {
                     .matrix = submat,
@@ -254,7 +280,7 @@ Namespace Deconvolute
         ''' </summary>
         ''' <param name="file"></param>
         ''' <returns></returns>
-        Public Function ExportCsvSheet(file As Stream) As Boolean
+        Public Function ExportCsvSheet(file As Stream, Optional write_label As Boolean = False) As Boolean
             Dim text As New StreamWriter(file, Encodings.ASCII.CodePage) With {
                 .NewLine = vbLf
             }
@@ -263,7 +289,13 @@ Namespace Deconvolute
             For Each pixelLine As String In matrix _
                 .AsParallel _
                 .Select(Function(pixel)
-                            Return $"""{pixel.X},{pixel.Y}"",{pixel.intensity.JoinBy(",")}"
+                            Dim id As String = $"{pixel.X},{pixel.Y}"
+
+                            If write_label Then
+                                id = $"{pixel.label}.{id}"
+                            End If
+
+                            Return $"""{id}"",{pixel.intensity.JoinBy(",")}"
                         End Function)
 
                 Call text.WriteLine(pixelLine)

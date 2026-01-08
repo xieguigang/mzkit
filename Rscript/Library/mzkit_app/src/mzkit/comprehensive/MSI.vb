@@ -1438,6 +1438,7 @@ Module MSI
     Public Function PixelIons(raw As Object,
                               <RRawVectorArgument> Optional x As Object = Nothing,
                               <RRawVectorArgument> Optional y As Object = Nothing,
+                              <RRawVectorArgument> Optional label As Object = Nothing,
                               Optional env As Environment = Nothing) As Object
 
         If raw Is Nothing Then
@@ -1453,9 +1454,16 @@ Module MSI
             Dim m As MzMatrix = DirectCast(raw, MzMatrix)
             Dim xidx As Integer() = CLRVector.asInteger(x)
             Dim yidx As Integer() = CLRVector.asInteger(y)
+            Dim labels As String() = CLRVector.asCharacter(label)
             Dim pixels As String() = GetVectorElement.Zip(xidx, yidx).Select(Function(i) $"{i.Item1},{i.Item2}").ToArray
 
             m = m(pixels)
+
+            If Not labels.IsNullOrEmpty Then
+                For i As Integer = 0 To m.matrix.Length - 1
+                    m.matrix(i).label = labels(i)
+                Next
+            End If
 
             Return m
         Else
