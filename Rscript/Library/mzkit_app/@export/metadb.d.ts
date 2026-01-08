@@ -91,11 +91,13 @@ declare namespace metadb {
        * 
        * 
         * @param formula -
+        * @param strict 
+        * + default value Is ``false``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function organic(formula: any, env?: object): boolean;
+      function organic(formula: any, strict?: boolean, env?: object): boolean;
    }
    /**
     * cast the given dataframe as the ion feature annotation result

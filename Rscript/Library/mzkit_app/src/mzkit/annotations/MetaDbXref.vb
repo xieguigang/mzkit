@@ -868,8 +868,11 @@ Module MetaDbXref
     ''' <returns></returns>
     <ExportAPI("is.organic")>
     <RApiReturn(GetType(Boolean))>
-    Public Function AssertOrganic(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
-        Return env.EvaluateFramework(Of String, Boolean)(formula, Function(f) MetalIons.IsOrganic(f))
+    Public Function AssertOrganic(<RRawVectorArgument> formula As Object,
+                                  Optional strict As Boolean = False,
+                                  Optional env As Environment = Nothing) As Object
+
+        Return env.EvaluateFramework(Of String, Boolean)(formula, Function(f) MetalIons.IsOrganic(f, strict))
     End Function
 
     ''' <summary>
