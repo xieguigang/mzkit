@@ -144,6 +144,10 @@ Public Module SampleData
                 Yield New NamedCollection(Of Double)(sample.name, Vector.Zero(dims))
             Else
                 For Each p As T In pixelSamples
+                    If p Is Nothing OrElse p.Data Is Nothing Then
+                        Continue For
+                    End If
+
                     sum = sum + p.Data.AsVector
                 Next
 
