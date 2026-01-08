@@ -153,11 +153,18 @@ Public Module MetalIons
         Return False
     End Function
 
-    Public Function IsOrganic(formula As String) As Boolean
+    Public Function IsOrganic(formula As String, Optional strict As Boolean = False) As Boolean
         Dim atoms As Formula = FormulaScanner.ScanFormula(formula)
         If atoms Is Nothing Then
             Return False
         End If
-        Return atoms.CheckElement("C") AndAlso (atoms.CheckElement("H") OrElse atoms.CheckElement("O"))
+
+        If strict Then
+            Return atoms.CheckElement("C") AndAlso
+                atoms.CheckElement("H") AndAlso
+                atoms.CheckElement("O")
+        Else
+            Return atoms.CheckElement("C") AndAlso (atoms.CheckElement("H") OrElse atoms.CheckElement("O"))
+        End If
     End Function
 End Module
