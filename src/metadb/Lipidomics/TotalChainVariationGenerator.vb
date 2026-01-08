@@ -79,6 +79,7 @@
 #End Region
 
 Imports System.Collections.Concurrent
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports std = System.Math
 
 
@@ -231,7 +232,16 @@ Public Class TotalChainVariationGenerator
         If chains.GetDeterminedChains().All(Function(chain) chain.DoubleBond.UnDecidedCount = 0 AndAlso chain.Oxidized.UnDecidedCount = 0) Then
             Return Enumerable.Empty(Of ITotalChain)()
         End If
-        Return CartesianProduct(chains.GetDeterminedChains().[Select](Function(c) c.GetCandidates(chainGenerator).ToArray()).ToArray()).[Select](Function([set]) New PositionLevelChains([set])).Distinct(ChainsComparer)
+
+        Dim candidateSet = chains.GetDeterminedChains() _
+            .Select(Function(c) c.GetCandidates(chainGenerator).ToArray()) _
+            .ToArray
+
+        Return NDimensionCartesianProduct.CreateMultiCartesianProduct(Of IChain)(candidateSet) _
+            .Select(Function([set])
+                        Return New PositionLevelChains([set])
+                    End Function) _
+            .Distinct(ChainsComparer)
     End Function
 
     Private Function CarbonNumberValid(curCarbon As Integer) As Boolean
