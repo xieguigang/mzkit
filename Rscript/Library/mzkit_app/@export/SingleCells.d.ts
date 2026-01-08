@@ -235,10 +235,12 @@ declare namespace SingleCells {
        * 
         * @param x the expression @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix`` object.
         * @param file -
+        * @param write_label 
+        * + default value Is ``false``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function matrix(x: object, file: any, env?: object): boolean;
+      function matrix(x: object, file: any, write_label?: boolean, env?: object): boolean;
    }
 }

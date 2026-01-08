@@ -349,11 +349,13 @@ declare namespace MSI {
      * + default value Is ``null``.
      * @param y 
      * + default value Is ``null``.
+     * @param label 
+     * + default value Is ``null``.
      * @param env 
      * + default value Is ``null``.
      * @return an integer vector of the number of ions in each spatial spot scans
    */
-   function pixelIons(raw: any, x?: any, y?: any, env?: object): object;
+   function pixelIons(raw: any, x?: any, y?: any, label?: any, env?: object): object;
    /**
     * dumping raw data matrix as text table file.
     * 
