@@ -236,13 +236,12 @@ Namespace Formula
         Private Function TryEvaluateExactMass() As Double
             Try
                 Return Aggregate element
-                   In CountsByElement
-                   Let isotopic As Double = AllAtomElements(element.Key).isotopic
-                   Let mass As Double = isotopic * element.Value
-                   Into Sum(mass)
+                    In CountsByElement
+                    Let isotopic As Double = AllAtomElements(element.Key).isotopic
+                    Let mass As Double = isotopic * element.Value
+                    Into Sum(mass)
             Catch ex As Exception
-                Dim notFound As String = CountsByElement _
-                    .Keys _
+                Dim notFound As String = CountsByElement.Keys _
                     .Where(Function(e)
                                Return Not AllAtomElements.ContainsKey(e)
                            End Function) _
