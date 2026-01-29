@@ -153,7 +153,7 @@ Public Class ParseChain
             .DoCall(AddressOf Network.ComputeDegreeData(Of ChemicalElement, ChemicalKey))
 
         For Each element As ChemicalElement In graph.AllElements
-            element.degree = (
+            element.degree = New NodeDegree(
                 degree.In.TryGetValue(element.label),
                 degree.Out.TryGetValue(element.label)
             )
