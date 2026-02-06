@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Microsoft.VisualBasic.Data.GraphTheory.Network.Node</title>
+    <title>Microsoft.VisualBasic.Data.visualize.Network.Graph.EdgeBundling.WayPointVector</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,37 +13,39 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>Node {Microsoft.VisualBasic.Data.GraphTheory.Network}</td>
+                <td>WayPointVector {Microsoft.VisualBasic.Data.visualize.Network.Graph.EdgeBundling}</td>
                 <td style="text-align: right;">.NET clr documentation</td>
             </tr>
         </table>
 
-        <h2>Node</h2>
+        <h2>WayPointVector</h2>
 
         <h3>Description</h3>
 
-        <p>A network node model</p>
+        <p>相对于<a href="/vignettes/clr/Microsoft/VisualBasic/Data/visualize/Network/Graph/EdgeBundling/Handle.html">Handle</a>模型，这个矢量模型则是单纯的以xy偏移比例来进行矢量比例缩放</p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
-# namespace Microsoft.VisualBasic.Data.GraphTheory.Network
-export class Node extends <a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/Vertex.html">Vertex</a> {
-   # Node connection counts: [point<em>to</em>this<em>node, point</em>from<em>this</em>node]
-   degree: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/Network/NodeDegree.html">NodeDegree</a>;
-   ID: integer;
-   label: string;
+# namespace Microsoft.VisualBasic.Data.visualize.Network.Graph.EdgeBundling
+export class WayPointVector {
+   isNaN: boolean;
+   # X轴方向的绝对像素偏移量 (当两点间X距离为0时使用)
+   xabsoluteshift: double;
+   # X轴方向的比例偏移量 (当两点间X距离不为0时使用)
+   xoffsetscale: double;
+   # Y轴方向的绝对像素偏移量 (当两点间Y距离为0时使用)
+   yabsoluteshift: double;
+   # Y轴方向的比例偏移量 (当两点间Y距离不为0时使用)
+   yoffsetscale: double;
 }
 </code>
         </pre>
 
         <h3>.NET clr type reference tree</h3>
 
-        <ol>
-<li>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/Vertex.html">Vertex</a> class: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/Vertex.html">Vertex</a></li>
-<li>use by <i>property</i> member <code>degree</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/Network/NodeDegree.html">NodeDegree</a></li>
-</ol>
+        this clr type has no other .net clr type reference.
 
 
         <hr />
