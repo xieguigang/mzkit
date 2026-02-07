@@ -31,7 +31,7 @@ Public Class spectraverse
             .ID = uniqueId,
             .formula = FORMULA,
             .exact_mass = FormulaScanner.EvaluateExactMass(FORMULA),
-            .name = COMPOUND_NAME,
+            .name = If(COMPOUND_NAME.StringEmpty, FORMULA, COMPOUND_NAME),
             .xref = New MetaLib.CrossReference.xref With {
                 .InChIkey = INCHIKEY,
                 .InChI = INCHI,
