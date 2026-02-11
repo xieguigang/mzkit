@@ -72,6 +72,10 @@ Namespace NCBI.PubChem
     Public Class PugViewRecord : Inherits InformationSection
 
         Public Property RecordType As String
+        ''' <summary>
+        ''' the pubchem cid
+        ''' </summary>
+        ''' <returns></returns>
         Public Property RecordNumber As String
         Public Property RecordTitle As String
 
