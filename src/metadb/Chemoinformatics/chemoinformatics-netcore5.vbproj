@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.BioDeep.Chemoinformatics</RootNamespace>
-    <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
+    <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
     <AssemblyName>BioNovoGene.BioDeep.Chemoinformatics</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;mzkit;NPSearch;Rsharp_app_release;PlantMAT;mzkit_win32;Desktop;MEMI-Desktop</Configurations>
