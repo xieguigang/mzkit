@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.SignalReader</RootNamespace>
 	  <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.SignalReader</AssemblyName>
-    <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
+    <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
 	  <Platforms>AnyCPU;x64</Platforms>
 	  <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release;mzkit_win32;MEMI-Desktop</Configurations>
 	  <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
@@ -32,10 +32,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Buffers" Version="4.6.1" />
-    <PackageReference Include="System.Composition" Version="10.0.2" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" />
-    <PackageReference Include="System.Resources.Extensions" Version="10.0.2" />
+    <PackageReference Include="System.Composition" Version="10.0.3" />
+    <PackageReference Include="System.Resources.Extensions" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup>
