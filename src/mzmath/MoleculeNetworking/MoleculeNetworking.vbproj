@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking</RootNamespace>
-    <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
+    <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
 	  <AssemblyName>BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking</AssemblyName>
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 	  <Platforms>AnyCPU;ARM32;x64</Platforms>
