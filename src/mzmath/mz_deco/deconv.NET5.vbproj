@@ -393,8 +393,4 @@
     <Import Include="System.Data" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.Composition" Version="10.0.3" />
-  </ItemGroup>
-
 </Project>
