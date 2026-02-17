@@ -149,6 +149,33 @@ Namespace Spectra.Xml
         <XmlArray("alignments")>
         Public Property alignments As SSM2MatrixFragment()
 
+        ''' <summary>
+        ''' get basepeak of the reference ion as Q3 product ion
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Q3 As Double
+            Get
+                If alignments.IsNullOrEmpty Then
+                    Return 0
+                Else
+                    Return alignments.OrderByDescending(Function(i) i.ref).First.mz
+                End If
+            End Get
+        End Property
+
+        Public ReadOnly Property Q3_ratio As Double
+            Get
+                If alignments.IsNullOrEmpty Then
+                    Return 0
+                Else
+                    Dim basepeak = alignments.OrderByDescending(Function(i) i.ref).First
+                    Dim min = std.Min(basepeak.query, basepeak.ref)
+                    Dim max = std.Max(basepeak.query, basepeak.ref)
+                    Return min / max
+                End If
+            End Get
+        End Property
+
         Public ReadOnly Property nhits As Integer
             Get
                 If alignments Is Nothing OrElse alignments.Length = 0 Then
@@ -180,6 +207,34 @@ Namespace Spectra.Xml
                     Yield New NamedValue(Of Double)(hit.annotation, hit.mz)
                 End If
             Next
+        End Function
+
+        Public Function GetNormalized() As AlignmentOutput
+            Dim qmax As Double = Aggregate i As SSM2MatrixFragment In alignments Into Max(i.query)
+            Dim rmax As Double = Aggregate i As SSM2MatrixFragment In alignments Into Max(i.ref)
+
+            Return New AlignmentOutput With {
+                .entropy = entropy,
+                .forward = forward,
+                .jaccard = jaccard,
+                .query = query,
+                .reference = reference,
+                .reverse = reverse,
+                .alignments = alignments _
+                    .SafeQuery _
+                    .Select(Function(i)
+                                Return New SSM2MatrixFragment With {
+                                    .ref = i.ref / rmax,
+                                    .query = i.query / qmax,
+                                    .da = i.da,
+                                    .annotation = i.annotation,
+                                    .IsNeutralLossMatched = i.IsNeutralLossMatched,
+                                    .IsProductIonMatched = i.IsProductIonMatched,
+                                    .mz = i.mz
+                                }
+                            End Function) _
+                    .ToArray
+            }
         End Function
 
         ''' <summary>
