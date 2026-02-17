@@ -815,6 +815,27 @@ Module MzMath
         Return align
     End Function
 
+    <ExportAPI("mrm_array")>
+    Public Function MRMArray(<RRawVectorArgument> alignments As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of AlignmentOutput)(alignments, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+        Dim norm = pull.populates(Of AlignmentOutput)(env).Select(Function(a) a.GetNormalized).ToArray
+        Dim Q3 As Double() = norm.Select(Function(a) a.Q3).ToArray
+        Dim ratio As Double() = norm.Select(Function(a) a.Q3_ratio).ToArray
+        Dim data As New dataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+
+        Call data.add("Q3", Q3)
+        Call data.add("ratio", ratio)
+
+        Return data
+    End Function
+
     ''' <summary>
     ''' pairwise alignment of the spectrum peak set
     ''' </summary>
