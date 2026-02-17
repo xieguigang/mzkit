@@ -722,12 +722,12 @@ Module MzWeb
             )
         ElseIf file.ExtensionSuffix("mgf", "msp") Then
             Return Converter.LoadAsciiFileAuto(file)
-
+#If NET8_0 Then
         ElseIf file.ExtensionSuffix("raw") Then
             Using msRaw As New MSFileReader(file)
                 Return msRaw.LoadFromXcaliburRaw
             End Using
-
+#End If
         ElseIf file.ExtensionSuffix("cdf") Then
             Using cdf As New netCDFReader(file)
                 If cdf.IsLecoGCMS Then

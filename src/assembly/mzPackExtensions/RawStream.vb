@@ -70,7 +70,6 @@ Public Module RawStream
 
         Return New WiffRawStream(raw, checkNoise:=checkNoise).StreamTo(println:=println)
     End Function
-#End If
 
     ''' <summary>
     ''' Load mzpack raw data object from Xcalibur raw data file object
@@ -95,7 +94,7 @@ Public Module RawStream
 
         Return data
     End Function
-
+#End If
 
     <Extension>
     Public Function GetChromatogram(mzpack As mzPack) As Chromatogram

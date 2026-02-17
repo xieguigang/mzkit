@@ -68,12 +68,12 @@ Public Module Extensions
         Dim allscans As mzPack
 
         Select Case fileName.ExtensionSuffix.ToLower
+#If NET48 Then
             Case "raw"
                 Dim Xraw As New MSFileReader(fileName)
 
                 n = Xraw.ScanMax
                 allscans = New XRawStream(Xraw).StreamTo
-#If NET48 Then
             Case "wiff"
                 Dim wiffRaw As New WiffScanFileReader(fileName)
                 Dim println As Action(Of String) = AddressOf Console.WriteLine

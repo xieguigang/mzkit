@@ -75,6 +75,8 @@ Imports std = System.Math
 ''' </summary>
 Public Module MSIRawPack
 
+#If NET8_0 Then
+
     ''' <summary>
     ''' single raw data file as MSI data
     ''' </summary>
@@ -256,6 +258,7 @@ Public Module MSIRawPack
             .source = spotsXy.raw.FileName
         }
     End Function
+#End If
 
     <Extension>
     Public Function PixelScaler(raw As ScanMS1()) As SizeF
