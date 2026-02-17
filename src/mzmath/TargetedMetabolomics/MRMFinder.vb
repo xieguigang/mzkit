@@ -86,7 +86,7 @@ Public Module MRMFinder
         Dim pool As PeakMs2() = ms2.ToArray
 
         For Each target As Ms1Feature In ms1.SafeQuery
-            Dim ions = ms2 _
+            Dim ions = pool _
                 .Where(Function(i) std.Abs(i.mz - target.mz) <= 0.1) _
                 .Where(Function(i) std.Abs(i.rt - target.rt) < 6) _
                 .ToArray
