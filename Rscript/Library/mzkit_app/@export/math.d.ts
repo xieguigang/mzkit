@@ -233,6 +233,10 @@ declare namespace math {
    */
    function merge_tables(tables: any, env?: object): object;
    /**
+     * @param env default value Is ``null``.
+   */
+   function mrm_array(alignments: any, env?: object): any;
+   /**
     * evaluate all m/z for all known precursor type.
     * 
     * 
