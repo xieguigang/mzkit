@@ -1,66 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::cda0f09083a3fb9f2c527d52e6cf903c, metadb\Massbank\Public\NCBI\PubChem\CIDSynonym.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 154
-    '    Code Lines: 108 (70.13%)
-    ' Comment Lines: 27 (17.53%)
-    '    - Xml Docs: 66.67%
-    ' 
-    '   Blank Lines: 19 (12.34%)
-    '     File Size: 5.72 KB
+' Summaries:
 
 
-    '     Class CIDSynonym
-    ' 
-    '         Properties: CID, IsCAS, IsChEBI, IsHMDB, IsKEGG
-    '                     Synonym
-    ' 
-    '         Function: LoadMetaInfo, LoadNames, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 154
+'    Code Lines: 108 (70.13%)
+' Comment Lines: 27 (17.53%)
+'    - Xml Docs: 66.67%
+' 
+'   Blank Lines: 19 (12.34%)
+'     File Size: 5.72 KB
+
+
+'     Class CIDSynonym
+' 
+'         Properties: CID, IsCAS, IsChEBI, IsHMDB, IsKEGG
+'                     Synonym
+' 
+'         Function: LoadMetaInfo, LoadNames, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Xml.Serialization
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
+Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 
@@ -165,9 +166,9 @@ Namespace NCBI.PubChem
             Next
         End Function
 
-        Public Shared Iterator Function LoadMetaInfo(file As String) As IEnumerable(Of Models.MetaLib)
+        Public Shared Iterator Function LoadMetaInfo(file As String) As IEnumerable(Of Metabolite.MetaLib)
             Dim xref As xref = Nothing
-            Dim meta As Models.MetaLib = Nothing
+            Dim meta As Metabolite.MetaLib = Nothing
             Dim cid As Integer = 0
             Dim cas As New List(Of String)
 
@@ -188,7 +189,7 @@ Namespace NCBI.PubChem
                     cas *= 0
                     cid = synonym.CID
                     ' construct a new pubchem metabolite metadata
-                    meta = New Models.MetaLib With {
+                    meta = New Metabolite.MetaLib With {
                         .ID = cid,
                         .name = synonym.Synonym,
                         .xref = xref

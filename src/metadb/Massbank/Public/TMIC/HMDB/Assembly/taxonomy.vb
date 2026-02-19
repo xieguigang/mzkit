@@ -1,114 +1,113 @@
 ﻿#Region "Microsoft.VisualBasic::33ba4586567d29d58cc8d3bd05ca077a, metadb\Massbank\Public\TMIC\HMDB\Assembly\taxonomy.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 130
-    '    Code Lines: 84 (64.62%)
-    ' Comment Lines: 13 (10.00%)
-    '    - Xml Docs: 92.31%
-    ' 
-    '   Blank Lines: 33 (25.38%)
-    '     File Size: 3.90 KB
+' Summaries:
 
 
-    '     Class taxonomy
-    ' 
-    '         Properties: alternative_parents, description, direct_parent, external_descriptors, substituents
-    ' 
-    '         Function: ToString
-    ' 
-    '     Structure external_descriptors
-    ' 
-    '         Properties: external_descriptor
-    ' 
-    '     Structure alternative_parents
-    ' 
-    '         Properties: alternative_parent
-    ' 
-    '     Structure substituents
-    ' 
-    '         Properties: substituent
-    ' 
-    '     Class ontology
-    ' 
-    '         Properties: root
-    ' 
-    '     Class ontology_term
-    ' 
-    '         Properties: definition, descendants, level, parent_id, synonyms
-    '                     term, type
-    ' 
-    '     Structure descendants
-    ' 
-    '         Properties: descendant
-    ' 
-    '     Structure origins
-    ' 
-    '         Properties: origin
-    ' 
-    '         Function: ToString
-    ' 
-    '     Structure biofunctions
-    ' 
-    '         Properties: biofunction
-    ' 
-    '         Function: ToString
-    ' 
-    '     Structure applications
-    ' 
-    '         Properties: application
-    ' 
-    '         Function: ToString
-    ' 
-    '     Structure cellular_locations
-    ' 
-    '         Properties: cellular
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 130
+'    Code Lines: 84 (64.62%)
+' Comment Lines: 13 (10.00%)
+'    - Xml Docs: 92.31%
+' 
+'   Blank Lines: 33 (25.38%)
+'     File Size: 3.90 KB
+
+
+'     Class taxonomy
+' 
+'         Properties: alternative_parents, description, direct_parent, external_descriptors, substituents
+' 
+'         Function: ToString
+' 
+'     Structure external_descriptors
+' 
+'         Properties: external_descriptor
+' 
+'     Structure alternative_parents
+' 
+'         Properties: alternative_parent
+' 
+'     Structure substituents
+' 
+'         Properties: substituent
+' 
+'     Class ontology
+' 
+'         Properties: root
+' 
+'     Class ontology_term
+' 
+'         Properties: definition, descendants, level, parent_id, synonyms
+'                     term, type
+' 
+'     Structure descendants
+' 
+'         Properties: descendant
+' 
+'     Structure origins
+' 
+'         Properties: origin
+' 
+'         Function: ToString
+' 
+'     Structure biofunctions
+' 
+'         Properties: biofunction
+' 
+'         Function: ToString
+' 
+'     Structure applications
+' 
+'         Properties: application
+' 
+'         Function: ToString
+' 
+'     Structure cellular_locations
+' 
+'         Properties: cellular
+' 
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Xml.Serialization
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
-Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 

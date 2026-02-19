@@ -56,13 +56,13 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Parser
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports SMRUCC.genomics.foundation.OBO_Foundry.IO.Models
-Imports metadata = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo
+Imports metadata = BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaInfo
 
 Namespace ChEBI
 

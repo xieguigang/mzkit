@@ -57,11 +57,11 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CommonNames
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports Microsoft.VisualBasic.Linq
 Imports any = Microsoft.VisualBasic.Scripting
-Imports Metadata2 = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
+Imports Metadata2 = BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib
 
 Namespace NCBI.PubChem.Web
 

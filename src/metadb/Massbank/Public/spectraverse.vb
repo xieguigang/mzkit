@@ -1,5 +1,6 @@
-﻿Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
-Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 
 Public Class spectraverse
 
@@ -32,7 +33,7 @@ Public Class spectraverse
             .formula = FORMULA,
             .exact_mass = FormulaScanner.EvaluateExactMass(FORMULA),
             .name = If(COMPOUND_NAME.StringEmpty, FORMULA, COMPOUND_NAME),
-            .xref = New MetaLib.CrossReference.xref With {
+            .xref = New xref With {
                 .InChIkey = INCHIKEY,
                 .InChI = INCHI,
                 .SMILES = SMILES,

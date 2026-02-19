@@ -1,113 +1,113 @@
 ﻿#Region "Microsoft.VisualBasic::7e6a013cea9619740d778c9c80c7afbd, metadb\Massbank\Public\TMIC\HMDB\Assembly\metabolite.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 246
-    '    Code Lines: 145 (58.94%)
-    ' Comment Lines: 68 (27.64%)
-    '    - Xml Docs: 91.18%
-    ' 
-    '   Blank Lines: 33 (13.41%)
-    '     File Size: 10.99 KB
+' Summaries:
 
 
-    '     Class MetaReference
-    ' 
-    '         Properties: accession, average_molecular_weight, bigg_id, biocyc_id, biological_properties
-    '                     cas_registry_number, chebi_id, chemical_formula, chemspider_id, description
-    '                     drugbank_id, drugbank_metabolite_id, ExactMass, fbonto_id, foodb_id
-    '                     het_id, inchi, inchikey, iupac_name, kegg_id
-    '                     knapsack_id, Mass, meta_cyc_id, metagene, metlin_id
-    '                     monisotopic_molecular_weight, name, nugowiki, pdb_id, phenol_explorer_compound_id
-    '                     phenol_explorer_metabolite_id, pubchem_compound_id, secondary_accessions, smiles, synonyms
-    '                     synthesis_reference, taxonomy, traditional_iupac, vmh_id, wikipedia_id
-    '                     wikipidia
-    ' 
-    '     Class biological_properties
-    ' 
-    '         Properties: biospecimen_locations, cellular_locations, pathways, tissue_locations
-    ' 
-    '     Class pathway
-    ' 
-    '         Properties: kegg_map_id, name, smpdb_id
-    ' 
-    '     Class metabolite
-    ' 
-    '         Properties: abnormal_concentrations, creation_date, diseases, experimental_properties, general_references
-    '                     normal_concentrations, ontology, predicted_properties, protein_associations, state
-    '                     update_date, version
-    ' 
-    '         Function: Load, ToString
-    ' 
-    '     Structure biospecimen_locations
-    ' 
-    '         Properties: biospecimen
-    ' 
-    '         Function: ToString
-    ' 
-    '     Structure tissue_locations
-    ' 
-    '         Properties: tissue
-    ' 
-    '         Function: ToString
-    ' 
-    '     Structure secondary_accessions
-    ' 
-    '         Properties: accession
-    ' 
-    '         Function: ToString
-    ' 
-    '     Structure synonyms
-    ' 
-    '         Properties: synonym
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 246
+'    Code Lines: 145 (58.94%)
+' Comment Lines: 68 (27.64%)
+'    - Xml Docs: 91.18%
+' 
+'   Blank Lines: 33 (13.41%)
+'     File Size: 10.99 KB
+
+
+'     Class MetaReference
+' 
+'         Properties: accession, average_molecular_weight, bigg_id, biocyc_id, biological_properties
+'                     cas_registry_number, chebi_id, chemical_formula, chemspider_id, description
+'                     drugbank_id, drugbank_metabolite_id, ExactMass, fbonto_id, foodb_id
+'                     het_id, inchi, inchikey, iupac_name, kegg_id
+'                     knapsack_id, Mass, meta_cyc_id, metagene, metlin_id
+'                     monisotopic_molecular_weight, name, nugowiki, pdb_id, phenol_explorer_compound_id
+'                     phenol_explorer_metabolite_id, pubchem_compound_id, secondary_accessions, smiles, synonyms
+'                     synthesis_reference, taxonomy, traditional_iupac, vmh_id, wikipedia_id
+'                     wikipidia
+' 
+'     Class biological_properties
+' 
+'         Properties: biospecimen_locations, cellular_locations, pathways, tissue_locations
+' 
+'     Class pathway
+' 
+'         Properties: kegg_map_id, name, smpdb_id
+' 
+'     Class metabolite
+' 
+'         Properties: abnormal_concentrations, creation_date, diseases, experimental_properties, general_references
+'                     normal_concentrations, ontology, predicted_properties, protein_associations, state
+'                     update_date, version
+' 
+'         Function: Load, ToString
+' 
+'     Structure biospecimen_locations
+' 
+'         Properties: biospecimen
+' 
+'         Function: ToString
+' 
+'     Structure tissue_locations
+' 
+'         Properties: tissue
+' 
+'         Function: ToString
+' 
+'     Structure secondary_accessions
+' 
+'         Properties: accession
+' 
+'         Function: ToString
+' 
+'     Structure synonyms
+' 
+'         Properties: synonym
+' 
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
-Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization

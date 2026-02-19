@@ -58,11 +58,11 @@
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
-Imports lipidMetab = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
+Imports lipidMetab = BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib
 
 Namespace LipidMaps
 

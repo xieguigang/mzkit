@@ -67,11 +67,11 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
-Imports Metabolite = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
+Imports Metabolite = BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib
 
 ''' <summary>
 ''' The metabolite data model from the cas registry details

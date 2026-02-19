@@ -68,7 +68,7 @@ Imports System.Xml
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Text.Xml
 Imports Microsoft.VisualBasic.Text.Xml.Linq
-Imports Metadata2 = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
+Imports Metadata2 = BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib
 
 Namespace NCBI.PubChem.Web
 

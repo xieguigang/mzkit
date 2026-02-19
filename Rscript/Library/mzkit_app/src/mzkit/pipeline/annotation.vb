@@ -73,10 +73,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -87,7 +86,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -95,7 +93,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
-Imports MetaData = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo
+Imports MetaData = BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaInfo
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
@@ -579,7 +577,7 @@ Module library
     ''' </summary>
     ''' <returns></returns>
     <ExportAPI("library_from_mona")>
-    <RApiReturn(GetType(Library(Of MetaLib)))>
+    <RApiReturn(GetType(Library(Of Metabolite.MetaLib)))>
     Public Function MakeMoNALibrary(<RRawVectorArgument>
                                     mona As Object,
                                     Optional libtype As IonModes = IonModes.Positive,
@@ -597,8 +595,8 @@ Module library
                 .ToArray
         End If
 
-        Dim fetch As Func(Of IEnumerable(Of (MetaLib, PeakMs2))) =
-            Iterator Function() As IEnumerable(Of (MetaLib, PeakMs2))
+        Dim fetch As Func(Of IEnumerable(Of (Metabolite.MetaLib, PeakMs2))) =
+            Iterator Function() As IEnumerable(Of (Metabolite.MetaLib, PeakMs2))
                 Dim source As IEnumerable(Of SpectraSection)
 
                 If tqdm_verbose Then
@@ -611,7 +609,7 @@ Module library
                     Yield (ref.GetMetabolite, ref.GetSpectrumPeaks)
                 Next
             End Function
-        Dim libs As New Library(Of MetaLib)(fetch())
+        Dim libs As New Library(Of Metabolite.MetaLib)(fetch())
 
         Return libs
     End Function
@@ -623,9 +621,9 @@ Module library
     ''' <param name="refSpec"></param>
     ''' <returns></returns>
     <ExportAPI("load_local")>
-    <RApiReturn(GetType(Library(Of MetaLib)))>
+    <RApiReturn(GetType(Library(Of Metabolite.MetaLib)))>
     Public Function LoadLocalDatabase(metadb As IMetaDb, refSpec As PackAlignment, Optional tqdm_verbose As Boolean = True) As Object
-        Return New Library(Of MetaLib)(metadb, refSpec.GetReferenceSpectrum(tqdm_verbose))
+        Return New Library(Of Metabolite.MetaLib)(metadb, refSpec.GetReferenceSpectrum(tqdm_verbose))
     End Function
 
     ''' <summary>
@@ -637,8 +635,8 @@ Module library
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("load_metadata")>
-    <RApiReturn(GetType(MetaLib))>
-    Public Function GetAnnotations(libs As Library(Of MetaLib), <RRawVectorArgument> id As Object) As Object
+    <RApiReturn(GetType(Metabolite.MetaLib))>
+    Public Function GetAnnotations(libs As Library(Of Metabolite.MetaLib), <RRawVectorArgument> id As Object) As Object
         Return CLRVector.asCharacter(id) _
             .SafeQuery _
             .Select(Function(refId) libs.GetMetadataByID(refId)) _

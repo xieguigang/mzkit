@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::b908336dff318d0aa20b15e7c8fa703c, Rscript\Library\mzkit_app\src\mzDIA\metaDNA.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 789
-    '    Code Lines: 517 (65.53%)
-    ' Comment Lines: 173 (21.93%)
-    '    - Xml Docs: 98.27%
-    ' 
-    '   Blank Lines: 99 (12.55%)
-    '     File Size: 34.58 KB
+' Summaries:
 
 
-    ' Module metaDNAInfer
-    ' 
-    '     Function: CreateKEGGSearch, DIAInfer, ExportNetwork, getResultTable, handleSample
-    '               InferTable, loadCompoundLibrary, loadKeggNetwork, loadMetaDNAInferNetwork, loadOntologyTree
-    '               MetaDNAAlgorithm, MgfSeeds, readInferDetails, readReactionClassTable, ResultAlignments
-    '               ResultTable, SaveAlgorithmPerfermance, SetInferNetwork, SetKeggLibrary, setLibrary
-    '               setNetworking, SetSearchRange
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 789
+'    Code Lines: 517 (65.53%)
+' Comment Lines: 173 (21.93%)
+'    - Xml Docs: 98.27%
+' 
+'   Blank Lines: 99 (12.55%)
+'     File Size: 34.58 KB
+
+
+' Module metaDNAInfer
+' 
+'     Function: CreateKEGGSearch, DIAInfer, ExportNetwork, getResultTable, handleSample
+'               InferTable, loadCompoundLibrary, loadKeggNetwork, loadMetaDNAInferNetwork, loadOntologyTree
+'               MetaDNAAlgorithm, MgfSeeds, readInferDetails, readReactionClassTable, ResultAlignments
+'               ResultTable, SaveAlgorithmPerfermance, SetInferNetwork, SetKeggLibrary, setLibrary
+'               setNetworking, SetSearchRange
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -69,7 +69,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep
 Imports BioNovoGene.BioDeep.Chemistry.ChEBI
-Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite
 Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports BioNovoGene.BioDeep.MetaDNA.Visual
@@ -99,7 +99,7 @@ Imports dataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports KeggCompound = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound
 Imports kegReaction = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Reaction
 Imports kegReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass
-Imports metadata = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo
+Imports metadata = BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaInfo
 Imports MetaDNAAlgorithm = BioNovoGene.BioDeep.MetaDNA.Algorithm
 Imports ReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass
 Imports ReactionClassTbl = BioNovoGene.BioDeep.MetaDNA.Visual.ReactionClass

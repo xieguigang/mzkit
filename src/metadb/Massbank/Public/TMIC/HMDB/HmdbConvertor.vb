@@ -56,10 +56,10 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports Microsoft.VisualBasic.Text
-Imports Metadata2 = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
+Imports Metadata2 = BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib
 
 Namespace TMIC.HMDB
 

@@ -64,9 +64,10 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
+
 Namespace TMIC.HMDB
 
-    Public Class MetaInfo : Inherits MetaLib.Models.MetaInfo
+    Public Class MetaInfo : Inherits Chemoinformatics.Metabolite.MetaInfo
 
         Public Property HMDB As String
         Public Property KEGG As String
