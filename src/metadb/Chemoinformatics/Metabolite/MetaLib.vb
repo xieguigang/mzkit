@@ -1,67 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::d3c6c0cebd9f39bd5b130b71472d9dd7, metadb\Massbank\MetaLib\Models\MetaLib.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 126
-    '    Code Lines: 89 (70.63%)
-    ' Comment Lines: 21 (16.67%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 16 (12.70%)
-    '     File Size: 5.05 KB
+' Summaries:
 
 
-    '     Class MetaLib
-    ' 
-    '         Properties: chemical, keywords, organism, pathways, samples
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: Equals, ToString, (+2 Overloads) Union
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 126
+'    Code Lines: 89 (70.63%)
+' Comment Lines: 21 (16.67%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 16 (12.70%)
+'     File Size: 5.05 KB
+
+
+'     Class MetaLib
+' 
+'         Properties: chemical, keywords, organism, pathways, samples
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: Equals, ToString, (+2 Overloads) Union
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
-Imports BioNovoGene.BioDeep.Chemoinformatics
-Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Metabolite
@@ -73,19 +72,19 @@ Namespace Metabolite
         Implements IEquatable(Of MetaLib)
         Implements ICompoundClass
 
-        <MessagePackMember(13)> Public Property chemical As ChemicalDescriptor
+        <Field(13)> Public Property chemical As ChemicalDescriptor
 
-        <MessagePackMember(14)> Public Property organism As String()
+        <Field(14)> Public Property organism As String()
 
         ''' <summary>
         ''' 包含有这个物质的KEGG pathway的编号的集合，只有当<see cref="xref.KEGG"/>
         ''' 存在值的时候才会存在这个属性
         ''' </summary>
         ''' <returns></returns>
-        <MessagePackMember(15)> Public Property pathways As String()
-        <MessagePackMember(16)> Public Property samples As BiosampleSource()
+        <Field(15)> Public Property pathways As String()
+        <Field(16)> Public Property samples As BiosampleSource()
 
-        <MessagePackMember(17)> Public Property keywords As String()
+        <Field(17)> Public Property keywords As String()
 
         Sub New()
         End Sub
@@ -110,11 +109,11 @@ Namespace Metabolite
         ''' <param name="clone"></param>
         Sub New(clone As MetaLib)
             ID = clone.ID
-            Formula = clone.formula
+            formula = clone.formula
             exact_mass = clone.exact_mass
             name = clone.name
             IUPACName = clone.IUPACName
-            Description = clone.description
+            description = clone.description
             synonym = clone.synonym.SafeQuery.ToArray
             kingdom = clone.kingdom
             super_class = clone.super_class
@@ -123,7 +122,7 @@ Namespace Metabolite
             molecular_framework = clone.molecular_framework
             organism = clone.organism.SafeQuery.ToArray
             pathways = clone.pathways.SafeQuery.ToArray
-            samples = clone.samples.SafeQuery.Select(Function(a) New BiosampleSource(a)).toarray
+            samples = clone.samples.SafeQuery.Select(Function(a) New BiosampleSource(a)).ToArray
             keywords = clone.keywords.SafeQuery.ToArray
 
             If Not clone.xref Is Nothing Then

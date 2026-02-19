@@ -100,13 +100,13 @@ Namespace Metabolite.CrossReference
             Dim classData As ICompoundClass = groupData.GetTopClass
             Dim id As String = xref.PickId(name)
             Dim m As T = setMeta(New T With {
-            .[class] = classData.[class],
-            .CrossReference = xref,
-            .kingdom = classData.kingdom,
-            .molecular_framework = classData.molecular_framework,
-            .sub_class = classData.sub_class,
-            .super_class = classData.super_class
-        }, id, name, formula, exact_mass)
+                .[class] = classData.[class],
+                .CrossReference = xref,
+                .kingdom = classData.kingdom,
+                .molecular_framework = classData.molecular_framework,
+                .sub_class = classData.sub_class,
+                .super_class = classData.super_class
+            }, id, name, formula, exact_mass)
 
             Return m
         End Function
@@ -136,27 +136,27 @@ Namespace Metabolite.CrossReference
             Dim smiles = struct_data?.SMILES
 
             Return New X With {
-            .SMILES = smiles,
-            .InChI = inchi,
-            .CAS = If(cas.StringEmpty(True, True), {}, {cas}),
-            .chebi = chebi,
-            .ChEMBL = chembl,
-            .ChemIDplus = chemidplus,
-            .chemspider = chemspider,
-            .DrugBank = drugbank,
-            .foodb = foodb,
-            .HMDB = hmdb,
-            .InChIkey = inchikey,
-            .KEGG = kegg,
-            .KEGGdrug = kegg_drug,
-            .KNApSAcK = knapsack,
-            .lipidmaps = lipidmaps,
-            .MeSH = mesh,
-            .MetaCyc = metacyc,
-            .metlin = metlin,
-            .pubchem = pubchem,
-            .Wikipedia = wikipedia
-        }
+                .SMILES = smiles,
+                .InChI = inchi,
+                .CAS = If(cas.StringEmpty(True, True), {}, {cas}),
+                .chebi = chebi,
+                .ChEMBL = chembl,
+                .ChemIDplus = chemidplus,
+                .chemspider = chemspider,
+                .DrugBank = drugbank,
+                .foodb = foodb,
+                .HMDB = hmdb,
+                .InChIkey = inchikey,
+                .KEGG = kegg,
+                .KEGGdrug = kegg_drug,
+                .KNApSAcK = knapsack,
+                .lipidmaps = lipidmaps,
+                .MeSH = mesh,
+                .MetaCyc = metacyc,
+                .metlin = metlin,
+                .pubchem = pubchem,
+                .Wikipedia = wikipedia
+            }
         End Function
 
         <Extension>
@@ -182,18 +182,18 @@ Namespace Metabolite.CrossReference
         <Extension>
         Private Function GetTopClass(Of C As ICompoundClass)(classList As C()) As ICompoundClass
             Dim top = classList _
-            .OrderByDescending(Function(a)
-                                   Dim count As Integer = 0
+                .OrderByDescending(Function(a)
+                                       Dim count As Integer = 0
 
-                                   If Not a.kingdom.StringEmpty(True, True) Then count += 1
-                                   If Not a.class.StringEmpty(True, True) Then count += 1
-                                   If Not a.sub_class.StringEmpty(True, True) Then count += 1
-                                   If Not a.super_class.StringEmpty(True, True) Then count += 1
-                                   If Not a.molecular_framework.StringEmpty(True, True) Then count += 1
+                                       If Not a.kingdom.StringEmpty(True, True) Then count += 1
+                                       If Not a.class.StringEmpty(True, True) Then count += 1
+                                       If Not a.sub_class.StringEmpty(True, True) Then count += 1
+                                       If Not a.super_class.StringEmpty(True, True) Then count += 1
+                                       If Not a.molecular_framework.StringEmpty(True, True) Then count += 1
 
-                                   Return count
-                               End Function) _
-            .First
+                                       Return count
+                                   End Function) _
+                .First
 
             Return top
         End Function
@@ -234,10 +234,10 @@ Namespace Metabolite.CrossReference
             For Each meta As ClusterKey(Of T) In groups.AsEnumerable
                 Dim listSet As T() = meta.ToArray
                 Dim name As IGrouping(Of String, String) = listSet _
-                .Select(Function(a) a.CommonName) _
-                .GroupBy(Function(a) a.ToLower) _
-                .OrderByDescending(Function(a) a.Count) _
-                .First
+                    .Select(Function(a) a.CommonName) _
+                    .GroupBy(Function(a) a.ToLower) _
+                    .OrderByDescending(Function(a) a.Count) _
+                    .First
 
                 Yield New NamedCollection(Of T)(name.Key, listSet)
             Next

@@ -1,73 +1,72 @@
 ﻿#Region "Microsoft.VisualBasic::2d2fb72cbedb4822e30d1c899bb537d1, metadb\Massbank\MetaLib\Models\MetaInfo.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 159
-    '    Code Lines: 84 (52.83%)
-    ' Comment Lines: 56 (35.22%)
-    '    - Xml Docs: 91.07%
-    ' 
-    '   Blank Lines: 19 (11.95%)
-    '     File Size: 7.35 KB
+' Summaries:
 
 
-    '     Class MetaInfo
-    ' 
-    '         Properties: [class], description, exact_mass, formula, ID
-    '                     IUPACName, kingdom, molecular_framework, name, sub_class
-    '                     super_class, synonym, xref
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Equals, ToSimpleAnnotation, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 159
+'    Code Lines: 84 (52.83%)
+' Comment Lines: 56 (35.22%)
+'    - Xml Docs: 91.07%
+' 
+'   Blank Lines: 19 (11.95%)
+'     File Size: 7.35 KB
+
+
+'     Class MetaInfo
+' 
+'         Properties: [class], description, exact_mass, formula, ID
+'                     IUPACName, kingdom, molecular_framework, name, sub_class
+'                     super_class, synonym, xref
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Equals, ToSimpleAnnotation, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
-Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
-Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
 Namespace Metabolite
 
@@ -91,11 +90,11 @@ Namespace Metabolite
         ''' 该物质在整合库之中的唯一标识符
         ''' </summary>
         ''' <returns></returns>
-        <MessagePackMember(0)> <XmlAttribute> Public Property ID As String Implements IKeyedEntity(Of String).Key, IReadOnlyId.Identity
-        <MessagePackMember(1)> <XmlAttribute> Public Property formula As String Implements IFormulaProvider.Formula
-        <MessagePackMember(2)> <XmlAttribute> Public Property exact_mass As Double Implements IExactMassProvider.ExactMass
+        <Field(0)> <XmlAttribute> Public Property ID As String Implements IKeyedEntity(Of String).Key, IReadOnlyId.Identity
+        <Field(1)> <XmlAttribute> Public Property formula As String Implements IFormulaProvider.Formula
+        <Field(2)> <XmlAttribute> Public Property exact_mass As Double Implements IExactMassProvider.ExactMass
 
-        <MessagePackMember(3)> Public Property name As String Implements ICompoundNameProvider.CommonName
+        <Field(3)> Public Property name As String Implements ICompoundNameProvider.CommonName
 
         ''' <summary>
         ''' IUPAC name refers to the systematic name given to a chemical compound according to the rules and 
@@ -115,29 +114,29 @@ Namespace Metabolite
         ''' technical documents related to chemistry.
         ''' </summary>
         ''' <returns></returns>
-        <MessagePackMember(4)> Public Property IUPACName As String
-        <MessagePackMember(5)> Public Property description As String
+        <Field(4)> Public Property IUPACName As String
+        <Field(5)> Public Property description As String
 
         ''' <summary>
         ''' the synonym of current metabolite, multiple names in different languages maybe contains inside this data names pool
         ''' </summary>
         ''' <returns></returns>
         <XmlElement>
-        <MessagePackMember(6)> Public Property synonym As String()
+        <Field(6)> Public Property synonym As String()
 
         ''' <summary>
         ''' The database cross reference of current metabolite and the molecule structure data.
         ''' </summary>
         ''' <returns></returns>
-        <MessagePackMember(7)> Public Property xref As xref Implements IMetabolite(Of xref).CrossReference
+        <Field(7)> Public Property xref As xref Implements IMetabolite(Of xref).CrossReference
 
 #Region "化合物分类"
 
-        <MessagePackMember(8)> Public Property kingdom As String Implements ICompoundClass.kingdom
-        <MessagePackMember(9)> Public Property super_class As String Implements ICompoundClass.super_class
-        <MessagePackMember(10)> Public Property [class] As String Implements ICompoundClass.class
-        <MessagePackMember(11)> Public Property sub_class As String Implements ICompoundClass.sub_class
-        <MessagePackMember(12)> Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
+        <Field(8)> Public Property kingdom As String Implements ICompoundClass.kingdom
+        <Field(9)> Public Property super_class As String Implements ICompoundClass.super_class
+        <Field(10)> Public Property [class] As String Implements ICompoundClass.class
+        <Field(11)> Public Property sub_class As String Implements ICompoundClass.sub_class
+        <Field(12)> Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
 
 #End Region
 
