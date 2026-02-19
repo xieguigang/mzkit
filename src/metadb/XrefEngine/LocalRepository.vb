@@ -62,14 +62,14 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports metadata = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
+Imports metadata = BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib
 
 ''' <summary>
 ''' read only metabolite annotation information data repository

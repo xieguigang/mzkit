@@ -887,9 +887,9 @@ Module library
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("getByKEGG")>
-    <RApiReturn(GetType(MetaLib))>
+    <RApiReturn(GetType(BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib))>
     Public Function getByKEGG(repo As LocalRepository, <RRawVectorArgument> kegg_id As Object, Optional env As Environment = Nothing) As Object
-        Return env.EvaluateFramework(Of String, MetaLib)(kegg_id,
+        Return env.EvaluateFramework(Of String, BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib)(kegg_id,
                eval:=Function(cid)
                          Return repo.GetMetadata(cid)
                      End Function)
@@ -955,15 +955,15 @@ Module library
 
     <ExportAPI("write_metadata")>
     Public Function Save(writer As RepositoryWriter, <RRawVectorArgument> meta As Object, Optional env As Environment = Nothing) As Object
-        Dim pull As pipeline = pipeline.TryCreatePipeline(Of Models.MetaInfo)(meta, env)
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaInfo)(meta, env)
 
         If pull.isError Then
             Return pull.getError
         End If
 
-        Dim alldata As Models.MetaInfo() = pull.populates(Of Models.MetaInfo)(env).ToArray
+        Dim alldata As BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaInfo() = pull.populates(Of BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaInfo)(env).ToArray
 
-        For Each m As Models.MetaInfo In TqdmWrapper.Wrap(alldata)
+        For Each m As BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaInfo In TqdmWrapper.Wrap(alldata)
             Call writer.Add(m)
         Next
 

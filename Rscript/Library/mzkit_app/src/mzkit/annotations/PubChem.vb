@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::74ab3f7df905cbf114204ef609a0b3be, Rscript\Library\mzkit_app\src\mzkit\annotations\PubChem.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 606
-    '    Code Lines: 358 (59.08%)
-    ' Comment Lines: 193 (31.85%)
-    '    - Xml Docs: 95.85%
-    ' 
-    '   Blank Lines: 55 (9.08%)
-    '     File Size: 26.85 KB
+' Summaries:
 
 
-    ' Module PubChemToolKit
-    ' 
-    '     Function: CID, GetMetaInfo, ImageFlyGetImages, level1Terms, makeTabular
-    '               MeshBackground, ParseMeshTree, pubchemUrl, pugView, queryExternalMetadata
-    '               QueryKnowledgeGraph, queryPubChem, readPubmed, readPugViewRepository, readPugViewXml
-    '               ReadSIDMap, readWebQuerySummary, SIDMapTable
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 606
+'    Code Lines: 358 (59.08%)
+' Comment Lines: 193 (31.85%)
+'    - Xml Docs: 95.85%
+' 
+'   Blank Lines: 55 (9.08%)
+'     File Size: 26.85 KB
+
+
+' Module PubChemToolKit
+' 
+'     Function: CID, GetMetaInfo, ImageFlyGetImages, level1Terms, makeTabular
+'               MeshBackground, ParseMeshTree, pubchemUrl, pugView, queryExternalMetadata
+'               QueryKnowledgeGraph, queryPubChem, readPubmed, readPugViewRepository, readPugViewXml
+'               ReadSIDMap, readWebQuerySummary, SIDMapTable
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -63,12 +63,12 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Threading
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemistry.NCBI
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.MeSH
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Graph
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Web
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -581,7 +581,7 @@ Module PubChemToolKit
                         Try
                             Yield file.LoadXml(Of PugViewRecord)
                         Catch ex As Exception
-                            Call $"invalid file content: {file}".Warning
+                            Call $"invalid file content: {file}".warning
                         End Try
                     Next
                 Next
