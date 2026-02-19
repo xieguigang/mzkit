@@ -56,7 +56,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.Assembly.KEGG

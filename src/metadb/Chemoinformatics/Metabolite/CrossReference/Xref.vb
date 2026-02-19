@@ -148,39 +148,6 @@ Namespace Metabolite.CrossReference
         Sub New()
         End Sub
 
-        ''' <summary>
-        ''' extract the cross reference id set from a chebi metabolite data
-        ''' </summary>
-        ''' <param name="chebi"></param>
-        Sub New(chebi As ChEBIEntity)
-            Me.chebi = chebi.chebiId
-            Me.KEGG = chebi.FindDatabaseLinkValue(AccessionTypes.KEGG_Compound)
-            Me.Wikipedia = chebi.FindDatabaseLinkValue(AccessionTypes.Wikipedia)
-            Me.SMILES = chebi.smiles
-            Me.InChI = chebi.inchi
-            Me.InChIkey = chebi.inchiKey
-            Me.CAS = chebi.RegistryNumbers _
-                .SafeQuery _
-                .Where(Function(r) r.type = "CAS Registry Number") _
-                .Select(Function(r) r.data) _
-                .ToArray
-        End Sub
-
-        ''' <summary>
-        ''' extract the cross reference id set from a hmdb metabolite data
-        ''' </summary>
-        ''' <param name="meta"></param>
-        Sub New(meta As HMDB.MetaDb)
-            Me.chebi = "CHEBI:" & meta.chebi_id
-            Me.KEGG = Strings.Trim(meta.kegg_id).Trim(ASCII.TAB)
-            Me.Wikipedia = meta.wikipedia_id
-            Me.SMILES = meta.smiles
-            Me.InChI = meta.inchi
-            Me.InChIkey = meta.inchikey
-            Me.CAS = {meta.CAS}
-            Me.HMDB = meta.accession
-        End Sub
-
         Sub New(clone As xref)
             With Me
                 .CAS = clone.CAS.SafeQuery.ToArray
