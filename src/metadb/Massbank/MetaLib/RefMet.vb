@@ -60,8 +60,8 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 

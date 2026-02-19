@@ -62,7 +62,8 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
-Namespace MetaLib
+
+Namespace Metabolite.CrossReference
 
     Friend Class ComparesIdXrefInteger
 
