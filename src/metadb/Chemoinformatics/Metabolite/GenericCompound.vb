@@ -65,40 +65,43 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
-''' <summary>
-''' a generic compound model for metaDNA modelling
-''' </summary>
-''' <remarks>
-''' A union of the abstract interface model:
-''' 
-''' + <see cref="IReadOnlyId"/>: for the unique database reference id;
-''' + <see cref="IExactMassProvider"/>: for exact mass value of the metabolite
-''' + <see cref="ICompoundNameProvider"/>: for the metabolite common name
-''' + <see cref="IFormulaProvider"/>: for provides the chemical formula string
-''' </remarks>
-Public Interface GenericCompound
-    Inherits IReadOnlyId
-    Inherits IExactMassProvider
-    Inherits ICompoundNameProvider
-    Inherits IFormulaProvider
+Namespace Metabolite
 
-End Interface
+    ''' <summary>
+    ''' a generic compound model for metaDNA modelling
+    ''' </summary>
+    ''' <remarks>
+    ''' A union of the abstract interface model:
+    ''' 
+    ''' + <see cref="IReadOnlyId"/>: for the unique database reference id;
+    ''' + <see cref="IExactMassProvider"/>: for exact mass value of the metabolite
+    ''' + <see cref="ICompoundNameProvider"/>: for the metabolite common name
+    ''' + <see cref="IFormulaProvider"/>: for provides the chemical formula string
+    ''' </remarks>
+    Public Interface GenericCompound
+        Inherits IReadOnlyId
+        Inherits IExactMassProvider
+        Inherits ICompoundNameProvider
+        Inherits IFormulaProvider
 
-Public Interface IMetabolite(Of T As ICrossReference) : Inherits GenericCompound, ICompoundClass
+    End Interface
 
-    Property CrossReference As T
+    Public Interface IMetabolite(Of T As ICrossReference) : Inherits GenericCompound, ICompoundClass
 
-End Interface
+        Property CrossReference As T
 
-''' <summary>
-''' 主要是取自HMDB数据库之中的代谢物分类信息
-''' </summary>
-Public Interface ICompoundClass
+    End Interface
 
-    Property kingdom As String
-    Property super_class As String
-    Property [class] As String
-    Property sub_class As String
-    Property molecular_framework As String
+    ''' <summary>
+    ''' 主要是取自HMDB数据库之中的代谢物分类信息
+    ''' </summary>
+    Public Interface ICompoundClass
 
-End Interface
+        Property kingdom As String
+        Property super_class As String
+        Property [class] As String
+        Property sub_class As String
+        Property molecular_framework As String
+
+    End Interface
+End Namespace

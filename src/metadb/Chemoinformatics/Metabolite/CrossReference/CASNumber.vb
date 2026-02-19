@@ -56,44 +56,47 @@
 
 Imports Microsoft.VisualBasic.Language
 
-''' <summary>
-''' Chemical Abstracts Service Number of a specific metabolite
-''' </summary>
-Public Class CASNumber
+Namespace Metabolite.CrossReference
 
     ''' <summary>
-    ''' CAS号（第一、二部分数字）的最后一位乘以1，最后第二位乘以2，往前依此类推，
-    ''' 然后再把所有的乘积相加，和除以10，余数就是第三部分的校验码。举例来说，
-    ''' 水（H2O）的CAS编号前两部分是7732-18，则其校验码
-    ''' ( 8×1 + 1×2 + 2×3 + 3×4 + 7×5 + 7×6 ) /10 = 105/10 = 10余5，
-    ''' 所以水的CAS号为7732-18-5。
+    ''' Chemical Abstracts Service Number of a specific metabolite
     ''' </summary>
-    ''' <param name="cas"></param>
-    ''' <returns></returns>
-    ''' <remarks>
-    ''' 第一部分有2到7位数字，第二部分有2位数字，第三部分有1位数字作为校验码
-    ''' </remarks>
-    Public Shared Function Verify(cas As String) As Boolean
-        If cas.StringEmpty(, True) Then
-            Return False
-        End If
+    Public Class CASNumber
 
-        Dim tokens As String() = cas.Split("-"c)
+        ''' <summary>
+        ''' CAS号（第一、二部分数字）的最后一位乘以1，最后第二位乘以2，往前依此类推，
+        ''' 然后再把所有的乘积相加，和除以10，余数就是第三部分的校验码。举例来说，
+        ''' 水（H2O）的CAS编号前两部分是7732-18，则其校验码
+        ''' ( 8×1 + 1×2 + 2×3 + 3×4 + 7×5 + 7×6 ) /10 = 105/10 = 10余5，
+        ''' 所以水的CAS号为7732-18-5。
+        ''' </summary>
+        ''' <param name="cas"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 第一部分有2到7位数字，第二部分有2位数字，第三部分有1位数字作为校验码
+        ''' </remarks>
+        Public Shared Function Verify(cas As String) As Boolean
+            If cas.StringEmpty(, True) Then
+                Return False
+            End If
 
-        If tokens.Length <> 3 OrElse tokens.Any(Function(si) Not si.IsInteger) Then
-            Return False
-        End If
+            Dim tokens As String() = cas.Split("-"c)
 
-        Dim n As Long = 0
-        Dim i As i32 = 1
+            If tokens.Length <> 3 OrElse tokens.Any(Function(si) Not si.IsInteger) Then
+                Return False
+            End If
 
-        For Each ni As Char In tokens.Take(2).JoinBy("").Reverse
-            n += Integer.Parse(CStr(ni)) * (++i)
-        Next
+            Dim n As Long = 0
+            Dim i As i32 = 1
 
-        Dim code As Integer = n Mod 10
-        Dim code2 As Integer = Integer.Parse(tokens(2))
+            For Each ni As Char In tokens.Take(2).JoinBy("").Reverse
+                n += Integer.Parse(CStr(ni)) * (++i)
+            Next
 
-        Return code = code2
-    End Function
-End Class
+            Dim code As Integer = n Mod 10
+            Dim code2 As Integer = Integer.Parse(tokens(2))
+
+            Return code = code2
+        End Function
+    End Class
+End Namespace

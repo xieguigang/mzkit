@@ -59,7 +59,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 
-Namespace MetaLib.CrossReference
+Namespace Metabolite.CrossReference
 
     ''' <summary>
     ''' the xref id string format validation

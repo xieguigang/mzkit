@@ -57,7 +57,7 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace MetaLib.CrossReference
+Namespace Metabolite.CrossReference
 
     ''' <summary>
     ''' helper function for re-format the input id string to canonical format

@@ -65,58 +65,61 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
-''' <summary>
-''' A basic metabolite annotation data model
-''' </summary>
-''' <remarks>
-''' contains the basic annotation metadata: id, name, exact mass, and formula data
-''' </remarks>
-Public Class MetaboliteAnnotation
-    Implements GenericCompound
-    Implements IReadOnlyId, ICompoundNameProvider, IExactMassProvider, IFormulaProvider
+Namespace Metabolite
 
     ''' <summary>
-    ''' the unique reference id of current metabolite
+    ''' A basic metabolite annotation data model
     ''' </summary>
-    ''' <returns></returns>
-    Public Property Id As String Implements IReadOnlyId.Identity
+    ''' <remarks>
+    ''' contains the basic annotation metadata: id, name, exact mass, and formula data
+    ''' </remarks>
+    Public Class MetaboliteAnnotation
+        Implements GenericCompound
+        Implements IReadOnlyId, ICompoundNameProvider, IExactMassProvider, IFormulaProvider
+
+        ''' <summary>
+        ''' the unique reference id of current metabolite
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Id As String Implements IReadOnlyId.Identity
+        ''' <summary>
+        ''' common name of the current metabolite
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property CommonName As String Implements ICompoundNameProvider.CommonName
+        ''' <summary>
+        ''' exact mass value of current metabolite, which it could be evaluated from the <see cref="Formula"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property ExactMass As Double Implements IExactMassProvider.ExactMass
+        ''' <summary>
+        ''' atom compositions of current metabolite
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Formula As String Implements IFormulaProvider.Formula
+
+        Public Overrides Function ToString() As String
+            Return $"[{Id}] {CommonName}"
+        End Function
+
+    End Class
+
     ''' <summary>
-    ''' common name of the current metabolite
+    ''' a simple data model for associates the metabolite id with its exact mass value 
     ''' </summary>
-    ''' <returns></returns>
-    Public Property CommonName As String Implements ICompoundNameProvider.CommonName
-    ''' <summary>
-    ''' exact mass value of current metabolite, which it could be evaluated from the <see cref="Formula"/>
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property ExactMass As Double Implements IExactMassProvider.ExactMass
-    ''' <summary>
-    ''' atom compositions of current metabolite
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Formula As String Implements IFormulaProvider.Formula
+    Public Class ExactMassMapping : Implements IExactMassProvider
 
-    Public Overrides Function ToString() As String
-        Return $"[{Id}] {CommonName}"
-    End Function
+        Public Property exact_mass As Double Implements IExactMassProvider.ExactMass
 
-End Class
+        ''' <summary>
+        ''' the biodeep id in integer number format
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property id As String
 
-''' <summary>
-''' a simple data model for associates the metabolite id with its exact mass value 
-''' </summary>
-Public Class ExactMassMapping : Implements IExactMassProvider
+        Public Overrides Function ToString() As String
+            Return $"[{id}] {exact_mass}"
+        End Function
 
-    Public Property exact_mass As Double Implements IExactMassProvider.ExactMass
-
-    ''' <summary>
-    ''' the biodeep id in integer number format
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property id As String
-
-    Public Overrides Function ToString() As String
-        Return $"[{id}] {exact_mass}"
-    End Function
-
-End Class
+    End Class
+End Namespace

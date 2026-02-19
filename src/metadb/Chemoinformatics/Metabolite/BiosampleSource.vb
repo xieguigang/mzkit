@@ -66,7 +66,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace MetaLib.Models
+Namespace Metabolite
 
     Public Class BiosampleSource
 

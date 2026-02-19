@@ -76,7 +76,7 @@ Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
 Imports CrossReferenceList = BioNovoGene.BioDeep.Chemoinformatics.ICrossReference
 
-Namespace MetaLib.CrossReference
+Namespace Metabolite.CrossReference
 
     ''' <summary>
     ''' The database cross reference set of a specific metabolite object.

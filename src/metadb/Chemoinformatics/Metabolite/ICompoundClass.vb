@@ -57,7 +57,7 @@
 
 Imports BioNovoGene.BioDeep.Chemoinformatics
 
-Namespace MetaLib.Models
+Namespace Metabolite
 
     ''' <summary>
     ''' a helper for get <see cref="ICompoundClass"/> data

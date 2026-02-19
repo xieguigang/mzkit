@@ -64,7 +64,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Imports Microsoft.VisualBasic.Linq
 
-Namespace MetaLib.Models
+Namespace Metabolite
 
     ''' <summary>
     ''' 对``chebi/kegg/pubchem/HMDB/metlin``的物质注释信息整合库，这个数据库只要为了生成编号，名称之类的注释信息而构建的
@@ -110,11 +110,11 @@ Namespace MetaLib.Models
         ''' <param name="clone"></param>
         Sub New(clone As MetaLib)
             ID = clone.ID
-            formula = clone.formula
+            Formula = clone.formula
             exact_mass = clone.exact_mass
             name = clone.name
             IUPACName = clone.IUPACName
-            description = clone.description
+            Description = clone.description
             synonym = clone.synonym.SafeQuery.ToArray
             kingdom = clone.kingdom
             super_class = clone.super_class

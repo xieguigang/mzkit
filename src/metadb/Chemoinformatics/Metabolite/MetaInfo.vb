@@ -69,7 +69,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 
-Namespace MetaLib.Models
+Namespace Metabolite
 
     ''' <summary>
     ''' the very basic metabolite annotation data model
