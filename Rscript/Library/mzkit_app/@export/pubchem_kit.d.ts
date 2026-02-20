@@ -220,7 +220,7 @@ declare namespace pubchem_kit {
         * 
         * + default value Is ``false``.
         * @return A collection of the pubchem query summary @``T:BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Web.QueryXml`` object
-        *  (or @``T:BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib`` data model if the parameter **`convert_std`** 
+        *  (or @``T:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib`` data model if the parameter **`convert_std`** 
         *  has been set to ``true``) that parsed from download result file.
       */
       function webquery(file: string, convert_std?: boolean): object;

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>BioNovoGene.BioDeep.Chemistry.LipidMaps.LipidClassReader</title>
+    <title>BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference.xref</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,27 +13,50 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>LipidClassReader {BioNovoGene.BioDeep.Chemistry.LipidMaps}</td>
+                <td>xref {BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference}</td>
                 <td style="text-align: right;">.NET clr documentation</td>
             </tr>
         </table>
 
-        <h2>LipidClassReader</h2>
+        <h2>xref</h2>
 
         <h3>Description</h3>
 
-        <p>A helper module for get lipidmaps <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/CompoundClass.html">CompoundClass</a> information via a given lipidmaps id</p>
+        <p>The database cross reference set of a specific metabolite object.</p>
 
-<p>the lipidmaps metabolite data in this module is indexed via the lipidmaps id: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/LipidMaps/MetaData.html">MetaData</a>.<a href="#">LM_ID</a>.</p>
+<p>(对某一个物质在数据库之间的相互引用编号)</p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
-# namespace BioNovoGene.BioDeep.Chemistry.LipidMaps
-export class LipidClassReader extends <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/ClassReader.html">ClassReader</a> {
-   # get number of the lipids inside the database
-   lipids: integer;
+# namespace BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
+export class xref {
+   # Multiple CAS id may exists
+   CAS: string;
+   # chebi main id, Chemical Entities of Biological Interest (ChEBI)
+   chebi: string;
+   ChEMBL: string;
+   ChemIDplus: string;
+   chemspider: string;
+   DrugBank: string;
+   # other additional database id set
+   extras: list;
+   foodb: string;
+   HMDB: string;
+   InChI: string;
+   InChIkey: string;
+   KEGG: string;
+   KEGGdrug: string;
+   KNApSAcK: string;
+   lipidmaps: string;
+   MeSH: string;
+   MetaCyc: string;
+   metlin: string;
+   # The pubchem cid
+   pubchem: string;
+   SMILES: string;
+   Wikipedia: string;
 }
 </code>
         </pre>
@@ -41,7 +64,7 @@ export class LipidClassReader extends <a href="/vignettes/clr/BioNovoGene/BioDee
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>this class extends from <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/ClassReader.html">ClassReader</a> class: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/ClassReader.html">ClassReader</a></li>
+<li>use by <i>property</i> member <code>extras</code>: list</li>
 </ol>
 
 

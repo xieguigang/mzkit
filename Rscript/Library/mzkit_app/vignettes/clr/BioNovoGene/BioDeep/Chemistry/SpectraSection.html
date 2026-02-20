@@ -27,14 +27,14 @@
 <p>this data object used for union the metabolite annotation <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaData.html">MetaData</a> and 
  the spectrum data(<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/SpectraSection.html">SpectraSection</a>.<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/SpectraInfo.html">SpectraInfo</a>).
  
- also is a sub class of the <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaInfo.html">MetaInfo</a> annotation information object</p>
+ also is a sub class of the <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/MetaInfo.html">MetaInfo</a> annotation information object</p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemistry
-export class SpectraSection extends <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaInfo.html">MetaInfo</a> {
+export class SpectraSection extends <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/MetaInfo.html">MetaInfo</a> {
    class: string;
    # should contains the necessary header data for @<code>M:BioNovoGene.BioDeep.Chemistry.SchemaMapper.FillData(System.Collections.Specialized.NameValueCollection)</code>
    Comment: <a href="/vignettes/clr/System/Collections/Specialized/NameValueCollection.html">NameValueCollection</a>;
@@ -60,7 +60,7 @@ export class SpectraSection extends <a href="/vignettes/clr/BioNovoGene/BioDeep/
    sub_class: string;
    super_class: string;
    synonym: string;
-   xref: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a>;
+   xref: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/CrossReference/xref.html">xref</a>;
 }
 </code>
         </pre>
@@ -68,14 +68,14 @@ export class SpectraSection extends <a href="/vignettes/clr/BioNovoGene/BioDeep/
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>this class extends from <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaInfo.html">MetaInfo</a> class: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaInfo.html">MetaInfo</a></li>
+<li>this class extends from <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/MetaInfo.html">MetaInfo</a> class: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/MetaInfo.html">MetaInfo</a></li>
 <li>use by <i>property</i> member <code>Comment</code>: <a href="/vignettes/clr/System/Collections/Specialized/NameValueCollection.html">NameValueCollection</a></li>
 <li>use by <i>property</i> member <code>GetSpectrumPeaks</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a></li>
 <li>use by <i>property</i> member <code>libtype</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a></li>
 <li>use by <i>property</i> member <code>MetaDB</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaData.html">MetaData</a></li>
 <li>use by <i>property</i> member <code>MetaReader</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/UnionReader.html">UnionReader</a></li>
 <li>use by <i>property</i> member <code>SpectraInfo</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/SpectraInfo.html">SpectraInfo</a></li>
-<li>use by <i>property</i> member <code>xref</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a></li>
+<li>use by <i>property</i> member <code>xref</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/CrossReference/xref.html">xref</a></li>
 </ol>
 
 

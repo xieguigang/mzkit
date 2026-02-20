@@ -57,7 +57,7 @@ declare namespace massbank {
      * @param env -
      * 
      * + default value Is ``null``.
-     * @return a tuple list of the @``T:BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo`` data. andalso an attribute with name ``mapping`` is tagged
+     * @return a tuple list of the @``T:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaInfo`` data. andalso an attribute with name ``mapping`` is tagged
      *  with the result tuple list that contains mapping from the spectrum id to the metabolite unique 
      *  reference id.
    */
@@ -344,7 +344,7 @@ declare namespace massbank {
        * write the metabolite annotation data collection as messagepack
        * 
        * 
-        * @param metadb should be a collection of the mzkit metabolite annotation model @``T:BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib``.
+        * @param metadb should be a collection of the mzkit metabolite annotation model @``T:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib``.
         * @param file the file to the target messagepack file
         * @param env -
         * 

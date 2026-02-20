@@ -252,7 +252,7 @@ declare namespace metadb {
    /**
     * verify that the given cas registry number is correct or not
     * 
-    * > based on the @``M:BioNovoGene.BioDeep.Chemoinformatics.CASNumber.Verify(System.String)`` clr function.
+    * > based on the @``M:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference.CASNumber.Verify(System.String)`` clr function.
     * 
      * @param num -
      * @param env -

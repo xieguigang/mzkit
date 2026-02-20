@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>BioNovoGene.BioDeep.Chemistry.LipidMaps.LipidClassReader</title>
+    <title>BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaboliteAnnotation</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,36 +13,40 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>LipidClassReader {BioNovoGene.BioDeep.Chemistry.LipidMaps}</td>
+                <td>MetaboliteAnnotation {BioNovoGene.BioDeep.Chemoinformatics.Metabolite}</td>
                 <td style="text-align: right;">.NET clr documentation</td>
             </tr>
         </table>
 
-        <h2>LipidClassReader</h2>
+        <h2>MetaboliteAnnotation</h2>
 
         <h3>Description</h3>
 
-        <p>A helper module for get lipidmaps <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/CompoundClass.html">CompoundClass</a> information via a given lipidmaps id</p>
+        <p>A basic metabolite annotation data model</p>
 
-<p>the lipidmaps metabolite data in this module is indexed via the lipidmaps id: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/LipidMaps/MetaData.html">MetaData</a>.<a href="#">LM_ID</a>.</p>
+<p>contains the basic annotation metadata: id, name, exact mass, and formula data</p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
-# namespace BioNovoGene.BioDeep.Chemistry.LipidMaps
-export class LipidClassReader extends <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/ClassReader.html">ClassReader</a> {
-   # get number of the lipids inside the database
-   lipids: integer;
+# namespace BioNovoGene.BioDeep.Chemoinformatics.Metabolite
+export class MetaboliteAnnotation {
+   # common name of the current metabolite
+   CommonName: string;
+   # exact mass value of current metabolite, which it could be evaluated from the <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/MetaboliteAnnotation.html">MetaboliteAnnotation</a>.<a href="#">Formula</a>
+   ExactMass: double;
+   # atom compositions of current metabolite
+   Formula: string;
+   # the unique reference id of current metabolite
+   Id: string;
 }
 </code>
         </pre>
 
         <h3>.NET clr type reference tree</h3>
 
-        <ol>
-<li>this class extends from <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/ClassReader.html">ClassReader</a> class: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/ClassReader.html">ClassReader</a></li>
-</ol>
+        this clr type has no other .net clr type reference.
 
 
         <hr />

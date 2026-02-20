@@ -94,7 +94,7 @@ declare namespace hmdb_kit {
        * 
        * 
         * @param xml the file path of the hmdb metabolite database xml file
-        * @param convert_std convert the metabolite annotation data as the mzkit standard metabolite annotation data model(@``T:BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib``)?
+        * @param convert_std convert the metabolite annotation data as the mzkit standard metabolite annotation data model(@``T:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib``)?
         * 
         * + default value Is ``false``.
         * @param tqdm 
