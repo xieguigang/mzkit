@@ -24,5 +24,4 @@ the metabolite annotation toolkit
 + [save_annotations](annotation/save_annotations.1) Save the reference library annotation result.
 + [push_temp](annotation/push_temp.1) Save the ms2 alignment hits result into current temp workspace.
 + [commit](annotation/commit.1) Commit library annotation
-+ [workspace](annotation/workspace.1) create an empty workspace object
 + [peak_assign](annotation/peak_assign.1) Associates the ms1 peaks with the ms2 spectrum alignment result hits.

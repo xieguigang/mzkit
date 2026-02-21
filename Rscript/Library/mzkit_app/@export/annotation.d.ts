@@ -263,12 +263,6 @@ declare namespace annotation {
    */
    function unique_candidates(candidates: any, env?: object): any;
    /**
-    * create an empty workspace object
-    * 
-    * 
-   */
-   function workspace(): object;
-   /**
      * @param env default value Is ``null``.
    */
    function write_metadata(writer: object, meta: any, env?: object): any;
