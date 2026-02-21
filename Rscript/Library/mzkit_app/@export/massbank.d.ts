@@ -93,7 +93,9 @@ declare namespace massbank {
     * check of the mona reference spectrum is positive or not?
     * 
     * 
-     * @param spec -
+     * @param spec should be a mass spectrum object with ion polarity data tagged. 
+     *  the mass spectrum object could be the MONA @``T:BioNovoGene.BioDeep.Chemistry.SpectraSection``, @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType.IonModes`` enum value,
+     *  precursor type @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType.MzCalculator`` object, @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2`` mass spectrum object.
    */
    function is_positive(spec: any): boolean;
    module lipid {
