@@ -437,7 +437,9 @@ Module Massbank
     ''' <summary>
     ''' check of the mona reference spectrum is positive or not?
     ''' </summary>
-    ''' <param name="spec"></param>
+    ''' <param name="spec">should be a mass spectrum object with ion polarity data tagged. 
+    ''' the mass spectrum object could be the MONA <see cref="SpectraSection"/>, <see cref="IonModes"/> enum value,
+    ''' precursor type <see cref="MzCalculator"/> object, <see cref="PeakMs2"/> mass spectrum object.</param>
     ''' <returns></returns>
     <ExportAPI("is_positive")>
     Public Function isPositive(spec As Object) As Boolean
