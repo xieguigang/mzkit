@@ -95,7 +95,7 @@ declare namespace massbank {
     * 
      * @param spec -
    */
-   function is_positive(spec: object): boolean;
+   function is_positive(spec: any): boolean;
    module lipid {
       /**
        * Create lipid class helper for annotation
