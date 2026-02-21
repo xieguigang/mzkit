@@ -69,6 +69,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.ChEBI
@@ -439,8 +440,20 @@ Module Massbank
     ''' <param name="spec"></param>
     ''' <returns></returns>
     <ExportAPI("is_positive")>
-    Public Function isPositive(spec As SpectraSection) As Boolean
-        Return spec.libtype = IonModes.Positive
+    Public Function isPositive(spec As Object) As Boolean
+        If TypeOf spec Is SpectraSection Then
+            Return DirectCast(spec, SpectraSection).libtype = IonModes.Positive
+        ElseIf TypeOf spec Is IonModes Then
+            Return DirectCast(spec, IonModes) = IonModes.Positive
+        ElseIf TypeOf spec Is MzCalculator Then
+            Return DirectCast(spec, MzCalculator).GetIonMode = IonModes.Positive
+        ElseIf TypeOf spec Is String Then
+            Return Provider.ParseIonMode(CStr(spec)) = IonModes.Positive
+        ElseIf TypeOf spec Is PeakMs2 Then
+            Return Provider.ParseAdductModel(DirectCast(spec, PeakMs2).precursor_type).GetIonMode = IonModes.Positive
+        Else
+            Return False
+        End If
     End Function
 
     ''' <summary>
