@@ -1224,15 +1224,6 @@ Module library
     End Sub
 
     ''' <summary>
-    ''' create an empty workspace object
-    ''' </summary>
-    ''' <returns></returns>
-    <ExportAPI("workspace")>
-    Public Function create_workspace() As LibraryWorkspace
-        Return New LibraryWorkspace
-    End Function
-
-    ''' <summary>
     ''' Associates the ms1 peaks with the ms2 spectrum alignment result hits.
     ''' </summary>
     ''' <param name="works">the workspace object, which could be constructed via the ``workspace`` function.</param>
