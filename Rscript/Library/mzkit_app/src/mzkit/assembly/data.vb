@@ -554,6 +554,9 @@ Module data
     ''' <param name="libname">Library identifier.</param>
     ''' <param name="precursor_type">Precursor adduct type.</param>
     ''' <param name="meta">Metadata list for the peak.</param>
+    ''' <param name="annotation">
+    ''' the msn spectrum fragment annotation information, this parameter is optional, and the length of this vector should be the same as the length of the mz and into parameters if this parameter is assigned with a value.
+    ''' </param>
     ''' <param name="env">R environment for error handling.</param>
     ''' <returns>A PeakMs2 object containing the spectral data.</returns>
     <ExportAPI("peakMs2")>
@@ -562,6 +565,7 @@ Module data
                                   Optional file As String = Nothing,
                                   Optional libname As String = Nothing,
                                   Optional precursor_type As String = Nothing,
+                                  Optional annotation As String() = Nothing,
                                   <RListObjectArgument>
                                   Optional meta As list = Nothing,
                                   Optional env As Environment = Nothing) As PeakMs2
@@ -573,7 +577,8 @@ Module data
                 .Select(Function(mzi, i)
                             Return New ms2 With {
                                 .mz = mzi,
-                                .intensity = into(i)
+                                .intensity = into(i),
+                                .Annotation = annotation.ElementAtOrDefault(i)
                             }
                         End Function) _
                 .ToArray,
