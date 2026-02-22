@@ -126,7 +126,26 @@ Public Class FormulaBuilder
                 ElseIf atomGroups.ContainsKey(element.elementName) Then
                     Call Push(atomGroups(element.elementName), element)
                 Else
-                    Throw New NotImplementedException("Unknown element name for build formula: " & element.elementName)
+                    If element.elementName.IsPattern("\[.+\]") Then
+                        Dim ion As String = element.elementName.GetStackValue("[", "]")
+                        Dim charge As String = ion.Match("[+\-]\d+")
+                        Dim chargeVal As Integer = 0
+
+                        If charge.StringEmpty Then
+                            charge = ion.Match("[+\-]+")
+                            chargeVal = charge.Length
+                        Else
+                            chargeVal = Integer.Parse(charge)
+                        End If
+
+                        ion = ion.Replace(charge, "")
+
+                        Dim atom As New Atom(ion, chargeVal)
+
+                        Call Push(atom, element)
+                    Else
+                        Throw New NotImplementedException("Unknown element name for build formula: " & element.elementName)
+                    End If
                 End If
         End Select
     End Sub
