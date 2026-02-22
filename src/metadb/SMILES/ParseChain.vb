@@ -229,7 +229,9 @@ Public Class ParseChain
                     .bond = Bonds.single
                 }
 
-                Call graph.Insert(bond)
+                If Not graph.ExistEdge(bond) Then
+                    Call graph.Insert(bond)
+                End If
             Else
                 rings(ringId) = element
             End If
@@ -246,7 +248,9 @@ Public Class ParseChain
                 .bond = bondType
             }
 
-            Call graph.Insert(bond)
+            If Not graph.ExistEdge(bond) Then
+                Call graph.Insert(bond)
+            End If
         End If
         If stackSize.Count > 0 Then
             Call stackSize.Peek.Hit()
