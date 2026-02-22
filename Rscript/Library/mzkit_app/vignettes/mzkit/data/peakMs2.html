@@ -32,6 +32,7 @@
     <i>file</i> = <span style='color: blue !important;'>NULL</span>,
     <i>libname</i> = <span style='color: blue !important;'>NULL</span>,
     <i>precursor.type</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>annotation</i> = <span style='color: blue !important;'>NULL</span>,
     <i>...</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
         </div>
 
@@ -73,6 +74,10 @@
 
 <dt>meta</dt>
 <dd><p>Metadata list for the peak. [as list]</p></dd>
+
+
+<dt>annotation</dt>
+<dd><p>the msn spectrum fragment annotation information, this parameter is optional, and the length of this vector should be the same as the length of the mz and into parameters if this parameter is assigned with a value. [as string]</p></dd>
 
 
 <dt>env</dt>

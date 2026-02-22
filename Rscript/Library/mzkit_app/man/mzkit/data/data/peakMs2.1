@@ -11,6 +11,7 @@ peakMs2 \- Constructs a PeakMs2 object from spectral data.
 \fBfile\fR as string = \fB<NULL>\fR, 
 \fBlibname\fR as string = \fB<NULL>\fR, 
 \fBprecursor_type\fR as string = \fB<NULL>\fR, 
+\fBannotation\fR as string = \fB<NULL>\fR, 
 ..., 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
@@ -44,6 +45,11 @@ Constructs a PeakMs2 object from spectral data.
 .PP
 .PP
 \fBmeta\fB \fR\- Metadata list for the peak.. 
+.PP
+.PP
+\fBannotation\fB \fR\- 
+ the msn spectrum fragment annotation information, this parameter is optional, and the length of this vector should be the same as the length of the mz and into parameters if this parameter is assigned with a value.
+. 
 .PP
 .PP
 \fBenv\fB \fR\- R environment for error handling.. 

@@ -196,6 +196,9 @@ declare namespace data {
      * @param precursor_type Precursor adduct type.
      * 
      * + default value Is ``null``.
+     * @param annotation the msn spectrum fragment annotation information, this parameter is optional, and the length of this vector should be the same as the length of the mz and into parameters if this parameter is assigned with a value.
+     * 
+     * + default value Is ``null``.
      * @param meta Metadata list for the peak.
      * 
      * + default value Is ``null``.
@@ -204,7 +207,7 @@ declare namespace data {
      * + default value Is ``null``.
      * @return A PeakMs2 object containing the spectral data.
    */
-   function peakMs2(precursor: number, rt: number, mz: number, into: number, totalIons?: number, file?: string, libname?: string, precursor_type?: string, meta?: object, env?: object): object;
+   function peakMs2(precursor: number, rt: number, mz: number, into: number, totalIons?: number, file?: string, libname?: string, precursor_type?: string, annotation?: string, meta?: object, env?: object): object;
    module read {
       /**
        * Reads a spectral matrix from a CSV file.
