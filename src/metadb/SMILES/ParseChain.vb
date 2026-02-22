@@ -229,6 +229,7 @@ Public Class ParseChain
                     .bond = Bonds.single
                 }
 
+                ' 20260223 avoid of the possible duplicated bond?
                 If Not graph.ExistEdge(bond) Then
                     Call graph.Insert(bond)
                 End If
@@ -248,6 +249,7 @@ Public Class ParseChain
                 .bond = bondType
             }
 
+            ' 20260223 avoid of the possible duplicated bond?
             If Not graph.ExistEdge(bond) Then
                 Call graph.Insert(bond)
             End If
