@@ -237,6 +237,18 @@ Namespace Spectra.Xml
             }
         End Function
 
+        Public Function GetSampleQuery() As LibraryMatrix
+            With New Ms2AlignMatrix(alignments)
+                Dim q = .GetQueryMatrix.With(Sub(a) a.name = query?.id)
+
+                If q.name.StringEmpty(, True) Then
+                    q.name = "Query"
+                End If
+
+                Return q
+            End With
+        End Function
+
         ''' <summary>
         ''' construct a tuple of the spectrum data as the mirror alignment
         ''' </summary>
