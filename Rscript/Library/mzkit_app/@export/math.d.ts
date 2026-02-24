@@ -351,12 +351,14 @@ declare namespace math {
      * @param adducts -
      * @param max_score 
      * + default value Is ``10``.
+     * @param orders 
+     * + default value Is ``null``.
      * @param env -
      * 
      * + default value Is ``null``.
      * @return A ranking score numeric vector
    */
-   function rank_adducts(formula: any, adducts: any, max_score?: number, env?: object): number;
+   function rank_adducts(formula: any, adducts: any, max_score?: number, orders?: any, env?: object): number;
    /**
     * removes the missing peaks
     * 
