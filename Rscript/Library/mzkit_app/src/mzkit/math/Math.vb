@@ -1325,11 +1325,13 @@ Module MzMath
     Public Function rank_adducts(<RRawVectorArgument> formula As Object,
                                  <RRawVectorArgument> adducts As Object,
                                  Optional max_score As Double = 10,
+                                 <RRawVectorArgument(TypeCodes.string)>
+                                 Optional orders As Object = Nothing,
                                  Optional env As Environment = Nothing) As Object
 
         Dim adducts_str As String() = CLRVector.asCharacter(adducts)
         Dim formula_str As String() = CLRVector.asCharacter(formula)
-        Dim rank As New AdductsRanking(max_score)
+        Dim rank As New AdductsRanking(max_score, CLRVector.asCharacter(orders))
 
         Return BinaryCoreInternal(Of String, String, Double)(
             formula_str, adducts_str,

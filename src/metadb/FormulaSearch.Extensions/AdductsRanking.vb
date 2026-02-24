@@ -68,10 +68,25 @@ Imports Microsoft.VisualBasic.Linq
 Public Class AdductsRanking
 
     ReadOnly maxValue As Double = 10
+    ReadOnly orders As Index(Of String)
+    ReadOnly noneOrder As Boolean = True
 
-    Sub New(Optional maxScore As Double = 10)
-        maxValue = maxScore
+    Sub New(Optional maxScore As Double = 10, Optional orders As IEnumerable(Of String) = Nothing)
+        Me.maxValue = maxScore
+        Me.orders = New Index(Of String)(orders, base:=1)
+        Me.noneOrder = Me.orders.Count = 0
     End Sub
+
+    Private Function OrderScore(adduct As String) As Double
+        If noneOrder Then Return 1
+
+        If adduct Like orders Then
+            Return orders.IndexOf(adduct)
+        Else
+            ' not inside the list
+            Return orders.Count + 1
+        End If
+    End Function
 
     ''' <summary>
     ''' 
@@ -119,9 +134,9 @@ Public Class AdductsRanking
         Dim ion As IonModes = adduct.GetIonMode
 
         If ion = IonModes.Positive Then
-            Return RankPositive(formula, adduct)
+            Return RankPositive(formula, adduct) / OrderScore(adduct.ToString)
         Else
-            Return RankNegative(formula, adduct)
+            Return RankNegative(formula, adduct) / OrderScore(adduct.ToString)
         End If
     End Function
 
@@ -153,12 +168,15 @@ Public Class AdductsRanking
         Dim ranks As IEnumerable(Of (rank As Double, adduct As MzCalculator)) = adducts _
             .Select(Function(adduct)
                         Dim ion As IonModes = adduct.GetIonMode
+                        Dim rank As Double
 
                         If ion = IonModes.Positive Then
-                            Return (rank:=RankPositive(formula, adduct), adduct)
+                            rank = RankPositive(formula, adduct) / OrderScore(adduct.ToString)
                         Else
-                            Return (rank:=RankNegative(formula, adduct), adduct)
+                            rank = RankNegative(formula, adduct) / OrderScore(adduct.ToString)
                         End If
+
+                        Return (rank, adduct)
                     End Function) _
             .ToArray
 
@@ -181,9 +199,9 @@ Public Class AdductsRanking
                                Dim ion As IonModes = adduct_type.GetIonMode
 
                                If ion = IonModes.Positive Then
-                                   Return RankPositive(formulaObj, adduct_type)
+                                   Return RankPositive(formulaObj, adduct_type) / OrderScore(type)
                                Else
-                                   Return RankNegative(formulaObj, adduct_type)
+                                   Return RankNegative(formulaObj, adduct_type) / OrderScore(type)
                                End If
                            End Function)
             If score > 0 Then
