@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::fab8fa719e1f6feb2c0c3b19f296a45c, mzmath\mz_deco\Save\SaveXcms.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 255
-    '    Code Lines: 180 (70.59%)
-    ' Comment Lines: 37 (14.51%)
-    '    - Xml Docs: 81.08%
-    ' 
-    '   Blank Lines: 38 (14.90%)
-    '     File Size: 9.79 KB
+' Summaries:
 
 
-    ' Module SaveXcms
-    ' 
-    '     Function: DumpSample, GetPeaks, ReadSample, ReadSamplePeaks, ReadTextTable
-    ' 
-    '     Sub: DumpSample
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 255
+'    Code Lines: 180 (70.59%)
+' Comment Lines: 37 (14.51%)
+'    - Xml Docs: 81.08%
+' 
+'   Blank Lines: 38 (14.90%)
+'     File Size: 9.79 KB
+
+
+' Module SaveXcms
+' 
+'     Function: DumpSample, GetPeaks, ReadSample, ReadSamplePeaks, ReadTextTable
+' 
+'     Sub: DumpSample
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.Trinity
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports std = System.Math
 
 ''' <summary>
 ''' the <see cref="xcms2"/> read/write helper
@@ -165,6 +166,15 @@ Public Module SaveXcms
             Next
         End If
 
+        ' 20260228 rtmin maybe the rt in minutes
+        If peaks.Any(Function(pk) std.Abs(pk.rt - pk.rtmin) > 60) Then
+            ' is rt in minutes
+            For i As Integer = 0 To peaks.Length - 1
+                peaks(i).rtmin = peaks(i).rt - 2
+                peaks(i).rtmax = peaks(i).rt + 2
+            Next
+        End If
+
         Call buf.Dispose()
 
         Return New PeakSet With {.peaks = peaks.ToArray}
@@ -188,8 +198,8 @@ Public Module SaveXcms
             pk = New xcms2 With {
                 .ID = t(ID).Trim(""""c, " "c),
                 .mz = Double.Parse(t(mz)),
-                .mzmax = If(mzmax > -1, Val(t(mzmax)), .mz),
-                .mzmin = If(mzmin > -1, Val(t(mzmin)), .mz),
+                .mzmax = If(mzmax > -1, Val(t(mzmax)), .mz + 0.01),
+                .mzmin = If(mzmin > -1, Val(t(mzmin)), .mz - 0.01),
                 .rt = Double.Parse(t(rt)),
                 .rtmax = If(rtmax > -1, Val(t(rtmax)), .rt),
                 .rtmin = If(rtmin > -1, Val(t(rtmin)), .rt),
