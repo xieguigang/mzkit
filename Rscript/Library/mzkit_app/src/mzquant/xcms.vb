@@ -58,6 +58,7 @@ Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
@@ -226,6 +227,8 @@ Module xcms
                                      <RRawVectorArgument(TypeCodes.double)> rt As Object,
                                      <RRawVectorArgument(TypeCodes.double)> intensity As Object,
                                      <RRawVectorArgument(TypeCodes.string)> rawfile As Object,
+                                     Optional mzdiff As Double = 0.01,
+                                     Optional ri_win As Double = 10,
                                      Optional id As String = "M%mT%t") As Object
 
         Dim mz_vec As Double() = CLRVector.asNumeric(mz)
@@ -251,8 +254,14 @@ Module xcms
                         }
                     End Function) _
             .ToArray
+        Dim peak_samples = peaks _
+            .GroupBy(Function(a) a.rawfile) _
+            .Select(Function(file)
+                        Return New NamedCollection(Of PeakFeature)(file)
+                    End Function) _
+            .ToArray
 
-
+        Return mzDeco.peakAlignment(peak_samples, mzdiff, ri_win:=ri_win)
     End Function
 
 End Module

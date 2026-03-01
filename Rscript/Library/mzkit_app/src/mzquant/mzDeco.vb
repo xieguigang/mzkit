@@ -1219,6 +1219,8 @@ extract_ms1:
                     .Select(Function(a) New NamedCollection(Of PeakFeature)(a.Key, a.Value)) _
                     .ToArray
             End If
+        ElseIf TypeOf samples Is NamedCollection(Of PeakFeature)() Then
+            sampleData = samples
         End If
 
         If sampleData.IsNullOrEmpty Then
