@@ -717,7 +717,7 @@ Module mzDeco
     ''' <example>
     ''' let cleandata = filter_noise_spectrum(peaktable, ions, mzdiff=0.1, rt_win=30);
     ''' # get the noise spectrum data
-    ''' let noise = cleandata$noise;
+    ''' let noise = attr(cleandata, "noise");
     ''' </example>
     <ExportAPI("filter_noise_spectrum")>
     <RApiReturn(GetType(PeakMs2))>
@@ -734,10 +734,14 @@ Module mzDeco
             Return pull.getError
         End If
 
+        ' scan all ms2 level spectrum
         For Each ion As PeakMs2 In pull.populates(Of PeakMs2)(env)
+            ' find ms1 peak with ms2 precursor mz and rt matches 
+            ' with given mzdiff and rt window size tolerance 
             If peaktable.FindIonSet(ion.mz, ion.rt, mzdiff, rt_win).Any Then
                 Call filterData.Add(ion)
             Else
+                ' this ms2 spectrum has no ms1 peak parent ion?
                 Call noiseData.Add(ion)
             End If
         Next

@@ -207,10 +207,15 @@ Public Class PeakSet : Implements Enumeration(Of xcms2)
             .Where(Function(i) i.index > -1 AndAlso std.Abs(i.mz - mz) <= mzdiff) _
             .ToArray
         Dim rtset = Me.rt.Query(rt).AsParallel _
-            .Where(Function(i) i.Item2 > -1 AndAlso std.Abs(i.Item1 - rt) <= rt_win) _
+            .Where(Function(i As (rt As Double, index As Integer))
+                       Return i.index > -1 AndAlso std.Abs(i.rt - rt) <= rt_win
+                   End Function) _
             .ToArray
         Dim intersect_offsets = mzset.Select(Function(a) a.index) _
-            .Intersect(rtset.Select(Function(b) b.Item2)) _
+            .Intersect(rtset _
+                .Select(Function(b As (Double, index As Integer))
+                            Return b.index
+                        End Function)) _
             .ToArray
 
         For Each i As Integer In intersect_offsets
