@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::7b89876807c897fed6d8a0b6d1c62513, Rscript\Library\mzkit_app\src\mzquant\xcms.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 149
-    '    Code Lines: 93 (62.42%)
-    ' Comment Lines: 39 (26.17%)
-    '    - Xml Docs: 97.44%
-    ' 
-    '   Blank Lines: 17 (11.41%)
-    '     File Size: 6.18 KB
+' Summaries:
 
 
-    ' Module xcms
-    ' 
-    '     Function: cast_raw_dataframe, parse_xcms_samples, setAnnotations
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 149
+'    Code Lines: 93 (62.42%)
+' Comment Lines: 39 (26.17%)
+'    - Xml Docs: 97.44%
+' 
+'   Blank Lines: 17 (11.41%)
+'     File Size: 6.18 KB
+
+
+' Module xcms
+' 
+'     Function: cast_raw_dataframe, parse_xcms_samples, setAnnotations
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -67,6 +67,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports std = System.Math
 
 ''' <summary>
 ''' the xcms interop and data handler
@@ -229,7 +230,8 @@ Module xcms
                                      <RRawVectorArgument(TypeCodes.string)> rawfile As Object,
                                      Optional mzdiff As Double = 0.01,
                                      Optional ri_win As Double = 10,
-                                     Optional id As String = "M%mT%t") As Object
+                                     Optional id As String = "M%mT%t",
+                                     Optional env As Environment = Nothing) As Object
 
         Dim mz_vec As Double() = CLRVector.asNumeric(mz)
         Dim rt_vec As Double() = CLRVector.asNumeric(rt)
@@ -260,8 +262,14 @@ Module xcms
                         Return New NamedCollection(Of PeakFeature)(file)
                     End Function) _
             .ToArray
+        Dim vec = mzDeco.peakAlignment(peak_samples, mzdiff, ri_win:=ri_win, env:=env)
+        Dim peaksdata As xcms2() = CLRIterator.Enumerates(Of xcms2)(vec, env).ToArray
 
-        Return mzDeco.peakAlignment(peak_samples, mzdiff, ri_win:=ri_win)
+        For i As Integer = 0 To peaksdata.Length - 1
+            peaksdata(i).ID = id.Replace("%m", std.Round(peaksdata(i).mz)).Replace("%t", std.Round(peaksdata(i).rt))
+        Next
+
+        Return peaksdata.uniqueNames.ToArray
     End Function
 
 End Module
