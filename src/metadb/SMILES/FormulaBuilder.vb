@@ -75,7 +75,9 @@ Public Class FormulaBuilder
         Me.graph = graph
         Me.atomProfile = Atom _
             .DefaultElements _
-            .ToDictionary(Function(a) a.label)
+            .ToDictionary(Function(a)
+                              Return a.label
+                          End Function)
 
         For Each group As AtomGroup In AtomGroup.DefaultAtomGroups
             atomGroups(group.GetIonLabel) = group

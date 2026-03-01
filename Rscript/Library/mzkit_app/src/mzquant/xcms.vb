@@ -221,4 +221,38 @@ Module xcms
         Return df
     End Function
 
+    <ExportAPI("make_group_peaks")>
+    Public Function make_group_peaks(<RRawVectorArgument(TypeCodes.double)> mz As Object,
+                                     <RRawVectorArgument(TypeCodes.double)> rt As Object,
+                                     <RRawVectorArgument(TypeCodes.double)> intensity As Object,
+                                     <RRawVectorArgument(TypeCodes.string)> rawfile As Object,
+                                     Optional id As String = "M%mT%t") As Object
+
+        Dim mz_vec As Double() = CLRVector.asNumeric(mz)
+        Dim rt_vec As Double() = CLRVector.asNumeric(rt)
+        Dim into_vec As Double() = CLRVector.asNumeric(intensity)
+        Dim name_vec As Double() = CLRVector.asNumeric(rawfile)
+        Dim peaks As PeakFeature() = mz_vec _
+            .Select(Function(mzi, i)
+                        Return New PeakFeature With {
+                            .rawfile = name_vec(i),
+                            .area = into_vec(i),
+                            .baseline = 1,
+                            .integration = 1,
+                            .maxInto = .area,
+                            .mz = mzi,
+                            .noise = 1,
+                            .nticks = 1,
+                            .RI = 0,
+                            .rt = rt_vec(i),
+                            .rtmax = .rt + 1,
+                            .rtmin = .rt - 1,
+                            .xcms_id = "F" & (i + 1).ToString.PadLeft(11, "0"c)
+                        }
+                    End Function) _
+            .ToArray
+
+
+    End Function
+
 End Module
