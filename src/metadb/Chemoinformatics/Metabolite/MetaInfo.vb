@@ -67,6 +67,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Metabolite
 
@@ -178,6 +179,14 @@ Namespace Metabolite
 
         Sub New()
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function EnumerateAllNames() As IEnumerable(Of String)
+            Return From s As String
+                   In {name, IUPACName}.JoinIterates(synonym)
+                   Where Strings.Len(s) > 0
+                   Distinct
+        End Function
 
         ''' <summary>
         ''' display the name for debug view
