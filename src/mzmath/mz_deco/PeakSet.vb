@@ -203,10 +203,10 @@ Public Class PeakSet : Implements Enumeration(Of xcms2)
     ''' <param name="rt_win"></param>
     ''' <returns></returns>
     Public Iterator Function FindIonSet(mz As Double, rt As Double, mzdiff As Double, rt_win As Double) As IEnumerable(Of xcms2)
-        Dim mzset = Me.mz.Search(mz).AsParallel _
+        Dim mzset = Me.mz.Search(mz) _
             .Where(Function(i) i.index > -1 AndAlso std.Abs(i.mz - mz) <= mzdiff) _
             .ToArray
-        Dim rtset = Me.rt.Query(rt).AsParallel _
+        Dim rtset = Me.rt.Query(rt) _
             .Where(Function(i As (rt As Double, index As Integer))
                        Return i.index > -1 AndAlso std.Abs(i.rt - rt) <= rt_win
                    End Function) _
