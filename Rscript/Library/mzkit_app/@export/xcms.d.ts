@@ -35,6 +35,13 @@ declare namespace xcms {
    */
    function expression_df(ion: object, sampleinfo: object): any;
    /**
+     * @param mzdiff default value Is ``0.01``.
+     * @param ri_win default value Is ``10``.
+     * @param id default value Is ``'M%mT%t'``.
+     * @param env default value Is ``null``.
+   */
+   function make_group_peaks(mz: any, rt: any, intensity: any, rawfile: any, mzdiff?: number, ri_win?: number, id?: string, env?: object): any;
+   /**
     * Parse the input file as the mzkit peakset object
     * 
     * 

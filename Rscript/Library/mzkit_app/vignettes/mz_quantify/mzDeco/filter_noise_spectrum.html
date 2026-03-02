@@ -77,7 +77,7 @@
 
         <pre><code id="example_r"> let cleandata = filter_noise_spectrum(peaktable, ions, mzdiff=0.1, rt_win=30);
  # get the noise spectrum data
- let noise = cleandata$noise;</code></pre>
+ let noise = attr(cleandata, "noise");</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>mzDeco</em> version 1.0.0.0 <a

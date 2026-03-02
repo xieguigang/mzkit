@@ -44,7 +44,7 @@ this function will filter the noise spectrum data from the given
 .PP
 let cleandata = filter_noise_spectrum(peaktable, ions, mzdiff=0.1, rt_win=30);
  # get the noise spectrum data
- let noise = cleandata$noise;
+ let noise = attr(cleandata, "noise");
 .PP
 .SH SEE ALSO
 mzDeco

@@ -6,3 +6,4 @@ the xcms interop and data handler
 + [cast_findpeaks_raw](xcms/cast_findpeaks_raw.1) cast the xcms find peaks result raw dataframe to mzkit peak feature data
 + [set_annotations](xcms/set_annotations.1) set annotation to the ion features
 + [expression_df](xcms/expression_df.1) Create the expression dataframe for a specific ion peak data
++ [make_group_peaks](xcms/make_group_peaks.1) 
