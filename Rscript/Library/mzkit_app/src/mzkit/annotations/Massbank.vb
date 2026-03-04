@@ -73,6 +73,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.ChEBI
+Imports BioNovoGene.BioDeep.Chemistry.Coconut
 Imports BioNovoGene.BioDeep.Chemistry.HERB
 Imports BioNovoGene.BioDeep.Chemistry.LipidMaps
 Imports BioNovoGene.BioDeep.Chemistry.LOTUS
@@ -357,6 +358,26 @@ Module Massbank
         End If
 
         Dim loading As IEnumerable(Of NaturalProduct) = NaturalProduct.Parse(NPOC2021:=s.TryCast(Of Stream))
+
+        If lazy Then
+            Return pipeline.CreateFromPopulator(loading)
+        Else
+            Return loading.ToArray
+        End If
+    End Function
+
+    <ExportAPI("read.coconut")>
+    Public Function loadCoconut(<RRawVectorArgument> file As Object,
+                                Optional lazy As Boolean = True,
+                                Optional env As Environment = Nothing) As Object
+
+        Dim s = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+        If s Like GetType(Message) Then
+            Return s.TryCast(Of Message)
+        End If
+
+        Dim loading As IEnumerable(Of CoconutNPTable) = CoconutNPTable.ParseTable(s.TryCast(Of Stream))
 
         If lazy Then
             Return pipeline.CreateFromPopulator(loading)
