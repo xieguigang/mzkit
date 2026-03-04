@@ -228,6 +228,11 @@ declare namespace massbank {
    function rankingNames(x: any, max_len?: object, min_len?: object): object;
    module read {
       /**
+        * @param lazy default value Is ``true``.
+        * @param env default value Is ``null``.
+      */
+      function coconut(file: any, lazy?: boolean, env?: object): any;
+      /**
        * read lipidmaps messagepack repository file
        * 
        * 
