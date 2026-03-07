@@ -269,7 +269,14 @@ Module ReferenceTreePkg
 
         Dim buf As Stream = buffer.TryCast(Of Stream)
         Dim isHDS = StreamPack.TestMagic(buf)
-        Dim targets As String() = CLRVector.asCharacter(target_uuid)
+        Dim targets As String() = CLRVector.asCharacter(target_uuid) _
+            .SafeQuery _
+            .Where(Function(id)
+                       ' 20260307 make filter of the empty id result
+                       ' example as: c("null")
+                       Return Not id.StringEmpty(, True)
+                   End Function) _
+            .ToArray
         Dim println = env.WriteLineHandler
 
         Call buf.Seek(Scan0, SeekOrigin.Begin)
