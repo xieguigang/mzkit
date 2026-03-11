@@ -143,8 +143,6 @@ Public Class Atom
 
     Public Shared Iterator Function DefaultElements() As IEnumerable(Of Atom)
         Yield New Atom("Li", 1)
-        Yield New Atom("Na", 1)
-        Yield New Atom("K", 1)
         Yield New Atom("Rb", 1)
         Yield New Atom("Cs", 1)
         Yield New Atom("Fr", 1)
@@ -184,11 +182,8 @@ Public Class Atom
         Yield New Atom("In", 1, 3)
         Yield New Atom("Tl", 1, 3)
 
-        Yield New Atom("Cu", 1, 2, 3)
         Yield New Atom("Ag", 1, 2, 3)
         Yield New Atom("Au", 1, 3)
-
-        Yield New Atom("H", 1, -1)
 
         Yield New Atom("Ce", 3, 4)
         Yield New Atom("Hf", 3, 4)
@@ -198,7 +193,6 @@ Public Class Atom
         Yield New Atom("Ni", 2, 3, 4)
         Yield New Atom("Pd", 2, 3, 4)
 
-        Yield New Atom("C", 2, 4)
         Yield New Atom("Si", 2, 4)
         Yield New Atom("Pb", 2, 4)
         Yield New Atom("Sn", 2, 4)
@@ -217,14 +211,8 @@ Public Class Atom
         Yield New Atom("Np", 3, 4, 5, 6, 7)
         Yield New Atom("Pu", 3, 4, 5, 6, 7)
 
-        Yield New Atom("O", -2, -1, 2)
-
-        Yield New Atom("S", -2, 2, 4, 6)
         Yield New Atom("Se", -2, 2, 4, 6)
         Yield New Atom("Te", -2, 2, 4, 6)
-
-        Yield New Atom("N", -3, 1, 2, 3, 4, 5)
-        Yield New Atom("P", -3, 1, 3, 4, 5)
 
         Yield New Atom("As", -3, 3, 5)
         Yield New Atom("Sb", -3, 3, 5)
@@ -241,15 +229,64 @@ Public Class Atom
 
         Yield New Atom("Br", -1, 1, 3, 5, 7)
         Yield New Atom("I", -1, 1, 3, 5, 7)
-        Yield New Atom("Cl", -1, 1, 3, 4, 5, 6, 7)
 
-        Yield New Atom("Fe", 2, 3, 4, 5, 6, 8)
         Yield New Atom("Os", 2, 3, 4, 5, 6, 8)
 
         Yield New Atom("Gd", 2, 3)
 
         Yield New Atom("Ge", -4, 2, 4)
         Yield New Atom("Sm", 2, 3)
+
+        ' --- 1. 氢 ---
+        ' 常见 +1 价 (酸、水、有机物)，在金属氢化物 (如 NaH) 中显 -1 价
+        Yield New Atom("H", 1, -1)
+
+        ' --- 2. 碳 ---
+        ' 有机化学核心元素。
+        ' 常见化合价：-4 (CH4), +2 (CO), +4 (CO2)
+        Yield New Atom("C", -4, 4, 2)
+
+        ' --- 3. 氧 ---
+        ' 非常活泼，通常显 -2 价 (水、氧化物)。
+        ' -1 价存在于过氧化物 (如 H2O2)，+2 价极少见 (如 OF2)
+        Yield New Atom("O", -2, -1, 2)
+
+        ' --- 4. 氮 ---
+        ' 化合价变化非常丰富。
+        ' -3 (NH3/铵根), +5 (HNO3/硝酸盐), +3 (HNO2/亚硝酸盐), +1/+2/+4 (氧化物)
+        Yield New Atom("N", -3, 5, 3, 1, 2, 4)
+
+        ' --- 5. 磷 ---
+        ' 与氮同族。
+        ' -3 (PH3/磷化物), +5 (H3PO4/磷酸盐), +3 (H3PO3/亚磷酸盐)
+        Yield New Atom("P", -3, 5, 3)
+
+        ' --- 6. 硫 ---
+        ' -2 (H2S/硫化物), +6 (H2SO4/硫酸盐), +4 (SO2/亚硫酸盐)
+        Yield New Atom("S", -2, 6, 4, 2)
+
+        ' --- 7. 钾 ---
+        ' 碱金属，极活泼，几乎只有 +1 价
+        Yield New Atom("K", 1)
+
+        ' --- 8. 钠 ---
+        ' 碱金属，极活泼，几乎只有 +1 价
+        Yield New Atom("Na", 1)
+
+        ' --- 9. 氯 ---
+        ' 卤素。
+        ' -1 (HCl/氯化物)，正价常见于含氧酸盐：+1 (次氯酸), +5 (氯酸), +7 (高氯酸), +3 (亚氯酸)
+        Yield New Atom("Cl", -1, 1, 5, 7, 3)
+
+        ' --- 10. 铁 ---
+        ' 过渡金属。
+        ' +2 (亚铁离子 Fe2+), +3 (三价铁离子 Fe3+)
+        Yield New Atom("Fe", 2, 3)
+
+        ' --- 11. 铜 ---
+        ' 过渡金属。
+        ' +2 (铜离子 Cu2+，最常见), +1 (亚铜离子 Cu+，如 Cu2O)
+        Yield New Atom("Cu", 2, 1)
     End Function
 
 End Class
