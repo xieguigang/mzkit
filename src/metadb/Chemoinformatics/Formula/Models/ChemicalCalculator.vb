@@ -1,4 +1,7 @@
-﻿Namespace Formula
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+
+Namespace Formula
 
     Public Module ChemicalCalculator
 
@@ -7,11 +10,24 @@
         ''' </summary>
         ReadOnly elementDb As Dictionary(Of String, Atom) = Atom.DefaultElements.ToDictionary(Function(a) a.label)
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CalculatePossibleCharges(formula As String) As IEnumerable(Of (Charge As Double, Probability As Double))
+            Static chargePool As New Dictionary(Of String, List(Of (Charge As Double, Probability As Double)))
+
+            Return chargePool.ComputeIfAbsent(
+                key:=formula,
+                lazyValue:=Function(formula_str)
+                               Return FormulaScanner.ScanFormula(formula_str).CountsByElement _
+                                   .CalculatePossibleCharges
+                           End Function)
+        End Function
+
         ''' <summary>
         ''' 计算化学式可能的电荷数及其概率
         ''' </summary>
         ''' <param name="formula">化学式组成字典，如 {"N":1, "H":4}</param>
         ''' <returns>返回按概率降序排列的列表，包含电荷数和概率值</returns>
+        <Extension>
         Public Function CalculatePossibleCharges(formula As Dictionary(Of String, Integer)) As List(Of (Charge As Double, Probability As Double))
             ' 临时存储结构：Key=电荷数, Value=最小的惩罚分数
             ' 我们只保留产生该电荷数的“最低成本”路径
