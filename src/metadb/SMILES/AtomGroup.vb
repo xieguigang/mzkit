@@ -1,61 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::9fa43995f9988ef4de2e54937b6eaea1, metadb\SMILES\AtomGroup.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 77
-    '    Code Lines: 60 (77.92%)
-    ' Comment Lines: 6 (7.79%)
-    '    - Xml Docs: 83.33%
-    ' 
-    '   Blank Lines: 11 (14.29%)
-    '     File Size: 3.19 KB
+' Summaries:
 
 
-    ' Class AtomGroup
-    ' 
-    '     Properties: AtomGroups, mainElement
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: CheckDefaultLabel, DefaultAtomGroups, GetDefaultValence, LoadAtoms
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 77
+'    Code Lines: 60 (77.92%)
+' Comment Lines: 6 (7.79%)
+'    - Xml Docs: 83.33%
+' 
+'   Blank Lines: 11 (14.29%)
+'     File Size: 3.19 KB
+
+
+' Class AtomGroup
+' 
+'     Properties: AtomGroups, mainElement
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: CheckDefaultLabel, DefaultAtomGroups, GetDefaultValence, LoadAtoms
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
 Public Class AtomGroup : Inherits Atom
 
