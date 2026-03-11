@@ -10,9 +10,9 @@
         ''' <summary>
         ''' 计算化学式可能的电荷数及其概率
         ''' </summary>
-        ''' <param name="formula_composition">化学式组成字典，如 {"N":1, "H":4}</param>
+        ''' <param name="formula">化学式组成字典，如 {"N":1, "H":4}</param>
         ''' <returns>返回按概率降序排列的列表，包含电荷数和概率值</returns>
-        Public Function CalculatePossibleCharges(formula_composition As Dictionary(Of String, Integer)) As List(Of (Charge As Double, Probability As Double))
+        Public Function CalculatePossibleCharges(formula As Dictionary(Of String, Integer)) As List(Of (Charge As Double, Probability As Double))
             ' 临时存储结构：Key=电荷数, Value=最小的惩罚分数
             ' 我们只保留产生该电荷数的“最低成本”路径
             Dim chargeCostMap As New Dictionary(Of Integer, Integer)
@@ -20,7 +20,7 @@
             ' 初始状态：电荷为0，成本为0
             Dim currentStates As New List(Of (Charge As Integer, Cost As Integer)) From {(0, 0)}
 
-            For Each kvp As KeyValuePair(Of String, Integer) In formula_composition
+            For Each kvp As KeyValuePair(Of String, Integer) In formula
                 Dim symbol As String = kvp.Key
                 Dim count As Integer = kvp.Value
 
