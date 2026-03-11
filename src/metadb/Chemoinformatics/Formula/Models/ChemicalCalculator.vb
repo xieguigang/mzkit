@@ -22,6 +22,17 @@ Namespace Formula
                            End Function)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CalculatePossibleCharges(formula As Formula) As IEnumerable(Of (Charge As Double, Probability As Double))
+            Static chargePool As New Dictionary(Of String, List(Of (Charge As Double, Probability As Double)))
+
+            Return chargePool.ComputeIfAbsent(
+                key:=formula.EmpiricalFormula,
+                lazyValue:=Function()
+                               Return formula.CountsByElement.CalculatePossibleCharges
+                           End Function)
+        End Function
+
         ''' <summary>
         ''' 计算化学式可能的电荷数及其概率
         ''' </summary>

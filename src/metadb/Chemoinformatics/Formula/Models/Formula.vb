@@ -213,6 +213,7 @@ Namespace Formula
         ''' </remarks>
         Sub New()
             CountsByElement = New Dictionary(Of String, Integer)
+            m_formula = ""
         End Sub
 
         ''' <summary>
