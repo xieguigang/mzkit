@@ -225,6 +225,11 @@ Public Class AdductsRanking
         Return RankAdducts(formula:=FormulaScanner.ScanFormula(formula_str), adducts)
     End Function
 
+    ''' <summary>
+    ''' Parse the adduct formula
+    ''' </summary>
+    ''' <param name="adduct"></param>
+    ''' <returns></returns>
     Private Function GetAdductsFormula(adduct As MzCalculator) As (sign%, formula As Formula)()
         Dim adduct_str As String = adduct.ToString
 
@@ -277,8 +282,9 @@ Public Class AdductsRanking
         If adduct_str = "[M]+" Then
             ' check for Anthocyanin
             Dim check As Double = AnthocyaninValidator.CheckRules(formula.CountsByElement) / 200
+            Dim topCharge As Double = ChemicalCalculator.CalculatePossibleCharges(formula).FirstOrDefault.Charge
 
-            If check > 0.4 Then
+            If check > 0.4 OrElse topCharge = 1 Then
                 Return maxValue * check
             Else
                 Return 0.05
@@ -321,7 +327,13 @@ Public Class AdductsRanking
         Dim adduct_str As String = adduct.ToString
 
         If adduct_str = "[M]-" Then
-            Return 0.01
+            Dim topCharge As Double = ChemicalCalculator.CalculatePossibleCharges(formula).FirstOrDefault.Charge
+
+            If topCharge < 0 Then
+                Return maxValue / 2
+            End If
+
+            Return 0.001
         End If
 
         ' deal with some special adducts type situation
