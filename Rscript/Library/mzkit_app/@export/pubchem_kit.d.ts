@@ -99,6 +99,9 @@ declare namespace pubchem_kit {
       function pugView(pugView: object): object;
    }
    /**
+   */
+   function parse_pathway_graph(jsonstr: string): object;
+   /**
     * Generate the url for get pubchem pugviews data object
     * 
     * 

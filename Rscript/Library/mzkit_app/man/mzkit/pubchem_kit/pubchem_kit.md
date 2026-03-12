@@ -44,3 +44,4 @@ toolkit for handling of the ncbi pubchem data
 + [read.mesh_tree](pubchem_kit/read.mesh_tree.1) Parse the mesh ontology tree
 + [mesh_background](pubchem_kit/mesh_background.1) create MeSH ontology gsea background based on the mesh tree
 + [mesh_level1](pubchem_kit/mesh_level1.1) gets the level1 term label of the mesh tree
++ [parse_pathway_graph](pubchem_kit/parse_pathway_graph.1) 
