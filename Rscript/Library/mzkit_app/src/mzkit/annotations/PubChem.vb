@@ -94,6 +94,8 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
+Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.ExtensionModels
+
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -686,5 +688,10 @@ Module PubChemToolKit
     <ExportAPI("mesh_level1")>
     Public Function level1Terms(mesh As Tree(Of Term)) As String()
         Return mesh.Childs.Values.Select(Function(c) c.Data.ToString).ToArray
+    End Function
+
+    <ExportAPI("parse_pathway_graph")>
+    Public Function pathway_graph(jsonstr As String) As PathwayGraph()
+        Return PathwayGraph.ParseJSON(jsonstr)
     End Function
 End Module
