@@ -79,6 +79,7 @@ Namespace NCBI.PubChem.ExtensionModels
         Public Property extid As String
         Public Property taxid As String
         Public Property core As String
+        Public Property dois As String()
         Public Property cids As String()
         Public Property geneids As String()
         Public Property protacxns As String()
