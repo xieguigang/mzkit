@@ -1,76 +1,78 @@
 ﻿#Region "Microsoft.VisualBasic::4698e4079e2090830530e3ccbaacc7dc, metadb\Lipidomics\OxidizedIndeterminateState.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 96
-    '    Code Lines: 83 (86.46%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 13 (13.54%)
-    '     File Size: 4.25 KB
+' Summaries:
 
 
-    ' Class OxidizedIndeterminateState
-    ' 
-    '     Properties: AllPositions, Identity
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: AsVisitor, Exclude, Include, Indeterminate, Positions
-    '               PositionsExclude
-    '     Enum State
-    ' 
-    '         None, PositionExclude, PositionInclude
-    ' 
-    ' 
-    ' 
-    '     Class OxidizedIndeterminateVisitor
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Visit
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 96
+'    Code Lines: 83 (86.46%)
+' Comment Lines: 0 (0.00%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 13 (13.54%)
+'     File Size: 4.25 KB
+
+
+' Class OxidizedIndeterminateState
+' 
+'     Properties: AllPositions, Identity
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: AsVisitor, Exclude, Include, Indeterminate, Positions
+'               PositionsExclude
+'     Enum State
+' 
+'         None, PositionExclude, PositionInclude
+' 
+' 
+' 
+'     Class OxidizedIndeterminateVisitor
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Visit
+' 
+'  
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports Microsoft.VisualBasic.Linq
 
 Public NotInheritable Class OxidizedIndeterminateState
     Public Shared ReadOnly Property AllPositions As OxidizedIndeterminateState = New OxidizedIndeterminateState(State.PositionExclude, Nothing)
@@ -110,7 +112,7 @@ Public NotInheritable Class OxidizedIndeterminateState
                 If _positions Is Nothing Then
                     Return New OxidizedIndeterminateState(_state, {position})
                 ElseIf Not _positions.Contains(position) Then
-                    Return New OxidizedIndeterminateState(_state, _positions.Append(position).ToArray())
+                    Return New OxidizedIndeterminateState(_state, _positions.JoinIterates(position).ToArray())
                 End If
             Case State.PositionExclude
                 If _positions IsNot Nothing AndAlso _positions.Contains(position) Then
@@ -130,7 +132,7 @@ Public NotInheritable Class OxidizedIndeterminateState
                 If _positions Is Nothing Then
                     Return New OxidizedIndeterminateState(_state, {position})
                 ElseIf _positions IsNot Nothing AndAlso Not _positions.Contains(position) Then
-                    Return New OxidizedIndeterminateState(_state, _positions.Append(position).ToArray())
+                    Return New OxidizedIndeterminateState(_state, _positions.JoinIterates(position).ToArray())
                 End If
         End Select
         Return Me
