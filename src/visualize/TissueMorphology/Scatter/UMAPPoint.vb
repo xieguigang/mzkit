@@ -62,7 +62,7 @@ Imports System.Drawing
 Imports Erica.Analysis.SingleCell.Expression
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.Framework
-Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
