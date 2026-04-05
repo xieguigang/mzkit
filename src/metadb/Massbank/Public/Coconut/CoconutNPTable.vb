@@ -1,7 +1,7 @@
 ﻿Imports System.IO
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
-Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
 Imports Microsoft.VisualBasic.Linq
 Imports Metab = BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib
 
