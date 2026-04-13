@@ -1248,7 +1248,8 @@ Module Massbank
                               Optional xref As xref = Nothing,
                               <RRawVectorArgument> Optional synonym As Object = Nothing,
                               <RRawVectorArgument> Optional desc As Object = Nothing,
-                              <RRawVectorArgument> Optional organism_source As Object = Nothing) As Object
+                              <RRawVectorArgument> Optional organism_source As Object = Nothing,
+                              Optional zh_name As String = Nothing) As Object
 
         Return New MetaLib With {
             .ID = id,
@@ -1259,7 +1260,8 @@ Module Massbank
             .description = CLRVector.asCharacter(desc).JoinBy(vbCrLf),
             .xref = xref,
             .exact_mass = FormulaScanner.EvaluateExactMass(formula),
-            .organism = CLRVector.asCharacter(organism_source)
+            .organism = CLRVector.asCharacter(organism_source),
+            .zh_name = zh_name
         }
     End Function
 

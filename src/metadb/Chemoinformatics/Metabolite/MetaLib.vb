@@ -86,6 +86,8 @@ Namespace Metabolite
 
         <Field(17)> Public Property keywords As String()
 
+        <Field(18)> Public Property zh_name As String
+
         Sub New()
         End Sub
 
