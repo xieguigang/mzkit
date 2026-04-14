@@ -189,8 +189,10 @@ declare namespace massbank {
      * + default value Is ``null``.
      * @param organism_source 
      * + default value Is ``null``.
+     * @param zh_name 
+     * + default value Is ``null``.
    */
-   function metabo_anno(id: string, formula: string, name: string, iupac_name?: string, xref?: object, synonym?: any, desc?: any, organism_source?: any): object;
+   function metabo_anno(id: string, formula: string, name: string, iupac_name?: string, xref?: object, synonym?: any, desc?: any, organism_source?: any, zh_name?: string): object;
    module mona {
       /**
        * Extract the annotation metadata from the MONA comment data
