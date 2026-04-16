@@ -62,12 +62,13 @@ Namespace HERB
 
     Public Class HERB_herb_info
 
-        Public Property Herb_ As String
+        Public Property Herb_id As String
         Public Property Herb_pinyin_name As String
         Public Property Herb_cn_name As String
+        Public Property Herb_alias_name As String
         Public Property Herb_en_name As String
         Public Property Herb_latin_name As String
-        Public Property Properties As String
+        Public Property Properties As String()
         Public Property Meridians As String
         Public Property UsePart As String
         Public Property [Function] As String

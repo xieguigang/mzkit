@@ -63,7 +63,12 @@ Namespace HERB
 
     Public Class HERB_reference_info
 
-        Public Property REF_id As String
+        Public Property Reference_id As String
+        Public Property Subject_id As String
+        Public Property Subject_paper_key As String
+        Public Property Subject_name As String
+        Public Property Subject_type As String
+
         <Column("Herb/ingredient_id")> Public Property Herb_ingredient_id As String
         <Column("Herb/ingredient_name")> Public Property Herb_ingredient_name As String
         <Column("Herb/ingredient")> Public Property Herb_ingredient As String
