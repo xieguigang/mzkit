@@ -72,9 +72,9 @@ Namespace HERB
         Sub New(base As HERB_ingredient_info)
             Ingredient_id = base.Ingredient_id
             Ingredient_name = base.Ingredient_name
-            [Alias] = base.Alias
-            Ingredient_formula = base.Ingredient_formula
-            Ingredient_Smile = base.Ingredient_Smile
+            Ingredient_alias_name = base.Ingredient_alias_name
+            Molecular_formula = base.Molecular_formula
+            Canonical_smiles = base.Canonical_smiles
             Ingredient_weight = base.Ingredient_weight
             OB_score = base.OB_score
             CAS_id = base.CAS_id
