@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::648b374dd8be2e8a627b7df890f2c927, metadb\FormulaSearch.Extensions\AdductsRanking.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 278
-    '    Code Lines: 170 (61.15%)
-    ' Comment Lines: 66 (23.74%)
-    '    - Xml Docs: 81.82%
-    ' 
-    '   Blank Lines: 42 (15.11%)
-    '     File Size: 9.91 KB
+' Summaries:
 
 
-    ' Class AdductsRanking
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: Filter, GetAdductsFormula, InvalidAdduct, (+3 Overloads) Rank, (+3 Overloads) RankAdducts
-    '               RankNegative, RankPositive
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 278
+'    Code Lines: 170 (61.15%)
+' Comment Lines: 66 (23.74%)
+'    - Xml Docs: 81.82%
+' 
+'   Blank Lines: 42 (15.11%)
+'     File Size: 9.91 KB
+
+
+' Class AdductsRanking
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: Filter, GetAdductsFormula, InvalidAdduct, (+3 Overloads) Rank, (+3 Overloads) RankAdducts
+'               RankNegative, RankPositive
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,6 +61,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
+Imports std = System.Math
 
 ''' <summary>
 ''' A helper tools for make adducts ions ranking
@@ -282,9 +283,9 @@ Public Class AdductsRanking
         If adduct_str = "[M]+" Then
             ' check for Anthocyanin
             Dim check As Double = AnthocyaninValidator.CheckRules(formula.CountsByElement) / 200
-            Dim topCharge As Double = ChemicalCalculator.CalculatePossibleCharges(formula).FirstOrDefault.Charge
+            Dim chargeValidate As Double = CheckChargeValue(formula, 1.0)
 
-            If check > 0.4 OrElse topCharge = 1 Then
+            If check > 0.4 OrElse chargeValidate > 0 Then
                 Return maxValue * check
             Else
                 Return 0.05
@@ -296,6 +297,13 @@ Public Class AdductsRanking
         End If
 
         Return 1
+    End Function
+
+    Private Shared Function CheckChargeValue(formula As Formula, check As Double) As Double
+        Dim charges = ChemicalCalculator.CalculatePossibleCharges(formula, strict:=False)
+        Dim validate = charges.Where(Function(e) std.Abs(e.Charge - check) < 0.1).FirstOrDefault
+
+        Return validate.Probability
     End Function
 
     Private Function InvalidAdduct(formula As Formula, adduct As MzCalculator) As Boolean
@@ -327,13 +335,13 @@ Public Class AdductsRanking
         Dim adduct_str As String = adduct.ToString
 
         If adduct_str = "[M]-" Then
-            Dim topCharge As Double = ChemicalCalculator.CalculatePossibleCharges(formula).FirstOrDefault.Charge
+            Dim chargeValidate As Double = CheckChargeValue(formula, -1.0)
 
-            If topCharge < 0 Then
+            If chargeValidate > 0 Then
                 Return maxValue / 2
             End If
 
-            Return 0.001
+            Return 0.0001
         End If
 
         ' deal with some special adducts type situation

@@ -11,25 +11,27 @@ Namespace Formula
         ReadOnly elementDb As Dictionary(Of String, Atom) = Atom.DefaultElements.ToDictionary(Function(a) a.label)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function CalculatePossibleCharges(formula As String) As IEnumerable(Of (Charge As Double, Probability As Double))
+        Public Function CalculatePossibleCharges(formula As String, Optional strict As Boolean = True) As IEnumerable(Of (Charge As Double, Probability As Double))
             Static chargePool As New Dictionary(Of String, List(Of (Charge As Double, Probability As Double)))
 
             Return chargePool.ComputeIfAbsent(
                 key:=formula,
                 lazyValue:=Function(formula_str)
                                Return FormulaScanner.ScanFormula(formula_str).CountsByElement _
-                                   .CalculatePossibleCharges
+                                   .CalculatePossibleCharges(strict)
                            End Function)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function CalculatePossibleCharges(formula As Formula) As IEnumerable(Of (Charge As Double, Probability As Double))
+        Public Function CalculatePossibleCharges(formula As Formula, Optional strict As Boolean = True) As IEnumerable(Of (Charge As Double, Probability As Double))
+            Dim key As String = $"{formula.EmpiricalFormula}-strict:{strict}"
+
             Static chargePool As New Dictionary(Of String, List(Of (Charge As Double, Probability As Double)))
 
             Return chargePool.ComputeIfAbsent(
-                key:=formula.EmpiricalFormula,
+                key:=key,
                 lazyValue:=Function()
-                               Return formula.CountsByElement.CalculatePossibleCharges
+                               Return formula.CountsByElement.CalculatePossibleCharges(strict)
                            End Function)
         End Function
 
@@ -39,23 +41,29 @@ Namespace Formula
         ''' <param name="formula">化学式组成字典，如 {"N":1, "H":4}</param>
         ''' <returns>返回按概率降序排列的列表，包含电荷数和概率值</returns>
         <Extension>
-        Public Function CalculatePossibleCharges(formula As Dictionary(Of String, Integer)) As List(Of (Charge As Double, Probability As Double))
+        Public Function CalculatePossibleCharges(formula As Dictionary(Of String, Integer), Optional strict As Boolean = True) As List(Of (Charge As Double, Probability As Double))
             ' 临时存储结构：Key=电荷数, Value=最小的惩罚分数
             ' 我们只保留产生该电荷数的“最低成本”路径
             Dim chargeCostMap As New Dictionary(Of Integer, Integer)
             ' 2. 递归/迭代生成所有组合并计算成本
             ' 初始状态：电荷为0，成本为0
             Dim currentStates As New List(Of (Charge As Integer, Cost As Integer)) From {(0, 0)}
+            Dim atom As Atom
 
             For Each kvp As KeyValuePair(Of String, Integer) In formula
                 Dim symbol As String = kvp.Key
                 Dim count As Integer = kvp.Value
 
                 If Not elementDb.ContainsKey(symbol) Then
-                    Throw New Exception($"元素 {symbol} 未在数据库中定义。")
+                    If strict Then
+                        Throw New Exception($"元素 {symbol} 未在数据库中定义。")
+                    Else
+                        Continue For
+                    End If
+                Else
+                    atom = elementDb(symbol)
                 End If
 
-                Dim atom As Atom = elementDb(symbol)
                 Dim valences As Integer() = atom.valence
 
                 Dim nextStates As New List(Of (Charge As Integer, Cost As Integer))
