@@ -89,7 +89,6 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
-Imports MetaboliteData = BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaInfo
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>

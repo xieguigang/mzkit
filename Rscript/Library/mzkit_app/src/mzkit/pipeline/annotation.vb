@@ -122,6 +122,7 @@ Module library
 
         Call report.add("metabolite_id", From mi As AnnotationData(Of xref) In data Select mi.ID)
         Call report.add("name", From mi As AnnotationData(Of xref) In data Select mi.CommonName)
+        Call report.add("name_zh", From mi As AnnotationData(Of xref) In data Select mi.ZhName)
         Call report.add("formula", From mi As AnnotationData(Of xref) In data Select mi.Formula)
         Call report.add("exact_mass", From mi As AnnotationData(Of xref) In data Select mi.ExactMass)
 
