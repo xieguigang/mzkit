@@ -484,7 +484,7 @@ Module ReferenceTreePkg
 
         For Each hit As ClusterHit In hits
             Dim hit_id As String = hit.Id.Split("|"c).First
-            Dim metadata As MetaboliteData = metadb.GetMetadata(hit_id)
+            Dim metadata As MetaLib = metadb.GetMetadata(hit_id)
 
             If metadata Is Nothing Then
                 missing.Add(hit_id)
@@ -512,7 +512,8 @@ Module ReferenceTreePkg
                 .CommonName = metadata.name,
                 .ExactMass = FormulaScanner.EvaluateExactMass(metadata.formula),
                 .Formula = metadata.formula,
-                .ID = metadata.ID
+                .ID = metadata.ID,
+                .ZhName = metadata.zh_name
             }
 
             Yield data

@@ -84,6 +84,12 @@ Public Class AnnotationData(Of T As ICrossReference)
     Public Property Formula As String Implements IFormulaProvider.Formula
 
     ''' <summary>
+    ''' the metabolite chinese name
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ZhName As String
+
+    ''' <summary>
     ''' the external database cross reference
     ''' </summary>
     ''' <returns></returns>
