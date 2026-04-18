@@ -130,7 +130,9 @@ Namespace Metabolite.CrossReference
         ''' <returns>this property getter returns nothing if not found</returns>
         Default Public ReadOnly Property Extra(dbname As String) As String
             Get
-                If extras.ContainsKey(dbname) Then
+                If extras Is Nothing Then
+                    Return Nothing
+                ElseIf extras.ContainsKey(dbname) Then
                     Return extras(dbname).FirstOrDefault
                 End If
 

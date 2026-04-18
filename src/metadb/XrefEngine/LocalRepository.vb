@@ -142,6 +142,8 @@ Public Class LocalRepository : Implements IDisposable, IMetaDb
         Return Me
     End Function
 
+    Const alias_main_id As String = "main_id"
+
     Private Function ReadMetadata(id As String) As metadata
         If Not offset.ContainsKey(id) Then
             If mapping Is Nothing Then
@@ -164,6 +166,17 @@ Public Class LocalRepository : Implements IDisposable, IMetaDb
 
         Dim json_str As String = Encoding.UTF8.GetString(buf)
         Dim metadata As metadata = json_str.LoadJSON(Of metadata)
+
+        ' 20260419
+        ' resolve main id alias at here
+        ' `main_id` is a preserved key for get alias main
+        If metadata.xref IsNot Nothing AndAlso Not metadata.xref(alias_main_id).StringEmpty(, True) Then
+            Dim main_id As String = metadata.xref(alias_main_id)
+
+            If main_id <> metadata.ID Then
+                metadata = If(ReadMetadata(metadata.xref(alias_main_id)), metadata)
+            End If
+        End If
 
         Return metadata
     End Function
