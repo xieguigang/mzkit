@@ -18,6 +18,7 @@ mass_spectrum.plot \- Plot of the mass spectrum
 \fBgridStrokeX\fR as string = "stroke: lightgray; stroke-width: 1px; stroke-dash: dash;", 
 \fBgridStrokeY\fR as string = "stroke: #EBEBEB; stroke-width: 1px; stroke-dash: solid;", 
 \fBhighlight_msn\fR as string = \fB<NULL>\fR, 
+\fBhighlight_ion\fR as any = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -51,6 +52,11 @@ Plot of the mass spectrum
 .PP
 \fBlegend_layout\fB \fR\- 
  the layout of the legend plot, this parameter value could affects the plot style
+. 
+.PP
+.PP
+\fBhighlight_msn\fB \fR\- 
+ make highlights of the MSn peaks, the value of this parameter should be a color string, such as "red" or "#FF0000". MS level greater than 2.
 . 
 .PP
 .SH SEE ALSO

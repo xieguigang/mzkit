@@ -73,12 +73,15 @@ declare namespace visual {
         * + default value Is ``'stroke: lightgray; stroke-width: 1px; stroke-dash: dash;'``.
         * @param gridStrokeY 
         * + default value Is ``'stroke: #EBEBEB; stroke-width: 1px; stroke-dash: solid;'``.
-        * @param highlight_msn 
+        * @param highlight_msn make highlights of the MSn peaks, the value of this parameter should be a color string, such as "red" or "#FF0000". MS level greater than 2.
+        * 
+        * + default value Is ``null``.
+        * @param highlight_ion 
         * + default value Is ``null``.
         * @param env 
         * + default value Is ``null``.
       */
-      function plot(spectrum: any, alignment?: any, title?: string, showLegend?: boolean, showGrid?: boolean, tagXFormat?: string, intoCutoff?: number, bar_width?: number, color1?: string, color2?: string, grid_x?: boolean, legend_layout?: any, gridStrokeX?: string, gridStrokeY?: string, highlight_msn?: string, env?: object): object;
+      function plot(spectrum: any, alignment?: any, title?: string, showLegend?: boolean, showGrid?: boolean, tagXFormat?: string, intoCutoff?: number, bar_width?: number, color1?: string, color2?: string, grid_x?: boolean, legend_layout?: any, gridStrokeX?: string, gridStrokeY?: string, highlight_msn?: string, highlight_ion?: any, env?: object): object;
    }
    module parse {
       /**
