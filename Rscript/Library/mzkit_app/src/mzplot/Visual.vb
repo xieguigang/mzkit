@@ -883,11 +883,20 @@ Module Visual
                 highlightStyle = $"stroke: {highlight_msn}; stroke-width: {bar_width}px; stroke-dash: solid;"
 
                 If highlight_ion IsNot Nothing Then
-                    Dim ions As Double() = CLRVector.asNumeric(highlight_ion)
+                    If TypeOf highlight_ion Is list Then
+                        highlights = DirectCast(highlight_ion, list) _
+                            .AsGeneric(Of Double)(env) _
+                            .Select(Function(a)
+                                        Return New NamedValue(Of Double)(a.Key, a.Value)
+                                    End Function) _
+                            .ToArray
+                    Else
+                        Dim ions As Double() = CLRVector.asNumeric(highlight_ion)
 
-                    highlights = ions _
-                        .Select(Function(d) New NamedValue(Of Double)("", d)) _
-                        .ToArray
+                        highlights = ions _
+                            .Select(Function(d) New NamedValue(Of Double)("", d)) _
+                            .ToArray
+                    End If
                 Else
                     highlights = ms.TryCast(Of LibraryMatrix).Array _
                         .JoinIterates(ref.TryCast(Of LibraryMatrix).Array) _
