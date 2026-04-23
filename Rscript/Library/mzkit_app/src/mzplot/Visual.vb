@@ -244,6 +244,20 @@ Module Visual
         Dim label_mz As String = args.getValue("label_mz", env, "F4")
         Dim grid_x As Boolean = args.getValue("grid_x", env, False)
         Dim show_hit_highlights As Boolean = args.getValue("show_hits", env, False)
+        Dim highlights_ion As list = args.getByName("highlights")
+        Dim highlights_color As String = If(CLRVector.asScalarCharacter(args.getByName("highlights.color")), "red")
+        Dim highlights As NamedValue(Of Double)() = Nothing
+
+        If highlights_ion Is Nothing Then
+            highlights = highlights_ion _
+                .AsGeneric(Of Double)(env) _
+                .Select(Function(a)
+                            Return New NamedValue(Of Double)(a.Key, a.Value)
+                        End Function) _
+                .ToArray
+        ElseIf show_hit_highlights Then
+            highlights = If(show_hit_highlights, aligns.GetHitsMzPeaks.ToArray, Nothing)
+        End If
 
         Return MassSpectra.AlignMirrorPlot(
             query:=pairwise.query,
@@ -258,7 +272,8 @@ Module Visual
             color1:=color1,
             color2:=color2,
             drawGridX:=grid_x,
-            highlights:=If(show_hit_highlights, aligns.GetHitsMzPeaks.ToArray, Nothing)
+            highlights:=highlights,
+            highlightStyle:=$"stroke: {highlights_color}; stroke-width: 2px; stroke-dash: dash;"
         )
     End Function
 
