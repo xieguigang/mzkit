@@ -818,6 +818,9 @@ Module Visual
     ''' <param name="legend_layout">
     ''' the layout of the legend plot, this parameter value could affects the plot style
     ''' </param>
+    ''' <param name="highlight_msn">
+    ''' make highlights of the MSn peaks, the value of this parameter should be a color string, such as "red" or "#FF0000". MS level greater than 2.
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("mass_spectrum.plot")>
     <RApiReturn(GetType(GraphicsData))>
@@ -837,6 +840,8 @@ Module Visual
                                  Optional gridStrokeX As String = PlotAlignmentGroup.DefaultGridXStroke,
                                  Optional gridStrokeY As String = PlotAlignmentGroup.DefaultGridYStroke,
                                  Optional highlight_msn As String = Nothing,
+                                 <RRawVectorArgument(TypeCodes.double)>
+                                 Optional highlight_ion As Object = Nothing,
                                  Optional env As Environment = Nothing) As Object
 
         Dim ms As [Variant](Of Message, LibraryMatrix) = getSpectrum(spectrum, env)
@@ -876,14 +881,27 @@ Module Visual
             End If
             If Not highlight_msn.StringEmpty(, True) Then
                 highlightStyle = $"stroke: {highlight_msn}; stroke-width: {bar_width}px; stroke-dash: solid;"
-                highlights = ms.TryCast(Of LibraryMatrix).Array _
-                    .JoinIterates(ref.TryCast(Of LibraryMatrix).Array) _
-                    .Where(Function(mzi)
-                               Return Not Strings.Trim(mzi.Annotation).Match("MS\d+", RegexICSng).StringEmpty(, True)
-                           End Function) _
-                    .Select(Function(i) New NamedValue(Of Double)(i.Annotation.Match("MS\d+", RegexICSng), i.mz)) _
-                    .Distinct _
-                    .ToArray
+
+                If highlight_ion IsNot Nothing Then
+                    Dim ions As Double() = CLRVector.asNumeric(highlight_ion)
+
+                    highlights = ions _
+                        .Select(Function(d) New NamedValue(Of Double)("", d)) _
+                        .ToArray
+                Else
+                    highlights = ms.TryCast(Of LibraryMatrix).Array _
+                        .JoinIterates(ref.TryCast(Of LibraryMatrix).Array) _
+                        .Where(Function(mzi)
+                                   Return Not Strings.Trim(mzi.Annotation) _
+                                       .Match("MS\d+", RegexICSng) _
+                                       .StringEmpty(, True)
+                               End Function) _
+                        .Select(Function(i)
+                                    Return New NamedValue(Of Double)(i.Annotation.Match("MS\d+", RegexICSng), i.mz)
+                                End Function) _
+                        .Distinct _
+                        .ToArray
+                End If
             End If
 
             Return MassSpectra.AlignMirrorPlot(
