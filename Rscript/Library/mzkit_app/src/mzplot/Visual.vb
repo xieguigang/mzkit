@@ -248,7 +248,7 @@ Module Visual
         Dim highlights_color As String = If(CLRVector.asScalarCharacter(args.getByName("highlights.color")), "red")
         Dim highlights As NamedValue(Of Double)() = Nothing
 
-        If highlights_ion Is Nothing Then
+        If Not highlights_ion Is Nothing Then
             highlights = highlights_ion _
                 .AsGeneric(Of Double)(env) _
                 .Select(Function(a)
