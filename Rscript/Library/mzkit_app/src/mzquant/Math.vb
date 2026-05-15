@@ -420,21 +420,37 @@ Module QuantifyMath
     ''' </returns>
     <ExportAPI("map_samplenames")>
     Public Function MapSampleNames(x As PeakSet, samples As SampleInfo()) As PeakSet
-        Dim mapIndex = samples.ToDictionary(Function(a) a.ID)
+        Dim mapIndex As Dictionary(Of String, String) = samples.ToDictionary(Function(a) a.ID, Function(a) a.sample_name)
         Dim mapNames = x.peaks _
             .Select(Function(xi)
-                        xi = New xcms2(xi)
-                        xi.Properties = xi.Properties _
-                            .ToDictionary(Function(si)
-                                              Return If(mapIndex.ContainsKey(si.Key), mapIndex(si.Key).sample_name, si.Key)
-                                          End Function,
-                                          Function(si)
-                                              Return si.Value
-                                          End Function)
-                        Return xi
+                        Return MapIonFeatureSamples(xi, mapIndex)
                     End Function) _
             .ToArray
 
         Return New PeakSet(mapNames) With {.annotations = x.annotations}
+    End Function
+
+    Private Function MapIonFeatureSamples(xi As xcms2, mapIndex As Dictionary(Of String, String)) As xcms2
+        ' 20260516
+        ' handling of the pos/neg name mapping
+        ' example as pos: XXX -> sample1
+        '            neg: YYY -> sample1
+        ' will generates two sample1       
+        xi = New xcms2(xi)
+        xi.Properties = xi.Properties _
+            .GroupBy(Function(si)
+                         Return If(mapIndex.ContainsKey(si.Key), mapIndex(si.Key), si.Key)
+                     End Function) _
+            .ToDictionary(Function(a) a.Key,
+                          Function(a)
+                              ' if the POS/NEG different sample id mapping
+                              ' to one name, then it means always one sample is
+                              ' zero
+                              ' make sum of these two sample directly
+                              Return Aggregate ai As KeyValuePair(Of String, Double)
+                                     In a
+                                     Into Sum(ai.Value)
+                          End Function)
+        Return xi
     End Function
 End Module
