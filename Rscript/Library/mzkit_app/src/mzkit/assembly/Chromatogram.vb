@@ -67,6 +67,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.SignalReader
+Imports BioNovoGene.BioDeep.Chemistry.Coconut
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
@@ -219,51 +220,76 @@ Module ChromatogramTools
     ''' </returns>
     <ExportAPI("toChromatogram")>
     <RApiReturn(GetType(Chromatogram))>
-    Public Function toChromatogram(<RRawVectorArgument> ticks As Object,
+    Public Function toChromatogram(<RRawVectorArgument, RListObjectArgument> ticks As list,
                                    Optional name As String = Nothing,
                                    Optional env As Environment = Nothing) As Object
-        Dim totalIons As Double()
-        Dim basePeaks As Double()
-        Dim scan_time As Double()
 
-        If TypeOf ticks Is dataframe Then
-            Dim df As dataframe = DirectCast(ticks, dataframe)
+        Dim totalIons As Double() = Nothing
+        Dim basePeaks As Double() = Nothing
+        Dim scan_time As Double() = Nothing
 
-            totalIons = df.getVector(Of Double)("totalIon", "TIC", "into", "intensity")
-            basePeaks = df.getVector(Of Double)("basePeak", "BPC", "into", "intensity")
-            scan_time = df.getVector(Of Double)("rt", "RT", "retention_time", "retention time")
+        Call ticks.slots.Remove(NameOf(name))
 
-            If basePeaks.IsNullOrEmpty Then
+        If ticks.length = 1 AndAlso TypeOf ticks.data.First Is dataframe Then
+            If TypeOf ticks.data.First Is dataframe Then
+                Dim df As dataframe = DirectCast(ticks.data.First, dataframe)
+
+                totalIons = df.getVector(Of Double)("totalIon", "TIC", "into", "intensity")
+                basePeaks = df.getVector(Of Double)("basePeak", "BPC", "into", "intensity")
+                scan_time = df.getVector(Of Double)("rt", "RT", "retention_time", "retention time")
+
+                If basePeaks.IsNullOrEmpty Then
+                    basePeaks = totalIons
+                End If
+                If totalIons.IsNullOrEmpty Then
+                    totalIons = basePeaks
+                End If
+
+                ' check data fields
+                If totalIons.IsNullOrEmpty OrElse basePeaks.IsNullOrEmpty Then
+                    Return RInternal.debug.stop("missing intensity value for create the chromatogram object!", env)
+                ElseIf scan_time.IsNullOrEmpty Then
+                    Return RInternal.debug.stop("the retention time is not provided!", env)
+                End If
+            Else
+                Dim ticksBuf = pipeline.TryCreatePipeline(Of ChromatogramTick)(ticks, env, suppress:=True)
+
+                If ticksBuf.isError Then
+                    Return ticksBuf.getError
+                End If
+
+                Dim chromatogramTicks As ChromatogramTick() = ticksBuf _
+                    .populates(Of ChromatogramTick)(env) _
+                    .ToArray
+
+                scan_time = chromatogramTicks _
+                    .Select(Function(t) t.Time) _
+                    .ToArray
+                totalIons = chromatogramTicks _
+                    .Select(Function(t) t.Intensity) _
+                    .ToArray
                 basePeaks = totalIons
             End If
-            If totalIons.IsNullOrEmpty Then
-                totalIons = basePeaks
-            End If
-
-            ' check data fields
-            If totalIons.IsNullOrEmpty OrElse basePeaks.IsNullOrEmpty Then
-                Return RInternal.debug.stop("missing intensity value for create the chromatogram object!", env)
-            ElseIf scan_time.IsNullOrEmpty Then
-                Return RInternal.debug.stop("the retention time is not provided!", env)
-            End If
         Else
-            Dim ticksBuf = pipeline.TryCreatePipeline(Of ChromatogramTick)(ticks, env, suppress:=True)
+            Dim tic = pipeline.TryCreatePipeline(Of ChromatogramTick)(ticks.getBySynonyms("tic", "TIC", "totalIon", "TotalIon"), env, nullPipe:=True)
+            Dim bpc = pipeline.TryCreatePipeline(Of ChromatogramTick)(ticks.getBySynonyms("bpc", "BPC", "basepeak", "BasePeak"), env, nullPipe:=True)
+            Dim ticdata = If(tic Is Nothing, Nothing, tic.populates(Of ChromatogramTick)(env).ToArray)
+            Dim bpcdata = If(bpc Is Nothing, Nothing, bpc.populates(Of ChromatogramTick)(env).ToArray)
 
-            If ticksBuf.isError Then
-                Return ticksBuf.getError
+            If Not ticdata Is Nothing Then
+                ticdata = ticdata.OrderBy(Function(t) t.Time).ToArray
+                totalIons = ticdata.Select(Function(t) t.Intensity).ToArray
+                scan_time = ticdata.Select(Function(t) t.Time).ToArray
+            End If
+            If Not bpcdata Is Nothing Then
+                bpcdata = bpcdata.OrderBy(Function(t) t.Time).ToArray
+                basePeaks = bpcdata.Select(Function(t) t.Intensity).ToArray
+                scan_time = bpcdata.Select(Function(t) t.Time).ToArray
             End If
 
-            Dim chromatogramTicks As ChromatogramTick() = ticksBuf _
-                .populates(Of ChromatogramTick)(env) _
-                .ToArray
-
-            scan_time = chromatogramTicks _
-                .Select(Function(t) t.Time) _
-                .ToArray
-            totalIons = chromatogramTicks _
-                .Select(Function(t) t.Intensity) _
-                .ToArray
-            basePeaks = totalIons
+            If scan_time Is Nothing Then
+                Return Nothing
+            End If
         End If
 
         Return New Chromatogram With {
