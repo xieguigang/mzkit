@@ -11,6 +11,8 @@ let group_name = "QC";
 sampleinfo = sampleinfo[sampleinfo$sample_info == group_name, ];
 
 if (nrow(sampleinfo) > 0) {
+    let overlaps_data = new overlaps();
+
     sampleinfo = sampleinfo |> groupBy("ID"); 
     
     for(let file in list.files(rawdir, pattern = c("*.mzXML","*.mzML"))) {
@@ -34,7 +36,23 @@ if (nrow(sampleinfo) > 0) {
             pdf(file = file.path(export_dir, `BPC_${label}.pdf`)) {
                 plot(filedata, bpc = TRUE, name = `BPC - ${label}`, color = "darkblue");
             }
+
+            overlaps_data = overlaps_data + filedata;
         }       
+    }
+
+    bitmap(file = file.path(export_dir, `TIC_${basename(dirname(rawdir))}.png`)) {
+        plot(overlaps_data);
+    }
+    pdf(file = file.path(export_dir, `TIC_${basename(dirname(rawdir))}.pdf`)) {
+        plot(overlaps_data);
+    }
+
+    bitmap(file = file.path(export_dir, `BPC_${basename(dirname(rawdir))}.png`)) {
+        plot(overlaps_data, bpc = TRUE);
+    }
+    pdf(file = file.path(export_dir, `BPC_${basename(dirname(rawdir))}.pdf`)) {
+        plot(overlaps_data, bpc = TRUE);
     }
 }
 
