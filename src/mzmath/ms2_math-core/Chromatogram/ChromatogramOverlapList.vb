@@ -103,7 +103,7 @@ Namespace Chromatogram
         End Property
 
         Public Sub Add(tic As Chromatogram)
-            Dim key As String = $"TIC_{overlaps.Count + 1}"
+            Dim key As String = $"Chromatogram_{overlaps.Count + 1}"
 
             If Not tic.name.StringEmpty Then
                 key = tic.name
