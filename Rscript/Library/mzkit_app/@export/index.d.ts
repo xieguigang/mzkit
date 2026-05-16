@@ -98,6 +98,13 @@ declare namespace mzkit {
    */
    function loadTree(files: string): object;
    /**
+     * @param export_dir default value Is ``./``.
+     * @param overlaps_size default value Is ``[2900, 1600]``.
+     * @param overlaps_layout default value Is ``padding:5% 5% 10% 12%;``.
+     * @param file_color default value Is ``blue``.
+   */
+   function make_chromatogram_exports(rawdir: any, sampleinfo: any, group_name: any, export_dir?: any, overlaps_size?: any, overlaps_layout?: any, file_color?: any): object;
+   /**
      * @param max_rtwin default value Is ``15``.
      * @param mzdiff default value Is ``0.01``.
    */
