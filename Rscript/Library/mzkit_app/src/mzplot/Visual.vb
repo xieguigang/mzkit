@@ -411,6 +411,7 @@ Module Visual
 
         Return overlaps.ToArray _
             .TICplot(
+                size:="",
                 fillAlpha:=alpha,
                 colorsSchema:=colorSet,
                 gridFill:=gridFill,
