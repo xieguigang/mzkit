@@ -500,7 +500,7 @@ Module Visual
     ''' plot single TIC
     ''' </summary>
     ''' <param name="x"></param>
-    ''' <param name="args"></param>
+    ''' <param name="args">bpc, name, color</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     ''' 
