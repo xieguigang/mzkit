@@ -22,17 +22,17 @@ if (nrow(sampleinfo) > 0) {
             let filedata = toChromatogram(tic = tic_data, bpc = bpc_data);
 
             bitmap(file = file.path(export_dir, `TIC_${label}.png`)) {
-                plot(filedata);
+                plot(filedata, name = `TIC - ${label}`, color = "darkblue");
             }
             pdf(file = file.path(export_dir, `TIC_${label}.pdf`)) {
-                plot(filedata);
+                plot(filedata, name = `TIC - ${label}`, color = "darkblue");
             }
 
             bitmap(file = file.path(export_dir, `BPC_${label}.png`)) {
-                plot(filedata, bpc = TRUE);
+                plot(filedata, bpc = TRUE, name = `BPC - ${label}`, color = "darkblue");
             }
             pdf(file = file.path(export_dir, `BPC_${label}.pdf`)) {
-                plot(filedata, bpc = TRUE);
+                plot(filedata, bpc = TRUE, name = `BPC - ${label}`, color = "darkblue");
             }
         }       
     }

@@ -509,6 +509,10 @@ Module Visual
         Dim isBPC As Boolean = args.getValue("bpc", env, [default]:=False)
         Dim data As ChromatogramTick() = x.GetTicks(isBPC).ToArray
 
+        If Not args.hasNames("name", "Name") Then
+            Call args.add("name", x.name)
+        End If
+
         Return data.plotTIC(args, env)
     End Function
 
