@@ -49,5 +49,6 @@ if __name__ == "__main__":
                               overlaps_size = [2900,1600],
                               overlaps_layout = "padding:5% 5% 10% 12%;", 
                               file_color = "blue",
+                              # 注意修改镜像ID
                               image_id = "metaboanalyst:20260501",
                               run_debug = False)
