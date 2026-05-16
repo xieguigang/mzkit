@@ -27,7 +27,8 @@ const make_chromatogram_exports = function(rawdir, sampleinfo, group_name,
             let tic_data = TIC(rawdata);
             let bpc_data = BPC(rawdata);
             let label = sampleinfo[[basename(file)]]$sample_name;
-            let filedata = toChromatogram(tic = tic_data, bpc = bpc_data);
+            let filedata = toChromatogram(tic = tic_data, bpc = bpc_data, 
+                name = label);
 
             bitmap(file = file.path(export_dir, "files", `TIC_${label}.png`)) {
                 plot(filedata, name = `TIC - ${label}`, color = file_color);
