@@ -111,7 +111,7 @@ declare namespace chromatogram {
      * @return A chromatogram data object, which could be used for do 
      *  chromatogram overlaps or data plot visualization.
    */
-   function toChromatogram(ticks: any, name?: string, env?: object): object;
+   function toChromatogram(ticks: object, name?: string, env?: object): object;
    /**
    */
    function topInto(overlaps: object, n: object): object;
