@@ -7,6 +7,10 @@ const make_chromatogram_exports = function(rawdir, sampleinfo, group_name,
                                            overlaps_layout = "padding:5% 5% 10% 12%;", 
                                            file_color = "blue") {
     
+    if (!is.data.frame(sampleinfo)) {
+        sampleinfo = read.csv(sampleinfo, row.names = NULL, check.names = FALSE);
+    }
+
     sampleinfo <- sampleinfo[sampleinfo$sample_info == group_name, ];
 
     if (nrow(sampleinfo) == 0) {
