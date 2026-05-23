@@ -9,61 +9,6 @@ Namespace LCMS.Preprocessing
     '  枚举定义
     ' ====================================================================
 
-    ''' <summary>
-    ''' 缺失值处理方法枚举
-    ''' 
-    ''' 在LC-MS代谢组学数据中，缺失值通常来源于以下几种情况：
-    ''' 1. 信号低于检测限（左截断数据）- 推荐使用HalfMin、QRILC
-    ''' 2. 随机缺失（如仪器波动）- 推荐使用KNN、PCA、Mean、Median
-    ''' 3. 稀疏缺失（某些代谢物在部分样本中确实不存在）- 推荐使用Zero
-    ''' </summary>
-    Public Enum MissingValueMethod As Integer
-        None = 0
-        HalfMin = 1
-        MinValue = 2
-        Zero = 3
-        Mean = 4
-        Median = 5
-        KNN = 6
-        PCA = 7
-        QRILC = 8
-        RandomMin = 9
-    End Enum
-
-    ''' <summary>
-    ''' 归一化方法枚举
-    ''' </summary>
-    Public Enum NormalizationMethod As Integer
-        None = 0
-        TotalIonCount = 1
-        MedianNorm = 2
-        Quantile = 3
-        PQN = 4
-        Log2 = 10
-        Log10 = 11
-        Ln = 12
-        CubeRoot = 13
-        SqrtTransform = 14
-        AutoScaling = 20
-        ParetoScaling = 21
-        RangeScaling = 22
-        VastScaling = 23
-        LevelScaling = 24
-    End Enum
-
-    ''' <summary>
-    ''' 批次矫正方法枚举
-    ''' </summary>
-    Public Enum BatchCorrectionMethod As Integer
-        None = 0
-        MeanCentering = 1
-        MedianCentering = 2
-        QC_RLSC = 3
-        LOESS = 4
-        ComBat = 5
-        SVR = 6
-        NormalizeQC = 7
-    End Enum
 
     ' ====================================================================
     '  配置类
