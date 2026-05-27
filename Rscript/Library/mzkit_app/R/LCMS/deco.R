@@ -83,26 +83,36 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xi
     write.csv(rt_shifts, file = `${outputdir}/rt_shifts.csv`, 
         row.names = TRUE);
 
-    let peakmeta = data.frame(
-        mz = [peaktable]::mz, mzmin = [peaktable]::mzmin, mzmax = [peaktable]::mzmax,
-        rt = [peaktable]::rt, rtmin = [peaktable]::rtmin, rtmax = [peaktable]::rtmax,
-        RI = [peaktable]::RI,
-        npeaks = [peaktable]::npeaks,
-        row.names = [peaktable]::ID
-    );
+    let peaksarea = as.data.frame(peaktable, peaks_area = TRUE); 
 
-    print("view of the lcms peaks ROI metadata:");
-    print(peakmeta, max.print = 6);
+    peaksarea <- apply(peaksarea, margin = "row", FUN = sum);
 
-    write.csv(peakmeta, file = `${outputdir}/peakmeta.csv`, 
-        row.names = TRUE);
+    print("sum peak area for each peak features:");
+    print(peaksarea);
 
-    bitmap(file = file.path(outputdir, "rt_shifts.png"), size = [4000, 2700], padding = [50 650 200 200]) {
-        plot(rt_shifts, res = 1000, grid.fill = "white");
-    }
-    bitmap(file = file.path(outputdir, "peakset.png")) {
-        plot(as.peak_set(peakmeta), scatter = TRUE, 
-            dimension = "npeaks");
+    if (length(peaktable) > 0) {
+        let peakmeta = data.frame(
+            mz = [peaktable]::mz, mzmin = [peaktable]::mzmin, mzmax = [peaktable]::mzmax,
+            rt = [peaktable]::rt, rtmin = [peaktable]::rtmin, rtmax = [peaktable]::rtmax,
+            RI = [peaktable]::RI,
+            npeaks = [peaktable]::npeaks,
+            into = peaksarea,
+            row.names = [peaktable]::ID
+        );
+
+        print("view of the lcms peaks ROI metadata:");
+        print(peakmeta, max.print = 6);
+
+        write.csv(peakmeta, file = `${outputdir}/peakmeta.csv`, 
+            row.names = TRUE);
+
+        bitmap(file = file.path(outputdir, "rt_shifts.png"), size = [4000, 2700], padding = [50 650 200 200]) {
+            plot(rt_shifts, res = 1000, grid.fill = "white");
+        }
+        bitmap(file = file.path(outputdir, "peakset.png")) {
+            plot(as.peak_set(peakmeta), scatter = TRUE, 
+                dimension = "npeaks");
+        }
     }
 
     invisible(NULL);
