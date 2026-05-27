@@ -43,15 +43,18 @@ const ms1_xic_bins = function(files, mzdiff = 0.005,
         print(`processing ${length(files)} un-cahced rawdata files:`);
         str(files);
 
-        parallel(path = files, n_threads = n_threads, 
+        parallel(raw_path = files, n_threads = n_threads, 
                  ignoreError = TRUE) {
                     
             require(mzkit);
 
+            let path = unlist(raw_path);
+
             # processing a single rawdata file
             # extract XIC data for run the downstream peak detection.
             __ms1_xic_bins_single(
-                path = unlist(path), mzdiff = unlist(mzdiff), 
+                path = path, 
+                mzdiff = unlist(mzdiff), 
                 outputdir = unlist(outputdir));
         }
     } else {
@@ -71,7 +74,7 @@ const ms1_xic_bins = function(files, mzdiff = 0.005,
 #' 
 #' @return this function returns nothing
 #' 
-const __ms1_xic_bins_single = function(path, mzdiff, outputdir) {
+const __ms1_xic_bins_single = function(path, mzdiff = 0.005, outputdir = "./") {
     let xic_cache = `${outputdir}/${basename(path)}.xic`;
 
     if (file.size(xic_cache) > (1*1024*1024)) {
