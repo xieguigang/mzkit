@@ -29,6 +29,7 @@ const ms1_xic_bins = function(files, mzdiff = 0.005,
     let i = sapply(xic_cache, cache -> cache_exists(cache, 
         min_size = 1*1024*1024, cache.enable = TRUE)
     );
+    let xcms_out = file.path(outputdir,"mzkit");
 
     print(`run XIC rawdata exports for ${length(files)} rawdata files:`);
     print(basename(files));   
@@ -43,8 +44,11 @@ const ms1_xic_bins = function(files, mzdiff = 0.005,
         print(`processing ${length(files)} un-cahced rawdata files:`);
         str(files);
 
-        parallel(raw_path = files, n_threads = n_threads, 
-                 ignoreError = TRUE) {
+        Parallel::parallel(raw_path = files, n_threads = n_threads, 
+                ignoreError = FALSE, 
+                debug = FALSE,
+                log_tmp = `${xcms_out}/.local_debug/`,
+                compress = FALSE) {
                     
             require(mzkit);
 

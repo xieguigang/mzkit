@@ -26,8 +26,10 @@ declare namespace mzkit {
    */
    function __deconv_gcms_single(file: any, peak.width?: any): object;
    /**
+     * @param mzdiff default value Is ``0.005``.
+     * @param outputdir default value Is ``./``.
    */
-   function __ms1_xic_bins_single(path: any, mzdiff: any, outputdir: any): object;
+   function __ms1_xic_bins_single(path: any, mzdiff?: any, outputdir?: any): object;
    /**
    */
    function ANOVAGroup(data: any, sampleinfo: any): object;
