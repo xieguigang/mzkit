@@ -113,6 +113,14 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xi
             plot(as.peak_set(peakmeta), scatter = TRUE, 
                 dimension = "npeaks");
         }
+
+        pdf(file = file.path(outputdir, "rt_shifts.pdf"), size = [4000, 2700], padding = [50 650 200 200]) {
+            plot(rt_shifts, res = 1000, grid.fill = "white");
+        }
+        pdf(file = file.path(outputdir, "peakset.pdf")) {
+            plot(as.peak_set(peakmeta), scatter = TRUE, 
+                dimension = "npeaks");
+        }
     }
 
     invisible(NULL);
