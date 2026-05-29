@@ -1,5 +1,5 @@
 .\" man page create by R# package system.
-.TH MSI 1 2000-Jan "splice" "splice"
+.TH MSI 1 2000-1月 "splice" "splice"
 .SH NAME
 splice \- split the raw 2D MSI data into multiple parts with given parts
 .SH SYNOPSIS
@@ -22,6 +22,11 @@ split the raw 2D MSI data into multiple parts with given parts
 .PP
 A collection of the ms-imaging mzpack object that split from multiple 
  parts based on the input **`raw`** data mzpack inputs.
+.PP
+.SH EXAMPLES
+.PP
+let rawdata = open.mzpack("/path/to/msi_rawdata.mzPack");
+ let parts = MSI::splice(rawdata, partition = 6);
 .PP
 .SH SEE ALSO
 MSI

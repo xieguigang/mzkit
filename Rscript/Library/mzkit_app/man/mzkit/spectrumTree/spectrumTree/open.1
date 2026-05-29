@@ -1,5 +1,5 @@
 .\" man page create by R# package system.
-.TH SPECTRUMTREE 1 2000-Jan "open" "open"
+.TH SPECTRUMTREE 1 2000-1月 "open" "open"
 .SH NAME
 open \- open the spectrum reference database
 .SH SYNOPSIS
@@ -31,6 +31,17 @@ open the spectrum reference database
  spectrum data from the database file is this parameter value is not 
  NULL.
 . 
+.PP
+.PP
+\fBadducts\fB \fR\- 
+ the precursor types for build the mass index for the reference library, this 
+ parameter is required for reference library model in stream pack object type.
+. 
+.PP
+.SH VALUE
+.PP
+the reference library object in different search mode, all library object 
+ is inherits based on the @\fBT:BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query.Ms2Search\fR object.
 .PP
 .SH DETAILS
 .PP

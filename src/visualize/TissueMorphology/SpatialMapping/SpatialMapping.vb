@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::307c17053e4a3c3705764f72ef2038dc, mzkit\src\visualize\TissueMorphology\SpatialMapping\SpatialMapping.vb"
+﻿#Region "Microsoft.VisualBasic::af46a4a98a588c66f570766cca85acf2, visualize\TissueMorphology\SpatialMapping\SpatialMapping.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 64
-    '    Code Lines: 40
-    ' Comment Lines: 13
-    '   Blank Lines: 11
-    '     File Size: 1.87 KB
+    '   Total Lines: 99
+    '    Code Lines: 40 (40.40%)
+    ' Comment Lines: 47 (47.47%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 12 (12.12%)
+    '     File Size: 3.04 KB
 
 
     ' Class SpatialMapping
@@ -75,9 +77,26 @@ Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
+''' <summary>
+''' the spatial mapping between two spatial omics data
+''' </summary>
+''' <remarks>
+''' this mapping data is consist with a collection of the spatial <see cref="SpotMap"/>,
+''' the data <see cref="Transform"/> records how to mapping from one layer to another
+''' omics layer, example as the geometry point rotation, offsets, and other operations.
+''' </remarks>
 Public Class SpatialMapping : Inherits ListOf(Of SpotMap)
 
+    ''' <summary>
+    ''' the sample data labels
+    ''' </summary>
+    ''' <returns></returns>
     <XmlElement> Public Property label As String
+
+    ''' <summary>
+    ''' a collection of the spatial spot geometry mapping result
+    ''' </summary>
+    ''' <returns></returns>
     <XmlElement("spot")>
     Public Property spots As SpotMap()
     ''' <summary>
@@ -114,13 +133,31 @@ Public Class SpatialMapping : Inherits ListOf(Of SpotMap)
     End Function
 End Class
 
+''' <summary>
+''' the geometry mapping transform frame data consists with a 
+''' transform <see cref="op"/> type and the operation argument 
+''' value
+''' </summary>
 Public Class Transform
 
+    ''' <summary>
+    ''' the geometry transform operation type
+    ''' </summary>
     Public Enum Operation
+        ''' <summary>
+        ''' point rotation
+        ''' </summary>
         Rotate
+        ''' <summary>
+        ''' point mirror translation
+        ''' </summary>
         Mirror
     End Enum
 
+    ''' <summary>
+    ''' the operation type
+    ''' </summary>
+    ''' <returns></returns>
     <XmlAttribute> Public Property op As Operation
     ''' <summary>
     ''' rotate angle in degree if the <see cref="op"/> code is <see cref="Transform.Operation.Rotate"/>

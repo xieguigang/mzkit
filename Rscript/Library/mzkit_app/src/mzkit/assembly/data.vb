@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8237c73033635fccfa321469e5ac3805, mzkit\Rscript\Library\mzkit\assembly\data.vb"
+﻿#Region "Microsoft.VisualBasic::cac80d88839d01af49f030b44065ccce, Rscript\Library\mzkit_app\src\mzkit\assembly\data.vb"
 
 ' Author:
 ' 
@@ -37,20 +37,23 @@
 
 ' Code Statistics:
 
-'   Total Lines: 589
-'    Code Lines: 423
-' Comment Lines: 81
-'   Blank Lines: 85
-'     File Size: 22.55 KB
+'   Total Lines: 1005
+'    Code Lines: 644 (64.08%)
+' Comment Lines: 236 (23.48%)
+'    - Xml Docs: 94.92%
+' 
+'   Blank Lines: 125 (12.44%)
+'     File Size: 43.85 KB
 
 
 ' Module data
 ' 
-'     Function: createPeakMs2, getIntensity, getIonsSummaryTable, getMSMSTable, getRawXICSet
-'               getScantime, getXICPoints, libraryMatrix, LibraryTable, linearMatrix
-'               makeROInames, nfragments, rawXIC, readMatrix, RtSlice
-'               TICTable, toString, unionPeaks, XIC, XICGroups
-'               XICTable
+'     Function: createPeakMs2, getAlignmentReference, getIntensity, getIonsSummaryTable, getMSMSTable
+'               getRawXICSet, getScantime, getXICPoints, groupBy_ROI, libraryMatrix
+'               LibraryTable, linearMatrix, makeAlignmentString, makeROInames, MsdataFromDf
+'               nfragments, rawXIC, readMatrix, representative_spectrum, RtSlice
+'               simpleSearch, (+2 Overloads) splashId, TICTable, toString, unionPeaks
+'               XIC, XICGroups, XICTable
 ' 
 '     Sub: Main
 ' 
@@ -59,45 +62,89 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports BioNovoGene.BioDeep.MetaDNA
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.Framework
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
+Imports std = System.Math
 
 ''' <summary>
-''' m/z data operator module
+''' Provides core functionality for mass spectrometry data processing and analysis within the mzkit framework.
 ''' </summary>
+''' <remarks>
+''' This module contains operations for:
+''' 
+''' 1. Mass spectral data manipulation (MS1 and MS2 level)
+''' 2. Chromatographic data processing (XIC/TIC generation)
+''' 3. Spectral similarity calculations and alignment
+''' 4. Data format conversions between native objects and R dataframe
+''' 5. Spectral library operations and metadata handling
+''' 
+''' Key features include:
+''' 
+''' - SPLASH ID generation for spectral uniqueness verification
+''' - ROI-based spectral grouping and analysis
+''' - Raw data centroiding and intensity normalization
+''' - Cross-sample spectral alignment and matching
+''' - Mass tolerance-aware operations (ppm/DA)
+''' </remarks>
+''' <example>
+''' ```
+''' # Get XIC from raw data
+''' rawdata &lt;- open.mzpack("sample.mzPack")
+''' xic &lt;- data::XIC(rawdata, mz=438.3251, tolerance="ppm:20")
+''' 
+''' # Create spectral library entry
+''' peaks &lt;- data::libraryMatrix(
+'''     mz=c(438.3251, 512.3987, 615.4872),
+'''     intensity=c(15000, 8700, 4300),
+'''     title="My Compound"
+''' )
+''' 
+''' # Generate SPLASH ID
+''' splash &lt;- data::splash_id(peaks)
+''' ```
+''' </example>
 <Package("data")>
 Module data
 
     <RInitialize>
     Sub Main()
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ms1_scan()), AddressOf XICTable)
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(PeakMs2()), AddressOf getIonsSummaryTable)
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(LibraryMatrix), AddressOf LibraryTable)
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ChromatogramTick()), AddressOf TICTable)
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ms2()), AddressOf getMSMSTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(ms1_scan()), AddressOf XICTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(PeakMs2()), AddressOf getIonsSummaryTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(LibraryMatrix), AddressOf LibraryTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(ChromatogramTick()), AddressOf TICTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(ms2()), AddressOf getMSMSTable)
     End Sub
 
-    Private Function TICTable(TIC As ChromatogramTick(), args As list, env As Environment) As dataframe
-        Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}
+    Private Function TICTable(TIC As ChromatogramTick(), args As list, env As Environment) As rDataframe
+        Dim table As New rDataframe With {.columns = New Dictionary(Of String, Array)}
 
         table.columns("time") = TIC.Select(Function(t) t.Time).ToArray
         table.columns("intensity") = TIC.Select(Function(t) t.Intensity).ToArray
@@ -105,9 +152,18 @@ Module data
         Return table
     End Function
 
+    ''' <summary>
+    ''' converts the spectrum peaks as dataframe
+    ''' </summary>
+    ''' <param name="matrix"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' 
+    <RGenericOverloads("as.data.frame")>
     <Extension>
-    Private Function getMSMSTable(matrix As ms2(), args As list, env As Environment) As dataframe
-        Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}
+    Private Function getMSMSTable(matrix As ms2(), args As list, env As Environment) As rDataframe
+        Dim table As New rDataframe With {.columns = New Dictionary(Of String, Array)}
 
         table.columns("mz") = matrix.Select(Function(m) m.mz).ToArray
         table.columns("intensity") = matrix.Select(Function(m) m.intensity).ToArray
@@ -117,12 +173,12 @@ Module data
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Function LibraryTable(matrix As LibraryMatrix, args As list, env As Environment) As dataframe
+    Private Function LibraryTable(matrix As LibraryMatrix, args As list, env As Environment) As rDataframe
         Return getMSMSTable(matrix.ms2, args, env)
     End Function
 
-    Private Function XICTable(XIC As ms1_scan(), args As list, env As Environment) As dataframe
-        Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}
+    Private Function XICTable(XIC As ms1_scan(), args As list, env As Environment) As rDataframe
+        Dim table As New rDataframe With {.columns = New Dictionary(Of String, Array)}
 
         table.columns("mz") = XIC.Select(Function(a) a.mz).ToArray
         table.columns("scan_time") = XIC.Select(Function(a) a.scan_time).ToArray
@@ -131,8 +187,8 @@ Module data
         Return table
     End Function
 
-    Private Function getIonsSummaryTable(peaks As PeakMs2(), args As list, env As Environment) As dataframe
-        Dim df As New dataframe With {
+    Private Function getIonsSummaryTable(peaks As PeakMs2(), args As list, env As Environment) As rDataframe
+        Dim df As New rDataframe With {
             .columns = New Dictionary(Of String, Array)
         }
 
@@ -174,11 +230,12 @@ Module data
     End Function
 
     ''' <summary>
-    ''' evaluate the splash id of the given spectrum data
+    ''' Calculates the SPLASH identifier for the given spectrum data.
     ''' </summary>
-    ''' <param name="spec"></param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="spec">The spectrum data, which can be a single spectrum object, a list, or an array of spectra.</param>
+    ''' <param name="type">The type of spectrum (default is MS).</param>
+    ''' <param name="env">The R environment for error handling.</param>
+    ''' <returns>A SPLASH ID string or an array/list of SPLASH IDs if input is multiple spectra.</returns>
     ''' <remarks>
     ''' The SPLASH is an unambiguous, database-independent spectral identifier, 
     ''' just as the InChIKey is designed to serve as a unique identifier for 
@@ -253,7 +310,7 @@ Module data
     ''' <summary>
     ''' Union and merge the given multiple spectrum data into one single spectrum
     ''' </summary>
-    ''' <param name="peaks">A collection of the spectrum object that going to merge into single one</param>
+    ''' <param name="peaks">A collection of the <see cref="PeakMs2"/> spectrum object that going to merge into single one</param>
     ''' <param name="matrix">
     ''' this parameter will affects the data type of the value returns of this function:
     ''' 
@@ -261,22 +318,40 @@ Module data
     ''' 2. true, returns a library matrix data object
     ''' </param>
     ''' <param name="massDiff">the mass error for merge two spectra peak</param>
+    ''' <param name="aggreate_sum">
+    ''' default false means use the max intensity for the union merged peaks, 
+    ''' or use the sum value of the intensity if this parameter value is set as TRUE.
+    ''' </param>
     ''' <returns>
     ''' a single ms spectrum data object, its data type depeneds on the <paramref name="matrix"/> parameter.
     ''' </returns>
     <ExportAPI("unionPeaks")>
     <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix))>
     Public Function unionPeaks(peaks As PeakMs2(),
+                               Optional norm As Boolean = False,
                                Optional matrix As Boolean = False,
-                               Optional massDiff As Double = 0.1) As Object
+                               Optional massDiff As Double = 0.1,
+                               Optional aggreate_sum As Boolean = False) As Object
 
         Dim fragments As ms2() = peaks _
-            .Select(Function(i) i.mzInto) _
+            .Select(Function(i) As IEnumerable(Of ms2)
+                        If (Not i.mzInto.IsNullOrEmpty) AndAlso norm Then
+                            Dim maxinto As Double = i.mzInto.Max(Function(a) a.intensity)
+                            Dim normInto = i.mzInto.Select(Function(a) New ms2(a.mz, a.intensity / maxinto, a.Annotation))
+                            Return normInto
+                        Else
+                            Return i.mzInto
+                        End If
+                    End Function) _
             .IteratesALL _
             .GroupBy(Function(i) i.mz, offsets:=massDiff) _
             .Select(Function(i)
                         Dim mz As Double = i.OrderByDescending(Function(x) x.intensity).First.mz
-                        Dim into = i.Max(Function(x) x.intensity)
+                        Dim into As Double = If(
+                            aggreate_sum,
+                            i.Sum(Function(x) x.intensity),
+                            i.Max(Function(x) x.intensity)
+                        )
 
                         Return New ms2 With {
                             .mz = mz,
@@ -305,10 +380,50 @@ Module data
     End Function
 
     ''' <summary>
-    ''' get the size of the target ms peaks
+    ''' Generates a representative spectrum by aggregating (sum or mean) input spectra.
     ''' </summary>
-    ''' <param name="matrix"></param>
-    ''' <returns></returns>
+    ''' <param name="x">Input spectra (PeakMs2 or LibraryMatrix collection).</param>
+    ''' <param name="mean">If true, uses mean intensity; otherwise sums intensities.</param>
+    ''' <param name="centroid">Mass tolerance for centroiding peaks.</param>
+    ''' <param name="intocutoff">Relative intensity cutoff (0-1) to filter weak peaks.</param>
+    ''' <param name="env">R environment for error handling.</param>
+    ''' <returns>A LibraryMatrix representing the aggregated spectrum.</returns>
+    <ExportAPI("representative")>
+    <RApiReturn(GetType(LibraryMatrix))>
+    Public Function representative_spectrum(<RRawVectorArgument> x As Object,
+                                            Optional mean As Boolean = True,
+                                            Optional centroid As Double = 0.1,
+                                            Optional intocutoff As Double = 0.05,
+                                            Optional env As Environment = Nothing) As Object
+
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(x, env, suppress:=True)
+        Dim representative As LibraryMatrix
+
+        If Not pull.isError Then
+            representative = pull.populates(Of PeakMs2)(env).SpectrumSum(centroid, average:=mean)
+        Else
+            pull = pipeline.TryCreatePipeline(Of LibraryMatrix)(x, env, suppress:=True)
+
+            If Not pull.isError Then
+                representative = pull.populates(Of LibraryMatrix)(env).SpectrumSum(centroid, average:=mean)
+            Else
+                Return pull.getError
+            End If
+        End If
+
+        If intocutoff > 0 Then
+            representative.ms2 = New RelativeIntensityCutoff(intocutoff).Trim(representative.ms2)
+        End If
+
+        Return representative
+    End Function
+
+    ''' <summary>
+    ''' Gets the number of fragments in a spectrum object.
+    ''' </summary>
+    ''' <param name="matrix">A LibraryMatrix or PeakMs2 object.</param>
+    ''' <param name="env">R environment for error handling.</param>
+    ''' <returns>Integer count of fragments.</returns>
     <ExportAPI("nsize")>
     <RApiReturn(GetType(Integer))>
     Public Function nfragments(matrix As Object, Optional env As Environment = Nothing) As Object
@@ -348,7 +463,7 @@ Module data
         ElseIf spectra Like GetType(Message) Then
             Return spectra.TryCast(Of Message)
         ElseIf refer Is Nothing OrElse refer.MS Is Nothing Then
-            Return Internal.debug.stop("the required reference data should not be nothing!", env)
+            Return RInternal.debug.stop("the required reference data should not be nothing!", env)
         End If
 
         Dim mzdiff As Tolerance = mzErr.TryCast(Of Tolerance)
@@ -378,23 +493,79 @@ Module data
     End Function
 
     ''' <summary>
-    ''' create a new ms2 peaks data object
+    ''' get alignment result tuple: query and reference
     ''' </summary>
-    ''' <param name="precursor"></param>
-    ''' <param name="rt"></param>
-    ''' <param name="mz"></param>
-    ''' <param name="into"></param>
-    ''' <param name="totalIons"></param>
-    ''' <param name="file"></param>
-    ''' <param name="meta"></param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="align">AlignmentOutput object from spectral matching.</param>
+    ''' <param name="query">Name label for query spectrum.</param>
+    ''' <param name="reference">Name label for reference spectrum.</param>
+    ''' <returns>
+    ''' a tuple list object that contains spectrum alignment result:
+    ''' 
+    ''' 1. query - spectrum of sample query
+    ''' 2. reference - spectrum of library reference
+    ''' </returns>
+    <ExportAPI("alignment_ref")>
+    <RApiReturn("query", "reference")>
+    Public Function getAlignmentReference(align As AlignmentOutput, Optional query$ = "Query", Optional reference$ = "Reference") As Object
+        Dim tuple = align.GetAlignmentMirror
+        Dim list As New list(
+            slot("query") = tuple.query,
+            slot("reference") = tuple.ref
+        )
+
+        tuple.query.name = query
+        tuple.ref.name = reference
+
+        Return list
+    End Function
+
+    ''' <summary>
+    ''' Creates a formatted string representation of aligned peaks.
+    ''' </summary>
+    ''' <param name="mz">Array of m/z values for aligned peaks.</param>
+    ''' <param name="query">Array of query intensities.</param>
+    ''' <param name="reference">Array of reference intensities.</param>
+    ''' <param name="annotation">Optional annotations for peaks.</param>
+    ''' <returns>Formatted string showing alignment details.</returns>
+    <ExportAPI("alignment_str")>
+    Public Function makeAlignmentString(<RRawVectorArgument> mz As Object,
+                                        <RRawVectorArgument> query As Object,
+                                        <RRawVectorArgument> reference As Object,
+                                        <RRawVectorArgument>
+                                        Optional annotation As Object = Nothing) As String
+
+        Return AlignmentOutput.CreateLinearMatrix(
+            mz:=CLRVector.asNumeric(mz),
+            query:=CLRVector.asNumeric(query),
+            ref:=CLRVector.asNumeric(reference),
+            annotation_str:=CLRVector.asCharacter(annotation)
+        ).JoinBy(" ")
+    End Function
+
+    ''' <summary>
+    ''' Constructs a PeakMs2 object from spectral data.
+    ''' </summary>
+    ''' <param name="precursor">Precursor m/z value.</param>
+    ''' <param name="rt">Retention time in seconds.</param>
+    ''' <param name="mz">Array of fragment m/z values.</param>
+    ''' <param name="into">Array of fragment intensities.</param>
+    ''' <param name="totalIons">Total ion current (optional).</param>
+    ''' <param name="file">Source file identifier.</param>
+    ''' <param name="libname">Library identifier.</param>
+    ''' <param name="precursor_type">Precursor adduct type.</param>
+    ''' <param name="meta">Metadata list for the peak.</param>
+    ''' <param name="annotation">
+    ''' the msn spectrum fragment annotation information, this parameter is optional, and the length of this vector should be the same as the length of the mz and into parameters if this parameter is assigned with a value.
+    ''' </param>
+    ''' <param name="env">R environment for error handling.</param>
+    ''' <returns>A PeakMs2 object containing the spectral data.</returns>
     <ExportAPI("peakMs2")>
     Public Function createPeakMs2(precursor As Double, rt As Double, mz As Double(), into As Double(),
                                   Optional totalIons As Double = 0,
                                   Optional file As String = Nothing,
                                   Optional libname As String = Nothing,
                                   Optional precursor_type As String = Nothing,
+                                  Optional annotation As String() = Nothing,
                                   <RListObjectArgument>
                                   Optional meta As list = Nothing,
                                   Optional env As Environment = Nothing) As PeakMs2
@@ -406,7 +577,8 @@ Module data
                 .Select(Function(mzi, i)
                             Return New ms2 With {
                                 .mz = mzi,
-                                .intensity = into(i)
+                                .intensity = into(i),
+                                .Annotation = annotation.ElementAtOrDefault(i)
                             }
                         End Function) _
                 .ToArray,
@@ -416,6 +588,54 @@ Module data
             .lib_guid = libname,
             .precursor_type = precursor_type
         }
+    End Function
+
+    ''' <summary>
+    ''' make a tuple list via grouping of the spectrum data via the ROI id inside the metadata list
+    ''' </summary>
+    ''' <param name="peakms2">a collection of the spectrum data to make spectrum data grouping.</param>
+    ''' <param name="default">the default ROI id for make the data groups if the metadata 
+    ''' is null or the ``ROI`` id tag is missing from the spectrum object metadata.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' A tuple list object that contains the spectrum data grouping by the ROI id.
+    ''' 
+    ''' The key of the tuple list is the ROI id, and the value is a list of spectrum data
+    ''' that belongs to this ROI id.
+    ''' 
+    ''' If no ROI id was assigned, a warning message will be added to the runtime environment.
+    ''' </returns>
+    <ExportAPI("groupBy_ROI")>
+    <RApiReturn(GetType(PeakMs2))>
+    Public Function groupBy_ROI(<RRawVectorArgument> peakms2 As Object,
+                                Optional default$ = "Not_Assigned",
+                                Optional env As Environment = Nothing) As Object
+
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(peakms2, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+        Dim ROI_groups = pull.populates(Of PeakMs2)(env) _
+            .GroupBy(Function(s)
+                         If s.meta Is Nothing Then
+                             Return [default]
+                         Else
+                             Return If(s.meta.ContainsKey("ROI"), s.meta!ROI, [default])
+                         End If
+                     End Function) _
+            .ToDictionary(Function(a) a.Key,
+                          Function(a)
+                              Return CObj(a.ToArray)
+                          End Function)
+
+        If ROI_groups.Count = 1 AndAlso ROI_groups.Keys.First = [default] Then
+            Call env.AddMessage("No peak ROI id was assigned with the given spectrum data!")
+        End If
+
+        Return New list With {.slots = ROI_groups}
     End Function
 
     ''' <summary>
@@ -451,9 +671,9 @@ Module data
             Dim into As Double() = CLRVector.asNumeric(args.getBySynonyms("into", "intensity"))
 
             If mz.IsNullOrEmpty OrElse into.IsNullOrEmpty Then
-                Return Internal.debug.stop("No mass spectrum peaks data was assigned!", env)
+                Return RInternal.debug.stop("No mass spectrum peaks data was assigned!", env)
             ElseIf mz.Length <> into.Length Then
-                Return Internal.debug.stop($"The vector data size of mz({mz.Length}) is mis-matched with the intensity vector({into.Length})!", env)
+                Return RInternal.debug.stop($"The vector data size of mz({mz.Length}) is mis-matched with the intensity vector({into.Length})!", env)
             End If
 
             MS = mz _
@@ -461,8 +681,8 @@ Module data
                             Return New ms2 With {.mz = mzi, .intensity = into(i)}
                         End Function) _
                 .ToArray
-        ElseIf TypeOf matrix Is dataframe Then
-            MS = DirectCast(matrix, dataframe).MsdataFromDf.ToArray
+        ElseIf TypeOf matrix Is rDataframe Then
+            MS = DirectCast(matrix, rDataframe).MsdataFromDf.ToArray
         Else
             Dim data As pipeline = pipeline.TryCreatePipeline(Of ms2)(matrix, env)
 
@@ -482,7 +702,7 @@ Module data
     End Function
 
     <Extension>
-    Private Function MsdataFromDf(ms2 As dataframe) As IEnumerable(Of ms2)
+    Private Function MsdataFromDf(ms2 As rDataframe) As IEnumerable(Of ms2)
         Dim mz As Double() = ms2.getVector(Of Double)("mz", "m/z")
         Dim into As Double() = ms2.getVector(Of Double)("into", "intensity")
         Dim annotation As String() = ms2.getVector(Of String)("annotation")
@@ -502,15 +722,12 @@ Module data
     End Function
 
     ''' <summary>
-    ''' grouping of the ms1 scan points by m/z data
+    ''' Groups MS1 scans into XIC (Extracted Ion Chromatogram) groups by m/z.
     ''' </summary>
-    ''' <param name="ms1"></param>
-    ''' <param name="tolerance">
-    ''' the m/z diff tolerance value for grouping ms1 scan point 
-    ''' based on its ``m/z`` value
-    ''' </param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="ms1">Input MS1 data (mzPack or array of scans).</param>
+    ''' <param name="tolerance">Mass tolerance for grouping m/z values.</param>
+    ''' <param name="env">R environment for error handling.</param>
+    ''' <returns>A list of XIC groups, each containing scans with similar m/z.</returns>
     <ExportAPI("XIC_groups")>
     Public Function XICGroups(<RRawVectorArgument>
                               ms1 As Object,
@@ -573,19 +790,15 @@ Module data
     End Function
 
     ''' <summary>
-    ''' get chromatogram data for a specific metabolite with given m/z from the ms1 scans data.
+    ''' Extracts chromatogram data for a specific m/z from MS1 scans.
     ''' </summary>
-    ''' <param name="ms1">a sequence data of ms1 scans</param>
-    ''' <param name="mz">target mz value</param>
-    ''' <param name="tolerance">
-    ''' tolerance value in unit ``ppm`` or ``da`` for 
-    ''' extract ``m/z`` data from the given ms1 ion 
-    ''' scans.
-    ''' </param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="ms1">Input MS1 data (mzPack, PeakSet, or scan array).</param>
+    ''' <param name="mz">Target m/z value to extract.</param>
+    ''' <param name="tolerance">Mass tolerance for m/z matching.</param>
+    ''' <param name="env">R environment for error handling.</param>
+    ''' <returns>ChromatogramTick array or ChromatogramOverlap object.</returns>
     <ExportAPI("XIC")>
-    <RApiReturn(GetType(ms1_scan), GetType(ChromatogramTick))>
+    <RApiReturn(GetType(ms1_scan), GetType(ChromatogramTick), GetType(ChromatogramOverlap))>
     Public Function XIC(<RRawVectorArgument> ms1 As Object, mz#,
                         Optional tolerance As Object = "ppm:20",
                         Optional env As Environment = Nothing) As Object
@@ -616,6 +829,45 @@ Module data
 
                     Return list
                 End If
+            ElseIf TypeOf ms1 Is PeakSet Then
+                Dim pkset As PeakSet = ms1
+                Dim da As Double = mzdiff.GetErrorDalton
+                Dim peaks = pkset.FilterMz(mz, mzdiff:=da).ToArray
+                Dim overlaps As New ChromatogramOverlap
+                Dim sample_names As String() = peaks.Split(peaks.Length / 8) _
+                    .AsParallel _
+                    .Select(Function(a) a.PropertyNames) _
+                    .IteratesALL _
+                    .Distinct _
+                    .ToArray
+                Dim peak_rt = peaks _
+                    .GroupBy(Function(a) a.rt, offsets:=0.5) _
+                    .OrderBy(Function(a) Val(a.name)) _
+                    .ToArray
+                Dim rt As Double() = peak_rt _
+                    .Select(Function(a) Val(a.name)) _
+                    .ToArray
+
+                For Each name As String In sample_names
+                    Dim tic As Double() = peak_rt _
+                        .Select(Function(a)
+                                    Return Aggregate ti As xcms2 In a Into Sum(ti(name))
+                                End Function) _
+                        .ToArray
+                    Dim bpc As Double() = peak_rt _
+                        .Select(Function(a)
+                                    Return Aggregate ti As xcms2 In a Into Max(ti(name))
+                                End Function) _
+                        .ToArray
+
+                    overlaps.overlaps(name) = New Chromatogram With {
+                        .BPC = bpc,
+                        .scan_time = rt,
+                        .TIC = tic
+                    }
+                Next
+
+                Return overlaps
             Else
                 Return ms1_scans.getError
             End If
@@ -648,13 +900,13 @@ Module data
     End Function
 
     ''' <summary>
-    ''' slice a region of ms1 scan data by a given rt window.
+    ''' Filters MS1 scans within a specified retention time window.
     ''' </summary>
-    ''' <param name="ms1">a sequence of ms1 scan data.</param>
-    ''' <param name="rtmin"></param>
-    ''' <param name="rtmax"></param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="ms1">Input MS1 scan data.</param>
+    ''' <param name="rtmin">Minimum retention time.</param>
+    ''' <param name="rtmax">Maximum retention time.</param>
+    ''' <param name="env">R environment for error handling.</param>
+    ''' <returns>Array of MS1 scans within the RT window.</returns>
     <ExportAPI("rt_slice")>
     <RApiReturn(GetType(ms1_scan))>
     Public Function RtSlice(<RRawVectorArgument>
@@ -679,11 +931,13 @@ Module data
     End Function
 
     ''' <summary>
-    ''' get intensity value from the ion scan points
+    ''' Extracts intensity values from MS1 scans or PeakMs2 spectra.
     ''' </summary>
-    ''' <param name="ticks"></param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="ticks">Input scans or spectra.</param>
+    ''' <param name="mz">Optional m/z to extract specific intensity.</param>
+    ''' <param name="mzdiff">Mass tolerance for m/z matching.</param>
+    ''' <param name="env">R environment for error handling.</param>
+    ''' <returns>Numeric vector of intensity values.</returns>
     <ExportAPI("intensity")>
     <RApiReturn(GetType(Double))>
     Public Function getIntensity(<RRawVectorArgument>
@@ -727,11 +981,11 @@ Module data
     End Function
 
     ''' <summary>
-    ''' get scan time value from the ion scan points
+    ''' Extracts retention times from MS1 scans or PeakMs2 spectra.
     ''' </summary>
-    ''' <param name="ticks"></param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="ticks">Input scans or spectra.</param>
+    ''' <param name="env">R environment for error handling.</param>
+    ''' <returns>Numeric vector of retention times.</returns>
     <ExportAPI("scan_time")>
     <RApiReturn(GetType(Double))>
     Public Function getScantime(<RRawVectorArgument>
@@ -758,25 +1012,25 @@ Module data
     End Function
 
     ''' <summary>
-    ''' makes xcms_id format liked ROI unique id
+    ''' Generates unique ROI (Region of Interest) IDs for spectra.
     ''' </summary>
-    ''' <param name="ROIlist"></param>
-    ''' <param name="name_chrs">
-    ''' just returns the ROI names character?
-    ''' </param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <param name="ROIlist">Input PeakMs2 spectra or list with mz/rt vectors.</param>
+    ''' <param name="name_chrs">If true, returns ROI IDs as strings; otherwise updates PeakMs2 metadata.</param>
+    ''' <param name="prefix">Prefix for ROI IDs.</param>
+    ''' <param name="env">R environment for error handling.</param>
+    ''' <returns>String array of ROI IDs or modified PeakMs2 objects array.</returns>
     <ExportAPI("make.ROI_names")>
-    <RApiReturn(GetType(PeakMs2))>
+    <RApiReturn(GetType(PeakMs2), GetType(String))>
     Public Function makeROInames(<RRawVectorArgument> ROIlist As Object,
                                  Optional name_chrs As Boolean = False,
+                                 Optional prefix As String = "",
                                  Optional env As Environment = Nothing) As Object
 
         If TypeOf ROIlist Is list AndAlso {"mz", "rt"}.All(AddressOf DirectCast(ROIlist, list).hasName) Then
             Dim mz As Double() = DirectCast(ROIlist, list).getValue(Of Double())("mz", env)
             Dim rt As Double() = DirectCast(ROIlist, list).getValue(Of Double())("rt", env)
 
-            Return xcms_id(mz, rt)
+            Return xcms_id(mz, rt, prefix:=prefix)
         End If
 
         Dim dataList As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ROIlist, env)
@@ -788,7 +1042,8 @@ Module data
         Dim allData As PeakMs2() = dataList.populates(Of PeakMs2)(env).ToArray
         Dim uniques As String() = xcms_id(
             mz:=allData.Select(Function(p) p.mz).ToArray,
-            rt:=allData.Select(Function(p) p.rt).ToArray
+            rt:=allData.Select(Function(p) p.rt).ToArray,
+            prefix:=prefix
         )
 
         If name_chrs Then
@@ -796,17 +1051,29 @@ Module data
         Else
             For i As Integer = 0 To allData.Length - 1
                 allData(i).lib_guid = uniques(i)
+                Call Algorithm.SimpleSetROI(allData(i), uniques(i))
             Next
 
             Return allData
         End If
     End Function
 
+    ''' <summary>
+    ''' Reads a spectral matrix from a CSV file.
+    ''' </summary>
+    ''' <param name="file">Path to CSV file containing spectral data.</param>
+    ''' <returns>Array of Library objects parsed from the file.</returns>
     <ExportAPI("read.MsMatrix")>
     Public Function readMatrix(file As String) As Spectra.Library()
         Return file.LoadCsv(Of Spectra.Library)
     End Function
 
+    ''' <summary>
+    ''' Generates a string representation of top intensity ions from spectra.
+    ''' </summary>
+    ''' <param name="data">Input PeakMs2 spectra.</param>
+    ''' <param name="topIons">Number of top ions to include per spectrum.</param>
+    ''' <returns>String array formatted as "mz:intensity" for top ions.</returns>
     <ExportAPI("linearMatrix")>
     Public Function linearMatrix(data As PeakMs2(), Optional topIons As Integer = 5) As String()
         Dim da = Tolerance.DeltaMass(0.3)
@@ -824,5 +1091,81 @@ Module data
                             .JoinBy("; ")
                     End Function) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' use log foldchange for compares two spectrum
+    ''' </summary>
+    ''' <param name="spec1"></param>
+    ''' <param name="spec2"></param>
+    ''' <returns></returns>
+    <ExportAPI("logfc")>
+    Public Function logfc_f(spec1 As LibraryMatrix, spec2 As LibraryMatrix,
+                            Optional da As Double = 0.03,
+                            Optional lb1 As String = Nothing,
+                            Optional lb2 As String = Nothing) As Object
+
+        Dim label1 = If(spec1.name.StringEmpty(, True), NameOf(spec1), spec1.name)
+        Dim label2 = If(spec2.name.StringEmpty(, True), NameOf(spec2), spec2.name)
+
+        label1 = If(lb1.StringEmpty(, True), label1, lb1)
+        label2 = If(lb2.StringEmpty(, True), label2, lb2)
+
+        If label1 = label2 Then
+            label1 = $"{label1}_1"
+            label2 = $"{label2}_2"
+        End If
+
+        Dim s1 = spec1.ms2.Select(Function(a) New ms2(a, label1)).ToArray
+        Dim s2 = spec2.ms2.Select(Function(a) New ms2(a, label2)).ToArray
+        Dim merge = s1.JoinIterates(s2).GroupBy(Function(m) m.mz, da).ToArray
+        Dim mz As Double() = merge.Select(Function(i) Val(i.name)).ToArray
+        Dim i1 As Double() = merge.Select(Function(i) i.Where(Function(m) m.Annotation = label1).Sum(Function(a) a.intensity)).ToArray
+        Dim i2 As Double() = merge.Select(Function(i) i.Where(Function(m) m.Annotation = label2).Sum(Function(a) a.intensity)).ToArray
+        Dim logfc As Double() = i1 _
+            .Select(Function(into1, i)
+                        Dim into2 As Double = i2(i)
+
+                        If into1 <= 0.0 Then
+                            Return 0
+                        ElseIf into2 <= 0 Then
+                            Return Double.PositiveInfinity
+                        Else
+                            Return Double.Log(into1 / into2, 2)
+                        End If
+                    End Function) _
+            .ToArray
+
+        Return New rDataframe With {
+            .columns = New Dictionary(Of String, Array) From {
+                {"m/z", mz},
+                {label1, i1},
+                {label2, i2},
+                {"logfc", logfc},
+                {"abs_logfc", logfc.Select(Function(a) std.Abs(a)).ToArray}
+            }
+        }
+    End Function
+
+    <ExportAPI("msn_matrix")>
+    <RApiReturn(GetType(MzMatrix))>
+    Public Function msn_matrix(<RRawVectorArgument> raw As Object,
+                               Optional mzdiff As Double = 0.01,
+                               Optional q As Double = 0.0,
+                               Optional top As Integer = 5,
+                               Optional env As Environment = Nothing) As Object
+
+        Dim rawdata As pipeline = pipeline.TryCreatePipeline(Of mzPack)(raw, env)
+
+        If rawdata.isError Then
+            Return rawdata.getError
+        End If
+
+        Dim pooldata As MSnFragmentProvider() = rawdata _
+            .populates(Of mzPack)(env) _
+            .Select(Function(s) New MSnFragmentProvider(s, top)) _
+            .ToArray
+
+        Return MassFragmentPool.CreateMatrix(pooldata, mzdiff, q)
     End Function
 End Module

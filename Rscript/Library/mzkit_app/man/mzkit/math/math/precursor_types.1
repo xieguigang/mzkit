@@ -1,9 +1,10 @@
 .\" man page create by R# package system.
-.TH MATH 4 2000-Jan "precursor_types" "precursor_types"
+.TH MATH 4 2000-1月 "precursor_types" "precursor_types"
 .SH NAME
 precursor_types \- create precursor type calculator
 .SH SYNOPSIS
 \fIprecursor_types(\fBtypes\fR as any, 
+\fBunsafe\fR as boolean = TRUE, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -11,10 +12,22 @@ create precursor type calculator
 .PP
 .SH OPTIONS
 .PP
-\fBtypes\fB \fR\- -. 
+\fBtypes\fB \fR\- a character vector of the precursor type symbols, example as \fB[M+H]+\fR, etc.. 
+.PP
+.PP
+\fBunsafe\fB \fR\- 
+ this parameter indicates that how the function handling of the string parser error when the given string value is empty:
+ 
+ 1. for unsafe, an exception will be throw
+ 2. for unsafe is false, corresponding null value will be generated.
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+a collection of the ion precursor adducts object.
 .PP
 .SH SEE ALSO
 math

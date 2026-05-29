@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09237b5d5a43f4a7a579d6c3af6a6355, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\Linear\InternalStandardMethod.vb"
+﻿#Region "Microsoft.VisualBasic::05f86e9099b77002c915cb6d7c4801d7, mzmath\TargetedMetabolomics\LinearQuantitative\Linear\InternalStandardMethod.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 168
-    '    Code Lines: 125
-    ' Comment Lines: 23
-    '   Blank Lines: 20
-    '     File Size: 6.91 KB
+    '   Total Lines: 189
+    '    Code Lines: 135 (71.43%)
+    ' Comment Lines: 31 (16.40%)
+    '    - Xml Docs: 90.32%
+    ' 
+    '   Blank Lines: 23 (12.17%)
+    '     File Size: 7.93 KB
 
 
     '     Class InternalStandardMethod
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToFeatureLinear, ToLinears, TPA
+    '         Function: CreateModel, (+2 Overloads) ToFeatureLinear, ToLinears, TPA
     ' 
     ' 
     ' /********************************************************************************/
@@ -57,14 +59,13 @@
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.SignalProcessing
-Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
-Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace LinearQuantitative.Linear
 
@@ -100,11 +101,7 @@ Namespace LinearQuantitative.Linear
                               Function(samples)
                                   Return samples.ToArray
                               End Function)
-            Dim linearSamples As String() = ionGroups.Values _
-                .IteratesALL _
-                .Select(Function(p) p.SampleName) _
-                .Distinct _
-                .ToArray
+            Dim linearSamples As String() = TargetPeakPoint.GetSampleNames(ionGroups.Values.IteratesALL)
 
             For Each featureId As String In ionGroups.Keys
                 If contents.hasDefined(featureId) Then
@@ -115,6 +112,92 @@ Namespace LinearQuantitative.Linear
                     Throw New MissingPrimaryKeyException($"missing linear information of the metabolite: {featureId}!")
                 End If
             Next
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="ionGroups">
+        ''' single compound reference points data
+        ''' </param>
+        ''' <param name="ionKey"></param>
+        ''' <returns></returns>
+        Public Function ToFeatureLinear(ionGroups As IEnumerable(Of IonPeakTableRow), ionKey As String) As StandardCurve
+            Dim define As Standards = contents.GetStandards(ionKey)
+            Dim compound As IonPeakTableRow() = ionGroups.ToArray
+            Dim A As Double() = compound.Select(Function(i) i.TPA).ToArray
+            Dim ISTPA As Double() = compound.Select(Function(i) i.TPA_IS).ToArray
+            Dim linearSamples As String() = compound.Select(Function(i) i.raw).ToArray
+
+            Return CreateModel(linearSamples, A, ISTPA, define, range:=Nothing)
+        End Function
+
+        Private Function CreateModel(linearSamples As String(), A#(), ISTPA#(), define As Standards, range As DoubleRange) As StandardCurve
+            Dim ionKey As String = define.ID
+            Dim C As Double() = linearSamples.Select(Function(level) contents(level, ionKey)).ToArray
+            Dim CIS As Double = 1
+            Dim invalids As New List(Of PointF)
+            Dim missingPoints As New List(Of String)
+            Dim points As New List(Of ReferencePoint)
+            Dim line As PointF() = QuantificationWorker _
+                .CreateModelPoints(C, A, ISTPA, CIS, ionKey, define.Name, linearSamples, points, missingPoints) _
+                .ToArray
+            Dim weight As String = Nothing
+            ' do linear regression fitting
+            Dim fit As IFitted = StandardCurve.CreateLinearRegression(line, maxDeletions,
+                                                                      removed:=invalids,
+                                                                      weight:=weight,
+                                                                      range:=range)
+            ' get points that removed from linear modelling
+            For Each ptRef As ReferencePoint In points
+                For Each invalid As PointF In invalids
+                    If std.Abs(invalid.X - ptRef.Cti) <= 0.0001 AndAlso std.Abs(invalid.Y - ptRef.Px) <= 0.0001 Then
+                        ptRef.valid = False
+                        Exit For
+                    End If
+                Next
+            Next
+
+            If missingPoints.Any Then
+                For Each id As String In missingPoints
+                    Call points.Add(New ReferencePoint With {
+                            .AIS = 0,
+                            .Ati = 0,
+                            .cIS = 0,
+                            .Cti = 0,
+                            .ID = ionKey,
+                            .level = id,
+                            .Name = define.Name,
+                            .valid = False,
+                            .yfit = 0
+                        }
+                    )
+                Next
+            End If
+
+            Dim out As New StandardCurve With {
+                .name = ionKey,
+                .linear = fit,
+                .points = points _
+                    .OrderBy(Function(p) contents(p.level, ionKey)) _
+                    .ToArray,
+                .[IS] = contents.GetIS(define.ISTD),
+                .weight = weight
+            }
+            Dim fy As Func(Of Double, Double) = out.ReverseModelFunction
+            Dim ptY#
+
+            For Each pt As ReferencePoint In out.points
+                If pt.AIS > 0 Then
+                    ptY = pt.Ati / pt.AIS
+                Else
+                    ptY = pt.Ati
+                End If
+
+                pt.yfit = std.Round(fy(ptY), 5)
+            Next
+
+            Return out
         End Function
 
         ''' <summary>
@@ -134,7 +217,7 @@ Namespace LinearQuantitative.Linear
             Dim A As Double() = TPA(linearSamples, rawPoints)
             Dim ISTPA As Double()
 
-            If Not define.ISTD.StringEmpty Then
+            If (Not define.ISTD.StringEmpty(, True)) AndAlso Not define.ISTD.TextEquals("None") Then
                 If Not ionGroups.ContainsKey(define.ISTD) Then
                     Call $"target linear required IS reference '{define.ISTD}', but ion is missing in sample data!".Warning
                     ISTPA = Nothing
@@ -145,46 +228,57 @@ Namespace LinearQuantitative.Linear
                 ISTPA = Nothing
             End If
 
-            Dim C As Double() = linearSamples.Select(Function(level) contents(level, ionKey)).ToArray
-            Dim CIS As Double = 1
-            Dim invalids As New List(Of PointF)
-            Dim line As PointF() = QuantificationWorker _
-                .CreateModelPoints(C, A, ISTPA, CIS, ionKey, define.Name, linearSamples, points) _
-                .ToArray
-            Dim fit As IFitted = StandardCurve.CreateLinearRegression(line, maxDeletions, removed:=invalids)
+            Return CreateModel(linearSamples, A, ISTPA, define, range:=Nothing)
+        End Function
 
-            ' get points that removed from linear modelling
-            For Each ptRef As ReferencePoint In points
-                For Each invalid In invalids
-                    If stdNum.Abs(invalid.X - ptRef.Cti) <= 0.0001 AndAlso stdNum.Abs(invalid.Y - ptRef.Px) <= 0.0001 Then
-                        ptRef.valid = False
-                        Exit For
-                    End If
-                Next
-            Next
+        ''' <summary>
+        ''' A method of create linear with samples content as reference range
+        ''' </summary>
+        ''' <param name="marker"></param>
+        ''' <param name="istd"></param>
+        ''' <param name="id"></param>
+        ''' <param name="samples"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' delete linear points use sample content range as reference data
+        ''' </remarks>
+        Public Function ToLinear(marker As TargetPeakPoint(), istd As TargetPeakPoint(), id As String, samples As TargetPeakPoint()) As StandardCurve
+            Dim define As Standards = contents.GetStandards(id)
+            Dim linearPoints = TargetPeakPoint.GetSampleNames(marker.JoinIterates(istd))
+            Dim samplePoints = TargetPeakPoint.GetSampleNames(samples)
+            Dim points As New List(Of ReferencePoint)
+            Dim A As Double() = TPA(linearPoints, marker)
+            Dim ISTPA As Double()
+            Dim sampleA As Double() = TPA(samplePoints, samples.Where(Function(i) i.Name <> id))
+            Dim sampleIS As Double() = Nothing
 
-            Dim out As New StandardCurve With {
-                .name = ionKey,
-                .linear = fit,
-                .points = points _
-                    .OrderBy(Function(p) contents(p.level, ionKey)) _
-                    .ToArray,
-                .[IS] = contents.GetIS(define.ISTD)
-            }
-            Dim fy As Func(Of Double, Double) = out.ReverseModelFunction
-            Dim ptY#
-
-            For Each pt As ReferencePoint In out.points
-                If pt.AIS > 0 Then
-                    ptY = pt.Ati / pt.AIS
+            If (Not define.ISTD.StringEmpty(, True)) AndAlso Not define.ISTD.TextEquals("None") Then
+                If istd.IsNullOrEmpty Then
+                    Call $"target linear required IS reference '{define.ISTD}', but ion is missing in sample data!".Warning
+                    ISTPA = Nothing
                 Else
-                    ptY = pt.Ati
+                    ISTPA = TPA(linearPoints, istd)
+                    sampleIS = TPA(samplePoints, samples.Where(Function(i) i.Name = id))
                 End If
+            Else
+                ISTPA = Nothing
+            End If
 
-                pt.yfit = stdNum.Round(fy(ptY), 5)
-            Next
+            Dim line As StandardCurve = CreateModel(linearPoints, A, ISTPA, define, range:=Nothing)
 
-            Return out
+            ' no sample data range for make secondary linear fitting
+            If sampleA.IsNullOrEmpty Then
+                Return line
+            End If
+
+            Dim fy = line.ContentVectorLambda
+            ' measure sample range
+            Dim y = If(sampleIS Is Nothing, sampleA, SIMD.Divide.f64_op_divide_f64(sampleA, sampleIS))
+            Dim x = fy(y).ToArray
+            Dim range As New DoubleRange(x)
+            Dim secondLine As StandardCurve = CreateModel(linearPoints, A, ISTPA, define, range)
+
+            Return secondLine
         End Function
 
         ''' <summary>

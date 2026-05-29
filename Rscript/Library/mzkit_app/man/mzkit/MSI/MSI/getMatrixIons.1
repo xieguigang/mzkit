@@ -1,12 +1,14 @@
 .\" man page create by R# package system.
-.TH MSI 1 2000-Jan "getMatrixIons" "getMatrixIons"
+.TH MSI 1 2000-1月 "getMatrixIons" "getMatrixIons"
 .SH NAME
 getMatrixIons \- get matrix ions feature m/z vector
 .SH SYNOPSIS
-\fIgetMatrixIons(\fBraw\fR as <generic> mzPack, 
+\fIgetMatrixIons(\fBraw\fR as any, 
 \fBmzdiff\fR as double = 0.001, 
 \fBq\fR as double = 0.001, 
-\fBfast_bins\fR as boolean = TRUE);\fR
+\fBfast_bins\fR as boolean = TRUE, 
+\fBverbose\fR as boolean = FALSE, 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
 get matrix ions feature m/z vector
@@ -19,10 +21,25 @@ get matrix ions feature m/z vector
 \fBmzdiff\fB \fR\- -. 
 .PP
 .PP
-\fBq\fB \fR\- -. 
+\fBq\fB \fR\- 
+ sparsity cutoff, the higher q cutoff value
+ the less ions we keeps As more sparse ion was 
+ removed.
+. 
 .PP
 .PP
 \fBfast_bins\fB \fR\- -. 
+.PP
+.SH EXAMPLES
+.PP
+# thread number for fast bins could be set via the 
+ # n_thread options, example as:
+ options(n_threads = 8);
+ 
+ let ion_features = getMatrixIons(mzpack, mzdiff = 0.001, fast.bins = TRUE);
+ let mz_vec = [ion_features]::mass;
+ let mz_min = [ion_features]::mzmin;
+ let mz_max = [ion_features]::mzmax;
 .PP
 .SH SEE ALSO
 MSI

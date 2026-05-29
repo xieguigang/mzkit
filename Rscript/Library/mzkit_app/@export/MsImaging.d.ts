@@ -17,6 +17,14 @@
  * 
 */
 declare namespace MsImaging {
+   /**
+    * apply a single filter or a filter pipeline
+    * 
+    * 
+     * @param filter -
+     * @param layer -
+   */
+   function apply_raster_filter(filter: object, layer: object): object;
    module as {
       /**
        * extract the pixel [x,y] information for all of
@@ -48,16 +56,23 @@ declare namespace MsImaging {
    /**
     * get the default ms-imaging filter pipeline
     * 
+    * > denoise_scale() > TrIQ_scale(0.8) > knn_scale() > soften_scale()
     * 
+     * @return A raster filter pipeline that consist with modules with orders:
+     *  
+     *  1. @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.DenoiseScaler``
+     *  2. @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.TrIQScaler``
+     *  3. @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.KNNScaler``
+     *  4. @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.SoftenScaler``
    */
    function defaultFilter(): object;
    /**
     * Extract a spectrum matrix object from MSI data by a given set of m/z values
     * 
     * 
-     * @param viewer -
-     * @param mz -
-     * @param tolerance -
+     * @param viewer A ms-imaging @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Drawer`` canvas object, which contains the ms-imaging rawdata.
+     * @param mz A numeric vector that used as the ion m/z value for extract the imaging layer data from the drawer canvas.
+     * @param tolerance the mass tolerance error
      * 
      * + default value Is ``'ppm:20'``.
      * @param title -
@@ -83,6 +98,10 @@ declare namespace MsImaging {
    */
    function intensity(layer: any, summary?: object, env?: object): number;
    /**
+     * @param env default value Is ``null``.
+   */
+   function intensityFilter(x: any, filter: object, env?: object): any;
+   /**
     * trim the intensity data value in a pixels of a ion MS-Imaging layer
     * 
     * 
@@ -97,6 +116,8 @@ declare namespace MsImaging {
     * load the raw pixels data from imzML file
     * 
     * 
+     * @param imzML the ms-imaging rawdata source, could be a rawdata rendering wrapper @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Drawer``,
+     *  or a indexed @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache.XICReader`` for specific ions collection.
      * @param mz a collection of ion m/z value for rendering on one image
      * @param tolerance m/z tolerance error for get layer data
      * 
@@ -133,21 +154,25 @@ declare namespace MsImaging {
      * @param pixelSize -
      * 
      * + default value Is ``'5,5'``.
-     * @param tolerance -
+     * @param tolerance the mass tolerance error for get ion intensity value from spatial spots.
      * 
      * + default value Is ``'da:0.1'``.
-     * @param color 
+     * @param color the color palette name
+     * 
      * + default value Is ``'viridis:turbo'``.
-     * @param levels 
+     * @param levels -
+     * 
      * + default value Is ``30``.
      * @param cutoff 
      * + default value Is ``[0.1,0.75]``.
      * @param background 
      * + default value Is ``'Transparent'``.
+     * @param raster 
+     * + default value Is ``null``.
      * @param env 
      * + default value Is ``null``.
    */
-   function layer(viewer: object, mz: number, pixelSize?: any, tolerance?: any, color?: string, levels?: object, cutoff?: any, background?: any, env?: object): object;
+   function layer(viewer: object, mz: number, pixelSize?: any, tolerance?: any, color?: string, levels?: object, cutoff?: any, background?: any, raster?: object, env?: object): object;
    /**
     * 
     * 
@@ -173,6 +198,11 @@ declare namespace MsImaging {
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return A dataframe object that contains data fields:
+     *  
+     *  1. mz: the ion mz vector
+     *  2. density: the average spatial density of current ion mz layer
+     *  3. layer: a mzkit clr @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer`` object that could be used for ms-imaging visualization
    */
    function MeasureMSIions(raw: object, gridSize?: object, mzdiff?: any, keepsLayer?: boolean, densityCut?: number, qcut?: number, intoCut?: number, env?: object): number|object;
    /**
@@ -188,20 +218,42 @@ declare namespace MsImaging {
      * @param threshold -
      * 
      * + default value Is ``0.01``.
+     * @param composed by default a union ion spectrum object will be generates based on the given spatial spots data,
+     *  for set this parameter value to false, then a tuple list object data that contains the ms1 
+     *  spectrum data for each spatial spots will be returns.
+     * 
+     * + default value Is ``true``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function MS1(viewer: object, x: object, y: object, tolerance?: any, threshold?: number, env?: object): object;
+   function MS1(viewer: object, x: object, y: object, tolerance?: any, threshold?: number, composed?: boolean, env?: object): object;
    /**
-     * @param samplingRegion default value Is ``true``.
+    * 
+    * 
+     * @param layer -
+     * @param xy -
+     * @param samplingRegion -
+     * 
+     * + default value Is ``true``.
    */
    function MSI_coverage(layer: object, xy: object, samplingRegion?: boolean): number;
    module MSI_summary {
       /**
-        * @param qcut default value Is ``0.75``.
-        * @param TrIQ default value Is ``true``.
-        * @param env default value Is ``null``.
+       * Get the max intensity value via TrIQ or quantile cutoff
+       * 
+       * 
+        * @param data the MSI plot data
+        * @param intensity the intensity source which describ how to extract the intensity data from the given MSI plot data.
+        * @param qcut the threshold cutoff value for the cutoff algorithm
+        * 
+        * + default value Is ``0.75``.
+        * @param TrIQ used the TrIQ cutoff algorithm or quantile cutoff? default parameter value TRUE means use the TrIQ method by default.
+        * 
+        * + default value Is ``true``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
       */
       function scaleMax(data: object, intensity: object, qcut?: number, TrIQ?: boolean, env?: object): number;
    }
@@ -226,16 +278,31 @@ declare namespace MsImaging {
    */
    function MSIlayer(viewer: object, mz: number, tolerance?: any, split?: boolean, env?: object): object;
    /**
-    * get a pixel data
+    * Converts R raw vector input into a raster processing pipeline configuration
+    * 
+    * > This method handles R-to-CLR type conversion and is primarily used for:
+    * >  Interop with R# environmentsParsing pipeline configurations from script parameters
+    * >  
+    * >  The @``M:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.RasterPipeline.Parse(System.Collections.Generic.IEnumerable{System.String})`` method implements the actual
+    * >  filter syntax interpretation and validation.
+    * 
+     * @param filters R-side input vector containing filter definitions. Accepts:
+     *  Character vector of filter expressionsList of filter specification stringsOther R vector types convertible via CLRVector.asCharacter
+     * @return A parsed RasterPipeline object configured with the input filter sequence
+   */
+   function parseFilters(filters: any): object;
+   /**
+    * get the spatial spot pixel data
     * 
     * 
-     * @param data -
-     * @param x -
-     * @param y -
+     * @param data the rawdata source for the ms-imaging.
+     * @param x an integer vector for x axis
+     * @param y an integer vector for y axis
      * @param env 
      * + default value Is ``null``.
+     * @return A collection of the spatial spot data
    */
-   function pixel(data: any, x: object, y: object, env?: object): object;
+   function pixel(data: any, x: object, y: object, env?: object): object|object|object;
    module read {
       /**
        * open the existed mzImage cache file
@@ -245,6 +312,7 @@ declare namespace MsImaging {
         * @param env -
         * 
         * + default value Is ``null``.
+        * @return A spatial ion xic reader object for MSI visual
       */
       function mzImage(file: any, env?: object): object;
    }
@@ -257,10 +325,11 @@ declare namespace MsImaging {
      * @param intensity -
      * 
      * + default value Is ``null``.
-     * @param colorSet @``T:Microsoft.VisualBasic.Imaging.Drawing2D.Colors.ScalerPalette``
+     * @param colorSet a enum flag value for rendering the spatial heatmap colors,
+     *  all flags see the clr enum: @``T:Microsoft.VisualBasic.Imaging.Drawing2D.Colors.ScalerPalette``
      * 
      * + default value Is ``'viridis:turbo'``.
-     * @param defaultFill -
+     * @param defaultFill the color value for the spots which those intensity value is missing(ZERO or NaN)
      * 
      * + default value Is ``'Transparent'``.
      * @param pixelSize -
@@ -280,7 +349,9 @@ declare namespace MsImaging {
      * + default value Is ``null``.
      * @param colorLevels 
      * + default value Is ``255``.
-     * @param dims 
+     * @param dims the raw ms-imaging canvas dimension size, should be an integer vector that contains 
+     *  two elements inside: canvas width and canvas height value.
+     * 
      * + default value Is ``null``.
      * @param env -
      * 
@@ -292,12 +363,12 @@ declare namespace MsImaging {
     * 
     * 
      * @param viewer -
-     * @param r -
-     * @param g -
-     * @param b -
+     * @param r the ion m/z value for the color red channel
+     * @param g the ion m/z value for the color green channel
+     * @param b the ion m/z value for the color blue channel
      * @param background 
      * + default value Is ``'black'``.
-     * @param tolerance -
+     * @param tolerance the ion m/z mass tolerance error
      * 
      * + default value Is ``'da:0.1'``.
      * @param maxCut 
@@ -321,8 +392,9 @@ declare namespace MsImaging {
         * @param env -
         * 
         * + default value Is ``null``.
+        * @return A tuple list of the single ion ms-imaging layer objects
       */
-      function layer(x: any, args: object, env?: object): any;
+      function layer(x: any, args: object, env?: object): object;
    }
    /**
     * merge multiple layers via intensity sum
@@ -342,19 +414,19 @@ declare namespace MsImaging {
     * set cluster tags to the pixel tag property data
     * 
     * 
-     * @param layer -
-     * @param segments -
+     * @param layer A ms-imaging render layer object that contains a collection of the spatial spot data.
+     * @param segments A collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion`` data, the tissue region label 
+     *  string value will be assigned to the corresponding spatial spot its sample tag value.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function tag_layers(layer: object, segments: any, env?: object): any;
+   function tag_layers(layer: object, segments: any, env?: object): object;
    /**
-    * Contrast optimization of mass
-    *  spectrometry imaging(MSI) data
-    *  visualization by threshold intensity
-    *  quantization (TrIQ)
+    * Contrast optimization of mass spectrometry imaging(MSI) data
+    *  visualization by threshold intensity quantization (TrIQ)
     * 
+    * > this function works based on the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.TrIQThreshold`` clr module
     * 
      * @param data A ms-imaging ion layer data or a numeric vector of the intensity data.
      * @param q cutoff threshold of the intensity numeric vector
@@ -365,6 +437,7 @@ declare namespace MsImaging {
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return A signal intensity value range [min, max]
    */
    function TrIQ(data: any, q?: number, levels?: object, env?: object): number;
    /**
@@ -373,10 +446,13 @@ declare namespace MsImaging {
     * > this function will load entire MSI matrix raw data into memory.
     * 
      * @param file *.imzML;*.mzPack
+     * @param memoryIndex read mzpack in-memory rawdata via the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader.MemoryIndexReader`` instead of un-indexed reader @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader.ReadRawPack``.
+     * 
+     * + default value Is ``false``.
      * @param env 
      * + default value Is ``null``.
    */
-   function viewer(file: any, env?: object): object;
+   function viewer(file: any, memoryIndex?: boolean, env?: object): object;
    module write {
       /**
        * write mzImage data file

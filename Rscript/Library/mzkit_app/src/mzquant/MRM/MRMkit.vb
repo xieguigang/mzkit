@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfdc2aa455fc234d20a1579ca5114a93, mzkit\Rscript\Library\mzkit.quantify\MRM\MRMkit.vb"
+﻿#Region "Microsoft.VisualBasic::96ad6d473a2725a47e2358013bfcdbca, Rscript\Library\mzkit_app\src\mzquant\MRM\MRMkit.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 832
-    '    Code Lines: 579
-    ' Comment Lines: 166
-    '   Blank Lines: 87
-    '     File Size: 35.91 KB
+    '   Total Lines: 1036
+    '    Code Lines: 689 (66.51%)
+    ' Comment Lines: 234 (22.59%)
+    '    - Xml Docs: 90.17%
+    ' 
+    '   Blank Lines: 113 (10.91%)
+    '     File Size: 46.18 KB
 
 
     ' Module MRMkit
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: asIonPair, ExtractIonData, ExtractPeakROI, GetPeakROIList, GetRTAlignments
-    '               IsomerismIonPairs, Linears, MRMarguments, printIonPairs, R2
-    '               readCompoundReference, readIonPairs, readIS, ROISummary, RTShiftSummary
-    '               (+2 Overloads) SampleQuantify, ScanPeakTable, ScanPeakTable2, (+2 Overloads) ScanWiffRaw, WiffRawFile
+    '     Function: asIonPair, castXicTable, (+2 Overloads) ExtractIonData, ExtractIonPairs, ExtractPeakROI
+    '               FindUntargetedIonPair, fromArgumentsJSON, GetRTAlignments, ion_pairs_tbl, IsomerismIonPairs
+    '               Linears, MRMarguments, peakAreaTable, printIonPairs, R2
+    '               readCompoundReference, readIonPairs, readIS, RTShiftSummary, (+2 Overloads) SampleQuantify
+    '               ScanPeakTable, ScanPeakTable2, ScanPeakTable3, (+2 Overloads) ScanWiffRaw, WiffRawFile
     ' 
     ' /********************************************************************************/
 
@@ -64,6 +67,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
@@ -71,8 +75,8 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
@@ -83,6 +87,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports RRuntime = SMRUCC.Rsharp.Runtime
 Imports std = System.Math
@@ -95,8 +100,8 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.File
 Module MRMkit
 
     Sub New()
-        REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
-        REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of IsomerismIonPairs)(
+        RInternal.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
+        RInternal.ConsolePrinter.AttachConsoleFormatter(Of IsomerismIonPairs)(
             Function(ion As IsomerismIonPairs)
                 If ion.hasIsomerism Then
                     Return $"[{ion.index}, rt:{ion.target.rt} (sec)] {ion.target} {{{ion.ions.Select(Function(i) i.name).JoinBy(", ")}}}"
@@ -105,8 +110,11 @@ Module MRMkit
                 End If
             End Function)
 
-        REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of QCData)(AddressOf MRMQCReport.CreateHtml)
-        REnv.Internal.Object.Converts.makeDataframe.addHandler(GetType(RTAlignment()), AddressOf RTShiftSummary)
+        RInternal.htmlPrinter.AttachHtmlFormatter(Of QCData)(AddressOf MRMQCReport.CreateHtml)
+        RInternal.Object.Converts.makeDataframe.addHandler(GetType(RTAlignment()), AddressOf RTShiftSummary)
+        RInternal.Object.Converts.makeDataframe.addHandler(GetType(IonPair()), AddressOf ion_pairs_tbl)
+        RInternal.Object.Converts.makeDataframe.addHandler(GetType(IonChromatogram), AddressOf castXicTable)
+        RInternal.Object.Converts.makeDataframe.addHandler(GetType(IonTPA()), AddressOf peakAreaTable)
 
         Dim toolkit As AssemblyInfo = GetType(MRMkit).Assembly.FromAssembly
 
@@ -114,6 +122,79 @@ Module MRMkit
         Call toolkit.AppSummary(Nothing, Nothing, App.StdOut)
     End Sub
 
+    <RGenericOverloads("as.data.frame")>
+    Private Function peakAreaTable(ions As IonTPA(), args As list, env As Environment) As Rdataframe
+        Dim castPeaktable As Boolean = CLRVector.asLogical(args.getBySynonyms("peaktable")).ElementAtOrDefault(0, [default]:=False)
+        Dim castValue As String = CLRVector.asScalarCharacter(args.getBySynonyms("value"))
+
+        If castPeaktable Then
+            Dim sourcefiles = ions.GroupBy(Function(a) a.source).ToArray
+            Dim ionNames = ions.Select(Function(a) a.name).Distinct.ToArray
+            Dim tbl As New Rdataframe With {
+                .rownames = sourcefiles.Select(Function(a) a.Key).ToArray,
+                .columns = New Dictionary(Of String, Array)
+            }
+            Dim areaData As Boolean = Not castValue.TextEquals("maxinto")
+
+            For Each name As String In ionNames
+                Call tbl.add(name, From file As IGrouping(Of String, IonTPA)
+                                   In sourcefiles
+                                   Let a = file.Where(Function(i) i.name = name).FirstOrDefault
+                                   Select If(a Is Nothing, 0, If(areaData, a.area, a.maxPeakHeight)))
+            Next
+
+            Return tbl
+        Else
+            Dim tbl As New Rdataframe With {
+                .rownames = ions.Select(Function(a) a.name).ToArray,
+                .columns = New Dictionary(Of String, Array)
+            }
+
+            Call tbl.add("name", From i As IonTPA In ions Select i.name)
+            Call tbl.add("refer RT", From i As IonTPA In ions Select i.refer_rt)
+            Call tbl.add("rt", From i As IonTPA In ions Select i.rt)
+            Call tbl.add("rt(min)", From i As IonTPA In ions Select (i.rt / 60).ToString("F2"))
+            Call tbl.add("rtmin", From i As IonTPA In ions Select i.peakROI.Min)
+            Call tbl.add("rtmax", From i As IonTPA In ions Select i.peakROI.Max)
+            Call tbl.add("area", From i As IonTPA In ions Select i.area)
+            Call tbl.add("baseline", From i As IonTPA In ions Select i.baseline)
+            Call tbl.add("sn", From i As IonTPA In ions Select i.sn)
+            Call tbl.add("maxinto", From i As IonTPA In ions Select i.maxPeakHeight)
+            Call tbl.add("source", From i As IonTPA In ions Select i.source)
+
+            Return tbl
+        End If
+    End Function
+
+    <RGenericOverloads("as.data.frame")>
+    Private Function castXicTable(xic As IonChromatogram, args As list, env As Environment) As Rdataframe
+        Dim df As New Rdataframe With {.columns = New Dictionary(Of String, Array)}
+        Dim tic = xic.chromatogram
+
+        Call df.add("time", TIC.Select(Function(t) t.Time))
+        Call df.add("intensity", tic.Select(Function(t) t.Intensity))
+
+        Return df
+    End Function
+
+    <RGenericOverloads("as.data.frame")>
+    Private Function ion_pairs_tbl(ions As IonPair(), args As list, env As Environment) As Object
+        Dim tbl As New Rdataframe With {
+            .rownames = ions _
+                .Select(Function(i) i.accession) _
+                .ToArray,
+            .columns = New Dictionary(Of String, Array)
+        }
+
+        Call tbl.add("name", ions.Select(Function(i) i.name))
+        Call tbl.add("precursor", ions.Select(Function(i) i.precursor))
+        Call tbl.add("product", ions.Select(Function(i) i.product))
+        Call tbl.add("rt", ions.Select(Function(i) If(i.rt Is Nothing, Double.NaN, CDbl(i.rt))))
+
+        Return tbl
+    End Function
+
+    <RGenericOverloads("as.data.frame")>
     Private Function RTShiftSummary(x As RTAlignment(), args As list, env As Environment) As Rdataframe
         Dim rownames = x.Select(Function(i) i.ion.target.accession).ToArray
         Dim cols As New Dictionary(Of String, Array)
@@ -168,6 +249,77 @@ Module MRMkit
     End Function
 
     ''' <summary>
+    ''' MRM-Ion Pair Finder is used to automatically and systematically define MRM transitions from untargeted metabolomics data. 
+    ''' Our research group first introduced the concept of pseudotargeted metabolomics using the retention time locking 
+    ''' GC-MS-selected ions monitoring in 2012. The pseudotargeted metabolomics method was extended to LC-MS in 2013. To define
+    ''' ion pairs automatically and systematically, the in-house software “Mul-tiple Reaction Monitoring-Ion Pair Finder (MRM-Ion 
+    ''' Pair Finder)” was developed, which made defining of the MRM transitions for untargeted metabolic profiling easier and 
+    ''' less time consuming. Recently, MRM-Ion Pair Finder was updated to version 2.0. The new version is more convenient, consumes 
+    ''' less time and is also suitable for negative ion mode. And the function of MRM-Ion Pair Finder is also performed in R so 
+    ''' that users have more options when using pseudotargeted method.
+    ''' </summary>
+    ''' <param name="ms2"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' https://github.com/zhengfj1994/MRM-Ion_Pair_Finder
+    ''' </remarks>
+    <ExportAPI("find_untargeted_ionpair")>
+    <RApiReturn(GetType(IonPair))>
+    Public Function FindUntargetedIonPair(<RRawVectorArgument> ms2 As Object, Optional ms1 As Rdataframe = Nothing,
+                                          Optional diff_MS2MS1 As Double = 0.05,
+                                          Optional ms2_intensity As Double = 0.05,
+                                          Optional env As Environment = Nothing) As Object
+
+        Dim ions As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ms2, env)
+
+        If ions.isError Then
+            Return ions.getError
+        End If
+
+        If ms1 Is Nothing Then
+            Return ions.populates(Of PeakMs2)(env) _
+                .MRMIonPairFinder(diff_MS2MS1, ms2_intensity) _
+                .ToArray
+        End If
+
+        Dim id As String() = CLRVector.asCharacter(ms1.getBySynonym("id", "ID", "xcms_id"))
+        Dim mz As Double() = CLRVector.asNumeric(ms1.getBySynonym("mz", "MZ", "m/z"))
+        Dim rt As Double() = CLRVector.asNumeric(ms1.getBySynonym("rt", "RT", "retention_time"))
+        Dim targets As Ms1Feature() = id _
+            .Select(Function(ref, i)
+                        Return New Ms1Feature() With {
+                            .ID = ref,
+                            .mz = mz(i),
+                            .rt = rt(i)
+                        }
+                    End Function) _
+            .ToArray
+
+        Return ions.populates(Of PeakMs2)(env) _
+            .MRMIonPairFinder(targets, diff_MS2MS1, ms2_intensity) _
+            .ToArray
+    End Function
+
+    ''' <summary>
+    ''' Create the MRM peak finding arguments from a json string
+    ''' </summary>
+    ''' <param name="json_str"></param>
+    ''' <param name="parse_single">
+    ''' this function will try to parse the given json string as <see cref="MRMArguments"/> if <paramref name="parse_single"/> is set to true,
+    ''' otherwise a set of the ion parameters <see cref="MRMArgumentSet"/> will be parsed if <paramref name="parse_single"/> is set to false.
+    ''' </param>
+    ''' <returns></returns>
+    <ExportAPI("from_arguments_json")>
+    Public Function fromArgumentsJSON(json_str As String, Optional parse_single As Boolean = True) As IArgumentSet
+        If parse_single Then
+            Return MRMArguments.FromJSON(json_str)
+        Else
+            Return MRMArgumentSet.FromJSON(json_str)
+        End If
+    End Function
+
+    ''' <summary>
     ''' Create argument object for run MRM quantification.
     ''' </summary>
     ''' <param name="tolerance"></param>
@@ -183,17 +335,20 @@ Module MRMkit
     ''' <returns></returns>
     <ExportAPI("MRM.arguments")>
     <RApiReturn(GetType(MRMArguments))>
-    Public Function MRMarguments(Optional tolerance As Object = "da:0.3",
-                                 Optional timeWindowSize# = 5,
-                                 Optional angleThreshold# = 5,
-                                 Optional baselineQuantile# = 0.65,
-                                 Optional integratorTicks% = 5000,
-                                 Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
-                                 <RRawVectorArgument>
-                                 Optional peakwidth As Object = "8,30",
-                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
-                                 Optional sn_threshold As Double = 3,
-                                 Optional env As Environment = Nothing) As Object
+    Public Function new_MRMarguments(Optional tolerance As Object = "da:0.3",
+                                     Optional timeWindowSize# = 5,
+                                     Optional angleThreshold# = 5,
+                                     Optional baselineQuantile# = 0.65,
+                                     Optional integratorTicks% = 5000,
+                                     Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
+                                     <RRawVectorArgument>
+                                     Optional peakwidth As Object = "8,30",
+                                     Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
+                                     Optional sn_threshold As Double = 3,
+                                     Optional joint_peaks As Boolean = True,
+                                     Optional time_shift_method As Boolean = False,
+                                     Optional percentage_threshold As Boolean = False,
+                                     Optional env As Environment = Nothing) As Object
 
         Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, Nothing)
         Dim mzErrors = Math.getTolerance(tolerance, env)
@@ -213,7 +368,10 @@ Module MRMkit
             integratorTicks:=integratorTicks,
             peakAreaMethod:=peakAreaMethod,
             peakwidth:=_peakwidth.TryCast(Of DoubleRange),
-            sn_threshold:=sn_threshold
+            sn_threshold:=sn_threshold,
+            joint_peaks:=joint_peaks,
+            time_shift_method:=time_shift_method,
+            percentage_threshold:=percentage_threshold
         )
     End Function
 
@@ -228,7 +386,7 @@ Module MRMkit
         Dim ionPairs As IonPair() = REnv.asVector(Of IonPair)(ions)
 
         If args Is Nothing Then
-            args = MRM.MRMArguments.GetDefaultArguments
+            args = MRMArguments.GetDefaultArguments
         End If
 
         Return RTAlignmentProcessor.AcquireRT(references, ionPairs, args)
@@ -237,26 +395,100 @@ Module MRMkit
     ''' <summary>
     ''' Extract ion peaks
     ''' </summary>
-    ''' <param name="mzML">A mzML raw file</param>
-    ''' <param name="ionpairs">metabolite targets</param>
-    ''' <returns></returns>
+    ''' <param name="mzML">the file path to a mzML raw data file.</param>
+    ''' <param name="ionpairs">metabolite targets, value could be a vector of the <see cref="IonPair"/> or vector of the <see cref="Models.IsomerismIonPairs"/> clr object.</param>
+    ''' <returns>vector of the ion pair corresponding xic data</returns>
     <ExportAPI("extract.ions")>
     <RApiReturn(GetType(IonChromatogram))>
-    Public Function ExtractIonData(mzML$, ionpairs As IonPair(), Optional tolerance As Object = "ppm:20", Optional env As Environment = Nothing) As Object
-        Dim mzErrors = Math.getTolerance(tolerance, env)
+    Public Function ExtractIonData(mzML$,
+                                   <RRawVectorArgument>
+                                   ionpairs As Object,
+                                   Optional tolerance As Object = "ppm:20",
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim mzErrors = Math.getTolerance(tolerance, env, supressErr:=True)
 
         If mzErrors Like GetType(Message) Then
-            Return mzErrors.TryCast(Of Message)
+            If TypeOf tolerance Is MRMArguments Then
+                mzErrors = DirectCast(tolerance, MRMArguments).tolerance
+            ElseIf TypeOf tolerance Is MRMArgumentSet Then
+                mzErrors = DirectCast(tolerance, MRMArgumentSet).globals.tolerance
+            Else
+                Return mzErrors.TryCast(Of Message)
+            End If
+        End If
+
+        Dim ions As IsomerismIonPairs()
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of IsomerismIonPairs)(ionpairs, env, suppress:=True)
+
+        If pull.isError Then
+            pull = pipeline.TryCreatePipeline(Of IonPair)(ionpairs, env)
+
+            If pull.isError Then
+                Return pull.getError
+            End If
+
+            ions = IonPair _
+                .GetIsomerism(pull.populates(Of IonPair)(env).ToArray, mzErrors) _
+                .ToArray
+        Else
+            ions = pull.populates(Of IsomerismIonPairs)(env).ToArray
         End If
 
         Return MRMSamples.ExtractIonData(
-            ion_pairs:=IonPair.GetIsomerism(ionpairs, mzErrors),
+            ion_pairs:=ions,
             mzML:=mzML,
             assignName:=Function(i) i.accession,
             tolerance:=mzErrors
         ).DoCall(Function(data)
                      Return New vector With {.data = data}
                  End Function)
+    End Function
+
+    ''' <summary>
+    ''' extract XIC data via a given MRM ion pair data
+    ''' </summary>
+    ''' <param name="mzML">the file path to the mzML rawdata file.</param>
+    ''' <param name="q1">the precursor ion m/z</param>
+    ''' <param name="q3">the product ion m/z</param>
+    ''' <param name="tolerance">the mass tolerance error for matches the ion data from the rawdata file</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("extract_mrm")>
+    <RApiReturn(GetType(IonChromatogram))>
+    Public Function ExtractIonData(mzML As String, q1 As Double, q3 As Double,
+                                   Optional tolerance As Object = "da:0.1",
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim mzErrors = Math.getTolerance(tolerance, env)
+
+        If mzErrors Like GetType(Message) Then
+            Return mzErrors.TryCast(Of Message)
+        ElseIf Not mzML.FileExists(ZERO_Nonexists:=True) Then
+            Return RInternal.debug.stop($"the given file path({mzML.GetFullPath}) to the MRM raw data file is not exists on your local file system!", env)
+        End If
+
+        Return MRMSamples.ExtractIonData(mzML, New IonPair(q1, q3), mzErrors)
+    End Function
+
+    ''' <summary>
+    ''' Extract all ion pairs information from the given rawdata file
+    ''' </summary>
+    ''' <param name="mzML">
+    ''' the file path to the given mzML rawdata file
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' a collection of the MRM ion pairs data objects that extract from the precursor/product isolation window target ``m/z`` value.
+    ''' </returns>
+    <ExportAPI("extract_ionpairs")>
+    <RApiReturn(GetType(IonPair))>
+    Public Function ExtractIonPairs(mzML As String, Optional env As Environment = Nothing) As Object
+        If Not mzML.FileExists(ZERO_Nonexists:=True) Then
+            Return RInternal.debug.stop($"the given file path({mzML.GetFullPath}) to the MRM raw data file is not exists on your local file system!", env)
+        End If
+
+        Return New String() {mzML}.GetAllFeatures
     End Function
 
     ''' <summary>
@@ -285,6 +517,9 @@ Module MRMkit
                                    Optional bsplineDegree% = 2,
                                    Optional sn_threshold As Double = 3,
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
+                                   Optional joint_peaks As Boolean = True,
+                                   Optional time_shift_method As Boolean = False,
+                                   Optional percentage_threshold As Boolean = False,
                                    Optional env As Environment = Nothing) As Object
 
         If TPAFactors Is Nothing Then
@@ -310,7 +545,10 @@ Module MRMkit
                 integratorTicks:=integratorTicks,
                 peakAreaMethod:=peakAreaMethod,
                 peakwidth:=_peakwidth,
-                sn_threshold:=sn_threshold
+                sn_threshold:=sn_threshold,
+                joint_peaks:=joint_peaks,
+                time_shift_method:=time_shift_method,
+                percentage_threshold:=percentage_threshold
             )
         ).ToArray
     End Function
@@ -335,7 +573,10 @@ Module MRMkit
 
     <ExportAPI("isomerism.ion_pairs")>
     <RApiReturn(GetType(IsomerismIonPairs))>
-    Public Function IsomerismIonPairs(ions As IonPair(), Optional tolerance$ = "ppm:20", Optional env As Environment = Nothing) As Object
+    Public Function IsomerismIonPairs(ions As IonPair(),
+                                      Optional tolerance$ = "ppm:20",
+                                      Optional env As Environment = Nothing) As Object
+
         Dim mzErrors = Math.getTolerance(tolerance, env)
 
         If mzErrors Like GetType(Message) Then
@@ -348,11 +589,16 @@ Module MRMkit
     ''' <summary>
     ''' Convert any compatibale type as the ion pairs data object for MRM target selected.
     ''' </summary>
-    ''' <param name="mz"></param>
+    ''' <param name="mz">
+    ''' should be a set of the <see cref="MSLIon"/> object data.
+    ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' a collection of the mzkit clr ion pair data object. this MRM ion pair data object could 
+    ''' be cast to dataframe vai the ``as.data.frame`` conversion.
+    ''' </returns>
     <ExportAPI("as.ion_pairs")>
-    <RApiReturn(GetType(IonPair()))>
+    <RApiReturn(GetType(IonPair))>
     Public Function asIonPair(<RRawVectorArgument> mz As Object, Optional env As Environment = Nothing) As Object
         If mz Is Nothing Then
             Return Nothing
@@ -503,7 +749,7 @@ Module MRMkit
                                    Optional env As Environment = Nothing) As Object
 
         If args Is Nothing Then
-            Return Internal.debug.stop("the required MRM argument can not be nothing!", env)
+            Return RInternal.debug.stop("the required MRM argument can not be nothing!", env)
         End If
 
         Return WiffRaw.ScanPeakTable(
@@ -512,6 +758,45 @@ Module MRMkit
             rtshifts:=rtshifts,
             args:=args
         )
+    End Function
+
+    ''' <summary>
+    ''' Extract the peak area data from the given xic data object.
+    ''' 
+    ''' This function is used to extract the peak area data from the given xic data object, 
+    ''' which is usually a result of the <see cref="ExtractIonData"/> function.
+    ''' </summary>
+    ''' <param name="xic"></param>
+    ''' <param name="args">the arguments for peak finding</param>
+    ''' <param name="env"></param>
+    ''' <returns>A vector of the <see cref="IonTPA"/> mzkit clr object, and the ``rtshifts`` tuple
+    ''' list data is tagged inside this vector attributes data.</returns>
+    ''' <example>
+    ''' # parse the arguments for peak finding from
+    ''' # a given json file
+    ''' let args = MRMLinear::from_arguments_json(readText("/path/to/arguments.json"));
+    ''' let ions = read.ion_pairs("/path/to/ions.csv") |> isomerism.ion_pairs(tolerance = "ppm:20");
+    ''' # extract xic data for each ion pairs
+    ''' let xic = extract.ions("/path/to/demo.mzML", ionpairs = ions, tolerance = "da:0.01");
+    ''' # make peak finding from each xic data
+    ''' let peaks = sapply(xic, ion -> MRM.peakarea(ion, args));
+    ''' 
+    ''' print(as.data.frame(peaks));
+    ''' </example>
+    <ExportAPI("MRM.peakarea")>
+    <RApiReturn(GetType(IonTPA))>
+    Public Function ScanPeakTable3(<RRawVectorArgument> xic As Object, args As IArgumentSet, Optional env As Environment = Nothing) As Object
+        Dim rtshifts As New Dictionary(Of String, Double)
+        Dim pullIons As pipeline = pipeline.TryCreatePipeline(Of IonChromatogram)(xic, env)
+
+        If pullIons.isError Then
+            Return pullIons.getError
+        End If
+
+        Dim peaks As IonTPA() = pullIons.populates(Of IonChromatogram)(env).ScanTPA(rtshifts, args).ToArray
+        Dim out As vector = vector.asVector(peaks)
+        out.setAttribute("rtshifts", rtshifts)
+        Return out
     End Function
 
     ''' <summary>
@@ -543,6 +828,9 @@ Module MRMkit
                                   <RRawVectorArgument>
                                   Optional peakwidth As Object = "8,30",
                                   Optional sn_threshold As Double = 3,
+                                  Optional joint_peaks As Boolean = True,
+                                  Optional time_shift_method As Boolean = False,
+                                  Optional percentage_threshold As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
 
         Dim mzErrors = Math.getTolerance(tolerance, env)
@@ -573,7 +861,10 @@ Module MRMkit
                 integratorTicks:=0,
                 peakAreaMethod:=peakAreaMethod,
                 peakwidth:=_peakwidth,
-                sn_threshold:=sn_threshold
+                sn_threshold:=sn_threshold,
+                joint_peaks:=joint_peaks,
+                time_shift_method:=time_shift_method,
+                percentage_threshold:=percentage_threshold
             ),
             env:=env
         )
@@ -589,12 +880,12 @@ Module MRMkit
                                 Optional env As Environment = Nothing) As Object
 
         If wiffConverts Is Nothing Then
-            Return Internal.debug.stop({
+            Return RInternal.debug.stop({
                 "the given wiff raw file list is nothing or empty!",
                 "argument: " & NameOf(wiffConverts)
             }, env)
         ElseIf args Is Nothing Then
-            Return Internal.debug.stop("the required MRM argument can not be nothing!", env)
+            Return RInternal.debug.stop("the required MRM argument can not be nothing!", env)
         End If
 
         If rtshifts Is Nothing Then
@@ -647,6 +938,9 @@ Module MRMkit
                                 Optional peakwidth As Object = "8,30",
                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                 Optional sn_threshold As Double = 3,
+                                Optional joint_peaks As Boolean = True,
+                                Optional time_shift_method As Boolean = False,
+                                Optional percentage_threshold As Boolean = False,
                                 Optional env As Environment = Nothing) As Object
 
         Dim mzErrors = Math.getTolerance(tolerance, env)
@@ -698,7 +992,10 @@ Module MRMkit
                 integratorTicks:=0,
                 peakAreaMethod:=peakAreaMethod,
                 peakwidth:=_peakwidth,
-                sn_threshold:=sn_threshold
+                sn_threshold:=sn_threshold,
+                joint_peaks:=joint_peaks,
+                time_shift_method:=time_shift_method,
+                percentage_threshold:=percentage_threshold
             ),
             env:=env
         )
@@ -760,7 +1057,7 @@ Module MRMkit
     <RApiReturn(GetType(QuantifyScan))>
     Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(), Optional env As Environment = Nothing) As Object
         If model.Any(Function(line) line.arguments Is Nothing) Then
-            Return Internal.debug.stop("part of the reference line missing argument value!", env)
+            Return RInternal.debug.stop("part of the reference line missing argument value!", env)
         End If
 
         Dim scan As New QuantifyScan
@@ -800,6 +1097,9 @@ Module MRMkit
                                    Optional peakwidth As Object = "8,30",
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                    Optional sn_threshold As Double = 3,
+                                   Optional joint_peaks As Boolean = True,
+                                   Optional time_shift_method As Boolean = False,
+                                   Optional percentage_threshold As Boolean = False,
                                    Optional env As Environment = Nothing) As Object
 
         Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, "8,30")
@@ -824,7 +1124,10 @@ Module MRMkit
                 integratorTicks:=0,
                 peakAreaMethod:=peakAreaMethod,
                 peakwidth:=_peakwidth,
-                sn_threshold:=sn_threshold
+                sn_threshold:=sn_threshold,
+                joint_peaks:=joint_peaks,
+                time_shift_method:=time_shift_method,
+                percentage_threshold:=percentage_threshold
             ),
             rtshifts:=New Dictionary(Of String, Double)
         )

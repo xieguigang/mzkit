@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdded4075d4abeb79b5bd68037fefa3a, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\Models\IonTPA.vb"
+﻿#Region "Microsoft.VisualBasic::b42a2d93e27c9855228cbd8efb369dd9, mzmath\TargetedMetabolomics\LinearQuantitative\Models\IonTPA.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 16
-    ' Comment Lines: 3
-    '   Blank Lines: 5
-    '     File Size: 798 B
+    '   Total Lines: 27
+    '    Code Lines: 19 (70.37%)
+    ' Comment Lines: 3 (11.11%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 5 (18.52%)
+    '     File Size: 916 B
 
 
     '     Class IonTPA
     ' 
     '         Properties: area, baseline, maxPeakHeight, name, peakROI
-    '                     rt
+    '                     refer_rt, rt, sn, source
     ' 
     '         Function: ToString
     ' 
@@ -58,7 +60,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace LinearQuantitative
 
@@ -68,14 +70,17 @@ Namespace LinearQuantitative
     Public Class IonTPA : Implements INamedValue
 
         Public Property name As String Implements INamedValue.Key
+        Public Property refer_rt As Double
         Public Property rt As Double
         Public Property peakROI As DoubleRange
         Public Property area As Double
         Public Property baseline As Double
         Public Property maxPeakHeight As Double
+        Public Property sn As Double
+        Public Property source As String
 
         Public Overrides Function ToString() As String
-            Return $"{name}[{peakROI.Min}, {stdNum.Round(peakROI.Max)}] = {area}"
+            Return $"{name}[{peakROI.Min}, {std.Round(peakROI.Max)}] = {area}"
         End Function
 
     End Class

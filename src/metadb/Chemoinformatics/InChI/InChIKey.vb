@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5f6f7d55a1234b24b3080d548b92e27, mzkit\src\metadb\Chemoinformatics\InChI\InChIKey.vb"
+﻿#Region "Microsoft.VisualBasic::acc8900858079c329fdd2455494c9e50, metadb\Chemoinformatics\InChI\InChIKey.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 54
-    '    Code Lines: 39
-    ' Comment Lines: 3
-    '   Blank Lines: 12
+    '    Code Lines: 39 (72.22%)
+    ' Comment Lines: 3 (5.56%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 12 (22.22%)
     '     File Size: 1.39 KB
 
 
@@ -58,7 +60,7 @@
 
 Imports Microsoft.VisualBasic.Text
 
-Namespace IUPAC.InChILayers
+Namespace IUPAC.InChI
 
     ''' <summary>
     ''' ``AAAAAAAAAAAAAA-BBBBBBBBFV-P``

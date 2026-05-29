@@ -18,8 +18,11 @@ declare namespace math {
     *  profile and centroid in Mass Spectrometry?
     *  
     *  1. Profile means the continuous wave form in a mass spectrum.
+    *  
     *    + Number of data points Is large.
+    *    
     *  2. Centroid means the peaks in a profile data Is changed to bars.
+    *  
     *    + location of the bar Is center of the profile peak.
     *    + height of the bar Is area of the profile peak.
     * 
@@ -37,11 +40,14 @@ declare namespace math {
      * + default value Is ``0.05``.
      * @param parallel 
      * + default value Is ``false``.
+     * @param aggregate default is get the max intensity value.
+     * 
+     * + default value Is ``null``.
      * @param env 
      * + default value Is ``null``.
      * @return Peaks data in centroid mode or a new m/z vector in centroid.
    */
-   function centroid(ions: any, tolerance?: any, intoCutoff?: number, parallel?: boolean, env?: object): object|object|number;
+   function centroid(ions: any, tolerance?: any, intoCutoff?: number, parallel?: boolean, aggregate?: object, env?: object): object|object|number;
    /**
     * Create a chromatogram data from a dataframe object
     * 
@@ -72,11 +78,23 @@ declare namespace math {
    }
    module cosine {
       /**
-        * @param tolerance default value Is ``'da:0.3'``.
-        * @param intocutoff default value Is ``0.05``.
-        * @param env default value Is ``null``.
+       * pairwise alignment of the spectrum peak set
+       * 
+       * 
+        * @param query a spectrum set of the sample query input.
+        * @param ref a spectrum set of the reference library
+        * @param tolerance the ion m/z mass tolerance value for make the peak alignment
+        * 
+        * + default value Is ``'da:0.3'``.
+        * @param intocutoff spectrum peak cutoff by relative intensity
+        * 
+        * + default value Is ``0.05``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+        * @return a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml.AlignmentOutput`` from the pairwise alignment between the query and reference.
       */
-      function pairwise(query: any, ref: any, tolerance?: any, intocutoff?: number, env?: object): any;
+      function pairwise(query: any, ref: any, tolerance?: any, intocutoff?: number, env?: object): object;
    }
    /**
     * returns all precursor types for a given libtype
@@ -89,12 +107,47 @@ declare namespace math {
     * evaluate all exact mass for all known precursor type.
     * 
     * 
-     * @param mz -
-     * @param mode -
+     * @param mz a single ion m/z value.
+     * @param mode the ion polarity mode ``+/-`` for evaluate all kind of 
+     *  precursor type under the specific polarity mode, or a vector of the 
+     *  @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType.MzCalculator`` precursor type model which is generates from 
+     *  the ``math::precursor_types`` function.
      * 
      * + default value Is ``'+'``.
+     * @param env 
+     * + default value Is ``null``.
+     * @return a collection of the exact mass evaluation result, could be cast
+     *  to dataframe via ``as.data.frame`` function.
    */
-   function exact_mass(mz: number, mode?: any): object;
+   function exact_mass(mz: number, mode?: any, env?: object): object;
+   /**
+    * find precursor adducts type for a given mass and the corresponding precursor mz
+    * 
+    * 
+     * @param mass the exact mass value
+     * @param mz the m/z value from the ion, usually be the mz value from the xcms peaktable.
+     * @param libtype the ion mode polarity value of the adducts for matches, value could be an integer value [1,-1].
+     *  and also this parameter value could be a set of the precursor adducts type character vector 
+     *  for do the data matches job.
+     * 
+     * + default value Is ``1``.
+     * @param da -
+     * 
+     * + default value Is ``0.3``.
+     * @param safe 
+     * + default value Is ``false``.
+     * @param env 
+     * + default value Is ``null``.
+     * @return a matched adducts result, for no matched data, a details error message will be returns.
+     *  generally, the result tuple list contains the slot data:
+     *  
+     *  1. precursor_type: the result adducts type that could be used for matches the given mass and mz value
+     *  2. error: the mass error in unit delta dalton between the given mz and the theoretical m/z value that evaluated from the given mass and the matched adducts type.
+     *  3. theoretical: the theoretical m/z value that evaluated from the given mass and the matched adducts type.
+     *  4. ppm: the mass ppm error between the given mz and the theoretical m/z value that evaluated from the given mass and the matched adducts type.
+     *  5. message: usually be the error message.
+   */
+   function find_precursor(mass: number, mz: number, libtype?: any, da?: number, safe?: boolean, env?: object): object;
    /**
     * Extract an intensity vector based on a given peak index
     * 
@@ -144,7 +197,7 @@ declare namespace math {
      * @param tolerance default value Is ``'da:0.3'``.
      * @param env default value Is ``null``.
    */
-   function jaccard(query: number, ref: number, tolerance?: any, env?: object): any;
+   function jaccard(query: number, ref: number, tolerance?: any, env?: object): number;
    /**
     * search spectrum via the jaccard index method
     * 
@@ -158,7 +211,31 @@ declare namespace math {
      * 
      * + default value Is ``null``.
    */
-   function jaccardSet(query: number, ref: number, tolerance?: any, env?: object): any;
+   function jaccardSet(query: number, ref: number, tolerance?: any, env?: object): object;
+   /**
+    * mapping sample id to sample names
+    * 
+    * 
+     * @param x the sample id is used as the sample identifier
+     * @param samples the mapping of sample id to sample name
+     * @return the peaktable that use the sample name as the sample identifier.
+   */
+   function map_samplenames(x: object, samples: object): object;
+   /**
+    * merge all peakset tables into one peaktable object
+    * 
+    * > this function merge two peaktable directly via the unique id reference
+    * 
+     * @param tables -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function merge_tables(tables: any, env?: object): object;
+   /**
+     * @param env default value Is ``null``.
+   */
+   function mrm_array(alignments: any, env?: object): any;
    /**
     * evaluate all m/z for all known precursor type.
     * 
@@ -172,17 +249,21 @@ declare namespace math {
      *  4. a list of the mz calculator object and a list of corresponding mz value will be evaluated.
      * 
      * + default value Is ``'+'``.
+     * @param unsafe 
+     * + default value Is ``true``.
      * @param env 
      * + default value Is ``null``.
    */
-   function mz(mass: number, mode?: any, env?: object): object|number;
+   function mz(mass: number, mode?: any, unsafe?: boolean, env?: object): object|number;
    /**
     * Create a peak index
     * 
     * 
      * @param mz A numeric vector of the peak m/z vector
+     * @param win_size 
+     * + default value Is ``1``.
    */
-   function mz_index(mz: number): object;
+   function mz_index(mz: any, win_size?: number): object;
    /**
     * normalized the peak intensity data, do [0,1] scaled.
     * 
@@ -242,12 +323,57 @@ declare namespace math {
     * create precursor type calculator
     * 
     * 
-     * @param types -
+     * @param types a character vector of the precursor type symbols, example as ``[M+H]+``, etc.
+     * @param unsafe this parameter indicates that how the function handling of the string parser error when the given string value is empty:
+     *  
+     *  1. for unsafe, an exception will be throw
+     *  2. for unsafe is false, corresponding null value will be generated.
+     * 
+     * + default value Is ``true``.
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return a collection of the ion precursor adducts object.
    */
-   function precursor_types(types: any, env?: object): any;
+   function precursor_types(types: any, unsafe?: boolean, env?: object): object;
+   module preprocessing {
+      /**
+        * @param scale default value Is ``100000000``.
+        * @param k default value Is ``3``.
+      */
+      function knn(x: object, scale?: number, k?: object): object;
+   }
+   /**
+    * evaluate of the adduct annotation ranking score
+    * 
+    * 
+     * @param formula -
+     * @param adducts -
+     * @param max_score 
+     * + default value Is ``10``.
+     * @param orders 
+     * + default value Is ``null``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+     * @return A ranking score numeric vector
+   */
+   function rank_adducts(formula: any, adducts: any, max_score?: number, orders?: any, env?: object): number;
+   /**
+    * removes the missing peaks
+    * 
+    * 
+     * @param x -
+     * @param sampleinfo a sample info data vector for provides the sample group information about each sample. 
+     *  if this parameter value is omit missing then the missing feature will be checked across all sample files, 
+     *  otherwise the missing will be check across the multiple sample groups
+     * 
+     * + default value Is ``null``.
+     * @param percent the missing percentage threshold
+     * 
+     * + default value Is ``0.5``.
+   */
+   function removes_missing(x: object, sampleinfo?: object, percent?: number): object;
    /**
     * Do resample of the chromatogram data
     * 
@@ -261,7 +387,7 @@ declare namespace math {
      * @param env 
      * + default value Is ``null``.
    */
-   function resample(TIC: object, dt?: number, aggregate?: object, env?: object): any;
+   function resample(TIC: object, dt?: number, aggregate?: any, env?: object): any;
    /**
     * reorder scan points into a sequence for downstream data analysis
     * 
@@ -277,7 +403,7 @@ declare namespace math {
      * 
      * + default value Is ``null``.
    */
-   function sequenceOrder(scans: any, mzwidth?: any, rtwidth?: number, env?: object): any;
+   function sequenceOrder(scans: any, mzwidth?: any, rtwidth?: number, env?: object): object;
    /**
     * Search spectra with entropy similarity
     * 
@@ -306,7 +432,7 @@ declare namespace math {
      * 
      * + default value Is ``null``.
    */
-   function spectral_entropy(x: object, ref?: object, tolerance?: any, intocutoff?: number, env?: object): any;
+   function spectral_entropy(x: object, ref?: object, tolerance?: any, intocutoff?: number, env?: object): number;
    module spectrum {
       /**
        * create a delegate function pointer that apply for compares spectrums theirs similarity.
@@ -321,7 +447,8 @@ declare namespace math {
         * @param gt_score -
         * 
         * + default value Is ``0.6``.
-        * @param score_aggregate ``@``T:System.Func`3````
+        * @param score_aggregate A @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.ScoreAggregates`` method, should be a function in clr delegate 
+        *  liked: ``@``T:System.Func`3````.
         * 
         * + default value Is ``null``.
         * @param env 
@@ -354,6 +481,15 @@ declare namespace math {
       function cluster(ms2list: any, compares?: object, tolerance?: any, intocutoff?: number, showReport?: boolean, env?: object): object;
    }
    /**
+    * convert a single spectrum alignment details as dataframe
+    * 
+    * 
+     * @param align -
+     * @param args -
+     * @param env -
+   */
+   function summary_result(align: object, args: object, env: object): any;
+   /**
     * Create tolerance object
     * 
     * 
@@ -363,17 +499,25 @@ declare namespace math {
      * + default value Is ``["ppm","da"]``.
      * @param env 
      * + default value Is ``null``.
+     * @return the value clr type of this function is determine based on 
+     *  the **`method`** parameter value.
    */
-   function tolerance(threshold: number, method?: any, env?: object): any;
+   function tolerance(threshold: number, method?: any, env?: object): object|object;
    /**
    */
    function toMS(isotope: object): object;
    /**
     * makes xcms_id format liked ROI unique id
     * 
+    * > the dimension size of the ion m/z vector and the corresponding scan time vector should be equals.
     * 
-     * @param mz -
-     * @param rt -
+     * @param mz a numeric vector of the ion m/z value
+     * @param rt the corresponding scan time rt vector.
+     * @param prefix 
+     * + default value Is ``''``.
+     * @param env 
+     * + default value Is ``null``.
+     * @return a character vector of the generated unique id based on the given m/z and rt ROI features.
    */
-   function xcms_id(mz: number, rt: number): string;
+   function xcms_id(mz: number, rt: number, prefix?: string, env?: object): string;
 }

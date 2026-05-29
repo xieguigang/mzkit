@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b5c5fd3606501c64fd45ad5c29ef376, mzkit\Rscript\Library\mzkit\annotations\MetaDbXref.vb"
+﻿#Region "Microsoft.VisualBasic::15666ced22d553f28297d9d69262e8f5, Rscript\Library\mzkit_app\src\mzkit\annotations\MetaDbXref.vb"
 
 ' Author:
 ' 
@@ -37,19 +37,22 @@
 
 ' Code Statistics:
 
-'   Total Lines: 726
-'    Code Lines: 566
-' Comment Lines: 68
-'   Blank Lines: 92
-'     File Size: 31.81 KB
+'   Total Lines: 1013
+'    Code Lines: 692 (68.31%)
+' Comment Lines: 201 (19.84%)
+'    - Xml Docs: 91.54%
+' 
+'   Blank Lines: 120 (11.85%)
+'     File Size: 45.13 KB
 
 
 ' Module MetaDbXref
 ' 
-'     Function: AnnotationStream, (+2 Overloads) boundList, cbindMeta, CreateMs1Handler, createTable
-'               excludeFeatures, getMetadata, getVector, loadQueryHits, makeUniqueQuery
-'               ms1Search, ParseLipidName, ParsePrecursorIon, search1, searchMzList
-'               searchMzVector, searchTable
+'     Function: (+2 Overloads) AnnotationStream, AssertMetalIon, AssertOrganic, (+2 Overloads) boundList, cbindMeta
+'               CreateMassSearchIndex, CreateMs1Handler, createTable, excludeFeatures, getMetadata
+'               getVector, loadQueryHits, makeUniqueQuery, ms1Search, ParseLipidName
+'               ParseLipidNameList, ParsePrecursorIon, QueryByMass, searchMz, searchTable
+'               TestMetalIon, VerifyCASNumber
 ' 
 '     Sub: Main
 ' 
@@ -58,18 +61,22 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemistry
-Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemoinformatics.Lipidomics
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -84,24 +91,64 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object.Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' Metabolite annotation database search engine
 ''' </summary>
+''' <remarks>
+''' this library module mainly address of the ion m/z database search problem
+''' </remarks>
 <Package("metadb")>
 Module MetaDbXref
 
     Sub Main()
         Call makeDataframe.addHandler(GetType(MzQuery()), AddressOf createTable)
+        Call makeDataframe.addHandler(GetType(MzSearch()), AddressOf createSearchTable)
     End Sub
 
+    <RGenericOverloads("as.data.frame")>
+    Private Function createSearchTable(query As MzSearch(), args As list, env As Environment) As dataframe
+        Dim df As New dataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = query.Select(Function(a) a.unique_id).ToArray
+        }
+
+        Call df.add(NameOf(MzSearch.unique_id), From q As MzSearch In query Select q.unique_id)
+        Call df.add(NameOf(MzSearch.precursor_type), From q As MzSearch In query Select q.precursor_type)
+        Call df.add(NameOf(MzSearch.intensity), From q As MzSearch In query Select q.intensity)
+        Call df.add(NameOf(MzSearch.mz), From q As MzSearch In query Select q.mz)
+        Call df.add(NameOf(MzSearch.name), From q As MzSearch In query Select q.name)
+        Call df.add(NameOf(MzSearch.mz_ref), From q As MzSearch In query Select q.mz_ref)
+        Call df.add(NameOf(MzSearch.ppm), From q As MzSearch In query Select q.ppm)
+        Call df.add(NameOf(MzSearch.score), From q As MzSearch In query Select q.score)
+
+        Dim allKeys As String() = query _
+            .Select(Function(m)
+                        If m.metadata Is Nothing Then
+                            Return New String() {}
+                        End If
+                        Return DirectCast(m.metadata.Keys, IEnumerable(Of String))
+                    End Function) _
+            .IteratesALL _
+            .Distinct _
+            .ToArray
+
+        For Each key As String In allKeys
+            Call df.add(key, From q As MzSearch In query Select q(key))
+        Next
+
+        Return df
+    End Function
+
+    <RGenericOverloads("as.data.frame")>
     Private Function createTable(query As MzQuery(), args As list, env As Environment) As dataframe
         Dim columns As New Dictionary(Of String, Array) From {
             {NameOf(MzQuery.unique_id), query.Select(Function(q) q.unique_id).ToArray},
             {NameOf(MzQuery.name), query.Select(Function(q) q.name).ToArray},
             {NameOf(MzQuery.mz), query.Select(Function(q) q.mz).ToArray},
             {NameOf(MzQuery.ppm), query.Select(Function(q) q.ppm).ToArray},
-            {NameOf(MzQuery.precursorType), query.Select(Function(q) q.precursorType).ToArray},
+            {NameOf(MzQuery.precursor_type), query.Select(Function(q) q.precursor_type).ToArray},
             {NameOf(MzQuery.score), query.Select(Function(q) q.score).ToArray}
         }
 
@@ -112,10 +159,10 @@ Module MetaDbXref
     End Function
 
     ''' <summary>
-    ''' 
+    ''' A general method for build exact mass search index
     ''' </summary>
     ''' <param name="massSet"></param>
-    ''' <param name="type"></param>
+    ''' <param name="type">the clr type description string of the elements in the given <paramref name="massSet"/> collection</param>
     ''' <param name="tolerance"></param>
     ''' <param name="env"></param>
     ''' <returns>A simple mass index search engine object instance</returns>
@@ -131,13 +178,13 @@ Module MetaDbXref
         Dim mzdiff = Math.getTolerance(tolerance, env, [default]:="da:0.01")
 
         If type Is Nothing Then
-            Return Internal.debug.stop("the required type information could not be nothing!", env)
+            Return RInternal.debug.stop("the required type information could not be nothing!", env)
         End If
         If indexVal Is Nothing Then
-            Return Internal.debug.stop({$"the given type information({type}) could not be resolve in current runtime session!"}, env)
+            Return RInternal.debug.stop({$"the given type information({type}) could not be resolve in current runtime session!"}, env)
         End If
         If Not indexVal.raw.ImplementInterface(Of IExactMassProvider) Then
-            Return Internal.debug.stop($"the given type information({type}) should implements the interface of '{GetType(IExactMassProvider).GetType.FullName}'!", env)
+            Return RInternal.debug.stop($"the given type information({type}) should implements the interface of '{GetType(IExactMassProvider).GetType.FullName}'!", env)
         End If
         If mzdiff Like GetType(Message) Then
             Return mzdiff.TryCast(Of Message)
@@ -163,6 +210,15 @@ Module MetaDbXref
         Return engine
     End Function
 
+    ''' <summary>
+    ''' A general interface method for query the exact mass search index
+    ''' </summary>
+    ''' <param name="search">the mass search index engine</param>
+    ''' <param name="mass">the target exact mass value</param>
+    ''' <remarks>
+    ''' this function will return a list of the matched results, which it could be empty if no matched results.
+    ''' </remarks>
+    ''' <returns></returns>
     <ExportAPI("queryByMass")>
     Public Function QueryByMass(search As IMassSearch, mass As Double) As Object
         Return search.QueryByMass(mass).ToArray(Of Object)
@@ -174,12 +230,37 @@ Module MetaDbXref
     ''' <param name="num"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' based on the <see cref="CASNumber.Verify"/> clr function.
+    ''' </remarks>
     <ExportAPI("verify_cas_number")>
+    <RApiReturn(GetType(Boolean))>
     Public Function VerifyCASNumber(<RRawVectorArgument> num As Object, Optional env As Environment = Nothing) As Object
         Return SMRUCC.Rsharp.EvaluateFramework(Of String, Boolean)(env, num, AddressOf CASNumber.Verify)
     End Function
 
+    ''' <summary>
+    ''' take the valid cas number from a collection of the given id set
+    ''' </summary>
+    ''' <param name="x">the target id collection set for taks the valid cas number.</param>
+    ''' <returns></returns>
+    <ExportAPI("select_cas_number")>
+    Public Function selectCASNumber(<RRawVectorArgument> x As Object) As String()
+        Return CLRVector.asCharacter(x) _
+            .SafeQuery _
+            .Where(Function(id) CASNumber.Verify(id)) _
+            .ToArray
+    End Function
+
+    ''' <summary>
+    ''' Parse the lipid names
+    ''' </summary>
+    ''' <param name="name">a character vector of the lipid names</param>
+    ''' <param name="keepsRaw">keeps the mzkit clr object instead of convert the clr object as R# runtime tuple list value.</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("parseLipidName")>
+    <RApiReturn(GetType(LipidName))>
     Public Function ParseLipidName(<RRawVectorArgument>
                                    name As Object,
                                    Optional keepsRaw As Boolean = False,
@@ -284,7 +365,7 @@ Module MetaDbXref
                                      Optional env As Environment = Nothing) As Object
 
         If id.Length <> name.Length OrElse name.Length <> formula.Length Then
-            Return Internal.debug.stop("vector size of the annotation data should be equals to each other!", env)
+            Return RInternal.debug.stop("vector size of the annotation data should be equals to each other!", env)
         Else
             Return id _
                 .Select(Function(ref, i)
@@ -346,6 +427,7 @@ Module MetaDbXref
     ''' <param name="ion">A precursor type string, example as ``[M+H]``.</param>
     ''' <returns></returns>
     <ExportAPI("precursorIon")>
+    <RApiReturn(GetType(MzCalculator))>
     Public Function ParsePrecursorIon(ion As String) As MzCalculator
         Return ParseMzCalculator(ion, ion.Last)
     End Function
@@ -359,6 +441,7 @@ Module MetaDbXref
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("ms1_handler")>
+    <RApiReturn(GetType(IMzQuery))>
     Public Function CreateMs1Handler(<RRawVectorArgument> compounds As Object,
                                      <RRawVectorArgument> precursors As Object,
                                      Optional tolerance As Object = "ppm:20",
@@ -380,7 +463,7 @@ Module MetaDbXref
         metabolites = pipeline.TryCreatePipeline(Of Compound)(compounds, env, suppress:=True)
 
         If Not metabolites.isError Then
-            Return KEGGHandler.CreateIndex(metabolites.populates(Of Compound)(env), mz1, mzdiff.TryCast(Of Tolerance))
+            Return CompoundSolver.CreateIndex(metabolites.populates(Of Compound)(env), mz1, mzdiff.TryCast(Of Tolerance))
         End If
 
         metabolites = pipeline.TryCreatePipeline(Of MetaboliteAnnotation)(compounds, env, suppress:=True)
@@ -389,13 +472,19 @@ Module MetaDbXref
             Return MSSearch(Of MetaboliteAnnotation).CreateIndex(metabolites.populates(Of MetaboliteAnnotation)(env), mz1, mzdiff)
         End If
 
+        metabolites = pipeline.TryCreatePipeline(Of GenericCompound)(compounds, env, suppress:=True)
+
+        If Not metabolites.isError Then
+            Return MSSearch(Of GenericCompound).CreateIndex(metabolites.populates(Of GenericCompound)(env), mz1, mzdiff)
+        End If
+
         Return metabolites.getError
     End Function
 
     ''' <summary>
     ''' get duplictaed raw annotation results.
     ''' </summary>
-    ''' <param name="engine"></param>
+    ''' <param name="engine">the ms1 search engine which implements the clr interface <see cref="IMzQuery"/></param>
     ''' <param name="mz">
     ''' a m/z numeric vector or a object list that 
     ''' contains the data mapping of unique id to 
@@ -405,35 +494,64 @@ Module MetaDbXref
     ''' only works when <paramref name="unique"/> parameter
     ''' value is set to value TRUE.
     ''' </param>
+    ''' <param name="field_mz">the field name of the ion m/z, options for list and dataframe input.</param>
+    ''' <param name="field_score">the field name of the ion score, options for list and dataframe input.</param>
     ''' <returns></returns>
     <ExportAPI("ms1_search")>
-    <RApiReturn(GetType(MzQuery))>
+    <RApiReturn(GetType(MzSearch))>
     Public Function ms1Search(engine As Object,
                               <RRawVectorArgument>
                               mz As Object,
                               Optional unique As Boolean = False,
                               Optional uniqueByScore As Boolean = False,
+                              Optional field_mz As String = "mz",
+                              Optional field_score As String = "score",
                               Optional env As Environment = Nothing) As Object
 
         Dim queryEngine As IMzQuery
         Dim println = env.WriteLineHandler
 
-        If TypeOf engine Is KEGGHandler Then
-            queryEngine = DirectCast(engine, KEGGHandler)
+        If TypeOf engine Is CompoundSolver Then
+            queryEngine = DirectCast(engine, CompoundSolver)
         ElseIf engine.GetType.ImplementInterface(Of IMzQuery) Then
             queryEngine = engine
         Else
-            Return Internal.debug.stop("invalid handler type!", env)
+            Return RInternal.debug.stop({
+                "invalid handler type!",
+                "type: " & engine.GetType.FullName
+            }, env)
         End If
 
         If mz Is Nothing Then
             Return Nothing
         End If
 
+        Dim opts As ISearchOp
+
         If TypeOf mz Is list Then
-            Return DirectCast(mz, list).searchMzList(queryEngine, unique, uniqueByScore, env)
+            opts = New SearchList(queryEngine, uniqueByScore, field_mz, field_score, env)
+        ElseIf TypeOf mz Is dataframe Then
+            opts = New SearchTable(queryEngine, uniqueByScore, field_mz, field_score, env)
         Else
-            Return CLRVector.asNumeric(mz).searchMzVector(queryEngine, unique, uniqueByScore)
+            opts = New SearchVector(queryEngine, uniqueByScore, field_mz, field_score, env)
+        End If
+
+        If unique Then
+            Return opts.SearchUnique(mz) _
+                .Select(Function(m)
+                            Dim info = queryEngine.GetAnnotation(m.unique_id)
+                            m.metadata!formula = info.formula
+                            Return m
+                        End Function) _
+                .ToArray
+        Else
+            Return opts.SearchAll(mz) _
+                .Select(Function(m)
+                            Dim info = queryEngine.GetAnnotation(m.unique_id)
+                            m.metadata!formula = info.formula
+                            Return m
+                        End Function) _
+                .ToArray
         End If
     End Function
 
@@ -518,7 +636,7 @@ Module MetaDbXref
                 .mz_ref = evalMz,
                 .name = exactMass.ToString("F4"),
                 .ppm = minPpm,
-                .precursorType = matchType.ToString,
+                .precursor_type = matchType.ToString,
                 .score = 1,
                 .unique_id = If(matchId, .name)
             }
@@ -530,121 +648,47 @@ Module MetaDbXref
     ''' <summary>
     ''' get metabolite annotation metadata by a set of given unique reference id
     ''' </summary>
-    ''' <param name="engine"></param>
-    ''' <param name="uniqueId"></param>
+    ''' <param name="engine">A local annotation repository object that should implements of the <see cref="IMetaDb"/> interface.</param>
+    ''' <param name="uniqueId">
+    ''' a set of the unique reference id
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("getMetadata")>
-    Public Function getMetadata(engine As Object, uniqueId As list, Optional env As Environment = Nothing) As Object
-        Dim queryEngine As IMzQuery
+    Public Function getMetadata(engine As Object, <RRawVectorArgument> uniqueId As Object, Optional env As Environment = Nothing) As Object
+        Dim queryEngine As IMetaDb
 
-        If engine.GetType.ImplementInterface(Of IMzQuery) Then
+        If engine.GetType.ImplementInterface(Of IMetaDb) Then
             queryEngine = engine
         Else
-            Return Internal.debug.stop("invalid handler type!", env)
+            Return RInternal.debug.stop("invalid handler type!", env)
         End If
 
-        Return New list With {
-            .slots = uniqueId _
-                .getNames _
-                .ToDictionary(Function(name) name,
-                              Function(name)
-                                  Dim id As String = uniqueId.getValue(Of String)(name, env, [default]:="")
+        If TypeOf uniqueId Is list Then
+            Dim list As list = DirectCast(uniqueId, list)
 
-                                  If id.StringEmpty Then
-                                      Return Nothing
-                                  Else
-                                      Return queryEngine.GetMetadata(id)
-                                  End If
-                              End Function)
-        }
-    End Function
-
-    <Extension>
-    Private Function search1(id As KeyValuePair(Of String, Object),
-                             mz As list,
-                             queryEngine As IMzQuery,
-                             unique As Boolean,
-                             uniqueByScore As Boolean,
-                             env As Environment) As Object
-
-        Dim mzi As Double = mz.getValue(Of Double)(id.Key, env)
-        Dim all As MzQuery() = queryEngine.QueryByMz(mzi).ToArray
-
-        If unique Then
-            If uniqueByScore Then
-                Return all _
-                   .OrderByDescending(Function(d) d.score) _
-                   .FirstOrDefault
-            Else
-                Return all _
-                   .OrderBy(Function(d) d.ppm) _
-                   .FirstOrDefault
-            End If
-        Else
-            Return all
-        End If
-    End Function
-
-    <Extension>
-    Private Function searchMzList(mz As list,
-                                  queryEngine As IMzQuery,
-                                  unique As Boolean,
-                                  uniqueByScore As Boolean,
-                                  env As Environment) As Object
-        Return New list With {
-            .slots = mz.slots _
-                .ToDictionary(Function(id) id.Key,
-                              Function(id)
-                                  Return id.search1(mz, queryEngine, unique, uniqueByScore, env)
-                              End Function)
-        }
-    End Function
-
-    <Extension>
-    Private Function searchMzVector(mz As Double(), queryEngine As IMzQuery, unique As Boolean, uniqueByScore As Boolean) As Object
-        If mz.Length = 1 Then
-            Dim all = queryEngine.QueryByMz(mz(Scan0)).ToArray
-
-            If unique Then
-                If uniqueByScore Then
-                    Return all _
-                        .OrderByDescending(Function(d) d.score) _
-                        .FirstOrDefault
-                Else
-                    Return all.OrderBy(Function(d) d.ppm).FirstOrDefault
-                End If
-            Else
-                Return all
-            End If
-        Else
             Return New list With {
-                .slots = mz _
-                    .Select(Function(mzi, i) (mzi, i)) _
-                    .AsParallel _
-                    .Select(Function(t)
-                                Dim mzi As Double = t.mzi
-                                Dim i As Integer = t.i
-                                Dim result As Object = queryEngine.QueryByMz(mzi).ToArray
+                .slots = list.slots _
+                    .ToDictionary(Function(name) name.Key,
+                                  Function(name)
+                                      Dim id As String = CLRVector.asCharacter(name.Value).DefaultFirst
 
-                                If unique Then
-                                    If uniqueByScore Then
-                                        result = DirectCast(result, MzQuery()) _
-                                            .OrderByDescending(Function(d) d.score) _
-                                            .FirstOrDefault
-                                    Else
-                                        result = DirectCast(result, MzQuery()) _
-                                            .OrderBy(Function(d) d.ppm) _
-                                            .FirstOrDefault
-                                    End If
-                                End If
+                                      If id.StringEmpty Then
+                                          Return Nothing
+                                      Else
+                                          Return queryEngine.GetMetadata(id)
+                                      End If
+                                  End Function)
+            }
+        Else
+            Dim list As String() = CLRVector.asCharacter(uniqueId)
 
-                                Return (mzi.ToString, result, i)
-                            End Function) _
-                    .OrderBy(Function(t) t.i) _
-                    .ToDictionary(Function(mzi) mzi.Item1,
-                                  Function(mzi) As Object
-                                      Return mzi.Item2
+            Return New list With {
+                .slots = list _
+                    .UniqueNames _
+                    .ToDictionary(Function(id) id,
+                                  Function(id)
+                                      Return queryEngine.GetMetadata(id)
                                   End Function)
             }
         End If
@@ -798,8 +842,38 @@ Module MetaDbXref
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("has.metal_ion")>
-    Public Function TestMetaIon(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
+    <RApiReturn(GetType(Boolean))>
+    Public Function TestMetalIon(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
         Return env.EvaluateFramework(Of String, Boolean)(formula, Function(f) MetalIons.HasMetalIon(f))
+    End Function
+
+    ''' <summary>
+    ''' check of the given formula is metal ion or not?
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("is.metal_ion")>
+    <RApiReturn(GetType(Boolean))>
+    Public Function AssertMetalIon(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
+        Return env.EvaluateFramework(Of String, Boolean)(formula, Function(f) MetalIons.IsMetalIon(f))
+    End Function
+
+    ''' <summary>
+    ''' check of the given formula is organic or not?
+    ''' this function will return TRUE if the formula is organic,
+    ''' otherwise it returns FALSE.
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("is.organic")>
+    <RApiReturn(GetType(Boolean))>
+    Public Function AssertOrganic(<RRawVectorArgument> formula As Object,
+                                  Optional strict As Boolean = False,
+                                  Optional env As Environment = Nothing) As Object
+
+        Return env.EvaluateFramework(Of String, Boolean)(formula, Function(f) MetalIons.IsOrganic(f, strict))
     End Function
 
     ''' <summary>
@@ -951,7 +1025,7 @@ Module MetaDbXref
                 {"m/z", mzqueries.getVector(Function(i) i.Value.mz)},
                 {"theoretical_mz", mzqueries.getVector(Function(i) i.Value.mz_ref)},
                 {"ppm", mzqueries.getVector(Function(i) i.Value.ppm)},
-                {"precursor_type", mzqueries.getVector(Function(i) i.Value.precursorType)},
+                {"precursor_type", mzqueries.getVector(Function(i) i.Value.precursor_type)},
                 {"unique_id", mzqueries.getVector(Function(i) i.Value.unique_id)},
                 {"name", mzqueries.getVector(Function(i) i.Value.name)},
                 {"score", mzqueries.getVector(Function(i) i.Value.score)}
@@ -975,13 +1049,13 @@ Module MetaDbXref
     <ExportAPI("cbind.metainfo")>
     Public Function cbindMeta(anno As dataframe, engine As Object, Optional env As Environment = Nothing) As Object
         If Not anno.hasName("unique_id") Then
-            Return Internal.debug.stop("missing unique id of the metabolite annotation result!", env)
+            Return RInternal.debug.stop("missing unique id of the metabolite annotation result!", env)
         End If
 
         If engine Is Nothing Then
             env.AddMessage("the required ms annotation engine is nothing!", MSG_TYPES.WRN)
             Return anno
-        ElseIf TypeOf engine Is KEGGHandler Then
+        ElseIf TypeOf engine Is CompoundSolver Then
             Throw New NotImplementedException
         ElseIf TypeOf engine Is MSSearch(Of LipidMaps.MetaData) Then
             Dim data As LipidMaps.MetaData() = DirectCast(anno!unique_id, String()) _
@@ -1013,18 +1087,33 @@ Module MetaDbXref
 
             Return anno
         Else
-            Return Message.InCompatibleType(GetType(KEGGHandler), engine.GetType, env)
+            Return Message.InCompatibleType(GetType(CompoundSolver), engine.GetType, env)
         End If
     End Function
 
+    ''' <summary>
+    ''' cast the given dataframe as the ion feature annotation result
+    ''' </summary>
+    ''' <param name="x">
+    ''' a dataframe of the ion annotation data that required of the data fields:
+    ''' 
+    ''' 1. unique_id: metabolite reference id
+    ''' 2. name: metabolite name
+    ''' 3. mz: target ion feature m/z value
+    ''' 4. ppm: the ppm error between the sample m/z and evaluated mz valuefrom the exact mass
+    ''' 5. adducts: ion feature adducts type for the annotation
+    ''' 6. score: the ion annotation score for the result.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("load_asQueryHits")>
     Public Function loadQueryHits(x As dataframe, Optional env As Environment = Nothing) As MzQuery()
         'unique_id,name,mz,ppm,precursorType,score
-        Dim unique_id As String() = CLRVector.asCharacter(x.getColumnVector("unique_id"))
+        Dim unique_id As String() = CLRVector.asCharacter(x.getBySynonym("", "id", "ID", "unique_id"))
         Dim name As String() = CLRVector.asCharacter(x.getColumnVector("name"))
         Dim mz As Double() = CLRVector.asNumeric(x.getColumnVector("mz"))
         Dim ppm As Double() = CLRVector.asNumeric(x.getColumnVector("ppm"))
-        Dim precursorType As String() = CLRVector.asCharacter(x.getColumnVector("precursorType"))
+        Dim precursorType As String() = CLRVector.asCharacter(x.getBySynonym("adducts", "precursor_type", "precursorType"))
         Dim score As Double() = CLRVector.asNumeric(x.getColumnVector("score"))
 
         Return unique_id _
@@ -1035,7 +1124,7 @@ Module MetaDbXref
                             .mz_ref = mz(i),
                             .name = name(i),
                             .ppm = ppm(i),
-                            .precursorType = precursorType(i),
+                            .precursor_type = precursorType(i),
                             .score = score(i)
                         }
                     End Function) _

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0391611c8a80530eb641c7aa23638cae, mzkit\src\assembly\ThermoRawFileReader\Enums\IntensityCutoffTypeConstants.vb"
+﻿#Region "Microsoft.VisualBasic::44e991f3db86104904d71074e774a24a, assembly\ThermoRawFileReader\Enums\IntensityCutoffTypeConstants.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 21
-    '    Code Lines: 6
-    ' Comment Lines: 13
-    '   Blank Lines: 2
-    '     File Size: 600 B
+    '    Code Lines: 6 (28.57%)
+    ' Comment Lines: 13 (61.90%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 2 (9.52%)
+    '     File Size: 621 B
 
 
     ' Enum IntensityCutoffTypeConstants
@@ -58,7 +60,7 @@
 ''' <summary>
 ''' Intensity Cutoff Types
 ''' </summary>
-''' <remarks>Used with <see cref="XRawFileIO.mXRawFile"/> functions in <see cref="XRawFileIO.GetScanData2D"/> and <see cref="XRawFileIO.GetScanDataSumScans"/></remarks>
+''' <remarks>Used with <see cref="XcaliburRawFileIO.mXRawFile"/> functions in <see cref="XcaliburRawFileIO.GetScanData2D"/> and <see cref="XcaliburRawFileIO.GetScanDataSumScans"/></remarks>
 <CLSCompliant(True)>
 Public Enum IntensityCutoffTypeConstants
     ''' <summary>

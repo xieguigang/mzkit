@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ea9c61b700695b41f8f8d6f488d0d06, mzkit\src\mzmath\ms2_math-core\Spectra\Models\Trimming\RelativeIntensityCutoff.vb"
+﻿#Region "Microsoft.VisualBasic::1a10094b5380757a10eafb8a4fcdf2ef, mzmath\ms2_math-core\Spectra\Models\Trimming\RelativeIntensityCutoff.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 61
-    '    Code Lines: 39
-    ' Comment Lines: 10
-    '   Blank Lines: 12
-    '     File Size: 1.95 KB
+    '   Total Lines: 63
+    '    Code Lines: 39 (61.90%)
+    ' Comment Lines: 12 (19.05%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 12 (19.05%)
+    '     File Size: 2.13 KB
 
 
     '     Class RelativeIntensityCutoff
@@ -81,12 +83,14 @@ Namespace Spectra
         Protected Overrides Function lowAbundanceTrimming(spectrum() As ms2) As ms2()
             Dim maxInto As Double = -999
 
+            ' get max intensity of the framgents
             For Each fragment As ms2 In spectrum
                 If fragment.intensity > maxInto Then
                     maxInto = fragment.intensity
                 End If
             Next
 
+            ' filter out the fragments that lower than the given threshold
             Return spectrum _
                 .Where(Function(a) (a.intensity / maxInto) >= m_threshold) _
                 .ToArray

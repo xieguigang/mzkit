@@ -1,0 +1,3223 @@
+﻿{
+  "LinkDataSet": {
+    "LinkData": [
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "C537358"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Methylmalonic acidemia",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 1157,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 37,
+            "CooccurrenceScore": 2051,
+            "Article": [
+              {
+                "GenericArticleId": 3880891,
+                "RelevanceScore": 85,
+                "PMID": 37643953,
+                "DOI": "10.3760/cma.j.cn511374-20220621-00417",
+                "PublicationDate": "2023-09-10",
+                "IsReview": false,
+                "Title": "[Analysis of clinical phenotypes and MMACHC gene variants in 65 children with Methylmalonic acidemia and homocysteinemia]",
+                "Author": "Chongfen Chen, Yaodong Zhang, Lili Ge, Lei Liu, Xiaoman Zhang, Shiyue Mei, Shuying Luo",
+                "Journal": "Zhonghua yi xue yi chuan xue za zhi = Zhonghua yixue yichuanxue zazhi = Chinese journal of medical genetics",
+                "Citation": "2023 Sep; 40(9):1086-1092",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "methylmalonic acidemia; methylmalonic aciduria"
+              },
+              {
+                "GenericArticleId": 4041096,
+                "RelevanceScore": 85,
+                "PMID": 37770946,
+                "DOI": "10.1186/s13023-023-02890-4",
+                "PublicationDate": "2023-09-28",
+                "IsReview": false,
+                "Title": "Late-onset cblC defect: clinical, biochemical and molecular analysis",
+                "Author": "Si Ding, Shiying Ling, Lili Liang, Wenjuan Qiu, Huiwen Zhang, Ting Chen, Xia Zhan, Feng Xu, Xuefan Gu, Lianshu Han",
+                "Journal": "Orphanet journal of rare diseases",
+                "Citation": "2023 09; 18(1):306",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "methylmalonic acidemia"
+              },
+              {
+                "GenericArticleId": 5689742,
+                "RelevanceScore": 80,
+                "PMID": 35254746,
+                "DOI": "10.1515/dmpt-2021-0218",
+                "PublicationDate": "2022-09-01",
+                "IsReview": false,
+                "Title": "The markers of the organic acidemias and their ratios in healthy neonates in Serbian population",
+                "Author": "Anđelo Beletić, Aleksandra Tijanić, Petr Chrastina, Tatjana Nikolić, Aleksandar Stefanović, Sanja Stanković",
+                "Journal": "Drug metabolism and personalized therapy",
+                "Citation": "2022 09; 37(3):271-275",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "methylmalonic acidemia"
+              },
+              {
+                "GenericArticleId": 5729724,
+                "RelevanceScore": 80,
+                "PMID": 35361390,
+                "DOI": "10.1016/j.tjog.2022.02.017",
+                "PublicationDate": "2022-03-01",
+                "IsReview": false,
+                "Title": "The genotype analysis and prenatal genetic diagnosis among 244 pedigrees with methylmalonic aciduria in China",
+                "Author": "Shuang Hu, Xiangdong Kong",
+                "Journal": "Taiwanese journal of obstetrics & gynecology",
+                "Citation": "2022 Mar; 61(2):290-298",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "methylmalonic aciduria"
+              },
+              {
+                "GenericArticleId": 6155097,
+                "RelevanceScore": 80,
+                "PMID": 36207831,
+                "DOI": "10.3724/zdxbyxb-2022-0194",
+                "PublicationDate": "2022-06-25",
+                "IsReview": false,
+                "Title": "Clinical characteristics and genotype analysis of five infants with cblX type of methylmalonic acidemia",
+                "Author": "Fei Wang, Lili Liang, Shiying Ling, Yue Yu, Ting Chen, Feng Xu, Zhuwen Gong, Lianshu Han",
+                "Journal": "Zhejiang da xue xue bao. Yi xue ban = Journal of Zhejiang University. Medical sciences",
+                "Citation": "2022 Jun; 51(3):298-305",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "methylmalonic acidemia"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "C536778"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Systemic carnitine deficiency",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 1263,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 28,
+            "CooccurrenceScore": 1537,
+            "Article": [
+              {
+                "GenericArticleId": 2878105,
+                "RelevanceScore": 250,
+                "PMID": 26998483,
+                "DOI": "10.1155/2016/2920108",
+                "PublicationDate": "2016-01-01",
+                "IsReview": false,
+                "Title": "Carnitine and/or Acetylcarnitine Deficiency as a Cause of Higher Levels of Ammonia",
+                "Author": "Cecilia Maldonado, Natalia Guevara, Cecilia Queijo, Raquel González, Pietro Fagiolino, Marta Vázquez",
+                "Journal": "BioMed research international",
+                "Citation": "2016; 2016(?):2920108",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "carnitine deficiency"
+              },
+              {
+                "GenericArticleId": 8413921,
+                "RelevanceScore": 240,
+                "PMID": 8875766,
+                "DOI": "10.1620/tjem.179.101",
+                "PublicationDate": "1996-06-01",
+                "IsReview": false,
+                "Title": "Effect of carnitine administration on glycine metabolism in patients with isovaleric acidemia: significance of acetylcarnitine determination to estimate the proper carnitine dose",
+                "Author": "T Itoh, T Ito, S Ohba, N Sugiyama, K Mizuguchi, S Yamaguchi, K Kidouchi",
+                "Journal": "The Tohoku journal of experimental medicine",
+                "Citation": "1996 Jun; 179(2):101-9",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "carnitine deficiency"
+              },
+              {
+                "GenericArticleId": 4975606,
+                "RelevanceScore": 165,
+                "PMID": 33570912,
+                "DOI": "10.1021/acs.chemrestox.0c00479",
+                "PublicationDate": "2021-05-17",
+                "IsReview": true,
+                "Title": "Neuroprotective Effects of Carnitine and Its Potential Application to Ameliorate Neurotoxicity",
+                "Author": "Leah E Latham, Cheng Wang, Tucker A Patterson, William Slikker, Fang Liu",
+                "Journal": "Chemical research in toxicology",
+                "Citation": "2021 05; 34(5):1208-1222",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "carnitine deficiency"
+              },
+              {
+                "GenericArticleId": 2111778,
+                "RelevanceScore": 150,
+                "PMID": 25527659,
+                "DOI": "10.3945/jn.114.201343",
+                "PublicationDate": "2015-01-01",
+                "IsReview": false,
+                "Title": "In HepG2 cells, coexisting carnitine deficiency masks important indicators of marginal biotin deficiency",
+                "Author": "Anna Bogusiewicz, Gunnar Boysen, Donald M Mock",
+                "Journal": "The Journal of nutrition",
+                "Citation": "2015 Jan; 145(1):32-40",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "carnitine deficiency"
+              },
+              {
+                "GenericArticleId": 8988625,
+                "RelevanceScore": 150,
+                "PMID": 10548966,
+                "DOI": "10.1080/17450399909386157",
+                "PublicationDate": "1999-01-01",
+                "IsReview": true,
+                "Title": "Metabolic functions of L-carnitine and its effects as feed additive in horses. A review",
+                "Author": "A Zeyner, J Harmeyer",
+                "Journal": "Archiv fur Tierernahrung",
+                "Citation": "1999; 52(2):115-38",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "carnitine deficiency"
+              },
+              {
+                "GenericArticleId": 1845070,
+                "RelevanceScore": 145,
+                "PMID": 24798266,
+                "DOI": "10.1007/8904_2014_312",
+                "PublicationDate": "2014-01-01",
+                "IsReview": false,
+                "Title": "Carnitine Profile and Effect of Suppletion in Children with Renal Fanconi Syndrome due to Cystinosis",
+                "Author": "M Besouw, E Cornelissen, D Cassiman, L Kluijtmans, L van den Heuvel, E Levtchenko",
+                "Journal": "JIMD reports",
+                "Citation": "2014; 16(?):25-30",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "carnitine deficiency"
+              },
+              {
+                "GenericArticleId": 13154520,
+                "RelevanceScore": 145,
+                "PMID": 20543534,
+                "DOI": "10.1620/tjem.221.191",
+                "PublicationDate": "2010-07-01",
+                "IsReview": false,
+                "Title": "Carnitine palmitoyltransferase 2 deficiency: the time-course of blood and urinary acylcarnitine levels during initial L-carnitine supplementation",
+                "Author": "Tomohiro Hori, Toshiyuki Fukao, Hironori Kobayashi, Takahide Teramoto, Masaki Takayanagi, Yuki Hasegawa, Tetsuhiko Yasuno, Seiji Yamaguchi, Naomi Kondo",
+                "Journal": "The Tohoku journal of experimental medicine",
+                "Citation": "2010 Jul; 221(3):191-5",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "carnitine deficiency"
+              },
+              {
+                "GenericArticleId": 3865088,
+                "RelevanceScore": 80,
+                "PMID": 37599690,
+                "DOI": "10.3389/fnut.2023.1107768",
+                "PublicationDate": "2023-01-01",
+                "IsReview": false,
+                "Title": "The influence of a maternal vegan diet on carnitine and vitamin B2 concentrations in human milk",
+                "Author": "Hannah G Juncker, Chris H P van den Akker, Pauline L Meerdink, Aniko Korosi, Frédéric M Vaz, Johannes B van Goudoever, Britt J van Keulen",
+                "Journal": "Frontiers in nutrition",
+                "Citation": "2023; 10(?):1107768",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "carnitine deficiency"
+              },
+              {
+                "GenericArticleId": 4587703,
+                "RelevanceScore": 75,
+                "PMID": 32869641,
+                "DOI": "10.1021/acs.jproteome.0c00585",
+                "PublicationDate": "2020-10-02",
+                "IsReview": false,
+                "Title": "Integrative Metabolic and Proteomic Profiling of the Brainstem in Spontaneously Hypertensive Rats",
+                "Author": "Yu Cheng, Dongmei Sun, Bangjie Zhu, Wenbin Zhou, Chunming Lv, Fang Kou, Hai Wei",
+                "Journal": "Journal of proteome research",
+                "Citation": "2020 10; 19(10):4114-4124",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "carnitine deficiency"
+              },
+              {
+                "GenericArticleId": 5432250,
+                "RelevanceScore": 75,
+                "PMID": 34564388,
+                "DOI": "10.3390/metabo11090573",
+                "PublicationDate": "2021-08-25",
+                "IsReview": false,
+                "Title": "Limited Impact of Pivalate-Induced Secondary Carnitine Deficiency on Hepatic Transcriptome and Hepatic and Plasma Metabolome in Nursery Pigs",
+                "Author": "Robert Ringseis, Sarah M Grundmann, Sven Schuchardt, Erika Most, Klaus Eder",
+                "Journal": "Metabolites",
+                "Citation": "2021 Aug; 11(9):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "carnitine deficiency"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D008661"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Metabolism, Inborn Errors",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 14969,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 25,
+            "CooccurrenceScore": 982,
+            "Article": [
+              {
+                "GenericArticleId": 8413921,
+                "RelevanceScore": 240,
+                "PMID": 8875766,
+                "DOI": "10.1620/tjem.179.101",
+                "PublicationDate": "1996-06-01",
+                "IsReview": false,
+                "Title": "Effect of carnitine administration on glycine metabolism in patients with isovaleric acidemia: significance of acetylcarnitine determination to estimate the proper carnitine dose",
+                "Author": "T Itoh, T Ito, S Ohba, N Sugiyama, K Mizuguchi, S Yamaguchi, K Kidouchi",
+                "Journal": "The Tohoku journal of experimental medicine",
+                "Citation": "1996 Jun; 179(2):101-9",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "metabolic disturbance"
+              },
+              {
+                "GenericArticleId": 4154454,
+                "RelevanceScore": 165,
+                "PMID": 38086883,
+                "DOI": "10.1038/s41598-023-49443-0",
+                "PublicationDate": "2023-12-12",
+                "IsReview": false,
+                "Title": "Database screening as a strategy to identify endogenous candidate metabolites to probe and assess mitochondrial drug toxicity",
+                "Author": "Mery Vet George De la Rosa, Dipali Patel, Marc R McCann, Kathleen A Stringer, Gus R Rosania",
+                "Journal": "Scientific reports",
+                "Citation": "2023 12; 13(1):22013",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "inborn errors of metabolism"
+              },
+              {
+                "GenericArticleId": 5539216,
+                "RelevanceScore": 155,
+                "PMID": 34851727,
+                "DOI": "10.1152/ajpregu.00185.2021",
+                "PublicationDate": "2022-01-01",
+                "IsReview": false,
+                "Title": "Sodium dichloroacetate stimulates cardiac mitochondrial metabolism and improves cardiac conduction in the ovine fetus during labor",
+                "Author": "Serene Joseph, Mengchen Li, Sicong Zhang, Lloyd Horne, Peter W Stacpoole, Stephanie E Wohlgemuth, Arthur S Edison, Charles Wood, Maureen Keller-Wood",
+                "Journal": "American journal of physiology. Regulatory, integrative and comparative physiology",
+                "Citation": "2022 01; 322(1):R83-R98",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "metabolic disturbance"
+              },
+              {
+                "GenericArticleId": 4140878,
+                "RelevanceScore": 115,
+                "PMID": 38048898,
+                "DOI": "10.1016/j.clinbiochem.2023.110698",
+                "PublicationDate": "2024-01-01",
+                "IsReview": false,
+                "Title": "Development of a second-tier method for C4, C5 and C2 acylcarnitine analysis in plasma",
+                "Author": "Josko Ivica, Faisal Adam, Lyse Wortel, Teresa Kalika, Heather Pelly, Jeannette Gauthier, Murray Potter",
+                "Journal": "Clinical biochemistry",
+                "Citation": "2024 Jan; 123(?):110698",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "inborn errors of metabolism"
+              },
+              {
+                "GenericArticleId": 6148179,
+                "RelevanceScore": 80,
+                "PMID": 36188883,
+                "DOI": "10.5001/omj.2022.88",
+                "PublicationDate": "2022-09-01",
+                "IsReview": false,
+                "Title": "Establishment and Validation of Reference Values for Amino Acids and Acylcarnitines in Dried Blood Spots for Omani Newborns Using Tandem Mass Spectrometry",
+                "Author": "Sulaiman Al-Riyami, Matar Al-Manei, Assad Al-Fahdi, Khalid Al-Thihli",
+                "Journal": "Oman medical journal",
+                "Citation": "2022 Sep; 37(5):e426",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "inborn errors of metabolism"
+              },
+              {
+                "GenericArticleId": 2668173,
+                "RelevanceScore": 75,
+                "PMID": 31597564,
+                "DOI": "10.1186/s12887-019-1747-5",
+                "PublicationDate": "2019-10-09",
+                "IsReview": false,
+                "Title": "Severe clinical manifestation of mitochondrial 3-hydroxy-3-methylglutaryl-CoA synthase deficiency associated with two novel mutations: a case report",
+                "Author": "Hao Liu, Jing-Kun Miao, Chao-Wen Yu, Ke-Xing Wan, Juan Zhang, Zhao-Jian Yuan, Jing Yang, Dong-Juan Wang, Yan Zeng, Lin Zou",
+                "Journal": "BMC pediatrics",
+                "Citation": "2019 10; 19(1):344",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "inborn error of metabolism"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D003920"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Diabetes Mellitus",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 325863,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 45,
+            "CooccurrenceScore": 891,
+            "Article": [
+              {
+                "GenericArticleId": 3916598,
+                "RelevanceScore": 255,
+                "PMID": 31676389,
+                "DOI": "10.1016/j.ebiom.2019.10.017",
+                "PublicationDate": "2019-11-01",
+                "IsReview": false,
+                "Title": "Carnitine supplementation improves metabolic flexibility and skeletal muscle acetylcarnitine formation in volunteers with impaired glucose tolerance: A randomised controlled trial",
+                "Author": "Yvonne Mh Bruls, Marlies de Ligt, Lucas Lindeboom, Esther Phielix, Bas Havekes, Gert Schaart, Esther Kornips, Joachim E Wildberger, Matthijs Kc Hesselink, Deborah Muoio, Patrick Schrauwen, Vera B Schrauwen-Hinderling",
+                "Journal": "EBioMedicine",
+                "Citation": "2019 Nov; 49(?):318-330",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "diabetes"
+              },
+              {
+                "GenericArticleId": 10949940,
+                "RelevanceScore": 252,
+                "PMID": 15591008,
+                "DOI": "10.1196/annals.1320.010",
+                "PublicationDate": "2004-11-01",
+                "IsReview": true,
+                "Title": "Delaying the mitochondrial decay of aging with acetylcarnitine",
+                "Author": "Bruce N Ames, Jiankang Liu",
+                "Journal": "Annals of the New York Academy of Sciences",
+                "Citation": "2004 Nov; 1033(?):108-16",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "diabetes"
+              },
+              {
+                "GenericArticleId": 2027139,
+                "RelevanceScore": 250,
+                "PMID": 25298189,
+                "DOI": "10.1002/mrm.25485",
+                "PublicationDate": "2015-10-01",
+                "IsReview": false,
+                "Title": "Metabolic imaging of hyperpolarized [1-(13) C]acetate and [1-(13) C]acetylcarnitine - investigation of the influence of dobutamine induced stress",
+                "Author": "Ulrich Koellisch, Concetta V Gringeri, Giaime Rancan, Eliane V Farell, Marion I Menzel, Axel Haase, Markus Schwaiger, Rolf F Schulte",
+                "Journal": "Magnetic resonance in medicine",
+                "Citation": "2015 Oct; 74(4):1011-8",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "diabetes mellitus"
+              },
+              {
+                "GenericArticleId": 1268263,
+                "RelevanceScore": 245,
+                "PMID": 23545238,
+                "DOI": "10.1016/j.bbagen.2013.03.023",
+                "PublicationDate": "2013-08-01",
+                "IsReview": false,
+                "Title": "In vivo enzymatic activity of acetylCoA synthetase in skeletal muscle revealed by (13)C turnover from hyperpolarized [1-(13)C]acetate to [1-(13)C]acetylcarnitine",
+                "Author": "Jessica A M Bastiaansen, Tian Cheng, Mor Mishkovsky, João M N Duarte, Arnaud Comment, Rolf Gruetter",
+                "Journal": "Biochimica et biophysica acta",
+                "Citation": "2013 Aug; 1830(8):4171-8",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "diabetes"
+              },
+              {
+                "GenericArticleId": 2235,
+                "RelevanceScore": 240,
+                "PMID": 4059,
+                "DOI": "10.1042/bj1520161",
+                "PublicationDate": "1975-11-01",
+                "IsReview": false,
+                "Title": "Enzymic hydrolysis of acetylcarnitine in liver from rats, sheep and cows",
+                "Author": "N D Costa, A M Snoswell",
+                "Journal": "The Biochemical journal",
+                "Citation": "1975 Nov; 152(2):161-6",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "diabetic"
+              },
+              {
+                "GenericArticleId": 3855932,
+                "RelevanceScore": 165,
+                "PMID": 37574027,
+                "DOI": "10.1016/j.ijcard.2023.131261",
+                "PublicationDate": "2023-08-11",
+                "IsReview": false,
+                "Title": "Short and medium chain acylcarnitines as markers of outcome in diabetic and non-diabetic subjects with acute coronary syndromes",
+                "Author": "Allan Davies, Florian A Wenzl, Xinmin S Li, Patric Winzap, Slayman Obeid, Roland Klingenberg, François Mach, Lorenz Räber, Olivier Muller, Christian M Matter, Reijo Laaksonen, Zeneng Wang, Stanley L Hazen, Thomas F Lüscher",
+                "Journal": "International journal of cardiology",
+                "Citation": "2023 Aug; ?(?):131261",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "diabetic"
+              },
+              {
+                "GenericArticleId": 6232096,
+                "RelevanceScore": 160,
+                "PMID": 36413408,
+                "DOI": "10.1172/jci.insight.163855",
+                "PublicationDate": "2023-01-10",
+                "IsReview": false,
+                "Title": "Skeletal muscle mitochondrial inertia is associated with carnitine acetyltransferase activity and physical function in humans",
+                "Author": "Rodrigo F Mancilla, Lucas Lindeboom, Lotte Grevendonk, Joris Hoeks, Tim R Koves, Deborah M Muoio, Patrick Schrauwen, Vera Schrauwen-Hinderling, Matthijs Kc Hesselink",
+                "Journal": "JCI insight",
+                "Citation": "2023 01; 8(1):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "diabetes"
+              },
+              {
+                "GenericArticleId": 4368651,
+                "RelevanceScore": 155,
+                "PMID": 32277266,
+                "DOI": "10.1007/s00204-020-02729-y",
+                "PublicationDate": "2020-06-01",
+                "IsReview": false,
+                "Title": "Exposure to inorganic arsenic and its methylated metabolites alters metabolomics profiles in INS-1 832/13 insulinoma cells and isolated pancreatic islets",
+                "Author": "Yuan-Yuan Li, Christelle Douillet, Madelyn Huang, Rowan Beck, Susan Jenkins Sumner, Miroslav Styblo",
+                "Journal": "Archives of toxicology",
+                "Citation": "2020 06; 94(6):1955-1972",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "diabetogenic"
+              },
+              {
+                "GenericArticleId": 5280702,
+                "RelevanceScore": 155,
+                "PMID": 34415396,
+                "DOI": "10.1007/s00424-021-02613-3",
+                "PublicationDate": "2021-11-01",
+                "IsReview": false,
+                "Title": "Hyperpolarized NMR study of the impact of pyruvate dehydrogenase kinase inhibition on the pyruvate dehydrogenase and TCA flux in type 2 diabetic rat muscle",
+                "Author": "Jae Mo Park, Sonal Josan, Ralph E Hurd, James Graham, Peter J Havel, David Bendahan, Dirk Mayer, Youngran Chung, Daniel M Spielman, Thomas Jue",
+                "Journal": "Pflugers Archiv : European journal of physiology",
+                "Citation": "2021 11; 473(11):1761-1773",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "diabetic"
+              },
+              {
+                "GenericArticleId": 5867269,
+                "RelevanceScore": 90,
+                "PMID": 35710135,
+                "DOI": "10.1124/pharmrev.121.000408",
+                "PublicationDate": "2022-07-01",
+                "IsReview": true,
+                "Title": "Acylcarnitines: Nomenclature, Biomarkers, Therapeutic Potential, Drug Targets, and Clinical Trials",
+                "Author": "Maija Dambrova, Marina Makrecka-Kuka, Janis Kuka, Reinis Vilskersts, Didi Nordberg, Misty M Attwood, Stefan Smesny, Zumrut Duygu Sen, An Chi Guo, Eponine Oler, Siyang Tian, Jiamin Zheng, David S Wishart, Edgars Liepinsh, Helgi B Schiöth",
+                "Journal": "Pharmacological reviews",
+                "Citation": "2022 07; 74(3):506-551",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "diabetes"
+              },
+              {
+                "GenericArticleId": 5472471,
+                "RelevanceScore": 80,
+                "PMID": 34671094,
+                "DOI": "10.1038/s41390-021-01753-7",
+                "PublicationDate": "2022-08-01",
+                "IsReview": false,
+                "Title": "Newborn screen metabolic panels reflect the impact of common disorders of pregnancy",
+                "Author": "Jonathan D Reiss, Alan L Chang, Jonathan A Mayo, Katherine Bianco, Henry C Lee, David K Stevenson, Gary M Shaw, Nima Aghaeepour, Karl G Sylvester",
+                "Journal": "Pediatric research",
+                "Citation": "2022 08; 92(2):490-497",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "diabetes; diabetic"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D005221"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Fatigue",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 67258,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 29,
+            "CooccurrenceScore": 863,
+            "Article": [
+              {
+                "GenericArticleId": 4186545,
+                "RelevanceScore": 275,
+                "PMID": 38172332,
+                "DOI": "10.1007/s00406-023-01734-3",
+                "PublicationDate": "2024-01-03",
+                "IsReview": true,
+                "Title": "Conceptual foundations of acetylcarnitine supplementation in neuropsychiatric long COVID syndrome: a narrative review",
+                "Author": "Dario Lucas Helbing, Eva-Maria Dommaschk, Lena Vera Danyeli, Edgars Liepinsh, Alexander Refisch, Zümrüt Duygu Sen, Liga Zvejniece, Tonia Rocktäschel, Leonie Karoline Stabenow, Helgi B Schiöth, Martin Walter, Maija Dambrova, Bianca Besteher",
+                "Journal": "European archives of psychiatry and clinical neuroscience",
+                "Citation": "2024 Jan; ?(?):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "fatigue"
+              },
+              {
+                "GenericArticleId": 6276795,
+                "RelevanceScore": 255,
+                "PMID": 36537638,
+                "DOI": "10.17116/jnevro202212212195",
+                "PublicationDate": "2022-01-01",
+                "IsReview": false,
+                "Title": "[Antiastenic effect of sequential levocarnitine and acetylcarnitine therapy in patients with cardiovascular diseases]",
+                "Author": "M E Statsenko, S V Turkina",
+                "Journal": "Zhurnal nevrologii i psikhiatrii imeni S.S. Korsakova",
+                "Citation": "2022; 122(12):95-100",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "fatigue"
+              },
+              {
+                "GenericArticleId": 2459979,
+                "RelevanceScore": 150,
+                "PMID": 26154055,
+                "DOI": "10.1016/j.cmet.2015.06.003",
+                "PublicationDate": "2015-07-07",
+                "IsReview": false,
+                "Title": "Carnitine Acetyltransferase Mitigates Metabolic Inertia and Muscle Fatigue during Exercise",
+                "Author": "Sarah E Seiler, Timothy R Koves, Jessica R Gooding, Kari E Wong, Robert D Stevens, Olga R Ilkayeva, April H Wittmann, Karen L DeBalsi, Michael N Davies, Lucas Lindeboom, Patrick Schrauwen, Vera B Schrauwen-Hinderling, Deborah M Muoio",
+                "Journal": "Cell metabolism",
+                "Citation": "2015 Jul; 22(1):65-76",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "fatigue"
+              },
+              {
+                "GenericArticleId": 10750587,
+                "RelevanceScore": 142,
+                "PMID": 15039515,
+                "DOI": "10.1097/01.psy.0000116249.60477.e9",
+                "PublicationDate": "2004-03-01",
+                "IsReview": false,
+                "Title": "Exploratory open label, randomized study of acetyl- and propionylcarnitine in chronic fatigue syndrome",
+                "Author": "Ruud C W Vermeulen, Hans R Scholte",
+                "Journal": "Psychosomatic medicine",
+                "Citation": "2004 Mar; 66(2):276-82",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "fatigue"
+              },
+              {
+                "GenericArticleId": 11009145,
+                "RelevanceScore": 142,
+                "PMID": 15746165,
+                "DOI": "10.1113/jphysiol.2005.083840",
+                "PublicationDate": "2005-05-01",
+                "IsReview": false,
+                "Title": "Prior heavy exercise eliminates VO2 slow component and reduces efficiency during submaximal exercise in humans",
+                "Author": "K Sahlin, J B Sørensen, L B Gladden, H B Rossiter, P K Pedersen",
+                "Journal": "The Journal of physiology",
+                "Citation": "2005 May; 564(Pt 3):765-73",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "fatiguing"
+              },
+              {
+                "GenericArticleId": 4099299,
+                "RelevanceScore": 85,
+                "PMID": 37933340,
+                "DOI": "10.7759/cureus.46595",
+                "PublicationDate": "2023-10-01",
+                "IsReview": false,
+                "Title": "Myopathic Carnitine Palmitoyltransferase II (CPT II) Deficiency: A Rare Cause of Acute Kidney Injury and Cardiomyopathy",
+                "Author": "Efrain Castillo, Debbie Medina, Nick Schoenmann",
+                "Journal": "Cureus",
+                "Citation": "2023 Oct; 15(10):e46595",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "fatigue"
+              },
+              {
+                "GenericArticleId": 5269629,
+                "RelevanceScore": 75,
+                "PMID": 34383825,
+                "DOI": "10.1371/journal.pone.0256009",
+                "PublicationDate": "2021-01-01",
+                "IsReview": false,
+                "Title": "Acylcarnitine profile in Alaskan sled dogs during submaximal multiday exercise points out metabolic flexibility and liver role in energy metabolism",
+                "Author": "Irene Tosi, Tatiana Art, François Boemer, Dominique-Marie Votion, Michael S Davis",
+                "Journal": "PloS one",
+                "Citation": "2021; 16(8):e0256009",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "fatigue"
+              },
+              {
+                "GenericArticleId": 5474741,
+                "RelevanceScore": 75,
+                "PMID": 34677366,
+                "DOI": "10.3390/metabo11100651",
+                "PublicationDate": "2021-09-23",
+                "IsReview": false,
+                "Title": "Vital Carbohydrate and Lipid Metabolites in Serum Involved in Energy Metabolism during Pubertal Molt of Mud Crab (Scylla paramamosain)",
+                "Author": "Wen-Feng Li, Shuang Li, Jie Liu, Xiao-Fei Wang, Hui-Yun Chen, Hua Hao, Ke-Jian Wang",
+                "Journal": "Metabolites",
+                "Citation": "2021 Sep; 11(10):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "exhausted"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D007333"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Insulin Resistance",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 93240,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 27,
+            "CooccurrenceScore": 748,
+            "Article": [
+              {
+                "GenericArticleId": 3916598,
+                "RelevanceScore": 255,
+                "PMID": 31676389,
+                "DOI": "10.1016/j.ebiom.2019.10.017",
+                "PublicationDate": "2019-11-01",
+                "IsReview": false,
+                "Title": "Carnitine supplementation improves metabolic flexibility and skeletal muscle acetylcarnitine formation in volunteers with impaired glucose tolerance: A randomised controlled trial",
+                "Author": "Yvonne Mh Bruls, Marlies de Ligt, Lucas Lindeboom, Esther Phielix, Bas Havekes, Gert Schaart, Esther Kornips, Joachim E Wildberger, Matthijs Kc Hesselink, Deborah Muoio, Patrick Schrauwen, Vera B Schrauwen-Hinderling",
+                "Journal": "EBioMedicine",
+                "Citation": "2019 Nov; 49(?):318-330",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "hyperinsulinemic euglycemic clamp; insulin sensitivity"
+              },
+              {
+                "GenericArticleId": 4384289,
+                "RelevanceScore": 255,
+                "PMID": 32320006,
+                "DOI": "10.1093/ajcn/nqaa072",
+                "PublicationDate": "2020-08-01",
+                "IsReview": false,
+                "Title": "Nicotinamide riboside supplementation alters body composition and skeletal muscle acetylcarnitine concentrations in healthy obese humans",
+                "Author": "Carlijn M E Remie, Kay H M Roumans, Michiel P B Moonen, Niels J Connell, Bas Havekes, Julian Mevenkamp, Lucas Lindeboom, Vera H W de Wit, Tineke van de Weijer, Suzanne A B M Aarts, Esther Lutgens, Bauke V Schomakers, Hyung L Elfrink, Rubén Zapata-Pérez, Riekelt H Houtkooper, Johan Auwerx, Joris Hoeks, Vera B Schrauwen-Hinderling, Esther Phielix, Patrick Schrauwen",
+                "Journal": "The American journal of clinical nutrition",
+                "Citation": "2020 08; 112(2):413-426",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "insulin sensitivity"
+              },
+              {
+                "GenericArticleId": 2018046,
+                "RelevanceScore": 250,
+                "PMID": 25271624,
+                "DOI": "10.1172/jci74830",
+                "PublicationDate": "2014-11-01",
+                "IsReview": false,
+                "Title": "Long-echo time MR spectroscopy for skeletal muscle acetylcarnitine detection",
+                "Author": "Lucas Lindeboom, Christine I Nabuurs, Joris Hoeks, Bram Brouwers, Esther Phielix, M Eline Kooi, Matthijs K C Hesselink, Joachim E Wildberger, Robert D Stevens, Timothy Koves, Deborah M Muoio, Patrick Schrauwen, Vera B Schrauwen-Hinderling",
+                "Journal": "The Journal of clinical investigation",
+                "Citation": "2014 Nov; 124(11):4915-25",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "hyperinsulinemic euglycemic clamp; insulin sensitivity"
+              },
+              {
+                "GenericArticleId": 3179557,
+                "RelevanceScore": 250,
+                "PMID": 27895387,
+                "DOI": "10.3164/jcbn.15-146",
+                "PublicationDate": "2016-11-01",
+                "IsReview": false,
+                "Title": "Retention of acetylcarnitine in chronic kidney disease causes insulin resistance in skeletal muscle",
+                "Author": "Yasunori Miyamoto, Teruo Miyazaki, Akira Honda, Homare Shimohata, Kouichi Hirayama, Masaki Kobayashi",
+                "Journal": "Journal of clinical biochemistry and nutrition",
+                "Citation": "2016 Nov; 59(3):199-206",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "insulin resistance"
+              },
+              {
+                "GenericArticleId": 5280702,
+                "RelevanceScore": 155,
+                "PMID": 34415396,
+                "DOI": "10.1007/s00424-021-02613-3",
+                "PublicationDate": "2021-11-01",
+                "IsReview": false,
+                "Title": "Hyperpolarized NMR study of the impact of pyruvate dehydrogenase kinase inhibition on the pyruvate dehydrogenase and TCA flux in type 2 diabetic rat muscle",
+                "Author": "Jae Mo Park, Sonal Josan, Ralph E Hurd, James Graham, Peter J Havel, David Bendahan, Dirk Mayer, Youngran Chung, Daniel M Spielman, Thomas Jue",
+                "Journal": "Pflugers Archiv : European journal of physiology",
+                "Citation": "2021 11; 473(11):1761-1773",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "insulin resistance"
+              },
+              {
+                "GenericArticleId": 4627149,
+                "RelevanceScore": 105,
+                "PMID": 32976523,
+                "DOI": "10.1371/journal.pone.0239506",
+                "PublicationDate": "2020-01-01",
+                "IsReview": false,
+                "Title": "L-carnitine infusion does not alleviate lipid-induced insulin resistance and metabolic inflexibility",
+                "Author": "Yvonne M H Bruls, Yvo J M Op den Kamp, Esther Phielix, Lucas Lindeboom, Bas Havekes, Gert Schaart, Esther Moonen-Kornips, Joachim E Wildberger, Matthijs K C Hesselink, Patrick Schrauwen, Vera B Schrauwen-Hinderling",
+                "Journal": "PloS one",
+                "Citation": "2020; 15(9):e0239506",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "insulin resistance; insulin sensitivity"
+              },
+              {
+                "GenericArticleId": 5867269,
+                "RelevanceScore": 90,
+                "PMID": 35710135,
+                "DOI": "10.1124/pharmrev.121.000408",
+                "PublicationDate": "2022-07-01",
+                "IsReview": true,
+                "Title": "Acylcarnitines: Nomenclature, Biomarkers, Therapeutic Potential, Drug Targets, and Clinical Trials",
+                "Author": "Maija Dambrova, Marina Makrecka-Kuka, Janis Kuka, Reinis Vilskersts, Didi Nordberg, Misty M Attwood, Stefan Smesny, Zumrut Duygu Sen, An Chi Guo, Eponine Oler, Siyang Tian, Jiamin Zheng, David S Wishart, Edgars Liepinsh, Helgi B Schiöth",
+                "Journal": "Pharmacological reviews",
+                "Citation": "2022 07; 74(3):506-551",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "insulin resistance"
+              },
+              {
+                "GenericArticleId": 6213250,
+                "RelevanceScore": 90,
+                "PMID": 36361519,
+                "DOI": "10.3390/ijms232112730",
+                "PublicationDate": "2022-10-22",
+                "IsReview": true,
+                "Title": "On the Need to Distinguish between Insulin-Normal and Insulin-Resistant Patients in Testosterone Therapy",
+                "Author": "Lello Zolla",
+                "Journal": "International journal of molecular sciences",
+                "Citation": "2022 Oct; 23(21):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "insulin resistance; insulin sensitivity"
+              },
+              {
+                "GenericArticleId": 6389976,
+                "RelevanceScore": 80,
+                "PMID": 36837817,
+                "DOI": "10.3390/metabo13020198",
+                "PublicationDate": "2023-01-29",
+                "IsReview": false,
+                "Title": "Serum Metabolome Adaptations Following 12 Weeks of High-Intensity Interval Training or Moderate-Intensity Continuous Training in Obese Older Adults",
+                "Author": "Layale Youssef, Mélanie Bourgin, Sylvère Durand, Fanny Aprahamian, Deborah Lefevre, Maria Chiara Maiuri, Vincent Marcangeli, Maude Dulac, Guy Hajj-Boutros, Fanny Buckinx, Eva Peyrusqué, Pierrette Gaudreau, José A Morais, Gilles Gouspillou, Guido Kroemer, Mylène Aubertin-Leheudre, Philippe Noirez",
+                "Journal": "Metabolites",
+                "Citation": "2023 Jan; 13(2):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "insulin sensitivity"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D009765"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Obesity",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 165083,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 31,
+            "CooccurrenceScore": 747,
+            "Article": [
+              {
+                "GenericArticleId": 4384289,
+                "RelevanceScore": 255,
+                "PMID": 32320006,
+                "DOI": "10.1093/ajcn/nqaa072",
+                "PublicationDate": "2020-08-01",
+                "IsReview": false,
+                "Title": "Nicotinamide riboside supplementation alters body composition and skeletal muscle acetylcarnitine concentrations in healthy obese humans",
+                "Author": "Carlijn M E Remie, Kay H M Roumans, Michiel P B Moonen, Niels J Connell, Bas Havekes, Julian Mevenkamp, Lucas Lindeboom, Vera H W de Wit, Tineke van de Weijer, Suzanne A B M Aarts, Esther Lutgens, Bauke V Schomakers, Hyung L Elfrink, Rubén Zapata-Pérez, Riekelt H Houtkooper, Johan Auwerx, Joris Hoeks, Vera B Schrauwen-Hinderling, Esther Phielix, Patrick Schrauwen",
+                "Journal": "The American journal of clinical nutrition",
+                "Citation": "2020 08; 112(2):413-426",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "obese"
+              },
+              {
+                "GenericArticleId": 2018046,
+                "RelevanceScore": 250,
+                "PMID": 25271624,
+                "DOI": "10.1172/jci74830",
+                "PublicationDate": "2014-11-01",
+                "IsReview": false,
+                "Title": "Long-echo time MR spectroscopy for skeletal muscle acetylcarnitine detection",
+                "Author": "Lucas Lindeboom, Christine I Nabuurs, Joris Hoeks, Bram Brouwers, Esther Phielix, M Eline Kooi, Matthijs K C Hesselink, Joachim E Wildberger, Robert D Stevens, Timothy Koves, Deborah M Muoio, Patrick Schrauwen, Vera B Schrauwen-Hinderling",
+                "Journal": "The Journal of clinical investigation",
+                "Citation": "2014 Nov; 124(11):4915-25",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "obese"
+              },
+              {
+                "GenericArticleId": 2837594,
+                "RelevanceScore": 250,
+                "PMID": 26887359,
+                "DOI": "10.1002/mrm.26149",
+                "PublicationDate": "2017-02-01",
+                "IsReview": false,
+                "Title": "Longitudinal relaxation time editing for acetylcarnitine detection with 1 H-MRS",
+                "Author": "Lucas Lindeboom, Yvonne M H Bruls, Petronella A van Ewijk, Matthijs K C Hesselink, Joachim E Wildberger, Patrick Schrauwen, Vera B Schrauwen-Hinderling",
+                "Journal": "Magnetic resonance in medicine",
+                "Citation": "2017 02; 77(2):505-510",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "obese"
+              },
+              {
+                "GenericArticleId": 7425166,
+                "RelevanceScore": 240,
+                "PMID": 6810706,
+                "DOI": "10.1152/ajpendo.1982.243.2.e168",
+                "PublicationDate": "1982-08-01",
+                "IsReview": false,
+                "Title": "Urinary excretion of acetylcarnitine during human diabetic and fasting ketosis",
+                "Author": "C L Hoppel, S M Genuth",
+                "Journal": "The American journal of physiology",
+                "Citation": "1982 Aug; 243(2):E168-72",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "obese; obesity"
+              },
+              {
+                "GenericArticleId": 6232096,
+                "RelevanceScore": 160,
+                "PMID": 36413408,
+                "DOI": "10.1172/jci.insight.163855",
+                "PublicationDate": "2023-01-10",
+                "IsReview": false,
+                "Title": "Skeletal muscle mitochondrial inertia is associated with carnitine acetyltransferase activity and physical function in humans",
+                "Author": "Rodrigo F Mancilla, Lucas Lindeboom, Lotte Grevendonk, Joris Hoeks, Tim R Koves, Deborah M Muoio, Patrick Schrauwen, Vera Schrauwen-Hinderling, Matthijs Kc Hesselink",
+                "Journal": "JCI insight",
+                "Citation": "2023 01; 8(1):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "obese"
+              },
+              {
+                "GenericArticleId": 237022,
+                "RelevanceScore": 155,
+                "PMID": 30894172,
+                "DOI": "10.1186/s12917-019-1845-5",
+                "PublicationDate": "2019-03-20",
+                "IsReview": false,
+                "Title": "Indication of metabolic inflexibility to food intake in spontaneously overweight Labrador Retriever dogs",
+                "Author": "Josefin Söder, Sara Wernersson, Johan Dicksved, Ragnvi Hagman, Johnny R Östman, Ali A Moazzami, Katja Höglund",
+                "Journal": "BMC veterinary research",
+                "Citation": "2019 Mar; 15(1):96",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "obesity"
+              },
+              {
+                "GenericArticleId": 3766484,
+                "RelevanceScore": 85,
+                "PMID": 37332914,
+                "DOI": "10.1016/j.heliyon.2023.e16651",
+                "PublicationDate": "2023-06-01",
+                "IsReview": false,
+                "Title": "Integrative multiomics analysis of infant gut microbiome and serum metabolome reveals key molecular biomarkers of early onset childhood obesity",
+                "Author": "Talha Rafiq, Jennifer C Stearns, Meera Shanmuganathan, Sandi M Azab, Sonia S Anand, Lehana Thabane, Joseph Beyene, Natalie C Williams, Katherine M Morrison, Koon K Teo, Philip Britz-McKibbin, Russell J de Souza",
+                "Journal": "Heliyon",
+                "Citation": "2023 Jun; 9(6):e16651",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "obese; obesity"
+              },
+              {
+                "GenericArticleId": 5896592,
+                "RelevanceScore": 80,
+                "PMID": 35788095,
+                "DOI": "10.1097/hjh.0000000000003182",
+                "PublicationDate": "2022-08-01",
+                "IsReview": false,
+                "Title": "Urinary metabolomics profiling by cardiovascular risk factors in young adults: the African Prospective study on Early Detection and Identification of Cardiovascular disease and Hypertension study",
+                "Author": "Wessel L du Toit, Ruan Kruger, Lebo F Gafane-Matemane, Aletta E Schutte, Roan Louw, Catharina M C Mels",
+                "Journal": "Journal of hypertension",
+                "Citation": "2022 08; 40(8):1545-1555",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "obese"
+              },
+              {
+                "GenericArticleId": 6188345,
+                "RelevanceScore": 80,
+                "PMID": 36295885,
+                "DOI": "10.3390/metabo12100983",
+                "PublicationDate": "2022-10-17",
+                "IsReview": false,
+                "Title": "A Marked Low-Grade Inflammation and a Significant Deterioration in Metabolic Status in First-Episode Schizophrenia: A Five-Year Follow-Up Study",
+                "Author": "Madis Parksepp, Liina Haring, Kalle Kilk, Egon Taalberg, Raul Kangro, Mihkel Zilmer, Eero Vasar",
+                "Journal": "Metabolites",
+                "Citation": "2022 Oct; 12(10):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "obesity"
+              },
+              {
+                "GenericArticleId": 6389976,
+                "RelevanceScore": 80,
+                "PMID": 36837817,
+                "DOI": "10.3390/metabo13020198",
+                "PublicationDate": "2023-01-29",
+                "IsReview": false,
+                "Title": "Serum Metabolome Adaptations Following 12 Weeks of High-Intensity Interval Training or Moderate-Intensity Continuous Training in Obese Older Adults",
+                "Author": "Layale Youssef, Mélanie Bourgin, Sylvère Durand, Fanny Aprahamian, Deborah Lefevre, Maria Chiara Maiuri, Vincent Marcangeli, Maude Dulac, Guy Hajj-Boutros, Fanny Buckinx, Eva Peyrusqué, Pierrette Gaudreau, José A Morais, Gilles Gouspillou, Guido Kroemer, Mylène Aubertin-Leheudre, Philippe Noirez",
+                "Journal": "Metabolites",
+                "Citation": "2023 Jan; 13(2):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "obese"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D003924"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Diabetes Mellitus, Type 2",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 137152,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 28,
+            "CooccurrenceScore": 707,
+            "Article": [
+              {
+                "GenericArticleId": 3916598,
+                "RelevanceScore": 255,
+                "PMID": 31676389,
+                "DOI": "10.1016/j.ebiom.2019.10.017",
+                "PublicationDate": "2019-11-01",
+                "IsReview": false,
+                "Title": "Carnitine supplementation improves metabolic flexibility and skeletal muscle acetylcarnitine formation in volunteers with impaired glucose tolerance: A randomised controlled trial",
+                "Author": "Yvonne Mh Bruls, Marlies de Ligt, Lucas Lindeboom, Esther Phielix, Bas Havekes, Gert Schaart, Esther Kornips, Joachim E Wildberger, Matthijs Kc Hesselink, Deborah Muoio, Patrick Schrauwen, Vera B Schrauwen-Hinderling",
+                "Journal": "EBioMedicine",
+                "Citation": "2019 Nov; 49(?):318-330",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "type 2 diabetes"
+              },
+              {
+                "GenericArticleId": 4570107,
+                "RelevanceScore": 255,
+                "PMID": 32820618,
+                "DOI": "10.1002/oby.22846",
+                "PublicationDate": "2020-08-01",
+                "IsReview": false,
+                "Title": "Muscle-Specific Relation of Acetylcarnitine and Intramyocellular Lipids to Chronic Hyperglycemia: A Pilot 3-T 1H MRS Study",
+                "Author": "Radka Klepochová, Michael Leutner, Magdalena Bastian, Michael Krebs, Michael Weber, Siegfried Trattnig, Alexandra Kautzky-Willer, Martin Krššák",
+                "Journal": "Obesity (Silver Spring, Md.)",
+                "Citation": "2020 08; 28(8):1405-1411",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "type 2 diabetes; type 2 diabetes mellitus"
+              },
+              {
+                "GenericArticleId": 2018046,
+                "RelevanceScore": 250,
+                "PMID": 25271624,
+                "DOI": "10.1172/jci74830",
+                "PublicationDate": "2014-11-01",
+                "IsReview": false,
+                "Title": "Long-echo time MR spectroscopy for skeletal muscle acetylcarnitine detection",
+                "Author": "Lucas Lindeboom, Christine I Nabuurs, Joris Hoeks, Bram Brouwers, Esther Phielix, M Eline Kooi, Matthijs K C Hesselink, Joachim E Wildberger, Robert D Stevens, Timothy Koves, Deborah M Muoio, Patrick Schrauwen, Vera B Schrauwen-Hinderling",
+                "Journal": "The Journal of clinical investigation",
+                "Citation": "2014 Nov; 124(11):4915-25",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "type 2 diabetes mellitus"
+              },
+              {
+                "GenericArticleId": 6182073,
+                "RelevanceScore": 160,
+                "PMID": 36280113,
+                "DOI": "10.1016/j.molmet.2022.101620",
+                "PublicationDate": "2022-12-01",
+                "IsReview": false,
+                "Title": "Effects of SGLT2 inhibitor dapagliflozin in patients with type 2 diabetes on skeletal muscle cellular metabolism",
+                "Author": "Yvo J M Op den Kamp, Anne Gemmink, Marlies de Ligt, Bas Dautzenberg, Esther Kornips, Johanna A Jorgensen, Gert Schaart, Russell Esterline, Diego A Pava, Joris Hoeks, Vera B Schrauwen-Hinderling, Sander Kersten, Bas Havekes, Timothy R Koves, Deborah M Muoio, Matthijs K C Hesselink, Jan Oscarsson, Esther Phielix, Patrick Schrauwen",
+                "Journal": "Molecular metabolism",
+                "Citation": "2022 12; 66(?):101620",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "type 2 diabetes; type 2 diabetes mellitus"
+              },
+              {
+                "GenericArticleId": 6232096,
+                "RelevanceScore": 160,
+                "PMID": 36413408,
+                "DOI": "10.1172/jci.insight.163855",
+                "PublicationDate": "2023-01-10",
+                "IsReview": false,
+                "Title": "Skeletal muscle mitochondrial inertia is associated with carnitine acetyltransferase activity and physical function in humans",
+                "Author": "Rodrigo F Mancilla, Lucas Lindeboom, Lotte Grevendonk, Joris Hoeks, Tim R Koves, Deborah M Muoio, Patrick Schrauwen, Vera Schrauwen-Hinderling, Matthijs Kc Hesselink",
+                "Journal": "JCI insight",
+                "Citation": "2023 01; 8(1):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "type 2 diabetes"
+              },
+              {
+                "GenericArticleId": 5280702,
+                "RelevanceScore": 155,
+                "PMID": 34415396,
+                "DOI": "10.1007/s00424-021-02613-3",
+                "PublicationDate": "2021-11-01",
+                "IsReview": false,
+                "Title": "Hyperpolarized NMR study of the impact of pyruvate dehydrogenase kinase inhibition on the pyruvate dehydrogenase and TCA flux in type 2 diabetic rat muscle",
+                "Author": "Jae Mo Park, Sonal Josan, Ralph E Hurd, James Graham, Peter J Havel, David Bendahan, Dirk Mayer, Youngran Chung, Daniel M Spielman, Thomas Jue",
+                "Journal": "Pflugers Archiv : European journal of physiology",
+                "Citation": "2021 11; 473(11):1761-1773",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "type 2 diabetes mellitus; type-2 diabetic"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D056693"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Propionic Acidemia",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 653,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 11,
+            "CooccurrenceScore": 650,
+            "Article": [
+              {
+                "GenericArticleId": 5689742,
+                "RelevanceScore": 80,
+                "PMID": 35254746,
+                "DOI": "10.1515/dmpt-2021-0218",
+                "PublicationDate": "2022-09-01",
+                "IsReview": false,
+                "Title": "The markers of the organic acidemias and their ratios in healthy neonates in Serbian population",
+                "Author": "Anđelo Beletić, Aleksandra Tijanić, Petr Chrastina, Tatjana Nikolić, Aleksandar Stefanović, Sanja Stanković",
+                "Journal": "Drug metabolism and personalized therapy",
+                "Citation": "2022 09; 37(3):271-275",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "propionic acidemia"
+              },
+              {
+                "GenericArticleId": 6292485,
+                "RelevanceScore": 80,
+                "PMID": 36577040,
+                "DOI": "10.1089/nat.2022.0036",
+                "PublicationDate": "2022-12-27",
+                "IsReview": false,
+                "Title": "Translational Pharmacokinetic/Pharmacodynamic Model for mRNA-3927, an Investigational Therapeutic for the Treatment of Propionic Acidemia",
+                "Author": "Husain Attarwala, Matthew Lumley, Min Liang, Vijay Ivaturi, Joe Senn",
+                "Journal": "Nucleic acid therapeutics",
+                "Citation": "2022 Dec; ?(?):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "propionic acidemia"
+              },
+              {
+                "GenericArticleId": 4432653,
+                "RelevanceScore": 75,
+                "PMID": 32451238,
+                "DOI": "10.1016/j.ymgme.2020.05.003",
+                "PublicationDate": "2020-07-01",
+                "IsReview": false,
+                "Title": "Biochemical and anaplerotic applications of in vitro models of propionic acidemia and methylmalonic acidemia using patient-derived primary hepatocytes",
+                "Author": "M Sol Collado, Allison J Armstrong, Matthew Olson, Stephen A Hoang, Nathan Day, Marshall Summar, Kimberly A Chapman, John Reardon, Robert A Figler, Brian R Wamhoff",
+                "Journal": "Molecular genetics and metabolism",
+                "Citation": "2020 07; 130(3):183-196",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "propionic acidemia"
+              },
+              {
+                "GenericArticleId": 4645810,
+                "RelevanceScore": 75,
+                "PMID": 33028371,
+                "DOI": "10.1186/s13023-020-01539-w",
+                "PublicationDate": "2020-10-07",
+                "IsReview": false,
+                "Title": "Biochemical and genetic approaches to the prenatal diagnosis of propionic acidemia in 78 pregnancies",
+                "Author": "Mengyao Dai, Bing Xiao, Huiwen Zhang, Jun Ye, Wenjuan Qiu, Hong Zhu, Lei Wang, Lili Liang, Xia Zhan, Wenjun Ji, Yu Wang, Yongguo Yu, Xuefan Gu, Lianshu Han",
+                "Journal": "Orphanet journal of rare diseases",
+                "Citation": "2020 10; 15(1):276",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "propionic acidemia"
+              },
+              {
+                "GenericArticleId": 2430039,
+                "RelevanceScore": 70,
+                "PMID": 26070565,
+                "DOI": "10.1074/jbc.m115.651737",
+                "PublicationDate": "2015-07-24",
+                "IsReview": false,
+                "Title": "Compartmentation of Metabolism of the C12-, C9-, and C5-n-dicarboxylates in Rat Liver, Investigated by Mass Isotopomer Analysis: ANAPLEROSIS FROM DODECANEDIOATE",
+                "Author": "Zhicheng Jin, Fang Bian, Kristyen Tomcik, Joanne K Kelleher, Guo-Fang Zhang, Henri Brunengraber",
+                "Journal": "The Journal of biological chemistry",
+                "Citation": "2015 Jul; 290(30):18671-7",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "propionic acidemia"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D007662"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Ketosis",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 6475,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 14,
+            "CooccurrenceScore": 624,
+            "Article": [
+              {
+                "GenericArticleId": 7425166,
+                "RelevanceScore": 240,
+                "PMID": 6810706,
+                "DOI": "10.1152/ajpendo.1982.243.2.e168",
+                "PublicationDate": "1982-08-01",
+                "IsReview": false,
+                "Title": "Urinary excretion of acetylcarnitine during human diabetic and fasting ketosis",
+                "Author": "C L Hoppel, S M Genuth",
+                "Journal": "The American journal of physiology",
+                "Citation": "1982 Aug; 243(2):E168-72",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "ketosis; ketotic"
+              },
+              {
+                "GenericArticleId": 8988625,
+                "RelevanceScore": 150,
+                "PMID": 10548966,
+                "DOI": "10.1080/17450399909386157",
+                "PublicationDate": "1999-01-01",
+                "IsReview": true,
+                "Title": "Metabolic functions of L-carnitine and its effects as feed additive in horses. A review",
+                "Author": "A Zeyner, J Harmeyer",
+                "Journal": "Archiv fur Tierernahrung",
+                "Citation": "1999; 52(2):115-38",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "ketosis"
+              },
+              {
+                "GenericArticleId": 6565610,
+                "RelevanceScore": 140,
+                "PMID": 4290218,
+                "PublicationDate": "1967-05-10",
+                "IsReview": false,
+                "Title": "Acetyl coenzyme A and acetylcarnitine concentration and turnover rates in muscle and liver of the ketotic rat and guinea pig",
+                "Author": "J D Erfle, F Sauer",
+                "Journal": "The Journal of biological chemistry",
+                "Citation": "1967 May; 242(9):1988-96",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "ketotic"
+              },
+              {
+                "GenericArticleId": 6799932,
+                "RelevanceScore": 140,
+                "PMID": 5433692,
+                "DOI": "10.3168/jds.s0022-0302(70)86236-1",
+                "PublicationDate": "1970-04-01",
+                "IsReview": false,
+                "Title": "Carnitine and acetylcarnitine in the milk of normal and ketotic cows",
+                "Author": "J D Erfle, L J Fisher, F Sauer",
+                "Journal": "Journal of dairy science",
+                "Citation": "1970 Apr; 53(4):486-9",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "ketotic"
+              },
+              {
+                "GenericArticleId": 6213250,
+                "RelevanceScore": 90,
+                "PMID": 36361519,
+                "DOI": "10.3390/ijms232112730",
+                "PublicationDate": "2022-10-22",
+                "IsReview": true,
+                "Title": "On the Need to Distinguish between Insulin-Normal and Insulin-Resistant Patients in Testosterone Therapy",
+                "Author": "Lello Zolla",
+                "Journal": "International journal of molecular sciences",
+                "Citation": "2022 Oct; 23(21):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "ketonuria"
+              },
+              {
+                "GenericArticleId": 2587767,
+                "RelevanceScore": 75,
+                "PMID": 31392109,
+                "DOI": "10.1002/jmd2.12051",
+                "PublicationDate": "2019-07-01",
+                "IsReview": false,
+                "Title": "A Japanese case of mitochondrial 3-hydroxy-3-methylglutaryl-CoA synthase deficiency who presented with severe metabolic acidosis and fatty liver without hypoglycemia",
+                "Author": "Tomoko Lee, Yuichi Takami, Kenji Yamada, Hironori Kobayashi, Yuki Hasegawa, Hideo Sasai, Hiroki Otsuka, Yasuhiro Takeshima, Toshiyuki Fukao",
+                "Journal": "JIMD reports",
+                "Citation": "2019 Jul; 48(1):19-25",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "ketosis; ketotic"
+              },
+              {
+                "GenericArticleId": 5135147,
+                "RelevanceScore": 75,
+                "PMID": 34021044,
+                "DOI": "10.2337/db21-0066",
+                "PublicationDate": "2021-08-01",
+                "IsReview": false,
+                "Title": "Metabolomics Profiling of Patients With A-β+ Ketosis-Prone Diabetes During Diabetic Ketoacidosis",
+                "Author": "Farook Jahoor, Jean W Hsu, Paras B Mehta, Kelly R Keene, Ruchi Gaba, Surya Narayan Mulukutla, Eunice Caducoy, W Frank Peacock, Sanjeet G Patel, Rasmus Bennet, Ake Lernmark, Ashok Balasubramanyam",
+                "Journal": "Diabetes",
+                "Citation": "2021 08; 70(8):1898-1909",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "ketosis"
+              },
+              {
+                "GenericArticleId": 2027835,
+                "RelevanceScore": 70,
+                "PMID": 25300031,
+                "DOI": "10.1097/shk.0000000000000274",
+                "PublicationDate": "2015-02-01",
+                "IsReview": false,
+                "Title": "Plasma metabolite profiles following trauma-hemorrhage: effect of posttreatment with resveratrol",
+                "Author": "Yu-Ren Wang, Yung-Fong Tsai, Ying-Tung Lau, Huang-Ping Yu",
+                "Journal": "Shock (Augusta, Ga.)",
+                "Citation": "2015 Feb; 43(2):172-7",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "ketoacidosis"
+              },
+              {
+                "GenericArticleId": 6054974,
+                "RelevanceScore": 70,
+                "PMID": 29030856,
+                "DOI": "10.1007/8904_2017_59",
+                "PublicationDate": "2018-01-01",
+                "IsReview": false,
+                "Title": "Mitochondrial 3-Hydroxy-3-Methylglutaryl-CoA Synthase Deficiency: Unique Presenting Laboratory Values and a Review of Biochemical and Clinical Features",
+                "Author": "Erin Conboy, Filippo Vairo, Matthew Schultz, Katherine Agre, Ross Ridsdale, David Deyle, Devin Oglesbee, Dimitar Gavrilov, Eric W Klee, Brendan Lanpher",
+                "Journal": "JIMD reports",
+                "Citation": "2018; 40(?):63-69",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "ketosis"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D007003"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Hypoglycemia",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 49836,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 19,
+            "CooccurrenceScore": 602,
+            "Article": [
+              {
+                "GenericArticleId": 4090921,
+                "RelevanceScore": 165,
+                "PMID": 37908211,
+                "DOI": "10.1210/jcemcr/luad109",
+                "PublicationDate": "2023-09-01",
+                "IsReview": false,
+                "Title": "A Case of Congenital Disorder of Glycosylation Type 1b Presenting as Hyperinsulinemic Hypoglycemia and Failure to Thrive",
+                "Author": "Swati Rani, Inderneel Sahai, Madhusmita Misra",
+                "Journal": "JCEM case reports",
+                "Citation": "2023 Sep; 1(5):luad109",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "hypoglycemia"
+              },
+              {
+                "GenericArticleId": 4600630,
+                "RelevanceScore": 155,
+                "PMID": 32905056,
+                "DOI": "10.1002/jmd2.12146",
+                "PublicationDate": "2020-09-01",
+                "IsReview": false,
+                "Title": "Hypoglycemia is not a defining feature of metabolic crisis in mitochondrial 3-hydroxy-3-methylglutaryl-CoA synthase deficiency: Further evidence of specific biochemical markers which may aid diagnosis",
+                "Author": "Tracey A Conlon, Patricia E Fitzsimons, Ingrid Borovickova, Fidelma Kirby, Sinéad Murphy, Ina Knerr, Ellen Crushell",
+                "Journal": "JIMD reports",
+                "Citation": "2020 Sep; 55(1):26-31",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "hypoglycemia"
+              },
+              {
+                "GenericArticleId": 13154520,
+                "RelevanceScore": 145,
+                "PMID": 20543534,
+                "DOI": "10.1620/tjem.221.191",
+                "PublicationDate": "2010-07-01",
+                "IsReview": false,
+                "Title": "Carnitine palmitoyltransferase 2 deficiency: the time-course of blood and urinary acylcarnitine levels during initial L-carnitine supplementation",
+                "Author": "Tomohiro Hori, Toshiyuki Fukao, Hironori Kobayashi, Takahide Teramoto, Masaki Takayanagi, Yuki Hasegawa, Tetsuhiko Yasuno, Seiji Yamaguchi, Naomi Kondo",
+                "Journal": "The Tohoku journal of experimental medicine",
+                "Citation": "2010 Jul; 221(3):191-5",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "hypoglycemic"
+              },
+              {
+                "GenericArticleId": 7258115,
+                "RelevanceScore": 140,
+                "PMID": 6340690,
+                "DOI": "10.1016/0006-2952(83)90629-9",
+                "PublicationDate": "1983-03-15",
+                "IsReview": false,
+                "Title": "Recovery after hypoglycemic brain injury. Action of some biological substances on the cerebral metabolism",
+                "Author": "G Benzi, A Gorini, M Dossena, M Taglietti, D Fulle, O Pastoris",
+                "Journal": "Biochemical pharmacology",
+                "Citation": "1983 Mar; 32(6):1083-91",
+                "ChemicalName": "dl-acetylcarnitine",
+                "DiseaseName": "hypoglycemia; hypoglycemic"
+              },
+              {
+                "GenericArticleId": 8964375,
+                "RelevanceScore": 140,
+                "PMID": 10487540,
+                "DOI": "10.1016/s0006-2952(99)00219-1",
+                "PublicationDate": "1999-10-15",
+                "IsReview": false,
+                "Title": "Carnitine transport and its inhibition by sulfonylureas in human kidney proximal tubular epithelial cells",
+                "Author": "W Huang, S N Shaikh, M E Ganapathy, U Hopfer, F H Leibach, A L Carter, V Ganapathy",
+                "Journal": "Biochemical pharmacology",
+                "Citation": "1999 Oct; 58(8):1361-70",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "hypoglycemic"
+              },
+              {
+                "GenericArticleId": 4099299,
+                "RelevanceScore": 85,
+                "PMID": 37933340,
+                "DOI": "10.7759/cureus.46595",
+                "PublicationDate": "2023-10-01",
+                "IsReview": false,
+                "Title": "Myopathic Carnitine Palmitoyltransferase II (CPT II) Deficiency: A Rare Cause of Acute Kidney Injury and Cardiomyopathy",
+                "Author": "Efrain Castillo, Debbie Medina, Nick Schoenmann",
+                "Journal": "Cureus",
+                "Citation": "2023 Oct; 15(10):e46595",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "hypoglycemia"
+              },
+              {
+                "GenericArticleId": 2587767,
+                "RelevanceScore": 75,
+                "PMID": 31392109,
+                "DOI": "10.1002/jmd2.12051",
+                "PublicationDate": "2019-07-01",
+                "IsReview": false,
+                "Title": "A Japanese case of mitochondrial 3-hydroxy-3-methylglutaryl-CoA synthase deficiency who presented with severe metabolic acidosis and fatty liver without hypoglycemia",
+                "Author": "Tomoko Lee, Yuichi Takami, Kenji Yamada, Hironori Kobayashi, Yuki Hasegawa, Hideo Sasai, Hiroki Otsuka, Yasuhiro Takeshima, Toshiyuki Fukao",
+                "Journal": "JIMD reports",
+                "Citation": "2019 Jul; 48(1):19-25",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "hypoglycemia"
+              },
+              {
+                "GenericArticleId": 5071078,
+                "RelevanceScore": 75,
+                "PMID": 33841490,
+                "DOI": "10.3389/fgene.2021.577046",
+                "PublicationDate": "2021-01-01",
+                "IsReview": false,
+                "Title": "Clinical, Biochemical, and Molecular Analyses of Medium-Chain Acyl-CoA Dehydrogenase Deficiency in Chinese Patients",
+                "Author": "Zhuwen Gong, Lili Liang, Wenjuan Qiu, Huiwen Zhang, Jun Ye, Yu Wang, Wenjun Ji, Ting Chen, Xuefan Gu, Lianshu Han",
+                "Journal": "Frontiers in genetics",
+                "Citation": "2021; 12(?):577046",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "hypoglycemia"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D030342"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Genetic Diseases, Inborn",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 43298,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 18,
+            "CooccurrenceScore": 586,
+            "Article": [
+              {
+                "GenericArticleId": 4600630,
+                "RelevanceScore": 155,
+                "PMID": 32905056,
+                "DOI": "10.1002/jmd2.12146",
+                "PublicationDate": "2020-09-01",
+                "IsReview": false,
+                "Title": "Hypoglycemia is not a defining feature of metabolic crisis in mitochondrial 3-hydroxy-3-methylglutaryl-CoA synthase deficiency: Further evidence of specific biochemical markers which may aid diagnosis",
+                "Author": "Tracey A Conlon, Patricia E Fitzsimons, Ingrid Borovickova, Fidelma Kirby, Sinéad Murphy, Ina Knerr, Ellen Crushell",
+                "Journal": "JIMD reports",
+                "Citation": "2020 Sep; 55(1):26-31",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "recessive disorders"
+              },
+              {
+                "GenericArticleId": 1845070,
+                "RelevanceScore": 145,
+                "PMID": 24798266,
+                "DOI": "10.1007/8904_2014_312",
+                "PublicationDate": "2014-01-01",
+                "IsReview": false,
+                "Title": "Carnitine Profile and Effect of Suppletion in Children with Renal Fanconi Syndrome due to Cystinosis",
+                "Author": "M Besouw, E Cornelissen, D Cassiman, L Kluijtmans, L van den Heuvel, E Levtchenko",
+                "Journal": "JIMD reports",
+                "Citation": "2014; 16(?):25-30",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "recessive disorders"
+              },
+              {
+                "GenericArticleId": 9993193,
+                "RelevanceScore": 140,
+                "PMID": 12730462,
+                "DOI": "10.1093/jn/133.5.1544s",
+                "PublicationDate": "2003-05-01",
+                "IsReview": false,
+                "Title": "The metabolic tune-up: metabolic harmony and disease prevention",
+                "Author": "Bruce N Ames",
+                "Journal": "The Journal of nutrition",
+                "Citation": "2003 05; 133(5 Suppl 1):1544S-8S",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "genetic diseases"
+              },
+              {
+                "GenericArticleId": 4032943,
+                "RelevanceScore": 85,
+                "PMID": 37750643,
+                "DOI": "10.26355/eurrev_202309_33575",
+                "PublicationDate": "2023-09-01",
+                "IsReview": false,
+                "Title": "Comparison of sperm carnitine profiles of normospermic, oligospermic and azospermic individuals",
+                "Author": "E Arslan, I Koyuncu, E Temız, M Arı, S Akmese, M Ramat",
+                "Journal": "European review for medical and pharmacological sciences",
+                "Citation": "2023 Sep; 27(17):8154-8162",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "single gene mutations"
+              },
+              {
+                "GenericArticleId": 1443065,
+                "RelevanceScore": 75,
+                "PMID": 31203424,
+                "DOI": "10.1007/s00415-019-09432-8",
+                "PublicationDate": "2019-10-01",
+                "IsReview": false,
+                "Title": "Treatable cause of hereditary spastic paraplegia: eight cases of combined homocysteinaemia with methylmalonic aciduria",
+                "Author": "Yanping Wei, Yan Zhou, Jing Yuan, Jun Ni, Min Qian, Liying Cui, Bin Peng",
+                "Journal": "Journal of neurology",
+                "Citation": "2019 Oct; 266(10):2434-2439",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "genetic disorders"
+              },
+              {
+                "GenericArticleId": 4432653,
+                "RelevanceScore": 75,
+                "PMID": 32451238,
+                "DOI": "10.1016/j.ymgme.2020.05.003",
+                "PublicationDate": "2020-07-01",
+                "IsReview": false,
+                "Title": "Biochemical and anaplerotic applications of in vitro models of propionic acidemia and methylmalonic acidemia using patient-derived primary hepatocytes",
+                "Author": "M Sol Collado, Allison J Armstrong, Matthew Olson, Stephen A Hoang, Nathan Day, Marshall Summar, Kimberly A Chapman, John Reardon, Robert A Figler, Brian R Wamhoff",
+                "Journal": "Molecular genetics and metabolism",
+                "Citation": "2020 07; 130(3):183-196",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "recessive disorders"
+              },
+              {
+                "GenericArticleId": 12388418,
+                "RelevanceScore": 75,
+                "PMID": 30731133,
+                "DOI": "10.1016/j.bbalip.2019.02.001",
+                "PublicationDate": "2019-05-01",
+                "IsReview": false,
+                "Title": "Cardiolipin-deficient cells depend on anaplerotic pathways to ameliorate defective TCA cycle function",
+                "Author": "Vaishnavi Raja, Michael Salsaa, Amit S Joshi, Yiran Li, Carlo W T van Roermund, Nadia Saadat, Pablo Lazcano, Michael Schmidtke, Maik Hüttemann, Smiti V Gupta, Ronald J A Wanders, Miriam L Greenberg",
+                "Journal": "Biochimica et biophysica acta. Molecular and cell biology of lipids",
+                "Citation": "2019 05; 1864(5):654-661",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "genetic disorder"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D008659"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Metabolic Diseases",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 23107,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 16,
+            "CooccurrenceScore": 584,
+            "Article": [
+              {
+                "GenericArticleId": 9956188,
+                "RelevanceScore": 240,
+                "PMID": 12635861,
+                "PublicationDate": "2002-01-01",
+                "IsReview": false,
+                "Title": "Long-term ethanol administration enhances age-dependent modulation of redox state in brain and peripheral organs of rat: protection by acetyl carnitine",
+                "Author": "G Scapagnini, A Ravagna, R Bella, C Colombrita, G Pennisi, M Calvani, D Alkon, V Calabrese",
+                "Journal": "International journal of tissue reactions",
+                "Citation": "2002; 24(3):89-96",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "metabolic abnormalities"
+              },
+              {
+                "GenericArticleId": 9956189,
+                "RelevanceScore": 240,
+                "PMID": 12635862,
+                "PublicationDate": "2002-01-01",
+                "IsReview": false,
+                "Title": "Long-term ethanol administration enhances age-dependent modulation of redox state in different brain regions in the rat: protection by acetyl carnitine",
+                "Author": "V Calabrese, G Scapagnini, S Latteri, C Colombrita, A Ravagna, C Catalano, G Pennisi, M Calvani, D A Butterfield",
+                "Journal": "International journal of tissue reactions",
+                "Citation": "2002; 24(3):97-104",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "metabolic abnormalities"
+              },
+              {
+                "GenericArticleId": 8030771,
+                "RelevanceScore": 150,
+                "PMID": 29422939,
+                "DOI": "10.1186/s12986-018-0241-7",
+                "PublicationDate": "2018-01-01",
+                "IsReview": false,
+                "Title": "Associations between fatty acid oxidation, hepatic mitochondrial function, and plasma acylcarnitine levels in mice",
+                "Author": "Bodil Bjørndal, Eva Katrine Alterås, Carine Lindquist, Asbjørn Svardal, Jon Skorve, Rolf K Berge",
+                "Journal": "Nutrition & metabolism",
+                "Citation": "2018; 15(?):10",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "metabolic disease"
+              },
+              {
+                "GenericArticleId": 6106112,
+                "RelevanceScore": 80,
+                "PMID": 36079804,
+                "DOI": "10.3390/nu14173547",
+                "PublicationDate": "2022-08-28",
+                "IsReview": false,
+                "Title": "Progressive Metabolic Abnormalities Associated with the Development of Neonatal Bronchopulmonary Dysplasia",
+                "Author": "Chengyin Ye, Jinghua Wu, Jonathan D Reiss, Tiffany J Sinclair, David K Stevenson, Gary M Shaw, Donald H Chace, Reese H Clark, Lawrence S Prince, Xuefeng Bruce Ling, Karl G Sylvester",
+                "Journal": "Nutrients",
+                "Citation": "2022 Aug; 14(17):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "metabolic abnormalities"
+              },
+              {
+                "GenericArticleId": 6155097,
+                "RelevanceScore": 80,
+                "PMID": 36207831,
+                "DOI": "10.3724/zdxbyxb-2022-0194",
+                "PublicationDate": "2022-06-25",
+                "IsReview": false,
+                "Title": "Clinical characteristics and genotype analysis of five infants with cblX type of methylmalonic acidemia",
+                "Author": "Fei Wang, Lili Liang, Shiying Ling, Yue Yu, Ting Chen, Feng Xu, Zhuwen Gong, Lianshu Han",
+                "Journal": "Zhejiang da xue xue bao. Yi xue ban = Journal of Zhejiang University. Medical sciences",
+                "Citation": "2022 Jun; 51(3):298-305",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "metabolic abnormalities"
+              },
+              {
+                "GenericArticleId": 4559714,
+                "RelevanceScore": 75,
+                "PMID": 32792969,
+                "DOI": "10.3389/fphys.2020.00776",
+                "PublicationDate": "2020-01-01",
+                "IsReview": false,
+                "Title": "The Serum Metabolic Biomarkers in Early Diagnosis and Risk Stratification of Acute Coronary Syndrome",
+                "Author": "Huali Jiang, Hualong Jiang, Jian Zhang, Weijie Chen, Changyou Luo, Heng Li, William Hau, Benfa Chen, Shanhua Wang",
+                "Journal": "Frontiers in physiology",
+                "Citation": "2020; 11(?):776",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "metabolic abnormalities"
+              },
+              {
+                "GenericArticleId": 4713516,
+                "RelevanceScore": 75,
+                "PMID": 33210481,
+                "DOI": "10.3785/j.issn.1008-9292.2020.10.03",
+                "PublicationDate": "2020-10-25",
+                "IsReview": false,
+                "Title": "[Effects of delivery and storage conditions on concentrations of amino acids and carnitines in neonatal dried blood spots]",
+                "Author": "Lingwei Hu, Zhenzhen Hu, Jianbin Yang, Yu Zhang, Yezhen Shi, Shasha Zhu, Rulai Yang, Xinwen Huang",
+                "Journal": "Zhejiang da xue xue bao. Yi xue ban = Journal of Zhejiang University. Medical sciences",
+                "Citation": "2020 Oct; 49(5):565-573",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "metabolic diseases"
+              },
+              {
+                "GenericArticleId": 4917382,
+                "RelevanceScore": 75,
+                "PMID": 33413471,
+                "DOI": "10.1186/s13023-020-01632-0",
+                "PublicationDate": "2021-01-07",
+                "IsReview": false,
+                "Title": "A rare mutation c.1663G > A (p.A555T) in the MMUT gene associated with mild clinical and biochemical phenotypes of methylmalonic acidemia in 30 Chinese patients",
+                "Author": "Lili Liang, Ruixue Shuai, Yue Yu, Wenjuan Qiu, Linghua Shen, Shengnan Wu, Haiyan Wei, Yongxing Chen, Chiju Yang, Peng Xu, Xigui Chen, Hui Zou, Jizhen Feng, Tingting Niu, Haili Hu, Jun Ye, Huiwen Zhang, Deyun Lu, Zhuwen Gong, Xia Zhan, Wenjun Ji, Yongguo Yu, Xuefan Gu, Lianshu Han",
+                "Journal": "Orphanet journal of rare diseases",
+                "Citation": "2021 01; 16(1):22",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "metabolic disease"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D007511"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Ischemia",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 152567,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 22,
+            "CooccurrenceScore": 541,
+            "Article": [
+              {
+                "GenericArticleId": 2027139,
+                "RelevanceScore": 250,
+                "PMID": 25298189,
+                "DOI": "10.1002/mrm.25485",
+                "PublicationDate": "2015-10-01",
+                "IsReview": false,
+                "Title": "Metabolic imaging of hyperpolarized [1-(13) C]acetate and [1-(13) C]acetylcarnitine - investigation of the influence of dobutamine induced stress",
+                "Author": "Ulrich Koellisch, Concetta V Gringeri, Giaime Rancan, Eliane V Farell, Marion I Menzel, Axel Haase, Markus Schwaiger, Rolf F Schulte",
+                "Journal": "Magnetic resonance in medicine",
+                "Citation": "2015 Oct; 74(4):1011-8",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "ischemia"
+              },
+              {
+                "GenericArticleId": 7821253,
+                "RelevanceScore": 240,
+                "PMID": 7894140,
+                "PublicationDate": "1994-10-01",
+                "IsReview": false,
+                "Title": "Ischemia-reperfusion of human skeletal muscle during aortoiliac surgery: effects of acetylcarnitine",
+                "Author": "C Adembri, L L Domenici, L Formigli, S Brunelleschi, E Ferrari, G P Novelli",
+                "Journal": "Histology and histopathology",
+                "Citation": "1994 Oct; 9(4):683-90",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "ischemia"
+              },
+              {
+                "GenericArticleId": 2161350,
+                "RelevanceScore": 150,
+                "PMID": 25660059,
+                "DOI": "10.1016/j.mad.2015.01.003",
+                "PublicationDate": "2015-01-01",
+                "IsReview": false,
+                "Title": "Acetyl-L-carnitine increases mitochondrial protein acetylation in the aged rat heart",
+                "Author": "Janos Kerner, Elizabeth Yohannes, Kwangwon Lee, Ashraf Virmani, Aleardo Koverech, Claudio Cavazza, Mark R Chance, Charles Hoppel",
+                "Journal": "Mechanisms of ageing and development",
+                "Citation": "2015 Jan; 145(?):39-50",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "ischemic"
+              },
+              {
+                "GenericArticleId": 8953967,
+                "RelevanceScore": 150,
+                "PMID": 10463134,
+                "PublicationDate": "1999-01-01",
+                "IsReview": true,
+                "Title": "Attenuation by acetyl-L-carnitine of neurological damage and biochemical derangement following brain ischemia and reperfusion",
+                "Author": "M Calvani, E Arrigoni-Martelli",
+                "Journal": "International journal of tissue reactions",
+                "Citation": "1999; 21(1):1-6",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "ischemia"
+              },
+              {
+                "GenericArticleId": 10898152,
+                "RelevanceScore": 142,
+                "PMID": 15454400,
+                "DOI": "10.1152/ajpendo.00441.2003",
+                "PublicationDate": "2005-02-01",
+                "IsReview": false,
+                "Title": "Acetyl-CoA provision and the acetyl group deficit at the onset of contraction in ischemic canine skeletal muscle",
+                "Author": "Paul A Roberts, Susan J G Loxham, Simon M Poucher, Dumitru Constantin-Teodosiu, Paul L Greenhaff",
+                "Journal": "American journal of physiology. Endocrinology and metabolism",
+                "Citation": "2005 Feb; 288(2):E327-34",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "ischemic"
+              },
+              {
+                "GenericArticleId": 11515155,
+                "RelevanceScore": 142,
+                "PMID": 16793872,
+                "DOI": "10.1096/fj.05-4535fje",
+                "PublicationDate": "2006-07-01",
+                "IsReview": false,
+                "Title": "Reversal of mitochondrial defects before ischemia protects the aged heart",
+                "Author": "Edward J Lesnefsky, DingChao He, Shadi Moghaddas, Charles L Hoppel",
+                "Journal": "FASEB journal : official publication of the Federation of American Societies for Experimental Biology",
+                "Citation": "2006 Jul; 20(9):1543-5",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "ischemia"
+              },
+              {
+                "GenericArticleId": 6386497,
+                "RelevanceScore": 85,
+                "PMID": 36830011,
+                "DOI": "10.3390/antiox12020452",
+                "PublicationDate": "2023-02-10",
+                "IsReview": false,
+                "Title": "Hyperkalemic or Low Potassium Cardioplegia Protects against Reduction of Energy Metabolism by Oxidative Stress",
+                "Author": "Hongting Diao, Haiwei Gu, Qin M Chen",
+                "Journal": "Antioxidants (Basel, Switzerland)",
+                "Citation": "2023 Feb; 12(2):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "ischemia"
+              },
+              {
+                "GenericArticleId": 4934468,
+                "RelevanceScore": 75,
+                "PMID": 33458907,
+                "DOI": "10.1002/nbm.4471",
+                "PublicationDate": "2021-04-01",
+                "IsReview": false,
+                "Title": "Hyperpolarized magnetic resonance shows that the anti-ischemic drug meldonium leads to increased flux through pyruvate dehydrogenase in vivo resulting in improved post-ischemic function in the diabetic heart",
+                "Author": "Dragana Savic, Vicky Ball, Lorenz Holzner, David Hauton, Kerstin N Timm, M Kate Curtis, Lisa C Heather, Damian J Tyler",
+                "Journal": "NMR in biomedicine",
+                "Citation": "2021 04; 34(4):e4471",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "ischemia; ischemic"
+              },
+              {
+                "GenericArticleId": 12618632,
+                "RelevanceScore": 65,
+                "PMID": 19307475,
+                "DOI": "10.1161/circulationaha.108.816116",
+                "PublicationDate": "2009-04-07",
+                "IsReview": false,
+                "Title": "Metabolomic profiling reveals distinct patterns of myocardial substrate use in humans with coronary artery disease or left ventricular dysfunction during surgical ischemia/reperfusion",
+                "Author": "Aslan T Turer, Robert D Stevens, James R Bain, Michael J Muehlbauer, Johannes van der Westhuizen, Joseph P Mathew, Debra A Schwinn, Donald D Glower, Christopher B Newgard, Mihai V Podgoreanu",
+                "Journal": "Circulation",
+                "Citation": "2009 Apr; 119(13):1736-46",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "ischemia"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "C536038"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Medium chain acyl CoA dehydrogenase deficiency",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 288,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 8,
+            "CooccurrenceScore": 514,
+            "Article": [
+              {
+                "GenericArticleId": 5071078,
+                "RelevanceScore": 75,
+                "PMID": 33841490,
+                "DOI": "10.3389/fgene.2021.577046",
+                "PublicationDate": "2021-01-01",
+                "IsReview": false,
+                "Title": "Clinical, Biochemical, and Molecular Analyses of Medium-Chain Acyl-CoA Dehydrogenase Deficiency in Chinese Patients",
+                "Author": "Zhuwen Gong, Lili Liang, Wenjuan Qiu, Huiwen Zhang, Jun Ye, Yu Wang, Wenjun Ji, Ting Chen, Xuefan Gu, Lianshu Han",
+                "Journal": "Frontiers in genetics",
+                "Citation": "2021; 12(?):577046",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "medium-chain acyl-coa dehydrogenase deficiency"
+              },
+              {
+                "GenericArticleId": 2381692,
+                "RelevanceScore": 70,
+                "PMID": 25940036,
+                "DOI": "10.1007/8904_2015_439",
+                "PublicationDate": "2015-01-01",
+                "IsReview": false,
+                "Title": "Medium-Chain Acyl-CoA Dehydrogenase Deficiency: Evaluation of Genotype-Phenotype Correlation in Patients Detected by Newborn Screening",
+                "Author": "Gwendolyn Gramer, Gisela Haege, Junmin Fang-Hoffmann, Georg F Hoffmann, Claus R Bartram, Katrin Hinderhofer, Peter Burgard, Martin Lindner",
+                "Journal": "JIMD reports",
+                "Citation": "2015; 23(?):101-12",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "medium-chain acyl-coa dehydrogenase deficiency"
+              },
+              {
+                "GenericArticleId": 926855,
+                "RelevanceScore": 65,
+                "PMID": 22976767,
+                "DOI": "10.1007/s10545-012-9532-8",
+                "PublicationDate": "2013-09-01",
+                "IsReview": false,
+                "Title": "Normal rates of whole-body fat oxidation and gluconeogenesis after overnight fasting and moderate-intensity exercise in patients with medium-chain acyl-CoA dehydrogenase deficiency",
+                "Author": "Hidde H Huidekoper, Mariëtte T Ackermans, René Koopman, Luc J C van Loon, Hans P Sauerwein, Frits A Wijburg",
+                "Journal": "Journal of inherited metabolic disease",
+                "Citation": "2013 Sep; 36(5):831-40",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "mcadd; medium-chain acyl-coa dehydrogenase deficiency"
+              },
+              {
+                "GenericArticleId": 2326961,
+                "RelevanceScore": 60,
+                "PMID": 2795349,
+                "DOI": "10.1016/s0022-3476(89)80284-7",
+                "PublicationDate": "1989-10-01",
+                "IsReview": false,
+                "Title": "Quantitation of urinary carnitine esters in a patient with medium-chain acyl-coenzyme A dehydrogenase deficiency: effect of metabolic state and L-carnitine therapy",
+                "Author": "E Schmidt-Sommerfeld, D Penn, J Kerner, L L Bieber, T M Rossi, E Lebenthal",
+                "Journal": "The Journal of pediatrics",
+                "Citation": "1989 Oct; 115(4):577-82",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "medium-chain acyl-coenzyme a dehydrogenase deficiency"
+              },
+              {
+                "GenericArticleId": 6485111,
+                "RelevanceScore": 60,
+                "PMID": 4000772,
+                "DOI": "10.1203/00006450-198505000-00011",
+                "PublicationDate": "1985-05-01",
+                "IsReview": false,
+                "Title": "Diagnostic and therapeutic implications of medium-chain acylcarnitines in the medium-chain acyl-coA dehydrogenase deficiency",
+                "Author": "C R Roe, D S Millington, D A Maltby, T P Bohan, S G Kahler, R A Chalmers",
+                "Journal": "Pediatric research",
+                "Citation": "1985 May; 19(5):459-66",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "medium-chain acyl-coa dehydrogenase deficiency"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D000592"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Amino Acid Metabolism, Inborn Errors",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 1157,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 9,
+            "CooccurrenceScore": 499,
+            "Article": [
+              {
+                "GenericArticleId": 5689742,
+                "RelevanceScore": 80,
+                "PMID": 35254746,
+                "DOI": "10.1515/dmpt-2021-0218",
+                "PublicationDate": "2022-09-01",
+                "IsReview": false,
+                "Title": "The markers of the organic acidemias and their ratios in healthy neonates in Serbian population",
+                "Author": "Anđelo Beletić, Aleksandra Tijanić, Petr Chrastina, Tatjana Nikolić, Aleksandar Stefanović, Sanja Stanković",
+                "Journal": "Drug metabolism and personalized therapy",
+                "Citation": "2022 09; 37(3):271-275",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "organic acidemia"
+              },
+              {
+                "GenericArticleId": 6351755,
+                "RelevanceScore": 80,
+                "PMID": 36735654,
+                "DOI": "10.1371/journal.pone.0272979",
+                "PublicationDate": "2023-01-01",
+                "IsReview": false,
+                "Title": "Free amino acid and acylcarnitine values in Ursus americanus Pallas 1780 (black bear) from Northeastern Mexico",
+                "Author": "Andres Abellan-Borja, Iram P Rodriguez-Sanchez, Rogelio Carrera-Treviño, Olga Karina Villanueva-Segura, Patricio Adrian Zapata-Morin, Laura E Martinez-de-Villareal, Luis Javier Barboza-Aranda, Mayra A Gomez-Govea, Margarita L Martinez-Fierro, Ivan Delgado-Enciso, Gabriel Ruiz-Ayma, Jose Ignacio Gonzalez-Rojas, Antonio Guzman-Velasco",
+                "Journal": "PloS one",
+                "Citation": "2023; 18(2):e0272979",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "organic acid metabolism disorders"
+              },
+              {
+                "GenericArticleId": 5154028,
+                "RelevanceScore": 75,
+                "PMID": 34070764,
+                "DOI": "10.3390/biom11060812",
+                "PublicationDate": "2021-05-30",
+                "IsReview": false,
+                "Title": "Effect of You-Gui-Wan on House Dust Mite-Induced Mouse Allergic Asthma via Regulating Amino Acid Metabolic Disorder and Gut Dysbiosis",
+                "Author": "Wei-Hsiang Hsu, Li-Jen Lin, Chung-Kuang Lu, Shung-Te Kao, Yun-Lian Lin",
+                "Journal": "Biomolecules",
+                "Citation": "2021 05; 11(6):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "amino acid metabolic disorder"
+              },
+              {
+                "GenericArticleId": 2057541,
+                "RelevanceScore": 70,
+                "PMID": 25381946,
+                "DOI": "10.1515/jpem-2014-0302",
+                "PublicationDate": "2015-05-01",
+                "IsReview": false,
+                "Title": "An asymptomatic mother diagnosed with 3-methylcrotonyl-CoA carboxylase deficiency after newborn screening",
+                "Author": "Deniz Kör, Neslihan Önenli Mungan, Berna Şeker Yılmaz, Murat Öktem",
+                "Journal": "Journal of pediatric endocrinology & metabolism : JPEM",
+                "Citation": "2015 May; 28(5-6):669-71",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "organic acidemia"
+              },
+              {
+                "GenericArticleId": 11173436,
+                "RelevanceScore": 70,
+                "PMID": 30292292,
+                "DOI": "10.1016/j.aca.2018.01.045",
+                "PublicationDate": "2018-12-11",
+                "IsReview": false,
+                "Title": "Isotope-labeling derivatization with 3-nitrophenylhydrazine for LC/multiple-reaction monitoring-mass-spectrometry-based quantitation of carnitines in dried blood spots",
+                "Author": "Jun Han, Rehan Higgins, Mark D Lim, Kieran Atkinson, Juncong Yang, Karen Lin, Christoph H Borchers",
+                "Journal": "Analytica chimica acta",
+                "Citation": "2018 Dec; 1037(?):177-187",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "organic acidemia"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D007249"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Inflammation",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 378982,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 26,
+            "CooccurrenceScore": 490,
+            "Article": [
+              {
+                "GenericArticleId": 4384289,
+                "RelevanceScore": 255,
+                "PMID": 32320006,
+                "DOI": "10.1093/ajcn/nqaa072",
+                "PublicationDate": "2020-08-01",
+                "IsReview": false,
+                "Title": "Nicotinamide riboside supplementation alters body composition and skeletal muscle acetylcarnitine concentrations in healthy obese humans",
+                "Author": "Carlijn M E Remie, Kay H M Roumans, Michiel P B Moonen, Niels J Connell, Bas Havekes, Julian Mevenkamp, Lucas Lindeboom, Vera H W de Wit, Tineke van de Weijer, Suzanne A B M Aarts, Esther Lutgens, Bauke V Schomakers, Hyung L Elfrink, Rubén Zapata-Pérez, Riekelt H Houtkooper, Johan Auwerx, Joris Hoeks, Vera B Schrauwen-Hinderling, Esther Phielix, Patrick Schrauwen",
+                "Journal": "The American journal of clinical nutrition",
+                "Citation": "2020 08; 112(2):413-426",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "inflammation"
+              },
+              {
+                "GenericArticleId": 11364398,
+                "RelevanceScore": 252,
+                "PMID": 16413418,
+                "DOI": "10.1016/j.jnutbio.2005.03.027",
+                "PublicationDate": "2006-02-01",
+                "IsReview": true,
+                "Title": "Acetylcarnitine and cellular stress response: roles in nutritional redox homeostasis and regulation of longevity genes",
+                "Author": "Vittorio Calabrese, Anna Maria Giuffrida Stella, Menotti Calvani, D Allan Butterfield",
+                "Journal": "The Journal of nutritional biochemistry",
+                "Citation": "2006 Feb; 17(2):73-88",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "inflammation"
+              },
+              {
+                "GenericArticleId": 11205330,
+                "RelevanceScore": 250,
+                "PMID": 30379669,
+                "DOI": "10.1097/ccm.0000000000003517",
+                "PublicationDate": "2019-02-01",
+                "IsReview": false,
+                "Title": "Increased Plasma Acetylcarnitine in Sepsis Is Associated With Multiple Organ Dysfunction and Mortality: A Multicenter Cohort Study",
+                "Author": "Kuei-Pin Chung, Guan-Yuan Chen, Tzu-Yi Chuang, Yen-Tsung Huang, Hou-Tai Chang, Yen-Fu Chen, Wei-Lun Liu, Yi-Jung Chen, Chia-Lin Hsu, Miao-Tzu Huang, Ching-Hua Kuo, Chong-Jen Yu",
+                "Journal": "Critical care medicine",
+                "Citation": "2019 02; 47(2):210-218",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "inflammation"
+              },
+              {
+                "GenericArticleId": 12980726,
+                "RelevanceScore": 240,
+                "PMID": 2171633,
+                "DOI": "10.1079/bjn19900049",
+                "PublicationDate": "1990-09-01",
+                "IsReview": false,
+                "Title": "The effect of acute feeding of carnitine, acetyl carnitine and propionyl carnitine on basal and A23187-stimulated eicosanoid release from rat carrageenan-elicited peritoneal macrophages",
+                "Author": "G R Elliott, A P Lauwen, I L Bonta",
+                "Journal": "The British journal of nutrition",
+                "Citation": "1990 Sep; 64(2):497-503",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "inflammation"
+              },
+              {
+                "GenericArticleId": 4280156,
+                "RelevanceScore": 155,
+                "PMID": 32048954,
+                "DOI": "10.2174/1381612826666200212114038",
+                "PublicationDate": "2020-01-01",
+                "IsReview": false,
+                "Title": "Potential Therapeutic Role of Carnitine and Acetylcarnitine in Neurological Disorders",
+                "Author": "Cecilia Maldonado, Marta Vázquez, Pietro Fagiolino",
+                "Journal": "Current pharmaceutical design",
+                "Citation": "2020; 26(12):1277-1285",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "inflammation"
+              },
+              {
+                "GenericArticleId": 10968654,
+                "RelevanceScore": 142,
+                "PMID": 15641110,
+                "DOI": "10.1002/jnr.20386",
+                "PublicationDate": "2005-02-15",
+                "IsReview": false,
+                "Title": "Acetylcarnitine induces heme oxygenase in rat astrocytes and protects against oxidative stress: involvement of the transcription factor Nrf2",
+                "Author": "Vittorio Calabrese, Agrippino Ravagna, Claudia Colombrita, Giovanni Scapagnini, Eleonora Guagliano, Menotti Calvani, D Allan Butterfield, Anna Maria Giuffrida Stella",
+                "Journal": "Journal of neuroscience research",
+                "Citation": "2005 Feb; 79(4):509-21",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "inflammation"
+              },
+              {
+                "GenericArticleId": 4151315,
+                "RelevanceScore": 115,
+                "PMID": 38076201,
+                "DOI": "10.1016/j.heliyon.2023.e22682",
+                "PublicationDate": "2023-12-01",
+                "IsReview": false,
+                "Title": "Exploring fibrous ingredients for fish: The case of feeding sugar beet pulp to tambaquí (Colossoma macropomum)",
+                "Author": "Awot Teklu Mebratu, Leilani Vanhandsaeme, Yohannes Tekle Asfaw, Wouter Merckx, Geert Paul Jules Janssens",
+                "Journal": "Heliyon",
+                "Citation": "2023 Dec; 9(12):e22682",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "inflammation"
+              },
+              {
+                "GenericArticleId": 3827629,
+                "RelevanceScore": 85,
+                "PMID": 37500444,
+                "DOI": "10.3168/jds.2023-23259",
+                "PublicationDate": "2023-07-25",
+                "IsReview": false,
+                "Title": "Effects of dietary rumen-protected choline supplementation to periparturient dairy cattle on inflammation, metabolism, and performance during an intramammary lipopolysaccharide challenge",
+                "Author": "T H Swartz, B J Bradford, L K Mamedova, K A Estes",
+                "Journal": "Journal of dairy science",
+                "Citation": "2023 Jul; ?(?):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "inflammation"
+              },
+              {
+                "GenericArticleId": 4132170,
+                "RelevanceScore": 85,
+                "PMID": 38026227,
+                "DOI": "10.1016/j.isci.2023.108278",
+                "PublicationDate": "2023-11-17",
+                "IsReview": false,
+                "Title": "Short salsalate administration affects cell proliferation, metabolism, and inflammation in polycystic kidney disease",
+                "Author": "Anish A Kanhai, Elena Sánchez-López, Thomas B Kuipers, Jan B van Klinken, Kyra L Dijkstra, Inge van der Veen, Hans J Baelde, Xuewen Song, York Pei, Hailiang Mei, Wouter N Leonhard, Oleg A Mayboroda, Dorien J M Peters",
+                "Journal": "iScience",
+                "Citation": "2023 Nov; 26(11):108278",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "inflammation"
+              },
+              {
+                "GenericArticleId": 6342701,
+                "RelevanceScore": 85,
+                "PMID": 36710180,
+                "DOI": "10.3168/jds.2022-22383",
+                "PublicationDate": "2023-03-01",
+                "IsReview": false,
+                "Title": "Beneficial effects of Lactobacillus rhamnosus hsryfm 1301 fermented milk on rats with nonalcoholic fatty liver disease",
+                "Author": "Dawei Chen, Yating Liang, Jiaojiao Liang, Feifei Shen, Yue Cheng, Hengxian Qu, Yunchao Wa, Congcong Guo, Ruixia Gu, Jianya Qian, Xia Chen, Chenchen Zhang, Chengran Guan",
+                "Journal": "Journal of dairy science",
+                "Citation": "2023 Mar; 106(3):1533-1548",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "inflammation"
+              },
+              {
+                "GenericArticleId": 6188345,
+                "RelevanceScore": 80,
+                "PMID": 36295885,
+                "DOI": "10.3390/metabo12100983",
+                "PublicationDate": "2022-10-17",
+                "IsReview": false,
+                "Title": "A Marked Low-Grade Inflammation and a Significant Deterioration in Metabolic Status in First-Episode Schizophrenia: A Five-Year Follow-Up Study",
+                "Author": "Madis Parksepp, Liina Haring, Kalle Kilk, Egon Taalberg, Raul Kangro, Mihkel Zilmer, Eero Vasar",
+                "Journal": "Metabolites",
+                "Citation": "2022 Oct; 12(10):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "inflammation"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D009369"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Neoplasms",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 1039274,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 36,
+            "CooccurrenceScore": 449,
+            "Article": [
+              {
+                "GenericArticleId": 3692126,
+                "RelevanceScore": 265,
+                "PMID": 37134161,
+                "DOI": "10.1126/sciadv.adf0115",
+                "PublicationDate": "2023-05-03",
+                "IsReview": false,
+                "Title": "Acetylcarnitine shuttling links mitochondrial metabolism to histone acetylation and lipogenesis",
+                "Author": "Luke T Izzo, Sophie Trefely, Christina Demetriadou, Jack M Drummond, Takuya Mizukami, Nina Kuprasertkul, Aimee T Farria, Phuong T T Nguyen, Nivitha Murali, Lauren Reich, Daniel S Kantner, Joshua Shaffer, Hayley Affronti, Alessandro Carrer, Andrew Andrews, Brian C Capell, Nathaniel W Snyder, Kathryn E Wellen",
+                "Journal": "Science advances",
+                "Citation": "2023 May; 9(18):eadf0115",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "cancer"
+              },
+              {
+                "GenericArticleId": 12669388,
+                "RelevanceScore": 255,
+                "PMID": 19449442,
+                "DOI": "10.1002/biof.22",
+                "PublicationDate": "2009-03-01",
+                "IsReview": true,
+                "Title": "Vitagenes, cellular stress response, and acetylcarnitine: relevance to hormesis",
+                "Author": "Vittorio Calabrese, Carolin Cornelius, Albena T Dinkova-Kostova, Edward J Calabrese",
+                "Journal": "BioFactors (Oxford, England)",
+                "Citation": "2009 Mar; 35(2):146-60",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "cancer"
+              },
+              {
+                "GenericArticleId": 11364398,
+                "RelevanceScore": 252,
+                "PMID": 16413418,
+                "DOI": "10.1016/j.jnutbio.2005.03.027",
+                "PublicationDate": "2006-02-01",
+                "IsReview": true,
+                "Title": "Acetylcarnitine and cellular stress response: roles in nutritional redox homeostasis and regulation of longevity genes",
+                "Author": "Vittorio Calabrese, Anna Maria Giuffrida Stella, Menotti Calvani, D Allan Butterfield",
+                "Journal": "The Journal of nutritional biochemistry",
+                "Citation": "2006 Feb; 17(2):73-88",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "cancer"
+              },
+              {
+                "GenericArticleId": 2870128,
+                "RelevanceScore": 250,
+                "PMID": 26976432,
+                "DOI": "10.1158/0008-5472.can-15-3199",
+                "PublicationDate": "2016-05-15",
+                "IsReview": false,
+                "Title": "Acetylcarnitine Is a Candidate Diagnostic and Prognostic Biomarker of Hepatocellular Carcinoma",
+                "Author": "Yonghai Lu, Ning Li, Liang Gao, Yong-Jiang Xu, Chong Huang, Kangkang Yu, Qingxia Ling, Qi Cheng, Shengsen Chen, Mengqi Zhu, Jinling Fang, Mingquan Chen, Choon Nam Ong",
+                "Journal": "Cancer research",
+                "Citation": "2016 05; 76(10):2912-20",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "cancer; tumor; tumors"
+              },
+              {
+                "GenericArticleId": 1268263,
+                "RelevanceScore": 245,
+                "PMID": 23545238,
+                "DOI": "10.1016/j.bbagen.2013.03.023",
+                "PublicationDate": "2013-08-01",
+                "IsReview": false,
+                "Title": "In vivo enzymatic activity of acetylCoA synthetase in skeletal muscle revealed by (13)C turnover from hyperpolarized [1-(13)C]acetate to [1-(13)C]acetylcarnitine",
+                "Author": "Jessica A M Bastiaansen, Tian Cheng, Mor Mishkovsky, João M N Duarte, Arnaud Comment, Rolf Gruetter",
+                "Journal": "Biochimica et biophysica acta",
+                "Citation": "2013 Aug; 1830(8):4171-8",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "cancer"
+              },
+              {
+                "GenericArticleId": 3778608,
+                "RelevanceScore": 165,
+                "PMID": 37367069,
+                "DOI": "10.3390/cimb45060320",
+                "PublicationDate": "2023-06-08",
+                "IsReview": false,
+                "Title": "Potential Diagnostic Biomarker Detection for Prostate Cancer Using Untargeted and Targeted Metabolomic Profiling",
+                "Author": "Diana Nitusca, Carmen Socaciu, Andreea Iulia Socaciu, Ioan Ovidiu Sirbu, Razvan Bardan, Alin Adrian Cumpanas, Edward Seclaman, Catalin Marian",
+                "Journal": "Current issues in molecular biology",
+                "Citation": "2023 Jun; 45(6):5036-5051",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "cancer"
+              },
+              {
+                "GenericArticleId": 5241316,
+                "RelevanceScore": 155,
+                "PMID": 34307370,
+                "DOI": "10.3389/fcell.2021.695540",
+                "PublicationDate": "2021-01-01",
+                "IsReview": false,
+                "Title": "Identification of Novel Serum Metabolic Biomarkers as Indicators in the Progression of Intravenous Leiomyomatosis: A High Performance Liquid Chromatography-Tandem Mass Spectrometry-Based Study",
+                "Author": "Zhitong Ge, Penghui Feng, Zijuan Zhang, Jianchu Li, Qi Yu",
+                "Journal": "Frontiers in cell and developmental biology",
+                "Citation": "2021; 9(?):695540",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "neoplasm"
+              },
+              {
+                "GenericArticleId": 5552232,
+                "RelevanceScore": 155,
+                "PMID": 34886862,
+                "DOI": "10.1186/s12916-021-02183-2",
+                "PublicationDate": "2021-12-10",
+                "IsReview": false,
+                "Title": "Lifestyle correlates of eight breast cancer-related metabolites: a cross-sectional study within the EPIC cohort",
+                "Author": "Mathilde His, Vivian Viallon, Laure Dossus, Julie A Schmidt, Ruth C Travis, Marc J Gunter, Kim Overvad, Cecilie Kyrø, Anne Tjønneland, Lucie Lécuyer, Joseph A Rothwell, Gianluca Severi, Theron Johnson, Verena Katzke, Matthias B Schulze, Giovanna Masala, Sabina Sieri, Salvatore Panico, Rosario Tumino, Alessandra Macciotta, Jolanda M A Boer, Evelyn M Monninkhof, Karina Standahl Olsen, Therese H Nøst, Torkjel M Sandanger, Antonio Agudo, Maria-Jose Sánchez, Pilar Amiano, Sandra M Colorado-Yohar, Eva Ardanaz, Linda Vidman, Anna Winkvist, Alicia K Heath, Elisabete Weiderpass, Inge Huybrechts, Sabina Rinaldi",
+                "Journal": "BMC medicine",
+                "Citation": "2021 12; 19(1):312",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "cancer"
+              },
+              {
+                "GenericArticleId": 5867269,
+                "RelevanceScore": 90,
+                "PMID": 35710135,
+                "DOI": "10.1124/pharmrev.121.000408",
+                "PublicationDate": "2022-07-01",
+                "IsReview": true,
+                "Title": "Acylcarnitines: Nomenclature, Biomarkers, Therapeutic Potential, Drug Targets, and Clinical Trials",
+                "Author": "Maija Dambrova, Marina Makrecka-Kuka, Janis Kuka, Reinis Vilskersts, Didi Nordberg, Misty M Attwood, Stefan Smesny, Zumrut Duygu Sen, An Chi Guo, Eponine Oler, Siyang Tian, Jiamin Zheng, David S Wishart, Edgars Liepinsh, Helgi B Schiöth",
+                "Journal": "Pharmacological reviews",
+                "Citation": "2022 07; 74(3):506-551",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "cancers"
+              },
+              {
+                "GenericArticleId": 3780228,
+                "RelevanceScore": 85,
+                "PMID": 37370852,
+                "DOI": "10.3390/cancers15123242",
+                "PublicationDate": "2023-06-19",
+                "IsReview": false,
+                "Title": "Serum Metabolite Biomarkers for Pancreatic Tumors: Neuroendocrine and Pancreatic Ductal Adenocarcinomas-A Preliminary Study",
+                "Author": "Karolina Skubisz, Krzysztof Dąbkowski, Emilia Samborowska, Teresa Starzyńska, Anna Deskur, Filip Ambrozkiewicz, Jakub Karczmarski, Mariusz Radkiewicz, Katarzyna Kusnierz, Beata Kos-Kudła, Tadeusz Sulikowski, Patrycja Cybula, Agnieszka Paziewska",
+                "Journal": "Cancers",
+                "Citation": "2023 Jun; 15(12):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "malignancy; tumors"
+              },
+              {
+                "GenericArticleId": 3780428,
+                "RelevanceScore": 85,
+                "PMID": 37371499,
+                "DOI": "10.3390/biom13060921",
+                "PublicationDate": "2023-05-31",
+                "IsReview": false,
+                "Title": "Cardiac Molecular Remodeling by Anticancer Drugs: Doxorubicin Affects More Metabolism While Mitoxantrone Impacts More Autophagy in Adult CD-1 Male Mice",
+                "Author": "Sofia Reis Brandão, Ana Reis-Mendes, Margarida Duarte Araújo, Maria João Neuparth, Hugo Rocha, Félix Carvalho, Rita Ferreira, Vera Marisa Costa",
+                "Journal": "Biomolecules",
+                "Citation": "2023 05; 13(6):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "cancer"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D019636"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Neurodegenerative Diseases",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 88447,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 16,
+            "CooccurrenceScore": 449,
+            "Article": [
+              {
+                "GenericArticleId": 12669388,
+                "RelevanceScore": 255,
+                "PMID": 19449442,
+                "DOI": "10.1002/biof.22",
+                "PublicationDate": "2009-03-01",
+                "IsReview": true,
+                "Title": "Vitagenes, cellular stress response, and acetylcarnitine: relevance to hormesis",
+                "Author": "Vittorio Calabrese, Carolin Cornelius, Albena T Dinkova-Kostova, Edward J Calabrese",
+                "Journal": "BioFactors (Oxford, England)",
+                "Citation": "2009 Mar; 35(2):146-60",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "neurodegeneration"
+              },
+              {
+                "GenericArticleId": 11364398,
+                "RelevanceScore": 252,
+                "PMID": 16413418,
+                "DOI": "10.1016/j.jnutbio.2005.03.027",
+                "PublicationDate": "2006-02-01",
+                "IsReview": true,
+                "Title": "Acetylcarnitine and cellular stress response: roles in nutritional redox homeostasis and regulation of longevity genes",
+                "Author": "Vittorio Calabrese, Anna Maria Giuffrida Stella, Menotti Calvani, D Allan Butterfield",
+                "Journal": "The Journal of nutritional biochemistry",
+                "Citation": "2006 Feb; 17(2):73-88",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "neurodegenerative disorders"
+              },
+              {
+                "GenericArticleId": 10070804,
+                "RelevanceScore": 240,
+                "PMID": 12938853,
+                "DOI": "10.1023/a:1024984013069",
+                "PublicationDate": "2003-09-01",
+                "IsReview": false,
+                "Title": "Disruption of thiol homeostasis and nitrosative stress in the cerebrospinal fluid of patients with active multiple sclerosis: evidence for a protective role of acetylcarnitine",
+                "Author": "V Calabrese, G Scapagnini, A Ravagna, R Bella, D A Butterfield, M Calvani, G Pennisi, A M Giuffrida Stella",
+                "Journal": "Neurochemical research",
+                "Citation": "2003 Sep; 28(9):1321-8",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "neurodegenerative disorders"
+              },
+              {
+                "GenericArticleId": 12067136,
+                "RelevanceScore": 152,
+                "PMID": 18042001,
+                "DOI": "10.1517/13543784.16.12.1921",
+                "PublicationDate": "2007-12-01",
+                "IsReview": true,
+                "Title": "Natural antioxidants in Alzheimer's disease",
+                "Author": "Cesare Mancuso, Timothy E Bates, D Allan Butterfield, Stella Calafato, Carolin Cornelius, Antonino De Lorenzo, Albena T Dinkova Kostova, Vittorio Calabrese",
+                "Journal": "Expert opinion on investigational drugs",
+                "Citation": "2007 Dec; 16(12):1921-31",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "neurodegenerative diseases; neurodegenerative disorder"
+              },
+              {
+                "GenericArticleId": 10968654,
+                "RelevanceScore": 142,
+                "PMID": 15641110,
+                "DOI": "10.1002/jnr.20386",
+                "PublicationDate": "2005-02-15",
+                "IsReview": false,
+                "Title": "Acetylcarnitine induces heme oxygenase in rat astrocytes and protects against oxidative stress: involvement of the transcription factor Nrf2",
+                "Author": "Vittorio Calabrese, Agrippino Ravagna, Claudia Colombrita, Giovanni Scapagnini, Eleonora Guagliano, Menotti Calvani, D Allan Butterfield, Anna Maria Giuffrida Stella",
+                "Journal": "Journal of neuroscience research",
+                "Citation": "2005 Feb; 79(4):509-21",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "neurodegeneration; neurodegenerative disorders"
+              },
+              {
+                "GenericArticleId": 11470266,
+                "RelevanceScore": 142,
+                "PMID": 16677087,
+                "DOI": "10.1089/ars.2006.8.404",
+                "PublicationDate": "2006-03-01",
+                "IsReview": false,
+                "Title": "Redox modulation of heat shock protein expression by acetylcarnitine in aging brain: relationship to antioxidant status and mitochondrial function",
+                "Author": "V Calabrese, C Colombrita, R Sultana, G Scapagnini, M Calvani, D A Butterfield, A M Giuffrida Stella",
+                "Journal": "Antioxidants & redox signaling",
+                "Citation": "2006 Mar; 8(3-4):404-16",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "neurodegeneration; neurodegenerative disorders"
+              },
+              {
+                "GenericArticleId": 4633256,
+                "RelevanceScore": 85,
+                "PMID": 32992896,
+                "DOI": "10.3390/nu12102946",
+                "PublicationDate": "2020-09-25",
+                "IsReview": true,
+                "Title": "Dietary Intake, Mediterranean Diet Adherence and Caloric Intake in Huntington's Disease: A Review",
+                "Author": "Christiana C Christodoulou, Christiana A Demetriou, Eleni Zamba-Papanicolaou",
+                "Journal": "Nutrients",
+                "Citation": "2020 Sep; 12(10):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "neurodegenerative disease"
+              },
+              {
+                "GenericArticleId": 2601162,
+                "RelevanceScore": 75,
+                "PMID": 31426571,
+                "DOI": "10.3390/ijms20164029",
+                "PublicationDate": "2019-08-18",
+                "IsReview": false,
+                "Title": "Multi-Omics Approach for Studying Tears in Treatment-Naïve Glaucoma Patients",
+                "Author": "Claudia Rossi, Ilaria Cicalini, Maria Concetta Cufaro, Luca Agnifili, Leonardo Mastropasqua, Paola Lanuti, Marco Marchisio, Vincenzo De Laurenzi, Piero Del Boccio, Damiana Pieragostino",
+                "Journal": "International journal of molecular sciences",
+                "Citation": "2019 Aug; 20(16):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "neurodegenerative disease"
+              },
+              {
+                "GenericArticleId": 5281215,
+                "RelevanceScore": 75,
+                "PMID": 34416688,
+                "DOI": "10.1016/j.jhazmat.2021.126849",
+                "PublicationDate": "2022-01-15",
+                "IsReview": false,
+                "Title": "Correlation between acute brain injury and brain metabonomics in dichlorvos-poisoned broilers",
+                "Author": "Lujia Huang, Xiaoquan Guo, Pei Liu, Yulan Zhao, Cong Wu, Changming Zhou, Cheng Huang, Guyue Li, Yu Zhuang, Sufang Cheng, Huabin Cao, Caiying Zhang, Zheng Xu, Xin Liu, Guoliang Hu, Ping Liu",
+                "Journal": "Journal of hazardous materials",
+                "Citation": "2022 01; 422(?):126849",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "neurodegenerative diseases"
+              },
+              {
+                "GenericArticleId": 6092372,
+                "RelevanceScore": 75,
+                "PMID": 36043711,
+                "DOI": "10.2174/1381612828666220830092815",
+                "PublicationDate": "2022-01-01",
+                "IsReview": false,
+                "Title": "Acetyl-L-carnitine Slows the Progression from Prefrailty to Frailty in Older Subjects: A Randomized Interventional Clinical Trial",
+                "Author": "Giulia Malaguarnera, Vito Emanuele Catania, Gaetano Bertino, Laura Maria Chisari, Maria Castorina, Claudia Bonfiglio, Omar Cauli, Michele Malaguarnera",
+                "Journal": "Current pharmaceutical design",
+                "Citation": "2022; 28(38):3158-3166",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "degenerative disorders"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D000138"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Acidosis",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 22227,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 12,
+            "CooccurrenceScore": 441,
+            "Article": [
+              {
+                "GenericArticleId": 4600630,
+                "RelevanceScore": 155,
+                "PMID": 32905056,
+                "DOI": "10.1002/jmd2.12146",
+                "PublicationDate": "2020-09-01",
+                "IsReview": false,
+                "Title": "Hypoglycemia is not a defining feature of metabolic crisis in mitochondrial 3-hydroxy-3-methylglutaryl-CoA synthase deficiency: Further evidence of specific biochemical markers which may aid diagnosis",
+                "Author": "Tracey A Conlon, Patricia E Fitzsimons, Ingrid Borovickova, Fidelma Kirby, Sinéad Murphy, Ina Knerr, Ellen Crushell",
+                "Journal": "JIMD reports",
+                "Citation": "2020 Sep; 55(1):26-31",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "metabolic acidosis"
+              },
+              {
+                "GenericArticleId": 11009145,
+                "RelevanceScore": 142,
+                "PMID": 15746165,
+                "DOI": "10.1113/jphysiol.2005.083840",
+                "PublicationDate": "2005-05-01",
+                "IsReview": false,
+                "Title": "Prior heavy exercise eliminates VO2 slow component and reduces efficiency during submaximal exercise in humans",
+                "Author": "K Sahlin, J B Sørensen, L B Gladden, H B Rossiter, P K Pedersen",
+                "Journal": "The Journal of physiology",
+                "Citation": "2005 May; 564(Pt 3):765-73",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "acidosis"
+              },
+              {
+                "GenericArticleId": 2587767,
+                "RelevanceScore": 75,
+                "PMID": 31392109,
+                "DOI": "10.1002/jmd2.12051",
+                "PublicationDate": "2019-07-01",
+                "IsReview": false,
+                "Title": "A Japanese case of mitochondrial 3-hydroxy-3-methylglutaryl-CoA synthase deficiency who presented with severe metabolic acidosis and fatty liver without hypoglycemia",
+                "Author": "Tomoko Lee, Yuichi Takami, Kenji Yamada, Hironori Kobayashi, Yuki Hasegawa, Hideo Sasai, Hiroki Otsuka, Yasuhiro Takeshima, Toshiyuki Fukao",
+                "Journal": "JIMD reports",
+                "Citation": "2019 Jul; 48(1):19-25",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "metabolic acidosis"
+              },
+              {
+                "GenericArticleId": 2668173,
+                "RelevanceScore": 75,
+                "PMID": 31597564,
+                "DOI": "10.1186/s12887-019-1747-5",
+                "PublicationDate": "2019-10-09",
+                "IsReview": false,
+                "Title": "Severe clinical manifestation of mitochondrial 3-hydroxy-3-methylglutaryl-CoA synthase deficiency associated with two novel mutations: a case report",
+                "Author": "Hao Liu, Jing-Kun Miao, Chao-Wen Yu, Ke-Xing Wan, Juan Zhang, Zhao-Jian Yuan, Jing Yang, Dong-Juan Wang, Yan Zeng, Lin Zou",
+                "Journal": "BMC pediatrics",
+                "Citation": "2019 10; 19(1):344",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "acidosis; metabolic acidosis"
+              },
+              {
+                "GenericArticleId": 5709852,
+                "RelevanceScore": 75,
+                "PMID": 35308163,
+                "DOI": "10.3389/fgene.2021.816779",
+                "PublicationDate": "2021-01-01",
+                "IsReview": false,
+                "Title": "Clinical, Biochemical, Molecular, and Outcome Features of Mitochondrial 3-Hydroxy-3-Methylglutaryl-CoA Synthase Deficiency in 10 Chinese Patients",
+                "Author": "Shengnan Wu, Linghua Shen, Qiong Chen, Chunxiu Gong, Yanling Yang, Haiyan Wei, Bingyan Cao, Yongxing Chen",
+                "Journal": "Frontiers in genetics",
+                "Citation": "2021; 12(?):816779",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "metabolic acidosis"
+              },
+              {
+                "GenericArticleId": 2194847,
+                "RelevanceScore": 70,
+                "PMID": 25750861,
+                "DOI": "10.1016/j.mgene.2014.02.001",
+                "PublicationDate": "2015-02-01",
+                "IsReview": false,
+                "Title": "Mutation analysis of methylmalonyl CoA mutase gene exon 2 in Egyptian families: Identification of 25 novel allelic variants",
+                "Author": "Dina A Ghoraba, Magdy M Mohammed, Osama K Zaki",
+                "Journal": "Meta gene",
+                "Citation": "2015 Feb; 3(?):71-88",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "metabolic acidosis"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D028361"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Mitochondrial Diseases",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 35251,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 13,
+            "CooccurrenceScore": 440,
+            "Article": [
+              {
+                "GenericArticleId": 11364398,
+                "RelevanceScore": 252,
+                "PMID": 16413418,
+                "DOI": "10.1016/j.jnutbio.2005.03.027",
+                "PublicationDate": "2006-02-01",
+                "IsReview": true,
+                "Title": "Acetylcarnitine and cellular stress response: roles in nutritional redox homeostasis and regulation of longevity genes",
+                "Author": "Vittorio Calabrese, Anna Maria Giuffrida Stella, Menotti Calvani, D Allan Butterfield",
+                "Journal": "The Journal of nutritional biochemistry",
+                "Citation": "2006 Feb; 17(2):73-88",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "mitochondrial dysfunction"
+              },
+              {
+                "GenericArticleId": 2946847,
+                "RelevanceScore": 250,
+                "PMID": 27187037,
+                "PublicationDate": "2016-01-01",
+                "IsReview": false,
+                "Title": "Effect of Simvastatin, Coenzyme Q10, Resveratrol, Acetylcysteine and Acetylcarnitine on Mitochondrial Respiration",
+                "Author": "Z Fišar, J Hroudová, N Singh, A Kopřivová, D Macečková",
+                "Journal": "Folia biologica",
+                "Citation": "2016; 62(2):53-66",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "mitochondrial toxicity"
+              },
+              {
+                "GenericArticleId": 4154454,
+                "RelevanceScore": 165,
+                "PMID": 38086883,
+                "DOI": "10.1038/s41598-023-49443-0",
+                "PublicationDate": "2023-12-12",
+                "IsReview": false,
+                "Title": "Database screening as a strategy to identify endogenous candidate metabolites to probe and assess mitochondrial drug toxicity",
+                "Author": "Mery Vet George De la Rosa, Dipali Patel, Marc R McCann, Kathleen A Stringer, Gus R Rosania",
+                "Journal": "Scientific reports",
+                "Citation": "2023 12; 13(1):22013",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "mitochondrial toxicity"
+              },
+              {
+                "GenericArticleId": 4368651,
+                "RelevanceScore": 155,
+                "PMID": 32277266,
+                "DOI": "10.1007/s00204-020-02729-y",
+                "PublicationDate": "2020-06-01",
+                "IsReview": false,
+                "Title": "Exposure to inorganic arsenic and its methylated metabolites alters metabolomics profiles in INS-1 832/13 insulinoma cells and isolated pancreatic islets",
+                "Author": "Yuan-Yuan Li, Christelle Douillet, Madelyn Huang, Rowan Beck, Susan Jenkins Sumner, Miroslav Styblo",
+                "Journal": "Archives of toxicology",
+                "Citation": "2020 06; 94(6):1955-1972",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "mitochondrial dysfunction"
+              },
+              {
+                "GenericArticleId": 8030771,
+                "RelevanceScore": 150,
+                "PMID": 29422939,
+                "DOI": "10.1186/s12986-018-0241-7",
+                "PublicationDate": "2018-01-01",
+                "IsReview": false,
+                "Title": "Associations between fatty acid oxidation, hepatic mitochondrial function, and plasma acylcarnitine levels in mice",
+                "Author": "Bodil Bjørndal, Eva Katrine Alterås, Carine Lindquist, Asbjørn Svardal, Jon Skorve, Rolf K Berge",
+                "Journal": "Nutrition & metabolism",
+                "Citation": "2018; 15(?):10",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "mitochondrial dysfunction"
+              },
+              {
+                "GenericArticleId": 12706767,
+                "RelevanceScore": 145,
+                "PMID": 19553674,
+                "DOI": "10.1074/jbc.m109.032888",
+                "PublicationDate": "2009-08-21",
+                "IsReview": false,
+                "Title": "Carnitine insufficiency caused by aging and overnutrition compromises mitochondrial performance and metabolic control",
+                "Author": "Robert C Noland, Timothy R Koves, Sarah E Seiler, Helen Lum, Robert M Lust, Olga Ilkayeva, Robert D Stevens, Fausto G Hegardt, Deborah M Muoio",
+                "Journal": "The Journal of biological chemistry",
+                "Citation": "2009 Aug; 284(34):22840-52",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "mitochondrial abnormalities; mitochondrial dysfunction"
+              },
+              {
+                "GenericArticleId": 5281215,
+                "RelevanceScore": 75,
+                "PMID": 34416688,
+                "DOI": "10.1016/j.jhazmat.2021.126849",
+                "PublicationDate": "2022-01-15",
+                "IsReview": false,
+                "Title": "Correlation between acute brain injury and brain metabonomics in dichlorvos-poisoned broilers",
+                "Author": "Lujia Huang, Xiaoquan Guo, Pei Liu, Yulan Zhao, Cong Wu, Changming Zhou, Cheng Huang, Guyue Li, Yu Zhuang, Sufang Cheng, Huabin Cao, Caiying Zhang, Zheng Xu, Xin Liu, Guoliang Hu, Ping Liu",
+                "Journal": "Journal of hazardous materials",
+                "Citation": "2022 01; 422(?):126849",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "mitochondrial damage"
+              },
+              {
+                "GenericArticleId": 5442582,
+                "RelevanceScore": 75,
+                "PMID": 34589865,
+                "DOI": "10.1016/j.bbih.2020.100104",
+                "PublicationDate": "2020-07-01",
+                "IsReview": false,
+                "Title": "Cerebellar mitochondrial dysfunction and concomitant multi-system fatty acid oxidation defects are sufficient to discriminate PTSD-like and resilient male mice",
+                "Author": "Graeme Preston, Tim Emmerzaal, Faisal Kirdar, Laura Schrader, Marloes Henckens, Eva Morava, Tamas Kozicz",
+                "Journal": "Brain, behavior, & immunity - health",
+                "Citation": "2020 Jul; 6(?):100104",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "mitochondrial dysfunction"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D006712"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Homocystinuria",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 1258,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 8,
+            "CooccurrenceScore": 439,
+            "Article": [
+              {
+                "GenericArticleId": 2199181,
+                "RelevanceScore": 80,
+                "PMID": 25762406,
+                "DOI": "10.1007/s10545-015-9830-z",
+                "PublicationDate": "2015-11-01",
+                "IsReview": true,
+                "Title": "Newborn screening for homocystinurias and methylation disorders: systematic review and proposed guidelines",
+                "Author": "Martina Huemer, Viktor Kožich, Piero Rinaldo, Matthias R Baumgartner, Begoña Merinero, Elisabetta Pasquini, Antonia Ribes, Henk J Blom",
+                "Journal": "Journal of inherited metabolic disease",
+                "Citation": "2015 Nov; 38(6):1007-19",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "cbs deficiency; homocystinuria"
+              },
+              {
+                "GenericArticleId": 5729724,
+                "RelevanceScore": 80,
+                "PMID": 35361390,
+                "DOI": "10.1016/j.tjog.2022.02.017",
+                "PublicationDate": "2022-03-01",
+                "IsReview": false,
+                "Title": "The genotype analysis and prenatal genetic diagnosis among 244 pedigrees with methylmalonic aciduria in China",
+                "Author": "Shuang Hu, Xiangdong Kong",
+                "Journal": "Taiwanese journal of obstetrics & gynecology",
+                "Citation": "2022 Mar; 61(2):290-298",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "homocystinuria"
+              },
+              {
+                "GenericArticleId": 4620346,
+                "RelevanceScore": 75,
+                "PMID": 32957924,
+                "DOI": "10.1186/s12881-020-01122-x",
+                "PublicationDate": "2020-09-21",
+                "IsReview": false,
+                "Title": "Proteinuria as a presenting sign of combined methylmalonic acidemia and homocysteinemia: case report",
+                "Author": "Ru-Yue Chen, Xiao-Zhong Li, Qiang Lin, Yun Zhu, Yun-Yan Shen, Qin-Ying Xu, Xue-Ming Zhu, Lin-Qi Chen, Hai-Ying Wu, Xu-Qin Chen",
+                "Journal": "BMC medical genetics",
+                "Citation": "2020 09; 21(1):183",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "homocystinuria"
+              },
+              {
+                "GenericArticleId": 5019276,
+                "RelevanceScore": 75,
+                "PMID": 33691766,
+                "DOI": "10.1186/s13023-021-01762-z",
+                "PublicationDate": "2021-03-10",
+                "IsReview": false,
+                "Title": "Value of amniotic fluid homocysteine assay in prenatal diagnosis of combined methylmalonic acidemia and homocystinuria, cobalamin C type",
+                "Author": "Ting Chen, Lili Liang, Huiwen Zhang, Jun Ye, Wenjuan Qiu, Bing Xiao, Hong Zhu, Lei Wang, Feng Xu, Zhuwen Gong, Xuefan Gu, Lianshu Han",
+                "Journal": "Orphanet journal of rare diseases",
+                "Citation": "2021 03; 16(1):125",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "homocystinuria"
+              },
+              {
+                "GenericArticleId": 5233890,
+                "RelevanceScore": 75,
+                "PMID": 34287232,
+                "DOI": "10.3390/ijns7030039",
+                "PublicationDate": "2021-07-07",
+                "IsReview": false,
+                "Title": "Pilot Study on Neonatal Screening for Methylmalonic Acidemia Caused by Defects in the Adenosylcobalamin Synthesis Pathway and Homocystinuria Caused by Defects in Homocysteine Remethylation",
+                "Author": "Reiko Kagawa, Go Tajima, Takako Maeda, Fumiaki Sakura, Akari Nakamura-Utsunomiya, Keiichi Hara, Yutaka Nishimura, Miori Yuasa, Yosuke Shigematsu, Hiromi Tanaka, Saki Fujihara, Chiyoko Yoshii, Satoshi Okada",
+                "Journal": "International journal of neonatal screening",
+                "Citation": "2021 Jul; 7(3):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "homocystinuria"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D012640"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Seizures",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 73102,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 15,
+            "CooccurrenceScore": 439,
+            "Article": [
+              {
+                "GenericArticleId": 2878105,
+                "RelevanceScore": 250,
+                "PMID": 26998483,
+                "DOI": "10.1155/2016/2920108",
+                "PublicationDate": "2016-01-01",
+                "IsReview": false,
+                "Title": "Carnitine and/or Acetylcarnitine Deficiency as a Cause of Higher Levels of Ammonia",
+                "Author": "Cecilia Maldonado, Natalia Guevara, Cecilia Queijo, Raquel González, Pietro Fagiolino, Marta Vázquez",
+                "Journal": "BioMed research international",
+                "Citation": "2016; 2016(?):2920108",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "seizures"
+              },
+              {
+                "GenericArticleId": 7395850,
+                "RelevanceScore": 240,
+                "PMID": 6738826,
+                "DOI": "10.1016/0028-3908(84)90033-9",
+                "PublicationDate": "1984-05-01",
+                "IsReview": false,
+                "Title": "Transient seizure activity induced by acetylcarnitine",
+                "Author": "R G Fariello, E Zeeman, G T Golden, P T Reyes, T Ramacci",
+                "Journal": "Neuropharmacology",
+                "Citation": "1984 May; 23(5):585-7",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "seizure"
+              },
+              {
+                "GenericArticleId": 3332821,
+                "RelevanceScore": 150,
+                "PMID": 28369834,
+                "DOI": "10.1111/epi.13729",
+                "PublicationDate": "2017-05-01",
+                "IsReview": false,
+                "Title": "An examination of biochemical parameters and their association with response to ketogenic dietary therapies",
+                "Author": "Natasha E Schoeler, Gail Bell, Alan Yuen, Adam D Kapelner, Simon J R Heales, J Helen Cross, Sanjay Sisodiya",
+                "Journal": "Epilepsia",
+                "Citation": "2017 05; 58(5):893-900",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "seizure"
+              },
+              {
+                "GenericArticleId": 13154520,
+                "RelevanceScore": 145,
+                "PMID": 20543534,
+                "DOI": "10.1620/tjem.221.191",
+                "PublicationDate": "2010-07-01",
+                "IsReview": false,
+                "Title": "Carnitine palmitoyltransferase 2 deficiency: the time-course of blood and urinary acylcarnitine levels during initial L-carnitine supplementation",
+                "Author": "Tomohiro Hori, Toshiyuki Fukao, Hironori Kobayashi, Takahide Teramoto, Masaki Takayanagi, Yuki Hasegawa, Tetsuhiko Yasuno, Seiji Yamaguchi, Naomi Kondo",
+                "Journal": "The Tohoku journal of experimental medicine",
+                "Citation": "2010 Jul; 221(3):191-5",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "convulsions"
+              },
+              {
+                "GenericArticleId": 4149028,
+                "RelevanceScore": 85,
+                "PMID": 38070096,
+                "DOI": "10.1007/s12519-023-00770-2",
+                "PublicationDate": "2023-12-09",
+                "IsReview": false,
+                "Title": "Variable phenotypes and outcomes associated with the MMACHC c.482G > A mutation: follow-up in a large CblC disease cohort",
+                "Author": "Sheng-Nan Wu, Hui-Shu E, Yue Yu, Shi-Ying Ling, Li-Li Liang, Wen-Juan Qiu, Hui-Wen Zhang, Rui-Xue Shuai, Hai-Yan Wei, Chi-Ju Yang, Peng Xu, Xi-Gui Chen, Hui Zou, Ji-Zhen Feng, Ting-Ting Niu, Hai-Li Hu, Kai-Chuang Zhang, De-Yun Lu, Zhu-Wen Gong, Xia Zhan, Wen-Jun Ji, Xue-Fan Gu, Yong-Xing Chen, Lian-Shu Han",
+                "Journal": "World journal of pediatrics : WJP",
+                "Citation": "2023 Dec; ?(?):",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "seizures"
+              },
+              {
+                "GenericArticleId": 1443065,
+                "RelevanceScore": 75,
+                "PMID": 31203424,
+                "DOI": "10.1007/s00415-019-09432-8",
+                "PublicationDate": "2019-10-01",
+                "IsReview": false,
+                "Title": "Treatable cause of hereditary spastic paraplegia: eight cases of combined homocysteinaemia with methylmalonic aciduria",
+                "Author": "Yanping Wei, Yan Zhou, Jing Yuan, Jun Ni, Min Qian, Liying Cui, Bin Peng",
+                "Journal": "Journal of neurology",
+                "Citation": "2019 Oct; 266(10):2434-2439",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "seizures"
+              },
+              {
+                "GenericArticleId": 3969164,
+                "RelevanceScore": 75,
+                "PMID": 31813137,
+                "DOI": "10.3760/cma.j.issn.1003-9406.2019.12.002",
+                "PublicationDate": "2019-12-10",
+                "IsReview": false,
+                "Title": "[Clinical and variant analysis of 15 patients with methylmalonic acidemia]",
+                "Author": "Hui Xiong, Wenlin Deng, Lanying Guo, Congcong Shi, Xin Xiao, Hu Hao",
+                "Journal": "Zhonghua yi xue yi chuan xue za zhi = Zhonghua yixue yichuanxue zazhi = Chinese journal of medical genetics",
+                "Citation": "2019 Dec; 36(12):1158-1162",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "seizure"
+              },
+              {
+                "GenericArticleId": 4620346,
+                "RelevanceScore": 75,
+                "PMID": 32957924,
+                "DOI": "10.1186/s12881-020-01122-x",
+                "PublicationDate": "2020-09-21",
+                "IsReview": false,
+                "Title": "Proteinuria as a presenting sign of combined methylmalonic acidemia and homocysteinemia: case report",
+                "Author": "Ru-Yue Chen, Xiao-Zhong Li, Qiang Lin, Yun Zhu, Yun-Yan Shen, Qin-Ying Xu, Xue-Ming Zhu, Lin-Qi Chen, Hai-Ying Wu, Xu-Qin Chen",
+                "Journal": "BMC medical genetics",
+                "Citation": "2020 09; 21(1):183",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "convulsions"
+              },
+              {
+                "GenericArticleId": 5071078,
+                "RelevanceScore": 75,
+                "PMID": 33841490,
+                "DOI": "10.3389/fgene.2021.577046",
+                "PublicationDate": "2021-01-01",
+                "IsReview": false,
+                "Title": "Clinical, Biochemical, and Molecular Analyses of Medium-Chain Acyl-CoA Dehydrogenase Deficiency in Chinese Patients",
+                "Author": "Zhuwen Gong, Lili Liang, Wenjuan Qiu, Huiwen Zhang, Jun Ye, Yu Wang, Wenjun Ji, Ting Chen, Xuefan Gu, Lianshu Han",
+                "Journal": "Frontiers in genetics",
+                "Citation": "2021; 12(?):577046",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "convulsion"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "D022124"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Hyperammonemia",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 4372,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 9,
+            "CooccurrenceScore": 423,
+            "Article": [
+              {
+                "GenericArticleId": 4600630,
+                "RelevanceScore": 155,
+                "PMID": 32905056,
+                "DOI": "10.1002/jmd2.12146",
+                "PublicationDate": "2020-09-01",
+                "IsReview": false,
+                "Title": "Hypoglycemia is not a defining feature of metabolic crisis in mitochondrial 3-hydroxy-3-methylglutaryl-CoA synthase deficiency: Further evidence of specific biochemical markers which may aid diagnosis",
+                "Author": "Tracey A Conlon, Patricia E Fitzsimons, Ingrid Borovickova, Fidelma Kirby, Sinéad Murphy, Ina Knerr, Ellen Crushell",
+                "Journal": "JIMD reports",
+                "Citation": "2020 Sep; 55(1):26-31",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "hyperammonemia"
+              },
+              {
+                "GenericArticleId": 8985447,
+                "RelevanceScore": 100,
+                "PMID": 10540873,
+                "PublicationDate": "1999-10-01",
+                "IsReview": true,
+                "Title": "[Carnitine as a vitamin-like biofactor]",
+                "Author": "T Saheki",
+                "Journal": "Nihon rinsho. Japanese journal of clinical medicine",
+                "Citation": "1999 Oct; 57(10):2270-5",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "hyperammonemia"
+              },
+              {
+                "GenericArticleId": 5709852,
+                "RelevanceScore": 75,
+                "PMID": 35308163,
+                "DOI": "10.3389/fgene.2021.816779",
+                "PublicationDate": "2021-01-01",
+                "IsReview": false,
+                "Title": "Clinical, Biochemical, Molecular, and Outcome Features of Mitochondrial 3-Hydroxy-3-Methylglutaryl-CoA Synthase Deficiency in 10 Chinese Patients",
+                "Author": "Shengnan Wu, Linghua Shen, Qiong Chen, Chunxiu Gong, Yanling Yang, Haiyan Wei, Bingyan Cao, Yongxing Chen",
+                "Journal": "Frontiers in genetics",
+                "Citation": "2021; 12(?):816779",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "hyperammonemia"
+              },
+              {
+                "GenericArticleId": 6015340,
+                "RelevanceScore": 70,
+                "PMID": 28912724,
+                "DOI": "10.3389/fphys.2017.00636",
+                "PublicationDate": "2017-01-01",
+                "IsReview": false,
+                "Title": "Abnormalities in the Polysomnographic, Adenosine and Metabolic Response to Sleep Deprivation in an Animal Model of Hyperammonemia",
+                "Author": "Selena Marini, Olena Santangeli, Pirjo Saarelainen, Benita Middleton, Namrata Chowdhury, Debra J Skene, Rodolfo Costa, Tarja Porkka-Heiskanen, Sara Montagnese",
+                "Journal": "Frontiers in physiology",
+                "Citation": "2017; 8(?):636",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "hyperammonemia"
+              },
+              {
+                "GenericArticleId": 2304451,
+                "RelevanceScore": 60,
+                "PMID": 2737286,
+                "DOI": "10.1016/0014-5793(89)80636-2",
+                "PublicationDate": "1989-06-05",
+                "IsReview": false,
+                "Title": "Hyperammonemia decreases body fat content in rat",
+                "Author": "M D Miñana, V Felipo, R Wallace, S Grisolía",
+                "Journal": "FEBS letters",
+                "Citation": "1989 Jun; 249(2):261-3",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "hyperammonemia"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 1
+        },
+        "ID_2": {
+          "MeSH": "C566403"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Homocysteinemia",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 564,
+            "NeighborArticleCount": 601,
+            "TotalArticleCount": 36772158,
+            "EffectiveTotalArticleCount": 7480498,
+            "ArticleCount": 7,
+            "CooccurrenceScore": 417,
+            "Article": [
+              {
+                "GenericArticleId": 3880891,
+                "RelevanceScore": 85,
+                "PMID": 37643953,
+                "DOI": "10.3760/cma.j.cn511374-20220621-00417",
+                "PublicationDate": "2023-09-10",
+                "IsReview": false,
+                "Title": "[Analysis of clinical phenotypes and MMACHC gene variants in 65 children with Methylmalonic acidemia and homocysteinemia]",
+                "Author": "Chongfen Chen, Yaodong Zhang, Lili Ge, Lei Liu, Xiaoman Zhang, Shiyue Mei, Shuying Luo",
+                "Journal": "Zhonghua yi xue yi chuan xue za zhi = Zhonghua yixue yichuanxue zazhi = Chinese journal of medical genetics",
+                "Citation": "2023 Sep; 40(9):1086-1092",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "homocysteinemia"
+              },
+              {
+                "GenericArticleId": 1443065,
+                "RelevanceScore": 75,
+                "PMID": 31203424,
+                "DOI": "10.1007/s00415-019-09432-8",
+                "PublicationDate": "2019-10-01",
+                "IsReview": false,
+                "Title": "Treatable cause of hereditary spastic paraplegia: eight cases of combined homocysteinaemia with methylmalonic aciduria",
+                "Author": "Yanping Wei, Yan Zhou, Jing Yuan, Jun Ni, Min Qian, Liying Cui, Bin Peng",
+                "Journal": "Journal of neurology",
+                "Citation": "2019 Oct; 266(10):2434-2439",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "homocysteinaemia; homocysteinemia"
+              },
+              {
+                "GenericArticleId": 4620346,
+                "RelevanceScore": 75,
+                "PMID": 32957924,
+                "DOI": "10.1186/s12881-020-01122-x",
+                "PublicationDate": "2020-09-21",
+                "IsReview": false,
+                "Title": "Proteinuria as a presenting sign of combined methylmalonic acidemia and homocysteinemia: case report",
+                "Author": "Ru-Yue Chen, Xiao-Zhong Li, Qiang Lin, Yun Zhu, Yun-Yan Shen, Qin-Ying Xu, Xue-Ming Zhu, Lin-Qi Chen, Hai-Ying Wu, Xu-Qin Chen",
+                "Journal": "BMC medical genetics",
+                "Citation": "2020 09; 21(1):183",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "homocysteinemia"
+              },
+              {
+                "GenericArticleId": 5781164,
+                "RelevanceScore": 75,
+                "PMID": 35495149,
+                "DOI": "10.3389/fgene.2022.856552",
+                "PublicationDate": "2022-01-01",
+                "IsReview": false,
+                "Title": "Acute Lymphoblastic Leukemia in Combined Methylmalonic Acidemia and Homocysteinemia (cblC Type): A Case Report and Literature Review",
+                "Author": "Jun Zhu, Shuisen Wan, Xueqi Zhao, Binlu Zhu, Yuan Lv, Hongkun Jiang",
+                "Journal": "Frontiers in genetics",
+                "Citation": "2022; 13(?):856552",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "homocysteinemia"
+              },
+              {
+                "GenericArticleId": 5938872,
+                "RelevanceScore": 75,
+                "PMID": 35903162,
+                "DOI": "10.3389/fped.2022.896177",
+                "PublicationDate": "2022-01-01",
+                "IsReview": false,
+                "Title": "Case Report: A Case of Late-Onset Combined Methylmalonic Acidemia and Hyperhomocysteinemia Induced by a Vegetarian Diet",
+                "Author": "Bei Xu, Lihong Zhang, Qiang Chen, Yajuan Wang, Yahong Peng, Hui Tang",
+                "Journal": "Frontiers in pediatrics",
+                "Citation": "2022; 10(?):896177",
+                "ChemicalName": "acetylcarnitine",
+                "DiseaseName": "homocysteinemia"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

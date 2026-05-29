@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b40616aace9901783c19a68846c4710, mzkit\src\assembly\assembly\MarkupData\mzXML\XML.vb"
+﻿#Region "Microsoft.VisualBasic::7ee2c994e77ae6b48dd8a42cf1ef3dc2, assembly\assembly\MarkupData\mzXML\XML.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 130
-    '    Code Lines: 77
-    ' Comment Lines: 36
-    '   Blank Lines: 17
-    '     File Size: 5.50 KB
+    '   Total Lines: 140
+    '    Code Lines: 85 (60.71%)
+    ' Comment Lines: 36 (25.71%)
+    '    - Xml Docs: 88.89%
+    ' 
+    '   Blank Lines: 19 (13.57%)
+    '     File Size: 5.87 KB
 
 
     '     Class XML
     ' 
     '         Properties: index, indexOffset, msRun, shal
     ' 
-    '         Function: ExportPeaktable, LoadScanPeaks, LoadScans, ReadSingleFile
+    '         Function: ExportPeaktable, GetMSInstrumentManufacturer, LoadScanPeaks, LoadScans, ReadSingleFile
     ' 
     ' 
     ' /********************************************************************************/
@@ -177,7 +179,7 @@ Namespace MarkupData.mzXML
                                                 .scan = scan.num,
                                                 .rt = rt,
                                                 .sample = sample,
-                                                .mz = mz.mz,
+                                                .mass = mz.mz,
                                                 .into = mz.intensity,
                                                 .energy = scan.collisionEnergy
                                             }

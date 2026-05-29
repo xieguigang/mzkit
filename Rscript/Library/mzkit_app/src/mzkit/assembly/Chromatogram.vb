@@ -1,65 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::9142e7df40420e443591c249015032d4, mzkit\Rscript\Library\mzkit\assembly\Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::8fbcd0451a25979f6d06d2ecb773fb8b, Rscript\Library\mzkit_app\src\mzkit\assembly\Chromatogram.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 285
-'    Code Lines: 215
-' Comment Lines: 29
-'   Blank Lines: 41
-'     File Size: 10.80 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module ChromatogramTools
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: addOverlaps, asChromatogram, overlaps, overlapsMatrix, overlapsSummary
-'               overlapsTable, ReadData, scaleScanTime, setLabels, subset
-'               toChromatogram, topInto
-' 
-'     Sub: PackData
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 413
+    '    Code Lines: 260 (62.95%)
+    ' Comment Lines: 98 (23.73%)
+    '    - Xml Docs: 93.88%
+    ' 
+    '   Blank Lines: 55 (13.32%)
+    '     File Size: 16.11 KB
+
+
+    ' Module ChromatogramTools
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: addOverlaps, asChromatogram, overlapFromList, overlapFromVector, overlaps
+    '               overlapsMatrix, overlapsSummary, overlapsTable, ReadData, scaleScanTime
+    '               setLabels, subset, toChromatogram, topInto
+    ' 
+    '     Sub: PackData
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Text
+Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
@@ -77,6 +80,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' A chromatogram is the trace generated by the detector 
@@ -91,7 +95,7 @@ Module ChromatogramTools
 
     Sub New()
         Call ConsolePrinter.AttachConsoleFormatter(Of ChromatogramOverlap)(AddressOf overlapsSummary)
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ChromatogramOverlap), AddressOf overlapsTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(ChromatogramOverlap), AddressOf overlapsTable)
     End Sub
 
     Private Function overlapsTable(data As ChromatogramOverlap, args As list, env As Environment) As dataframe
@@ -136,6 +140,12 @@ Module ChromatogramTools
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let rt = 1:5;
+    ''' let intensity = [242 374 8923 74234 23];
+    ''' 
+    ''' print(as.chromatogram(rt, intensity));
+    ''' </example>
     <ExportAPI("as.chromatogram")>
     <RApiReturn(GetType(Chromatogram), GetType(ChromatogramTick))>
     Public Function asChromatogram(<RRawVectorArgument>
@@ -209,55 +219,83 @@ Module ChromatogramTools
     ''' </returns>
     <ExportAPI("toChromatogram")>
     <RApiReturn(GetType(Chromatogram))>
-    Public Function toChromatogram(<RRawVectorArgument> ticks As Object, Optional env As Environment = Nothing) As Object
-        Dim totalIons As Double()
-        Dim basePeaks As Double()
-        Dim scan_time As Double()
+    Public Function toChromatogram(<RRawVectorArgument, RListObjectArgument> ticks As list,
+                                   Optional name As String = Nothing,
+                                   Optional env As Environment = Nothing) As Object
 
-        If TypeOf ticks Is dataframe Then
-            Dim df As dataframe = DirectCast(ticks, dataframe)
+        Dim totalIons As Double() = Nothing
+        Dim basePeaks As Double() = Nothing
+        Dim scan_time As Double() = Nothing
 
-            totalIons = df.getVector(Of Double)("totalIon", "TIC", "into", "intensity")
-            basePeaks = df.getVector(Of Double)("basePeak", "BPC", "into", "intensity")
-            scan_time = df.getVector(Of Double)("rt", "RT", "retention_time", "retention time")
+        Call ticks.slots.Remove(NameOf(name))
 
-            If basePeaks.IsNullOrEmpty Then
+        If ticks.length = 1 AndAlso TypeOf ticks.data.First Is dataframe Then
+            If TypeOf ticks.data.First Is dataframe Then
+                Dim df As dataframe = DirectCast(ticks.data.First, dataframe)
+
+                totalIons = df.getVector(Of Double)("totalIon", "TIC", "into", "intensity")
+                basePeaks = df.getVector(Of Double)("basePeak", "BPC", "into", "intensity")
+                scan_time = df.getVector(Of Double)("rt", "RT", "retention_time", "retention time")
+
+                If basePeaks.IsNullOrEmpty Then
+                    basePeaks = totalIons
+                End If
+                If totalIons.IsNullOrEmpty Then
+                    totalIons = basePeaks
+                End If
+
+                ' check data fields
+                If totalIons.IsNullOrEmpty OrElse basePeaks.IsNullOrEmpty Then
+                    Return RInternal.debug.stop("missing intensity value for create the chromatogram object!", env)
+                ElseIf scan_time.IsNullOrEmpty Then
+                    Return RInternal.debug.stop("the retention time is not provided!", env)
+                End If
+            Else
+                Dim ticksBuf = pipeline.TryCreatePipeline(Of ChromatogramTick)(ticks, env, suppress:=True)
+
+                If ticksBuf.isError Then
+                    Return ticksBuf.getError
+                End If
+
+                Dim chromatogramTicks As ChromatogramTick() = ticksBuf _
+                    .populates(Of ChromatogramTick)(env) _
+                    .ToArray
+
+                scan_time = chromatogramTicks _
+                    .Select(Function(t) t.Time) _
+                    .ToArray
+                totalIons = chromatogramTicks _
+                    .Select(Function(t) t.Intensity) _
+                    .ToArray
                 basePeaks = totalIons
             End If
-            If totalIons.IsNullOrEmpty Then
-                totalIons = basePeaks
-            End If
-
-            ' check data fields
-            If totalIons.IsNullOrEmpty OrElse basePeaks.IsNullOrEmpty Then
-                Return Internal.debug.stop("missing intensity value for create the chromatogram object!", env)
-            ElseIf scan_time.IsNullOrEmpty Then
-                Return Internal.debug.stop("the retention time is not provided!", env)
-            End If
         Else
-            Dim ticksBuf = pipeline.TryCreatePipeline(Of ChromatogramTick)(ticks, env, suppress:=True)
+            Dim tic = pipeline.TryCreatePipeline(Of ChromatogramTick)(ticks.getBySynonyms("tic", "TIC", "totalIon", "TotalIon"), env, nullPipe:=True)
+            Dim bpc = pipeline.TryCreatePipeline(Of ChromatogramTick)(ticks.getBySynonyms("bpc", "BPC", "basepeak", "BasePeak"), env, nullPipe:=True)
+            Dim ticdata = If(tic Is Nothing, Nothing, tic.populates(Of ChromatogramTick)(env).ToArray)
+            Dim bpcdata = If(bpc Is Nothing, Nothing, bpc.populates(Of ChromatogramTick)(env).ToArray)
 
-            If ticksBuf.isError Then
-                Return ticksBuf.getError
+            If Not ticdata Is Nothing Then
+                ticdata = ticdata.OrderBy(Function(t) t.Time).ToArray
+                totalIons = ticdata.Select(Function(t) t.Intensity).ToArray
+                scan_time = ticdata.Select(Function(t) t.Time).ToArray
+            End If
+            If Not bpcdata Is Nothing Then
+                bpcdata = bpcdata.OrderBy(Function(t) t.Time).ToArray
+                basePeaks = bpcdata.Select(Function(t) t.Intensity).ToArray
+                scan_time = bpcdata.Select(Function(t) t.Time).ToArray
             End If
 
-            Dim chromatogramTicks As ChromatogramTick() = ticksBuf _
-                .populates(Of ChromatogramTick)(env) _
-                .ToArray
-
-            scan_time = chromatogramTicks _
-                .Select(Function(t) t.Time) _
-                .ToArray
-            totalIons = chromatogramTicks _
-                .Select(Function(t) t.Intensity) _
-                .ToArray
-            basePeaks = totalIons
+            If scan_time Is Nothing Then
+                Return Nothing
+            End If
         End If
 
         Return New Chromatogram With {
             .BPC = basePeaks,
             .scan_time = scan_time,
-            .TIC = totalIons
+            .TIC = totalIons,
+            .name = name
         }
     End Function
 
@@ -265,12 +303,11 @@ Module ChromatogramTools
     ''' Add a chromatogram data in the chromatogram overlap collection
     ''' </summary>
     ''' <param name="overlaps">A chromatogram overlap collection object to be add new layer to it</param>
-    ''' <param name="name">usually be a sample name</param>
     ''' <param name="data">usually be a chromatogram data that extract from a sample data</param>
     ''' <returns></returns>
-    <ExportAPI("add")>
-    Public Function addOverlaps(overlaps As ChromatogramOverlap, name$, data As Chromatogram) As ChromatogramOverlap
-        Call overlaps.overlaps.Add(name, data)
+    <ROperator("+")>
+    Public Function addOverlaps(overlaps As ChromatogramOverlap, data As Chromatogram) As ChromatogramOverlap
+        Call overlaps.Add(data)
         Return overlaps
     End Function
 
@@ -427,11 +464,15 @@ Module ChromatogramTools
         If overlapsData.isError Then
             Return overlapsData.getError
         Else
+            Dim name As String
+
             For Each item As SeqValue(Of Chromatogram) In overlapsData _
                 .populates(Of Chromatogram)(env) _
-                .SeqIterator
+                .SeqIterator(offset:=1)
 
-                result(item.i) = item
+                name = item.value.name
+                name = If(name.StringEmpty(, True), "chromatogram_" & item.i, name)
+                result(name) = item
             Next
         End If
 
@@ -453,7 +494,7 @@ Module ChromatogramTools
     <ExportAPI("read.pack")>
     Public Function ReadData(cdf As String) As ChromatogramOverlap
         Using file As Stream = cdf.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-            Return file.ReadPackData
+            Return New ChromatogramOverlap(file.ReadPackData.overlaps)
         End Using
     End Function
 End Module

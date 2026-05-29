@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be53df3c56471d45171633a6ad6d2a9e, mzkit\src\visualize\MsImaging\Reader\ReadRawPack.vb"
+﻿#Region "Microsoft.VisualBasic::bd0aaa370450230e8c349a283d30232a, visualize\MsImaging\Reader\ReadRawPack.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 143
-    '    Code Lines: 109
-    ' Comment Lines: 10
-    '   Blank Lines: 24
-    '     File Size: 5.24 KB
+    '   Total Lines: 154
+    '    Code Lines: 103 (66.88%)
+    ' Comment Lines: 26 (16.88%)
+    '    - Xml Docs: 53.85%
+    ' 
+    '   Blank Lines: 25 (16.23%)
+    '     File Size: 6.15 KB
 
 
     '     Class ReadRawPack
@@ -60,9 +62,7 @@
 #End Region
 
 Imports System.Drawing
-Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
@@ -86,39 +86,40 @@ Namespace Reader
         ''' </summary>
         Dim pixels As Dictionary(Of String, mzPackPixel())
 
-        Sub New(mzpack As Assembly.mzPack)
+        Sub New(mzpack As IMZPack, Optional verbose As Boolean = True)
             Call mzpack.MS _
                 .Select(Function(pixel)
                             Return New mzPackPixel(pixel)
                         End Function) _
-                .DoCall(AddressOf loadPixelsArray)
+                .DoCall(Sub(ls) loadPixelsArray(ls, verbose))
 
-            Call ReadDimensions(mzpack)
+            Call ReadDimensions(mzpack, pixels.Select(Function(pr) pr.Value).IteratesALL, verbose, _resolution, _dimension)
         End Sub
 
-        Sub New(raw As mzPackPixel())
-            Call loadPixelsArray(raw)
-            Call ReadDimensions(mzpack:=Nothing)
+        Sub New(raw As mzPackPixel(), Optional verbose As Boolean = True)
+            Call loadPixelsArray(raw, verbose)
+            Call ReadDimensions(mzpack:=Nothing, pixels.Select(Function(pr) pr.Value).IteratesALL, verbose, _resolution, _dimension)
         End Sub
 
-        Sub New(mzpack As String)
-            Using file As Stream = mzpack.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                Call Assembly.mzPack _
-                    .ReadAll(file).MS _
-                    .Select(Function(pixel)
-                                Return New mzPackPixel(pixel)
-                            End Function) _
-                    .DoCall(AddressOf loadPixelsArray)
+        ' load from mzpack rawdata file
+        'Sub New(mzpack As String, Optional verbose As Boolean = True)
+        '    Using file As Stream = mzpack.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+        '        Call Assembly.mzPack _
+        '            .ReadAll(file).MS _
+        '            .Select(Function(pixel)
+        '                        Return New mzPackPixel(pixel)
+        '                    End Function) _
+        '            .DoCall(Sub(ls) loadPixelsArray(ls, verbose))
 
-                Call ReadDimensions(mzpack:=Nothing)
-            End Using
-        End Sub
+        '        Call ReadDimensions(mzpack:=Nothing, verbose)
+        '    End Using
+        'End Sub
 
-        Sub New(pixels As IEnumerable(Of mzPackPixel), MsiDim As Size, resolution As Double)
+        Sub New(pixels As IEnumerable(Of mzPackPixel), MsiDim As Size, resolution As Double, Optional verbose As Boolean = True)
             Me.dimension = MsiDim
             Me.resolution = resolution
 
-            Call loadPixelsArray(pixels)
+            Call loadPixelsArray(pixels, verbose)
         End Sub
 
         Public Iterator Function GetScans() As IEnumerable(Of ScanMS1)
@@ -131,8 +132,10 @@ Namespace Reader
         ''' build a [x,y] matrix
         ''' </summary>
         ''' <param name="pixels"></param>
-        Private Sub loadPixelsArray(pixels As IEnumerable(Of mzPackPixel))
-            Call RunSlavePipeline.SendMessage("create grid data...")
+        Private Sub loadPixelsArray(pixels As IEnumerable(Of mzPackPixel), verbose As Boolean)
+            If verbose Then
+                Call RunSlavePipeline.SendMessage("create grid data...")
+            End If
 
             Me.pixels = pixels _
                 .GroupBy(Function(p) p.X) _
@@ -154,9 +157,9 @@ Namespace Reader
         ''' the required mzpack object could be nothing
         ''' </summary>
         ''' <param name="mzpack"></param>
-        Private Overloads Sub ReadDimensions(mzpack As mzPack)
+        Friend Overloads Shared Sub ReadDimensions(mzpack As IMZPack, pixels As IEnumerable(Of PixelScan), verbose As Boolean, ByRef resolution As Double, ByRef dimension As Size)
             Dim metadata As Dictionary(Of String, String)
-            Dim polygon As New Polygon2D(pixels.Select(Function(pr) pr.Value).IteratesALL.Select(Function(p) New Point(p.X, p.Y)))
+            Dim polygon As New Polygon2D(pixels.Select(Function(p) New Point(p.X, p.Y)))
 
             If mzpack Is Nothing OrElse mzpack.metadata.IsNullOrEmpty Then
                 metadata = New Dictionary(Of String, String)
@@ -164,14 +167,15 @@ Namespace Reader
                 metadata = mzpack.metadata
             End If
 
-            Call RunSlavePipeline.SendMessage("detect canvas dimensions...")
+            If verbose Then
+                Call RunSlavePipeline.SendMessage("detect canvas dimensions...")
+            End If
 
             Dim width As Integer = Val(metadata.TryGetValue("width", [default]:=polygon.xpoints.Max))
             Dim height As Integer = Val(metadata.TryGetValue("height", [default]:=polygon.ypoints.Max))
-            Dim resolution As Double = Val(metadata.TryGetValue("resolution", [default]:=17))
 
-            _resolution = resolution
-            _dimension = New Size(width, height)
+            resolution = Val(metadata.TryGetValue("resolution", [default]:=17))
+            dimension = New Size(width, height)
         End Sub
 
         Protected Overrides Sub release()

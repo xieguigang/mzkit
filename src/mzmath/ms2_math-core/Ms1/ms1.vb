@@ -1,67 +1,69 @@
-﻿#Region "Microsoft.VisualBasic::a4dc14dede28a67fccaabd6e8c567cbd, mzkit\src\mzmath\ms2_math-core\Ms1\ms1.vb"
+﻿#Region "Microsoft.VisualBasic::ca3e790e080502e5c8e908ecfa38f813, mzmath\ms2_math-core\Ms1\ms1.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 38
-'    Code Lines: 21
-' Comment Lines: 10
-'   Blank Lines: 7
-'     File Size: 1.15 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class Ms1Feature
-' 
-'     Properties: ID, mz, rt
-' 
-'     Function: ToString
-' 
-' Class MetaInfo
-' 
-'     Properties: name, xref
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 17 (50.00%)
+    ' Comment Lines: 10 (29.41%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (20.59%)
+    '     File Size: 1.07 KB
+
+
+    ' Class Ms1Feature
+    ' 
+    '     Properties: ID, mz, rt
+    ' 
+    '     Function: ToString
+    ' 
+    ' Class MetaInfo
+    ' 
+    '     Properties: name, xref
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' The ms1 peak
@@ -74,7 +76,7 @@ Public Class Ms1Feature : Implements INamedValue, IMs1, IRetentionTime
     Public Property rt As Double Implements IMs1.rt
 
     Public Overrides Function ToString() As String
-        Return $"{stdNum.Round(mz, 4)}@{rt}"
+        Return $"{std.Round(mz, 4)}@{rt}"
     End Function
 End Class
 

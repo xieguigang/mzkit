@@ -1,11 +1,12 @@
 .\" man page create by R# package system.
-.TH MASSBANK 1 2000-Jan "read.MoNA" "read.MoNA"
+.TH MASSBANK 1 2000-1月 "read.MoNA" "read.MoNA"
 .SH NAME
 read.MoNA \- read MoNA database file.
 .SH SYNOPSIS
 \fIread.MoNA(\fBrawfile\fR as string, 
 \fBskipSpectraInfo\fR as boolean = FALSE, 
 \fBis_gcms\fR as boolean = FALSE, 
+\fBlazy\fR as boolean = TRUE, 
 \fBverbose\fR as boolean = TRUE, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
@@ -17,7 +18,17 @@ read MoNA database file.
 \fBrawfile\fB \fR\- 
  a vector of the mona database file, could be a set of multiple mona database file.
  the database reader is switched automatically based on this file path its 
- extension name.
+ extension name. currently supported data file formats: \fBsdf\fR and \fBmsp\fR.
+. 
+.PP
+.PP
+\fBis_gcms\fB \fR\- 
+ Load gcms reference dataset?
+. 
+.PP
+.PP
+\fBlazy\fB \fR\- 
+ Create a lazy data populator or load all data in memory and returns a vector of the spectral data
 . 
 .PP
 .PP

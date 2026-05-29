@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::795244b540e8a325713919df79b518a2, mzkit\src\mzmath\ms2_math-core\Spectra\GlobalAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::dbdafea5a31cf656a30422f537a472da, mzmath\ms2_math-core\Spectra\GlobalAlignment.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 229
-    '    Code Lines: 118
-    ' Comment Lines: 83
-    '   Blank Lines: 28
-    '     File Size: 9.91 KB
+    '   Total Lines: 259
+    '    Code Lines: 136 (52.51%)
+    ' Comment Lines: 90 (34.75%)
+    '    - Xml Docs: 56.67%
+    ' 
+    '   Blank Lines: 33 (12.74%)
+    '     File Size: 11.03 KB
 
 
     '     Module GlobalAlignment
     ' 
     '         Properties: ppm20
     ' 
-    '         Function: Align, AlignMatrix, CreateAlignment, findMatch, (+2 Overloads) JaccardIndex
-    '                   MzIntersect, MzUnion, SharedPeakCount, TopPeaks, TwoDirectionSSM
+    '         Function: Align, AlignMatrix, CreateAlignment, CreateAnnotation, findMatch
+    '                   (+3 Overloads) JaccardIndex, MzIntersect, MzUnion, SharedPeakCount, TopPeaks
+    '                   TwoDirectionSSM
     ' 
     ' 
     ' /********************************************************************************/
@@ -65,7 +68,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Extensions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Spectra
 
@@ -191,6 +194,16 @@ Namespace Spectra
             Return intersects.Length / union.Length
         End Function
 
+        <Extension>
+        Public Function JaccardIndex(align As SSM2MatrixFragment()) As Double
+            Dim union As Integer = align.Length
+            Dim intersects As Integer = align _
+                .Where(Function(a) a.query > 0 AndAlso a.ref > 0) _
+                .Count
+
+            Return intersects / union
+        End Function
+
         Public Function MzUnion(mzx As Double(), mzy As Double(), tolerance As Tolerance) As Double()
             Return mzx _
                 .JoinIterates(mzy) _
@@ -268,20 +281,40 @@ Namespace Spectra
             End If
         End Function
 
-        Public Iterator Function CreateAlignment(query As ms2(), ref As ms2(), tolerance As Tolerance) As IEnumerable(Of SSM2MatrixFragment)
-            Dim union = MzUnion(query.Select(Function(m) m.mz).ToArray, ref.Select(Function(m) m.mz).ToArray, tolerance)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="query">the sample query data</param>
+        ''' <param name="refrs">the reference data</param>
+        ''' <param name="tolerance"></param>
+        ''' <returns></returns>
+        Public Iterator Function CreateAlignment(query As ms2(), refrs As ms2(), tolerance As Tolerance) As IEnumerable(Of SSM2MatrixFragment)
+            Dim union = MzUnion(query.Select(Function(m) m.mz).ToArray, refrs.Select(Function(m) m.mz).ToArray, tolerance)
 
             For Each mz As Double In union
                 Dim qmz = query.Where(Function(a) tolerance(a.mz, mz)).FirstOrDefault
-                Dim rmz = ref.Where(Function(a) tolerance(a.mz, mz)).FirstOrDefault
+                Dim rmz = refrs.Where(Function(a) tolerance(a.mz, mz)).FirstOrDefault
 
                 Yield New SSM2MatrixFragment With {
                     .mz = mz,
                     .query = If(qmz Is Nothing, 0, qmz.intensity),
                     .ref = If(rmz Is Nothing, 0, rmz.intensity),
-                    .da = If(qmz Is Nothing OrElse rmz Is Nothing, Double.NaN, stdNum.Abs(qmz.mz - rmz.mz))
+                    .da = If(qmz Is Nothing OrElse rmz Is Nothing, Double.NaN, std.Abs(qmz.mz - rmz.mz)),
+                    .annotation = CreateAnnotation(qmz, rmz)
                 }
             Next
+        End Function
+
+        Private Function CreateAnnotation(q As ms2, r As ms2) As String
+            If q Is Nothing OrElse q.Annotation.StringEmpty(, True) Then
+                Return r?.Annotation
+            End If
+
+            If r Is Nothing OrElse r.Annotation.StringEmpty(, True) Then
+                Return q?.Annotation
+            End If
+
+            Return {q.Annotation, r.Annotation}.Distinct.JoinBy("_")
         End Function
     End Module
 End Namespace

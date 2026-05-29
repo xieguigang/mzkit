@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::018ad030bdf646e57f501fdb930ad0d6, mzkit\src\mzmath\ms2_math-core\Ms1\PrecursorType\IonModes.vb"
+﻿#Region "Microsoft.VisualBasic::a8443ac6bdcced2bb49e5e3d60048e8f, mzmath\ms2_math-core\Ms1\PrecursorType\IonModes.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 23
-    '    Code Lines: 8
-    ' Comment Lines: 12
-    '   Blank Lines: 3
-    '     File Size: 471 B
+    '   Total Lines: 29
+    '    Code Lines: 9 (31.03%)
+    ' Comment Lines: 16 (55.17%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (13.79%)
+    '     File Size: 723 B
 
 
     '     Enum IonModes
@@ -56,30 +58,32 @@
 
 #End Region
 
+Imports System.ComponentModel
+
 Namespace Ms1.PrecursorType
 
     ''' <summary>
-    ''' Ion Modes
+    ''' Ion Modes, +/-
     ''' </summary>
     ''' <remarks>
     ''' integer value is matched with the thermo fisher ms raw file reader
     ''' do not modify the constant value at here
     ''' </remarks>
     <CLSCompliant(True)>
-    Public Enum IonModes
+    Public Enum IonModes As Integer
         ''' <summary>
-        ''' Unknown Ion Mode
+        ''' Unknown Ion Mode or Raw data file contains both positive data and negative data
         ''' </summary>
         Unknown = 0
 
         ''' <summary>
         ''' Positive Ion Mode
         ''' </summary>
-        Positive = 1
+        <Description("+")> Positive = 1
 
         ''' <summary>
         ''' Negative Ion Mode
         ''' </summary>
-        Negative = -1
+        <Description("-")> Negative = -1
     End Enum
 End Namespace

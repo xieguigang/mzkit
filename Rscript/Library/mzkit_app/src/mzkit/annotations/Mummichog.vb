@@ -1,56 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::f94471f9c1cc5012920cea85718421e0, mzkit\Rscript\Library\mzkit\annotations\Mummichog.vb"
+﻿#Region "Microsoft.VisualBasic::0874c8f39e33a68431f137f21a535eec, Rscript\Library\mzkit_app\src\mzkit\annotations\Mummichog.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 304
-'    Code Lines: 218
-' Comment Lines: 47
-'   Blank Lines: 39
-'     File Size: 12.18 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module Mummichog
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: CreateKEGGBackground, createMzSet, fromGseaBackground, getResultTable, GroupPeaks
-'               mzScore, PeakListAnnotation, queryCandidateSet
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 415
+    '    Code Lines: 298 (71.81%)
+    ' Comment Lines: 65 (15.66%)
+    '    - Xml Docs: 96.92%
+    ' 
+    '   Blank Lines: 52 (12.53%)
+    '     File Size: 17.46 KB
+
+
+    ' Module Mummichog
+    ' 
+    '     Function: CreateKEGGBackground, createMzSet, extractCandidateUniqueId, fromGseaBackground, getResultTable
+    '               GroupPeaks, mzScore, PeakListAnnotation, queryCandidateSet
+    ' 
+    '     Sub: Main
+    '     Class MetabolicNetworkGraph
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: CreateGraphModel
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -78,6 +87,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports std = System.Math
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' Mummichog searches for enrichment patterns on metabolic network, 
@@ -87,8 +97,8 @@ Imports std = System.Math
 <Package("Mummichog")>
 Module Mummichog
 
-    Sub New()
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ActivityEnrichment()), AddressOf getResultTable)
+    Sub Main()
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(ActivityEnrichment()), AddressOf getResultTable)
     End Sub
 
     Private Function getResultTable(result As ActivityEnrichment(), args As list, env As Environment) As dataframe
@@ -158,7 +168,7 @@ Module Mummichog
         Call scores.add("ppm", allUnion.Select(Function(i) i.ppm))
         Call scores.add("unique_id", allUnion.Select(Function(i) i.unique_id))
         Call scores.add("name", allUnion.Select(Function(i) i.name))
-        Call scores.add("precursor_type", allUnion.Select(Function(i) i.precursorType))
+        Call scores.add("precursor_type", allUnion.Select(Function(i) i.precursor_type))
         Call scores.add("score", allUnion.Select(Function(a) unionScore(MzQuery.ReferenceKey(a))))
 
         Return scores
@@ -263,7 +273,7 @@ Module Mummichog
     <RApiReturn(GetType(MzSet))>
     Public Function queryCandidateSet(mz As Double(), msData As Object, Optional env As Environment = Nothing) As Object
         If msData Is Nothing Then
-            Return Internal.debug.stop("the given ms compound annotation repository can not be nothing!", env)
+            Return RInternal.debug.stop("the given ms compound annotation repository can not be nothing!", env)
         ElseIf msData.GetType.ImplementInterface(Of IMzQuery) Then
             Return DirectCast(msData, IMzQuery).GetCandidateSet(peaks:=mz).ToArray
         Else
@@ -344,7 +354,13 @@ Module Mummichog
     ''' all of the network topology information
     ''' </summary>
     ''' <param name="background"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A tuple list object that contains elements inside each slot data:
+    ''' 
+    ''' 1. name: the pathway map id
+    ''' 2. desc: the pathway map names
+    ''' 3. model: the network graph object that will be used as the model for run enrichment
+    ''' </returns>
     <ExportAPI("fromGseaBackground")>
     Public Function fromGseaBackground(background As Background, Optional min_size As Integer = 3) As list
         Dim gset As New Dictionary(Of String, Object)
@@ -397,8 +413,8 @@ Module Mummichog
     ''' <summary>
     ''' create kegg pathway network graph background model
     ''' </summary>
-    ''' <param name="maps"></param>
-    ''' <param name="reactions"></param>
+    ''' <param name="maps">A collection of the kegg <see cref="Map"/> clr object</param>
+    ''' <param name="reactions">A collection of the kegg <see cref="Reaction"/> clr object</param>
     ''' <returns></returns>
     <ExportAPI("kegg_background")>
     Public Function CreateKEGGBackground(maps As Map(), reactions As Reaction(), Optional alternative As Boolean = False) As list

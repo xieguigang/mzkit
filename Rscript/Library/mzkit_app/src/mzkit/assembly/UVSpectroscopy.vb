@@ -1,55 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::a0ab6cd8e055d69e56c2e319afecc101, mzkit\Rscript\Library\mzkit\assembly\ERS.vb"
+﻿#Region "Microsoft.VisualBasic::4b4663a9d3470e884c743c4db847a7b6, Rscript\Library\mzkit_app\src\mzkit\assembly\UVSpectroscopy.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 122
-'    Code Lines: 81
-' Comment Lines: 21
-'   Blank Lines: 20
-'     File Size: 4.85 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module ERS
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: ExtractERSUVData, GetPhotodiodeArrayDetectorInstrumentConfigurationId, ReadSignals, translateToTimeSignals, WriteSignal
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 131
+    '    Code Lines: 84 (64.12%)
+    ' Comment Lines: 27 (20.61%)
+    '    - Xml Docs: 88.89%
+    ' 
+    '   Blank Lines: 20 (15.27%)
+    '     File Size: 5.31 KB
+
+
+    ' Module UVSpectroscopy
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: ExtractERSUVData, GetPhotodiodeArrayDetectorInstrumentConfigurationId, ReadSignals, translateToTimeSignals, WriteSignal
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -107,6 +109,7 @@ Module UVSpectroscopy
     End Function
 
     <ExportAPI("as.UVtime_signals")>
+    <RApiReturn(GetType(GeneralSignal))>
     Public Function translateToTimeSignals(<RRawVectorArgument> rawscans As Object, Optional rawfile As String = "UVraw", Optional env As Environment = Nothing) As Object
         Dim raw As pipeline = pipeline.TryCreatePipeline(Of GeneralSignal)(rawscans, env)
 
@@ -158,7 +161,14 @@ Module UVSpectroscopy
         Return True
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns>A tuple list of the signal data</returns>
     <ExportAPI("read.UVsignals")>
+    <RApiReturn(GetType(GeneralSignal))>
     Public Function ReadSignals(file As Object, Optional env As Environment = Nothing) As Object
         Dim filestream As [Variant](Of Stream, Message) = GetFileStream(file, FileAccess.Read, env)
 

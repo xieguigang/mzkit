@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf71606b1080c7925636612c6d11adaa, mzkit\src\metadb\SMILES\Bonds.vb"
+﻿#Region "Microsoft.VisualBasic::d17dfd0eca8de221d5a6b0eb9bb0bb2a, metadb\SMILES\Graph\Bonds.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 16
-    '    Code Lines: 7
-    ' Comment Lines: 8
-    '   Blank Lines: 1
-    '     File Size: 537 B
+    '   Total Lines: 19
+    '    Code Lines: 9 (47.37%)
+    ' Comment Lines: 8 (42.11%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 2 (10.53%)
+    '     File Size: 689 B
 
 
     ' Enum Bonds
@@ -56,6 +58,7 @@
 #End Region
 
 Imports System.ComponentModel
+Imports BioNovoGene.BioDeep.Chemoinformatics.SDF.Models
 
 ''' <summary>
 ''' Single, double, triple, and aromatic bonds are 
@@ -66,10 +69,10 @@ Imports System.ComponentModel
 ''' omitted).
 ''' </summary>
 Public Enum Bonds As Byte
-    NA
+    NA = BoundTypes.Other
 
-    <Description("-")> [single] = 1
-    <Description("=")> [double] = 2
-    <Description("#")> triple = 3
-    <Description(":")> aromatic = 4
+    <Description("-")> [single] = BoundTypes.Single
+    <Description("=")> [double] = BoundTypes.Double
+    <Description("#")> triple = BoundTypes.Triple
+    <Description(":")> aromatic = BoundTypes.Aromatic
 End Enum

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b89a8baa21296e408e3b38b6f0283354, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\Linear\QuantificationWorker.vb"
+﻿#Region "Microsoft.VisualBasic::69f5e4e2e6b1269180c589fec77c4094, mzmath\TargetedMetabolomics\LinearQuantitative\Linear\QuantificationWorker.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 197
-    '    Code Lines: 129
-    ' Comment Lines: 45
-    '   Blank Lines: 23
-    '     File Size: 7.87 KB
+    '   Total Lines: 201
+    '    Code Lines: 132 (65.67%)
+    ' Comment Lines: 45 (22.39%)
+    '    - Xml Docs: 35.56%
+    ' 
+    '   Blank Lines: 24 (11.94%)
+    '     File Size: 8.07 KB
 
 
     '     Module QuantificationWorker
@@ -57,8 +59,9 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace LinearQuantitative.Linear
 
@@ -84,7 +87,8 @@ Namespace LinearQuantitative.Linear
                                                    Optional id$ = Nothing,
                                                    Optional name$ = Nothing,
                                                    Optional levelFactors As String() = Nothing,
-                                                   Optional points As List(Of ReferencePoint) = Nothing) As IEnumerable(Of PointF)
+                                                   Optional points As List(Of ReferencePoint) = Nothing,
+                                                   Optional missing As List(Of String) = Nothing) As IEnumerable(Of PointF)
             Dim AIS#
             Dim factorName = LevelFactorName(levelFactors)
 
@@ -93,17 +97,31 @@ Namespace LinearQuantitative.Linear
             Else
                 points *= 0
             End If
+            If missing Is Nothing Then
+                missing = New List(Of String)
+            Else
+                missing *= 0
+            End If
 
             If ISA.IsNullOrEmpty Then
                 ISA = Nothing
+            ElseIf ISA.All(Function(d) d <= 0) Then
+                ISA = Nothing
+
+                Call $"{id}.{name} all IStd area is ZERO, IS will be ignored on linear regression modelling..".Warning
             End If
 
             For i As Integer = 0 To C.Length - 1
                 Dim Ct_i = C(i)
-                Dim At_i = stdNum.Round(A(i))
+                Dim At_i = std.Round(A(i))
 
                 If At_i <= 0 Then
-                    Call $"missing peak area data of {factorName(i)} in build reference line: {name}".Warning
+                    Dim inputLevel As String = levelFactors(i)
+                    Dim factor As String = factorName(i)
+
+                    Call $"missing peak area data of {factor}(input:={inputLevel}) in build reference line: {name}".Warning
+                    Call missing.Add(inputLevel)
+
                     Continue For
                 End If
 
@@ -150,8 +168,18 @@ Namespace LinearQuantitative.Linear
             Next
         End Function
 
+        ''' <summary>
+        ''' Create a lambda function for make measure of the x content based on the given linear regression model
+        ''' </summary>
+        ''' <param name="model"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' when do modelling of the target linear, x is the content data and y is peak area
+        ''' so if we want to make measure of the content value from the sample peak area,
+        ''' we needs to flip the equation for make peak area as x input
+        ''' </remarks>
         <Extension>
-        Friend Function ReverseModelFunction(model As StandardCurve) As Func(Of Double, Double)
+        Public Function ReverseModelFunction(model As StandardCurve) As Func(Of Double, Double)
             Dim fx As Polynomial = model.linear.Polynomial
             Dim a As Double = fx.Factors(1)
             Dim b As Double = fx.Factors(Scan0)
@@ -165,6 +193,17 @@ Namespace LinearQuantitative.Linear
                        End If
 
                        Return y
+                   End Function
+        End Function
+
+        <Extension>
+        Public Function ContentVectorLambda(model As StandardCurve) As Func(Of IEnumerable(Of Double), IEnumerable(Of Double))
+            Dim fx As Func(Of Double, Double) = model.ReverseModelFunction
+
+            Return Iterator Function(x)
+                       For Each xi As Double In x.SafeQuery
+                           Yield fx(xi)
+                       Next
                    End Function
         End Function
 

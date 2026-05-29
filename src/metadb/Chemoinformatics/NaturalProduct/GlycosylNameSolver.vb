@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34905eedf1f912c0aa1e5c2bf6c8c829, mzkit\src\metadb\Chemoinformatics\NaturalProduct\GlycosylNameSolver.vb"
+﻿#Region "Microsoft.VisualBasic::34905eedf1f912c0aa1e5c2bf6c8c829, metadb\Chemoinformatics\NaturalProduct\GlycosylNameSolver.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 285
-    '    Code Lines: 237
-    ' Comment Lines: 6
-    '   Blank Lines: 42
+    '    Code Lines: 237 (83.16%)
+    ' Comment Lines: 6 (2.11%)
+    '    - Xml Docs: 66.67%
+    ' 
+    '   Blank Lines: 42 (14.74%)
     '     File Size: 10.56 KB
 
 
@@ -325,7 +327,7 @@ Namespace NaturalProduct
                 If buf > 0 Then
                     Dim message As String = $"name is broken: {buf.Select(Function(t) t.text).JoinBy(" ")}"
 
-                    Call message.__DEBUG_ECHO
+                    Call message.debug
 
                     Do While stack.Count > 0
                         stack.Pop()

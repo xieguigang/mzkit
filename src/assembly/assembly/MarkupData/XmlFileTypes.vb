@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3b4df2d6ebd02c97403753f3211f294, mzkit\src\assembly\assembly\MarkupData\XmlFileTypes.vb"
+﻿#Region "Microsoft.VisualBasic::9ffb2aa50fe2af0f51002defa34369c6, assembly\assembly\MarkupData\XmlFileTypes.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 9
-    '    Code Lines: 8
-    ' Comment Lines: 0
-    '   Blank Lines: 1
-    '     File Size: 149 B
+    '   Total Lines: 13
+    '    Code Lines: 9 (69.23%)
+    ' Comment Lines: 3 (23.08%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 1 (7.69%)
+    '     File Size: 270 B
 
 
     '     Enum XmlFileTypes
     ' 
-    '         imzML, mzData, mzML, mzXML
+    '         imzML, mzData, mzML, mzXML, nmrML
     ' 
     '  
     ' 

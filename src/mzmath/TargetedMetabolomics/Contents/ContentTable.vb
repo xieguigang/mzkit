@@ -1,56 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::87fd1576a49ede7a0620995ae30b64e9, mzkit\src\mzmath\TargetedMetabolomics\Contents\ContentTable.vb"
+﻿#Region "Microsoft.VisualBasic::36167890b4ae2edcfe268bbe50379747, mzmath\TargetedMetabolomics\Contents\ContentTable.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 122
-'    Code Lines: 74
-' Comment Lines: 33
-'   Blank Lines: 15
-'     File Size: 4.62 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class ContentTable
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: GetIS, GetStandards, hasDefined, hasISDefined, StripMaxCommonNames
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 139
+    '    Code Lines: 84 (60.43%)
+    ' Comment Lines: 38 (27.34%)
+    '    - Xml Docs: 86.84%
+    ' 
+    '   Blank Lines: 17 (12.23%)
+    '     File Size: 5.50 KB
+
+
+    '     Class ContentTable
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetIS, GetStandards, hasDefined, hasISDefined, StripMaxCommonNames
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -113,7 +115,7 @@ Namespace Content
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetIS(ion As String) As [IS]
-            If [IS] Is Nothing Then
+            If [IS] Is Nothing OrElse ion.StringEmpty(, True) OrElse ion.TextEquals("None") Then
                 Return New [IS]
             Else
                 Return [IS].TryGetValue(ion, [default]:=New [IS])
@@ -141,6 +143,19 @@ Namespace Content
             Dim names As String() = files.Select(AddressOf BaseName).ToArray
             Dim minName As String = names.MinLengthString
             Dim index As Integer
+
+            Static cals As String() = {"L[-_]?\d+", "R[-_]?\d+", "S[-_]?\d+", "cal[-_]?\d+"}
+
+            ' check of the original clas reference name
+            For Each pattern As String In cals
+                If names.All(Function(s) s.IsPattern(pattern)) Then
+                    Return names _
+                        .Select(Function(cal_name)
+                                    Return New NamedValue(Of String)(cal_name, cal_name)
+                                End Function) _
+                        .ToArray
+                End If
+            Next
 
             For i As Integer = 0 To minName.Length - 1
                 index = i

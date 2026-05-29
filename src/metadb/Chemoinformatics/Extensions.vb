@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aca06a371533b558cf87ca568a50f68c, mzkit\src\metadb\Chemoinformatics\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ec030df7b3fa52ca149a47398d8a0093, metadb\Chemoinformatics\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 17
-    '    Code Lines: 14
-    ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 456 B
+    '   Total Lines: 18
+    '    Code Lines: 14 (77.78%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (22.22%)
+    '     File Size: 628 B
 
 
     ' Module Extensions
@@ -52,20 +54,21 @@
 
 #End Region
 
+Imports System.Text
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports FormulaVal = BioNovoGene.BioDeep.Chemoinformatics.Formula.Formula
+
 <HideModuleName>
 Public Module Extensions
 
-    Public Function HtmlView(formula As String) As String
-        Dim numbers As String() = formula _
-            .Matches("\d+") _
-            .Distinct _
-            .OrderByDescending(Function(d) d.Length) _
-            .ToArray
+    Public Function HtmlView(formulaStr As String) As String
+        Dim f As FormulaVal = FormulaScanner.ScanFormula(formulaStr)
+        Dim html As New StringBuilder
 
-        For Each n As String In numbers
-            formula = formula.Replace(n, $"<sub>{n}</sub>")
+        For Each element As KeyValuePair(Of String, Integer) In f.CountsByElement
+            html.Append($"<span class=""element"">{element.Key}</span><sub>{element.Value}</sub>")
         Next
 
-        Return formula
+        Return html.ToString
     End Function
 End Module

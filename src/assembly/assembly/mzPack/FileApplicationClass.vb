@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a1e7db0966abaa26ce6d8694e6be697, mzkit\src\assembly\assembly\mzPack\FileApplicationClass.vb"
+﻿#Region "Microsoft.VisualBasic::f6d81f36a41ffbf1e67ca95ee41ad468, assembly\assembly\mzPack\FileApplicationClass.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 45
-    '    Code Lines: 14
-    ' Comment Lines: 24
-    '   Blank Lines: 7
-    '     File Size: 1.32 KB
+    '   Total Lines: 50
+    '    Code Lines: 15 (30.00%)
+    ' Comment Lines: 27 (54.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (16.00%)
+    '     File Size: 1.56 KB
 
 
     '     Enum FileApplicationClass
@@ -63,7 +65,7 @@ Namespace mzData.mzWebCache
     ''' <summary>
     ''' 当前的这个mzpack原始数据文件的应用程序类型
     ''' </summary>
-    Public Enum FileApplicationClass
+    Public Enum FileApplicationClass As Integer
 
         ''' <summary>
         ''' 普通LC-MS非靶向

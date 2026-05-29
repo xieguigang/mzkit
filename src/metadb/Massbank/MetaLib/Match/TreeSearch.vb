@@ -1,60 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::e28da0efd53a1da305026dd02b834abc, mzkit\src\metadb\Massbank\MetaLib\Match\TreeSearch.vb"
+﻿#Region "Microsoft.VisualBasic::231379f7490e7e89ac3cb2a0c11329fc, metadb\Massbank\MetaLib\Match\TreeSearch.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
-    ' Code Statistics:
 
-    '   Total Lines: 55
-    '    Code Lines: 37
-    ' Comment Lines: 7
-    '   Blank Lines: 11
-    '     File Size: 1.75 KB
+' /********************************************************************************/
+
+' Summaries:
 
 
-    '     Class TreeSearch
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: BuildTree, CompareAnnotation, Search
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 55
+'    Code Lines: 37 (67.27%)
+' Comment Lines: 7 (12.73%)
+'    - Xml Docs: 85.71%
+' 
+'   Blank Lines: 11 (20.00%)
+'     File Size: 1.76 KB
+
+
+'     Class MetaDataTreeSearch
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: BuildTree, CompareAnnotation, Search
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 
 Namespace MetaLib
@@ -62,7 +65,7 @@ Namespace MetaLib
     ''' <summary>
     ''' 在数据库的编号定义比较模糊的情况下, 会需要使用这个模块进行快速匹配搜索
     ''' </summary>
-    Public Class TreeSearch
+    Public Class MetaDataTreeSearch
 
         ReadOnly metaTree As AVLTree(Of MetaInfo, MetaInfo)
         ReadOnly cutoff#
@@ -89,7 +92,7 @@ Namespace MetaLib
             End If
         End Function
 
-        Public Function BuildTree(pubchem As IEnumerable(Of MetaInfo)) As TreeSearch
+        Public Function BuildTree(pubchem As IEnumerable(Of MetaInfo)) As MetaDataTreeSearch
             For Each meta As MetaInfo In pubchem
                 Call metaTree.Add(meta, meta, False)
             Next

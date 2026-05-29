@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df74c4e65fd06676668bb4a3a66caa2a, mzkit\src\metadna\metaDNA\Infer\CandidateInfer.vb"
+﻿#Region "Microsoft.VisualBasic::c60a5adbbeee191bf4c0ab5575d30042, metadna\metaDNA\Infer\CandidateInfer.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 14
-    '    Code Lines: 10
-    ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 392 B
+    '   Total Lines: 15
+    '    Code Lines: 11 (73.33%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (26.67%)
+    '     File Size: 509 B
 
 
     '     Class CandidateInfer
@@ -56,12 +58,13 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace Infer
 
-    Public Class CandidateInfer
+    Public Class CandidateInfer : Implements INamedValue
 
-        <XmlAttribute> Public Property kegg_id As String
+        <XmlAttribute> Public Property kegg_id As String Implements INamedValue.Key
         <XmlElement> Public Property infers As Candidate()
 
         Public Overrides Function ToString() As String

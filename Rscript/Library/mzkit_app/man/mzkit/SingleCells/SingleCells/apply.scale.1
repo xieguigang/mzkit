@@ -1,10 +1,10 @@
 .\" man page create by R# package system.
-.TH SINGLECELLS 1 2000-Jan "apply.scale" "apply.scale"
+.TH SINGLECELLS 1 2000-1月 "apply.scale" "apply.scale"
 .SH NAME
 apply.scale \- scale matrix for each spot/cell sample
 .SH SYNOPSIS
 \fIapply.scale(\fBx\fR as any, 
-\fBscaler\fR as <generic> RFunction, 
+\fBscaler\fR as <closure> RFunction, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -15,10 +15,20 @@ scale matrix for each spot/cell sample
 \fBx\fB \fR\- -. 
 .PP
 .PP
-\fBscaler\fB \fR\- -. 
+\fBscaler\fB \fR\- A R# @\fBT:SMRUCC.Rsharp.Runtime.Components.Interface.RFunction\fR for apply the scale transform.. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
+.PP
+.SH EXAMPLES
+.PP
+# use the internal function
+ x <- apply.scale(x, scaler = max);
+ # use the lambda function
+ # the symbol x of the parameter in f function is a different thing 
+ # with the variable x
+ let f(x) = x ^ 2;
+ x <- apply.scale(x, scaler = f);
 .PP
 .SH SEE ALSO
 SingleCells

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc05247afd57463bc6bc14952a6b580b, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Query\WebResponse.vb"
+﻿#Region "Microsoft.VisualBasic::0dc3817ed05f96374925c754764c91f2, metadb\Massbank\Public\NCBI\PubChem\Web\Query\WebResponse.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 51
-    '    Code Lines: 39
-    ' Comment Lines: 5
-    '   Blank Lines: 7
-    '     File Size: 2.00 KB
+    '    Code Lines: 39 (76.47%)
+    ' Comment Lines: 5 (9.80%)
+    '    - Xml Docs: 60.00%
+    ' 
+    '   Blank Lines: 7 (13.73%)
+    '     File Size: 2.01 KB
 
 
     '     Class JsonQuery
@@ -65,7 +67,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 
 Namespace NCBI.PubChem
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5bd8c3449d34507fd3f87567e2b97930, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Query\CIDExport.vb"
+﻿#Region "Microsoft.VisualBasic::2ca55beca3e93aa85c7c108a43be4966, metadb\Massbank\Public\NCBI\PubChem\Web\Query\CIDExport.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 41
-    '    Code Lines: 33
-    ' Comment Lines: 0
-    '   Blank Lines: 8
-    '     File Size: 1.54 KB
+    '    Code Lines: 33 (80.49%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 8 (19.51%)
+    '     File Size: 1.55 KB
 
 
     '     Class CIDExport
@@ -55,7 +57,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
 

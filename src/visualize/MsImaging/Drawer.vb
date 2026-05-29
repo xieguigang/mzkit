@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3d3a1d5341519ee471dbc42f020eec7, mzkit\src\visualize\MsImaging\Drawer.vb"
+﻿#Region "Microsoft.VisualBasic::7da91995b55118846a95531d5ec895f4, visualize\MsImaging\Drawer.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 286
-    '    Code Lines: 181
-    ' Comment Lines: 62
-    '   Blank Lines: 43
-    '     File Size: 11.67 KB
+    '   Total Lines: 366
+    '    Code Lines: 219 (59.84%)
+    ' Comment Lines: 98 (26.78%)
+    '    - Xml Docs: 86.73%
+    ' 
+    '   Blank Lines: 49 (13.39%)
+    '     File Size: 14.98 KB
 
 
     ' Class Drawer
     ' 
     '     Properties: dimension, pixelReader
     ' 
-    '     Constructor: (+3 Overloads) Sub New
+    '     Constructor: (+4 Overloads) Sub New
     ' 
-    '     Function: (+2 Overloads) DrawLayer, GetPixelsMatrix, LoadPixels, ReadXY, RenderSummaryLayer
+    '     Function: (+2 Overloads) DrawLayer, GetPixelsMatrix, (+2 Overloads) LoadPixels, ReadXY, RenderSummaryLayer
     '               (+2 Overloads) ScaleLayer, ScalePixels, ShowSummaryRendering
     ' 
     '     Sub: (+2 Overloads) Dispose
@@ -60,19 +62,48 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
-Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports HeatMapParameters = Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.HeatMapParameters
+
+#If NET48 Then
+Imports Microsoft.VisualBasic.Drawing
+Imports Microsoft.VisualBasic.Drawing.Imaging.BitmapImage
+
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
 
 ''' <summary>
 ''' MS-imaging render canvas
@@ -81,6 +112,10 @@ Public Class Drawer : Implements IDisposable
 
     Dim disposedValue As Boolean
 
+    ''' <summary>
+    ''' adapter to the ms-imaging rawdata file
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property pixelReader As PixelReader
 
     ''' <summary>
@@ -97,28 +132,59 @@ Public Class Drawer : Implements IDisposable
         End Get
     End Property
 
-    Sub New(file As String, Optional memoryCache As Boolean = False)
+    ''' <summary>
+    ''' construct a data render from a local spatial rawdata file.
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="memoryCache"></param>
+    ''' <param name="verbose"></param>
+    Sub New(file As String, Optional memoryCache As Boolean = False, Optional verbose As Boolean = True)
         If file.ExtensionSuffix("imzML") Then
             pixelReader = New ReadIbd(imzML:=file, memoryCache:=memoryCache)
         ElseIf file.ExtensionSuffix("mzpack") Then
-            pixelReader = New ReadRawPack(mzpack:=file)
+            ' pixelReader = New ReadRawPack(mzpack:=file, verbose:=verbose)
+            Throw New NotSupportedException($"Create ms-imaging rendering canvas from read mzPack rawdata file is not supported.")
         Else
             Throw New InvalidProgramException($"unsupported file type: {file.FileName}")
         End If
     End Sub
 
-    Sub New(mzpack As mzPack)
-        pixelReader = New ReadRawPack(mzpack)
+    ''' <summary>
+    ''' Create render from an in-memory dataset
+    ''' </summary>
+    ''' <param name="mzpack">
+    ''' An abstract interface of the in-memory mzPack data object
+    ''' </param>
+    ''' <param name="verbose"></param>
+    Sub New(mzpack As IMZPack, Optional verbose As Boolean = True, Optional indexMemory As Boolean = False)
+        If indexMemory Then
+            pixelReader = New MemoryIndexReader(mzpack, verbose)
+        Else
+            pixelReader = New ReadRawPack(mzpack, verbose)
+        End If
     End Sub
 
-    Sub New(matrix As mzPackPixel())
-        pixelReader = New ReadRawPack(matrix)
+    ''' <summary>
+    ''' Create render from an in-memory dataset
+    ''' </summary>
+    ''' <param name="matrix"></param>
+    ''' <param name="verbose"></param>
+    Sub New(matrix As mzPackPixel(), Optional verbose As Boolean = True)
+        pixelReader = New ReadRawPack(matrix, verbose)
     End Sub
 
     Sub New(reader As PixelReader)
         pixelReader = reader
     End Sub
 
+    ''' <summary>
+    ''' read spectrum data via a given x,y spatial spot
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <returns>
+    ''' A spatial data collection, empty if the given spot is not existed.
+    ''' </returns>
     Public Function ReadXY(x As Integer, y As Integer) As IEnumerable(Of ms2)
         Dim pixel As PixelScan = pixelReader.GetPixel(x, y)
 
@@ -190,21 +256,16 @@ Public Class Drawer : Implements IDisposable
             New PixelRender(heatmapRender:=False),
             New RectangleRender(driver, heatmapRender:=False)
         )
+        Dim heatmap As New HeatMapParameters(colorSet, mapLevels, background)
 
-        Return engine.RenderPixels(
-            pixels:=pixels,
-            dimension:=dimension,
-            colorSet:=colorSet,
-            defaultFill:=background,
-            mapLevels:=mapLevels
-        )
+        Return engine.RenderPixels(pixels:=pixels, dimension:=dimension, heatmap:=heatmap)
     End Function
 
-    Public Shared Function ScaleLayer(raw As Bitmap, dimension As Size, dimSize As Size, scale As InterpolationMode) As Bitmap
+    Public Shared Function ScaleLayer(raw As Bitmap, dimension As Size, dimSize As Size) As Bitmap
         Dim newWidth As Integer = dimension.Width * dimSize.Width
         Dim newHeight As Integer = dimension.Height * dimSize.Height
 
-        Return ScaleLayer(raw, newWidth, newHeight, scale)
+        Return ScaleLayer(raw, newWidth, newHeight)
     End Function
 
     ''' <summary>
@@ -213,14 +274,13 @@ Public Class Drawer : Implements IDisposable
     ''' <param name="raw"></param>
     ''' <param name="newWidth"></param>
     ''' <param name="newHeight"></param>
-    ''' <param name="scale"></param>
     ''' <returns></returns>
-    Public Shared Function ScaleLayer(raw As Bitmap, newWidth As Integer, newHeight As Integer, scale As InterpolationMode) As Bitmap
-        If scale = InterpolationMode.Invalid Then
-            scale = InterpolationMode.Default
-        End If
-
-        Return raw.Resize(newWidth, onlyResizeIfWider:=True, scale:=scale)
+    Public Shared Function ScaleLayer(raw As Bitmap, newWidth As Integer, newHeight As Integer) As Bitmap
+#If NET48 Then
+        Return raw.Resize(newWidth, onlyResizeIfWider:=True)
+#Else
+        Return raw.Resize(newWidth, newHeight)
+#End If
     End Function
 
     ''' <summary>
@@ -235,27 +295,28 @@ Public Class Drawer : Implements IDisposable
                               Optional toleranceErr As String = "da:0.1",
                               Optional colorSet As String = "YlGnBu:c8",
                               Optional mapLevels% = 25,
-                              Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                              Optional pixelDrawer As Boolean = True,
+                              Optional filter As RasterPipeline = Nothing,
                               Optional background As String = NameOf(Color.Transparent),
                               Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim tolerance As Tolerance = Tolerance.ParseScript(toleranceErr)
 
-        Call $"loading pixel datas [m/z={mz.ToString("F4")}] with tolerance {tolerance}...".__INFO_ECHO
+        Call $"loading pixel datas [m/z={mz.ToString("F4")}] with tolerance {tolerance}...".info
 
         Dim pixels As PixelData() = pixelReader.LoadPixels({mz}, tolerance).ToArray
         Dim engine As New RectangleRender(driver, heatmapRender:=False)
+        Dim heatmap As New HeatMapParameters(colorSet, mapLevels, background)
 
-        Call $"rendering {pixels.Length} pixel blocks...".__INFO_ECHO
+        If Not filter Is Nothing Then
+            pixels = filter.DoIntensityScale(pixels, dimSize:=dimension)
+        End If
+
+        Call $"rendering {pixels.Length} pixel blocks...".info
 
         Return engine.RenderPixels(
             pixels:=pixels,
             dimension:=dimension,
-            colorSet:=colorSet,
-            mapLevels:=mapLevels,
-            scale:=scale,
-            defaultFill:=background
+            heatmap:=heatmap
         )
     End Function
 
@@ -308,33 +369,35 @@ Public Class Drawer : Implements IDisposable
                               Optional toleranceErr As String = "da:0.1",
                               Optional colorSet As String = "YlGnBu:c8",
                               Optional mapLevels% = 25,
-                              Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                              Optional pixelDrawer As Boolean = True,
+                              Optional filter As RasterPipeline = Nothing,
                               Optional background As String = NameOf(Color.Transparent),
                               Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim rawPixels As PixelData()
         Dim tolerance As Tolerance = Tolerance.ParseScript(toleranceErr)
 
-        Call $"loading pixel datas [m/z={mz.Select(Function(mzi) mzi.ToString("F4")).JoinBy(", ")}] with tolerance {tolerance}...".__INFO_ECHO
+        Call $"loading pixel datas [m/z={mz.Select(Function(mzi) mzi.ToString("F4")).JoinBy(", ")}] with tolerance {tolerance}...".info
 
         rawPixels = pixelReader.LoadPixels(mz, tolerance).ToArray
+
+        If Not filter Is Nothing Then
+            rawPixels = filter.DoIntensityScale(rawPixels, dimension)
+        End If
+
         rawPixels = ScalePixels(rawPixels, tolerance)
 
-        Call $"building pixel matrix from {rawPixels.Count} raw pixels...".__INFO_ECHO
+        Call $"building pixel matrix from {rawPixels.Length} raw pixels...".info
 
         Dim matrix As PixelData() = GetPixelsMatrix(rawPixels)
         Dim engine As Renderer = New RectangleRender(driver, heatmapRender:=False)
+        Dim heatmap As New HeatMapParameters(colorSet, mapLevels, background)
 
-        Call $"rendering {matrix.Length} pixel blocks...".__INFO_ECHO
+        Call $"rendering {matrix.Length} pixel blocks...".info
 
         Return engine.RenderPixels(
             pixels:=matrix,
             dimension:=dimension,
-            colorSet:=colorSet,
-            mapLevels:=mapLevels,
-            scale:=scale,
-            defaultFill:=background
+            heatmap:=heatmap
         )
     End Function
 

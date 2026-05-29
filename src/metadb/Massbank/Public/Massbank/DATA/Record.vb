@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18b6b4b9c911fbe96bbdb839efe5b66b, mzkit\src\metadb\Massbank\Public\Massbank\DATA\Record.vb"
+﻿#Region "Microsoft.VisualBasic::7e9a499faccf9df629833cf941cf9375, metadb\Massbank\Public\Massbank\DATA\Record.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 119
-    '    Code Lines: 75
-    ' Comment Lines: 15
-    '   Blank Lines: 29
-    '     File Size: 3.39 KB
+    '    Code Lines: 75 (63.03%)
+    ' Comment Lines: 15 (12.61%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 29 (24.37%)
+    '     File Size: 3.40 KB
 
 
     '     Class Record
@@ -92,7 +94,7 @@
 
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 

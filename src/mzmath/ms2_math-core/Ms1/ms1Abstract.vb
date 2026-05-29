@@ -1,73 +1,79 @@
-﻿#Region "Microsoft.VisualBasic::c565b4c40a5559c6a5fdee00bc76f2c3, mzkit\src\mzmath\ms2_math-core\Ms1\ms1Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::513c4bfe298730f9578de27b31024aca, mzmath\ms2_math-core\Ms1\ms1Abstract.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 31
-'    Code Lines: 13
-' Comment Lines: 7
-'   Blank Lines: 11
-'     File Size: 529 B
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Interface IMs1
-' 
-'     Properties: mz
-' 
-' Interface IRetentionTime
-' 
-'     Properties: rt
-' 
-' Interface IMs1Scan
-' 
-'     Properties: intensity
-' 
-' Interface IMS1Annotation
-' 
-'     Properties: id, precursor_type
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 63
+    '    Code Lines: 16 (25.40%)
+    ' Comment Lines: 32 (50.79%)
+    '    - Xml Docs: 96.88%
+    ' 
+    '   Blank Lines: 15 (23.81%)
+    '     File Size: 1.46 KB
+
+
+    ' Interface IMs1
+    ' 
+    '     Properties: mz
+    ' 
+    ' Interface IRetentionTime
+    ' 
+    '     Properties: rt
+    ' 
+    ' Interface IRetentionIndex
+    ' 
+    '     Properties: RI
+    ' 
+    ' Interface IMs1Scan
+    ' 
+    '     Properties: intensity
+    ' 
+    ' Interface IMS1Annotation
+    ' 
+    '     Properties: precursor_type
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 ''' <summary>
-''' 
+''' [mz, rt] tuple
 ''' </summary>
 Public Interface IMs1 : Inherits IRetentionTime
 
@@ -85,6 +91,19 @@ Public Interface IRetentionTime
     ''' </summary>
     ''' <returns></returns>
     Property rt As Double
+
+End Interface
+
+''' <summary>
+''' A time point related data
+''' </summary>
+Public Interface IRetentionIndex
+
+    ''' <summary>
+    ''' the retention index
+    ''' </summary>
+    ''' <returns></returns>
+    Property RI As Double
 
 End Interface
 

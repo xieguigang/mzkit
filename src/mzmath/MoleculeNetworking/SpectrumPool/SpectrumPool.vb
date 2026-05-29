@@ -1,4 +1,68 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::8ef7fd80c1a3658ff0c1e844acb1aed2, mzmath\MoleculeNetworking\SpectrumPool\SpectrumPool.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 397
+    '    Code Lines: 217 (54.66%)
+    ' Comment Lines: 123 (30.98%)
+    '    - Xml Docs: 68.29%
+    ' 
+    '   Blank Lines: 57 (14.36%)
+    '     File Size: 14.72 KB
+
+
+    '     Class SpectrumPool
+    ' 
+    '         Properties: ClusterInfo
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Create, GetFileSystem, GetSpectral, Open, ToString
+    ' 
+    '         Sub: Add, AddInternal, Commit, (+3 Overloads) DirectPush, (+2 Overloads) Dispose
+    '              eval_score
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
@@ -9,6 +73,9 @@ Namespace PoolData
     ''' <summary>
     ''' A pool storage object for the spectrum tree data
     ''' </summary>
+    ''' <remarks>
+    ''' A multiple tree branch clustering of the ms spectrum object 
+    ''' </remarks>
     Public Class SpectrumPool : Implements IDisposable
 
         Dim classTree As New Dictionary(Of String, SpectrumPool)
@@ -58,6 +125,10 @@ Namespace PoolData
             End Get
         End Property
 
+        ''' <summary>
+        ''' get the <see cref="Metadata"/> collection of each cluster
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ClusterInfo As IEnumerable(Of Metadata)
             Get
                 Return metadata.AllClusterMembers
@@ -70,7 +141,7 @@ Namespace PoolData
         ''' <param name="fs">
         ''' the pool filesystem storage
         ''' </param>
-        Private Sub New(fs As PoolFs, path As String)
+        Public Sub New(fs As PoolFs, path As String)
             Me.fs = fs
             Me.handle = path.StringReplace("/{2,}", "/")
             Me.metadata = fs.LoadMetadata(path)

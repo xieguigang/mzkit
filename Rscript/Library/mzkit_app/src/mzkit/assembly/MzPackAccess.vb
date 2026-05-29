@@ -1,57 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::90a2ea4946e7532ddd04616dc033d25d, mzkit\Rscript\Library\mzkit\assembly\MzPackAccess.vb"
+﻿#Region "Microsoft.VisualBasic::ac0bdc10bd5d781cf9d51a7e716b089d, Rscript\Library\mzkit_app\src\mzkit\assembly\MzPackAccess.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 327
-'    Code Lines: 214
-' Comment Lines: 75
-'   Blank Lines: 38
-'     File Size: 12.14 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module MzPackAccess
-' 
-'     Function: convertTo_mzXML, GetMetaData, getSampleTags, index, open_mzpack
-'               open_mzwork, packData, populateMzPacks, readFileCache, scanInfo
-'               SplitSamples, writeStream
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 549
+    '    Code Lines: 344 (62.66%)
+    ' Comment Lines: 149 (27.14%)
+    '    - Xml Docs: 94.63%
+    ' 
+    '   Blank Lines: 56 (10.20%)
+    '     File Size: 21.28 KB
+
+
+    ' Module MzPackAccess
+    ' 
+    '     Function: appendMzPack, convertTo_mzXML, denoiseMsMs, denoiseMzpack, GetMetaData
+    '               getSampleTags, handlingMs2products, index, open_mzpack, open_mzwork
+    '               packData, packMs1, populateMzPacks, readFileCache, removeSciexNoise
+    '               scanInfo, SplitSamples, writeStream
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -67,6 +70,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
@@ -74,7 +78,8 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
-Imports stdNum = System.Math
+Imports std = System.Math
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' raw data accessor for the mzpack data object
@@ -197,11 +202,13 @@ Module MzPackAccess
     End Function
 
     ''' <summary>
+    ''' ### get mzpack object from mzwork archive
+    ''' 
     ''' read mzpack data from the mzwork package by a 
     ''' given raw data file name as reference id
     ''' </summary>
-    ''' <param name="mzwork"></param>
-    ''' <param name="fileName"></param>
+    ''' <param name="mzwork">a zip archive liked data package, contains multiple mzpack object</param>
+    ''' <param name="fileName">the reference key for extract the mzpack data</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("readFileCache")>
@@ -257,7 +264,7 @@ Module MzPackAccess
         ElseIf ver = 2 Then
             Return New mzStream(buffer.TryCast(Of Stream))
         Else
-            Return Internal.debug.stop(New NotImplementedException("unknow version of the mzpack file format!"), env)
+            Return RInternal.debug.stop(New NotImplementedException("unknow version of the mzpack file format!"), env)
         End If
     End Function
 
@@ -355,10 +362,10 @@ Module MzPackAccess
     End Function
 
     ''' <summary>
-    ''' method for write mzpack data object as a mzML file
+    ''' method for write mzpack data object as a mzXML file
     ''' </summary>
     ''' <param name="mzpack"></param>
-    ''' <param name="file"></param>
+    ''' <param name="file">the file stream to the target mzXML file to write the data</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("convertTo_mzXML")>
@@ -427,7 +434,7 @@ Module MzPackAccess
             .populates(Of PeakMs2)(env) _
             .GroupBy(Function(t) t.rt,
                      Function(t1, t2)
-                         Return stdNum.Abs(t1 - t2) <= timeWindow
+                         Return std.Abs(t1 - t2) <= timeWindow
                      End Function) _
             .ToArray
         Dim groupMs1 = (From list As NamedCollection(Of PeakMs2)
@@ -567,6 +574,36 @@ Module MzPackAccess
             .rt = scan2.Average(Function(a) a.rt),
             .TIC = scan2.Sum(Function(a) a.intensity),
             .meta = New Dictionary(Of String, String)
+        }
+    End Function
+
+    ''' <summary>
+    ''' union merge two rawdata.
+    ''' </summary>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
+    ''' <returns></returns>
+    <ROperator("+")>
+    Public Function appendMzPack(a As mzPack, b As mzPack) As Object
+        If a Is Nothing Then
+            Return b
+        ElseIf b Is Nothing Then
+            Return a
+        ElseIf a Is Nothing AndAlso b Is Nothing Then
+            Return Nothing
+        End If
+
+        Return New mzPack With {
+            .Annotations = a.Annotations _
+                .JoinIterates(b.Annotations) _
+                .GroupBy(Function(ai) ai.Key) _
+                .ToDictionary(Function(ai) ai.Key,
+                              Function(ai)
+                                  Return ai.First.Value
+                              End Function),
+            .Application = a.Application,
+            .MS = a.MS.JoinIterates(b.MS).ToArray,
+            .source = $"{a.source}+{b.source}"
         }
     End Function
 End Module

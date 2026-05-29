@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91c10f368a821172ae38ae6d89cd1c8f, mzkit\src\assembly\assembly\UnifyReader\FileFormats\imzMLScan.vb"
+﻿#Region "Microsoft.VisualBasic::7c5cedbf0dec1149c41738396ed71942, assembly\assembly\UnifyReader\FileFormats\imzMLScan.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 61
-    '    Code Lines: 46
-    ' Comment Lines: 0
-    '   Blank Lines: 15
-    '     File Size: 2.14 KB
+    '   Total Lines: 69
+    '    Code Lines: 52 (75.36%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 17 (24.64%)
+    '     File Size: 2.42 KB
 
 
     '     Class imzMLScan
     ' 
     '         Function: GetActivationMethod, GetBPC, GetCentroided, GetCharge, GetCollisionEnergy
-    '                   GetMsLevel, GetMsMs, GetParentMz, GetPolarity, GetScanId
-    '                   GetScanTime, GetTIC, IsEmpty
+    '                   GetMsLevel, GetMsMs, GetParentMz, GetParentScanNumber, GetPolarity
+    '                   GetScanId, GetScanNumber, GetScanTime, GetTIC, IsEmpty
     ' 
     ' 
     ' /********************************************************************************/
@@ -56,7 +58,7 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace DataReader
@@ -113,6 +115,14 @@ Namespace DataReader
 
         Public Overrides Function GetCentroided(scan As ScanReader) As Boolean
             Throw New NotImplementedException()
+        End Function
+
+        Public Overrides Function GetScanNumber(scan As ScanReader) As String
+            Throw New NotImplementedException()
+        End Function
+
+        Public Overrides Function GetParentScanNumber(scan As ScanReader) As String
+            Return Nothing
         End Function
     End Class
 End Namespace

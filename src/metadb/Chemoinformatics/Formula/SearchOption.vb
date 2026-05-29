@@ -1,59 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::7c5d6a383eb3b149e3a55dabd2400869, mzkit\src\metadb\Chemoinformatics\Formula\SearchOption.vb"
+﻿#Region "Microsoft.VisualBasic::cad47bc633958fcf75f1b48392c48fc5, metadb\Chemoinformatics\Formula\SearchOption.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 130
-'    Code Lines: 110
-' Comment Lines: 0
-'   Blank Lines: 20
-'     File Size: 5.03 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class SearchOption
-' 
-'         Properties: candidateElements, chargeRange, ppm
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: AddElement, AdjustPpm, DefaultMetaboliteProfile, GeneralFlavone, NaturalProduct
-'                   SmallMolecule, ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 167
+    '    Code Lines: 128 (76.65%)
+    ' Comment Lines: 14 (8.38%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 25 (14.97%)
+    '     File Size: 6.30 KB
+
+
+    '     Class SearchOption
+    ' 
+    '         Properties: candidateElements, candidateSize, chargeRange, ppm
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: (+2 Overloads) AddElement, AdjustPpm, DefaultMetaboliteProfile, GeneralFlavone, NaturalProduct
+    '                   SmallMolecule, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -64,16 +66,47 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Formula
 
+    ''' <summary>
+    ''' options for evaluate a formula for matches a given experiment mass
+    ''' </summary>
     Public Class SearchOption
 
-        Public ReadOnly Property candidateElements As List(Of ElementSearchCandiate)
+        Public ReadOnly Property candidateElements As ElementSearchCandiate()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return _candidateElements.SafeQuery.ToArray
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' the mass tolerance between the formula evaluated mass and the experiment mass
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ppm As Double
         Public ReadOnly Property chargeRange As IntRange
 
+        ''' <summary>
+        ''' number of the element types in current search option
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property candidateSize As Integer
+            Get
+                Return _candidateElements.TryCount
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' a collection of the candidate elements
+        ''' </summary>
+        ReadOnly _candidateElements As List(Of ElementSearchCandiate)
+
         Sub New(minCharge As Integer, maxCharge As Integer, Optional ppm As Double = 30)
-            Me.candidateElements = New List(Of ElementSearchCandiate)
+            Me._candidateElements = New List(Of ElementSearchCandiate)
             Me.ppm = ppm
             Me.chargeRange = New IntRange(minCharge, maxCharge)
+        End Sub
+
+        Sub New()
         End Sub
 
         Public Function AddElement(element As String, min As Integer, max As Integer) As SearchOption
@@ -81,7 +114,7 @@ Namespace Formula
                 .Element = element,
                 .MaxCount = max,
                 .MinCount = min
-            }.DoCall(AddressOf candidateElements.Add)
+            }.DoCall(AddressOf _candidateElements.Add)
 
             Return Me
         End Function

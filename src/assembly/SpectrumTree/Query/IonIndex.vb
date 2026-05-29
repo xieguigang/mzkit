@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb8d7b5a596bedcf7f55278de3361950, mzkit\src\assembly\SpectrumTree\Query\IonIndex.vb"
+﻿#Region "Microsoft.VisualBasic::24f1c2c9aa913001ea7a41c22a458b93, assembly\SpectrumTree\Query\IonIndex.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 19
-    '    Code Lines: 11
-    ' Comment Lines: 3
-    '   Blank Lines: 5
-    '     File Size: 463 B
+    '   Total Lines: 22
+    '    Code Lines: 11 (50.00%)
+    ' Comment Lines: 6 (27.27%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 5 (22.73%)
+    '     File Size: 580 B
 
 
     '     Structure IonIndex

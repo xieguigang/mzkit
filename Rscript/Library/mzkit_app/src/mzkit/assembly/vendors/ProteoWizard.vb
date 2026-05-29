@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b253c02e9660f250e6e43a46a14768c, mzkit\Rscript\Library\mzkit\assembly\vendors\ProteoWizard.vb"
+﻿#Region "Microsoft.VisualBasic::e55d3cf30b0a2088b983d7acbc3fefe0, Rscript\Library\mzkit_app\src\mzkit\assembly\vendors\ProteoWizard.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 143
-    '    Code Lines: 92
-    ' Comment Lines: 31
-    '   Blank Lines: 20
-    '     File Size: 4.96 KB
+    '   Total Lines: 144
+    '    Code Lines: 93 (64.58%)
+    ' Comment Lines: 31 (21.53%)
+    '    - Xml Docs: 93.55%
+    ' 
+    '   Blank Lines: 20 (13.89%)
+    '     File Size: 5.16 KB
 
 
     ' Module ProteoWizard
@@ -61,6 +63,7 @@ Imports ProteoWizard.Interop
 Imports ProteoWizard.Interop.filters
 Imports SMRUCC.Rsharp.Development.Configuration
 Imports SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' ProteoWizard helper
@@ -114,7 +117,7 @@ Module ProteoWizard
         Dim bin As ProteoWizardCLI = GetServices(env)
 
         If Not bin.IsAvailable Then
-            Return Internal.debug.stop(ErrMsg, env)
+            Return RInternal.debug.stop(ErrMsg, env)
         Else
             If output.StringEmpty Then
                 output = wiff.TrimSuffix
@@ -168,7 +171,7 @@ Module ProteoWizard
         }
 
         If Not bin.IsAvailable Then
-            Return Internal.debug.stop(ErrMsg, env)
+            Return RInternal.debug.stop(ErrMsg, env)
         ElseIf parallel > App.CPUCoreNumbers Then
             Call env.AddMessage($"the given parallelism degree is greater than the processor counts!", MSG_TYPES.WRN)
         End If

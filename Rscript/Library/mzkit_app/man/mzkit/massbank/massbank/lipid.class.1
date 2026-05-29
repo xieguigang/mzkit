@@ -1,9 +1,10 @@
 .\" man page create by R# package system.
-.TH MASSBANK 1 2000-Jan "lipid.class" "lipid.class"
+.TH MASSBANK 1 2000-1月 "lipid.class" "lipid.class"
 .SH NAME
 lipid.class \- Create lipid class helper for annotation
 .SH SYNOPSIS
 \fIlipid.class(\fBlipidmaps\fR as any, 
+\fBid\fR as any = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -15,6 +16,15 @@ Create lipid class helper for annotation
 .PP
 .PP
 \fBenv\fB \fR\- -. 
+.PP
+.SH EXAMPLES
+.PP
+# cast sdf dataset to lipidmaps data object
+ let dataset = read.SDF(file = "./example.sdf", lazy = FALSE);
+ let lipids = dataset |> as.lipidmaps();
+ 
+ # create annotation helper
+ let class = lipid.class(lipids);
 .PP
 .SH SEE ALSO
 massbank

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78af973eada1d1b7a274e0d275da0e6e, mzkit\src\mzmath\ms2_math-core\Chromatogram\Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::6bf50ac7c97b7cce111a2af036e16f43, mzmath\mz_deco\Signals\Chromatogram\Chromatogram.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 40
-    ' Comment Lines: 16
-    '   Blank Lines: 9
-    '     File Size: 2.62 KB
+    '   Total Lines: 51
+    '    Code Lines: 34 (66.67%)
+    ' Comment Lines: 10 (19.61%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (13.73%)
+    '     File Size: 2.04 KB
 
 
     '     Module ChromatogramMath
     ' 
-    '         Function: Baseline, IntensityArray, Summary, TimeArray, TimeRange
+    '         Function: IntensityArray, Summary, TimeArray, TimeRange
     ' 
     ' 
     ' /********************************************************************************/
@@ -84,20 +86,6 @@ Namespace Chromatogram
         <Extension>
         Public Function IntensityArray(chromatogram As IEnumerable(Of ChromatogramTick)) As Vector
             Return chromatogram.Select(Function(c) c.Intensity).AsVector
-        End Function
-
-        ''' <summary>
-        ''' Detection of the signal base line based on the quantile method.
-        ''' </summary>
-        ''' <param name="chromatogram"></param>
-        ''' <param name="quantile#"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function Baseline(chromatogram As IEnumerable(Of ChromatogramTick), Optional quantile# = 0.65) As Double
-            Dim q As QuantileEstimationGK = chromatogram.Shadows!Intensity.GKQuantile
-            Dim baseValue = q.Query(quantile)
-
-            Return baseValue
         End Function
 
         ''' <summary>

@@ -1,4 +1,62 @@
-﻿Imports System.Collections.ObjectModel
+﻿#Region "Microsoft.VisualBasic::ce2fe4ff04c68b07a6338d4a5c487995, mzmath\ms2_math-core\Ms1\PrecursorType\AdductIonParser.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 404
+    '    Code Lines: 357 (88.37%)
+    ' Comment Lines: 13 (3.22%)
+    '    - Xml Docs: 69.23%
+    ' 
+    '   Blank Lines: 34 (8.42%)
+    '     File Size: 22.20 KB
+
+
+    '     Module AdductIonParser
+    ' 
+    '         Function: GetAdductContent, GetAdductIonXmer, GetChargeNumber, GetFormulaAndNumber, GetIonType
+    '                   GetOrganicAdductFormulaAndMass, GetRadicalInfo, IonTypeFormatChecker, IsCommonAdduct
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Collections.ObjectModel
 Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
 Imports std = System.Math
@@ -80,11 +138,8 @@ Namespace Ms1.PrecursorType
             Return contentString.Trim()
         End Function
 
-        Public Function CountChar(s As String, c As Char) As Integer
-            Return s.Length - s.Replace(c.ToString(), "").Length
-        End Function
+        Private ReadOnly XmerCheckTemplate As New Regex("\[(?<x>\d+)?")
 
-        Private ReadOnly XmerCheckTemplate As Regex = New Regex("\[(?<x>\d+)?")
         Public Function GetAdductIonXmer(adductName As String) As Integer
             Dim match = XmerCheckTemplate.Match(adductName)
             If match.Success Then
@@ -95,13 +150,15 @@ Namespace Ms1.PrecursorType
             Return 1
         End Function
 
-        Private ReadOnly FormatCheckTemplate As Regex = New Regex("^\[[^\]\[\(\)]+\](?!.*[\]\[\(\)]).*[+-].*$")
+        ReadOnly FormatCheckTemplate As New Regex("^\[[^\]\[\(\)]+\](?!.*[\]\[\(\)]).*[+-].*$")
+
         Public Function IonTypeFormatChecker(adductName As String) As Boolean
             Return Not Equals(adductName, Nothing) AndAlso FormatCheckTemplate.IsMatch(adductName)
         End Function
 
         Public Function GetIonType(adductName As String) As IonModes
             Dim chargeString = adductName.Split("]"c)(1)
+
             If chargeString.Contains("+"c) Then
                 Return IonModes.Positive
             Else
@@ -135,19 +192,25 @@ Namespace Ms1.PrecursorType
         ''' </summary>
         ''' <param name="formula"></param>
         ''' <returns></returns>
-        Public Function GetFormulaAndNumber(formula As String) As (String, Double)
+        Public Function GetFormulaAndNumber(formula As String) As (formula As String, multipliedNum As Double)
             Dim numString = String.Empty
-            For i = 0 To formula.Length - 1
+
+            For i As Integer = 0 To formula.Length - 1
                 If Char.IsNumber(formula(i)) Then
                     numString += formula(i)
                 Else
                     Exit For
                 End If
             Next
+
             Return (formula.Substring(numString.Length), If(String.IsNullOrEmpty(numString), 1, Double.Parse(numString)))
         End Function
 
-        Public Function IsCommonAdduct(formula As String, multipliedNumber As Double, <Out> ByRef acurateMass As Double, <Out> ByRef m1Intensity As Double, <Out> ByRef m2Intensity As Double) As Boolean
+        Public Function IsCommonAdduct(formula As String, multipliedNumber As Double,
+                                       <Out> ByRef acurateMass As Double,
+                                       <Out> ByRef m1Intensity As Double,
+                                       <Out> ByRef m2Intensity As Double) As Boolean
+
             If formula.Equals("Na") Then
                 acurateMass = multipliedNumber * 22.9897692809
                 m1Intensity = 0

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc4f7d7d4fe4170576db3bd6824a4745, mzkit\src\mzmath\MSEngine\DBPool.vb"
+﻿#Region "Microsoft.VisualBasic::af1ec3ae5a49e122f59715198c92eb6f, mzmath\MSEngine\DBPool.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 53
-    '    Code Lines: 40
-    ' Comment Lines: 3
-    '   Blank Lines: 10
-    '     File Size: 1.80 KB
+    '    Code Lines: 40 (75.47%)
+    ' Comment Lines: 3 (5.66%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (18.87%)
+    '     File Size: 1.84 KB
 
 
     ' Class DBPool
@@ -93,7 +95,7 @@ Public Class DBPool
     Public Iterator Function MSetAnnotation(mzlist As IEnumerable(Of Double), Optional println As Action(Of String) = Nothing) As IEnumerable(Of NamedCollection(Of MzQuery))
         Dim allMz As Double() = mzlist.ToArray
 
-        For Each xrefDb In metadb
+        For Each xrefDb As KeyValuePair(Of String, IMzQuery) In metadb
             If Not println Is Nothing Then
                 Call println($"Do m/z set annotation of {xrefDb.Key}...")
             End If
@@ -101,7 +103,7 @@ Public Class DBPool
             Yield New NamedCollection(Of MzQuery) With {
                 .name = xrefDb.Key,
                 .value = xrefDb.Value _
-                    .MSetAnnotation(allMz) _
+                    .MSetAnnotation(allMz, 9) _
                     .ToArray
             }
         Next

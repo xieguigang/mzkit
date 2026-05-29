@@ -1,4 +1,68 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+﻿#Region "Microsoft.VisualBasic::d73476ec6c6ab1e3c37aeb6e92fc8150, mzmath\MSFinder\FragmentAssigner.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 832
+    '    Code Lines: 604 (72.60%)
+    ' Comment Lines: 97 (11.66%)
+    '    - Xml Docs: 69.07%
+    ' 
+    '   Blank Lines: 131 (15.75%)
+    '     File Size: 40.73 KB
+
+
+    ' Class FragmentAssigner
+    ' 
+    '     Properties: [Default]
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: FastFragmnetAssigner, FastNeutralLossAssigner, FragmnetAssign, GetAnnotatedIon, GetCentroidMsMsSpectrum
+    '               getFormulaCandidatesbyLibrarySearch, getLossFragment, GetNeutralLossList, (+3 Overloads) GetRefinedPeaklist, (+2 Overloads) getStartIndex
+    '               getValenceCheckedFragmentFormulaList, isFormulaComposition, isotopicPeakAssignmnet
+    ' 
+    '     Sub: AnnotateAdducts, AnnotateIsotopes
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
@@ -14,14 +78,16 @@ Public NotInheritable Class FragmentAssigner
     ''' must be sort by mass
     ''' </summary>
     Dim productIonDB As List(Of ProductIon)
+    Dim loss As List(Of NeutralLoss)
     Dim ms2Tol As Double, massTolType As MassToleranceType
 
     ''' <summary>
     ''' use default profile
     ''' </summary>
-    Sub New()
-        productIonDB = New List(Of ProductIon)(ProductIon.GetDefault.OrderBy(Function(i) i.Mass))
-        ms2Tol = 0.3
+    Sub New(Optional da As Double = 0.3)
+        productIonDB = New List(Of ProductIon)(MemorySheet.GetDefault.OrderBy(Function(i) i.Mass))
+        loss = New List(Of NeutralLoss)(MemorySheet.GetDefaultNeutralLoss(absMass:=True).OrderBy(Function(i) i.MassLoss))
+        ms2Tol = da
         massTolType = MassToleranceType.Da
     End Sub
 
@@ -29,11 +95,122 @@ Public NotInheritable Class FragmentAssigner
 
     Public Shared ReadOnly Property [Default] As New FragmentAssigner
 
+    Public Function FragmnetAssign(peak As SpectrumPeak, eMass As Double, formula As Formula, AdductIon As AdductIon) As ProductIon
+        Dim mass = peak.mz + eMass
+        Dim minDiff = Double.MaxValue
+        Dim massTol = ms2Tol
+        Dim exactMass As Double = formula.ExactMass
+        Dim precursor As Double = AdductIon.ConvertToMz(exactMass)
+
+        If massTolType = MassToleranceType.Ppm Then
+            massTol = PPMmethod.ConvertPpmToMassAccuracy(mass, ms2Tol)
+        End If
+
+        Dim minId = -1
+
+        ' for precursor annotation
+        If std.Abs(mass - exactMass - AdductIon.AdductIonAccurateMass) < massTol Then
+            Dim nFormula = FormulaCalculateUtility.ConvertFormulaAdductPairToPrecursorAdduct(formula, AdductIon)
+
+            Return New ProductIon() With {
+                .Formula = nFormula,
+                .Mass = peak.mz,
+                .MassDiff = exactMass + AdductIon.AdductIonAccurateMass - mass,
+                .Intensity = peak.intensity,
+                .Comment = "Precursor",
+                .Name = .Comment,
+                .ShortName = .Comment,
+                .Type = AnnotationType.Precursor
+            }
+        End If
+
+        'library search
+        Dim fragmentFormulas = getFormulaCandidatesbyLibrarySearch(formula, AdductIon.IonMode, peak.mz, massTol, productIonDB)
+
+        If fragmentFormulas.IsNullOrEmpty Then
+            ' loss search
+            Dim ion = getLossFragment(formula, peak, precursor, loss, da:=massTol)
+
+            If Not ion Is Nothing Then
+                Return ion
+            End If
+        End If
+
+        If fragmentFormulas.IsNullOrEmpty Then
+            fragmentFormulas = getValenceCheckedFragmentFormulaList(formula, AdductIon.IonMode, peak.mz, massTol) _
+                .Select(Function(a)
+                            Return New ProductIon With {
+                                .Formula = a,
+                                .Comment = "FragmentFormula",
+                                .ShortName = a.EmpiricalFormula,
+                                .Name = .ShortName,
+                                .Mass = peak.mz,
+                                .Intensity = peak.intensity,
+                                .IonMode = AdductIon.IonMode,
+                                .Type = AnnotationType.Product
+                            }
+                        End Function) _
+                .ToList
+        End If
+
+        For i As Integer = 0 To fragmentFormulas.Count - 1
+            Dim eval As Double = fragmentFormulas(i).Formula.ExactMass
+
+            If minDiff > std.Abs(mass - eval) Then
+                minId = i
+                minDiff = std.Abs(mass - eval)
+            End If
+        Next
+
+        If minId >= 0 Then
+            Return fragmentFormulas(minId)
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    Private Shared Function getLossFragment(formula As Formula,
+                                            peak As SpectrumPeak,
+                                            precursor As Double,
+                                            lossDb As IEnumerable(Of NeutralLoss),
+                                            da As Double) As ProductIon
+        Dim delta = precursor - peak.mz
+        Dim minLoss As NeutralLoss = Nothing
+        Dim minErr As Double = Double.MaxValue
+
+        For Each loss As NeutralLoss In lossDb
+            Dim dl = std.Abs(loss.MassLoss - delta)
+
+            If dl <= da AndAlso dl < minErr Then
+                If isFormulaComposition(loss.Formula, formula) Then
+                    minErr = dl
+                    minLoss = loss
+
+                    ' fast check
+                    ' just check of the first candidates?
+                    Exit For
+                End If
+            End If
+        Next
+
+        If minLoss Is Nothing Then Return Nothing
+
+        Return New ProductIon With {
+            .Comment = minLoss.Comment,
+            .Formula = formula - minLoss.Formula,
+            .Mass = peak.mz,
+            .Name = minLoss.Name,
+            .ShortName = minLoss.ShortName,
+            .Intensity = peak.intensity,
+            .Type = AnnotationType.Loss
+        }
+    End Function
+
     ''' <summary>
     ''' peaklist should be centroid and refined. For peaklist refining, use GetRefinedPeaklist.
     ''' </summary>
-    ''' <param name="peaklist"></param>
-    ''' <param name="formula"></param>
+    ''' <param name="peaklist">the ms2 spectrum matrix</param>
+    ''' <param name="formula">the annotated formula</param>
     ''' <remarks>
     ''' this function only populate out the product ion fragment which has 
     ''' the annotation result
@@ -47,65 +224,28 @@ Public NotInheritable Class FragmentAssigner
         End If
 
         For Each peak As SpectrumPeak In peaklist
-            If peak.Annotation <> "M" Then
+            ' do not overrides the current existsed annotations
+            If Not peak.Annotation.StringEmpty(, True) Then
                 Continue For
             End If
 
-            Dim mass = peak.mz + eMass
-            Dim minDiff = Double.MaxValue
-            Dim massTol = ms2Tol
+            Dim ion As ProductIon = FragmnetAssign(peak, eMass, formula, AdductIon)
 
-            If massTolType = MassToleranceType.Ppm Then
-                massTol = PPMmethod.ConvertPpmToMassAccuracy(mass, ms2Tol)
-            End If
-
-            Dim minId = -1
-
-            'for precursor annotation
-            If std.Abs(mass - formula.ExactMass - AdductIon.AdductIonAccurateMass) < massTol Then
-                Dim nFormula = FormulaCalculateUtility.ConvertFormulaAdductPairToPrecursorAdduct(formula, AdductIon)
-
-                Call productIons.Add(New ProductIon() With {
-                    .Formula = nFormula,
-                    .Mass = peak.mz,
-                    .MassDiff = formula.ExactMass + AdductIon.AdductIonAccurateMass - mass,
-                    .Intensity = peak.intensity
-                })
+            If ion Is Nothing Then
                 Continue For
             End If
 
-            'library search
-            Dim fragmentFormulas = getFormulaCandidatesbyLibrarySearch(formula, AdductIon.IonMode, peak.mz, massTol, productIonDB)
-
-            If fragmentFormulas Is Nothing OrElse fragmentFormulas.Count = 0 Then
-                fragmentFormulas = getValenceCheckedFragmentFormulaList(formula, AdductIon.IonMode, peak.mz, massTol)
-            End If
-
-            For i As Integer = 0 To fragmentFormulas.Count - 1
-                If minDiff > std.Abs(mass - fragmentFormulas(i).ExactMass) Then
-                    minId = i
-                    minDiff = std.Abs(mass - fragmentFormulas(i).ExactMass)
-                End If
-            Next
-
-            If minId >= 0 Then
-                productIons.Add(New ProductIon() With {
-                    .Formula = fragmentFormulas(minId),
-                    .Mass = peak.mz,
-                    .MassDiff = fragmentFormulas(minId).ExactMass - mass,
-                    .Intensity = peak.intensity
-                })
-            End If
+            Call productIons.Add(ion)
         Next
 
         For Each ion As ProductIon In productIons
-            Dim startIndex = FragmentAssigner.getStartIndex(ion.Mass, 0.1, productIonDB)
+            Dim startIndex = FragmentAssigner.getStartIndex(ion.Mass, ms2Tol, productIonDB)
 
             For i As Integer = startIndex To productIonDB.Count - 1
                 Dim ionQuery = productIonDB(i)
 
-                If ionQuery.IonMode <> AdductIon.IonMode Then Continue For
-                If ionQuery.Formula.ExactMass > ion.Mass + 0.1 Then Exit For
+                If ionQuery.IonMode <> IonModes.Unknown AndAlso ionQuery.IonMode <> AdductIon.IonMode Then Continue For
+                If ionQuery.Formula.ExactMass > ion.Mass + ms2Tol Then Exit For
 
                 If FragmentAssigner.isFormulaComposition(ion.Formula, ionQuery.Formula) Then
                     ion.CandidateInChIKeys = ionQuery.CandidateInChIKeys
@@ -119,17 +259,31 @@ Public NotInheritable Class FragmentAssigner
         Return productIons
     End Function
 
-    Private Shared Function getFormulaCandidatesbyLibrarySearch(formula As Formula, ionMode As IonModes, mz As Double, massTol As Double, productIonDB As List(Of ProductIon)) As List(Of Formula)
-        Dim candidates = New List(Of Formula)()
+    ''' <summary>
+    ''' make fragment annotation by search in <paramref name="productIonDB"/>
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="ionMode"></param>
+    ''' <param name="mz"></param>
+    ''' <param name="massTol"></param>
+    ''' <param name="productIonDB"></param>
+    ''' <returns></returns>
+    Private Shared Function getFormulaCandidatesbyLibrarySearch(formula As Formula, ionMode As IonModes,
+                                                                mz As Double,
+                                                                massTol As Double,
+                                                                productIonDB As List(Of ProductIon)) As List(Of ProductIon)
+        Dim candidates = New List(Of ProductIon)()
         Dim startIndex = getStartIndex(mz, massTol, productIonDB)
+
         For i As Integer = startIndex To productIonDB.Count - 1
-            Dim ionQuery = productIonDB(i)
-            If ionQuery.IonMode <> ionMode Then Continue For
+            Dim ionQuery As ProductIon = productIonDB(i)
+
+            If ionQuery.IonMode <> IonModes.Unknown AndAlso ionQuery.IonMode <> ionMode Then Continue For
             If ionQuery.Formula.ExactMass < mz - massTol Then Continue For
             If ionQuery.Formula.ExactMass > mz + massTol Then Exit For
 
             If isFormulaComposition(ionQuery.Formula, formula) Then
-                candidates.Add(ionQuery.Formula)
+                Call candidates.Add(ionQuery)
             End If
         Next
 
@@ -164,18 +318,24 @@ Public NotInheritable Class FragmentAssigner
     ''' <param name="originalFormula"></param>
     ''' <param name="adductIon"></param>
     ''' <returns></returns>
-    Public Shared Function FastNeutralLossAssigner(neutralLosslist As List(Of NeutralLoss), neutralLossDB As List(Of NeutralLoss), originalFormula As Formula, ms2Tol As Double, massTolType As MassToleranceType, adductIon As AdductIon) As List(Of NeutralLoss)
-        Dim neutralLossResult = New List(Of NeutralLoss)()
+    Public Shared Function FastNeutralLossAssigner(neutralLosslist As List(Of NeutralLoss),
+                                                   neutralLossDB As List(Of NeutralLoss),
+                                                   originalFormula As Formula,
+                                                   ms2Tol As Double,
+                                                   massTolType As MassToleranceType,
+                                                   adductIon As AdductIon) As List(Of NeutralLoss)
+
+        Dim neutralLossResult As New List(Of NeutralLoss)()
         'double eMass = electron; if (adductIon.IonMode == IonMode.Negative) eMass = -1.0 * electron; 
 
-        For Each nloss In neutralLosslist
+        For Each nloss As NeutralLoss In neutralLosslist
             Dim mass = nloss.MassLoss
             Dim minDiff = Double.MaxValue
             Dim massTol = ms2Tol
             If massTolType = MassToleranceType.Ppm Then massTol = PPMmethod.ConvertPpmToMassAccuracy(mass, ms2Tol)
             Dim minID = -1
 
-            Dim startIndex = getStartIndex(mass, 0.1, neutralLossDB)
+            Dim startIndex = getStartIndex(mass, ms2Tol, neutralLossDB)
 
             For i = startIndex To neutralLossDB.Count - 1
                 If mass - massTol > neutralLossDB(i).Formula.ExactMass Then Continue For
@@ -192,22 +352,23 @@ Public NotInheritable Class FragmentAssigner
 
             If minID >= 0 Then
                 neutralLossResult.Add(New NeutralLoss() With {
-.Comment = neutralLossDB(minID).Comment,
-.Formula = neutralLossDB(minID).Formula,
-.Iontype = neutralLossDB(minID).Iontype,
-.CandidateInChIKeys = neutralLossDB(minID).CandidateInChIKeys,
-.CandidateOntologies = neutralLossDB(minID).CandidateOntologies,
-.Frequency = neutralLossDB(minID).Frequency,
-.MassLoss = nloss.MassLoss,
-.PrecursorMz = nloss.PrecursorMz,
-.ProductMz = nloss.ProductMz,
-.PrecursorIntensity = nloss.PrecursorIntensity,
-.ProductIntensity = nloss.ProductIntensity,
-.MassError = neutralLossDB(minID).Formula.ExactMass - mass,
-.Smiles = neutralLossDB(minID).Smiles
-})
+                    .Comment = neutralLossDB(minID).Comment,
+                    .Formula = neutralLossDB(minID).Formula,
+                    .Iontype = neutralLossDB(minID).Iontype,
+                    .CandidateInChIKeys = neutralLossDB(minID).CandidateInChIKeys,
+                    .CandidateOntologies = neutralLossDB(minID).CandidateOntologies,
+                    .Frequency = neutralLossDB(minID).Frequency,
+                    .MassLoss = nloss.MassLoss,
+                    .PrecursorMz = nloss.PrecursorMz,
+                    .ProductMz = nloss.ProductMz,
+                    .PrecursorIntensity = nloss.PrecursorIntensity,
+                    .ProductIntensity = nloss.ProductIntensity,
+                    .MassError = neutralLossDB(minID).Formula.ExactMass - mass,
+                    .Smiles = neutralLossDB(minID).Smiles
+                })
             End If
         Next
+
         Return neutralLossResult.OrderByDescending(Function(n) std.Max(n.PrecursorIntensity, n.ProductIntensity)).ToList()
     End Function
 
@@ -240,30 +401,36 @@ Public NotInheritable Class FragmentAssigner
         Dim monoIsotopicPeaklist = New List(Of SpectrumPeak)()
         Dim maxNeutralLoss = 1000
 
-        For Each peak In peaklist
-            If Equals(peak.Annotation, "M") Then monoIsotopicPeaklist.Add(peak)
+        For Each peak As SpectrumPeak In peaklist
+            If peak.Annotation = "M" Then
+                monoIsotopicPeaklist.Add(peak)
+            End If
         Next
+
         monoIsotopicPeaklist = monoIsotopicPeaklist.OrderByDescending(Function(n) n.mz).ToList()
 
         Dim highestMz = monoIsotopicPeaklist(0).mz
-        If std.Abs(highestMz - precurosrMz) > masstol Then monoIsotopicPeaklist.Insert(0, New SpectrumPeak() With {
-.mz = precurosrMz,
-.intensity = 1,
-.Annotation = "Insearted precursor"
-})
 
-        For i = 0 To monoIsotopicPeaklist.Count - 1
-            For j = i + 1 To monoIsotopicPeaklist.Count - 1
+        If std.Abs(highestMz - precurosrMz) > masstol Then
+            monoIsotopicPeaklist.Insert(0, New SpectrumPeak() With {
+                .mz = precurosrMz,
+                .intensity = 1,
+                .Annotation = "Insearted precursor"
+            })
+        End If
+
+        For i As Integer = 0 To monoIsotopicPeaklist.Count - 1
+            For j As Integer = i + 1 To monoIsotopicPeaklist.Count - 1
                 If j > monoIsotopicPeaklist.Count - 1 Then Exit For
                 If monoIsotopicPeaklist(i).mz - monoIsotopicPeaklist(j).mz < 12 - masstol Then Continue For
 
                 neutralLosslist.Add(New NeutralLoss() With {
-.MassLoss = monoIsotopicPeaklist(i).mz - monoIsotopicPeaklist(j).mz,
-.PrecursorMz = monoIsotopicPeaklist(i).mz,
-.ProductMz = monoIsotopicPeaklist(j).mz,
-.PrecursorIntensity = monoIsotopicPeaklist(i).intensity,
-.ProductIntensity = monoIsotopicPeaklist(j).intensity
-})
+                    .MassLoss = monoIsotopicPeaklist(i).mz - monoIsotopicPeaklist(j).mz,
+                    .PrecursorMz = monoIsotopicPeaklist(i).mz,
+                    .ProductMz = monoIsotopicPeaklist(j).mz,
+                    .PrecursorIntensity = monoIsotopicPeaklist(i).intensity,
+                    .ProductIntensity = monoIsotopicPeaklist(j).intensity
+                })
             Next
         Next
 
@@ -272,7 +439,9 @@ Public NotInheritable Class FragmentAssigner
             Dim filteredList = New List(Of NeutralLoss)()
             For Each peak In neutralLosslist
                 filteredList.Add(peak)
-                If filteredList.Count > maxNeutralLoss Then Return filteredList.OrderByDescending(Function(n) n.PrecursorMz).ToList()
+                If filteredList.Count > maxNeutralLoss Then
+                    Return filteredList.OrderByDescending(Function(n) n.PrecursorMz).ToList()
+                End If
             Next
         End If
 
@@ -285,9 +454,14 @@ Public NotInheritable Class FragmentAssigner
     ''' <param name="peaklist"></param>
     ''' <param name="precursorMz"></param>
     ''' <returns></returns>
-    Public Shared Function GetRefinedPeaklist(peaklist As SpectrumPeak(), relativeAbundanceCutOff As Double, absoluteAbundanceCutOff As Double, precursorMz As Double, ms2Tol As Double, massTolType As MassToleranceType, Optional peakListMax As Integer = 1000, Optional isRemoveIsotopes As Boolean = False, Optional removeAfterPrecursor As Boolean = True) As List(Of SpectrumPeak)
-
-
+    Public Shared Function GetRefinedPeaklist(peaklist As SpectrumPeak(), relativeAbundanceCutOff As Double,
+                                              absoluteAbundanceCutOff As Double,
+                                              precursorMz As Double,
+                                              ms2Tol As Double,
+                                              massTolType As MassToleranceType,
+                                              Optional peakListMax As Integer = 1000,
+                                              Optional isRemoveIsotopes As Boolean = False,
+                                              Optional removeAfterPrecursor As Boolean = True) As List(Of SpectrumPeak)
 
         If peaklist Is Nothing OrElse peaklist.Length = 0 Then
             Return New List(Of SpectrumPeak)()
@@ -365,7 +539,12 @@ Public NotInheritable Class FragmentAssigner
     ''' <param name="peaklist"></param>
     ''' <param name="precursorMz"></param>
     ''' <returns></returns>
-    Public Shared Function GetRefinedPeaklist(peaklist As List(Of SpectrumPeak), relativeAbundanceCutOff As Double, absoluteAbundanceCutOff As Double, precursorMz As Double, ms2Tol As Double, massTolType As MassToleranceType) As List(Of SpectrumPeak)
+    Public Shared Function GetRefinedPeaklist(peaklist As List(Of SpectrumPeak),
+                                              relativeAbundanceCutOff As Double,
+                                              absoluteAbundanceCutOff As Double,
+                                              precursorMz As Double,
+                                              ms2Tol As Double,
+                                              massTolType As MassToleranceType) As List(Of SpectrumPeak)
 
         If peaklist Is Nothing OrElse peaklist.Count = 0 Then
             Return New List(Of SpectrumPeak)()
@@ -410,9 +589,20 @@ Public NotInheritable Class FragmentAssigner
     'private static double brMass = 78.91833710000;
     'private static double iMass = 126.90447300000;
 
-    Private Shared Function getValenceCheckedFragmentFormulaList(formula As Formula, ionMode As IonModes, mass As Double, massTol As Double) As List(Of Formula)
+    ''' <summary>
+    ''' de-novo search of the fragment formula candidates
+    ''' </summary>
+    ''' <param name="formula">the molecule formula</param>
+    ''' <param name="ionMode">adducts ion mode</param>
+    ''' <param name="mass">ms2 fragment mz value</param>
+    ''' <param name="massTol">mass tolerance error in mass delta delton</param>
+    ''' <returns>
+    ''' a candidate list of the fragment formula
+    ''' </returns>
+    Public Shared Function getValenceCheckedFragmentFormulaList(formula As Formula, ionMode As IonModes, mass As Double, massTol As Double) As List(Of Formula)
         Dim fragmentFormulas = New List(Of Formula)()
         Dim hydrogen = 1
+
         If ionMode = IonModes.Negative Then hydrogen = -1
 
         Dim maxHmass = hMass * (formula!H + hydrogen)
@@ -426,57 +616,57 @@ Public NotInheritable Class FragmentAssigner
         Dim maxClSPSiFONCHmass = maxSPSiFONCHmass + clMass * formula!Cl
         Dim maxBrClSPSiFONCHmass = maxClSPSiFONCHmass + brMass * formula!Br
 
-        For inum = 0 To formula!I
+        For inum As Integer = 0 To formula!I
             If inum * iMass + maxBrClSPSiFONCHmass < mass - massTol Then Continue For
             If inum * iMass > mass + massTol Then Exit For
             Dim uImass = inum * iMass
 
-            For brnum = 0 To formula!Br
+            For brnum As Integer = 0 To formula!Br
                 If uImass + brnum * brMass + maxClSPSiFONCHmass < mass - massTol Then Continue For
                 If uImass + brnum * brMass > mass + massTol Then Exit For
                 Dim uBrmass = uImass + brnum * brMass
 
-                For clnum = 0 To formula!Cl
+                For clnum As Integer = 0 To formula!Cl
                     If uBrmass + clnum * clMass + maxSPSiFONCHmass < mass - massTol Then Continue For
                     If uBrmass + clnum * clMass > mass + massTol Then Exit For
                     Dim uClmass = uBrmass + clnum * clMass
 
-                    For snum = 0 To formula!S
+                    For snum As Integer = 0 To formula!S
                         If uClmass + snum * sMass + maxPSiFONCHmass < mass - massTol Then Continue For
                         If uClmass + snum * sMass > mass + massTol Then Exit For
                         Dim uSmass = uClmass + snum * sMass
 
-                        For pnum = 0 To formula!P
+                        For pnum As Integer = 0 To formula!P
                             If uSmass + pnum * pMass + maxSiFONCHmass < mass - massTol Then Continue For
                             If uSmass + pnum * pMass > mass + massTol Then Exit For
                             Dim uPmass = uSmass + pnum * pMass
 
-                            For sinum = 0 To formula!Si
+                            For sinum As Integer = 0 To formula!Si
                                 If uPmass + sinum * siMass + maxFONCHmass < mass - massTol Then Continue For
                                 If uPmass + sinum * siMass > mass + massTol Then Exit For
                                 Dim uSimass = uPmass + sinum * siMass
 
-                                For fnum = 0 To formula!F
+                                For fnum As Integer = 0 To formula!F
                                     If uSimass + fnum * fMass + maxONCHmass < mass - massTol Then Continue For
                                     If uSimass + fnum * fMass > mass + massTol Then Exit For
                                     Dim uFmass = uSimass + fnum * fMass
 
-                                    For onum = 0 To formula!O
+                                    For onum As Integer = 0 To formula!O
                                         If uFmass + onum * oMass + maxNCHmass < mass - massTol Then Continue For
                                         If uFmass + onum * oMass > mass + massTol Then Exit For
                                         Dim uOmass = uFmass + onum * oMass
 
-                                        For nnum = 0 To formula!N
+                                        For nnum As Integer = 0 To formula!N
                                             If uOmass + nnum * nMass + maxCHmass < mass - massTol Then Continue For
                                             If uOmass + nnum * nMass > mass + massTol Then Exit For
                                             Dim uNmass = uOmass + nnum * nMass
 
-                                            For cnum = 0 To formula!C
+                                            For cnum As Integer = 0 To formula!C
                                                 If uNmass + cnum * cMass + maxHmass < mass - massTol Then Continue For
                                                 If uNmass + cnum * cMass > mass + massTol Then Exit For
                                                 Dim uCmass = uNmass + cnum * cMass
 
-                                                For hnum = 0 To formula!H + hydrogen
+                                                For hnum As Integer = 0 To formula!H + hydrogen
                                                     If uCmass + hnum * hMass < mass - massTol Then Continue For
                                                     If uCmass + hnum * hMass > mass + massTol Then Exit For
 
@@ -485,7 +675,7 @@ Public NotInheritable Class FragmentAssigner
                                                         {"S", snum}, {"F", fnum}, {"Cl", clnum}, {"Br", brnum},
                                                         {"I", inum}, {"Si", sinum}
                                                     }
-                                                    Dim fragmentFormula = New Formula(counts)
+                                                    Dim fragmentFormula As New Formula(counts)
 
                                                     If SevenGoldenRulesCheck.ValenceCheckByHydrogenShift(fragmentFormula) Then
                                                         fragmentFormulas.Add(fragmentFormula)
@@ -568,7 +758,13 @@ Public NotInheritable Class FragmentAssigner
     End Function
 
 
-    Public Shared Function GetAnnotatedIon(peaklist As List(Of SpectrumPeak), mainAdduct As AdductIon, referenceAdductTypeList As List(Of AdductIon), precursorMz As Double, massTol As Double, massTolType As MassToleranceType) As List(Of AnnotatedIon)
+    Public Shared Function GetAnnotatedIon(peaklist As List(Of SpectrumPeak),
+                                           mainAdduct As AdductIon,
+                                           referenceAdductTypeList As List(Of AdductIon),
+                                           precursorMz As Double,
+                                           massTol As Double,
+                                           massTolType As MassToleranceType) As List(Of AnnotatedIon)
+
         Dim annotations = New List(Of AnnotatedIon)()
         For Each peak In peaklist
             annotations.Add(New AnnotatedIon() With {
@@ -591,7 +787,7 @@ Public NotInheritable Class FragmentAssigner
             Dim m2TheoreticalCarbonInt = m1Intensity * maxCarbon * (maxCarbon - 1) * 0.5 * std.Pow(c13_c12_Ratio, 2)
             Dim ms2Tol = massTol
             If massTolType = MassToleranceType.Ppm Then ms2Tol = PPMmethod.ConvertPpmToMassAccuracy(mass, massTol)
-            If annotations(i).PeakType = AnnotatedIon.AnnotationType.Product Then
+            If annotations(i).PeakType = AnnotationType.Product Then
                 If i = peaklist.Count - 1 Then Exit For
                 Dim m2Intensity = 0.0
                 Dim m2mass = 0.0
@@ -625,11 +821,17 @@ Public NotInheritable Class FragmentAssigner
     End Sub
 
 
-    Public Shared Sub AnnotateAdducts(peaklist As List(Of SpectrumPeak), annotations As List(Of AnnotatedIon), mainAdduct As AdductIon, referenceAdductTypeList As List(Of AdductIon), precursorMz As Double, massTol As Double, massTolType As MassToleranceType)
+    Public Shared Sub AnnotateAdducts(peaklist As List(Of SpectrumPeak),
+                                      annotations As List(Of AnnotatedIon),
+                                      mainAdduct As AdductIon,
+                                      referenceAdductTypeList As List(Of AdductIon),
+                                      precursorMz As Double,
+                                      massTol As Double,
+                                      massTolType As MassToleranceType)
 
         For i = 0 To peaklist.Count - 1
             Dim peak = peaklist(i)
-            If annotations(i).PeakType <> AnnotatedIon.AnnotationType.Product Then Continue For
+            If annotations(i).PeakType <> AnnotationType.Product Then Continue For
             Dim centralExactMass = mainAdduct.ConvertToExactMass(peak.mz)
             Dim ppm = massTol
             If massTolType <> MassToleranceType.Ppm Then ppm = PPMmethod.PPM(200, 200 + massTol)
@@ -650,7 +852,7 @@ Public NotInheritable Class FragmentAssigner
                 If j = i Then Continue For
                 Dim targetPeak = peaklist(j)
                 Dim targetAnnotation = annotations(j)
-                If targetAnnotation.PeakType <> AnnotatedIon.AnnotationType.Product Then Continue For
+                If targetAnnotation.PeakType <> AnnotationType.Product Then Continue For
 
                 For Each targetAdduct In referenceAdductIons
                     If std.Abs(peak.mz - precursorMz) > massTol2 Then
@@ -664,7 +866,7 @@ Public NotInheritable Class FragmentAssigner
 
                         targetAnnotation.LinkedAccurateMass = peak.mz
                         targetAnnotation.AdductIon = targetAdduct.AdductIon
-                        targetAnnotation.PeakType = AnnotatedIon.AnnotationType.Adduct
+                        targetAnnotation.PeakType = AnnotationType.Adduct
                         Exit For
                     End If
                 Next

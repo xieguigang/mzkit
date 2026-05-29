@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3457a3862ed94933077d1a9df4ad5828, mzkit\src\mzmath\TargetedMetabolomics\GCMS\ReaderExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d18d611cfeed3cc0dff3769a2c173d3a, mzmath\TargetedMetabolomics\GCMS\ReaderExtensions.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 161
-    '    Code Lines: 133
-    ' Comment Lines: 11
-    '   Blank Lines: 17
-    '     File Size: 6.35 KB
+    '   Total Lines: 158
+    '    Code Lines: 130 (82.28%)
+    ' Comment Lines: 11 (6.96%)
+    '    - Xml Docs: 90.91%
+    ' 
+    '   Blank Lines: 17 (10.76%)
+    '     File Size: 6.33 KB
 
 
     '     Module ReaderExtensions
@@ -61,9 +63,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.DataStorage.netCDF
-Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
-Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
-Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math

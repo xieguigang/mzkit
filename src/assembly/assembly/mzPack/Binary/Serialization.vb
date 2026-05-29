@@ -1,57 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::69fbfc63d2409093a4aa8572ede27807, mzkit\src\assembly\assembly\mzPack\Binary\Serialization.vb"
+﻿#Region "Microsoft.VisualBasic::a869a9cee85ee420fdc1d7450aa43a8b, assembly\assembly\mzPack\Binary\Serialization.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 100
-'    Code Lines: 65
-' Comment Lines: 24
-'   Blank Lines: 11
-'     File Size: 3.64 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Serialization
-' 
-'         Function: ReadScanMs2
-' 
-'         Sub: ReadScan1, WriteBuffer, WriteScan1
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 124
+    '    Code Lines: 78 (62.90%)
+    ' Comment Lines: 32 (25.81%)
+    '    - Xml Docs: 78.12%
+    ' 
+    '   Blank Lines: 14 (11.29%)
+    '     File Size: 4.90 KB
+
+
+    '     Module Serialization
+    ' 
+    '         Function: ParseScan2, ReadScanMs2
+    ' 
+    '         Sub: ReadScan1, WriteBuffer, WriteScan1
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -109,17 +111,20 @@ Namespace mzData.mzWebCache
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' write the product scan data into binary data file
         ''' </summary>
         ''' <param name="scan"></param>
         ''' <param name="file">should be in little endian byte order</param>
+        ''' <remarks>
+        ''' this function will not write the peak annotation metadata at here
+        ''' </remarks>
         <Extension>
         Public Sub WriteBuffer(scan As ScanMS2, file As BinaryDataWriter)
             Call file.Write(scan.scan_id, BinaryStringFormat.ZeroTerminated)
             Call file.Write(scan.parentMz)
             Call file.Write(scan.rt)
             Call file.Write(scan.intensity)
-            Call file.Write(scan.polarity)
+            Call file.Write(CInt(scan.polarity))
             Call file.Write(scan.charge)
             Call file.Write(scan.activationMethod)
             Call file.Write(scan.collisionEnergy)
@@ -142,9 +147,13 @@ Namespace mzData.mzWebCache
         ''' 
         ''' </summary>
         ''' <param name="file">should be in little endian byte order</param>
+        ''' <param name="levels">
+        ''' for mzpack version 1, this optional parameter flag controls the multiple stage product tree reader;
+        ''' for mzpack version 2, this optional parameter flag should be always be 1, due to the reason of read product tree code in somewhere else
+        ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function ReadScanMs2(file As BinaryDataReader) As ScanMS2
+        Public Function ReadScanMs2(file As BinaryDataReader, Optional levels As Integer = 1) As ScanMS2
             Dim ms2 As New ScanMS2 With {
                 .scan_id = file.ReadString(BinaryStringFormat.ZeroTerminated),
                 .parentMz = file.ReadDouble,
@@ -160,6 +169,13 @@ Namespace mzData.mzWebCache
 
             ms2.mz = file.ReadDoubles(productSize)
             ms2.into = file.ReadDoubles(productSize)
+
+            If levels > 1 Then
+                ' 20250204 read multiple stage product tree data
+                If file.ReadInt32 > 0 Then
+                    ms2.product = ReadScanMs2(file, levels)
+                End If
+            End If
 
             Return ms2
         End Function

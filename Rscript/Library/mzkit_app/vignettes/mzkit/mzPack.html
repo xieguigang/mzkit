@@ -73,7 +73,14 @@ table caption {font-size:14px;font-weight:bolder;}
                            </p>
     </blockquote>
     <div id="main-wrapper">
+      <table class="table-three-line" style="display: none">
+        <caption>.NET clr type export</caption>
+        <tbody></tbody>
+      </table>
+      <br />
+      <br />
       <table class="table-three-line">
+        <caption>.NET clr function exports</caption>
         <tbody><tr>
   <td id="getSampleTags">
     <a href="./mzPack/getSampleTags.html">getSampleTags</a>
@@ -102,7 +109,9 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="readFileCache">
     <a href="./mzPack/readFileCache.html">readFileCache</a>
   </td>
-  <td><p>read mzpack data from the mzwork package by a <br />
+  <td><h3>get mzpack object from mzwork archive</h3>
+
+<p>read mzpack data from the mzwork package by a 
  given raw data file name as reference id</p></td>
 </tr>
 <tr>
@@ -133,7 +142,7 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="convertTo_mzXML">
     <a href="./mzPack/convertTo_mzXML.html">convertTo_mzXML</a>
   </td>
-  <td><p>method for write mzpack data object as a mzML file</p></td>
+  <td><p>method for write mzpack data object as a mzXML file</p></td>
 </tr>
 <tr>
   <td id="packData">

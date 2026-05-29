@@ -1,54 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::479f83b9145237467fdb738fcca6ccf2, mzkit\src\visualize\TissueMorphology\HEMap\HistologicalImage.vb"
+﻿#Region "Microsoft.VisualBasic::cc17188195e686ab21c8f0929c90dba7, visualize\TissueMorphology\HEMap\HeatMapAnalysis\HistologicalImage.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 108
-'    Code Lines: 76
-' Comment Lines: 19
-'   Blank Lines: 13
-'     File Size: 4.12 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module HistologicalImage
-' 
-'     Function: GridScan, HeatMap, MonoScale
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 165
+    '    Code Lines: 113 (68.48%)
+    ' Comment Lines: 34 (20.61%)
+    '    - Xml Docs: 91.18%
+    ' 
+    '   Blank Lines: 18 (10.91%)
+    '     File Size: 6.66 KB
+
+
+    '     Module HistologicalImage
+    ' 
+    '         Function: CellEvaluation, GridScan, HeatMap, MonoScale, ScanColor
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -139,6 +142,20 @@ Namespace HEMap
             End Using
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="block">the current block data</param>
+        ''' <param name="sx"></param>
+        ''' <param name="sy"></param>
+        ''' <param name="i">image physical x</param>
+        ''' <param name="j">image physical y</param>
+        ''' <param name="gridSize"></param>
+        ''' <param name="tolerance"></param>
+        ''' <param name="densityGrid"></param>
+        ''' <param name="colors"></param>
+        ''' <param name="colorData"></param>
+        ''' <returns></returns>
         <Extension>
         Private Function CellEvaluation(block As Color()(),
                                         ByRef sx As Integer,
@@ -172,6 +189,7 @@ Namespace HEMap
                 .ScaleY = sy
             }
 
+            ' evaluate the color channels
             If Not colors Is Nothing Then
                 For Each cl As String In colors
                     cell.layers(cl) = [Object].Eval(matrix, colorData(cl), gridSize, tolerance, densityGrid)
@@ -181,6 +199,24 @@ Namespace HEMap
             sy += 1
 
             Return cell
+        End Function
+
+        <Extension>
+        Public Iterator Function ScanColor(image As Image, targets As Color(), Optional tolerance As Double = 15) As IEnumerable(Of (target As Color, pos As Point))
+            Using bitmap As BitmapBuffer = BitmapBuffer.FromImage(image)
+                For i As Integer = 1 To bitmap.Width - 1
+                    For j As Integer = 1 To bitmap.Height - 1
+                        Dim pixel As Color = bitmap.GetPixel(i, j)
+                        Dim xy As New Point(i, j)
+
+                        For Each channel As Color In targets
+                            If channel.Equals(pixel, tolerance:=tolerance) Then
+                                Yield (channel, xy)
+                            End If
+                        Next
+                    Next
+                Next
+            End Using
         End Function
     End Module
 End Namespace

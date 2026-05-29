@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4e0645bdbd847d677350edc4ce21497, mzkit\src\visualize\MsImaging\Blender\Renderer\RenderingModes.vb"
+﻿#Region "Microsoft.VisualBasic::9c69e58d32f0e97fe7e1484d38187324, visualize\MsImaging\Blender\Renderer\RenderingModes.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 10
-    '    Code Lines: 7
-    ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 148 B
+    '   Total Lines: 17
+    '    Code Lines: 8 (47.06%)
+    ' Comment Lines: 6 (35.29%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 3 (17.65%)
+    '     File Size: 352 B
 
 
     '     Enum RenderingModes
     ' 
-    '         LayerOverlaps, MixIons, RGBComposition
+    '         CMYKComposition, LayerOverlaps, MixIons, RGBComposition
     ' 
     '  
     ' 
@@ -61,9 +63,16 @@ Namespace Blender
 
     Public Enum RenderingModes
 
+        ''' <summary>
+        ''' supports 3 ion channels: rgb
+        ''' </summary>
         RGBComposition
         MixIons
         LayerOverlaps
+        ''' <summary>
+        ''' supports 4 ion channels: cmyk
+        ''' </summary>
+        CMYKComposition
 
     End Enum
 End Namespace

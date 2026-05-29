@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f34a6b0fa9e664d199ad0b50c92b35d5, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\MetaReference\WebQuery.vb"
+﻿#Region "Microsoft.VisualBasic::c49307bda843618b1b00767446106f1e, metadb\Massbank\Public\TMIC\HMDB\MetaReference\WebQuery.vb"
 
 ' Author:
 ' 
@@ -38,10 +38,12 @@
 ' Code Statistics:
 
 '   Total Lines: 29
-'    Code Lines: 24
-' Comment Lines: 0
-'   Blank Lines: 5
-'     File Size: 1.15 KB
+'    Code Lines: 24 (82.76%)
+' Comment Lines: 0 (0.00%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 5 (17.24%)
+'     File Size: 1.17 KB
 
 
 '     Class WebQuery
@@ -55,7 +57,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports Microsoft.VisualBasic.Net.Http
 
 Namespace TMIC.HMDB.Repository

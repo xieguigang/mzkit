@@ -1,65 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::56d523fbae356833ab64a665d8201b0b, mzkit\src\mzmath\ms2_math-core\Chromatogram\ChromatogramTick.vb"
+﻿#Region "Microsoft.VisualBasic::c64dfcf7df8493b309e5324d7df1429f, mzmath\ms2_math-core\Chromatogram\ChromatogramTick.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 70
-'    Code Lines: 44
-' Comment Lines: 11
-'   Blank Lines: 15
-'     File Size: 2.05 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class ChromatogramTick
-' 
-'         Properties: Intensity, Time
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: ToString
-' 
-'     Class Chromatogram
-' 
-'         Properties: Chromatogram, Name, rtmax, rtmin
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 74
+    '    Code Lines: 46 (62.16%)
+    ' Comment Lines: 15 (20.27%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 13 (17.57%)
+    '     File Size: 2.60 KB
+
+
+    '     Class ChromatogramTick
+    ' 
+    '         Properties: Intensity, Time
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: Bspline, ToString, Zip
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -67,19 +62,20 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.TagData
+Imports Microsoft.VisualBasic.Math.Interpolation
 
 Namespace Chromatogram
 
     ''' <summary>
     ''' The chromatogram signal ticks (``{time => intensity}``)
     ''' </summary>
-    Public Class ChromatogramTick : Implements ITimeSignal
+    Public Class ChromatogramTick : Implements ITimeSignal, IRetentionTime
 
         ''' <summary>
         ''' The signal tick time in second
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property Time As Double Implements ITimeSignal.time
+        <XmlAttribute> Public Property Time As Double Implements ITimeSignal.time, IRetentionTime.rt
 
         ''' <summary>
         ''' number of detector counts
@@ -118,6 +114,20 @@ Namespace Chromatogram
             For i As Integer = 0 To rt.Length - 1
                 Yield New ChromatogramTick(rt(i), If(intensity(i) < 0, 0, intensity(i)))
             Next
+        End Function
+
+        Public Shared Function Bspline(scatter As ChromatogramTick(),
+                                       Optional degree As Single = 2,
+                                       Optional resolution As Integer = 10) As ChromatogramTick()
+            Dim xy = scatter _
+                .Select(Function(a) New PointF(a.Time, a.Intensity)) _
+                .OrderBy(Function(a) a.X) _
+                .ToArray
+            Dim interpolate = B_Spline.BSpline(xy, degree, resolution).ToArray
+
+            Return interpolate _
+                .Select(Function(p) New ChromatogramTick(p.X, p.Y)) _
+                .ToArray
         End Function
     End Class
 

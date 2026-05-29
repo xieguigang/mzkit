@@ -1,0 +1,29 @@
+.\" man page create by R# package system.
+.TH MRMLINEAR 2 2000-1月 "from_arguments_json" "from_arguments_json"
+.SH NAME
+from_arguments_json \- Create the MRM peak finding arguments from a json string
+.SH SYNOPSIS
+\fIfrom_arguments_json(\fBjson_str\fR as string, 
+\fBparse_single\fR as boolean = TRUE);\fR
+.SH DESCRIPTION
+.PP
+Create the MRM peak finding arguments from a json string
+.PP
+.SH OPTIONS
+.PP
+\fBjson_str\fB \fR\- -. 
+.PP
+.PP
+\fBparse_single\fB \fR\- 
+ this function will try to parse the given json string as @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.MRMArguments\fR if **`parse_single`** is set to true,
+ otherwise a set of the ion parameters @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.MRMArgumentSet\fR will be parsed if **`parse_single`** is set to false.
+. 
+.PP
+.SH SEE ALSO
+MRMLinear
+.SH FILES
+.PP
+mz_quantify.dll
+.PP
+.SH AUTHOR
+Written by \fBBioNovoGene\fR

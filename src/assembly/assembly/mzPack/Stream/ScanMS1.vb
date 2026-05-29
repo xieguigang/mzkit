@@ -1,57 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::356920f6088c323fe2a7222b8cbf81aa, mzkit\src\assembly\assembly\mzPack\Stream\ScanMS1.vb"
+﻿#Region "Microsoft.VisualBasic::aab6af05136a40897704273725108c0f, assembly\assembly\mzPack\Stream\ScanMS1.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 97
-'    Code Lines: 59
-' Comment Lines: 27
-'   Blank Lines: 11
-'     File Size: 3.31 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class ScanMS1
-' 
-'         Properties: BPC, meta, products, rt, TIC
-' 
-'         Function: GetMs1Scans, GetMSIPixel, hasMetaKeys
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 136
+    '    Code Lines: 82 (60.29%)
+    ' Comment Lines: 40 (29.41%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 14 (10.29%)
+    '     File Size: 4.72 KB
+
+
+    '     Class ScanMS1
+    ' 
+    '         Properties: BPC, meta, products, rt, TIC
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: (+2 Overloads) GetMs1Scans, GetMSIPixel, hasMetaKeys
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -63,7 +66,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Namespace mzData.mzWebCache
 
     ''' <summary>
-    ''' MS scan
+    ''' MS scan of mslevel 1
     ''' </summary>
     Public Class ScanMS1 : Inherits MSScan
         Implements ITimeSignal
@@ -72,6 +75,10 @@ Namespace mzData.mzWebCache
         Public Overrides Property rt As Double Implements ITimeSignal.time, IRetentionTime.rt
         Public Property TIC As Double Implements ITimeSignal.intensity
         Public Property BPC As Double
+        ''' <summary>
+        ''' the msn products scan data
+        ''' </summary>
+        ''' <returns></returns>
         Public Property products As ScanMS2()
 
         ''' <summary>
@@ -94,6 +101,22 @@ Namespace mzData.mzWebCache
                 meta(key) = value
             End Set
         End Property
+
+        Sub New()
+        End Sub
+
+        Sub New(clone As ScanMS1)
+            Me.BPC = clone.BPC
+            Me.TIC = clone.TIC
+            Me.scan_id = clone.scan_id
+            Me.into = clone.into
+            Me.meta = New Dictionary(Of String, String)(clone.meta)
+            Me.metadata = clone.metadata
+            Me.MRM = clone.MRM
+            Me.mz = clone.mz
+            Me.products = clone.products
+            Me.rt = clone.rt
+        End Sub
 
         ''' <summary>
         ''' get [x, y] pixel point from the scan metadata or scan id data.

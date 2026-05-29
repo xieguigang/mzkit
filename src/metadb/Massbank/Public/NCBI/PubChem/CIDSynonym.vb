@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e74028fcef40889d8514c489d732468, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\CIDSynonym.vb"
+﻿#Region "Microsoft.VisualBasic::cda0f09083a3fb9f2c527d52e6cf903c, metadb\Massbank\Public\NCBI\PubChem\CIDSynonym.vb"
 
 ' Author:
 ' 
@@ -37,11 +37,13 @@
 
 ' Code Statistics:
 
-'   Total Lines: 153
-'    Code Lines: 108
-' Comment Lines: 26
-'   Blank Lines: 19
-'     File Size: 5.56 KB
+'   Total Lines: 154
+'    Code Lines: 108 (70.13%)
+' Comment Lines: 27 (17.53%)
+'    - Xml Docs: 66.67%
+' 
+'   Blank Lines: 19 (12.34%)
+'     File Size: 5.72 KB
 
 
 '     Class CIDSynonym
@@ -57,8 +59,9 @@
 #End Region
 
 Imports System.Xml.Serialization
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
+Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 
@@ -163,9 +166,9 @@ Namespace NCBI.PubChem
             Next
         End Function
 
-        Public Shared Iterator Function LoadMetaInfo(file As String) As IEnumerable(Of Models.MetaLib)
+        Public Shared Iterator Function LoadMetaInfo(file As String) As IEnumerable(Of Metabolite.MetaLib)
             Dim xref As xref = Nothing
-            Dim meta As Models.MetaLib = Nothing
+            Dim meta As Metabolite.MetaLib = Nothing
             Dim cid As Integer = 0
             Dim cas As New List(Of String)
 
@@ -186,7 +189,7 @@ Namespace NCBI.PubChem
                     cas *= 0
                     cid = synonym.CID
                     ' construct a new pubchem metabolite metadata
-                    meta = New Models.MetaLib With {
+                    meta = New Metabolite.MetaLib With {
                         .ID = cid,
                         .name = synonym.Synonym,
                         .xref = xref

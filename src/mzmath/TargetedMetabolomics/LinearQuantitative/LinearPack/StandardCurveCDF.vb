@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36f3fe4f8df8052a0849bab79e60a491, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\LinearPack\StandardCurveCDF.vb"
+﻿#Region "Microsoft.VisualBasic::dbd01db0425b0ebeb3146a956211f6eb, mzmath\TargetedMetabolomics\LinearQuantitative\LinearPack\StandardCurveCDF.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 123
-    '    Code Lines: 105
-    ' Comment Lines: 0
-    '   Blank Lines: 18
-    '     File Size: 6.99 KB
+    '   Total Lines: 125
+    '    Code Lines: 107 (85.60%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 18 (14.40%)
+    '     File Size: 7.20 KB
 
 
     '     Module StandardCurveCDF
@@ -61,7 +63,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.DataStorage
-Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
@@ -90,14 +91,14 @@ Namespace LinearQuantitative.Data
 
         <Extension>
         Private Sub WriteCDF(linear As StandardCurve, cdf As netCDF.CDFWriter)
-            Dim name As New attribute With {.name = "name", .type = CDFDataTypes.CHAR, .value = linear.name}
-            Dim [IS] As New attribute With {.name = "IS", .type = CDFDataTypes.CHAR, .value = linear.IS.ID}
-            Dim IS_name As New attribute With {.name = "IS_name", .type = CDFDataTypes.CHAR, .value = linear.IS.name}
-            Dim cIS As New attribute With {.name = "cIS", .type = CDFDataTypes.DOUBLE, .value = linear.IS.CIS}
-            Dim R2 As New attribute With {.name = "R2", .type = CDFDataTypes.DOUBLE, .value = If(linear.linear Is Nothing, 0.0, linear.linear.R2)}
-            Dim outliers As New attribute With {.name = "outliers", .type = CDFDataTypes.INT, .value = linear.points.SafeQuery.Where(Function(p) Not p.valid).Count}
+            Dim name As New attribute With {.name = "name", .type = CDFDataTypes.NC_CHAR, .value = linear.name}
+            Dim [IS] As New attribute With {.name = "IS", .type = CDFDataTypes.NC_CHAR, .value = If(linear.IS.ID, "")}
+            Dim IS_name As New attribute With {.name = "IS_name", .type = CDFDataTypes.NC_CHAR, .value = If(linear.IS.name, "")}
+            Dim cIS As New attribute With {.name = "cIS", .type = CDFDataTypes.NC_DOUBLE, .value = linear.IS.CIS}
+            Dim R2 As New attribute With {.name = "R2", .type = CDFDataTypes.NC_DOUBLE, .value = If(linear.linear Is Nothing, 0.0, linear.linear.R2)}
+            Dim outliers As New attribute With {.name = "outliers", .type = CDFDataTypes.NC_INT, .value = linear.points.SafeQuery.Where(Function(p) Not p.valid).Count}
             Dim weighted As New attribute With {.name = "is_weighted", .type = CDFDataTypes.BOOLEAN, .value = TypeOf linear.linear Is WeightedFit}
-            Dim points As New attribute With {.name = "ref_size", .type = CDFDataTypes.INT, .value = linear.points.TryCount}
+            Dim points As New attribute With {.name = "ref_size", .type = CDFDataTypes.NC_INT, .value = linear.points.TryCount}
 
             cdf.GlobalAttributes(name, [IS], IS_name, cIS, R2, outliers, weighted, points)
 
@@ -130,8 +131,8 @@ Namespace LinearQuantitative.Data
             For Each p As ReferencePoint In linear.points.SafeQuery
                 Call cdf.AddVariable(p.level, CType(New Double() {p.AIS, p.Ati, p.cIS, p.Cti, p.Px, p.yfit, p.error, p.variant}, doubles), width, {
                     New attribute With {.name = "valid", .type = CDFDataTypes.BOOLEAN, .value = p.valid},
-                    New attribute With {.name = "ID", .type = CDFDataTypes.CHAR, .value = p.ID},
-                    New attribute With {.name = "name", .type = CDFDataTypes.CHAR, .value = p.Name}
+                    New attribute With {.name = "ID", .type = CDFDataTypes.NC_CHAR, .value = p.ID},
+                    New attribute With {.name = "name", .type = CDFDataTypes.NC_CHAR, .value = p.Name}
                 })
             Next
         End Sub
@@ -143,16 +144,16 @@ Namespace LinearQuantitative.Data
             Dim sizeofDY As New Dimension With {.name = "dy_size", .size = fit.Residuals.Length}
             Dim sizeofSEC As New Dimension With {.name = "sec_size", .size = fit.CoefficientsStandardError.Length}
             Dim attrs As attribute() = {
-                New attribute With {.name = "fisher", .type = CDFDataTypes.DOUBLE, .value = fit.FisherF},
-                New attribute With {.name = "R2", .type = CDFDataTypes.DOUBLE, .value = fit.CorrelationCoefficient},
-                New attribute With {.name = "SDV", .type = CDFDataTypes.DOUBLE, .value = fit.StandardDeviation}
+                New attribute With {.name = "fisher", .type = CDFDataTypes.NC_DOUBLE, .value = fit.FisherF},
+                New attribute With {.name = "R2", .type = CDFDataTypes.NC_DOUBLE, .value = fit.CorrelationCoefficient},
+                New attribute With {.name = "SDV", .type = CDFDataTypes.NC_DOUBLE, .value = fit.StandardDeviation}
             }
             Dim matrix As Double()() = fit.VarianceMatrix.RowIterator.ToArray
             Dim vars As Double() = matrix.IteratesALL.ToArray
             Dim sizeofVar As New Dimension With {.name = "var_size", .size = vars.Length}
             Dim matrixDim As attribute() = {
-                New attribute With {.name = "dim1", .type = CDFDataTypes.INT, .value = matrix.Length},
-                New attribute With {.name = "dim2", .type = CDFDataTypes.INT, .value = matrix(Scan0).Length}
+                New attribute With {.name = "dim1", .type = CDFDataTypes.NC_INT, .value = matrix.Length},
+                New attribute With {.name = "dim2", .type = CDFDataTypes.NC_INT, .value = matrix(Scan0).Length}
             }
 
             cdf.AddVariable("polynomial", CType(formula.Factors, doubles), size, attrs)
@@ -166,15 +167,15 @@ Namespace LinearQuantitative.Data
             Dim formula As Polynomial = fit.Polynomial
             Dim size As New Dimension With {.name = "polynomial_size", .size = formula.Factors.Length}
             Dim attrs As attribute() = {
-                New attribute With {.name = "adjustR_square", .type = CDFDataTypes.DOUBLE, .value = fit.AdjustR_square},
-                New attribute With {.name = "factor_size", .type = CDFDataTypes.DOUBLE, .value = fit.FactorSize},
-                New attribute With {.name = "intercept", .type = CDFDataTypes.DOUBLE, .value = fit.Intercept},
-                New attribute With {.name = "is_poly", .type = CDFDataTypes.DOUBLE, .value = fit.IsPolyFit},
-                New attribute With {.name = "RMSE", .type = CDFDataTypes.DOUBLE, .value = fit.RMSE},
-                New attribute With {.name = "R2", .type = CDFDataTypes.DOUBLE, .value = fit.R_square},
-                New attribute With {.name = "slope", .type = CDFDataTypes.DOUBLE, .value = fit.Slope},
-                New attribute With {.name = "SSE", .type = CDFDataTypes.DOUBLE, .value = fit.SSE},
-                New attribute With {.name = "SSR", .type = CDFDataTypes.DOUBLE, .value = fit.SSR}
+                New attribute With {.name = "adjustR_square", .type = CDFDataTypes.NC_DOUBLE, .value = fit.AdjustR_square},
+                New attribute With {.name = "factor_size", .type = CDFDataTypes.NC_INT, .value = fit.FactorSize},
+                New attribute With {.name = "intercept", .type = CDFDataTypes.NC_DOUBLE, .value = fit.Intercept},
+                New attribute With {.name = "is_poly", .type = CDFDataTypes.BOOLEAN, .value = fit.IsPolyFit},
+                New attribute With {.name = "RMSE", .type = CDFDataTypes.NC_DOUBLE, .value = fit.RMSE},
+                New attribute With {.name = "R2", .type = CDFDataTypes.NC_DOUBLE, .value = fit.R_square},
+                New attribute With {.name = "slope", .type = CDFDataTypes.NC_DOUBLE, .value = fit.Slope},
+                New attribute With {.name = "SSE", .type = CDFDataTypes.NC_DOUBLE, .value = fit.SSE},
+                New attribute With {.name = "SSR", .type = CDFDataTypes.NC_DOUBLE, .value = fit.SSR}
             }
 
             cdf.AddVector("polynomial", formula.Factors, size, attrs)

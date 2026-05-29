@@ -1,4 +1,4 @@
-# mzPack
+﻿# mzPack
 
 raw data accessor for the mzpack data object
 
@@ -6,12 +6,12 @@ raw data accessor for the mzpack data object
 + [split_samples](mzPack/split_samples.1) try to split target mzpack file into multiple parts based on the sample tags
 + [open.mzwork](mzPack/open.mzwork.1) open mzwork file and then populate all of the mzpack raw data file
 + [mzwork](mzPack/mzwork.1) open a mzwork package file
-+ [readFileCache](mzPack/readFileCache.1) read mzpack data from the mzwork package by a 
++ [readFileCache](mzPack/readFileCache.1) ### get mzpack object from mzwork archive
 + [mzpack](mzPack/mzpack.1) open a mzpack data object reader, not read all data into memory in one time.
 + [ls](mzPack/ls.1) Get object list inside the MS packdata
 + [metadata](mzPack/metadata.1) get metadata list from a specific ms1 scan
 + [scaninfo](mzPack/scaninfo.1) get ms scan information metadata list
-+ [convertTo_mzXML](mzPack/convertTo_mzXML.1) method for write mzpack data object as a mzML file
++ [convertTo_mzXML](mzPack/convertTo_mzXML.1) method for write mzpack data object as a mzXML file
 + [packData](mzPack/packData.1) pack mzkit ms2 peaks data as a mzpack data object
 + [packStream](mzPack/packStream.1) write mzPack in v2 format
 + [removeSciexNoise](mzPack/removeSciexNoise.1) Removes the sciex AB5600 noise data from the MS2 raw data

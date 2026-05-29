@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9283a94ac8cff3ae9ffe69d155074c7b, mzkit\Rscript\Library\mzkit.insilicons\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::fcf0085912b0226e34f5fd3336186ec7, Rscript\Library\mzkit_app\src\mzDIA\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 74
-    '    Code Lines: 53
-    ' Comment Lines: 9
-    '   Blank Lines: 12
-    '     File Size: 2.91 KB
+    '    Code Lines: 53 (71.62%)
+    ' Comment Lines: 9 (12.16%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (16.22%)
+    '     File Size: 2.99 KB
 
 
     '     Class MySettings

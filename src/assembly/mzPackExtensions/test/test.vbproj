@@ -128,49 +128,73 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\R-sharp\R#\R.vbproj">
-      <Project>{0c2eb77c-39f2-460d-a3f8-ce905f867637}</Project>
-      <Name>R</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj">
+      <Project>{ef043887-970a-42f7-ace5-0475b2e872f6}</Project>
+      <Name>binarydata-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
-      <Project>{487d7c92-d05a-4908-bf81-e6baba0bf592}</Project>
-      <Name>BinaryData</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\HDSPack\HDSPack.vbproj">
+      <Project>{ec567f94-b24a-4611-8a9f-1a07f893f739}</Project>
+      <Name>HDSPack</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\DataStorage\DataStorage.vbproj">
-      <Project>{3c79ae03-a766-4b61-bdc4-824d78481b53}</Project>
-      <Name>DataStorage</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\msgpack\msgpack-netcore5.vbproj">
+      <Project>{3e8943e9-0c30-44ff-8f86-927885511bb9}</Project>
+      <Name>msgpack-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-core.vbproj">
-      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\netCDF\netCDF.vbproj">
+      <Project>{a4c09e9a-a828-4c33-81dc-bf0700211947}</Project>
+      <Name>netCDF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\SignalProcessing.vbproj">
-      <Project>{83975074-cbe1-4abc-ba91-91d63da156c8}</Project>
-      <Name>SignalProcessing</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj">
+      <Project>{62b3ca67-2f26-476b-a1ef-1eff9398d514}</Project>
+      <Name>linear-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj">
+      <Project>{484c9da4-ebd9-45cd-bca0-08602c8a5f7c}</Project>
+      <Name>Math.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
-      <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
-      <Name>MassSpectrum.math-core</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj">
+      <Project>{b6d5d451-84dd-476a-b88d-b530bb2d2d61}</Project>
+      <Name>signalprocessing-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\assembly\assembly.vbproj">
-      <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
-      <Name>assembly</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{fdf7619f-fbe9-4f18-8082-26486ac7439a}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\mzPack\mzPack.vbproj">
-      <Project>{a1cb72f1-e918-4146-82a4-f409f31700b6}</Project>
-      <Name>mzPack</Name>
+    <ProjectReference Include="..\..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj">
+      <Project>{bb1f497c-88ea-439c-82c3-1063972d8a30}</Project>
+      <Name>mzmath-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ThermoRawFileReader\ThermoRawFileReader.vbproj">
-      <Project>{b2a12d83-0b7b-45e5-8eee-7fe0f2d6a979}</Project>
-      <Name>ThermoRawFileReader</Name>
+    <ProjectReference Include="..\..\..\mzmath\mz_deco\deconv.NET5.vbproj">
+      <Project>{a5bbe104-22e9-455f-988b-eee2517dfbb0}</Project>
+      <Name>deconv.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\mzPackExtensions.vbproj">
-      <Project>{2288294b-3a1d-40c0-b05b-c5f53eadd5c8}</Project>
-      <Name>mzPackExtensions</Name>
+    <ProjectReference Include="..\..\assembly\assembly-netcore5.vbproj">
+      <Project>{8277d8d0-7f17-4415-a84e-58a5c01fec8c}</Project>
+      <Name>assembly-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BrukerDataReader\BrukerDataReader.NET5.vbproj">
+      <Project>{eca628d6-d6d1-4fc1-a089-f0e6fd176bed}</Project>
+      <Name>BrukerDataReader.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Comprehensive\Comprehensive.NET5.vbproj">
+      <Project>{7e3f41dc-5415-40f1-8030-426d070b3510}</Project>
+      <Name>Comprehensive.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\mzPack\mzpack.NET5.vbproj">
+      <Project>{da69cab6-85d3-41fd-88b9-c56e6ef82097}</Project>
+      <Name>mzpack.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SignalReader\SignalReader.vbproj">
+      <Project>{ae71fa80-a931-460f-9cdc-c42f18e93406}</Project>
+      <Name>SignalReader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ThermoRawFileReader\MSFileReader.NET5.vbproj">
+      <Project>{5d3cc21f-f63b-4bd2-b406-be048554739b}</Project>
+      <Name>MSFileReader.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\mzPackExtensions.NET5.vbproj">
+      <Project>{f45585be-1659-4607-8e12-e37248704cde}</Project>
+      <Name>mzPackExtensions.NET5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

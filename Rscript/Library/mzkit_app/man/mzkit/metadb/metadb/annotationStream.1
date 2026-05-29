@@ -1,5 +1,5 @@
 .\" man page create by R# package system.
-.TH METADB 1 2000-Jan "annotationStream" "annotationStream"
+.TH METADB 1 2000-1月 "annotationStream" "annotationStream"
 .SH NAME
 annotationStream \- Construct a basic metabolite annotation data collection
 .SH SYNOPSIS
@@ -27,6 +27,14 @@ Construct a basic metabolite annotation data collection
 .SH DETAILS
 .PP
 the exact mass will be evaluated based on the input **`formula`** data.
+.PP
+.SH EXAMPLES
+.PP
+annotationStream(
+     id = ["met1","met2","met3"],
+     name = ["name1", "name2", "name3"],
+     formula = ["CH3OH","CH3OOOOOH","CH4NH4"]
+ );
 .PP
 .SH SEE ALSO
 metadb

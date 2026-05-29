@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b50e260f85fb7d14187ae26a72cf3e5, mzkit\src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\StandardCurveWorker.vb"
+﻿#Region "Microsoft.VisualBasic::978e8e7c7dec96d489cf83275ffbff28, mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\StandardCurveWorker.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 331
-    '    Code Lines: 231
-    ' Comment Lines: 59
-    '   Blank Lines: 41
-    '     File Size: 15.68 KB
+    '    Code Lines: 231 (69.79%)
+    ' Comment Lines: 59 (17.82%)
+    '    - Xml Docs: 52.54%
+    ' 
+    '   Blank Lines: 41 (12.39%)
+    '     File Size: 15.67 KB
 
 
     '     Module StandardCurveWorker
@@ -60,7 +62,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.Bootstrapping
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
@@ -69,7 +71,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports LinearQuantificationWorker = BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear.QuantificationWorker
 Imports regexp = System.Text.RegularExpressions.Regex
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace MRM
 
@@ -191,6 +193,7 @@ Namespace MRM
                 Dim line As PointF()
                 Dim fit As IFitted
                 Dim invalids As New List(Of PointF)
+                Dim weight As String = Nothing
 
                 If blankPoints.Length > 0 Then
                     Dim baseline = blankPoints.Average
@@ -210,12 +213,12 @@ Namespace MRM
                     line = LinearQuantificationWorker _
                         .CreateModelPoints(C, nA, ISTPA, CIS, ion.ID, ion.Name,, points) _
                         .ToArray
-                    fit = StandardCurve.CreateLinearRegression(line, maxDeletions, removed:=invalids)
+                    fit = StandardCurve.CreateLinearRegression(line, maxDeletions, removed:=invalids, weight:=weight)
                 Else
                     line = LinearQuantificationWorker _
                         .CreateModelPoints(C, A, ISTPA, CIS, ion.ID, ion.Name,, points) _
                         .ToArray
-                    fit = StandardCurve.CreateLinearRegression(line, maxDeletions, removed:=invalids)
+                    fit = StandardCurve.CreateLinearRegression(line, maxDeletions, removed:=invalids, weight:=weight)
                 End If
 
                 If fit Is Nothing Then
@@ -225,7 +228,7 @@ Namespace MRM
                     ' get points that removed from linear modelling
                     For Each ptRef As ReferencePoint In points
                         For Each invalid In invalids
-                            If stdNum.Abs(invalid.X - ptRef.Cti) <= 0.0001 AndAlso stdNum.Abs(invalid.Y - ptRef.Px) <= 0.0001 Then
+                            If std.Abs(invalid.X - ptRef.Cti) <= 0.0001 AndAlso std.Abs(invalid.Y - ptRef.Px) <= 0.0001 Then
                                 ptRef.valid = False
                                 Exit For
                             End If
@@ -237,7 +240,8 @@ Namespace MRM
                     .name = ion.ID,
                     .linear = fit,
                     .points = points.PopAll,
-                    .[IS] = IsIon
+                    .[IS] = IsIon,
+                    .weight = weight
                 }
                 Dim fy As Func(Of Double, Double) = out.ReverseModelFunction
                 Dim ptY#
@@ -249,7 +253,7 @@ Namespace MRM
                         ptY = pt.Ati
                     End If
 
-                    pt.yfit = stdNum.Round(fy(ptY), 5)
+                    pt.yfit = std.Round(fy(ptY), 5)
                 Next
 
                 Yield out

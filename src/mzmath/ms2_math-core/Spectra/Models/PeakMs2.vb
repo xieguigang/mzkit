@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::415e12795140f048a44ac61b297ea7bf, mzkit\src\mzmath\ms2_math-core\Spectra\Models\PeakMs2.vb"
+﻿#Region "Microsoft.VisualBasic::01abc707942c356b465b0ce5487ca5ee, mzmath\ms2_math-core\Spectra\Models\PeakMs2.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,31 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 129
-    '    Code Lines: 64
-    ' Comment Lines: 49
-    '   Blank Lines: 16
-    '     File Size: 4.49 KB
+    '   Total Lines: 220
+    '    Code Lines: 118 (53.64%)
+    ' Comment Lines: 74 (33.64%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 28 (12.73%)
+    '     File Size: 7.94 KB
 
 
+    '     Class AnnotationMetadata
+    ' 
+    '         Properties: annotation, meta
+    ' 
     '     Class PeakMs2
     ' 
     '         Properties: activation, collisionEnergy, file, fragments, intensity
     '                     lib_guid, meta, Ms2Intensity, mz, mzInto
     '                     precursor_type, rt, scan
     ' 
-    '         Function: AlignMatrix, GetIntensity, RtInSecond, ToString
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
+    '         Function: AlignMatrix, GetAnnotationJsonModel, GetIntensity, GetIons, GetMatrix
+    '                   GetPeaks, RtInSecond, ToString
+    ' 
+    '         Sub: SetIons
     ' 
     ' 
     ' /********************************************************************************/
@@ -61,9 +72,31 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
+Imports std = System.Math
 
 Namespace Spectra
+
+    ''' <summary>
+    ''' json list model for save the annotation metadata for
+    ''' the ion and the corresponding peak fragments.
+    ''' </summary>
+    Public Class AnnotationMetadata
+
+        ''' <summary>
+        ''' <see cref="PeakMs2.meta"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property meta As Dictionary(Of String, String)
+        ''' <summary>
+        ''' A collection of the <see cref="ms2.Annotation"/> for each peaks 
+        ''' inside the collection <see cref="PeakMs2.mzInto"/>.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property annotation As String()
+
+    End Class
 
     ''' <summary>
     ''' 将mzXML文件之中的每一个ms2 scan转换而来
@@ -115,6 +148,10 @@ Namespace Spectra
         ''' </summary>
         Public Property mzInto As ms2()
 
+        ''' <summary>
+        ''' the associated meta/properties about this spectrum data object.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property meta As Dictionary(Of String, String)
 
         ''' <summary>
@@ -130,6 +167,10 @@ Namespace Spectra
             End Get
         End Property
 
+        ''' <summary>
+        ''' the number of the fragments in current spectrum peaks
+        ''' </summary>
+        ''' <returns></returns>
         <ScriptIgnore>
         Public ReadOnly Property fragments As Integer
             Get
@@ -141,6 +182,36 @@ Namespace Spectra
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(guid As String, spec As IEnumerable(Of ms2))
+            lib_guid = guid
+            mzInto = spec.SafeQuery.ToArray
+        End Sub
+
+        ''' <summary>
+        ''' make a value copy of the spectrum data
+        ''' </summary>
+        ''' <param name="clone"></param>
+        Sub New(clone As PeakMs2)
+            mz = clone.mz
+            rt = clone.rt
+            intensity = clone.intensity
+            file = clone.file
+            lib_guid = clone.lib_guid
+            scan = clone.scan
+            activation = clone.activation
+            collisionEnergy = clone.collisionEnergy
+            precursor_type = clone.precursor_type
+            meta = If(clone.meta Is Nothing, Nothing, New Dictionary(Of String, String)(clone.meta))
+            mzInto = clone.mzInto.ToArray
+        End Sub
+
+        Sub New(guid As String, mz As Double(), into As IVector)
+            Call Me.New(guid, into.Data.Select(Function(intensity, i) New ms2(mz(i), intensity)))
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Sub SetIons(ions As IEnumerable(Of ms2)) Implements ISpectrum.SetIons
             mzInto = ions.ToArray
@@ -149,6 +220,16 @@ Namespace Spectra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function GetIons() As IEnumerable(Of ms2) Implements ISpectrum.GetIons
             Return mzInto.AsEnumerable
+        End Function
+
+        Public Function GetAnnotationJsonModel() As AnnotationMetadata
+            Return New AnnotationMetadata With {
+                .annotation = mzInto _
+                    .SafeQuery _
+                    .Select(Function(i) i.Annotation) _
+                    .ToArray,
+                .meta = If(meta, New Dictionary(Of String, String))
+            }
         End Function
 
         ''' <summary>
@@ -168,7 +249,7 @@ Namespace Spectra
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"M{stdNum.Round(mz)}T{stdNum.Round(rt)} intensity={Ms2Intensity.ToString("G3")} {file}#{scan}"
+            Return $"M{std.Round(mz)}T{std.Round(rt)} intensity={Ms2Intensity.ToString("G3")} {file}#{scan}"
         End Function
 
         ''' <summary>
@@ -194,6 +275,16 @@ Namespace Spectra
             Else
                 Return mz.intensity
             End If
+        End Function
+
+        Public Function GetMatrix() As LibraryMatrix
+            Return New LibraryMatrix(lib_guid, mzInto)
+        End Function
+
+        Public Iterator Function GetPeaks() As IEnumerable(Of SpectrumPeak)
+            For Each peak As ms2 In mzInto
+                Yield New SpectrumPeak(peak)
+            Next
         End Function
     End Class
 End Namespace

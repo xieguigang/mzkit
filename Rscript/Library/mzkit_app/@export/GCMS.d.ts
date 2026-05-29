@@ -1,10 +1,15 @@
 ﻿// export R# package module type define for javascript/typescript language
 //
+//    imports "GCMS" from "mzkit";
 //    imports "GCMS" from "mz_quantify";
 //
+// ref=mzkit.GCMSData@mzkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // ref=mzkit.GCMSLinear@mz_quantify, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**
+ * GC-MS rawdata handler package module
+ * 
+ * the targetted GCMS sim data quantification module
  * 
 */
 declare namespace GCMS {
@@ -21,6 +26,14 @@ declare namespace GCMS {
      * @param env default value Is ``null``.
    */
    function contentTable(ions: any, contentVector: any, IS?: any, env?: object): object;
+   /**
+    * Create gc-ms features data object
+    * 
+    * 
+     * @param raw -
+     * @param peaks -
+   */
+   function gcms_features(raw: object, peaks: object): object;
    /**
     * create linear model handler
     * 
@@ -54,16 +67,36 @@ declare namespace GCMS {
    function peakRaw(extract: object, sample: object, chromatogramPlot?: boolean): object|object;
    module read {
       /**
+       * read gcms rawdata
+       * 
+       * 
+        * @param file -
       */
       function raw(file: string): object;
    }
    /**
-     * @param peakwidth default value Is ``'3,20'``.
-     * @param baseline default value Is ``0.65``.
-     * @param sn default value Is ``3``.
-     * @param env default value Is ``null``.
+    * do peak detection for gc-ms rawdata
+    * 
+    * 
+     * @param raw the input gcms rawdata, could be @``T:BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.Raw`` for 
+     *  targetted data and @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack`` for un-targetted gc-ms rawdata.
+     * @param peakwidth -
+     * 
+     * + default value Is ``'3,20'``.
+     * @param baseline -
+     * 
+     * + default value Is ``0.65``.
+     * @param sn -
+     * 
+     * + default value Is ``3``.
+     * @param joint 
+     * + default value Is ``false``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+     * @return a list of detected peak features
    */
-   function ROIlist(raw: object, peakwidth?: any, baseline?: number, sn?: number, env?: object): object;
+   function ROIlist(raw: any, peakwidth?: any, baseline?: number, sn?: number, joint?: boolean, env?: object): object|object;
    /**
      * @param peakwidth default value Is ``[3,5]``.
      * @param centroid default value Is ``'da:0.3'``.

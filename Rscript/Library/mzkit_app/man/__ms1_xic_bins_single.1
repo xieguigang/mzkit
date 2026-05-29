@@ -1,0 +1,30 @@
+﻿.TH __MS1_XIC_BINS_SINGLE 1 2026-5月 "" "export XIC data for a single rawdata file"
+.SH NAME
+__ms1_xic_bins_single \- __ms1_xic_bins_single(path,
+    <i>mzdiff</i> = <span style='color: green;'>0.005</span>,
+    <i>outputdir</i> = <span style='color: brown;'><strong>'./'</strong></span>)
+.SH SYNOPSIS
+\fI__ms1_xic_bins_single(path,
+    <i>mzdiff</i> = <span style='color: green;'>0.005</span>,
+    <i>outputdir</i> = <span style='color: brown;'><strong>'./'</strong></span>)\fR
+.SH OPTIONS
+.PP
+\fBpath\fB \fR\- . a single rawdata file its file path, should be in mzpack file format.
+.PP
+.PP
+\fBmzdiff\fB \fR\- 0.005. the mass tolerance error in delta dalton for extract the
+xic values from the ms1 data.
+.PP
+.PP
+\fBoutputdir\fB \fR\- './'. a directory for save the temp file
+.PP
+.SH VALUE
+.PP
+this function returns nothing
+.PP
+.SH FILES
+.PP
+SMRUCC/R#.declare_function.__ms1_xic_bins_single at ms1_xic_bins.R:line 81
+.PP
+.SH COPYRIGHT
+Copyright © xieguigang, MIT Licensed 2026

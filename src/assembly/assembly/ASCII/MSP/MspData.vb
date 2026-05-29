@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4c71f513c0b9ba0aa21adfa61083d85, mzkit\src\assembly\assembly\ASCII\MSP\MspData.vb"
+﻿#Region "Microsoft.VisualBasic::9cfc2fa25188bcb5daecaff892242c2a, assembly\assembly\ASCII\MSP\MspData.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 51
-    ' Comment Lines: 13
-    '   Blank Lines: 10
-    '     File Size: 3.05 KB
+    '   Total Lines: 88
+    '    Code Lines: 51 (57.95%)
+    ' Comment Lines: 27 (30.68%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (11.36%)
+    '     File Size: 3.53 KB
 
 
     '     Class MspData
@@ -68,8 +70,18 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
 Namespace ASCII.MSP
 
+    ''' <summary>
+    ''' a spectrum file format data
+    ''' </summary>
+    ''' <remarks>
+    ''' a collection of the spectrum peaks <see cref="ms2"/> data.
+    ''' </remarks>
     Public Class MspData : Implements INamedValue, IFormulaProvider
 
+        ''' <summary>
+        ''' the metabolite name
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Name As String
         Public Property Synonyms As String()
 
@@ -91,6 +103,10 @@ Namespace ASCII.MSP
         Public Property Collision_energy As String
         Public Property RetentionTime As String
 
+        ''' <summary>
+        ''' the spectrum data
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Peaks As ms2()
 
         ''' <summary>

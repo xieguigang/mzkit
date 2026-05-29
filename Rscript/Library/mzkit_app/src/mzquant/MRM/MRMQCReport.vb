@@ -1,58 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::efe0eb74a110f06bf8f25e8a0716a000, mzkit\Rscript\Library\mzkit.quantify\MRM\MRMQCReport.vb"
+﻿#Region "Microsoft.VisualBasic::a99ba34cc08228ea444df05254de791a, Rscript\Library\mzkit_app\src\mzquant\MRM\MRMQCReport.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 185
-'    Code Lines: 157
-' Comment Lines: 12
-'   Blank Lines: 16
-'     File Size: 8.04 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module MRMQCReport
-' 
-'     Function: CreateHtml, doReport, reportTOC
-' 
-' Class QCData
-' 
-'     Properties: matchQC, model, result
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 212
+    '    Code Lines: 183 (86.32%)
+    ' Comment Lines: 12 (5.66%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 17 (8.02%)
+    '     File Size: 9.21 KB
+
+
+    ' Module MRMQCReport
+    ' 
+    '     Function: CreateHtml, doReport, reportTOC
+    ' 
+    ' Class QCData
+    ' 
+    '     Properties: matchQC, model, result
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -62,7 +64,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Histogram
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
@@ -72,7 +74,33 @@ Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 Imports Microsoft.VisualBasic.Text.Xml
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
-Imports stdNum = System.Math
+Imports std = System.Math
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
 
 Module MRMQCReport
 
@@ -126,7 +154,7 @@ Module MRMQCReport
         For Each metabolite As DataSet In QCResult
             RSD = metabolite.Vector.RSD
             linear = ref(metabolite.ID)
-            title = $"QC scatter of {metabolite.ID}(RSD: {stdNum.Round(RSD, 3)})"
+            title = $"QC scatter of {metabolite.ID}(RSD: {std.Round(RSD, 3)})"
             samples = metabolite.Properties.NamedValues
             image = Visual.DrawStandardCurve(linear, title, samples, labelerIterations:=2000).AsGDIImage
             mean = metabolite.Vector.Average
@@ -147,11 +175,11 @@ Module MRMQCReport
             rows *= 0
 
             For Each sample As KeyValuePair(Of String, Double) In metabolite.Properties
-                QC_variants += (stdNum.Abs(sample.Value - tabulateMean) / tabulateMean)
+                QC_variants += (std.Abs(sample.Value - tabulateMean) / tabulateMean)
                 rows += (<tr>
                              <td><%= sample.Key %></td>
                              <td><%= sample.Value %></td>
-                             <td><%= stdNum.Abs(sample.Value - tabulateMean) / tabulateMean %></td>
+                             <td><%= std.Abs(sample.Value - tabulateMean) / tabulateMean %></td>
                          </tr>).ToString
             Next
 
@@ -161,7 +189,7 @@ Module MRMQCReport
                                     <ul>
                                         <li>Mean: <%= mean %></li>
                                         <li>SD: <%= metabolite.Vector.SD %></li>
-                                        <li>RSD : <strong><%= stdNum.Round(RSD * 100, 2) %></strong></li>
+                                        <li>RSD : <strong><%= std.Round(RSD * 100, 2) %></strong></li>
                                     </ul>
                                     <img src=<%= New DataURI(image).ToString %> style="width: 70%"/>
                                     <h3>QC samples</h3>
@@ -211,7 +239,7 @@ Module MRMQCReport
                                 <td><a href="#%s"><%= compound.ID %></a></td>
                                 <td><%= compound!Mean %></td>
                                 <td><%= compound!SD %></td>
-                                <td><%= stdNum.Round(compound!RSD * 100, 2) %></td>
+                                <td><%= std.Round(compound!RSD * 100, 2) %></td>
                             </tr>, compound.ID)
         Next
 

@@ -1,55 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::d1d79b3c7b489b65e6afae5aeb41b56c, mzkit\Rscript\Library\mzkit\comprehensive\GCxGC.vb"
+﻿#Region "Microsoft.VisualBasic::b307fa714464a440c716f117859b249c, Rscript\Library\mzkit_app\src\mzkit\comprehensive\GCxGC.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 151
-'    Code Lines: 101
-' Comment Lines: 33
-'   Blank Lines: 17
-'     File Size: 5.85 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module GCxGC
-' 
-'     Function: create2DPeaks, extractTIC, extractXIC, readCDF, saveCDF
-'               TIC1D, TIC2D
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 228
+    '    Code Lines: 112 (49.12%)
+    ' Comment Lines: 94 (41.23%)
+    '    - Xml Docs: 92.55%
+    ' 
+    '   Blank Lines: 22 (9.65%)
+    '     File Size: 9.83 KB
+
+
+    ' Module GCxGC
+    ' 
+    '     Function: create2DPeaks, Demodulate2D, extract_2D_peaks, readCDF, saveCDF
+    '               TIC1D, TIC2D
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -57,29 +59,67 @@ Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.GCxGC
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
-''' Processing GCxGC comprehensive chromatogram data
+''' Comprehensive two-dimensional gas chromatography
+''' 
+''' Processing GCxGC comprehensive chromatogram data: Comprehensive Two-dimensional gas chromatography, 
+''' or GC×GC is a multidimensional gas chromatography technique that was originally described in 1984 
+''' by J. Calvin Giddings and first successfully implemented in 1991 by Professor Phillips and his 
+''' student Zaiyou Liu.
+'''
+''' GC×GC utilizes two different columns With two different stationary phases. In GC×GC, all Of the 
+''' effluent from the first dimension column Is diverted To the second dimension column via a modulator. 
+''' The modulator quickly traps, Then "injects" the effluent from the first dimension column onto the second 
+''' dimension. This process creates a retention plane Of the 1St dimension separation x 2nd dimension 
+''' separation.
+'''
+''' The Oil And Gas Industry were early adopters Of the technology For the complex oil samples To determine
+''' the many different types Of Hydrocarbons And its isomers. Nowadays In these types Of samples it has been 
+''' reported that over 30000 different compounds could be identified In a crude oil With this Comprehensive 
+''' Chromatography Technology (CCT).
+'''
+''' The CCT evolved from a technology only used In academic R&amp;D laboratories, into a more robust technology 
+''' used In many different industrial labs. Comprehensive Chromatography Is used In forensics, food And flavor, 
+''' environmental, metabolomics, biomarkers And clinical applications. Some Of the most well-established 
+''' research groups In the world that are found In Australia, Italy, the Netherlands, Canada, United States,
+''' And Brazil use this analytical technique.
 ''' </summary>
 <Package("GCxGC")>
 Module GCxGC
 
+    ''' <summary>
+    ''' Demodulate the 1D TIC to 2D data
+    ''' </summary>
+    ''' <param name="TIC"></param>
+    ''' <param name="modtime">
+    ''' The time required to complete a cycle is called the period of modulation (modulation time)
+    ''' and is actually the time in between two hot pulses, which typically lasts between 2 and 10 
+    ''' seconds is related to the time needed for the compounds to eluted in 2D.
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("TIC2D")>
-    Public Function TIC2D(TIC As ChromatogramTick(), modtime As Double) As D2Chromatogram()
+    <RApiReturn(GetType(Chromatogram2DScan))>
+    Public Function TIC2D(TIC As ChromatogramTick(), modtime As Double) As Object
         Return TIC.Demodulate2D(modtime)
     End Function
 
     <ExportAPI("TIC1D")>
-    Public Function TIC1D(matrix As D2Chromatogram()) As ChromatogramTick()
+    Public Function TIC1D(matrix As Chromatogram2DScan()) As ChromatogramTick()
         Return matrix _
             .Select(Function(i)
                         Return New ChromatogramTick With {
@@ -91,7 +131,7 @@ Module GCxGC
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Demodulate the 1D rawdata input as 2D data
     ''' </summary>
     ''' <param name="rawdata"></param>
     ''' <param name="modtime"></param>
@@ -108,6 +148,7 @@ Module GCxGC
     ''' write.mzPack(gcxgc, file = "/file/to/save/gcxgc_rawdata.mzPack");
     ''' </example>
     <ExportAPI("demodulate_2D")>
+    <RApiReturn(GetType(mzPack))>
     Public Function Demodulate2D(rawdata As Object, modtime As Double, Optional env As Environment = Nothing) As Object
         If rawdata Is Nothing Then
             Return Nothing
@@ -118,7 +159,7 @@ Module GCxGC
         ElseIf TypeOf rawdata Is mzPack Then
             Return DirectCast(rawdata, mzPack).Demodulate2D(modtime)
         Else
-            Return Internal.debug.stop("invalid rawdata type!", env)
+            Return RInternal.debug.stop("invalid rawdata type!", env)
         End If
     End Function
 
@@ -139,8 +180,8 @@ Module GCxGC
     ''' <remarks>
     ''' this function will extract the TIC data by default.
     ''' </remarks>
-    <ExportAPI("extract_2D_peaks")>
-    <RApiReturn(GetType(D2Chromatogram))>
+    <ExportAPI("extract_xic_layer")>
+    <RApiReturn(GetType(Chromatogram2DScan))>
     Public Function create2DPeaks(raw As mzPack,
                                   Optional mz As Double = Double.NaN,
                                   Optional mzdiff As Object = "ppm:30",
@@ -154,12 +195,12 @@ Module GCxGC
         End If
 
         Dim test As Tolerance = mzErr.TryCast(Of Tolerance)
-        Dim extract As Func(Of ScanMS1, D2Chromatogram)
+        Dim extract As Func(Of ScanMS1, Chromatogram2DScan)
 
         If extract_XIC Then
-            extract = extractXIC(mz, mzdiff:=test)
+            extract = ExtractXIC(mz, mzdiff:=test)
         Else
-            extract = AddressOf extractTIC
+            extract = AddressOf ExtractTIC
         End If
 
         Return raw.MS _
@@ -169,36 +210,36 @@ Module GCxGC
             .ToArray
     End Function
 
-    Private Function extractXIC(mz As Double, mzdiff As Tolerance) As Func(Of ScanMS1, D2Chromatogram)
-        Return Function(d)
-                   Return New D2Chromatogram With {
-                       .scan_time = d.rt,
-                       .intensity = d.GetIntensity(mz, mzdiff),
-                       .chromatogram = d.products _
-                            .Select(Function(t)
-                                        Return New ChromatogramTick With {
-                                            .Time = t.rt,
-                                            .Intensity = t.GetIntensity(mz, mzdiff)
-                                        }
-                                    End Function) _
-                            .ToArray
-                   }
-               End Function
-    End Function
+    ''' <summary>
+    ''' make 2d peak detection and extract the related peak feature ROI set
+    ''' </summary>
+    ''' <param name="raw">
+    ''' the GCxGC rawdata set, should be one encoded GCxGC <see cref="mzPack"/> rawdata object, 
+    ''' or a deconded GCxGC <see cref="DimensionalSpectrum"/> dimension 1 rawdata.
+    ''' </param>
+    ''' <returns></returns>
+    <ExportAPI("extract_2D_peaks")>
+    <RApiReturn(GetType(EIPeak(Of Peak2D)))>
+    Public Function extract_2D_peaks(<RRawVectorArgument> raw As Object,
+                                     <RRawVectorArgument(TypeCodes.double)>
+                                     Optional rt_win As Object = "3,8",
+                                     Optional env As Environment = Nothing) As Object
 
-    Private Function extractTIC(d As ScanMS1) As D2Chromatogram
-        Return New D2Chromatogram With {
-            .intensity = d.TIC,
-            .scan_time = d.rt,
-            .chromatogram = d.products _
-                .Select(Function(t)
-                            Return New ChromatogramTick With {
-                                .Intensity = t.into.Sum,
-                                .Time = t.rt
-                            }
-                        End Function) _
-                .ToArray
-        }
+        Dim rtwin As New DoubleRange(CLRVector.asNumeric(rt_win))
+        Dim gcxgc As DimensionalSpectrum()
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of DimensionalSpectrum)(raw, env, suppress:=True)
+
+        If TypeOf raw Is mzPack Then
+            gcxgc = DirectCast(raw, mzPack).Create2DData.ToArray
+        ElseIf Not pull.isError Then
+            gcxgc = pull.populates(Of DimensionalSpectrum)(env).ToArray
+        Else
+            Return pull.getError
+        End If
+
+        Dim features As EIPeak(Of Peak2D)() = GCxGCPeakDetection.Extract2DFeatures(gcxgc, rtwin).ToArray
+
+        Return features
     End Function
 
     ''' <summary>
@@ -209,7 +250,8 @@ Module GCxGC
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("save.cdf")>
-    Public Function saveCDF(TIC As D2Chromatogram(), <RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+    <RApiReturn(TypeCodes.boolean)>
+    Public Function saveCDF(TIC As Chromatogram2DScan(), <RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
         Dim filestream As [Variant](Of Stream, Message) = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 
         If filestream Like GetType(Message) Then

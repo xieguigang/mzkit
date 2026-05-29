@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10d8c0dd19d931ce3f21204479228ea2, mzkit\src\mzmath\ms2_math-core\Ms1\PrecursorType\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::db3c33a1cbf16f8d6c4f029d7329e9c3, mzmath\ms2_math-core\Ms1\PrecursorType\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 198
-    '    Code Lines: 144
-    ' Comment Lines: 21
-    '   Blank Lines: 33
-    '     File Size: 7.54 KB
+    '   Total Lines: 238
+    '    Code Lines: 166 (69.75%)
+    ' Comment Lines: 35 (14.71%)
+    '    - Xml Docs: 71.43%
+    ' 
+    '   Blank Lines: 37 (15.55%)
+    '     File Size: 9.65 KB
 
 
     '     Module Parser
     ' 
-    '         Function: Formula, ParseCharge, ParseMzCalculator, ParseMzCalculatorInternal, ToString
+    '         Function: AdductFormulaParts, Formula, GetAdductParts, ParseCharge, ParseMzCalculator
+    '                   ParseMzCalculatorInternal, ToString
     ' 
     '     Module Extensions
     ' 
@@ -59,6 +62,8 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Text.Parser
@@ -181,9 +186,30 @@ Namespace Ms1.PrecursorType
             Return $"[{main}{adducts}]{chargeMode}"
         End Function
 
+        ''' <summary>
+        ''' parse the formula adducts parts
+        ''' </summary>
+        ''' <param name="precursor_type">the precursor type expression, example as: [M+H]+</param>
+        ''' <param name="raw"></param>
+        ''' <returns></returns>
         Public Function Formula(precursor_type$, Optional raw As Boolean = True) As [Variant](Of String, IEnumerable(Of (sign%, expression As String)))
+            Dim formulas = AdductFormulaParts(precursor_type)
+
+            If raw Then
+                ' 20190510
+                ' 运行时不允许隐式转换  
+                Return New [Variant](Of String, IEnumerable(Of (sign As Integer, expression As String)))(formulas.AsEnumerable)
+            Else
+                Throw New NotImplementedException
+            End If
+        End Function
+
+        Private Function AdductFormulaParts(precursor_type As String) As ICollection(Of (sign%, expression As String))
             Dim formulas As New List(Of (sign%, expression As String))
-            Dim parser As CharPtr = precursor_type.GetStackValue("[", "]").StringReplace("\d*M", "")
+            ' 20250227 try to replace the DMSO with its formula string
+            ' or the `M` character inside the DMSO will be replaced via the
+            ' regexp pattern laterly
+            Dim parser As CharPtr = precursor_type.Replace("DMSO", "CH3CH3SO").GetStackValue("[", "]").StringReplace("\d*M", "")
             Dim buffer As New List(Of Char)
             Dim c As Char
             Dim sign% = 1
@@ -208,13 +234,27 @@ Namespace Ms1.PrecursorType
                 formulas += (sign, buffer.CharString)
             End If
 
-            If raw Then
-                ' 20190510
-                ' 运行时不允许隐式转换  
-                Return New [Variant](Of String, IEnumerable(Of (sign As Integer, expression As String)))(formulas.AsEnumerable)
-            Else
-                Throw New NotImplementedException
-            End If
+            Return formulas
+        End Function
+
+        ''' <summary>
+        ''' <see cref="Formula(String, Boolean)"/>
+        ''' </summary>
+        ''' <param name="precursor_type"></param>
+        ''' <returns></returns>
+        Public Function GetAdductParts(precursor_type As String) As NamedValue(Of Integer)()
+            Static cache As New Dictionary(Of String, ICollection(Of NamedValue(Of Integer)))
+
+            Return cache _
+                .ComputeIfAbsent(Strings.Trim(precursor_type),
+                                 lazyValue:=Function(str)
+                                                Return AdductFormulaParts(precursor_type) _
+                                                    .Select(Function(t)
+                                                                Return New NamedValue(Of Integer)(t.expression, t.sign)
+                                                            End Function) _
+                                                    .ToArray
+                                            End Function) _
+                .ToArray
         End Function
     End Module
 

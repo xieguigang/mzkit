@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf3a7ab6ecb1fdb45c147346ad9089e0, mzkit\src\mzmath\Mummichog\Models\KEGG.vb"
+﻿#Region "Microsoft.VisualBasic::6c08be7bf370b62684dac068073d1134, mzmath\Mummichog\Models\KEGG.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 67
-    ' Comment Lines: 18
-    '   Blank Lines: 10
-    '     File Size: 3.65 KB
+    '   Total Lines: 120
+    '    Code Lines: 84 (70.00%)
+    ' Comment Lines: 18 (15.00%)
+    '    - Xml Docs: 77.78%
+    ' 
+    '   Blank Lines: 18 (15.00%)
+    '     File Size: 4.67 KB
 
 
+    ' Class MapGraphPopulator
+    ' 
+    ' 
+    ' 
+    ' Class DefaultMapGraphPopulator
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: CreateGraphModel
+    ' 
     ' Module KEGG
     ' 
-    '     Function: CreateBackground, graphModel
+    '     Function: (+2 Overloads) CreateBackground, graphModel
     ' 
     ' /********************************************************************************/
 
@@ -87,10 +98,10 @@ Public Module KEGG
 
     <Extension>
     Public Iterator Function CreateBackground(pathways As IEnumerable(Of Map), populator As MapGraphPopulator) As IEnumerable(Of NamedValue(Of NetworkGraph))
-        For Each map As Map In pathways
+        For Each map As Map In From pwy In pathways Where Not pwy Is Nothing
             Dim model As NetworkGraph = populator.CreateGraphModel(map)
             Dim referId As String = If(map.EntryId.IsPattern("\d+"), $"map{map.EntryId}", map.EntryId)
-            Dim name As String = map.Name _
+            Dim name As String = map.name _
                 .Replace("Reference pathway", "") _
                 .Trim(" "c, "-"c)
 

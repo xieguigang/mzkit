@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4dbd909eb8a750be8a2559acf11d1cff, mzkit\src\mzmath\ms2_math-core\Spectra\Models\MzAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::8adfb17928fe75d1f9b357c04534c5c8, mzmath\ms2_math-core\Spectra\Models\MzAnnotation.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 28
-    '    Code Lines: 19
-    ' Comment Lines: 0
-    '   Blank Lines: 9
-    '     File Size: 857 B
+    '   Total Lines: 66
+    '    Code Lines: 32 (48.48%)
+    ' Comment Lines: 21 (31.82%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 13 (19.70%)
+    '     File Size: 2.00 KB
 
 
     '     Class MzAnnotation
     ' 
     '         Properties: annotation, productMz
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString
     '         Operators: -
     ' 
@@ -65,18 +68,56 @@ Imports System.Xml.Serialization
 
 Namespace Spectra
 
+    ''' <summary>
+    ''' annotation of the m/z value
+    ''' </summary>
+    ''' <remarks>
+    ''' could be ctype cast to mz number value
+    ''' </remarks>
     Public Class MzAnnotation : Implements IMzAnnotation
 
+        ''' <summary>
+        ''' the target ion m/z value
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property productMz As Double Implements IMzAnnotation.mz
+        ''' <summary>
+        ''' the ion annotation result, could be the metabolite id 
+        ''' or metabolite name, something else.
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property annotation As String Implements IMzAnnotation.annotation
+
+        Sub New()
+        End Sub
+
+        Sub New(mz As Double)
+            productMz = mz
+        End Sub
+
+        Sub New(annotation As String, mz As Double)
+            Me.productMz = mz
+            Me.annotation = annotation
+        End Sub
 
         Public Overrides Function ToString() As String
             Return $"{productMz.ToString("F4")} [{annotation}]"
         End Function
 
+        ''' <summary>
+        ''' make evaluation of the mass delta
+        ''' </summary>
+        ''' <param name="anno"></param>
+        ''' <param name="mass"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(anno As MzAnnotation, mass As Double) As Double
             Return anno.productMz - mass
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(mz As MzAnnotation) As Double
+            Return mz.productMz
         End Operator
 
     End Class

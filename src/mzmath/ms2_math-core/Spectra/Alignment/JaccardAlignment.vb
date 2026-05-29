@@ -1,56 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::ca1e2d8d2e0bc8aaf1fe0a2f3bf22421, mzkit\src\mzmath\ms2_math-core\Spectra\Alignment\JaccardAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::4a449d399413353fe33a0cc95817bb52, mzmath\ms2_math-core\Spectra\Alignment\JaccardAlignment.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 34
-'    Code Lines: 25
-' Comment Lines: 0
-'   Blank Lines: 9
-'     File Size: 1.31 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class JaccardAlignment
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: (+2 Overloads) GetScore
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 69
+    '    Code Lines: 56 (81.16%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 13 (18.84%)
+    '     File Size: 2.91 KB
+
+
+    '     Class JaccardAlignment
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetJaccardScore, (+2 Overloads) GetScore, JaccardRankScore
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -108,6 +110,18 @@ Namespace Spectra
             Dim J As Double = intersect / union
 
             Return J
+        End Function
+
+        Public Shared Function JaccardRankScore(spectrum As ms2(), matches As Double(), mzdiff As Tolerance) As Double
+            Dim norm = spectrum.StandardizeSpectrum()
+            Dim aligns = matches _
+                .Select(Function(mzi)
+                            Return norm.Where(Function(i) mzdiff(i.mz, mzi)).OrderByDescending(Function(a) a.intensity).FirstOrDefault
+                        End Function) _
+                .Where(Function(p) Not p Is Nothing) _
+                .ToArray
+
+            Return (aligns.Length / matches.Length) * aligns.Sum(Function(a) a.intensity)
         End Function
     End Class
 End Namespace

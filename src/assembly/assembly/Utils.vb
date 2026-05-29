@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ede660d5d8e215d9a42806b1dc6158d1, mzkit\src\assembly\assembly\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::671f6af17799d8dd9e3e76b7529a1ac8, assembly\assembly\Utils.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 19
-    '    Code Lines: 16
-    ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 524 B
+    '    Code Lines: 16 (84.21%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (15.79%)
+    '     File Size: 542 B
 
 
     ' Module Utils

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c10bed4f83203be07bd3b646b99d97e9, mzkit\src\visualize\MsImaging\Blender\Scaler\LogScaler.vb"
+﻿#Region "Microsoft.VisualBasic::a880e4879943a57f0f369f39139a29ff, visualize\MsImaging\Blender\Scaler\LogScaler.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 18
-    ' Comment Lines: 0
-    '   Blank Lines: 6
-    '     File Size: 717 B
+    '   Total Lines: 31
+    '    Code Lines: 22 (70.97%)
+    ' Comment Lines: 3 (9.68%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (19.35%)
+    '     File Size: 901 B
 
 
     '     Class LogScaler
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: DoIntensityScale, ToString
+    '         Properties: base
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: DoIntensityScale, ToScript
     ' 
     ' 
     ' /********************************************************************************/
@@ -55,21 +59,24 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Blender.Scaler
 
+    ''' <summary>
+    ''' log for reduce the data difference
+    ''' </summary>
     Public Class LogScaler : Inherits Scaler
 
-        Public Property base As Double = stdNum.E
+        <XmlAttribute> Public Property base As Double = std.E
 
         Sub New(base As Double)
             Me.base = base
         End Sub
-
         Sub New()
-            Call Me.New(base:=stdNum.E)
+            Call Me.New(base:=std.E)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

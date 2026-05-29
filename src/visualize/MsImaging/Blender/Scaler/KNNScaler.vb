@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b74e81d050aac3ad37b0e33e3670616b, mzkit\src\visualize\MsImaging\Blender\Scaler\KNNScaler.vb"
+﻿#Region "Microsoft.VisualBasic::c5c77f39f5e9fb7b8f452be2121aaaa7, visualize\MsImaging\Blender\Scaler\KNNScaler.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 18
-    ' Comment Lines: 0
-    '   Blank Lines: 6
-    '     File Size: 695 B
+    '   Total Lines: 34
+    '    Code Lines: 24 (70.59%)
+    ' Comment Lines: 3 (8.82%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (20.59%)
+    '     File Size: 1.08 KB
 
 
     '     Class KNNScaler
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: DoIntensityScale, ToString
+    '         Properties: k, q, random
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: DoIntensityScale, ToScript
     ' 
     ' 
     ' /********************************************************************************/
@@ -55,30 +59,36 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 
 Namespace Blender.Scaler
 
+    ''' <summary>
+    ''' fill the missing data with knn search method
+    ''' </summary>
     Public Class KNNScaler : Inherits Scaler
 
-        Public Property k As Integer
-        Public Property q As Double
+        <XmlAttribute> Public Property k As Integer
+        <XmlAttribute> Public Property q As Double
+        <XmlAttribute> Public Property random As Boolean
 
-        Public Sub New(k As Integer, q As Double)
+        Public Sub New(k As Integer, q As Double, random As Boolean)
             Me.k = k
             Me.q = q
+            Me.random = random
         End Sub
 
         Sub New()
-            Call Me.New(k:=3, q:=0.65)
+            Call Me.New(k:=3, q:=0.65, random:=False)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function DoIntensityScale(layer As SingleIonLayer) As SingleIonLayer
-            Return layer.KnnFill(k, k, q)
+            Return layer.KnnFill(k, k, q, random)
         End Function
 
         Public Overrides Function ToScript() As String
-            Return $"knn_fill({k},{q})"
+            Return $"knn_fill({k},{q},random={random.ToString.ToLower})"
         End Function
     End Class
 End Namespace

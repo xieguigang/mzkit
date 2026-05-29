@@ -1,70 +1,77 @@
-﻿#Region "Microsoft.VisualBasic::aa7412a28fe12413efdc82ab9cad6d80, mzkit\Rscript\Library\mzkit.plot\Visual.vb"
+﻿#Region "Microsoft.VisualBasic::ff8259f168987fd6f79c592d766bda1d, Rscript\Library\mzkit_app\src\mzplot\Visual.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 643
-'    Code Lines: 504
-' Comment Lines: 74
-'   Blank Lines: 65
-'     File Size: 28.00 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module Visual
-' 
-'     Function: getSpectrum, plotAlignments, plotChromatogram, PlotGCxGCHeatMap, plotGCxGCTic2D
-'               plotMolecularNetworkingHistogram, plotMS, plotOverlaps, plotPeaktable, plotRawChromatogram
-'               PlotRawScatter, plotSignal, plotSignal2, plotTIC, plotTIC2
-'               PlotUVSignals, Snapshot3D, SpectrumPlot
-' 
-'     Sub: Main
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 963
+    '    Code Lines: 748 (77.67%)
+    ' Comment Lines: 127 (13.19%)
+    '    - Xml Docs: 92.91%
+    ' 
+    '   Blank Lines: 88 (9.14%)
+    '     File Size: 44.16 KB
+
+
+    ' Module Visual
+    ' 
+    '     Function: assembleOverlaps, ParseSpectrumAlignment, plotAlignments, plotChromatogram, PlotGCxGCHeatMap
+    '               plotGCxGCTic2D, plotMolecularNetworkingHistogram, plotMRM, plotMS, plotOverlaps
+    '               plotPeaktable, plotRawChromatogram, PlotRawScatter, plotRtShifts, plotSignal
+    '               plotSignal2, plotTIC, plotTIC2, PlotUVSignals, Snapshot3D
+    '               SpectrumPlot, XicScatterDensity
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.GCxGC
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
@@ -73,17 +80,23 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.ChartPlots
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Math.SignalProcessing
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp.Runtime
@@ -92,53 +105,222 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Chromatogram = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.Chromatogram
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
+
+''' <summary>
+''' Mass spectrum data visualization
+''' </summary>
 <Package("visual")>
 Module Visual
 
     Sub Main()
-        Call Internal.generic.add("plot", GetType(GeneralSignal), AddressOf plotSignal)
-        Call Internal.generic.add("plot", GetType(GeneralSignal()), AddressOf plotSignal2)
-        Call Internal.generic.add("plot", GetType(MGF.Ions), AddressOf plotMS)
-        Call Internal.generic.add("plot", GetType(PeakMs2), AddressOf plotMS)
-        Call Internal.generic.add("plot", GetType(LibraryMatrix), AddressOf plotMS)
-        Call Internal.generic.add("plot", GetType(Chromatogram), AddressOf plotChromatogram)
-        Call Internal.generic.add("plot", GetType(mzPack), AddressOf plotRawChromatogram)
-        Call Internal.generic.add("plot", GetType(ChromatogramOverlap), AddressOf plotOverlaps)
-        Call Internal.generic.add("plot", GetType(D2Chromatogram()), AddressOf plotGCxGCTic2D)
-        Call Internal.generic.add("plot", GetType(D2Chromatogram), AddressOf plotTIC2)
-        Call Internal.generic.add("plot", GetType(ChromatogramTick()), AddressOf plotTIC)
-        Call Internal.generic.add("plot", GetType(PeakSet), AddressOf plotPeaktable)
-        Call Internal.generic.add("plot", GetType(AlignmentOutput), AddressOf plotAlignments)
-        Call Internal.generic.add("plot", GetType(ScanMS1), AddressOf plotMS)
-        Call Internal.generic.add("plot", GetType(ScanMS2), AddressOf plotMS)
+        Call RInternal.generic.add("plot", GetType(GeneralSignal), AddressOf plotSignal)
+        Call RInternal.generic.add("plot", GetType(GeneralSignal()), AddressOf plotSignal2)
+        Call RInternal.generic.add("plot", GetType(MGF.Ions), AddressOf plotMS)
+        Call RInternal.generic.add("plot", GetType(PeakMs2), AddressOf plotMS)
+        Call RInternal.generic.add("plot", GetType(LibraryMatrix), AddressOf plotMS)
+        Call RInternal.generic.add("plot", GetType(Chromatogram), AddressOf plotChromatogram)
+        Call RInternal.generic.add("plot", GetType(mzPack), AddressOf plotRawChromatogram)
+        Call RInternal.generic.add("plot", GetType(ChromatogramOverlap), AddressOf plotOverlaps)
+        Call RInternal.generic.add("plot", GetType(D2Chromatogram()), AddressOf plotGCxGCTic2D)
+        Call RInternal.generic.add("plot", GetType(D2Chromatogram), AddressOf plotTIC2)
+        Call RInternal.generic.add("plot", GetType(ChromatogramTick()), AddressOf plotTIC)
+        Call RInternal.generic.add("plot", GetType(PeakSet), AddressOf plotPeaktable)
+        Call RInternal.generic.add("plot", GetType(AlignmentOutput), AddressOf plotAlignments)
+        Call RInternal.generic.add("plot", GetType(ScanMS1), AddressOf plotMS)
+        Call RInternal.generic.add("plot", GetType(ScanMS2), AddressOf plotMS)
+        Call RInternal.generic.add("plot", GetType(RtShift()), AddressOf plotRtShifts)
+        Call RInternal.generic.add("plot", GetType(IonChromatogram), AddressOf plotMRM)
     End Sub
 
+    <RGenericOverloads("plot")>
+    Private Function plotMRM(xic As IonChromatogram, args As list, env As Environment) As Object
+        If Not args.hasName("name") Then
+            Call args.add("name", If(xic.name, xic.description))
+        End If
+
+        Return plotTIC(xic.chromatogram, args, env)
+    End Function
+
+    <RGenericOverloads("plot")>
+    Private Function plotRtShifts(rt_shifts As RtShift(), args As list, env As Environment) As Object
+        Dim samples = rt_shifts _
+            .GroupBy(Function(a) a.sample) _
+            .Select(Function(file) New NamedCollection(Of RtShift)(file.Key, file)) _
+            .ToArray
+        Dim rt_range As New DoubleRange(rt_shifts.Select(Function(a) a.refer_rt))
+        Dim res As Double = args.getValue({"res"}, env, [default]:=1000)
+        Dim dt As Double = (rt_range.Max - rt_range.Min) / res
+        Dim x_axis As Double() = seq(rt_range.Min, rt_range.Max, by:=dt).ToArray
+        Dim lines As New List(Of SerialData)
+        Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env, "3800,3000")
+        Dim padding As String = InteropArgumentHelper.getPadding(args.getByName("padding"), "padding: 100px 600px 200px 200px;")
+        Dim colorSet = args.getValue({"colorSet", "colors"}, env, "paper")
+        Dim colors As Color() = Designer.GetColors(colorSet, n:=samples.Length + 1)
+        Dim fill_color As String = RColorPalette.getColor(args.getBySynonyms("fill", "grid.fill"), "lightgray")
+        Dim idx As i32 = 0
+        Dim plot_ri As Boolean = args.getValue({"x_axis.ri"}, env, False)
+        Dim points As NamedCollection(Of RtShift)()
+        Dim legend_split As Integer = args.getValue({"legend_split", "legend.split"}, env, 20)
+        Dim ppi As Integer = If(env.getDriver = Drivers.SVG, 120, 300)
+
+        For Each sample As NamedCollection(Of RtShift) In samples
+            If plot_ri Then
+                points = sample _
+                    .GroupBy(Function(a) a.RI, offsets:=dt) _
+                    .OrderBy(Function(a) Val(a.name)) _
+                    .ToArray
+            Else
+                points = sample _
+                    .GroupBy(Function(a) a.refer_rt, offsets:=dt) _
+                    .OrderBy(Function(a) Val(a.name)) _
+                    .ToArray
+            End If
+
+            Dim shift_points = points _
+                .Select(Function(dti)
+                            Return New PointData(Val(dti.name), Aggregate pt In dti Into Sum(pt.shift))
+                        End Function) _
+                .ToArray
+
+            lines.Add(New SerialData With {
+                .lineType = DashStyle.Solid,
+                .pointSize = 3,
+                .pts = shift_points,
+                .shape = LegendStyles.Square,
+                .title = sample.name,
+                .width = 2,
+                .color = colors(++idx)
+            })
+        Next
+
+        Return Scatter.Plot(lines, size:=size, padding:=padding, drawLine:=True, fill:=False,
+                            Xlabel:=If(plot_ri, "retention index", "retention time(s)"),
+                            Ylabel:="RT shift(s)",
+                            XtickFormat:="F0", YtickFormat:="G4",
+                            gridFill:=fill_color,
+                            tickFontStyle:=CSSFont.Win7Small,
+                            legendFontCSS:=CSSFont.Win10Normal,
+                            legendSplit:=legend_split,
+                            driver:=env.getDriver,
+                            dpi:=ppi)
+    End Function
+
+    <RGenericOverloads("plot")>
     Private Function plotAlignments(aligns As AlignmentOutput, args As list, env As Environment) As Object
         Dim pairwise = aligns.GetAlignmentMirror
-        Dim title As String = args.getValue("title", env, [default]:=$"{aligns.query.id} vs {aligns.reference.id}")
+        Dim title As String = args.getValue("title", env, [default]:=$"{aligns.query?.id} vs {aligns.reference?.id}")
+        Dim legend_layout As String = args.getValue("legend_layout", env, "none")
+        Dim bar_width As Single = args.getValue("bar_width", env, 8.0)
+        Dim color1 As String = args.getValue("color1", env, AlignmentPlot.DefaultColor1)
+        Dim color2 As String = args.getValue("color2", env, AlignmentPlot.DefaultColor2)
+        Dim label_intensity As Double = args.getValue("label_into", env, 0.2)
+        Dim label_mz As String = args.getValue("label_mz", env, "F4")
+        Dim grid_x As Boolean = args.getValue("grid_x", env, False)
+        Dim show_hit_highlights As Boolean = args.getValue("show_hits", env, False)
+        Dim highlights_ion As list = args.getByName("highlights")
+        Dim highlights_color As String = If(CLRVector.asScalarCharacter(args.getByName("highlights.color")), "red")
+        Dim highlights As NamedValue(Of Double)() = Nothing
+
+        If Not highlights_ion Is Nothing Then
+            highlights = highlights_ion _
+                .AsGeneric(Of Double)(env) _
+                .Select(Function(a)
+                            Return New NamedValue(Of Double)(a.Key, a.Value)
+                        End Function) _
+                .ToArray
+        ElseIf show_hit_highlights Then
+            highlights = If(show_hit_highlights, aligns.GetHitsMzPeaks.ToArray, Nothing)
+        End If
 
         Return MassSpectra.AlignMirrorPlot(
             query:=pairwise.query,
             ref:=pairwise.ref,
             title:=title,
             drawGrid:=True,
-            tagXFormat:="F2",
-            labelDisplayIntensity:=0.5,
-            driver:=env.getDriver
+            tagXFormat:=label_mz,
+            labelDisplayIntensity:=label_intensity,
+            driver:=env.getDriver,
+            legendLayout:=legend_layout,
+            bw:=bar_width,
+            color1:=color1,
+            color2:=color2,
+            drawGridX:=grid_x,
+            highlights:=highlights,
+            highlightStyle:=$"stroke: {highlights_color}; stroke-width: 2px; stroke-dash: dash;"
         )
     End Function
 
+    ''' <summary>
+    ''' draw peaktable as heatmap/scatter
+    ''' </summary>
+    ''' <param name="peakSet"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <RGenericOverloads("plot")>
     Private Function plotPeaktable(peakSet As PeakSet, args As list, env As Environment) As Object
         Dim theme As New Theme With {
             .axisLabelCSS = "font-style: normal; font-size: 12; font-family: " & FontFace.CambriaMath & ";",
-            .colorSet = "Jet"
+            .colorSet = "Jet",
+            .padding = InteropArgumentHelper.getPadding(args.getBySynonyms("padding", "paddings", "margin"), "padding: 100px 650px 200px 250px;", env),
+            .pointSize = args.getValue({"point_size", "point.size"}, env, 10.0)
         }
-        Dim app As New PeakTablePlot(peakSet, theme)
-        Return app.Plot()
+        Dim scatter As Boolean = args.getValue({"scatter"}, env, False)
+        Dim app As Plot
+        Dim nlevels As Integer = args.getValue({"levels", "nlevel"}, env, 30)
+
+        If scatter Then
+            Dim dimension As String = args.getValue({"dimension", "dim_name"}, env, "default")
+            Dim scatter_data As ms1_scan() = peakSet.Ms1Scatter(dimension).ToArray
+
+            If scatter_data.All(Function(i) i.intensity = 0.0) Then
+                Return RInternal.debug.stop({
+                    $"missing of the data for plot the scatter on specific data dimension: {dimension}",
+                    $"dimension: {dimension}"
+                }, env)
+            End If
+
+            app = New RawScatterPlot(scatter_data, nlevels, "peaktable", theme) With {
+                .legendTitle = dimension
+            }
+        Else
+            app = New PeakTablePlot(peakSet, theme) With {
+                .mapLevels = nlevels
+            }
+        End If
+
+        Return app.Plot(driver:=env.getDriver)
     End Function
 
-    Private Function plotGCxGCTic2D(x As D2Chromatogram(), args As list, env As Environment) As Object
+    <RGenericOverloads("plot")>
+    Private Function plotGCxGCTic2D(x As Chromatogram2DScan(), args As list, env As Environment) As Object
         Dim theme As New Theme With {
             .padding = args.getValue("padding", env, "padding: 250px 500px 200px 200px;"),
             .colorSet = args.getValue("colorSet", env, "Jet")
@@ -149,6 +331,7 @@ Module Visual
         Dim mapLevels As Integer = args.getValue("map.levels", env, 64)
         Dim mesh3D As Boolean = args.getValue("peaks3D", env, False)
         Dim app As Plot
+        Dim driver As Drivers = env.getDriver
 
         If mesh3D Then
             app = New GCxGCTIC3DPeaks(x, 5, mapLevels, theme) With {
@@ -167,7 +350,7 @@ Module Visual
             }
         End If
 
-        Return app.Plot(size)
+        Return app.Plot(size, driver:=driver)
     End Function
 
     ''' <summary>
@@ -178,6 +361,7 @@ Module Visual
     ''' <param name="env"></param>
     ''' <returns></returns>
     ''' 
+    <RGenericOverloads("plot")>
     <Extension>
     Private Function plotOverlaps(x As ChromatogramOverlap, args As list, env As Environment) As Object
         Dim isBPC As Boolean = args.getValue("bpc", env, [default]:=False)
@@ -190,16 +374,19 @@ Module Visual
         Dim parallel As Boolean = args.getValue("parallel", env, [default]:=False)
         Dim axisStroke As String = args.getValue("axis.stroke", env, [default]:="stroke: black; stroke-width: 3px; stroke-dash: solid;")
         Dim lineStroke As String = args.getValue("line.stroke", env, [default]:="stroke: black; stroke-width: 2px; stroke-dash: solid;")
-        Dim padding As String = args.getValue("padding", env, "padding:100px 100px 125px 150px;")
+        Dim padding As String = InteropArgumentHelper.getPadding(args.getByName("padding"), "padding:5% 5% 10% 10%;", env)
         Dim axisLabel As String = args.getValue("axis.cex", env, "font-style: normal; font-size: 24; font-family: Bookman Old Style;")
         Dim axisTickCex As String = args.getValue("tick.cex", env, "font-style: normal; font-size: 16; font-family: Bookman Old Style;")
         Dim legendLabel As String = args.getValue("legend.cex", env, "font-style: normal; font-size: 12; font-family: Bookman Old Style;")
         Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env, "1600,1000")
         Dim xlab As String = args.getValue("xlab", env, "Time (s)")
         Dim ylab As String = args.getValue("ylab", env, "Intensity")
+        Dim title As String = CLRVector.asScalarCharacter(args.getBySynonyms("title", "main"))
         Dim reorderOverlaps As Boolean = args.getValue("reorder.overlaps", env, [default]:=False)
+        Dim legend_split_size As Integer = args.getValue("legend.split_size", env, [default]:=32)
         Dim overlaps As New List(Of NamedCollection(Of ChromatogramTick))
         Dim data As NamedCollection(Of ChromatogramTick)
+        Dim driver As Drivers = env.getDriver
 
         For Each raw In x.overlaps
             If raw.Value Is Nothing OrElse raw.Value.scan_time.IsNullOrEmpty Then
@@ -240,7 +427,12 @@ Module Visual
                 xlabel:=xlab,
                 ylabel:=ylab,
                 axisTickFont:=axisTickCex,
-                showLegends:=showLegends
+                showLegends:=showLegends,
+                legend_split:=legend_split_size,
+                labelLayoutTicks:=-1,
+                ppi:=args.getValue({"dpi", "ppi"}, env, [default]:=200),
+                driver:=driver,
+                title:=title
             )
     End Function
 
@@ -251,7 +443,15 @@ Module Visual
     ''' <param name="args"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' 
+    <RGenericOverloads("plot")>
     Private Function plotRawChromatogram(x As mzPack, args As list, env As Environment) As Object
+        Dim scatter As Boolean = args.getValue("scatter", env, [default]:=False)
+
+        If scatter Then
+            Return PlotRawScatter(x, env:=env)
+        End If
+
         Dim chr As Chromatogram = x.Chromatogram
 
         If chr Is Nothing Then
@@ -265,11 +465,13 @@ Module Visual
         Return plotChromatogram(chr, args, env)
     End Function
 
+    <RGenericOverloads("plot")>
     <Extension>
-    Private Function plotTIC2(x As D2Chromatogram, args As list, env As Environment) As Object
+    Private Function plotTIC2(x As Chromatogram2DScan, args As list, env As Environment) As Object
         Return x.chromatogram.plotTIC(args, env)
     End Function
 
+    <RGenericOverloads("plot")>
     <Extension>
     Private Function plotTIC(x As ChromatogramTick(), args As list, env As Environment) As Object
         Dim name As String = args.getValue("name", env, [default]:="unknown")
@@ -289,7 +491,8 @@ Module Visual
             fillAlpha:=alpha,
             showGird:=True,
             xlabel:=xlab,
-            ylabel:=ylab
+            ylabel:=ylab,
+            driver:=env.getDriver
         )
     End Function
 
@@ -297,24 +500,40 @@ Module Visual
     ''' plot single TIC
     ''' </summary>
     ''' <param name="x"></param>
-    ''' <param name="args"></param>
+    ''' <param name="args">bpc, name, color</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' 
+    <RGenericOverloads("plot")>
     Private Function plotChromatogram(x As Chromatogram, args As list, env As Environment) As Object
         Dim isBPC As Boolean = args.getValue("bpc", env, [default]:=False)
         Dim data As ChromatogramTick() = x.GetTicks(isBPC).ToArray
 
+        If Not args.hasNames("name") Then
+            Call args.add("name", x.name)
+        End If
+
         Return data.plotTIC(args, env)
     End Function
 
+    <RGenericOverloads("plot")>
     Private Function plotSignal(x As GeneralSignal, args As list, env As Environment) As Object
         Return plotSignal2({x}, args, env)
     End Function
 
+    <RGenericOverloads("plot")>
     Private Function plotSignal2(x As GeneralSignal(), args As list, env As Environment) As Object
         Return PlotUVSignals(x, env:=env)
     End Function
 
+    ''' <summary>
+    ''' plot spectrum
+    ''' </summary>
+    ''' <param name="spectrum"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <RGenericOverloads("plot")>
     Private Function plotMS(spectrum As Object, args As list, env As Environment) As Object
         Dim title As String = args.getValue(Of String)("title", env, Nothing)
         Dim mirror As Boolean = args.getValue("mirror", env, False)
@@ -322,6 +541,7 @@ Module Visual
         Dim labeIntensity As Double = args.getValue("label.intensity", env, 0.2)
         Dim size As String = InteropArgumentHelper.getSize(args!size, env, "1920,900")
         Dim alignment As Object = args.getByName("alignment")
+        Dim showAnnotation As Boolean = args.getValue("annotation.show", env, [default]:=True)
 
         If mirror OrElse Not alignment Is Nothing Then
             ' plot ms alignment mirror plot
@@ -346,7 +566,10 @@ Module Visual
                 images:=annotateImages,
                 labelIntensity:=labeIntensity,
                 size:=size,
-                title:=title Or ms.TryCast(Of LibraryMatrix).name.AsDefault
+                title:=title Or ms.TryCast(Of LibraryMatrix).name.AsDefault,
+                showAnnotationText:=showAnnotation,
+                driver:=env.getDriver,
+                dpi:=300
             )
         End If
     End Function
@@ -377,9 +600,9 @@ Module Visual
         Dim rt_size = InteropArgumentHelper.getSize(rt_width, env, "5,0.5").Split(","c).Select(AddressOf Val).ToArray
         Dim samples = GCxGC.getNames _
             .Select(Function(name)
-                        Return New NamedCollection(Of D2Chromatogram) With {
+                        Return New NamedCollection(Of Chromatogram2DScan) With {
                             .name = name,
-                            .value = GCxGC.getValue(Of D2Chromatogram())(name, env, Nothing)
+                            .value = GCxGC.getValue(Of Chromatogram2DScan())(name, env, Nothing)
                         }
                     End Function) _
             .Where(Function(d) Not d.value.IsNullOrEmpty) _
@@ -415,7 +638,7 @@ Module Visual
     ''' plot raw scatter matrix based on a given sequence of ms1 scans data
     ''' </summary>
     ''' <param name="ms1_scans">
-    ''' a sequence of ms1 scan data or a mzpack data object.
+    ''' a sequence of ms1 scan data, mzkit peakset object or a mzpack data object.
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
@@ -425,6 +648,9 @@ Module Visual
                                    <RRawVectorArgument>
                                    Optional colorSet As Object = "darkblue,blue,skyblue,green,orange,red,darkred",
                                    Optional contour As Boolean = False,
+                                   <RRawVectorArgument(GetType(String))>
+                                   Optional dimension As Object = "default|sum|mean|max|npeaks|<sample_name>",
+                                   Optional dpi As Integer = 300,
                                    Optional env As Environment = Nothing) As Object
 
         Dim schema As String = RColorPalette.getColorSet(colorSet)
@@ -433,6 +659,20 @@ Module Visual
         If TypeOf ms1_scans Is mzPack Then
             matrix = DirectCast(ms1_scans, mzPack) _
                 .GetAllScanMs1 _
+                .ToArray
+
+            Dim max As Double = Double.MaxValue
+
+            If matrix.Any Then
+                ' 20241027 try to reduce the dataset
+                max = matrix.Select(Function(a) a.intensity).Max
+                matrix = matrix _
+                    .Where(Function(a) a.intensity / max >= 0.0001) _
+                    .ToArray
+            End If
+        ElseIf TypeOf ms1_scans Is PeakSet Then
+            matrix = DirectCast(ms1_scans, PeakSet) _
+                .Ms1Scatter(CLRVector.asCharacter(dimension).DefaultFirst) _
                 .ToArray
         Else
             Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
@@ -453,13 +693,20 @@ Module Visual
             ' scatter
             Return RawScatterPlot.Plot(
                 samples:=matrix,
-                sampleColors:=schema
+                sampleColors:=schema,
+                mapLevels:=100,
+                ppi:=dpi,
+                driver:=env.getDriver
             )
         End If
     End Function
 
     <Extension>
-    Private Function assembleOverlaps(points As pipeline, mzErr As [Variant](Of Tolerance, Message), noise_cutoff As Double, env As Environment) As ChromatogramOverlap
+    Private Function assembleOverlaps(points As pipeline,
+                                      mzErr As [Variant](Of Tolerance, Message),
+                                      noise_cutoff As Double,
+                                      env As Environment) As ChromatogramOverlap
+
         Dim XIC As New ChromatogramOverlap
         Dim scan As ms1_scan()
         Dim chr As Chromatogram
@@ -522,6 +769,7 @@ Module Visual
         If mzErr Like GetType(Message) Then
             Return mzErr.TryCast(Of Message)
         End If
+
         If points.isError Then
             If TypeOf ms1_scans Is list AndAlso DirectCast(ms1_scans, list).data _
                 .All(Function(xi) TypeOf xi Is MzGroup) Then
@@ -531,6 +779,8 @@ Module Visual
                 For Each group In DirectCast(ms1_scans, list).AsGeneric(Of MzGroup)(env)
                     XIC(group.Key) = group.Value.CreateChromatogram
                 Next
+            ElseIf TypeOf ms1_scans Is ChromatogramOverlap Then
+                XIC = DirectCast(ms1_scans, ChromatogramOverlap)
             Else
                 Return points.getError
             End If
@@ -554,6 +804,20 @@ Module Visual
     End Function
 
     ''' <summary>
+    ''' Parse the spectrum alignment details from the given string data
+    ''' </summary>
+    ''' <param name="s">
+    ''' A string data that represents the spectrum alignment details.
+    ''' </param>
+    ''' <returns>
+    ''' A collection of the <see cref="SSM2MatrixFragment"/> matrix data
+    ''' </returns>
+    <ExportAPI("parse.spectrum_alignment")>
+    Public Function ParseSpectrumAlignment(s As String) As AlignmentOutput
+        Return AlignmentOutput.ParseAlignment(s)
+    End Function
+
+    ''' <summary>
     ''' Plot of the mass spectrum
     ''' </summary>
     ''' <param name="spectrum">
@@ -567,8 +831,14 @@ Module Visual
     ''' <param name="bar_width">
     ''' the column width of the bar plot
     ''' </param>
+    ''' <param name="intoCutoff">
+    ''' the intensity cutoff value for display the m/z label on the bar
+    ''' </param>
     ''' <param name="legend_layout">
     ''' the layout of the legend plot, this parameter value could affects the plot style
+    ''' </param>
+    ''' <param name="highlight_msn">
+    ''' make highlights of the MSn peaks, the value of this parameter should be a color string, such as "red" or "#FF0000". MS level greater than 2.
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("mass_spectrum.plot")>
@@ -581,12 +851,22 @@ Module Visual
                                  Optional tagXFormat$ = "F2",
                                  Optional intoCutoff# = 0.3,
                                  Optional bar_width As Single = 8,
+                                 Optional color1 As String = AlignmentPlot.DefaultColor1,
+                                 Optional color2 As String = AlignmentPlot.DefaultColor2,
+                                 Optional grid_x As Boolean = False,
                                  <RRawVectorArgument(GetType(String))>
-                                 Optional legend_layout As Object = "top-right|title|bottom",
+                                 Optional legend_layout As Object = "top-right|title|bottom|none",
+                                 Optional gridStrokeX As String = PlotAlignmentGroup.DefaultGridXStroke,
+                                 Optional gridStrokeY As String = PlotAlignmentGroup.DefaultGridYStroke,
+                                 Optional highlight_msn As String = Nothing,
+                                 <RRawVectorArgument(TypeCodes.double)>
+                                 Optional highlight_ion As Object = Nothing,
                                  Optional env As Environment = Nothing) As Object
 
         Dim ms As [Variant](Of Message, LibraryMatrix) = getSpectrum(spectrum, env)
         Dim layouts As String() = CLRVector.asCharacter(legend_layout)
+        Dim highlights As NamedValue(Of Double)() = Nothing
+        Dim highlightStyle As String = Stroke.StrongHighlightStroke
 
         If ms Like GetType(Message) Then
             Return ms.TryCast(Of Message)
@@ -606,13 +886,50 @@ Module Visual
                     },
                     driver:=env.getDriver,
                     bw:=bar_width,
-                    legendLayout:=layouts.ElementAtOrDefault(0, "top-right")
+                    legendLayout:=layouts.ElementAtOrDefault(0, "top-right"),
+                    color1:=color1, color2:=color2,
+                    DrawGridX:=grid_x,
+                    gridStrokeX:=gridStrokeX,
+                    gridStrokeY:=gridStrokeY
                 )
         Else
             Dim ref As [Variant](Of Message, LibraryMatrix) = getSpectrum(alignment, env)
 
             If ref Like GetType(Message) Then
                 Return ref.TryCast(Of Message)
+            End If
+            If Not highlight_msn.StringEmpty(, True) Then
+                highlightStyle = $"stroke: {highlight_msn}; stroke-width: {bar_width}px; stroke-dash: solid;"
+
+                If highlight_ion IsNot Nothing Then
+                    If TypeOf highlight_ion Is list Then
+                        highlights = DirectCast(highlight_ion, list) _
+                            .AsGeneric(Of Double)(env) _
+                            .Select(Function(a)
+                                        Return New NamedValue(Of Double)(a.Key, a.Value)
+                                    End Function) _
+                            .ToArray
+                    Else
+                        Dim ions As Double() = CLRVector.asNumeric(highlight_ion)
+
+                        highlights = ions _
+                            .Select(Function(d) New NamedValue(Of Double)("", d)) _
+                            .ToArray
+                    End If
+                Else
+                    highlights = ms.TryCast(Of LibraryMatrix).Array _
+                        .JoinIterates(ref.TryCast(Of LibraryMatrix).Array) _
+                        .Where(Function(mzi)
+                                   Return Not Strings.Trim(mzi.Annotation) _
+                                       .Match("MS\d+", RegexICSng) _
+                                       .StringEmpty(, True)
+                               End Function) _
+                        .Select(Function(i)
+                                    Return New NamedValue(Of Double)(i.Annotation.Match("MS\d+", RegexICSng), i.mz)
+                                End Function) _
+                        .Distinct _
+                        .ToArray
+                End If
             End If
 
             Return MassSpectra.AlignMirrorPlot(
@@ -624,7 +941,14 @@ Module Visual
                 tagXFormat:=tagXFormat,
                 labelDisplayIntensity:=intoCutoff,
                 bw:=bar_width,
-                legendLayout:=layouts.ElementAtOrDefault(0, "top-right")
+                legendLayout:=layouts.ElementAtOrDefault(0, "top-right"),
+                drawGridX:=grid_x,
+                color1:=color1,
+                color2:=color2,
+                gridStrokeX:=gridStrokeX,
+                gridStrokeY:=gridStrokeY,
+                highlights:=highlights,
+                highlightStyle:=highlightStyle
             )
         End If
     End Function
@@ -632,7 +956,7 @@ Module Visual
     ''' <summary>
     ''' visual of the UV spectrum
     ''' </summary>
-    ''' <param name="timeSignals"></param>
+    ''' <param name="timeSignals">should be a collection of the signal data: <see cref="GeneralSignal"/></param>
     ''' <param name="is_spectrum"></param>
     ''' <param name="size"></param>
     ''' <param name="padding"></param>
@@ -704,5 +1028,44 @@ Module Visual
         }
 
         Return app.Plot(size:=InteropArgumentHelper.getSize(size, env, [default]:="2700,2000"), ppi:=dpi)
+    End Function
+
+    ''' <summary>
+    ''' make visualization of the XIC scatters
+    ''' </summary>
+    ''' <param name="ms1"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("xic_scatter_density")>
+    Public Function XicScatterDensity(<RRawVectorArgument> ms1 As Object,
+                                      Optional mz As Double? = Nothing,
+                                      Optional mass_err As Object = "ppm:20",
+                                      <RListObjectArgument>
+                                      Optional args As list = Nothing,
+                                      Optional env As Environment = Nothing) As Object
+
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+        Dim scatter = pull.populates(Of ms1_scan)(env).ToArray
+        Dim mass_win = Math.getTolerance(mass_err, env)
+
+        If mass_win Like GetType(Message) Then
+            Return mass_win.TryCast(Of Message)
+        End If
+
+        If mz Is Nothing Then
+            mz = scatter.Select(Function(a) a.mz).Average
+        End If
+
+        Dim theme As New Theme
+        Dim app As New PlotMassWindowXIC(scatter, CDbl(mz), mass_win.TryCast(Of Tolerance), theme)
+        Dim dpi As Integer = graphicsPipeline.getDpi(args.slots, env, [default]:=100)
+        Dim size As SizeF = graphicsPipeline.getSize(args, env, New SizeF(3600, 2700))
+
+        Return app.Plot($"{size.Width},{size.Height}", dpi, env.getDriver)
     End Function
 End Module

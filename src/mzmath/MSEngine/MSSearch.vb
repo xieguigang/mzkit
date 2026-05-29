@@ -1,71 +1,79 @@
-﻿#Region "Microsoft.VisualBasic::8e139a499b199cb7e993ba789e0ed05e, mzkit\src\mzmath\MSEngine\MSSearch.vb"
+﻿#Region "Microsoft.VisualBasic::e259c916a350e195107bc90067cd2a7c, mzmath\MSEngine\MSSearch.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 227
-'    Code Lines: 133
-' Comment Lines: 64
-'   Blank Lines: 30
-'     File Size: 8.61 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class MSSearch
-' 
-'     Properties: Calculators, Metadata
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: CreateIndex, GetAnnotation, GetCompound, GetDbXref, GetMetadata
-'               MSetAnnotation, QueryByMz, ToString
-'     Structure IonIndex
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 254
+    '    Code Lines: 159 (62.60%)
+    ' Comment Lines: 57 (22.44%)
+    '    - Xml Docs: 66.67%
+    ' 
+    '   Blank Lines: 38 (14.96%)
+    '     File Size: 10.20 KB
+
+
+    ' Class MSSearch
+    ' 
+    '     Properties: Calculators, Metadata
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: CreateIndex, DoEvalMz, GetAnnotation, GetCompound, GetDbXref
+    '               GetMetadata, loadIndex, MSetAnnotation, QueryByMz, ToString
+    '     Structure IonIndex
+    ' 
+    '         Properties: mz
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 
 <Assembly: InternalsVisibleTo("BioNovoGene.BioDeep.MetaDNA")>
@@ -96,6 +104,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
     ReadOnly score As Func(Of Compound, Double)
     ReadOnly xrefs As Func(Of Compound, Dictionary(Of String, String))
     ReadOnly mzIndex As MassSearchIndex(Of IonIndex)
+    ReadOnly reduceMetalIon As Boolean = True
 
     ''' <summary>
     ''' index by unique id
@@ -132,11 +141,12 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
             tolerance As Tolerance,
             precursorTypes As MzCalculator(),
             Optional score As Func(Of Compound, Double) = Nothing,
-            Optional xrefs As Func(Of Compound, Dictionary(Of String, String)) = Nothing)
+            Optional xrefs As Func(Of Compound, Dictionary(Of String, String)) = Nothing,
+            Optional mass_range As DoubleRange = Nothing)
 
         Me.precursorTypes = precursorTypes
         Me.xrefs = xrefs
-        Me.score = If(score, New Func(Of Compound, Double)(Function() 0.0))
+        Me.score = If(score, New Func(Of Compound, Double)(Function() 1.0))
         Me.index = tree _
             .GroupBy(Function(c) c.Identity) _
             .ToDictionary(Function(cpd) cpd.Key,
@@ -144,18 +154,28 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
                               Return cgroup.First
                           End Function)
 
-        Me.mzIndex = loadIndex(Me.index, precursorTypes, tolerance)
+        Me.mzIndex = loadIndex(Me.index,
+            precursorTypes:=precursorTypes,
+            tolerance:=tolerance,
+            mass_range:=mass_range)
     End Sub
 
     Private Shared Function loadIndex(index As Dictionary(Of String, Compound),
                                       precursorTypes As MzCalculator(),
-                                      tolerance As Tolerance) As MassSearchIndex(Of IonIndex)
+                                      tolerance As Tolerance,
+                                      mass_range As DoubleRange) As MassSearchIndex(Of IonIndex)
 
         Dim mzset As IonIndex() = index.Values _
             .Select(Function(c) DoEvalMz(c, precursorTypes)) _
             .IteratesALL _
             .Where(Function(i) i.mz > 0) _
             .ToArray
+
+        If mass_range IsNot Nothing AndAlso mass_range.Length > 0 Then
+            mzset = mzset _
+                .Where(Function(m) mass_range.IsInside(m.mz)) _
+                .ToArray
+        End If
 
         Return New MassSearchIndex(Of IonIndex)(mzset, Function(mz) New IonIndex(mz), tolerance)
     End Function
@@ -189,6 +209,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
         Return index.TryGetValue(id)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function MSetAnnotation(mzlist As IEnumerable(Of Double), Optional topN As Integer = 3) As IEnumerable(Of MzQuery) Implements IMzQuery.MSetAnnotation
         Return mzlist.Select(AddressOf QueryByMz).IteratesALL
     End Function
@@ -203,7 +224,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
     ''' <remarks>
     ''' the query score is zero from this function
     ''' </remarks>
-    Public Iterator Function QueryByMz(mz As Double) As IEnumerable(Of MzQuery) Implements IMzQuery.QueryByMz
+    Public Overridable Iterator Function QueryByMz(mz As Double) As IEnumerable(Of MzQuery) Implements IMzQuery.QueryByMz
         Dim result As Compound() = mzIndex _
             .QueryByMass(mz) _
             .Select(Function(d) d.compound) _
@@ -212,33 +233,50 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
                         Return g.First
                     End Function) _
             .ToArray
+        Dim ranking As New AdductsRanking(10000)
 
         For Each cpd As Compound In result
             Dim minppm = precursorTypes _
                 .Select(Function(type, i)
                             Dim mzhit As Double = type.CalcMZ(cpd.ExactMass)
                             Dim ppm As Double = PPMmethod.PPM(mzhit, mz)
+                            Dim rank As Double = ranking.Rank(FormulaScanner.ScanFormula(cpd.Formula), type)
+
+                            If ppm > mzIndex.tolerance.GetErrorPPM Then
+                                rank = 0
+                            Else
+                                rank = rank / (ppm + 1) / (i + 1)
+                            End If
+
+                            If reduceMetalIon Then
+                                If MetalIons.IsMetalIon(cpd.Formula) Then
+                                    rank = 0
+                                ElseIf MetalIons.HasMetalIon(cpd.Formula) Then
+                                    rank = rank / 5
+                                End If
+                            End If
 
                             ' 20220426
                             ' precursor type has priority order
                             ' as its annotation score
-                            Return (type, mzhit, ppm, priority:=i + 1)
+                            Return (type, mzhit, ppm, rank)
                         End Function) _
-                .OrderBy(Function(type) type.Item3) _
+                .OrderByDescending(Function(type) type.rank) _
                 .First
 
             Yield New MzQuery With {
                 .unique_id = cpd.Identity,
-                .precursorType = minppm.type.ToString,
+                .precursor_type = minppm.type.ToString,
                 .mz = mz,
-                .ppm = minppm.Item3,
+                .ppm = minppm.ppm,
                 .name = cpd.CommonName,
                 .mz_ref = minppm.mzhit,
-                .score = (score(cpd) / (.ppm + 1)) / minppm.priority
+                .score = score(cpd) * minppm.rank
             }
         Next
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function CreateIndex(compounds As IEnumerable(Of Compound), types As MzCalculator(), tolerance As Tolerance) As MSSearch(Of Compound)
         'Dim tree As New AVLTree(Of MassIndexKey, Compound)(MassIndexKey.ComparesMass(tolerance), AddressOf any.ToString)
         'Dim typesCache = types.Select(Function(t) (name:=t.ToString, type:=t)).ToArray
@@ -271,6 +309,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
         End If
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function GetMetadata(uniqueId As String) As Object Implements IMzQuery.GetMetadata
         Return GetCompound(uniqueId)
     End Function

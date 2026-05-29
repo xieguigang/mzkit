@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5946971d47ee91df19c3ca35255aaf96, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Models\Information.vb"
+﻿#Region "Microsoft.VisualBasic::8a956d89e913007d71633573380a391b, metadb\Massbank\Public\NCBI\PubChem\Web\Models\Information.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 200
-    '    Code Lines: 157
-    ' Comment Lines: 11
-    '   Blank Lines: 32
-    '     File Size: 6.99 KB
+    '   Total Lines: 221
+    '    Code Lines: 176 (79.64%)
+    ' Comment Lines: 11 (4.98%)
+    '    - Xml Docs: 90.91%
+    ' 
+    '   Blank Lines: 34 (15.38%)
+    '     File Size: 8.06 KB
 
 
     '     Class Value
@@ -94,10 +96,15 @@ Imports System.Xml.Serialization
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace NCBI.PubChem
 
+    ''' <summary>
+    ''' A common value model between the json/xml file
+    ''' </summary>
     Public Class Value
 
         <XmlElement("StringWithMarkup")>
@@ -108,14 +115,16 @@ Namespace NCBI.PubChem
         Public Property Unit As String
         Public Property DateISO8601 As String
         Public Property [Boolean] As Boolean
+        Public Property ExternalTableName As String
 
     End Class
 
     Public Class StringWithMarkup
 
         Public Property [String] As String
+
         <XmlElement("Markup")>
-        Public Property Markups As Markup()
+        Public Property Markup As Markup()
 
         Public Overrides Function ToString() As String
             Return Me.String
@@ -146,11 +155,24 @@ Namespace NCBI.PubChem
         Public ReadOnly Property UnitValue As UnitValue
             Get
                 If Value.Unit.StringEmpty Then
+                    Dim str As String
+
+                    If InfoValue Is Nothing Then
+                        str = ""
+                    ElseIf InfoValue.GetType.IsArray Then
+                        str = DirectCast(InfoValue, Array) _
+                            .AsObjectEnumerator _
+                            .Select(Function(o) any.ToString(o)) _
+                            .JoinBy("; ")
+                    Else
+                        str = CStr(InfoValue)
+                    End If
+
                     Return New UnitValue With {
                         .value = Me.GetInformationNumber,
                         .unit = Value.Unit,
                         .reference = Reference,
-                        .condition = CStr(InfoValue)
+                        .condition = str
                     }
                 Else
                     Return New UnitValue With {

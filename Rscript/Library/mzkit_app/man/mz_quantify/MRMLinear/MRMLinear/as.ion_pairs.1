@@ -1,5 +1,5 @@
 .\" man page create by R# package system.
-.TH MRMLINEAR 2 2000-Jan "as.ion_pairs" "as.ion_pairs"
+.TH MRMLINEAR 2 2000-1月 "as.ion_pairs" "as.ion_pairs"
 .SH NAME
 as.ion_pairs \- Convert any compatibale type as the ion pairs data object for MRM target selected.
 .SH SYNOPSIS
@@ -11,10 +11,17 @@ Convert any compatibale type as the ion pairs data object for MRM target selecte
 .PP
 .SH OPTIONS
 .PP
-\fBmz\fB \fR\- -. 
+\fBmz\fB \fR\- 
+ should be a set of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL.MSLIon\fR object data.
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+a collection of the mzkit clr ion pair data object. this MRM ion pair data object could 
+ be cast to dataframe vai the \fBas.data.frame\fR conversion.
 .PP
 .SH SEE ALSO
 MRMLinear

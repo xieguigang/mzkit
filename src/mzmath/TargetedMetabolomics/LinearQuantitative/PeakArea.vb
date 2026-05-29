@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a36121ce94726f4a048c34c2fd61747f, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\PeakArea.vb"
+﻿#Region "Microsoft.VisualBasic::d2040765b35e4cb17cda1ed899ab568a, mzmath\TargetedMetabolomics\LinearQuantitative\PeakArea.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 217
-    '    Code Lines: 124
-    ' Comment Lines: 64
-    '   Blank Lines: 29
-    '     File Size: 8.94 KB
+    '   Total Lines: 226
+    '    Code Lines: 125 (55.31%)
+    ' Comment Lines: 73 (32.30%)
+    '    - Xml Docs: 69.86%
+    ' 
+    '   Blank Lines: 28 (12.39%)
+    '     File Size: 9.27 KB
 
 
     '     Module PeakArea
@@ -66,8 +68,8 @@ Imports Microsoft.VisualBasic.Math.Calculus
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports stdNum = System.Math
-
+Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
+Imports std = System.Math
 
 Namespace LinearQuantitative
 
@@ -93,7 +95,9 @@ Namespace LinearQuantitative
         ''' <summary>
         ''' ``B + A = S``
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' area data with baseline noise removed
+        ''' </returns>
         ''' <remarks>
         ''' 简单的净峰法计算出峰面积
         ''' </remarks>
@@ -133,6 +137,13 @@ Namespace LinearQuantitative
             Return region
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="chromatogram"></param>
+        ''' <returns>
+        ''' area data with add all intensity data
+        ''' </returns>
         <Extension>
         Public Function SumAll(chromatogram As IVector(Of ChromatogramTick)) As Double
             Return Aggregate t As ChromatogramTick
@@ -192,7 +203,7 @@ Namespace LinearQuantitative
                     Dim t0 = rawPoints(0)
                     Dim i% = chromatogram _
                         .Which(Function(t)
-                                   Return stdNum.Abs(t0.X - t.Time) <= 0.1
+                                   Return std.Abs(t0.X - t.Time) <= 0.1
                                End Function)(0)
 
                     With chromatogram(i - 1)
@@ -203,7 +214,7 @@ Namespace LinearQuantitative
                     Dim t1 = rawPoints(1)
                     Dim i% = chromatogram _
                         .Which(Function(t)
-                                   Return stdNum.Abs(t1.X - t.Time) <= 0.1
+                                   Return std.Abs(t1.X - t.Time) <= 0.1
                                End Function)(0)
 
                     With chromatogram(i + 1)
@@ -213,7 +224,7 @@ Namespace LinearQuantitative
             End If
 
             Dim points As PointF() = B_Spline.BSpline(rawPoints, bsplineDegree, bsplineDensity).ToArray
-            Dim baseline# = chromatogram.Baseline(baselineQuantile)
+            Dim baseline# = chromatogram.SignalBaseline(baselineQuantile)
             Dim windows = points.SlideWindows(2).ToArray
             Dim p As i32 = 0
             Dim current As DoubleRange = Nothing
@@ -242,7 +253,7 @@ Namespace LinearQuantitative
                                    Call moveNext()
                                End If
 
-                               y = tangent(x) '- baseline
+                               y = tangent(x) - baseline
 
                                Return y
                            End Function

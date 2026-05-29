@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be20315e908c3251db08e57a5c3fd3e6, mzkit\src\metadb\SMILES\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::217ce15a5960e7da517b628fc36aa225, metadb\SMILES\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 35
-    '    Code Lines: 13
-    ' Comment Lines: 15
-    '   Blank Lines: 7
-    '     File Size: 1.11 KB
+    '    Code Lines: 13 (37.14%)
+    ' Comment Lines: 15 (42.86%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (20.00%)
+    '     File Size: 1.14 KB
 
 
     ' 

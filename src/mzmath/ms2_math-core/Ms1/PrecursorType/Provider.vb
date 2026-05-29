@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a593f2eaa1818e387dc4ad2a58cdeab, mzkit\src\mzmath\ms2_math-core\Ms1\PrecursorType\Provider.vb"
+﻿#Region "Microsoft.VisualBasic::5098426fc64689e1e3e18fcb821a0b76, mzmath\ms2_math-core\Ms1\PrecursorType\Provider.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 208
-    '    Code Lines: 85
-    ' Comment Lines: 101
-    '   Blank Lines: 22
-    '     File Size: 10.04 KB
+    '   Total Lines: 349
+    '    Code Lines: 173 (49.57%)
+    ' Comment Lines: 133 (38.11%)
+    '    - Xml Docs: 48.87%
+    ' 
+    '   Blank Lines: 43 (12.32%)
+    '     File Size: 16.22 KB
 
 
     '     Module Provider
     ' 
     '         Properties: Negative, Negatives, Positive, Positives
     ' 
-    '         Function: Calculator, Calculators, GetCalculator, ParseIonMode
+    '         Function: (+2 Overloads) Calculators, (+2 Overloads) GetCalculator, ParseAdductModel, ParseAdducts, ParseCalculatorInternal
+    '                   (+2 Overloads) ParseIonMode, TryAdductPolarityParserInternal
     ' 
     ' 
     ' /********************************************************************************/
@@ -56,6 +59,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Ms1.PrecursorType
 
@@ -160,7 +165,9 @@ Namespace Ms1.PrecursorType
         ''' 解析出阳离子模式的加合物形式
         ''' </summary>
         ''' <param name="mode">例如[M]+，[M+H]+等</param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' 
+        ''' </returns>
         Public ReadOnly Property Positive(mode As String) As MzCalculator
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -193,23 +200,108 @@ Namespace Ms1.PrecursorType
         End Property
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="precursor_type"></param>
+        ''' <returns>
+        ''' this function will returns nothing if the given string is empty
+        ''' </returns>
+        Public Function ParseAdductModel(precursor_type As String) As MzCalculator
+            Static cache As New Dictionary(Of String, MzCalculator)
+            Return cache.ComputeIfAbsent(
+                key:=precursor_type,
+                lazyValue:=Function(type)
+                               Return ParseCalculatorInternal(type, strict:=False)
+                           End Function)
+        End Function
+
+        Public Iterator Function ParseAdducts(ParamArray adducts As String()) As IEnumerable(Of MzCalculator)
+            For Each type As String In adducts
+                Yield ParseAdductModel(type)
+            Next
+        End Function
+
+        ''' <summary>
         ''' get internal m/z calculator
         ''' </summary>
         ''' <param name="precursor_types"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this function has an internal cache hash table for the given input adducts string.
+        ''' and the new precursor adducts object will be parsed if it not found inside 
+        ''' the internal cache.
+        ''' </remarks>
         Public Function Calculators(ParamArray precursor_types As String()) As MzCalculator()
-            Return (Iterator Function() As IEnumerable(Of MzCalculator)
-                        For Each type As String In precursor_types
-                            If type.Last = "+"c Then
-                                Yield Positive(type)
-                            ElseIf type.Last = "-"c Then
-                                Yield Negative(type)
-                            Else
-                                ' do nothing?
-                                Throw New InvalidExpressionException($"unknown charge mode '{type}'!")
-                            End If
-                        Next
-                    End Function)().ToArray
+            Return Calculators(precursor_types, strict:=False).ToArray
+        End Function
+
+        Const empty_adducts_input As String = "one of the given precursor adducts type string for parsed is empty!"
+
+        Private Function ParseCalculatorInternal(type As String, strict As Boolean) As MzCalculator
+            type = Strings.Trim(type)
+
+            If type.StringEmpty(, True) Then
+                If strict Then
+                    Throw New NullReferenceException(empty_adducts_input)
+                Else
+                    Call type.Warning
+                    Return Nothing
+                End If
+            End If
+
+            ' get adducts
+            ' and parse adducts object from the string value type
+            ' if the adducts object is not found in the cached data list
+            If type.Last = "+"c Then
+                Return Positive(type)
+            ElseIf type.Last = "-"c Then
+                Return Negative(type)
+            Else
+                If strict Then
+                    ' do nothing?
+                    Throw New InvalidExpressionException($"unknown charge mode that could be parsed from the given adducts string: '{type}'!")
+                Else
+                    Call $"unknown charge mode that could be parsed from the given adducts string: '{type}'! Assuming positive mode for parse adducts model.".Warning
+
+                    If Not (type.First = "["c AndAlso type.Last = "]"c) Then
+                        type = $"[{type}]+"
+                    End If
+
+                    Return Positive(type)
+                End If
+            End If
+        End Function
+
+        ''' <summary>
+        ''' get internal m/z calculator
+        ''' </summary>
+        ''' <param name="precursor_types"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this function has an internal cache hash table for the given input adducts string.
+        ''' and the new precursor adducts object will be parsed if it not found inside 
+        ''' the internal cache.
+        ''' </remarks>
+        Public Iterator Function Calculators(precursor_types As String(), strict As Boolean) As IEnumerable(Of MzCalculator)
+            Dim adduct As MzCalculator
+
+            For Each type As String In precursor_types.SafeQuery
+                adduct = ParseCalculatorInternal(type, strict)
+
+                If Not adduct Is Nothing Then
+                    Yield adduct
+                End If
+            Next
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ParseIonMode(mode$, ByRef ionMode As IonModes,
+                                     Optional allowsUnknown As Boolean = False,
+                                     Optional allowAdductParser As Boolean = False,
+                                     Optional verbose As Boolean = True) As IonModes
+
+            ionMode = ParseIonMode(mode, allowsUnknown, allowAdductParser, verbose:=verbose)
+            Return ionMode
         End Function
 
         ''' <summary>
@@ -220,45 +312,78 @@ Namespace Ms1.PrecursorType
         ''' zero will be returns if this parameter value is set to TRUE, otherwise this
         ''' parser function will throw an exception
         ''' </param>
+        ''' <param name="allowAdductParser">
+        ''' allow parse the ion polarity mode value from the adducts model string
+        ''' </param>
         ''' <returns>
         ''' function returns 1(positive) or -1(negative)
         ''' </returns>
-        Public Function ParseIonMode(mode$, Optional allowsUnknown As Boolean = False) As IonModes
+        Public Function ParseIonMode(mode$,
+                                     Optional allowsUnknown As Boolean = False,
+                                     Optional allowAdductParser As Boolean = False,
+                                     Optional verbose As Boolean = True) As IonModes
+
+            If allowsUnknown AndAlso (mode Is Nothing OrElse mode.StringEmpty(, True)) Then
+                Return IonModes.Unknown
+            End If
+
             Select Case LCase(mode)
                 Case "+", "1", "p", "pos", "positive"
                     Return IonModes.Positive
                 Case "-", "-1", "n", "neg", "negative"
                     Return IonModes.Negative
                 Case Else
-                    Dim msg As String
+                    Static unknown As New Dictionary(Of String, IonModes)
 
-                    If mode.StringEmpty Then
-                        msg = "the given ion mode string is empty!"
-                    Else
-                        msg = $"unsure how to parse the given string '{mode}' as ion mode!"
+                    If Not unknown.ContainsKey(mode) Then
+                        Dim pol As IonModes = mode.TryAdductPolarityParserInternal(
+                            allowsUnknown,
+                            allowAdductParser,
+                            verbose
+                        )
+
+                        SyncLock unknown
+                            unknown(mode) = pol
+                        End SyncLock
                     End If
 
-                    Call VBDebugger.WriteLine("InvalidExpressionException: " & msg)
-
-                    If allowsUnknown Then
-                        Return IonModes.Unknown
-                    Else
-                        Throw New InvalidExpressionException(msg)
-                    End If
+                    Return unknown(mode)
             End Select
         End Function
 
-        ''' <summary>
-        ''' 采用Friend访问控制是为了避免被不必要的意外修改出现
-        ''' </summary>
-        ''' <param name="ion_mode"></param>
-        ''' <returns></returns>
-        Friend Function Calculator(ion_mode As String) As Dictionary(Of String, MzCalculator)
-            ' using cache for internal modules
-            If ParseIonMode(ion_mode) = 1 Then
-                Return pos
+        <Extension>
+        Private Function TryAdductPolarityParserInternal(mode As String,
+                                                         allowsUnknown As Boolean,
+                                                         allow_adduct_parser As Boolean,
+                                                         verbose As Boolean) As IonModes
+            Dim msg As String
+
+            If mode.StringEmpty Then
+                msg = "the given ion mode string is empty!"
+            ElseIf allow_adduct_parser AndAlso mode.IsPattern("\[.+\].*[+-]") Then
+                msg = $"parse the ion polarity mode from the precursor adducts: {mode}!"
+
+                If verbose Then
+                    Call VBDebugger.EchoLine(msg)
+                End If
+
+                If mode.Last = "+"c Then
+                    Return IonModes.Positive
+                Else
+                    Return IonModes.Negative
+                End If
             Else
-                Return neg
+                msg = $"unsure how to parse the given string '{mode}' as ion mode!"
+            End If
+
+            If verbose Then
+                Call VBDebugger.WriteLine("InvalidExpressionException: " & msg)
+            End If
+
+            If allowsUnknown Then
+                Return IonModes.Unknown
+            Else
+                Throw New InvalidExpressionException(msg)
             End If
         End Function
 
@@ -271,15 +396,15 @@ Namespace Ms1.PrecursorType
         End Function
 
         ''' <summary>
-        ''' Get the internal default adducts data set
+        ''' Get the internal default adducts data set via parse the ion polarity value from a given string
         ''' </summary>
         ''' <param name="ion_mode">any character string that could 
         ''' be parse a <see cref="IonModes"/> value via the 
-        ''' <see cref="ParseIonMode(String, Boolean)"/> function.
+        ''' <see cref="ParseIonMode"/> function.
         ''' </param>
         ''' <returns></returns>
-        Public Function GetCalculator(ion_mode As String) As Dictionary(Of String, MzCalculator)
-            If ParseIonMode(ion_mode) = 1 Then
+        Public Function GetCalculator(ion_mode As String, Optional verbose As Boolean = False) As Dictionary(Of String, MzCalculator)
+            If ParseIonMode(ion_mode, verbose:=verbose) = 1 Then
                 Return pos
             Else
                 Return neg

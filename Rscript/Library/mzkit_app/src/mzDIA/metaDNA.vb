@@ -1,92 +1,111 @@
-﻿#Region "Microsoft.VisualBasic::dc8f09faca442980b6908d1f6f0008f4, mzkit\Rscript\Library\mzkit.insilicons\metaDNA.vb"
+﻿#Region "Microsoft.VisualBasic::b908336dff318d0aa20b15e7c8fa703c, Rscript\Library\mzkit_app\src\mzDIA\metaDNA.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
-    ' Code Statistics:
 
-    '   Total Lines: 538
-    '    Code Lines: 377
-    ' Comment Lines: 88
-    '   Blank Lines: 73
-    '     File Size: 22.83 KB
+' /********************************************************************************/
+
+' Summaries:
 
 
-    ' Module metaDNAInfer
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: CreateKEGGSearch, DIAInfer, ExportNetwork, getResultTable, handleSample
-    '               InferTable, loadCompoundLibrary, loadKeggNetwork, loadMetaDNAInferNetwork, MetaDNAAlgorithm
-    '               MgfSeeds, readReactionClassTable, ResultAlignments, ResultTable, SaveAlgorithmPerfermance
-    '               SetInferNetwork, SetKeggLibrary, SetSearchRange
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 789
+'    Code Lines: 517 (65.53%)
+' Comment Lines: 173 (21.93%)
+'    - Xml Docs: 98.27%
+' 
+'   Blank Lines: 99 (12.55%)
+'     File Size: 34.58 KB
+
+
+' Module metaDNAInfer
+' 
+'     Function: CreateKEGGSearch, DIAInfer, ExportNetwork, getResultTable, handleSample
+'               InferTable, loadCompoundLibrary, loadKeggNetwork, loadMetaDNAInferNetwork, loadOntologyTree
+'               MetaDNAAlgorithm, MgfSeeds, readInferDetails, readReactionClassTable, ResultAlignments
+'               ResultTable, SaveAlgorithmPerfermance, SetInferNetwork, SetKeggLibrary, setLibrary
+'               setNetworking, SetSearchRange
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep
+Imports BioNovoGene.BioDeep.Chemistry.ChEBI
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite
 Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports BioNovoGene.BioDeep.MetaDNA.Visual
+Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.Data
 Imports SMRUCC.genomics.Data.KEGG.Metabolism
+Imports SMRUCC.genomics.foundation.OBO_Foundry.IO.Models
+Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports SMRUCC.Rsharp.Runtime.Internal.Object.Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports dataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports KeggCompound = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound
+Imports kegReaction = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Reaction
 Imports kegReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass
+Imports metadata = BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaInfo
 Imports MetaDNAAlgorithm = BioNovoGene.BioDeep.MetaDNA.Algorithm
 Imports ReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass
 Imports ReactionClassTbl = BioNovoGene.BioDeep.MetaDNA.Visual.ReactionClass
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
+Imports std = System.Math
 
 ''' <summary>
 ''' Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics
@@ -98,12 +117,15 @@ Imports REnv = SMRUCC.Rsharp.Runtime
          Nature Communications, 
          2019, 10: 1516.")>
 <RTypeExport("metadna", GetType(MetaDNAAlgorithm))>
+<RTypeExport("obo_ontology", GetType(OBOFile))>
+<RTypeExport("metadna_infer", GetType(CandidateInfer))>
 Module metaDNAInfer
 
-    Sub New()
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(MetaDNAResult()), AddressOf getResultTable)
+    Sub Main()
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(MetaDNAResult()), AddressOf getResultTable)
     End Sub
 
+    <RGenericOverloads("as.data.frame")>
     Private Function getResultTable(list As MetaDNAResult(), args As list, env As Environment) As dataframe
         Dim data As New dataframe With {
             .columns = New Dictionary(Of String, Array)
@@ -147,6 +169,7 @@ Module metaDNAInfer
     ''' <param name="debugOutput"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>read data;metadna</keywords>
     <ExportAPI("read.metadna.infer")>
     <RApiReturn(GetType(NetworkGraph))>
     Public Function loadMetaDNAInferNetwork(debugOutput As Object, Optional env As Environment = Nothing) As Object
@@ -168,9 +191,11 @@ Module metaDNAInfer
     ''' </summary>
     ''' <param name="file">csv table file or a directory with raw xml model data file in it.</param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>A collection of the reaction class table for provides 
+    ''' the data links between the compounds.</returns>
+    ''' <keywords>read data;kegg</keywords>
     <ExportAPI("reaction_class.table")>
-    <RApiReturn(GetType(ReactionClassTbl()))>
+    <RApiReturn(GetType(ReactionClassTbl))>
     Public Function readReactionClassTable(file As String, Optional env As Environment = Nothing) As Object
         If file.ExtensionSuffix("csv") Then
             Return file.LoadCsv(Of ReactionClassTbl).ToArray
@@ -192,12 +217,25 @@ Module metaDNAInfer
                 .IteratesALL _
                 .ToArray
         Else
-            Return Internal.debug.stop($"unable to determin the data source type of the given file '{file}'", env)
+            Return RInternal.debug.stop($"unable to determin the data source type of the given file '{file}'", env)
         End If
     End Function
 
 #Region "metadna algorithm"
 
+    ''' <summary>
+    ''' Create an algorithm module for run metaDNA inferance
+    ''' </summary>
+    ''' <param name="ms1ppm">the mass tolerance error for matches the ms1 ion</param>
+    ''' <param name="mzwidth"></param>
+    ''' <param name="dotcutoff">
+    ''' network propagation score cutoff, could be lower to 0.4 ~ 0.5.
+    ''' </param>
+    ''' <param name="allowMs1"></param>
+    ''' <param name="maxIterations"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <keywords>metadna</keywords>
     <ExportAPI("metadna")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
     Public Function MetaDNAAlgorithm(Optional ms1ppm As Object = "ppm:20",
@@ -205,6 +243,7 @@ Module metaDNAInfer
                                      Optional dotcutoff As Double = 0.5,
                                      Optional allowMs1 As Boolean = True,
                                      Optional maxIterations As Integer = 1000,
+                                     Optional debug As Boolean = False,
                                      Optional env As Environment = Nothing) As Object
 
         Dim ms1Err As [Variant](Of Tolerance, Message) = Math.getTolerance(ms1ppm, env)
@@ -216,9 +255,21 @@ Module metaDNAInfer
             Return mz2Err.TryCast(Of Message)
         End If
 
-        Return New MetaDNAAlgorithm(ms1Err, dotcutoff, mz2Err, allowMs1, maxIterations)
+        Return New MetaDNAAlgorithm(ms1Err, dotcutoff, mz2Err, allowMs1,
+            maxIterations:=maxIterations,
+            debug:=debug)
     End Function
 
+    ''' <summary>
+    ''' Configs the precursor adducts range for the metaDNA algorithm
+    ''' </summary>
+    ''' <param name="metadna"></param>
+    ''' <param name="precursorTypes">a collection of the ms1 precursor adducts type data,
+    ''' could be a character vector of the adducts type string.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <keywords>adducts</keywords>
     <ExportAPI("range")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
     Public Function SetSearchRange(metadna As Algorithm,
@@ -237,38 +288,80 @@ Module metaDNAInfer
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Set kegg compound library
     ''' </summary>
     ''' <param name="metadna"></param>
     ''' <param name="kegg">
-    ''' a collection of the kegg compound data.
+    ''' should be a collection of the <see cref="KeggCompound"/> data,
+    ''' or a general <see cref="CompoundSolver"/>.
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>kegg;metabolite</keywords>
     <ExportAPI("load.kegg")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
     Public Function SetKeggLibrary(metadna As Algorithm,
-                                   <RRawVectorArgument> kegg As Object,
+                                   <RRawVectorArgument>
+                                   kegg As Object,
                                    Optional env As Environment = Nothing) As Object
 
-        Dim library As pipeline = pipeline.TryCreatePipeline(Of KeggCompound)(kegg, env)
+        Dim library As pipeline = pipeline.TryCreatePipeline(Of KeggCompound)(kegg, env, suppress:=True)
 
-        If library.isError Then
-            Return library.getError
+        If Not library.isError Then
+            Return metadna.SetKeggLibrary(library.populates(Of KeggCompound)(env))
+        ElseIf TypeOf kegg Is CompoundSolver Then
+            Return metadna.SetLibrary(DirectCast(kegg, CompoundSolver))
+        Else
+
         End If
 
-        Return metadna.SetKeggLibrary(library.populates(Of KeggCompound)(env))
+        Return library.getError
     End Function
 
     ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="metadna"></param>
+    ''' <param name="[library]"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <keywords>kegg;metabolite;pubchem;biodeep</keywords>
+    <ExportAPI("setLibrary")>
+    Public Function setLibrary(metadna As Algorithm, [library] As Object, Optional env As Environment = Nothing) As Object
+        If library Is Nothing Then
+            Return RInternal.debug.stop("the required compound library should not be nothing!", env)
+        End If
+        If TypeOf library Is CompoundSolver Then
+            Return metadna.SetLibrary(DirectCast(library, CompoundSolver))
+        ElseIf library.GetType.IsInheritsFrom(GetType(MSSearch(Of GenericCompound))) Then
+            Return metadna.SetLibrary(DirectCast(library, MSSearch(Of GenericCompound)))
+        Else
+            Return Message.InCompatibleType(GetType(CompoundSolver), library.GetType, env)
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="metadna"></param>
+    ''' <param name="networking"></param>
+    ''' <returns></returns>
+    ''' <keywords>kegg;reaction;metacyc;reactome;biodeep</keywords>
+    <ExportAPI("setNetworking")>
+    Public Function setNetworking(metadna As Algorithm, networking As Networking) As Object
+        Return metadna.SetNetwork(networking)
+    End Function
+
+    ''' <summary>
+    ''' set the kegg reaction class data links for the compounds
+    ''' </summary>
+    ''' <param name="metadna"></param>
     ''' <param name="links">
-    ''' a collection of the reaction class data
+    ''' should be a collection of the <see cref="ReactionClass"/> data
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>kegg;reaction</keywords>
     <ExportAPI("load.kegg_network")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
     Public Function SetInferNetwork(metadna As Algorithm,
@@ -278,6 +371,12 @@ Module metaDNAInfer
         Dim network As pipeline = pipeline.TryCreatePipeline(Of ReactionClass)(links, env)
 
         If network.isError Then
+            network = pipeline.TryCreatePipeline(Of kegReaction)(links, env)
+
+            If Not network.isError Then
+                Return metadna.SetNetwork(network.populates(Of kegReaction)(env))
+            End If
+
             Return network.getError
         End If
 
@@ -285,48 +384,159 @@ Module metaDNAInfer
     End Function
 
     ''' <summary>
-    ''' 
+    ''' load the ontology tree as the network graph for search
+    ''' </summary>
+    ''' <param name="metadna"></param>
+    ''' <param name="obo">raw data for build <see cref="OntologyTree"/>.</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <keywords>networking</keywords>
+    <ExportAPI("load.ontology")>
+    Public Function loadOntologyTree(metadna As Algorithm, obo As OBOFile, Optional env As Environment = Nothing) As Object
+        Return metadna.SetNetwork(New OntologyTree(obo))
+    End Function
+
+    ''' <summary>
+    ''' set ms2 spectrum data for run the annotation
     ''' </summary>
     ''' <param name="metadna"></param>
     ''' <param name="sample">
     ''' a collection of the mzkit peak ms2 data objects
     ''' </param>
+    ''' <param name="peaktable">
+    ''' used for generates the ROI id for matches with the ms1 peaks data 
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>spectrum;lc-ms</keywords>
     <ExportAPI("load.raw")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
-    Public Function handleSample(metadna As Algorithm,
-                                 <RRawVectorArgument> sample As Object,
+    Public Function handleSample(metadna As Algorithm, <RRawVectorArgument> sample As Object,
+                                 <RRawVectorArgument>
+                                 Optional peaktable As Object = Nothing,
+                                 Optional ms1diff As Double = 0.1,
+                                 Optional rt_win As Double = 30,
                                  Optional env As Environment = Nothing) As Object
+        Dim raw As pipeline
+        Dim peakSet As pipeline = Nothing
 
-        Dim raw As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(sample, env)
+        If Not peaktable Is Nothing Then
+            peakSet = pipeline.TryCreatePipeline(Of xcms2)(peaktable, env)
 
-        If raw.isError Then
-            Return raw.getError
+            If peakSet.isError AndAlso TypeOf peaktable Is dataframe Then
+                peakSet = pipeline.CreateFromPopulator(
+                    Iterator Function() As IEnumerable(Of xcms2)
+                        Dim df As dataframe = DirectCast(peaktable, dataframe)
+                        Dim mz As Double() = df.getVector(Of Double)("mz", "MZ", "m/z", "mass to charge")
+                        Dim rt As Double() = df.getVector(Of Double)("rt", "RT", "retention time", "retention_time")
+                        Dim xcms_id As String() = df.getVector(Of String)("xcms_id", "id", "ID", "roi", "ROI")
+
+                        For i As Integer = 0 To xcms_id.Length - 1
+                            Yield New xcms2(xcms_id(i), mz(i), rt(i))
+                        Next
+                    End Function())
+            End If
+            If peakSet.isError Then
+                Return peakSet.getError
+            End If
         End If
 
-        Return metadna.SetSamples(raw.populates(Of PeakMs2)(env))
+        If TypeOf sample Is list Then
+            sample = RConversion.unlist(sample, env:=env)
+
+            If Program.isException(sample) Then
+                Return sample
+            End If
+        End If
+
+        raw = pipeline.TryCreatePipeline(Of PeakMs2)(sample, env, suppress:=True)
+
+        If raw.isError Then
+            raw = pipeline.TryCreatePipeline(Of mzPack)(sample, env)
+
+            If raw.isError Then
+                Return raw.getError
+            End If
+
+            raw = pipeline.CreateFromPopulator(
+                Iterator Function() As IEnumerable(Of PeakMs2)
+                    For Each rawdata As mzPack In raw.populates(Of mzPack)(env)
+                        For Each peak As PeakMs2 In rawdata.GetMs2Peaks
+                            Yield peak
+                        Next
+                    Next
+                End Function().ToArray)
+        End If
+
+        Dim pool As PeakMs2() = raw.populates(Of PeakMs2)(env).ToArray
+
+        If pool.Length = 0 Then
+            Return RInternal.debug.stop("the required sample data collection should not be empty!", env)
+        End If
+
+        If Not peakSet Is Nothing Then
+            Dim peaksdata As New PeakSet(peakSet.populates(Of xcms2)(env))
+            Dim println = env.WriteLineHandler
+
+            Call println("set ms2 peak data associated ROI id from the ms1 peaktable data!")
+
+            ' assign ms1 peak id to the ms2 spectrum
+            For i As Integer = 0 To pool.Length - 1
+                Dim peak2 As PeakMs2 = pool(i)
+                Dim peak1 = peaksdata.FindIonSet(peak2.mz, peak2.rt, ms1diff, rt_win).ToArray
+                Dim xcms_id As String = Nothing
+
+                If Not peak1.IsNullOrEmpty Then
+                    If peak1.Length = 1 Then
+                        xcms_id = peak1(0).ID
+                    Else
+                        With peak1 _
+                            .OrderBy(Function(p1)
+                                         Return std.Abs(p1.mz - peak2.mz + 0.0001) * std.Abs(p1.rt - peak2.rt + 0.1)
+                                     End Function) _
+                            .First
+
+                            xcms_id = .ID
+                        End With
+                    End If
+                End If
+
+                pool(i) = Algorithm.SimpleSetROI(peak2, xcms_id)
+            Next
+        End If
+
+        Return metadna.SetSamples(pool, autoROIid:=peakSet Is Nothing)
     End Function
 
+    ''' <summary>
+    ''' apply of the metadna annotation workflow
+    ''' </summary>
+    ''' <param name="metaDNA"></param>
+    ''' <param name="sample"></param>
+    ''' <param name="seeds"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <keywords>metadna;lc-ms</keywords>
     <ExportAPI("DIA.infer")>
     <RApiReturn(GetType(CandidateInfer))>
     Public Function DIAInfer(metaDNA As Algorithm,
-                             <RRawVectorArgument> sample As Object,
+                             <RRawVectorArgument> Optional sample As Object = Nothing,
                              <RRawVectorArgument> Optional seeds As Object = Nothing,
                              Optional env As Environment = Nothing) As Object
 
-        Dim raw As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(sample, env)
+        Dim raw As pipeline = If(sample Is Nothing, Nothing, pipeline.TryCreatePipeline(Of PeakMs2)(sample, env))
         Dim infer As CandidateInfer()
 
-        If raw.isError Then
-            Return raw.getError
-        End If
-
         If seeds Is Nothing Then
-            infer = metaDNA _
-                .SetSamples(raw.populates(Of PeakMs2)(env)) _
-                .DIASearch _
-                .ToArray
+            If Not raw Is Nothing Then
+                If raw.isError Then
+                    Return raw.getError
+                End If
+
+                Call metaDNA.SetSamples(raw.populates(Of PeakMs2)(env))
+            End If
+
+            infer = metaDNA.DIASearch.ToArray
         ElseIf TypeOf seeds Is dataframe Then
             infer = DirectCast(seeds, dataframe).InferTable(raw, metaDNA, env)
         Else
@@ -341,6 +551,12 @@ Module metaDNAInfer
         Dim id As String() = DirectCast(seeds, dataframe).getColumnVector(1)
         Dim kegg_id As String() = DirectCast(seeds, dataframe).getColumnVector(2)
         Dim rawFile As UnknownSet = UnknownSet.CreateTree(raw.populates(Of PeakMs2)(env), metaDNA.ms1Err)
+
+        If rawFile.is_empty Then
+            Call VBDebugger.EchoLine("no spectrum feature for run annotation, returns empty result collection!")
+            Return {}
+        End If
+
         Dim annoSet As NamedValue(Of String)() = id _
             .Select(Function(uid, i) (uid, kegg_id(i))) _
             .GroupBy(Function(map) map.uid) _
@@ -380,9 +596,11 @@ Module metaDNAInfer
     ''' <summary>
     ''' create seeds from mgf file data
     ''' </summary>
-    ''' <param name="seeds"></param>
+    ''' <param name="seeds">A set of the mzkit <see cref="PeakMs2"/> clr object that could 
+    ''' be used for the seeds for run the metadna annotation.</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>spectrum</keywords>
     <ExportAPI("as.seeds")>
     <RApiReturn(GetType(AnnotatedSeed))>
     Public Function MgfSeeds(<RRawVectorArgument> seeds As Object, Optional env As Environment = Nothing) As Object
@@ -405,8 +623,8 @@ Module metaDNAInfer
     ''' <summary>
     ''' get result alignments raw data for data plots.
     ''' </summary>
-    ''' <param name="DIAinfer"></param>
-    ''' <param name="table"></param>
+    ''' <param name="DIAinfer">the result candidates of clr data type in mzkit: <see cref="CandidateInfer"/></param>
+    ''' <param name="table">the <see cref="MetaDNAResult"/> data table</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("result.alignment")>
@@ -431,12 +649,25 @@ Module metaDNAInfer
             .ExportInferRaw(rawFilter)
     End Function
 
+    ''' <summary>
+    ''' Extract the annotation result from metaDNA algorithm module as data table
+    ''' </summary>
+    ''' <param name="metaDNA"></param>
+    ''' <param name="result">a collection of the <see cref="CandidateInfer"/>.</param>
+    ''' <param name="unique"></param>
+    ''' <param name="cutoff">
+    ''' the score cutoff for filter the result list
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns>A collection of the <see cref="MetaDNAResult"/> data objects that could be
+    ''' used for represented as the result table.</returns>
     <ExportAPI("as.table")>
     <RApiReturn(GetType(MetaDNAResult))>
     Public Function ResultTable(metaDNA As Algorithm,
                                 <RRawVectorArgument>
                                 result As Object,
                                 Optional unique As Boolean = False,
+                                Optional cutoff As Double = 0.75,
                                 Optional env As Environment = Nothing) As Object
 
         Dim data As pipeline = pipeline.TryCreatePipeline(Of CandidateInfer)(result, env)
@@ -447,6 +678,9 @@ Module metaDNAInfer
 
         Return metaDNA _
             .ExportTable(data.populates(Of CandidateInfer)(env), unique) _
+            .DoCall(Function(a)
+                        Return MetaDNAResult.FilterInferenceHits(a, cutoff)
+                    End Function) _
             .ToArray
     End Function
 
@@ -483,13 +717,18 @@ Module metaDNAInfer
     End Function
 #End Region
 
+    <ExportAPI("read.infer_details")>
+    Public Function readInferDetails(file As String) As CandidateInfer()
+        Return file.LoadJsonFile(Of CandidateInfer())
+    End Function
+
 #Region "kegg"
 
     ''' <summary>
     ''' Create the kegg compound ms1 annotation query engine.
     ''' </summary>
     ''' <param name="kegg">
-    ''' a set of kegg compound data
+    ''' a set of kegg/pubchem/chebi/hmdb compound data.
     ''' </param>
     ''' <param name="precursors">
     ''' a character vector of the ms1 precursor ion names or 
@@ -506,37 +745,61 @@ Module metaDNAInfer
     ''' a data query engine model to run ms1 data search 
     ''' for the kegg metaolite compounds.
     ''' </returns>
+    ''' <keywords>kegg;metabolites</keywords>
     <ExportAPI("annotationSet")>
-    <RApiReturn(GetType(KEGGHandler))>
+    <RApiReturn(GetType(CompoundSolver))>
     Public Function CreateKEGGSearch(<RRawVectorArgument> kegg As Object,
                                      <RRawVectorArgument()>
                                      Optional precursors As Object = "[M]+|[M+H]+|[M+H-H2O]+",
                                      Optional mzdiff As Object = "ppm:20",
                                      <RRawVectorArgument(TypeCodes.string)>
                                      Optional excludes As Object = Nothing,
+                                     <RRawVectorArgument(TypeCodes.double)>
+                                     Optional mass_range As Object = Nothing,
                                      Optional env As Environment = Nothing) As Object
 
-        Dim keggSet = pipeline.TryCreatePipeline(Of KeggCompound)(kegg, env)
+        Dim keggSet = pipeline.TryCreatePipeline(Of KeggCompound)(kegg, env, suppress:=True)
         Dim mzErr = Math.getTolerance(mzdiff, env)
+        Dim calculators As MzCalculator() = Math.GetPrecursorTypes(precursors, env)
+        Dim excludesEntry As Index(Of String) = CLRVector.asCharacter(excludes).Indexing
+        Dim mz_range As Double() = CLRVector.asNumeric(mass_range)
 
-        If keggSet.isError Then
-            Return keggSet.getError
-        ElseIf mzErr Like GetType(Message) Then
+        If mzErr Like GetType(Message) Then
             Return mzErr.TryCast(Of Message)
         End If
 
-        Dim calculators As MzCalculator() = Math.GetPrecursorTypes(precursors, env)
-        Dim excludesEntry As Index(Of String) = CLRVector.asCharacter(excludes).Indexing
+        If Not keggSet.isError Then
+            Return CompoundSolver.CreateIndex(
+                compounds:=keggSet _
+                    .populates(Of KeggCompound)(env) _
+                    .Where(Function(c)
+                               Return Not c.entry Like excludesEntry
+                           End Function),
+                types:=calculators,
+                tolerance:=mzErr.TryCast(Of Tolerance),
+                mass_range:=If(mz_range.IsNullOrEmpty, Nothing, New DoubleRange(mz_range))
+            )
+        End If
 
-        Return KEGGHandler.CreateIndex(
-            compounds:=keggSet _
-                .populates(Of KeggCompound)(env) _
-                .Where(Function(c)
-                           Return Not c.entry Like excludesEntry
-                       End Function),
-            types:=calculators,
-            tolerance:=mzErr.TryCast(Of Tolerance)
-        )
+        If TypeOf kegg Is OBOFile Then
+            keggSet = pipeline.CreateFromPopulator(ChEBIObo.ImportsMetabolites(DirectCast(kegg, OBOFile)))
+        Else
+            keggSet = pipeline.TryCreatePipeline(Of metadata)(kegg, env)
+        End If
+
+        If Not keggSet.isError Then
+            Dim pull = keggSet.populates(Of metadata)(env).ToArray
+            Dim filter = pull.Where(Function(c) Not c.ID Like excludesEntry).ToArray
+
+            Return CompoundSolver.CreateIndex(
+                compounds:=filter,
+                types:=calculators,
+                tolerance:=mzErr.TryCast(Of Tolerance),
+                mass_range:=If(mz_range.IsNullOrEmpty, Nothing, New DoubleRange(mz_range))
+            )
+        End If
+
+        Return keggSet.getError
     End Function
 
     ''' <summary>
@@ -545,7 +808,10 @@ Module metaDNAInfer
     ''' <param name="repo">
     ''' the file path to the messagepack data repository
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' a collection of the kegg compound data model
+    ''' </returns>
+    ''' <keywords>kegg;metabolites</keywords>
     <ExportAPI("kegg.library")>
     <RApiReturn(GetType(KeggCompound))>
     Public Function loadCompoundLibrary(repo As String) As Object
@@ -565,6 +831,7 @@ Module metaDNAInfer
     ''' </summary>
     ''' <param name="repo"></param>
     ''' <returns></returns>
+    ''' <keywords>kegg;networking</keywords>
     <ExportAPI("kegg.network")>
     <RApiReturn(GetType(ReactionClass))>
     Public Function loadKeggNetwork(repo As String) As Object

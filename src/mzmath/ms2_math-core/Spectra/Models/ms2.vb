@@ -1,58 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::0a139cb54449e8297c6943a4c0bbc1d9, mzkit\src\mzmath\ms2_math-core\Spectra\Models\ms2.vb"
+﻿#Region "Microsoft.VisualBasic::99daf6af61c29c8bd825737333d8c96c, mzmath\ms2_math-core\Spectra\Models\ms2.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 93
-'    Code Lines: 53
-' Comment Lines: 28
-'   Blank Lines: 12
-'     File Size: 3.67 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class ms2
-' 
-'         Properties: Annotation, intensity, mz
-' 
-'         Function: AbsoluteIntensity, RelativeIntensity, ToString
-'         Operators: -
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 155
+    '    Code Lines: 83 (53.55%)
+    ' Comment Lines: 53 (34.19%)
+    '    - Xml Docs: 94.34%
+    ' 
+    '   Blank Lines: 19 (12.26%)
+    '     File Size: 5.77 KB
+
+
+    '     Class ms2
+    ' 
+    '         Properties: Annotation, intensity, mz
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    '         Function: AbsoluteIntensity, CompareTo, RelativeIntensity, ToString
+    '         Operators: -
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -69,9 +72,17 @@ Namespace Spectra
     ''' </summary>
     ''' <remarks>
     ''' [mz, into, annotation]
+    ''' 
+    ''' the mass spectrum data model that based on this peak collection has:
+    ''' 
+    ''' + <see cref="PeakMs2"/>
+    ''' + <see cref="PeakList"/>
+    ''' 
+    ''' a more complex of this spectrum peak data model is <see cref="SpectrumPeak"/> object
     ''' </remarks>
     Public Class ms2 : Implements IMzAnnotation, INumericKey, ISpectrumPeak
         Implements IComparable
+        Implements IComparable(Of ms2)
 
         ''' <summary>
         ''' Molecular fragment m/z.(or the mass value)
@@ -96,9 +107,37 @@ Namespace Spectra
         Sub New()
         End Sub
 
-        Sub New(mz As Double, intensity As Double)
+        ''' <summary>
+        ''' Create a spectrum fragment data model
+        ''' </summary>
+        ''' <param name="mz"></param>
+        ''' <param name="intensity"></param>
+        Sub New(mz As Double, intensity As Double, Optional anno As String = Nothing)
             Me.mz = mz
             Me.intensity = intensity
+            Me.Annotation = anno
+        End Sub
+
+        ''' <summary>
+        ''' makes peak data copy
+        ''' </summary>
+        ''' <param name="peak"></param>
+        Sub New(peak As IMs1Scan)
+            Me.mz = peak.mz
+            Me.intensity = peak.intensity
+        End Sub
+
+        ''' <summary>
+        ''' make value copy
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="anno">
+        ''' overrides of the <see cref="Annotation"/> string inside the source <paramref name="data"/> object.
+        ''' </param>
+        Sub New(data As ms2, Optional anno As String = Nothing)
+            mz = data.mz
+            intensity = data.intensity
+            Annotation = If(anno, data.Annotation)
         End Sub
 
         Public Overrides Function ToString() As String
@@ -114,23 +153,25 @@ Namespace Spectra
         End Function
 
         ''' <summary>
-        ''' compares by mz value
+        ''' compares by fragment intensity and mz value
         ''' </summary>
         ''' <param name="other"></param>
         ''' <returns></returns>
         Public Function CompareTo(other As Object) As Integer Implements IComparable.CompareTo
-            If [GetType]() IsNot other.GetType() Then
+            If Me.GetType() IsNot other.GetType() Then
                 Throw New ArgumentException(String.Format("Can't compare {0} with {1}.", [GetType](), other.GetType()))
+            Else
+                Return CompareTo(DirectCast(other, ms2))
             End If
+        End Function
 
-            Dim otherCpy = DirectCast(other, ms2)
-
-            If intensity < otherCpy.intensity Then
+        Public Function CompareTo(other As ms2) As Integer Implements IComparable(Of ms2).CompareTo
+            If intensity < other.intensity Then
                 Return -1
-            ElseIf intensity > otherCpy.intensity Then
+            ElseIf intensity > other.intensity Then
                 Return 1
             Else
-                Return otherCpy.mz.CompareTo(mz)
+                Return other.mz.CompareTo(mz)
             End If
         End Function
 

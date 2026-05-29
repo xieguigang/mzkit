@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::510482b624cc6e3db46f88cc107b2d09, mzkit\src\visualize\plot\MassSpectraMirrorPlot.vb"
+﻿#Region "Microsoft.VisualBasic::db61385e5ed4b26ebda9ebfc21706183, visualize\plot\MassSpectraMirrorPlot.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 107
-    '    Code Lines: 90
-    ' Comment Lines: 9
-    '   Blank Lines: 8
-    '     File Size: 4.76 KB
+    '   Total Lines: 169
+    '    Code Lines: 123 (72.78%)
+    ' Comment Lines: 38 (22.49%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (4.73%)
+    '     File Size: 8.12 KB
 
 
     ' Module MassSpectra
@@ -55,21 +57,25 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
+''' <summary>
+''' data visualization for the mass spectrum alignment details
+''' </summary>
 Public Module MassSpectra
 
     ''' <summary>
-    ''' 
+    ''' Make the single spectrum input mirror and plot
     ''' </summary>
-    ''' <param name="library"></param>
-    ''' <param name="size$"></param>
-    ''' <param name="margin$"></param>
-    ''' <param name="intoCutoff#"></param>
+    ''' <param name="library">A single spectrum object, this function will make a mirror plot of this spectrum object.</param>
+    ''' <param name="size"></param>
+    ''' <param name="margin"></param>
+    ''' <param name="intoCutoff"></param>
     ''' <param name="titles">[query, reference]</param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -89,6 +95,11 @@ Public Module MassSpectra
                                Optional tagXFormat$ = "F2",
                                Optional bw As Single = 8,
                                Optional legendLayout As String = "top-right",
+                               Optional color1 As String = AlignmentPlot.DefaultColor1,
+                               Optional color2 As String = AlignmentPlot.DefaultColor2,
+                               Optional DrawGridX As Boolean = False,
+                               Optional gridStrokeX As String = PlotAlignmentGroup.DefaultGridXStroke,
+                               Optional gridStrokeY As String = PlotAlignmentGroup.DefaultGridYStroke,
                                Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim a As New LibraryMatrix With {.ms2 = library.ms2, .name = titles.ElementAtOrDefault(0, library.name)}
@@ -109,10 +120,41 @@ Public Module MassSpectra
             tagXFormat:=tagXFormat,
             driver:=driver,
             bw:=bw,
-            legendLayout:=legendLayout
+            legendLayout:=legendLayout,
+            color1:=color1,
+            color2:=color2,
+            drawGridX:=DrawGridX,
+            gridStrokeX:=gridStrokeX,
+            gridStrokeY:=gridStrokeY
         )
     End Function
 
+    ''' <summary>
+    ''' Make mirror plot of two spectrum object
+    ''' </summary>
+    ''' <param name="query">usually be the sample data as query input</param>
+    ''' <param name="ref">usually be the reference library spectrum data as the mirror reference</param>
+    ''' <param name="size"></param>
+    ''' <param name="margin"></param>
+    ''' <param name="bg$"></param>
+    ''' <param name="intoCutoff"></param>
+    ''' <param name="title"></param>
+    ''' <param name="labelDisplayIntensity"></param>
+    ''' <param name="drawLegend"></param>
+    ''' <param name="xlab$"></param>
+    ''' <param name="ylab$"></param>
+    ''' <param name="tagXFormat$"></param>
+    ''' <param name="drawGrid"></param>
+    ''' <param name="drawGridX"></param>
+    ''' <param name="bw"></param>
+    ''' <param name="legendLayout"></param>
+    ''' <param name="color1"></param>
+    ''' <param name="color2"></param>
+    ''' <param name="gridStrokeX"></param>
+    ''' <param name="gridStrokeY"></param>
+    ''' <param name="highlights"></param>
+    ''' <param name="driver"></param>
+    ''' <returns></returns>
     Public Function AlignMirrorPlot(query As LibraryMatrix, ref As LibraryMatrix,
                                     Optional size$ = "1200,800",
                                     Optional margin$ = "padding: 100px 30px 50px 100px;",
@@ -125,8 +167,15 @@ Public Module MassSpectra
                                     Optional ylab$ = "Relative Intensity(%)",
                                     Optional tagXFormat$ = "F2",
                                     Optional drawGrid As Boolean = True,
+                                    Optional drawGridX As Boolean = False,
                                     Optional bw As Single = 8,
                                     Optional legendLayout As String = "top-right",
+                                    Optional color1 As String = DefaultColor1,
+                                    Optional color2 As String = DefaultColor2,
+                                    Optional gridStrokeX As String = PlotAlignmentGroup.DefaultGridXStroke,
+                                    Optional gridStrokeY As String = PlotAlignmentGroup.DefaultGridYStroke,
+                                    Optional highlights As NamedValue(Of Double)() = Nothing,
+                                    Optional highlightStyle As String = Stroke.StrongHighlightStroke,
                                     Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim mz As Double() = query _
@@ -163,7 +212,14 @@ Public Module MassSpectra
             tagXFormat:=tagXFormat,
             driver:=driver,
             bw:=bw,
-            legendLayout:=legendLayout
+            legendLayout:=legendLayout,
+            cla:=color1,
+            clb:=color2,
+            drawGridX:=drawGridX,
+            gridStrokeX:=gridStrokeX,
+            gridStrokeY:=gridStrokeY,
+            highlights:=highlights,
+            highlightStyle:=highlightStyle
         )
     End Function
 End Module

@@ -1,4 +1,65 @@
-﻿Imports System.Text.RegularExpressions
+﻿#Region "Microsoft.VisualBasic::675005d62f2be6ecd47583e96bd3e014, metadb\Lipidomics\ChainParser\TotalChainParser.vb"
+
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
+
+
+
+' /********************************************************************************/
+
+' Summaries:
+
+
+' Code Statistics:
+
+'   Total Lines: 148
+'    Code Lines: 126 (85.14%)
+' Comment Lines: 1 (0.68%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 21 (14.19%)
+'     File Size: 7.65 KB
+
+
+' Class TotalChainParser
+' 
+'     Properties: Capacity, ChainCount, Pattern
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: BuildCeramideParser, BuildEtherParser, BuildLysoEtherParser, BuildParser, BuildSpeciesLevelParser
+'               Parse, ParseMolecularSpeciesLevelChains, ParsePositionLevelChains, ParseTotalChains
+' 
+' /********************************************************************************/
+
+#End Region
+
+Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Linq
 
 Public Class TotalChainParser
     Private Shared ReadOnly CarbonPattern As String = "(?<carbon>\d+)"
@@ -38,20 +99,35 @@ Public Class TotalChainParser
     Private Sub New(chainCount As Integer, capacity As Integer, hasSphingosine As Boolean, hasEther As Boolean, atLeastSpeciesLevel As Boolean)
         Me.ChainCount = chainCount
         Me.Capacity = capacity
-        Dim submolecularLevelPattern = If(hasEther, $"(?<TotalChain>(?<plasm>[de]?[OP]-)?{CarbonPattern}:{DoubleBondPattern}({OxidizedPattern})?)", $"(?<TotalChain>{CarbonPattern}:{DoubleBondPattern}({OxidizedPattern})?)")
-        Dim molecularSpeciesLevelPattern = If(hasSphingosine, $"(?<MolecularSpeciesLevel>(?<Chain>{SphingoChainParser.Pattern})_({ChainsPattern}_?){{{Me.ChainCount - 1}}})", If(hasEther, $"(?<MolecularSpeciesLevel>({ChainsPattern}_?){{{Me.ChainCount}}})", $"(?<MolecularSpeciesLevel>({AcylChainsPattern}_?){{{Me.ChainCount}}})"))
-        Dim positionLevelPattern = If(hasSphingosine, $"(?<PositionLevel>(?<Chain>{SphingoChainParser.Pattern})/({ChainsPattern}/?){{{Me.Capacity - 1}}})", If(hasEther, $"(?<PositionLevel>({ChainsPattern}/?){{{Me.Capacity}}})", $"(?<PositionLevel>({AcylChainsPattern}/?){{{Me.Capacity}}})"))
+        Dim submolecularLevelPattern = If(hasEther,
+            $"(?<TotalChain>(?<plasm>[de]?[OP]-)?{CarbonPattern}:{DoubleBondPattern}({OxidizedPattern})?)",
+            $"(?<TotalChain>{CarbonPattern}:{DoubleBondPattern}({OxidizedPattern})?)"
+        )
+        Dim molecularSpeciesLevelPattern = If(hasSphingosine,
+            $"(?<MolecularSpeciesLevel>(?<Chain>{SphingoChainParser.Pattern})_({ChainsPattern}_?){{{Me.ChainCount - 1}}})",
+            If(hasEther,
+                $"(?<MolecularSpeciesLevel>({ChainsPattern}_?){{{Me.ChainCount}}})",
+                $"(?<MolecularSpeciesLevel>({AcylChainsPattern}_?){{{Me.ChainCount}}})"
+        ))
+        Dim positionLevelPattern = If(hasSphingosine,
+            $"(?<PositionLevel>(?<Chain>{SphingoChainParser.Pattern})/({ChainsPattern}/?){{{Me.Capacity - 1}}})",
+            If(hasEther,
+                $"(?<PositionLevel>({ChainsPattern}/?){{{Me.Capacity}}})",
+                $"(?<PositionLevel>({AcylChainsPattern}/?){{{Me.Capacity}}})"
+        ))
+
         If Me.Capacity = 1 Then
             Dim postionLevelExpression = New Regex(positionLevelPattern, RegexOptions.Compiled)
             Pattern = positionLevelPattern
             Expression = postionLevelExpression
         Else
             Dim patterns = {positionLevelPattern, molecularSpeciesLevelPattern}
-            Dim totalPattern = String.Join("|", If(atLeastSpeciesLevel, patterns, patterns.Append(submolecularLevelPattern)))
+            Dim totalPattern = String.Join("|", If(atLeastSpeciesLevel, patterns, patterns.JoinIterates(submolecularLevelPattern).ToArray))
             Dim totalExpression = New Regex(totalPattern, RegexOptions.Compiled)
             Pattern = totalPattern
             Expression = totalExpression
         End If
+
         Me.HasSphingosine = hasSphingosine
     End Sub
 

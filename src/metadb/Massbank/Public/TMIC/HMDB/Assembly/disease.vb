@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ae7e6d2abc54c8b4231219b1148475d, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Assembly\disease.vb"
+﻿#Region "Microsoft.VisualBasic::40e86f6848b0e66f09a2924984f935f8, metadb\Massbank\Public\TMIC\HMDB\Assembly\disease.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 28
-    '    Code Lines: 21
-    ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 728 B
+    '   Total Lines: 31
+    '    Code Lines: 22 (70.97%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 9 (29.03%)
+    '     File Size: 1.05 KB
 
 
     '     Class disease
@@ -63,19 +65,21 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
+
 Namespace TMIC.HMDB
 
     Public Class disease
 
-        Public Property name As String
-        Public Property omim_id As String
-        Public Property references As reference()
+        <MessagePackMember(0)> Public Property name As String
+        <MessagePackMember(1)> Public Property omim_id As String
+        <MessagePackMember(2)> Public Property references As reference()
 
     End Class
 
     Public Structure reference
-        Public Property reference_text As String
-        Public Property pubmed_id As String
+        <MessagePackMember(0)> Public Property reference_text As String
+        <MessagePackMember(1)> Public Property pubmed_id As String
 
         Public Overrides Function ToString() As String
             Return reference_text
@@ -84,10 +88,11 @@ Namespace TMIC.HMDB
 
     Public Class protein
 
-        Public Property protein_accession As String
-        Public Property name As String
-        Public Property uniprot_id As String
-        Public Property gene_name As String
-        Public Property protein_type As String
+        <MessagePackMember(0)> Public Property protein_accession As String
+        <MessagePackMember(1)> Public Property name As String
+        <MessagePackMember(2)> Public Property uniprot_id As String
+        <MessagePackMember(3)> Public Property gene_name As String
+        <MessagePackMember(4)> Public Property protein_type As String
+
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::371076265ac1d687eb7337aec2bdb3c0, mzkit\src\metadna\metaDNA\Infer\InferLevel.vb"
+﻿#Region "Microsoft.VisualBasic::b7c405d5f94a8b3ecaad37c3934cb924, metadna\metaDNA\Infer\InferLevel.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 7
-    '    Code Lines: 6
-    ' Comment Lines: 0
-    '   Blank Lines: 1
-    '     File Size: 100 B
+    '   Total Lines: 14
+    '    Code Lines: 10 (71.43%)
+    ' Comment Lines: 1 (7.14%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (21.43%)
+    '     File Size: 302 B
 
 
     '     Enum InferLevel
@@ -57,10 +59,17 @@
 
 #End Region
 
+Imports System.Runtime.Serialization
+
 Namespace Infer
 
+    ' add EnumMember for make parse the string value as enum value
+
+    <DataContract>
     Public Enum InferLevel
+        <EnumMember(Value:="Ms1")>
         Ms1
+        <EnumMember(Value:="Ms2")>
         Ms2
     End Enum
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7c2150cdfd428d1c6209782046f41fe, mzkit\src\assembly\Comprehensive\MsImaging\MsImagingRaw.vb"
+﻿#Region "Microsoft.VisualBasic::bd98940f14fafade561058d18b78b12f, assembly\Comprehensive\MsImaging\MsImagingRaw.vb"
 
 ' Author:
 ' 
@@ -37,16 +37,19 @@
 
 ' Code Statistics:
 
-'   Total Lines: 180
-'    Code Lines: 133
-' Comment Lines: 25
-'   Blank Lines: 22
-'     File Size: 7.52 KB
+'   Total Lines: 347
+'    Code Lines: 260 (74.93%)
+' Comment Lines: 50 (14.41%)
+'    - Xml Docs: 90.00%
+' 
+'   Blank Lines: 37 (10.66%)
+'     File Size: 14.66 KB
 
 
 '     Module MsImagingRaw
 ' 
-'         Function: GetMSIMetadata, MeasureRow, MSICombineRowScans, ParseRowNumber
+'         Function: (+3 Overloads) GetMSIMetadata, MeasureRow, MSICombineRowScans, ParseRowNumber, PixelScanPadding
+'                   Reset, Summary, WriteRegionPoints
 ' 
 ' 
 ' /********************************************************************************/
@@ -57,14 +60,21 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.Expressions
 
 Namespace MsImaging
@@ -73,6 +83,103 @@ Namespace MsImaging
     ''' raw data file reader helper code
     ''' </summary>
     Public Module MsImagingRaw
+
+        ''' <summary>
+        ''' Try to save the tissue region data into mzPack rawdata file
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function WriteRegionPoints(raw As mzPack, index As IEnumerable(Of NamedValue(Of Point))) As mzPack
+            Dim dimensionSize As Size = GetDimensionSize(raw)
+            Dim evalIndex As Func(Of Point, Integer) = Function(i) BitmapBuffer.GetIndex(i.X, i.Y, dimensionSize.Width, channels:=1)
+            Dim regions As Dictionary(Of String, Point()) = index _
+                .GroupBy(Function(i) i.Name) _
+                .ToDictionary(Function(region) region.Key,
+                              Function(region)
+                                  Return region.Select(Function(i) i.Value).ToArray
+                              End Function)
+
+            Throw New NotImplementedException
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="slide"></param>
+        ''' <param name="padding"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function PixelScanPadding(slide As mzPack, padding As Padding) As mzPack
+            Dim dims As Size = PixelReader.ReadDimensions(slide.MS.Select(Function(scan) scan.GetMSIPixel))
+            Dim paddingData As ScanMS1() = slide.MS.PixelScanPadding(padding, dims).ToArray
+
+            Return New mzPack With {
+                .MS = paddingData,
+                .Application = FileApplicationClass.MSImaging,
+                .Chromatogram = slide.Chromatogram,
+                .Scanners = slide.Scanners,
+                .source = slide.source,
+                .Thumbnail = slide.Thumbnail,
+                .metadata = slide.metadata,
+                .Annotations = slide.Annotations
+            }
+        End Function
+
+        ''' <summary>
+        ''' reset sample position
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <param name="padding">
+        ''' Add padding around the slide sample data
+        ''' </param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Reset(raw As mzPack, padding As Padding) As mzPack
+            Dim rect As RectangleF = raw.Shape
+            Dim scans As New List(Of ScanMS1)
+            Dim pos As Point
+            Dim meta As Dictionary(Of String, String)
+            Dim layout As PaddingLayout = PaddingLayout.ParsePixels(padding)
+
+            For Each scan As ScanMS1 In raw.MS
+                pos = scan.GetMSIPixel
+                pos = New Point With {
+                    .X = pos.X - rect.Left + layout.Left,
+                    .Y = pos.Y - rect.Top + layout.Top
+                }
+                meta = New Dictionary(Of String, String)(scan.meta)
+                meta("x") = pos.X.ToString
+                meta("y") = pos.Y.ToString
+
+                scans += New ScanMS1 With {
+                .BPC = scan.BPC,
+                .into = scan.into,
+                .mz = scan.mz,
+                .products = scan.products,
+                .rt = scan.rt,
+                .TIC = scan.TIC,
+                .scan_id = scan.scan_id,
+                .meta = meta
+            }
+            Next
+
+            meta = raw.metadata
+            meta("width") = rect.Width + layout.Left + layout.Right
+            meta("height") = rect.Height + layout.Top + layout.Bottom
+
+            Return New mzPack With {
+                .Application = FileApplicationClass.MSImaging,
+                .Chromatogram = raw.Chromatogram,
+                .MS = scans.ToArray,
+                .Scanners = raw.Scanners,
+                .source = $"reset({raw.source})",
+                .Thumbnail = Nothing,
+                .Annotations = raw.Annotations,
+                .metadata = meta
+            }
+        End Function
 
         <Extension>
         Public Function Summary(msidata As mzPack, Optional filter As Func(Of Integer, Integer, Boolean) = Nothing) As IEnumerable(Of iPixelIntensity)
@@ -97,6 +204,44 @@ Namespace MsImaging
                        .min = p.into.Min,
                        .median = p.into.Median
                    }
+        End Function
+
+        ''' <summary>
+        ''' measure the ms-imaging metadata from an aligned processed matrix object
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function GetMSIMetadata(raw As MzMatrix) As Metadata
+            Dim dims As New Size With {
+               .Width = raw.matrix.Select(Function(i) i.X).Max,
+               .Height = raw.matrix.Select(Function(i) i.Y).Max
+            }
+
+            Return New Metadata With {
+                .[class] = raw.matrixType.ToString,
+                .mass_range = New DoubleRange(raw.mz),
+                .resolution = 13,
+                .scan_x = dims.Width,
+                .scan_y = dims.Height
+            }
+        End Function
+
+        <Extension>
+        Public Function GetMSIMetadata(raw As MassSpectrometry.SingleCells.File.MatrixReader) As Metadata
+            If raw.matrixType <> FileApplicationClass.MSImaging Then
+                Return New Metadata With {.[class] = raw.matrixType.ToString}
+            Else
+                Dim dims = raw.dim_size
+
+                Return New Metadata With {
+                    .[class] = raw.matrixType.ToString,
+                    .mass_range = New DoubleRange(raw.ionSet),
+                    .resolution = 13,
+                    .scan_x = dims.Width,
+                    .scan_y = dims.Height
+                }
+            End If
         End Function
 
         ''' <summary>
@@ -168,6 +313,10 @@ Namespace MsImaging
                            End Sub
             End If
 
+            Dim polarity As New List(Of String)
+            Dim notes As New Dictionary(Of String, String)
+            Dim i As i32 = 1
+
             ' each row is a small sample in current sample batch
             For Each row As mzPack In src
                 pixels += row.MeasureRow(yscale, correction, cutoff, sumNorm, labelPrefix, progress)
@@ -177,6 +326,9 @@ Namespace MsImaging
                     mzmin.Add(mzvals.Min)
                     mzmax.Add(mzvals.Max)
                 End If
+
+                Call notes.Add(If(row.source, $"sf{++i}"), row.note)
+                Call polarity.Add(row.GetMetadata("polarity"))
             Next
 
             Dim polygon As New Polygon2D(pixels.Select(Function(scan) scan.GetMSIPixel))
@@ -185,13 +337,28 @@ Namespace MsImaging
             metadata.scan_y = polygon.ypoints.Max
             metadata.mass_range = New DoubleRange(mzmin.Min, mzmax.Max)
 
+            Dim checkIon = polarity.Distinct.ToArray
+
+            If checkIon.Length = 1 Then
+                If checkIon(0) Is Nothing Then
+                    metadata.polarity = IonModes.Unknown
+                Else
+                    metadata.polarity = Provider.ParseIonMode(checkIon(0), allowsUnknown:=True)
+                End If
+            Else
+                metadata.polarity = IonModes.Unknown
+            End If
+
             Return New mzPack With {
                 .MS = pixels.ToArray,
                 .Application = FileApplicationClass.MSImaging,
                 .source = Strings _
                     .Trim(labelPrefix) _
                     .Trim("-"c, " "c, CChar(vbTab), "_"c),
-                .metadata = metadata.GetMetadata
+                .metadata = metadata.GetMetadata,
+                .note = notes _
+                    .Select(Function(t) $"{t.Key}:{vbCrLf}{t.Value}") _
+                    .JoinBy(vbCrLf)
             }
         End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25dfbe4736e54790dda9916c13735daf, mzkit\src\mzmath\ms2_math-core\Spectra\Models\LibraryMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::3af15e45d2d07b9a89bf68b5dcf8899a, mzmath\ms2_math-core\Spectra\Models\LibraryMatrix.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 189
-    '    Code Lines: 124
-    ' Comment Lines: 43
-    '   Blank Lines: 22
-    '     File Size: 6.58 KB
+    '   Total Lines: 267
+    '    Code Lines: 157 (58.80%)
+    ' Comment Lines: 78 (29.21%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 32 (11.99%)
+    '     File Size: 9.62 KB
 
 
     '     Class LibraryMatrix
@@ -49,8 +51,12 @@
     '         Properties: centroid, entropy, intensity, ms2, mz
     '                     name, parentMz, totalIon
     ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: AlignMatrix, GetMaxInto
+    '         Constructor: (+6 Overloads) Sub New
+    ' 
+    '         Function: AlignMatrix, GetIons, GetMaxInto, ParseStream, ToString
+    ' 
+    '         Sub: SetIons
+    ' 
     '         Operators: *, /
     ' 
     ' 
@@ -65,6 +71,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Information
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
@@ -163,11 +170,25 @@ Namespace Spectra
             Call MyBase.New({})
         End Sub
 
+        Sub New(name As String, mz As Double(), into As IVector, Optional centroid As Boolean = True)
+            Call Me.New(name, mz, into.Data, centroid)
+        End Sub
+
         Sub New(name As String, mz As Double(), into As Double(), Optional centroid As Boolean = True)
             Call MyBase.New(mz.Select(Function(mzi, i) New ms2 With {.mz = mzi, .intensity = into(i)}))
 
             Me.name = name
             Me.centroid = centroid
+        End Sub
+
+        Sub New(name As String, spectrum As IEnumerable(Of ms2))
+            Call MyBase.New(spectrum)
+            Me.name = name
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(mz As Double(), into As Double())
+            Call MyBase.New(mz.Select(Function(mzi, i) New ms2(mzi, into(i))))
         End Sub
 
         <DebuggerStepThrough>
@@ -225,6 +246,9 @@ Namespace Spectra
         ''' <param name="matrix"></param>
         ''' <param name="x">should be max intensity</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this operator just normalized the intensity value, fragment annotation metadata will not lost at here.
+        ''' </remarks>
         Public Shared Operator /(matrix As LibraryMatrix, x#) As LibraryMatrix
             For Each ms2 As ms2 In matrix.ms2
                 If ms2.intensity = 0 Then

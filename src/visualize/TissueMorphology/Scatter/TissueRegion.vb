@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2b555d63d7827d323866bf8be262d47, mzkit\src\visualize\TissueMorphology\Scatter\TissueRegion.vb"
+﻿#Region "Microsoft.VisualBasic::a7c05b24395e47b5f0abde846f1432a6, visualize\TissueMorphology\Scatter\TissueRegion.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 57
-    '    Code Lines: 30
-    ' Comment Lines: 19
-    '   Blank Lines: 8
-    '     File Size: 1.71 KB
+    '   Total Lines: 90
+    '    Code Lines: 42 (46.67%)
+    ' Comment Lines: 36 (40.00%)
+    '    - Xml Docs: 94.44%
+    ' 
+    '   Blank Lines: 12 (13.33%)
+    '     File Size: 3.02 KB
 
 
     ' Class TissueRegion
     ' 
-    '     Properties: color, label, nsize, points
+    '     Properties: color, label, nsize, points, tags
     ' 
-    '     Function: GetPolygons, IsInside, ToString
+    '     Function: GetPolygons, GetRectangle, IsInside, ToString
     ' 
     ' /********************************************************************************/
 
@@ -62,6 +64,17 @@ Imports Microsoft.VisualBasic.Imaging.Math2D
 ''' <summary>
 ''' a tissue polygon region object
 ''' </summary>
+''' <remarks>
+''' a tissue region polygon is consist with a collection of 
+''' the 2d geometry <see cref="Point"/> spots.
+''' 
+''' this tissue region object could be used for create the
+''' analysis sampleinfo object, where:
+''' 
+''' 1. label could be used as the sample group name
+''' 2. color is the clr <see cref="Color"/> data, could be used as the sample group color for chartting plot
+''' 3. the points consist the sample data for run the different expression analysis
+''' </remarks>
 Public Class TissueRegion
 
     ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8628816ae19109fe008dbee75b2f9d42, mzkit\src\mzmath\TargetedMetabolomics\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::acfa8181875b87699bd3d46e126946c0, mzmath\TargetedMetabolomics\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 36
-    '    Code Lines: 15
-    ' Comment Lines: 15
-    '   Blank Lines: 6
-    '     File Size: 1.15 KB
+    '    Code Lines: 15 (41.67%)
+    ' Comment Lines: 15 (41.67%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (16.67%)
+    '     File Size: 1.19 KB
 
 
     ' 

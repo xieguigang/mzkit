@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6deab45f067fbc5889793b920313721a, mzkit\src\metadb\SMILES\Language\Token.vb"
+﻿#Region "Microsoft.VisualBasic::a8e3c8576da3ca3ac0f5394a1e420e8e, metadb\SMILES\Language\Token.vb"
 
     ' Author:
     ' 
@@ -37,26 +37,33 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 20
-    '    Code Lines: 16
-    ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 571 B
+    '   Total Lines: 41
+    '    Code Lines: 30 (73.17%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 11 (26.83%)
+    '     File Size: 1.09 KB
 
 
-    ' Class Token
+    '     Class Token
     ' 
-    '     Properties: charge, ring
+    '         Properties: aromatic, charge, ring
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: ToString
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class MultipleTokens
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Language
 
@@ -64,17 +71,26 @@ Namespace Language
 
         Public Property ring As Integer?
         Public Property charge As Integer?
+        Public Property aromatic As Boolean = False
 
         Sub New(name As ElementTypes, text As String)
             Call MyBase.New(name, text)
         End Sub
 
         Public Overrides Function ToString() As String
+            Dim s As String
+
             If charge Is Nothing Then
-                Return MyBase.ToString
+                s = MyBase.ToString
             Else
-                Return $"[{text}{stdNum.Abs(charge.Value)}{If(charge > 0, "+", "-")}]"
+                s = $"[{text}{std.Abs(charge.Value)}{If(charge > 0, "+", "-")}]"
             End If
+
+            If aromatic Then
+                s = s & " (aromatic)"
+            End If
+
+            Return s
         End Function
     End Class
 

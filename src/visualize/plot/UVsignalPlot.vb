@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcf20c9153a0857496bbead1d8b69425, mzkit\src\visualize\plot\UVsignalPlot.vb"
+﻿#Region "Microsoft.VisualBasic::1855167f6fe01f8c2260818323ad6388, visualize\plot\UVsignalPlot.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 91
-    '    Code Lines: 85
-    ' Comment Lines: 0
-    '   Blank Lines: 6
-    '     File Size: 4.38 KB
+    '   Total Lines: 132
+    '    Code Lines: 122 (92.42%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 10 (7.58%)
+    '     File Size: 5.90 KB
 
 
     ' Module UVsignalPlot
     ' 
-    '     Function: Plot
+    '     Function: BuildSignalLines, Plot
     ' 
     ' /********************************************************************************/
 
@@ -54,6 +56,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Data.ChartPlots
@@ -65,7 +68,75 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
+
 Public Module UVsignalPlot
+
+    <Extension>
+    Private Iterator Function BuildSignalLines(signals As IEnumerable(Of GeneralSignal),
+                                               legendTitle As Func(Of Dictionary(Of String, String), String),
+                                               colorSet As String,
+                                               pt_size As Single,
+                                               line_width As Single,
+                                               annotations As NamedValue(Of PointF)()) As IEnumerable(Of SerialData)
+
+        Dim colors As LoopArray(Of Color) = Designer.GetColors(colorSet)
+
+        For Each line As GeneralSignal In signals
+            Yield New SerialData With {
+                .color = colors.Next,
+                .lineType = DashStyle.Solid,
+                .pointSize = pt_size,
+                .shape = LegendStyles.Triangle,
+                .width = line_width,
+                .title = legendTitle(line.meta),
+                .pts = line _
+                    .PopulatePoints _
+                    .Select(Function(p)
+                                Return New PointData(p)
+                            End Function) _
+                    .ToArray,
+                .DataAnnotations = annotations _
+                    .SafeQuery _
+                    .Select(Function(a)
+                                Return New Annotation With {
+                                    .color = "blue",
+                                    .Font = CSSFont.Win10NormalLarge,
+                                    .Legend = LegendStyles.Pentacle,
+                                    .size = New SizeF(200, 64),
+                                    .Text = a.Name,
+                                    .X = a.Value.X,
+                                    .Y = a.Value.Y
+                                }
+                            End Function) _
+                    .ToArray
+            }
+        Next
+    End Function
 
     Public Function Plot(signals As IEnumerable(Of GeneralSignal), legendTitle As Func(Of Dictionary(Of String, String), String),
                          Optional size As String = "1600,1200",
@@ -82,38 +153,8 @@ Public Module UVsignalPlot
                          Optional showGrid As Boolean = True,
                          Optional gridFill$ = "rgb(245,245,245)") As GraphicsData
 
-        Dim colors As LoopArray(Of Color) = Designer.GetColors(colorSet)
         Dim data As SerialData() = signals _
-            .Select(Function(line)
-                        Return New SerialData With {
-                            .color = colors.Next,
-                            .lineType = DashStyle.Solid,
-                            .pointSize = pt_size,
-                            .shape = LegendStyles.Triangle,
-                            .width = line_width,
-                            .title = legendTitle(line.meta),
-                            .pts = line _
-                                .PopulatePoints _
-                                .Select(Function(p)
-                                            Return New PointData(p)
-                                        End Function) _
-                                .ToArray,
-                            .DataAnnotations = annotations _
-                                .SafeQuery _
-                                .Select(Function(a)
-                                            Return New Annotation With {
-                                                .color = "blue",
-                                                .Font = CSSFont.Win10NormalLarge,
-                                                .Legend = LegendStyles.Pentacle,
-                                                .size = New SizeF(200, 64),
-                                                .Text = a.Name,
-                                                .X = a.Value.X,
-                                                .Y = a.Value.Y
-                                            }
-                                        End Function) _
-                                .ToArray
-                        }
-                    End Function) _
+            .BuildSignalLines(legendTitle, colorSet, pt_size, line_width, annotations) _
             .ToArray
         Dim ablines As Line() = {}
 
@@ -122,7 +163,9 @@ Public Module UVsignalPlot
             Dim max = data.Select(Function(a) a.pts.Select(Function(b) b.pt.Y).Max).Max
 
             ablines = {
-               New Line(New PointF(rtLine, min), New PointF(rtLine, max), New Pen(Color.Black, 3) With {.DashStyle = DashStyle.Dash})
+               New Line(New PointF(rtLine, min), New PointF(rtLine, max), New Stroke(Color.Black, 3) With {
+                   .dash = DashStyle.Dash
+               })
             }
         End If
 

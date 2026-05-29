@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d96468d55c4583d05ed1c2eee26eb57, mzkit\src\mzmath\mz_deco\test\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::1297c1cc342515bd59373d169a359386, mzmath\mz_deco\test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 62
-    '    Code Lines: 31
-    ' Comment Lines: 23
-    '   Blank Lines: 8
-    '     File Size: 2.71 KB
+    '    Code Lines: 31 (50.00%)
+    ' Comment Lines: 23 (37.10%)
+    '    - Xml Docs: 17.39%
+    ' 
+    '   Blank Lines: 8 (12.90%)
+    '     File Size: 2.77 KB
 
 
     '     Module Resources

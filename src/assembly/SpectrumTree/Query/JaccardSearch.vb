@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9910bcac8d5750f866bf174c53ccdd16, mzkit\src\assembly\SpectrumTree\Query\JaccardSearch.vb"
+﻿#Region "Microsoft.VisualBasic::84b64541eb9ad65adaec48ce3089ebf8, assembly\SpectrumTree\Query\JaccardSearch.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 112
-    '    Code Lines: 68
-    ' Comment Lines: 30
-    '   Blank Lines: 14
-    '     File Size: 4.86 KB
+    '   Total Lines: 137
+    '    Code Lines: 77 (56.20%)
+    ' Comment Lines: 44 (32.12%)
+    '    - Xml Docs: 36.36%
+    ' 
+    '   Blank Lines: 16 (11.68%)
+    '     File Size: 5.94 KB
 
 
     '     Class JaccardSearch
@@ -94,12 +96,18 @@ Namespace Query
                 ' 20230801
                 ' current precursor has very complex adducts?
                 ' skip of current result
-                If query.Max - mz1 > 0.3 Then
-                    Return
-                End If
+                'If query.Max - mz1 > 0.3 Then
+                '    Return
+                'End If
             End If
 
-            Dim subset = mzSet.Where(Function(i) da(mz1, i.mz1)).ToArray
+            Dim subset = mzSet _
+                .Where(Function(i)
+                           ' matches of the input precursor mz1 with
+                           ' the reference mz1
+                           Return da(mz1, i.mz1)
+                       End Function) _
+                .ToArray
             Dim jaccard = subset _
                 .Select(Function(i)
                             Dim itr = GlobalAlignment.MzIntersect(i.ms2, query, da)

@@ -1,10 +1,11 @@
 .\" man page create by R# package system.
-.TH MZWEB 1 2000-Jan "write.text_cache" "write.text_cache"
+.TH MZWEB 1 2000-1月 "write.text_cache" "write.text_cache"
 .SH NAME
 write.text_cache \- write ASCII text format of mzweb stream
 .SH SYNOPSIS
-\fIwrite.text_cache(\fBscans\fR as <generic> pipeline, 
+\fIwrite.text_cache(\fBx\fR as any, 
 \fBfile\fR as any = \fB<NULL>\fR, 
+\fBtabular\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -12,7 +13,7 @@ write ASCII text format of mzweb stream
 .PP
 .SH OPTIONS
 .PP
-\fBscans\fB \fR\- -. 
+\fBx\fB \fR\- -. 
 .PP
 .PP
 \fBfile\fB \fR\- -. 
@@ -24,6 +25,13 @@ write ASCII text format of mzweb stream
 .PP
 this method used for create ascii text package data for the biodeep
  web application js code to read the ms rawdata.
+.PP
+.SH EXAMPLES
+.PP
+let rawdata = open.mzpack(file = "./rawdata.mzPack");
+ let ms1 = [rawdata]::MS;
+ 
+ write.text_cache(ms1, file = "./msdata.txt");
 .PP
 .SH SEE ALSO
 mzweb

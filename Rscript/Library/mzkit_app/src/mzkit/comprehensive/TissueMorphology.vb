@@ -1,56 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::c4e0ccf253ae264cf3f9def982afe714, mzkit\Rscript\Library\mzkit\comprehensive\TissueMorphology.vb"
+﻿#Region "Microsoft.VisualBasic::ad33d6e55d97b483231e1783221776b4, Rscript\Library\mzkit_app\src\mzkit\comprehensive\TissueMorphology.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 396
-'    Code Lines: 274
-' Comment Lines: 78
-'   Blank Lines: 44
-'     File Size: 14.51 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module TissueMorphology
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: createCDF, createTissueData, createTissueTable, createUMAPsample, createUMAPTable
-'               gridding, loadSpatialMapping, loadTissue, loadUMAP, SplitMapping
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 743
+    '    Code Lines: 549 (73.89%)
+    ' Comment Lines: 104 (14.00%)
+    '    - Xml Docs: 97.12%
+    ' 
+    '   Blank Lines: 90 (12.11%)
+    '     File Size: 29.35 KB
+
+
+    ' Module TissueMorphology
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: createCDF, createTissueData, createTissueTable, createUMAPsample, createUMAPTable
+    '               FillLabels, GetPointLabels, gridding, intersect, loadSpatialMapping
+    '               loadTissue, loadUMAP, (+2 Overloads) PlotTissueMap, SplitMapping, tag_samples
+    '               TagSampleLabels
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -72,16 +76,45 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports R_graphics.Common.Runtime
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
-Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
-Imports RgraphicsDev = SMRUCC.Rsharp.Runtime.Internal.Invokes.graphicsDevice
+Imports RgraphicsDev = R_graphics.Common.Runtime.graphicsDevice
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Imports std = System.Math
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
+
 
 ''' <summary>
 ''' spatial tissue region handler
@@ -90,15 +123,17 @@ Imports std = System.Math
 ''' bionovogene MS-imaging analysis pipeline.
 ''' </summary>
 <Package("TissueMorphology")>
+<RTypeExport("umap_point", GetType(UMAPPoint))>
 Module TissueMorphology
 
     Sub New()
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(TissueRegion()), AddressOf createTissueTable)
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(UMAPPoint()), AddressOf createUMAPTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(TissueRegion()), AddressOf createTissueTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(UMAPPoint()), AddressOf createUMAPTable)
 
-        Call Internal.generic.add("plot", GetType(TissueRegion()), AddressOf PlotTissueMap)
+        Call RInternal.generic.add("plot", GetType(TissueRegion()), AddressOf PlotTissueMap)
     End Sub
 
+    <RGenericOverloads("as.data.frame")>
     Private Function createTissueTable(tissues As TissueRegion(), args As list, env As Environment) As dataframe
         Dim labels As String() = tissues _
             .Select(Function(i) i.label.Replicate(n:=i.nsize)) _
@@ -128,14 +163,15 @@ Module TissueMorphology
         }
     End Function
 
+    <RGenericOverloads("as.data.frame")>
     Private Function createUMAPTable(umap As UMAPPoint(), args As list, env As Environment) As dataframe
         Dim px As Integer() = umap.Select(Function(i) i.Pixel.X).ToArray
         Dim py As Integer() = umap.Select(Function(i) i.Pixel.Y).ToArray
         Dim x As Double() = umap.Select(Function(i) i.x).ToArray
         Dim y As Double() = umap.Select(Function(i) i.y).ToArray
         Dim z As Double() = umap.Select(Function(i) i.z).ToArray
-        Dim cluster As Integer() = umap _
-            .Select(Function(i) Integer.Parse(i.class)) _
+        Dim cluster As String() = umap _
+            .Select(Function(i) i.class) _
             .ToArray
 
         Return New dataframe With {
@@ -153,6 +189,7 @@ Module TissueMorphology
         }
     End Function
 
+    <RGenericOverloads("plot")>
     Public Function PlotTissueMap(tissue As TissueRegion(), args As list, env As Environment) As Object
         If args.CheckGraphicsDeviceExists Then
             ' draw on current graphics context
@@ -203,9 +240,10 @@ Module TissueMorphology
                 .ToArray
         End If
 
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim x = tissue.Select(Function(t) t.points.Select(Function(a) CDbl(a.X))).IteratesALL.Range
         Dim y = tissue.Select(Function(t) t.points.Select(Function(a) CDbl(a.Y))).IteratesALL.Range
-        Dim rect = canvas.PlotRegion
+        Dim rect = canvas.PlotRegion(css)
         Dim lx = d3js.scale.linear.domain(range:=x).range(integers:={rect.Left, rect.Right})
         Dim ly = d3js.scale.linear.domain(range:=y).range(integers:={rect.Top, rect.Height})
         Dim scale_x As Double = std.Abs(lx(2) - lx(1))
@@ -218,7 +256,7 @@ Module TissueMorphology
         Dim interplate As PixelData()
 
         If dims.IsEmpty Then
-            Return Internal.debug.stop("missng of the ms-imaging dimension size value!", env)
+            Return RInternal.debug.stop("missng of the ms-imaging dimension size value!", env)
         End If
 
         For Each region As TissueRegion In tissue.OrderBy(Function(r) If(r.label = missing, 0, 1))
@@ -370,6 +408,7 @@ Module TissueMorphology
     ''' this function used for generates the tissue map segment plot data for some special charts
     ''' </remarks>
     <ExportAPI("intersect_layer")>
+    <RApiReturn(GetType(TissueRegion))>
     Public Function intersect(layer As SingleIonLayer, tissues As TissueRegion(), Optional trim_suffix As Boolean = False) As Object
         Dim missing As New List(Of Point)
         Dim intersectList As New List(Of TissueRegion)
@@ -444,6 +483,7 @@ Module TissueMorphology
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("UMAPsample")>
+    <RApiReturn(GetType(UMAPPoint))>
     Public Function createUMAPsample(<RRawVectorArgument>
                                      points As Object,
                                      x As Double(),
@@ -451,7 +491,7 @@ Module TissueMorphology
                                      z As Double(),
                                      cluster As String(),
                                      Optional is_singlecells As Boolean = False,
-                                     Optional env As Environment = Nothing) As UMAPPoint()
+                                     Optional env As Environment = Nothing) As Object
 
         Dim pixels As String() = CLRVector.asCharacter(points)
         Dim umap As UMAPPoint() = pixels _
@@ -512,6 +552,10 @@ Module TissueMorphology
         Dim labelClass As String() = labels.Distinct.ToArray
         Dim colors As New Dictionary(Of String, Color)
         Dim regions As New Dictionary(Of String, List(Of Point))
+
+        If colorSet Is Nothing Then
+            Return RInternal.debug.stop($"the color palette term is nothing, please check of the '{NameOf(colorSet)}' parameter!", env)
+        End If
 
         If TypeOf colorSet Is list Then
             Dim list As list = DirectCast(colorSet, list)
@@ -659,7 +703,7 @@ Module TissueMorphology
         Dim mapping = file.LoadXml(Of SpatialMapping)(throwEx:=False)
 
         If mapping Is Nothing Then
-            Return Internal.debug.stop({
+            Return RInternal.debug.stop({
                 $"the required spatial mapping data which is loaded from the file location ({file}) is nothing, this could be some reasons:",
                 $"file is exists on location: {file}",
                 $"or invalid xml file format"
@@ -688,6 +732,11 @@ Module TissueMorphology
         Return mapping
     End Function
 
+    ''' <summary>
+    ''' Split the spatial mapping by tissue label data
+    ''' </summary>
+    ''' <param name="mapping"></param>
+    ''' <returns>A tuple list of the <see cref="SpatialMapping"/> object</returns>
     <ExportAPI("splitMapping")>
     <RApiReturn(GetType(list))>
     Public Function SplitMapping(mapping As SpatialMapping) As Object
@@ -722,6 +771,7 @@ Module TissueMorphology
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("gridding")>
+    <RApiReturn(GetType(SpotMap))>
     Public Function gridding(mapping As SpatialMapping,
                              Optional gridSize As Integer = 6,
                              Optional label As String = Nothing) As Object

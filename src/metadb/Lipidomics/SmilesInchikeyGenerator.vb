@@ -1,54 +1,125 @@
-﻿Public Class SmilesInchikeyGenerator
-    Public Shared Function Generate(lipid As Lipid) As SmilesInchikey
-        'Dim plChains As PositionLevelChains = TryCast(lipid.Chains, PositionLevelChains)
+﻿#Region "Microsoft.VisualBasic::55889008ee3bdd0471f7e96ca2ac621a, metadb\Lipidomics\SmilesInchikeyGenerator.vb"
 
-        'If plChains IsNot Nothing Then
-        '    Dim smilesHeaderDict = SmilesLipidHeader.HeaderDictionary
-        '    Dim headerSmiles = smilesHeaderDict(lipid.LipidClass.ToString())
-        '    If Equals(headerSmiles, Nothing) Then Return Nothing
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
-        '    Dim chainList = New List(Of String)()
-        '    Dim jointPosition = 10
 
-        '    For Each chain In lipid.Chains.GetDeterminedChains()
-        '        Dim oxidized = chain.Oxidized
-        '        Dim doubleBond = chain.DoubleBond
-        '        If oxidized.UnDecidedCount > 0 OrElse doubleBond.UnDecidedCount > 0 Then
-        '            Return Nothing
-        '        End If
-        '        Dim smilesInchikeyGenerator = New SmilesInchikeyGenerator()
-        '        Dim chainSmiles = smilesInchikeyGenerator.ChainSmilesGen(chain)
-        '        If TypeOf chain Is SphingoChain Then
-        '            chainSmiles = chainSmiles.Remove(0, 5).Insert(1, "%" & jointPosition.ToString())
-        '        Else
-        '            chainSmiles = chainSmiles.Insert(1, "%" & jointPosition.ToString())
-        '        End If
-        '        chainList.Add(chainSmiles)
-        '        jointPosition = jointPosition + 10
-        '    Next
 
-        '    Dim rawSmiles = headerSmiles & String.Join(".", chainList)
+    ' /********************************************************************************/
 
-        '    Dim SmilesParser = New SmilesParser()
-        '    Dim SmilesGenerator = New SmilesGenerator(SmiFlavors.StereoCisTrans)
-        '    Dim iAtomContainer = SmilesParser.ParseSmiles(rawSmiles)
-        '    Dim smiles = SmilesGenerator.Create(iAtomContainer)
-        '    Dim InChIGeneratorFactory = New InChIGeneratorFactory()
-        '    Dim InChIKey = InChIGeneratorFactory.GetInChIGenerator(iAtomContainer).GetInChIKey()
+    ' Summaries:
 
-        '    Return New SmilesInchikey() With {
+
+    ' Code Statistics:
+
+    '   Total Lines: 245
+    '    Code Lines: 209 (85.31%)
+    ' Comment Lines: 15 (6.12%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 21 (8.57%)
+    '     File Size: 17.27 KB
+
+
+    ' Class SmilesInchikeyGenerator
+    ' 
+    '     Function: ChainSmilesGen, Generate
+    ' 
+    ' Class SmilesInchikey
+    ' 
+    '     Properties: InchiKey, Smiles
+    ' 
+    ' Class SmilesLipidHeader
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Public Class SmilesInchikeyGenerator
+
+    Public Shared Function Generate(lipid As Lipid) As String
+        Dim plChains As PositionLevelChains = TryCast(lipid.Chains, PositionLevelChains)
+
+        ' If plChains IsNot Nothing Then
+        Dim smilesHeaderDict = SmilesLipidHeader.HeaderDictionary
+        Dim headerSmiles = smilesHeaderDict(lipid.LipidClass.ToString())
+        If headerSmiles Is Nothing Then Return Nothing
+
+        Dim chainList = New List(Of String)()
+        Dim jointPosition = 10
+
+        For Each chain In lipid.Chains.GetDeterminedChains()
+            Dim oxidized = chain.Oxidized
+            Dim doubleBond = chain.DoubleBond
+            If oxidized.UnDecidedCount > 0 OrElse doubleBond.UnDecidedCount > 0 Then
+                ' Return Nothing
+            End If
+            Dim smilesInchikeyGenerator = New SmilesInchikeyGenerator()
+            Dim chainSmiles = smilesInchikeyGenerator.ChainSmilesGen(chain)
+            If TypeOf chain Is SphingoChain Then
+                chainSmiles = chainSmiles.Remove(0, 5).Insert(1, "%" & jointPosition.ToString())
+            Else
+                chainSmiles = chainSmiles.Insert(1, "%" & jointPosition.ToString())
+            End If
+            chainList.Add(chainSmiles)
+            jointPosition = jointPosition + 10
+        Next
+
+        Dim rawSmiles = headerSmiles & chainList.Select(Function(s) $"({s})").JoinBy("")
+
+        rawSmiles = rawSmiles.Replace("%", "")
+        rawSmiles = rawSmiles.StringReplace("\d+", "")
+        rawSmiles = rawSmiles.Replace(".", "")
+
+        'Dim SmilesParser = New SmilesParser()
+        'Dim SmilesGenerator = New SmilesGenerator(SmiFlavors.StereoCisTrans)
+        'Dim iAtomContainer = SmilesParser.ParseSmiles(rawSmiles)
+        'Dim smiles = SmilesGenerator.Create(iAtomContainer)
+        'Dim InChIGeneratorFactory = New InChIGeneratorFactory()
+        'Dim InChIKey = InChIGeneratorFactory.GetInChIGenerator(iAtomContainer).GetInChIKey()
+
+        'Return New SmilesInchikey() With {
         '        .Smiles = smiles,
         '        .InchiKey = InChIKey
         '    }
-        'End If
-        Return Nothing
+        ' End If
+
+        Return rawSmiles
     End Function
+
     Public Function ChainSmilesGen(chain As IChain) As String
         Dim doubleBond = chain.DoubleBond
         Dim oxidized = chain.Oxidized
 
         If doubleBond.UnDecidedCount > 0 Then
-            Return Nothing
+            ' Return Nothing
         End If
         If Equals(chain.CarbonCount.ToString() & ":" & chain.DoubleBondCount.ToString(), "0:0") Then
             Return "H"
@@ -83,21 +154,16 @@
 
 End Class
 Public Class SmilesInchikey
-    Private smilesField As String
-    Private inchikeyField As String
 
-    Public Sub New()
-        smilesField = Nothing
-        inchikeyField = Nothing
-    End Sub
     Public Property Smiles As String
     Public Property InchiKey As String
+
 End Class
 Public NotInheritable Class SmilesLipidHeader
     Private Sub New()
     End Sub
 
-    Public Shared HeaderDictionary As Dictionary(Of String, String) = New Dictionary(Of String, String)() From {
+    Public Shared ReadOnly HeaderDictionary As New Dictionary(Of String, String)() From {
 {"PC", "C(O%10)C(O%20)COP([O-])(=O)OCC[N+](C)(C)C."},
 {"PA", "C(O%10)C(O%20)COP(O)(O)=O."},
 {"PE", "C(O%10)C(O%20)COP(O)(=O)OCCN."},
@@ -241,4 +307,3 @@ Public NotInheritable Class SmilesLipidHeader
     {"STSPHex", "CCC(C=CC(C)C1CCC2C3CC=C4CC(CCC4(C)C3CCC12C)OC1OC(COP(O)(=O)OCC(CO%10)O%20)C(O)C(O)C1O)C(C)C."}'bacterial lipid'{"Ac2PIM1", "OCC1OC(OC2C(O)C(O)C(O)C(O)C2OP(O)(=O)OCC(O%10)C(O%20))C(O)C(O)C1O."},'{"Ac2PIM2", "OCC1OC(OC2C(O)C(O)C(O)C(OC3OC(CO)C(O)C(O)C3O)C2OP(O)(=O)OCC(O%10)C(O%20))C(O)C(O)C1O."},'{"Ac3PIM2", "OCC1OC(OC2C(O)C(O)C(O)C(OC3OC(C(O%30))C(O)C(O)C3O)C2OP(O)(=O)OCC(O%10)C(O%20))C(O)C(O)C1O."},'{"Ac4PIM2", "OCC1OC(OC2C(O)C(O)C(O%40)C(OC3OC(C(O%30))C(O)C(O)C3O)C2OP(O)(=O)OCC(O%10)C(O%20))C(O)C(O)C1O."},'{"LipidA", "OCC1O[C@@H](OCC2O[C@H](OP(O)(O)=O)C(N%10)[C@@H](O%20)[C@@H]2O)C(N%30)[C@@H](O%40)[C@@H]1OP(O)(O)=O."},
 }
 End Class
-

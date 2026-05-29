@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d69b34bb8e46b1437d5ec08238cb63e, mzkit\src\metadb\MoNA\Web\WebJSON.vb"
+﻿#Region "Microsoft.VisualBasic::d4252dc458326f8e649d772aeb779f1b, metadb\MoNA\Web\WebJSON.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 101
-    '    Code Lines: 84
-    ' Comment Lines: 0
-    '   Blank Lines: 17
-    '     File Size: 3.81 KB
+    '   Total Lines: 60
+    '    Code Lines: 48 (80.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (20.00%)
+    '     File Size: 2.30 KB
 
 
     ' Class WebJSON
@@ -50,21 +52,12 @@
     ' 
     '     Function: GetJson, ParseMatrix, SearchLCMSByName, ToString
     ' 
-    ' Class QueryWeb
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: getRestUrl, parseJSON
-    ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Language.C
-Imports Microsoft.VisualBasic.Net.Http
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class WebJSON
 
@@ -122,41 +115,4 @@ Public Class WebJSON
             .Query(Of WebJSON)((False, id), cacheType:=".json")
     End Function
 
-End Class
-
-Friend Class QueryWeb : Inherits WebQuery(Of (name_query As Boolean, q As String))
-
-    Public Sub New(<CallerMemberName>
-                   Optional cache As String = Nothing,
-                   Optional interval As Integer = -1,
-                   Optional offline As Boolean = False)
-
-        Call MyBase.New(
-            url:=AddressOf getRestUrl,
-            contextGuid:=Function(id) $"{id.name_query}+{id.q}".MD5,
-            parser:=AddressOf parseJSON,
-            prefix:=Function(id) id.Substring(0, 2),
-            cache:=cache,
-            interval:=interval,
-            offline:=offline
-        )
-    End Sub
-
-    Private Shared Function parseJSON(json As String, schema As Type) As Object
-        If schema Is GetType(WebJSON) Then
-            Return json.LoadJSON(Of WebJSON)
-        ElseIf schema Is GetType(WebJSON()) Then
-            Return json.LoadJSON(Of WebJSON())
-        Else
-            Throw New NotImplementedException
-        End If
-    End Function
-
-    Private Shared Function getRestUrl(context As (name_query As Boolean, q As String)) As String
-        If context.name_query Then
-            Return WebJSON.query.Replace("{q}", context.q.UrlEncode)
-        Else
-            Return sprintf(WebJSON.urlBase, context.q)
-        End If
-    End Function
 End Class

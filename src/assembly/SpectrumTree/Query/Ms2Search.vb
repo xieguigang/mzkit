@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0915cd6d98941b0d8d0ab0894f74284a, mzkit\src\assembly\SpectrumTree\Query\Ms2Search.vb"
+﻿#Region "Microsoft.VisualBasic::fee5028d311d0ecb96c74228bb3d90b1, assembly\SpectrumTree\Query\Ms2Search.vb"
 
     ' Author:
     ' 
@@ -37,14 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 17
-    ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 782 B
+    '   Total Lines: 34
+    '    Code Lines: 18 (52.94%)
+    ' Comment Lines: 8 (23.53%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (23.53%)
+    '     File Size: 1.26 KB
 
 
     '     Class Ms2Search
+    ' 
+    '         Properties: discardPrecursorFilter
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: Centroid
@@ -64,6 +68,16 @@ Namespace Query
 
         Protected ReadOnly da As Tolerance
         Protected ReadOnly intocutoff As RelativeIntensityCutoff
+
+        ''' <summary>
+        ''' for waters instrument data, the proteowizard has bug about processing the precorsor ion
+        ''' data, so we need to discard the precursor ion filter for the spectrum alignment
+        ''' </summary>
+        ''' <remarks>
+        ''' this is a temporary solution for the proteowizard bug
+        ''' </remarks>
+        ''' <returns></returns>
+        Public Property discardPrecursorFilter As Boolean = False
 
         Sub New(Optional da As Double = 0.3, Optional intocutoff As Double = 0.05)
             Me.da = Tolerance.DeltaMass(da)

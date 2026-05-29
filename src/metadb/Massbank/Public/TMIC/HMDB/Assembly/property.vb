@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76e65deca35a7b569425c91d0cc5f12f, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Assembly\property.vb"
+﻿#Region "Microsoft.VisualBasic::e87ae6a07d4ffa777244f8c18fa6110b, metadb\Massbank\Public\TMIC\HMDB\Assembly\property.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 76
-    '    Code Lines: 63
-    ' Comment Lines: 0
-    '   Blank Lines: 13
-    '     File Size: 2.53 KB
+    '   Total Lines: 78
+    '    Code Lines: 65 (83.33%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 13 (16.67%)
+    '     File Size: 2.86 KB
 
 
     '     Structure [property]
@@ -77,14 +79,15 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 
 Namespace TMIC.HMDB
 
     Public Structure [property]
 
-        Public Property kind As String
-        Public Property value As String
-        Public Property source As String
+        <MessagePackMember(0)> Public Property kind As String
+        <MessagePackMember(1)> Public Property value As String
+        <MessagePackMember(2)> Public Property source As String
 
         Public Overrides Function ToString() As String
             Return $"{value} [{kind}]"
@@ -94,6 +97,7 @@ Namespace TMIC.HMDB
     Public Structure Properties
 
         <XmlElement("property")>
+        <MessagePackMember(0)>
         Public Property PropertyList As [property]()
 
         Public Overrides Function ToString() As String
@@ -103,13 +107,13 @@ Namespace TMIC.HMDB
 
     Public Structure concentration
 
-        Public Property biospecimen As String
-        Public Property concentration_value As String
-        Public Property concentration_units As String
-        Public Property subject_age As String
-        Public Property subject_sex As String
-        Public Property subject_condition As String
-        Public Property references As reference()
+        <MessagePackMember(0)> Public Property biospecimen As String
+        <MessagePackMember(1)> Public Property concentration_value As String
+        <MessagePackMember(2)> Public Property concentration_units As String
+        <MessagePackMember(3)> Public Property subject_age As String
+        <MessagePackMember(4)> Public Property subject_sex As String
+        <MessagePackMember(5)> Public Property subject_condition As String
+        <MessagePackMember(6)> Public Property references As reference()
 
         Public ReadOnly Property AgeType As PeopleAgeTypes
             Get

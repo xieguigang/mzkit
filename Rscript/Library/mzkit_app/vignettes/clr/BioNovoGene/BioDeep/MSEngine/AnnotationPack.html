@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.BioDeep.MSEngine.AnnotationPack</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>AnnotationPack {BioNovoGene.BioDeep.MSEngine}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>AnnotationPack</h2>
+
+        <h3>Description</h3>
+
+        <p>Result data pack for save the annotation result data</p>
+
+<p>data export for internal annotation workflow, handling to customer report and view on mzkit workbench.</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.BioDeep.MSEngine
+export class AnnotationPack {
+   file: string;
+   # the ms2 spectrum alignment search hits
+   libraries: list;
+   # the ms1 peaktable
+   peaks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2[]</a>;
+   # RI reference point
+   RI: list;
+   # [xcms_id => XIC across multiple sample files]
+   XIC: list;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>libraries</code>: list</li>
+<li>use by <i>property</i> member <code>peaks</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a></li>
+<li>use by <i>property</i> member <code>RI</code>: list</li>
+<li>use by <i>property</i> member <code>XIC</code>: list</li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

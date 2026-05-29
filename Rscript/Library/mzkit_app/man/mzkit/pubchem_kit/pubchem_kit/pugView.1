@@ -1,11 +1,12 @@
 .\" man page create by R# package system.
-.TH PUBCHEM_KIT 1 2000-Jan "pugView" "pugView"
+.TH PUBCHEM_KIT 1 2000-1月 "pugView" "pugView"
 .SH NAME
 pugView \- query pubchem data via a given cid value
 .SH SYNOPSIS
 \fIpugView(\fBcid\fR as any, 
 \fBcacheFolder\fR as string = "./pubchem_cache", 
 \fBoffline\fR as boolean = FALSE, 
+\fBsleep\fR as double = 2, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -21,10 +22,24 @@ query pubchem data via a given cid value
 . 
 .PP
 .PP
+\fBsleep\fB \fR\- sleep task in time interval seconds if no cache hit. 
+.PP
+.PP
 \fBoffline\fB \fR\- -. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+A collection of the pubchem pug view object that contains
+ the metabolite annotation information.
+.PP
+.SH DETAILS
+.PP
+an attribute data which its named \fBhit_cache\fR is attached into the
+ result object. which indicates that the current query is hit the cache
+ or not.
 .PP
 .SH SEE ALSO
 pubchem_kit

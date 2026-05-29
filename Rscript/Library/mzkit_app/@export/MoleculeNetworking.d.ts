@@ -81,6 +81,16 @@ declare namespace MoleculeNetworking {
    */
    function clustering(ions: any, mzdiff1?: any, mzdiff2?: any, intocutoff?: number, tree_identical?: number, tree_right?: number, env?: object): object;
    /**
+    * Make precursor assigned to the cluster node
+    * 
+    * 
+     * @param grid -
+     * @param peakset -
+     * @param assign_top 
+     * + default value Is ``3``.
+   */
+   function grid_assigned(grid: object, peakset: object, assign_top?: object): object;
+   /**
     * populate a list of peak ms2 cluster data
     * 
     * 
@@ -103,6 +113,38 @@ declare namespace MoleculeNetworking {
    */
    function representative(tree: object, mzdiff?: any, env?: object): object;
    /**
+    * get all aligned spectrum clusters across rawdata files
+    * 
+    * 
+     * @param grid -
+   */
+   function spectrum_clusters(grid: object): object;
+   /**
+    * Create grid clustering of the ms2 spectrum data
+    * 
+    * 
+     * @param rawdata -
+     * @param centroid -
+     * 
+     * + default value Is ``'da:0.3'``.
+     * @param intocutoff -
+     * 
+     * + default value Is ``0.05``.
+     * @param rt_win 
+     * + default value Is ``20``.
+     * @param dia_n set this decompose parameter to any positive integer value greater 
+     *  than 1 may produce too many data for analysis, make the workflow 
+     *  too slow.
+     * 
+     * + default value Is ``-1``.
+     * @param dotcutoff 
+     * + default value Is ``0.85``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function spectrum_grid(rawdata: any, centroid?: any, intocutoff?: number, rt_win?: number, dia_n?: object, dotcutoff?: number, env?: object): any;
+   /**
     * Split each cluster data into multiple parts by a givne rt window
     * 
     * > This function works for the small molecular networking analysis
@@ -111,14 +153,20 @@ declare namespace MoleculeNetworking {
      * @param rtwin -
      * 
      * + default value Is ``30``.
-     * @param wrap_peaks -
+     * @param wrap_peaks wraping the networking node data as the spectrum peak object?
      * 
      * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return the value type of this function is affects by the **`wrap_peaks`** parameter:
+     *  
+     *  1. for wrap_peaks is set to false by default, a vector of the raw @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.MoleculeNetworking.NetworkingNode`` 
+     *     which is extract from the cluster data will be returns
+     *  2. otherwise the spectrum peaks data will be returns if the parameter 
+     *     value is set to value true.
    */
-   function splitClusterRT(clusters: any, rtwin?: number, wrap_peaks?: boolean, env?: object): any;
+   function splitClusterRT(clusters: any, rtwin?: number, wrap_peaks?: boolean, env?: object): object|object;
    /**
     * do spectrum data clustering
     * 
@@ -141,7 +189,22 @@ declare namespace MoleculeNetworking {
     * makes the spectrum data its unique id reference uniqued!
     * 
     * 
-     * @param ions -
+     * @param ions A collection of the mzkit spectrum object
    */
    function uniqueNames(ions: object): object;
+   /**
+    * Unpack of the spectrum data into multiple file groups
+    * 
+    * 
+     * @param assign -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+     * @return A tuple list of the spectrum data in multiple file groups, 
+     *  each slot tuple is a rawdata file content.
+   */
+   function unpack_assign(assign: any, env?: object): any;
+   /**
+   */
+   function unpack_unmapped(grid: object): any;
 }

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e07dfe046d2e103cce8320d2d14f0c07, mzkit\src\assembly\assembly\mzPack\mzWebCache\mzMLScans.vb"
+﻿#Region "Microsoft.VisualBasic::8f4ebd5f61c00f5e3b2fabb73f895f17, assembly\assembly\mzPack\mzWebCache\mzMLScans.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 33
-    '    Code Lines: 27
-    ' Comment Lines: 0
-    '   Blank Lines: 6
-    '     File Size: 1.38 KB
+    '   Total Lines: 31
+    '    Code Lines: 24 (77.42%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (22.58%)
+    '     File Size: 1.16 KB
 
 
     '     Class mzMLScans
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: dataReader, GetUVScans, loadScans
+    '         Function: dataReader, GetNoneSpectrumScans, loadScans, msManufacturer
     ' 
     ' 
     ' /********************************************************************************/

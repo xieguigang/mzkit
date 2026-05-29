@@ -1,11 +1,13 @@
-# metadb
+﻿# metadb
 
 Metabolite annotation database search engine
+> this library module mainly address of the ion m/z database search problem
 
-+ [mass_search.index](metadb/mass_search.index.1) 
-+ [queryByMass](metadb/queryByMass.1) 
++ [mass_search.index](metadb/mass_search.index.1) A general method for build exact mass search index
++ [queryByMass](metadb/queryByMass.1) A general interface method for query the exact mass search index
 + [verify_cas_number](metadb/verify_cas_number.1) verify that the given cas registry number is correct or not
-+ [parseLipidName](metadb/parseLipidName.1) 
++ [select_cas_number](metadb/select_cas_number.1) take the valid cas number from a collection of the given id set
++ [parseLipidName](metadb/parseLipidName.1) Parse the lipid names
 + [annotationStream](metadb/annotationStream.1) Construct a basic metabolite annotation data collection
 + [annotationStream.compounds](metadb/annotationStream.compounds.1) Construct a basic metabolite annotation data collection
 + [precursorIon](metadb/precursorIon.1) parse the precursor type calculator
@@ -15,6 +17,8 @@ Metabolite annotation database search engine
 + [getMetadata](metadb/getMetadata.1) get metabolite annotation metadata by a set of given unique reference id
 + [excludeFeatures](metadb/excludeFeatures.1) removes all of the annotation result which is not 
 + [has.metal_ion](metadb/has.metal_ion.1) Check the formula string has metal ion inside?
++ [is.metal_ion](metadb/is.metal_ion.1) check of the given formula is metal ion or not?
++ [is.organic](metadb/is.organic.1) check of the given formula is organic or not?
 + [uniqueFeatures](metadb/uniqueFeatures.1) unique of the peak annotation features
 + [cbind.metainfo](metadb/cbind.metainfo.1) 
-+ [load_asQueryHits](metadb/load_asQueryHits.1) 
++ [load_asQueryHits](metadb/load_asQueryHits.1) cast the given dataframe as the ion feature annotation result

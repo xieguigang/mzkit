@@ -73,8 +73,68 @@ table caption {font-size:14px;font-weight:bolder;}
                            </p>
     </blockquote>
     <div id="main-wrapper">
-      <table class="table-three-line">
+      <table class="table-three-line" style="display: block">
+        <caption>.NET clr type export</caption>
         <tbody><tr>
+  <td id="spectrum_alignment">
+    <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">spectrum_alignment: AlignmentOutput</a>
+  </td>
+  <td><p>the spectrum similarity comparision result object</p></td>
+</tr>
+<tr>
+  <td id="mass_window">
+    <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/MassWindow.html">mass_window: MassWindow</a>
+  </td>
+  <td><p>the m/z bin data</p></td>
+</tr></tbody>
+      </table>
+      <br />
+      <br />
+      <table class="table-three-line">
+        <caption>.NET clr function exports</caption>
+        <tbody><tr>
+  <td id="as.data.frame.mzcalculator">
+    <a href="./math/as.data.frame.mzcalculator.html">as.data.frame.mzcalculator</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/MzCalculator.html">MzCalculator</a>: <p>m/z calculator for a given ion precursor type</p></td>
+</tr>
+<tr>
+  <td id="as.data.frame.masswindow">
+    <a href="./math/as.data.frame.masswindow.html">as.data.frame.masswindow</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/MassWindow.html">MassWindow</a>: <p>the m/z bin data</p></td>
+</tr>
+<tr>
+  <td id="as.data.frame.precursorinfo">
+    <a href="./math/as.data.frame.precursorinfo.html">as.data.frame.precursorinfo</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/PrecursorInfo.html">PrecursorInfo</a>: <p>a ion m/z data model, includes the adducts data and <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a> polarity data.</p></td>
+</tr>
+<tr>
+  <td id="as.data.frame.alignmentoutput">
+    <a href="./math/as.data.frame.alignmentoutput.html">as.data.frame.alignmentoutput</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">AlignmentOutput</a>: <p>the spectrum similarity comparision result object</p></td>
+</tr>
+<tr>
+  <td id="as.data.frame.mzgroup">
+    <a href="./math/as.data.frame.mzgroup.html">as.data.frame.mzgroup</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MzGroup.html">MzGroup</a>: <p>XIC dataset that used for deconv</p></td>
+</tr>
+<tr>
+  <td id="summary_result">
+    <a href="./math/summary_result.html">summary_result</a>
+  </td>
+  <td><p>convert a single spectrum alignment details as dataframe</p></td>
+</tr>
+<tr>
+  <td id="find_precursor">
+    <a href="./math/find_precursor.html">find_precursor</a>
+  </td>
+  <td><p>find precursor adducts type for a given mass and the corresponding precursor mz</p></td>
+</tr>
+<tr>
   <td id="mz">
     <a href="./math/mz.html">mz</a>
   </td>
@@ -123,10 +183,16 @@ table caption {font-size:14px;font-weight:bolder;}
   <td><p>Do evaluate the spectra cosine similarity score</p></td>
 </tr>
 <tr>
+  <td id="mrm_array">
+    <a href="./math/mrm_array.html">mrm_array</a>
+  </td>
+  <td></td>
+</tr>
+<tr>
   <td id="cosine.pairwise">
     <a href="./math/cosine.pairwise.html">cosine.pairwise</a>
   </td>
-  <td></td>
+  <td><p>pairwise alignment of the spectrum peak set</p></td>
 </tr>
 <tr>
   <td id="spectrum_tree.cluster">
@@ -152,21 +218,16 @@ table caption {font-size:14px;font-weight:bolder;}
   </td>
   <td><h4>Converts profiles peak data to peak data in centroid mode.</h4>
 
-<p>profile and centroid in Mass Spectrometry?</p>
-
-<ol>
-<li>Profile means the continuous wave form in a mass spectrum.
-
-<ul>
-<li>Number of data points Is large.</li>
-</ul></li>
-<li>Centroid means the peaks in a profile data Is changed to bars.
-
-<ul>
-<li>location of the bar Is center of the profile peak.</li>
-<li>height of the bar Is area of the profile peak.</li>
-</ul></li>
-</ol></td>
+<p>profile and centroid in Mass Spectrometry?
+ 
+ 1. Profile means the continuous wave form in a mass spectrum.
+ 
+   + Number of data points Is large.
+   
+ 2. Centroid means the peaks in a profile data Is changed to bars.
+ 
+   + location of the bar Is center of the profile peak.
+   + height of the bar Is area of the profile peak.</p></td>
 </tr>
 <tr>
   <td id="tolerance">
@@ -191,6 +252,12 @@ table caption {font-size:14px;font-weight:bolder;}
     <a href="./math/defaultPrecursors.html">defaultPrecursors</a>
   </td>
   <td><p>returns all precursor types for a given libtype</p></td>
+</tr>
+<tr>
+  <td id="rank_adducts">
+    <a href="./math/rank_adducts.html">rank_adducts</a>
+  </td>
+  <td><p>evaluate of the adduct annotation ranking score</p></td>
 </tr>
 <tr>
   <td id="toMS">

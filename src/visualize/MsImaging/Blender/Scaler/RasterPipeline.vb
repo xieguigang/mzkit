@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84a36f3444f1e07f94d2cdc76e4749d4, mzkit\src\visualize\MsImaging\Blender\Scaler\RasterPipeline.vb"
+﻿#Region "Microsoft.VisualBasic::ef1e9b54fd613c36827b9e0c5ef4b67a, visualize\MsImaging\Blender\Scaler\RasterPipeline.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 57
-    '    Code Lines: 44
-    ' Comment Lines: 0
-    '   Blank Lines: 13
-    '     File Size: 2.05 KB
+    '   Total Lines: 92
+    '    Code Lines: 68 (73.91%)
+    ' Comment Lines: 3 (3.26%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 21 (22.83%)
+    '     File Size: 3.24 KB
 
 
     '     Class RasterPipeline
     ' 
-    '         Function: [Then], (+2 Overloads) DoIntensityScale, GetDefaultPipeline, GetEnumerator, IEnumerable_GetEnumerator
-    '                   ToString
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: [Then], (+3 Overloads) DoIntensityScale, GetDefaultPipeline, GetEnumerator, IEnumerable_GetEnumerator
+    '                   Parse, ToScript, ToString
     ' 
     '         Sub: Add
     ' 
@@ -58,10 +62,14 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Blender.Scaler
 
-    Public Class RasterPipeline : Implements Scaler.LayerScaler, IEnumerable(Of Scaler)
+    ''' <summary>
+    ''' a collection of the raster data filter: <see cref="Scaler"/>
+    ''' </summary>
+    Public Class RasterPipeline : Implements Scaler.LayerScaler, IEnumerable(Of Scaler), Enumeration(Of Scaler)
 
         ReadOnly pipeline As New List(Of Scaler)
 
@@ -70,6 +78,15 @@ Namespace Blender.Scaler
                 Return DoIntensityScale(layer)
             End Get
         End Property
+
+        Sub New()
+        End Sub
+
+        Sub New(ParamArray pipeline As Scaler())
+            For Each filter As Scaler In pipeline.SafeQuery
+                Call Add(filter)
+            Next
+        End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(scaler As Scaler)
@@ -124,7 +141,7 @@ Namespace Blender.Scaler
             Return filter
         End Function
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of Scaler) Implements IEnumerable(Of Scaler).GetEnumerator
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Scaler) Implements IEnumerable(Of Scaler).GetEnumerator, Enumeration(Of Scaler).GenericEnumerator
             For Each scaler As Scaler In pipeline
                 Yield scaler
             Next

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e656c5f56a02ba8248617c76153a5700, mzkit\src\assembly\assembly\MarkupData\mzML\XML\MsData\spectrum.vb"
+﻿#Region "Microsoft.VisualBasic::95ecc587c0c2f31dc152c2047c8d960c, assembly\assembly\MarkupData\mzML\XML\MsData\spectrum.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 173
-    '    Code Lines: 127
-    ' Comment Lines: 21
-    '   Blank Lines: 25
-    '     File Size: 6.52 KB
+    '   Total Lines: 199
+    '    Code Lines: 147 (73.87%)
+    ' Comment Lines: 22 (11.06%)
+    '    - Xml Docs: 81.82%
+    ' 
+    '   Blank Lines: 30 (15.08%)
+    '     File Size: 7.48 KB
 
 
     '     Class spectrum
     ' 
-    '         Properties: controllerNumber, controllerType, ms_level, precursorList, profile
-    '                     scan, scan_time, scanList, selectedIon
+    '         Properties: controllerNumber, controllerType, ms_level, polarity, precursorList
+    '                     profile, scan, scan_time, scanList, selectedIon
     ' 
     '         Function: GetRawMatrix, ScanData, ToString
     ' 
@@ -110,6 +112,10 @@ Namespace MarkupData.mzML
 
         Public ReadOnly Property polarity As IonModes
             Get
+                If cvParams Is Nothing Then
+                    Return IonModes.Unknown
+                End If
+
                 If cvParams.Any(Function(cv) cv.name = "positive scan") Then
                     Return IonModes.Positive
                 ElseIf cvParams.Any(Function(cv) cv.name = "negative scan") Then
@@ -126,10 +132,19 @@ Namespace MarkupData.mzML
         ''' <returns></returns>
         Public ReadOnly Property scan_time As Double
             Get
-                With scanList.scans(0).cvParams.KeyItem("scan start time")
+                Dim rtParams = scanList.scans(0).cvParams
+
+                ' rt parameter maybe missing in lidms or maldi-ms
+                If rtParams.IsNullOrEmpty Then
+                    Return 0
+                End If
+
+                Dim rt_val = If(rtParams.KeyItem("scan start time"), rtParams.KeyItem("scan time"))
+
+                With rt_val
                     Dim time# = Val(.value)
 
-                    If .unitName = "second" Then
+                    If .unitName = "second" OrElse .unitName.StringEmpty Then
                         Return time
                     ElseIf .unitName = "minute" Then
                         Return time * 60

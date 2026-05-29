@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c0e9e9f1a7cd9d11c17dfcef7d6950f, mzkit\src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\ScanIonExtract.vb"
+﻿#Region "Microsoft.VisualBasic::64f61ad657174e1678c97ff17c301a49, mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\ScanIonExtract.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 54
-    '    Code Lines: 43
-    ' Comment Lines: 5
-    '   Blank Lines: 6
+    '    Code Lines: 43 (79.63%)
+    ' Comment Lines: 5 (9.26%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (11.11%)
     '     File Size: 2.50 KB
 
 
@@ -59,7 +61,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace GCMS.QuantifyAnalysis
 
@@ -83,7 +85,7 @@ Namespace GCMS.QuantifyAnalysis
             '    .First.mz
             Dim maxMz As Double = spectra.OrderByDescending(Function(mz) mz.intensity).First.mz
             Dim tick As ChromatogramTick() = spectra _
-                .Where(Function(scan) stdNum.Abs(scan.mz - maxMz) <= 0.3) _
+                .Where(Function(scan) std.Abs(scan.mz - maxMz) <= 0.3) _
                 .Select(Function(mzi)
                             Return New ChromatogramTick With {
                                 .Time = mzi.scan_time,

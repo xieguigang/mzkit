@@ -1,4 +1,63 @@
-﻿'
+﻿#Region "Microsoft.VisualBasic::5b14d0fe7b504e4b26fe8f1d86f2f419, mzmath\ms2_math-core\Spectra\Splash\Splash.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 325
+    '    Code Lines: 152 (46.77%)
+    ' Comment Lines: 110 (33.85%)
+    '    - Xml Docs: 50.00%
+    ' 
+    '   Blank Lines: 63 (19.38%)
+    '     File Size: 13.22 KB
+
+
+    '     Class Splash
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: CalcSplashID, (+3 Overloads) filterSpectrum, formatIntensity, formatMZ, getFirstBlock
+    '                   getHistoBlock, getSpectrumBlock, ToBase10, translateBase
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+'
 '  Splash.cs
 '
 '  Author:
@@ -91,9 +150,9 @@ Namespace Spectra.SplashID
 
         Public Shared ReadOnly MSSplash As New Splash(SpectrumType.MS)
 
-        Dim spectrumType As SpectrumType
+        ReadOnly spectrumType As SpectrumType
 
-        Sub New(type As SpectrumType)
+        Sub New(Optional type As SpectrumType = SpectrumType.MS)
             Me.spectrumType = type
         End Sub
 
@@ -112,9 +171,9 @@ Namespace Spectra.SplashID
 
             'create prefilter block
             Dim filteredSpec = filterSpectrum(spectrum, 10, 0.1)
-            Call Debug.WriteLine("filtered spectrum: " & filteredSpec.ToString())
+            Call System.Diagnostics.Debug.WriteLine("filtered spectrum: " & filteredSpec.ToString())
             Dim preFilterHistogram = getHistoBlock(filteredSpec, PREFILTER_BASE, PREFILTER_LENGTH, PREFILTER_BIN_SIZE)
-            Debug.WriteLine("prefilter block: " & preFilterHistogram)
+            System.Diagnostics.Debug.WriteLine("prefilter block: " & preFilterHistogram)
             Dim translated = translateBase(preFilterHistogram, PREFILTER_BASE, 36, 4)
 
             hash.Append(translated)
@@ -137,7 +196,7 @@ Namespace Spectra.SplashID
         ''' <returns>the version block as a string</returns>
         Private Function getFirstBlock(specType As SpectrumType) As String
             Dim s As String = (PREFIX & CInt(specType).ToString() & VERSION.ToString())
-            Call Debug.WriteLine(String.Format("version block: {0}", s))
+            Call System.Diagnostics.Debug.WriteLine(String.Format("version block: {0}", s))
             Return s
         End Function
 
@@ -174,7 +233,7 @@ Namespace Spectra.SplashID
                 histogram.Append(INTENSITY_MAP.ElementAt(CInt(bin + EPSILON)))
             Next
 
-            Call Debug.WriteLine(String.Format("{1} block: {0}", histogram.ToString(), If(length = 10, "histogram", "similarity")))
+            Call System.Diagnostics.Debug.WriteLine(String.Format("{1} block: {0}", histogram.ToString(), If(length = 10, "histogram", "similarity")))
             Return histogram.ToString()
         End Function
 
@@ -205,7 +264,7 @@ Namespace Spectra.SplashID
             Dim hash = BitConverter.ToString(hashString.Hash)
             hash = hash.Replace("-", "").Substring(0, maxCharactersForSpectrumBlockTruncation).ToLower()
 
-            Debug.WriteLine(String.Format("hash block: {0}", hash))
+            System.Diagnostics.Debug.WriteLine(String.Format("hash block: {0}", hash))
 
             Return hash
         End Function
@@ -232,7 +291,7 @@ Namespace Spectra.SplashID
                 result.Insert(0, "0"c)
             End While
 
-            Call Debug.WriteLine("prefilter: " & result.ToString())
+            Call System.Diagnostics.Debug.WriteLine("prefilter: " & result.ToString())
             Return result.ToString()
         End Function
 
@@ -250,12 +309,12 @@ Namespace Spectra.SplashID
         Public Shared Function ToBase10(number As String, start_base As Integer) As Integer
             Dim sum = 0
             Dim power = 0
-            Debug.WriteLine("before base10: " & number)
+            System.Diagnostics.Debug.WriteLine("before base10: " & number)
             For Each c In number.Reverse()
                 sum += CInt(INTENSITY_MAP.IndexOf(c) * std.Pow(start_base, power))
                 power += 1
             Next
-            Call Debug.WriteLine("after base10: " & sum.ToString())
+            Call System.Diagnostics.Debug.WriteLine("after base10: " & sum.ToString())
 
             Return sum
         End Function

@@ -1,24 +1,101 @@
-﻿
+﻿#Region "Microsoft.VisualBasic::bd6d6a2711bd88d2e9e5c77e4ac5de78, metadb\Massbank\Public\NCBI\PubChem\Web\Query\QueryXml.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 148
+    '    Code Lines: 92 (62.16%)
+    ' Comment Lines: 41 (27.70%)
+    '    - Xml Docs: 70.73%
+    ' 
+    '   Blank Lines: 15 (10.14%)
+    '     File Size: 6.70 KB
+
+
+    '     Class QueryXml
+    ' 
+    '         Properties: annotation, canonicalsmiles, charge, cid, cmpdname
+    '                     cmpdsynonym, complexity, covalentunitcnt, definedatomstereocnt, definedbondstereocnt
+    '                     exactmass, gpfamilycnt, gpidcnt, hbondacc, hbonddonor
+    '                     heavycnt, inchi, inchikey, isosmiles, isotopeatomcnt
+    '                     iupacname, meshheadings, mf, monoisotopicmass, mw
+    '                     neighbortype, pclidcnt, polararea, rotbonds, sidsrcname
+    '                     totalatomstereocnt, totalbondstereocnt, undefinedatomstereocnt, undefinedbondstereocnt, xlogp
+    ' 
+    '         Function: CreateMetadata, DownloadURL, GetText, Load, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Runtime.CompilerServices
 Imports System.Xml
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Text.Xml
 Imports Microsoft.VisualBasic.Text.Xml.Linq
+Imports Metadata2 = BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib
 
 Namespace NCBI.PubChem.Web
 
+    ' https://pubchem.ncbi.nlm.nih.gov/sdq/sdqagent.cgi?infmt=json&outfmt=xml&query={%22download%22:%22*%22,%22collection%22:%22compound%22,%22order%22:[%22relevancescore,desc%22],%22start%22:1,%22limit%22:10000000,%22downloadfilename%22:%22PubChem_compound_text_kegg%22,%22where%22:{%22ands%22:[{%22*%22:%22kegg%22}]}}
+
+    ' {%22download%22:%22*%22,%22collection%22:%22compound%22,%22order%22:[%22relevancescore,desc%22],%22start%22:1,%22limit%22:10000000,%22downloadfilename%22:%22PubChem_compound_text_kegg%22,%22where%22:{%22ands%22:[{%22*%22:%22kegg%22}]}}
+    ' {"download":"*","collection":"compound","order":["relevancescore,desc"],"start":1,"limit":10000000,"downloadfilename":"PubChem_compound_text_kegg","where":{"ands":[{"*":"kegg"}]}}
+
     ''' <summary>
-    ''' result data set for pubchem query summary
+    ''' result data set for pubchem query summary, download in xml format
     ''' </summary>
     ''' <remarks>
     ''' [Download]
     ''' Summary (Search Results)
     ''' XML format
+    ''' 
+    ''' this xml data model is a kind of summary of the pubchem <see cref="PugViewRecord"/> xml data.
     ''' </remarks>
     ''' 
     <XmlType("row"), XmlRoot("row")>
     Public Class QueryXml
 
         Public Property cid As Integer
+        ''' <summary>
+        ''' a string array
+        ''' </summary>
+        ''' <returns></returns>
         Public Property cmpdname As Object
         Public Property mw As Double
         Public Property mf As String
@@ -72,6 +149,11 @@ Namespace NCBI.PubChem.Web
         Public Property cmpdsynonym As Object
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CreateMetadata() As Metadata2
+            Return MetadataConvertor.CreateMetadata(Me)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Iterator Function Load(filepath As String) As IEnumerable(Of QueryXml)
             For Each metabo As QueryXml In filepath.LoadUltraLargeXMLDataSet(Of QueryXml)(
                 typeName:="row",
@@ -118,5 +200,14 @@ Namespace NCBI.PubChem.Web
             Return Me.GetXml
         End Function
 
+        Public Shared Function DownloadURL(q As String, Optional limit As Integer = 10000000) As String
+            ' {"download":"*","collection":"compound","order":["relevancescore,desc"],"start":1,"limit":10000000,"downloadfilename":"PubChem_compound_text_kegg","where":{"ands":[{"*":"kegg"}]}}
+            Dim json As String = sprintf(<JSON>{"download":"*","collection":"compound","order":["relevancescore,desc"],"start":1,"limit":%s,"downloadfilename":"PubChem_compound_text_kegg","where":{"ands":[{"*":"%s"}]}}</JSON>,
+                                         limit,
+                                         q.Replace(""""c, "'")).UrlEncode
+            Dim url As String = $"https://pubchem.ncbi.nlm.nih.gov/sdq/sdqagent.cgi?infmt=json&outfmt=xml&query={json}"
+
+            Return url
+        End Function
     End Class
 End Namespace

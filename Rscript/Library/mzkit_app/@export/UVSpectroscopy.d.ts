@@ -14,7 +14,7 @@ declare namespace UVSpectroscopy {
         * @param rawfile default value Is ``'UVraw'``.
         * @param env default value Is ``null``.
       */
-      function UVtime_signals(rawscans: any, rawfile?: string, env?: object): any;
+      function UVtime_signals(rawscans: any, rawfile?: string, env?: object): object;
    }
    /**
      * @param env default value Is ``null``.
@@ -29,9 +29,15 @@ declare namespace UVSpectroscopy {
    function get_instrument(mzml: string): string;
    module read {
       /**
-        * @param env default value Is ``null``.
+       * 
+       * 
+        * @param file -
+        * @param env -
+        * 
+        * + default value Is ``null``.
+        * @return A tuple list of the signal data
       */
-      function UVsignals(file: any, env?: object): any;
+      function UVsignals(file: any, env?: object): object;
    }
    module write {
       /**

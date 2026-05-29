@@ -54,6 +54,9 @@ Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports PeakMs1 = BioNovoGene.Analytical.MassSpectrometry.Math.Peaktable
 
+''' <summary>
+''' Common shared math module
+''' </summary>
 Module Math
 
     Public Function GetIonMode(x As Object, env As Environment) As IonModes
@@ -86,7 +89,7 @@ Module Math
     ''' apply for throw exception message
     ''' </param>
     ''' <returns></returns>
-    Public Function getTolerance(val As Object, env As Environment, Optional default$ = "ppm:20") As [Variant](Of Tolerance, Message)
+    Public Function getTolerance(val As Object, env As Environment, Optional default$ = "ppm:20", Optional supressErr As Boolean = False) As [Variant](Of Tolerance, Message)
         If val Is Nothing Then
             Return Tolerance.DefaultTolerance.DefaultValue
         ElseIf val.GetType.IsInheritsFrom(GetType(Tolerance)) Then
@@ -101,7 +104,7 @@ Module Math
             Dim errMsg As String = $"mzdiff tolerance value can not be '{val.GetType.FullName}', [{val}]!"
             Dim ex As New NotImplementedException(errMsg)
 
-            Return debug.stop(ex, env)
+            Return debug.stop(ex, env, suppress:=supressErr)
         End If
     End Function
 
@@ -125,13 +128,14 @@ Module Math
         data = pipeline.TryCreatePipeline(Of String)(adducts, env, suppress:=True)
 
         If Not data.isError Then
-            Return data.populates(Of String)(env) _
+            Dim adduct_strs As String() = data.populates(Of String)(env) _
                 .Where(Function(si) Not si.StringEmpty) _
                 .Select(Function(si) si.Split("|"c)) _
                 .IteratesALL _
                 .Distinct _
-                .ToArray _
-                .DoCall(AddressOf Provider.Calculators)
+                .ToArray
+
+            Return Provider.Calculators(adduct_strs)
         End If
 
         Throw New NotImplementedException
@@ -155,8 +159,8 @@ Module Math
 
     <Extension>
     Public Function PeakListFromDataframe(peaktable As dataframe) As PeakMs1()
-        Dim mz As Double() = peaktable.getVector(Of Double)("mz", "m/z")
-        Dim rt As Double() = peaktable.getVector(Of Double)("rt", "RT", "retention_time")
+        Dim mz As Double() = peaktable.getVector(Of Double)("mz", "m/z", "MZ", "mass to charge")
+        Dim rt As Double() = peaktable.getVector(Of Double)("rt", "RT", "retention_time", "retention time")
         Dim id As String() = peaktable.getVector(Of String)("xcms_id", "id", "ID", "name", "guid")
         Dim scan As Integer() = peaktable.getVector(Of Integer)("scan")
         Dim rtmin As Double() = peaktable.getVector(Of Double)("rtmin")
@@ -173,16 +177,17 @@ Module Math
         Return id _
             .Select(Function(uid, i)
                         Return New PeakMs1 With {
-                            .mz = mz(i),
+                            .mass = mz(i),
                             .rt = rt(i),
-                            .name = id(i),
+                            .id = id(i),
                             .scan = scan(i),
                             .rtmin = rtmin.ElementAtOrDefault(i, .rt),
                             .rtmax = rtmax.ElementAtOrDefault(i, .rt),
                             .into = area.ElementAtOrDefault(i),
                             .maxo = maxinto.ElementAtOrDefault(i),
-                            .mzmin = mzmin.ElementAtOrDefault(i, .mz),
-                            .mzmax = mzmax.ElementAtOrDefault(i, .mz)
+                            .mzmin = mzmin.ElementAtOrDefault(i, .mass),
+                            .mzmax = mzmax.ElementAtOrDefault(i, .mass),
+                            .name = .id
                         }
                     End Function) _
             .ToArray

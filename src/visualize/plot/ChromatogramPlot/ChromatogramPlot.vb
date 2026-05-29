@@ -1,54 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::bbaaa8379959b4fe07ceb710044652ba, mzkit\src\visualize\plot\ChromatogramPlot\ChromatogramPlot.vb"
+﻿#Region "Microsoft.VisualBasic::e100908c6b7707c53b8f4a823b414084, visualize\plot\ChromatogramPlot\ChromatogramPlot.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 236
-'    Code Lines: 192
-' Comment Lines: 32
-'   Blank Lines: 12
-'     File Size: 10.89 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module ChromatogramPlot
-' 
-'     Function: MRMChromatogramPlot, Plot, (+2 Overloads) TICplot
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 245
+    '    Code Lines: 198 (80.82%)
+    ' Comment Lines: 35 (14.29%)
+    '    - Xml Docs: 97.14%
+    ' 
+    '   Blank Lines: 12 (4.90%)
+    '     File Size: 11.34 KB
+
+
+    ' Module ChromatogramPlot
+    ' 
+    '     Function: MRMChromatogramPlot, Plot, (+2 Overloads) TICplot
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -67,9 +69,13 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Chromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 
+''' <summary>
+''' the extension helper function module for invoke the <see cref="TICplot"/>
+''' </summary>
 Public Module ChromatogramPlot
 
     ''' <summary>
@@ -157,7 +163,8 @@ Public Module ChromatogramPlot
                             Optional gridFill As String = "rgb(245,245,245)",
                             Optional showGird As Boolean = False,
                             Optional xlabel$ = "Time (s)",
-                            Optional ylabel$ = "Intensity") As GraphicsData
+                            Optional ylabel$ = "Intensity",
+                            Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Return {ionData}.TICplot(
             size:=size,
@@ -179,7 +186,8 @@ Public Module ChromatogramPlot
             fillAlpha:=fillAlpha,
             showGrid:=showGird,
             xlabel:=xlabel,
-            ylabel:=ylabel
+            ylabel:=ylabel,
+            driver:=driver
         )
     End Function
 
@@ -199,7 +207,7 @@ Public Module ChromatogramPlot
     ''' <param name="size"></param>
     ''' <param name="margin"></param>
     ''' <param name="bg"></param>
-    ''' <param name="deln">legend每一列有多少个进行显示</param>
+    ''' <param name="legend_split">legend每一列有多少个进行显示</param>
     ''' <param name="labelColor"></param>
     ''' <param name="penStyle">
     ''' CSS value for controls of the line drawing style
@@ -225,7 +233,7 @@ Public Module ChromatogramPlot
                             Optional ylabel$ = "Intensity",
                             Optional showLegends As Boolean = True,
                             Optional legendFontCSS$ = CSSFont.Win10Normal,
-                            Optional deln% = 10,
+                            Optional legend_split% = 10,
                             Optional isXIC As Boolean = False,
                             Optional fillAlpha As Integer = 180,
                             Optional gridFill As String = "rgb(245,245,245)",
@@ -234,7 +242,10 @@ Public Module ChromatogramPlot
                             Optional drawParallelAxis As Boolean = False,
                             Optional intensityMax As Double = 0,
                             Optional spline As Single = 0,
-                            Optional ppi As Double = 100) As GraphicsData
+                            Optional spline_resolution As Integer = 10,
+                            Optional title As String = Nothing,
+                            Optional ppi As Double = 100,
+                            Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim theme As New Theme With {
             .lineStroke = penStyle,
@@ -251,7 +262,8 @@ Public Module ChromatogramPlot
             .gridFill = gridFill,
             .drawLabels = showLabels,
             .tagColor = labelColor,
-            .axisStroke = axisStroke
+            .axisStroke = axisStroke,
+            .legendSplitSize = legend_split
         }
         Dim TIC As Plot
 
@@ -265,7 +277,8 @@ Public Module ChromatogramPlot
                 theme:=theme
             ) With {
                 .xlabel = xlabel,
-                .ylabel = ylabel
+                .ylabel = ylabel,
+                .main = title
             }
         Else
             TIC = New TICplot(
@@ -277,14 +290,14 @@ Public Module ChromatogramPlot
                 fillAlpha:=fillAlpha,
                 labelLayoutTicks:=labelLayoutTicks,
                 theme:=theme,
-                deln:=deln,
-                bspline:=spline
+                bspline:=If(spline > 1, New BSpline(spline, spline_resolution), Nothing)
             ) With {
                 .xlabel = xlabel,
-                .ylabel = ylabel
+                .ylabel = ylabel,
+                .main = title
             }
         End If
 
-        Return TIC.Plot(size, ppi)
+        Return TIC.Plot(size, ppi, driver:=driver)
     End Function
 End Module

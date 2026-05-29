@@ -1,42 +1,51 @@
-﻿.TH RUN.DECONVOLUTION 1 2023-Dec "" "extract peak ms1 from a set of raw data files"
+﻿.TH RUN.DECONVOLUTION 1 2026-5月 "" "Do ms1 deconvolution of the rawdata"
 .SH NAME
-run.Deconvolution \- run.Deconvolution(
-    <i>data.dir</i> = ./,
-    <i>mzdiff</i> = da:0.001,
-    <i>baseline</i> = <span style='color: green;'>0.65</span>,
-    <i>peakwidth</i> = [3, 20],
-    <i>outputdir</i> = ./,
-    <i>n.threads</i> = <span style='color: green;'>8</span>)
+run.Deconvolution \- run.Deconvolution(rawdata,
+    <i>outputdir</i> = <span style='color: brown;'><strong>'./'</strong></span>,
+    <i>mzdiff</i> = <span style='color: green;'>0.001</span>,
+    <i>xic.mzdiff</i> = <span style='color: green;'>0.005</span>,
+    <i>peak.width</i> = [<span style='color: green;'>30</span>],
+    <i>n.threads</i> = <span style='color: green;'>16</span>,
+    <i>filename</i> = <span style='color: brown;'><strong>'peaktable.csv'</strong></span>)
 .SH SYNOPSIS
-\fIrun.Deconvolution(
-    <i>data.dir</i> = ./,
-    <i>mzdiff</i> = da:0.001,
-    <i>baseline</i> = <span style='color: green;'>0.65</span>,
-    <i>peakwidth</i> = [3, 20],
-    <i>outputdir</i> = ./,
-    <i>n.threads</i> = <span style='color: green;'>8</span>)\fR
+\fIrun.Deconvolution(rawdata,
+    <i>outputdir</i> = <span style='color: brown;'><strong>'./'</strong></span>,
+    <i>mzdiff</i> = <span style='color: green;'>0.001</span>,
+    <i>xic.mzdiff</i> = <span style='color: green;'>0.005</span>,
+    <i>peak.width</i> = [<span style='color: green;'>30</span>],
+    <i>n.threads</i> = <span style='color: green;'>16</span>,
+    <i>filename</i> = <span style='color: brown;'><strong>'peaktable.csv'</strong></span>)\fR
 .SH OPTIONS
 .PP
-\fBdata.dir\fB \fR\- ./. 
+\fBrawdata\fB \fR\- . a directory path that contains the mzXML or mzML rawdata files.
 .PP
 .PP
-\fBmzdiff\fB \fR\- da:0.001. 
+\fBoutputdir\fB \fR\- './'. a directory path for save the peaktable result file and the
+temp cache files.
 .PP
 .PP
-\fBbaseline\fB \fR\- 0.65. 
+\fBmzdiff\fB \fR\- 0.001. the mass tolerance error for create the mz bins from the ms1
+rawdata, the XIC data is generated based on this parameter value
 .PP
 .PP
-\fBpeakwidth\fB \fR\- [3, 20]. 
+\fBxic.mzdiff\fB \fR\- 0.005. 
 .PP
 .PP
-\fBoutputdir\fB \fR\- ./. 
+\fBpeak.width\fB \fR\- [2, 30]. the rt range of the peak data
 .PP
 .PP
-\fBn.threads\fB \fR\- 8. 
+\fBn.threads\fB \fR\- 16. 
+.PP
+.PP
+\fBfilename\fB \fR\- 'peaktable.csv'. the save file name of the exports generated peaktable file.
+.PP
+.SH VALUE
+.PP
+this function returns nothing
 .PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.run.Deconvolution at deco.R:line 10
+SMRUCC/R#.declare_function.run.Deconvolution at deco.R:line 23
 .PP
 .SH COPYRIGHT
-Copyright © xieguigang, MIT Licensed 2023
+Copyright © xieguigang, MIT Licensed 2026

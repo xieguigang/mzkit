@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66207bf8066b3ad577eae29d6e6ead3f, mzkit\src\assembly\assembly\MarkupData\mzML\XML\ControlVocabulary.vb"
+﻿#Region "Microsoft.VisualBasic::784c5c0dd64697d29b0e1a86dc48e455, assembly\assembly\MarkupData\mzML\XML\ControlVocabulary.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 78
-    '    Code Lines: 53
-    ' Comment Lines: 7
-    '   Blank Lines: 18
-    '     File Size: 2.88 KB
+    '   Total Lines: 120
+    '    Code Lines: 71 (59.17%)
+    ' Comment Lines: 28 (23.33%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 21 (17.50%)
+    '     File Size: 4.90 KB
 
 
     '     Class cvList
     ' 
     '         Properties: list
+    ' 
+    '         Function: GenericEnumerator, ToString
     ' 
     '     Structure cv
     ' 
@@ -57,6 +61,8 @@
     '     Class Params
     ' 
     '         Properties: cvParams, cvTerm, userParams
+    ' 
+    '         Function: FindVocabulary
     ' 
     '     Class userParam
     ' 
@@ -89,6 +95,7 @@ Namespace MarkupData.mzML.ControlVocabulary
     ''' a set of the control vocabulary that used in current dataset
     ''' </summary>
     Public Class cvList : Inherits List
+        Implements Enumeration(Of cv)
 
         <XmlElement(NameOf(cv))>
         Public Property list As cv()
@@ -97,6 +104,11 @@ Namespace MarkupData.mzML.ControlVocabulary
             Return list.JoinBy("; ")
         End Function
 
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of cv) Implements Enumeration(Of cv).GenericEnumerator
+            For Each vocabulary As cv In list.SafeQuery
+                Yield vocabulary
+            Next
+        End Function
     End Class
 
     ''' <summary>

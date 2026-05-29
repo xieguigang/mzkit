@@ -11,8 +11,17 @@
 declare namespace annotation {
    module assert {
       /**
-        * @param ion_mode default value Is ``'+'``.
-        * @param env default value Is ``null``.
+       * Check of the valid adducts
+       * 
+       * 
+        * @param formula -
+        * @param adducts -
+        * @param ion_mode -
+        * 
+        * + default value Is ``'+'``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
       */
       function adducts(formula: string, adducts: any, ion_mode?: any, env?: object): object;
    }
@@ -35,6 +44,86 @@ declare namespace annotation {
      *  fragment ion data, otherwise slot value FALSE means not.
    */
    function checkInSourceFragments(ms1: any, ms2: any, da?: number, rt_win?: number, env?: object): boolean;
+   /**
+    * Commit library annotation
+    * 
+    * 
+     * @param workspace -
+     * @param xref_id -
+   */
+   function commit(workspace: object, xref_id: string, mz: number, rt: number, adducts: string, biodeep_id: string, name: string, formula: string): ;
+   /**
+    * config spectrum lib reference id mapping to metabolite id
+    * 
+    * 
+     * @param libs -
+     * @param mapping -
+   */
+   function config_mapping(libs: object, mapping: object): object;
+   /**
+   */
+   function filter(pack: object, filter: any): object;
+   /**
+    * get annotation data from the given workspace object
+    * 
+    * 
+     * @param workspace -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function get_annotations(workspace: any, env?: object): object|object;
+   /**
+    * get annotated ms1 peak features from the result data pack
+    * 
+    * 
+     * @param workspace -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function get_peaktable(workspace: any, env?: object): object;
+   /**
+    * get mzkit annotation data via a given set of the kegg id for mapping
+    * 
+    * 
+     * @param repo -
+     * @param kegg_id -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function getByKEGG(repo: object, kegg_id: any, env?: object): object;
+   /**
+    * Create spectrum reference library from mona msp file
+    * 
+    * 
+     * @param libtype 
+     * + default value Is ``null``.
+     * @param tqdm_verbose 
+     * + default value Is ``true``.
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function library_from_mona(mona: any, libtype?: object, tqdm_verbose?: boolean, env?: object): object;
+   /**
+    * Construct of the local reference library for gcms data
+    * 
+    * 
+     * @param metadb -
+     * @param refSpec -
+     * @param tqdm_verbose 
+     * + default value Is ``true``.
+   */
+   function load_local(metadb: object, refSpec: object, tqdm_verbose?: boolean): object;
+   /**
+    * get metabolite annotation metadata via given reference id
+    * 
+    * 
+     * @param libs the annotation data library model
+     * @param id a set of the compound reference id for get the metadata from the library.
+   */
+   function load_metadata(libs: object, id: any): object;
    module make {
       /**
        * create a new metabolite annotation information
@@ -52,6 +141,54 @@ declare namespace annotation {
       */
       function annotation(id: string, formula: string, name: string, synonym?: string, xref?: object): object;
    }
+   module open {
+      /**
+       * 
+       * 
+        * @param file -
+        * @param io Read or Write
+        * 
+        * + default value Is ``null``.
+        * @param lazy 
+        * + default value Is ``false``.
+        * @param meta_allocated please increase this pre-allocation size if there are too many samples data files, default is 32MB pre-allocated size.
+        * 
+        * + default value Is ``33554432``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function annotation_workspace(file: any, io?: object, lazy?: boolean, meta_allocated?: object, env?: object): object;
+   }
+   /**
+    * open the annotation database file
+    * 
+    * 
+     * @param file -
+     * @param mode 
+     * + default value Is ``["read","write"]``.
+     * @param mapping 
+     * + default value Is ``null``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function open_repository(file: any, mode?: any, mapping?: object, env?: object): object|object;
+   /**
+    * Associates the ms1 peaks with the ms2 spectrum alignment result hits.
+    * 
+    * > a ms2 spectrum alignment result should be existed inside the workspace before assign the ms1 peaks to the result.
+    * 
+     * @param works the workspace object, which could be constructed via the ``workspace`` function.
+     * @param libname the reference key to the ms2 spectrum alignment result.
+     * @param adducts -
+     * @param xcms_id -
+     * @param mz -
+     * @param rt -
+     * @param RI -
+     * @param npeaks -
+   */
+   function peak_assign(works: object, libname: string, adducts: string, xcms_id: string, mz: number, rt: number, RI: number, npeaks: object): ;
    /**
     * a shortcut method for populate the peak ms2 data from a mzpack raw data file
     * 
@@ -65,6 +202,70 @@ declare namespace annotation {
      * + default value Is ``null``.
    */
    function populateIonData(raw: object, mzdiff?: any, env?: object): object;
+   /**
+    * Save the ms2 alignment hits result into current temp workspace.
+    * 
+    * 
+     * @param workspace -
+     * @param mz -
+     * @param rt -
+     * @param intensity -
+     * @param libname -
+     * @param score -
+     * @param forward -
+     * @param reverse -
+     * @param jaccard -
+     * @param entropy -
+     * @param source -
+     * @param alignment the ms2 spectrum alignment matrix in linear string format
+   */
+   function push_temp(workspace: object, mz: number, rt: number, intensity: number, libname: string, score: number, forward: number, reverse: number, jaccard: number, entropy: number, source: string, alignment: string): ;
+   module read {
+      /**
+        * @param env default value Is ``null``.
+      */
+      function annotationPack(file: any, env?: object): object;
+   }
+   /**
+    * Save the reference library annotation result.
+    * 
+    * 
+     * @param workspace -
+     * @param library the reference library name of the spectrum reference data
+     * @param annotations A temp workspace of a single reference library.
+   */
+   function save_annotations(workspace: object, library: string, annotations: object): ;
+   /**
+    * Set the XIC cache data into the report viewer workspace
+    * 
+    * 
+     * @param workspace -
+     * @param raw_set should be a set of the mzpack raw data objects, or a character 
+     *  vector of the file path to the mzpack rawdata files.
+     * @param da -
+     * 
+     * + default value Is ``0.25``.
+     * @param rt_win -
+     * 
+     * + default value Is ``7.5``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function set_xicCache(workspace: object, raw_set: any, da?: number, rt_win?: number, env?: object): any;
+   /**
+    * 
+    * 
+     * @param candidates should be a collection of the @``T:BioNovoGene.BioDeep.MSEngine.AnnotationData`1`` object
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function unique_candidates(candidates: any, env?: object): any;
+   /**
+     * @param env default value Is ``null``.
+   */
+   function write_metadata(writer: object, meta: any, env?: object): any;
    /**
     * Create the database cross reference links
     * 

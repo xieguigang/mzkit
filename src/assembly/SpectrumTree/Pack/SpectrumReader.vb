@@ -1,4 +1,69 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::1615e7c39307798850f477f9889d70b9, assembly\SpectrumTree\Pack\SpectrumReader.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 423
+    '    Code Lines: 258 (60.99%)
+    ' Comment Lines: 111 (26.24%)
+    '    - Xml Docs: 75.68%
+    ' 
+    '   Blank Lines: 54 (12.77%)
+    '     File Size: 17.60 KB
+
+
+    '     Class SpectrumReader
+    ' 
+    '         Properties: Libname, nspectrum
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: BuildSearchIndex, evalMz, GetAllLibNames, GetMassFiles, (+4 Overloads) GetSpectrum
+    '                   HasMapName, ListAllSpectrumId, LoadAllNodes, LoadMass, QueryByMz
+    '                   ThrowNoMassIndex, ToString
+    ' 
+    '         Sub: (+2 Overloads) Dispose
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -6,7 +71,10 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
@@ -50,6 +118,18 @@ Namespace PackLib
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return map(libname)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' get the number of the spectrum in current reference library
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property nspectrum As Integer
+            Get
+                Return DirectCast(file.GetObject("/spectrum/"), StreamGroup) _
+                    .ListFiles _
+                    .Count
             End Get
         End Property
 
@@ -127,6 +207,14 @@ Namespace PackLib
             Next
         End Function
 
+        Public Iterator Function LoadAllNodes() As IEnumerable(Of BlockNode)
+            Call VBDebugger.EchoLine("Load all spectrum reference entry into memory...")
+
+            For Each key As String In TqdmWrapper.Wrap(ListAllSpectrumId().ToArray)
+                Yield GetSpectrum(key)
+            Next
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -157,6 +245,12 @@ Namespace PackLib
             Return GetSpectrum(key:=pointer.ToString)
         End Function
 
+        ''' <summary>
+        ''' no adducts info
+        ''' </summary>
+        ''' <param name="node"></param>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         Public Shared Function GetSpectrum(node As BlockNode, Optional file As String = Nothing) As PeakMs2
             Return New PeakMs2 With {
                 .mzInto = node.centroid,
@@ -174,10 +268,28 @@ Namespace PackLib
         ''' </summary>
         ''' <param name="mass"></param>
         ''' <returns></returns>
-        Public Iterator Function GetSpectrum(mass As MassIndex) As IEnumerable(Of PeakMs2)
+        Public Iterator Function GetSpectrum(mass As MassIndex, Optional ionMode As IonModes = IonModes.Unknown) As IEnumerable(Of PeakMs2)
+            Dim exactMass As Double = If(ionMode = IonModes.Unknown, 0, FormulaScanner.EvaluateExactMass(mass.formula))
+            Dim polarity As String = ionMode.Description
+            Dim ref As NamedValue(Of String) = mass.name.GetTagValue("|")
+
             For Each i As Integer In mass.spectrum
                 Dim node As BlockNode = GetSpectrum(key:=i.ToString)
                 Dim spectrum As PeakMs2 = GetSpectrum(node, file:=mass.name)
+
+                If ionMode <> IonModes.Unknown Then
+                    With PrecursorType.FindPrecursorType(exactMass, spectrum.mz, 1, polarity)
+                        If Not .errors.IsNaNImaginary Then
+                            spectrum.precursor_type = .precursorType
+                        End If
+                    End With
+                End If
+
+                spectrum.meta = New Dictionary(Of String, String) From {
+                    {"name", ref.Value},
+                    {"formula", mass.formula},
+                    {"xref_id", ref.Name}
+                }
 
                 Yield spectrum
             Next
@@ -210,7 +322,15 @@ Namespace PackLib
                 .IteratesALL
         End Function
 
-        Public Function BuildSearchIndex(ParamArray adducts As MzCalculator()) As SpectrumReader
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="println">printer function for verbose debug echo, value could be nothing</param>
+        ''' <param name="adducts"></param>
+        ''' <returns></returns>
+        Public Function BuildSearchIndex(println As Action(Of Object), ParamArray adducts As MzCalculator()) As SpectrumReader
+            ' the target reference spectrum has already been filter
+            ' in the loadMass function.
             Dim exactMass As MassIndex() = LoadMass().ToArray
             Dim mz As IonIndex() = exactMass _
                 .Select(Function(mass)
@@ -219,15 +339,36 @@ Namespace PackLib
                 .IteratesALL _
                 .ToArray
 
-            If exactMass.IsNullOrEmpty Then
-                Call ThrowNoMassIndex().Warning
+            If println Is Nothing Then
+                ' mute
+                println = Sub()
+                              ' do nothing for mute
+                          End Sub
             End If
 
+            If exactMass.IsNullOrEmpty Then
+                Dim msg As String = ThrowNoMassIndex()
+
+                Call msg.Warning
+                Call println(msg.LineTokens)
+            Else
+                Call println($"get {mz.Length} ion targets based on the {exactMass.Length} metabolite targets!")
+                Call println(mz.Select(Function(i) i.ToString).ToArray)
+            End If
+
+            ' 20240722 due to the reason of matched with ms2 precursor ion m/z
+            ' so that the delta mass tolerance error may be greater than 0.1da
+            ' ms2 precursor ion tolerance error usually be greater than 0.1da
+            ' set 0.5 at here
             mzIndex = New MzIonSearch(mz, da:=Tolerance.DeltaMass(0.5))
 
             Return Me
         End Function
 
+        ''' <summary>
+        ''' get error message
+        ''' </summary>
+        ''' <returns></returns>
         Private Function ThrowNoMassIndex() As String
             Dim err_msg As New StringBuilder("There is no ion mass index was loaded from this reference library stream!")
             Dim hasIdTargets As Boolean = targetSet.Count > 0
@@ -258,6 +399,7 @@ Namespace PackLib
         Private Function GetMassFiles() As IEnumerable(Of StreamBlock)
             Return DirectCast(file.GetObject("/massSet/"), StreamGroup) _
                 .ListFiles(safe:=True) _
+                .Where(Function(f) TypeOf f Is StreamBlock) _
                 .Select(Function(f) DirectCast(f, StreamBlock))
         End Function
 
@@ -309,7 +451,7 @@ Namespace PackLib
         Public Overrides Function ToString() As String
             Dim name As String = metadata.TryGetValue("name", [default]:="Spectrum Reference Library")
             Dim n_mass As Integer = DirectCast(file.GetObject("/massSet/"), StreamGroup).files.Length
-            Dim n_spectrum As Integer = DirectCast(file.GetObject("/spectrum/"), StreamGroup).ListFiles.Count
+            Dim n_spectrum As Integer = nspectrum
 
             Return $"[{name}] {n_mass} metabolites, {n_spectrum} spectrum"
         End Function

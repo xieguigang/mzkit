@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::594c055a47562804db879c15ddcaa438, mzkit\src\assembly\assembly\UnifyReader\IDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::5ad967cf39a3d69ecf660cde50ea1de6, assembly\assembly\UnifyReader\IDataReader.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 19
-    ' Comment Lines: 0
-    '   Blank Lines: 5
-    '     File Size: 961 B
+    '   Total Lines: 28
+    '    Code Lines: 22 (78.57%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (21.43%)
+    '     File Size: 1.06 KB
 
 
     '     Interface IDataReader
@@ -50,12 +52,16 @@
     '                   GetMsLevel, GetMsMs, GetParentMz, GetPolarity, GetScanId
     '                   GetScanTime, GetTIC, IsEmpty
     ' 
+    '     Interface ISpectrumReader
+    ' 
+    '         Function: GetMsMs
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace DataReader
@@ -77,5 +83,9 @@ Namespace DataReader
         Function GetCollisionEnergy(scan As Object) As Double
         Function GetCentroided(scan As Object) As Boolean
 
+    End Interface
+
+    Public Interface ISpectrumReader(Of T)
+        Function GetMsMs(scan As T) As ms2()
     End Interface
 End Namespace

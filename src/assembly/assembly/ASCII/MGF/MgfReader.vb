@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4c6a8147e3cbda1a3e8e121262090c6, mzkit\src\assembly\assembly\ASCII\MGF\MgfReader.vb"
+﻿#Region "Microsoft.VisualBasic::1396220b341c93f6234fc6e5a1acf7ac, assembly\assembly\ASCII\MGF\MgfReader.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 157
-    '    Code Lines: 131
-    ' Comment Lines: 6
-    '   Blank Lines: 20
-    '     File Size: 6.33 KB
+    '   Total Lines: 141
+    '    Code Lines: 116 (82.27%)
+    ' Comment Lines: 7 (4.96%)
+    '    - Xml Docs: 71.43%
+    ' 
+    '   Blank Lines: 18 (12.77%)
+    '     File Size: 5.67 KB
 
 
     '     Module MgfReader
@@ -83,7 +85,7 @@ Namespace ASCII.MGF
         Public Function ReadIons(ParamArray files As String()) As IEnumerable(Of Ions)
             Return files _
                 .Select(Function(filepath)
-                            Call filepath.__INFO_ECHO
+                            ' Call filepath.info
                             Return StreamParser(filepath)
                         End Function) _
                 .IteratesALL
@@ -138,7 +140,8 @@ Namespace ASCII.MGF
                 .Select(Function(l)
                             Return New ms2 With {
                                 .mz = l(0),
-                                .intensity = l(1)
+                                .intensity = l(1),
+                                .Annotation = l.Skip(2).JoinBy(" ")
                             }
                         End Function) _
                 .ToArray

@@ -10,7 +10,7 @@
     <meta name="keywords" content="R#; MSI; mzkit" />
     <meta name="generator" content="https://github.com/rsharp-lang" />
     <meta name="theme-color" content="#333" />
-    <meta name="description" content="MS-Imaging data handler Mass spectrometry imaging (MSI) is a tec..." />
+    <meta name="description" content="MS-Imaging data handler  Mass spectrometry imaging (MSI) is a te..." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -66,10 +66,10 @@ table caption {font-size:14px;font-weight:bolder;}
                                <br /><br /><span style="color: green;">#' MS-Imaging data handler</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "MSI"</span><span style="color: blue;"> from</span><span style="color: brown"> "mzkit"</span>;
                            </code>
     </p>
-    <p><p>MS-Imaging data handler</p>
-
-<p>Mass spectrometry imaging (MSI) is a technique used in mass spectrometry<br />
- to visualize the spatial distribution of molecules, as biomarkers, <br />
+    <p><p>MS-Imaging data handler
+ 
+ Mass spectrometry imaging (MSI) is a technique used in mass spectrometry
+ to visualize the spatial distribution of molecules, as biomarkers, 
  metabolites, peptides or proteins by their molecular masses.</p></p>
     <blockquote>
       <p style="font-style: italic; font-size: 0.9em;">
@@ -77,8 +77,58 @@ table caption {font-size:14px;font-weight:bolder;}
                            </p>
     </blockquote>
     <div id="main-wrapper">
-      <table class="table-three-line">
+      <table class="table-three-line" style="display: block">
+        <caption>.NET clr type export</caption>
         <tbody><tr>
+  <td id="msi_layer">
+    <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">msi_layer: SingleIonLayer</a>
+  </td>
+  <td><p>a collection of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">PixelData</a> spots, the spot pixel
+ data was used to the spatial heatmap rendering.</p></td>
+</tr>
+<tr>
+  <td id="msi_summary">
+    <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/MSISummary.html">msi_summary: MSISummary</a>
+  </td>
+  <td><p>total ions/base peak/average intensity</p></td>
+</tr></tbody>
+      </table>
+      <br />
+      <br />
+      <table class="table-three-line">
+        <caption>.NET clr function exports</caption>
+        <tbody><tr>
+  <td id="as.data.frame.imzmlmetadata">
+    <a href="./MSI/as.data.frame.imzmlmetadata.html">as.data.frame.imzmlmetadata</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/imzMLMetadata.html">imzMLMetadata</a>: <p>the MS-imaging metadata that read from the imzML header data</p></td>
+</tr>
+<tr>
+  <td id="as.data.frame.ionstat">
+    <a href="./MSI/as.data.frame.ionstat.html">as.data.frame.ionstat</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/IonStat.html">IonStat</a>: <p>Stats the ion features inside a MSI raw data slide</p></td>
+</tr>
+<tr>
+  <td id="writeBin.msisummary">
+    <a href="./MSI/writeBin.msisummary.html">writeBin.msisummary</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/MSISummary.html">MSISummary</a>: <p>total ions/base peak/average intensity</p></td>
+</tr>
+<tr>
+  <td id="writeBin.singleionlayer">
+    <a href="./MSI/writeBin.singleionlayer.html">writeBin.singleionlayer</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a>: <p>a collection of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">PixelData</a> spots, the spot pixel
+ data was used to the spatial heatmap rendering.</p></td>
+</tr>
+<tr>
+  <td id="index_reader">
+    <a href="./MSI/index_reader.html">index_reader</a>
+  </td>
+  <td><p>create memory index reader for the large profile raw MS data</p></td>
+</tr>
+<tr>
   <td id="scale">
     <a href="./MSI/scale.html">scale</a>
   </td>
@@ -115,16 +165,34 @@ table caption {font-size:14px;font-weight:bolder;}
   <td><p>get pixels size from the raw data file</p></td>
 </tr>
 <tr>
+  <td id="dimension_size">
+    <a href="./MSI/dimension_size.html">dimension_size</a>
+  </td>
+  <td><p>get or set the dimension size of the ms-imaging mzpack raw data object</p></td>
+</tr>
+<tr>
   <td id="open.imzML">
     <a href="./MSI/open.imzML.html">open.imzML</a>
   </td>
   <td><p>open the reader for the imzML ms-imaging file</p></td>
 </tr>
 <tr>
+  <td id="load_spectrum">
+    <a href="./MSI/load_spectrum.html">load_spectrum</a>
+  </td>
+  <td><p>load the spectrum of a specific spot scan inside the imzML</p></td>
+</tr>
+<tr>
   <td id="write.imzML">
     <a href="./MSI/write.imzML.html">write.imzML</a>
   </td>
   <td><p>Save and write the given ms-imaging mzpack object as imzML file</p></td>
+</tr>
+<tr>
+  <td id="read.imzml_metadata">
+    <a href="./MSI/read.imzml_metadata.html">read.imzml_metadata</a>
+  </td>
+  <td><p>read the metadata from the imzml file header</p></td>
 </tr>
 <tr>
   <td id="row.scans">
@@ -142,7 +210,7 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="correction">
     <a href="./MSI/correction.html">correction</a>
   </td>
-  <td><p>calculate the X scale</p></td>
+  <td><p>calculate the X axis scale</p></td>
 </tr>
 <tr>
   <td id="basePeakMz">
@@ -181,6 +249,12 @@ table caption {font-size:14px;font-weight:bolder;}
   <td><p>Extract the ion data matrix</p></td>
 </tr>
 <tr>
+  <td id="peakMatrix_stream">
+    <a href="./MSI/peakMatrix_stream.html">peakMatrix_stream</a>
+  </td>
+  <td><p>create the peak matrix alignment in stream mode</p></td>
+</tr>
+<tr>
   <td id="peakSamples">
     <a href="./MSI/peakSamples.html">peakSamples</a>
   </td>
@@ -190,7 +264,7 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="pixelIons">
     <a href="./MSI/pixelIons.html">pixelIons</a>
   </td>
-  <td><p>get number of ions in each pixel scans</p></td>
+  <td><p>get number of ions in each pixel scans or get ion peaks data for specific pixels</p></td>
 </tr>
 <tr>
   <td id="getMatrixIons">
@@ -203,6 +277,12 @@ table caption {font-size:14px;font-weight:bolder;}
     <a href="./MSI/pixelMatrix.html">pixelMatrix</a>
   </td>
   <td><p>dumping raw data matrix as text table file.</p></td>
+</tr>
+<tr>
+  <td id="levels.convolution">
+    <a href="./MSI/levels.convolution.html">levels.convolution</a>
+  </td>
+  <td><p>sum pixels for create pixel spot convolution</p></td>
 </tr>
 <tr>
   <td id="spatial.convolution">
@@ -226,13 +306,27 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="sample_bootstraping">
     <a href="./MSI/sample_bootstraping.html">sample_bootstraping</a>
   </td>
-  <td></td>
+  <td><p>make expression bootstrapping of the spatial data</p></td>
 </tr>
 <tr>
   <td id="cast.spatial_layers">
     <a href="./MSI/cast.spatial_layers.html">cast.spatial_layers</a>
   </td>
   <td><p>cast the rawdata matrix as the ms-imaging ion layer</p></td>
+</tr>
+<tr>
+  <td id="raster">
+    <a href="./MSI/raster.html">raster</a>
+  </td>
+  <td><p>cast the ms-imaging layer data to raster object 
+ 
+ use this function for cast raster object, for do spatial heatmap rendering in another method.</p></td>
+</tr>
+<tr>
+  <td id="reset_padding">
+    <a href="./MSI/reset_padding.html">reset_padding</a>
+  </td>
+  <td><p>re-located of the sample of the ms-imaging for a location which is evaluated by the given <strong>`padding`</strong>.</p></td>
 </tr></tbody>
       </table>
     </div>

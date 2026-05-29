@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a0b7efde7b00a0ffa7eb35475e957c4, mzkit\src\metadb\Chemoinformatics\SDF\Struct\Point3D.vb"
+﻿#Region "Microsoft.VisualBasic::7baf6599b807831ac85cca8252a00986, metadb\Chemoinformatics\SDF\Struct\Point3D.vb"
 
     ' Author:
     ' 
@@ -37,29 +37,52 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 10
-    '    Code Lines: 7
-    ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 193 B
+    '   Total Lines: 28
+    '    Code Lines: 18 (64.29%)
+    ' Comment Lines: 3 (10.71%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (25.00%)
+    '     File Size: 628 B
 
 
     '     Class Point3D
     ' 
     '         Properties: X, Y, Z
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Xml.Serialization
+
 Namespace SDF.Models
 
+    ''' <summary>
+    ''' [x,y,z]
+    ''' </summary>
     Public Class Point3D
 
-        Public Property X As Double
-        Public Property Y As Double
-        Public Property Z As Double
+        <XmlAttribute> Public Property X As Double
+        <XmlAttribute> Public Property Y As Double
+        <XmlAttribute> Public Property Z As Double
+
+        Sub New()
+        End Sub
+
+        Sub New(x As Double, y As Double, z As Double)
+            Me.X = x
+            Me.Y = y
+            Me.Z = z
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"[{X}, {Y}, {Z}]"
+        End Function
 
     End Class
 End Namespace

@@ -1,4 +1,63 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math
+﻿#Region "Microsoft.VisualBasic::85a451192600abb2ed22a3702c0f27ca, metadb\FormulaSearch.Extensions\test\peakTest.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 79
+    '    Code Lines: 54 (68.35%)
+    ' Comment Lines: 10 (12.66%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 15 (18.99%)
+    '     File Size: 2.53 KB
+
+
+    ' Module peakTest
+    ' 
+    '     Function: loadMs2
+    ' 
+    '     Sub: Main, peakAnnoFormula, peakAnnoNoFormula
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -46,8 +105,7 @@ m/z	intensity	relative	annotation
     End Sub
 
     Sub peakAnnoFormula()
-        Dim anno As New PeakAnnotation(0.1, True)
-        Dim result = anno.RunAnnotation(90.0555, loadMs2, formula)
+        Dim result = PeakAnnotation.DoPeakAnnotation(New PeakMs2("", loadMs2), Provider.ParseAdductModel("[M+H]+"), FormulaScanner.ScanFormula(formula))
 
         Call Console.WriteLine("With formula test")
         Call Console.WriteLine()
@@ -62,18 +120,18 @@ m/z	intensity	relative	annotation
     End Sub
 
     Sub peakAnnoNoFormula()
-        Dim anno As New PeakAnnotation(0.1, True)
-        Dim result = anno.RunAnnotation(90.0555, loadMs2)
+        'Dim anno As New PeakAnnotation(0.1, True)
+        'Dim result = anno.RunAnnotation(90.0555, loadMs2)
 
-        Call Console.WriteLine("No formula test")
-        Call Console.WriteLine()
+        'Call Console.WriteLine("No formula test")
+        'Call Console.WriteLine()
 
-        For Each row In result.products
-            Call Console.WriteLine(row.ToString)
-        Next
+        'For Each row In result.products
+        '    Call Console.WriteLine(row.ToString)
+        'Next
 
-        Call Console.WriteLine(New String("-"c, 32))
-        Call Console.WriteLine()
-        Call Console.WriteLine()
+        'Call Console.WriteLine(New String("-"c, 32))
+        'Call Console.WriteLine()
+        'Call Console.WriteLine()
     End Sub
 End Module

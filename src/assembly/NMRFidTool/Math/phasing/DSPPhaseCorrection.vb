@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83f69004ea6b5fe81f535e88ec0c0b3d, mzkit\src\assembly\NMRFidTool\Math\phasing\DSPPhaseCorrection.vb"
+﻿#Region "Microsoft.VisualBasic::2a5f0f78d36826088aa2d122aa9c996e, assembly\NMRFidTool\Math\phasing\DSPPhaseCorrection.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 186
-    '    Code Lines: 161
-    ' Comment Lines: 15
-    '   Blank Lines: 10
-    '     File Size: 6.66 KB
+    '    Code Lines: 161 (86.56%)
+    ' Comment Lines: 15 (8.06%)
+    '    - Xml Docs: 53.33%
+    ' 
+    '   Blank Lines: 10 (5.38%)
+    '     File Size: 6.85 KB
 
 
     '     Class DSPPhaseCorrection

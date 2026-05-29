@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11a990e9048988615bf87af1f748d12a, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\Models\Standards.vb"
+﻿#Region "Microsoft.VisualBasic::dbb34fc8bfe2744df4eb35f6b2a15c6d, mzmath\TargetedMetabolomics\LinearQuantitative\Models\Standards.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 40
-    '    Code Lines: 19
-    ' Comment Lines: 17
-    '   Blank Lines: 4
-    '     File Size: 1.41 KB
+    '   Total Lines: 71
+    '    Code Lines: 34 (47.89%)
+    ' Comment Lines: 31 (43.66%)
+    '    - Xml Docs: 96.77%
+    ' 
+    '   Blank Lines: 6 (8.45%)
+    '     File Size: 2.54 KB
 
 
     '     Class Standards
@@ -49,7 +51,7 @@
     '         Properties: [IS], C, Factor, ID, ISTD
     '                     Name
     ' 
-    '         Function: ToString
+    '         Function: GetLevelKeys, PopulateLevels, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -57,25 +59,41 @@
 #End Region
 
 Imports System.ComponentModel
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace LinearQuantitative
 
     ''' <summary>
     ''' The standard curve concentration gradient data.
-    ''' (标准品的标准曲线的浓度梯度信息)
     ''' </summary>
+    ''' <remarks>
+    ''' (标准品的标准曲线的浓度梯度信息)
+    ''' </remarks>
     Public Class Standards : Implements INamedValue
 
+        ''' <summary>
+        ''' the reference id of the compound
+        ''' </summary>
+        ''' <returns></returns>
         Public Property ID As String Implements INamedValue.Key
+        ''' <summary>
+        ''' display name of the target compound
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Name As String
         ''' <summary>
         ''' 标准曲线的浓度梯度信息
         ''' </summary>
         ''' <returns></returns>
         Public Property C As Dictionary(Of String, Double)
+        ''' <summary>
+        ''' the is td name 
+        ''' </summary>
+        ''' <returns></returns>
         Public Property ISTD As String
         ''' <summary>
         ''' 内标的编号，需要使用这个编号来分别找到离子对和浓度信息
@@ -93,6 +111,21 @@ Namespace LinearQuantitative
 
         Public Overrides Function ToString() As String
             Return $"[{[IS]}] {ID}: {Name}, {C.GetJson}"
+        End Function
+
+        Public Iterator Function PopulateLevels() As IEnumerable(Of Double)
+            For Each lv In C.OrderBy(Function(ci) Integer.Parse(ci.Key.Match("\d+")))
+                Yield lv.Value
+            Next
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function GetLevelKeys(standards As IEnumerable(Of Standards)) As IEnumerable(Of String)
+            Return standards _
+                .Select(Function(c) c.C.Keys) _
+                .IteratesALL _
+                .Distinct _
+                .OrderBy(Function(k) Integer.Parse(k.Match("\d+")))
         End Function
     End Class
 End Namespace

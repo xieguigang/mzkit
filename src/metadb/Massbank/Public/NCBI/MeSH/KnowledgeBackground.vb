@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c4b073b8079e4ab7afdd16dedf791e8, mzkit\src\metadb\Massbank\Public\NCBI\MeSH\KnowledgeBackground.vb"
+﻿#Region "Microsoft.VisualBasic::d93c9c4d64c4c44ee65c5eda0d0eecdc, metadb\Massbank\Public\NCBI\MeSH\KnowledgeBackground.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 108
-    '    Code Lines: 96
-    ' Comment Lines: 0
-    '   Blank Lines: 12
-    '     File Size: 4.13 KB
+    '   Total Lines: 109
+    '    Code Lines: 97 (88.99%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (11.01%)
+    '     File Size: 4.32 KB
 
 
     '     Module KnowledgeBackground
@@ -58,6 +60,7 @@ Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
+Imports SMRUCC.genomics.GCModeller.Workbench.Knowledge_base.NCBI.MeSH.Tree
 
 Namespace NCBI.MeSH
 

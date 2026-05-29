@@ -1,10 +1,11 @@
 .\" man page create by R# package system.
-.TH PUBCHEM_KIT 1 2000-Jan "query.knowlegde_graph" "query.knowlegde_graph"
+.TH PUBCHEM_KIT 1 2000-1月 "query.knowlegde_graph" "query.knowlegde_graph"
 .SH NAME
 query.knowlegde_graph \- Query the compound related biological context information from pubchem
 .SH SYNOPSIS
 \fIquery.knowlegde_graph(\fBcid\fR as string, 
-\fBcache\fR as string = "./graph_kb");\fR
+\fBcache\fR as any = "./graph_kb", 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
 Query the compound related biological context information from pubchem
@@ -15,6 +16,17 @@ Query the compound related biological context information from pubchem
 .PP
 .PP
 \fBcache\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+A tuple list of the knowledge data that associated with the given pubchem metabolite:
+ 
+ 1. genes: the co-occurance genes with the compound 
+ 2. disease: a list of the related disease with the compound
+ 3. compounds: the co-occurance compound data
+ 
+ all of the slot data is a collection of the mzkit pubchem @\fBT:BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Graph.MeshGraph\fR 
+ clr object.
 .PP
 .SH SEE ALSO
 pubchem_kit

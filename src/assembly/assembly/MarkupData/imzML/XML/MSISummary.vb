@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eca7400f950202e20553a8e431489fb0, mzkit\src\assembly\assembly\MarkupData\imzML\XML\MSISummary.vb"
+﻿#Region "Microsoft.VisualBasic::ba41d4dfb296494a7243b055f8a9da22, assembly\assembly\MarkupData\imzML\XML\MSISummary.vb"
 
     ' Author:
     ' 
@@ -37,27 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 123
-    '    Code Lines: 87
-    ' Comment Lines: 19
-    '   Blank Lines: 17
-    '     File Size: 4.39 KB
+    '   Total Lines: 144
+    '    Code Lines: 100 (69.44%)
+    ' Comment Lines: 26 (18.06%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 18 (12.50%)
+    '     File Size: 5.37 KB
 
 
     '     Class MSISummary
     ' 
-    '         Properties: rowScans, size
+    '         Properties: rowScans, size, x, y
     ' 
-    '         Function: FromPixels, GetBasePeakMz, GetLayer, GetRowScan, ToArray
-    '                   ToString
-    ' 
-    '     Enum IntensitySummary
-    ' 
-    '         Average, BasePeak, Total
-    ' 
-    '  
-    ' 
-    ' 
+    '         Function: FromPixels, GetBasePeakMz, GetLayer, GetPixel, GetRowScan
+    '                   ToArray, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -76,10 +70,14 @@ Namespace MarkupData.imzML
     ''' <summary>
     ''' total ions/base peak/average intensity
     ''' </summary>
+    ''' <remarks>
+    ''' spatial heatmap object consist with a collection of the <see cref="iPixelIntensity"/> 
+    ''' spot data in rows.
+    ''' </remarks>
     Public Class MSISummary
 
         ''' <summary>
-        ''' [x,y]
+        ''' [x,y], each row array may be in different size!
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>
@@ -92,12 +90,20 @@ Namespace MarkupData.imzML
         ''' <returns></returns>
         Public Property size As Size
 
+        ''' <summary>
+        ''' the range of the x axis: [min, max]
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property x As Double()
             Get
                 Return New DoubleRange(rowScans.IteratesALL.Select(Function(p) p.x)).MinMax
             End Get
         End Property
 
+        ''' <summary>
+        ''' the range of the y axis: [min, max]
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property y As Double()
             Get
                 Return New DoubleRange(rowScans.Select(Function(r) r(0).y)).MinMax
@@ -194,7 +200,5 @@ Namespace MarkupData.imzML
         Public Overrides Function ToString() As String
             Return $"[width:={size.Width}, height:={size.Height}]"
         End Function
-
     End Class
-
 End Namespace

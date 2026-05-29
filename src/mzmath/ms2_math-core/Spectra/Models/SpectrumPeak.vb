@@ -1,4 +1,84 @@
-﻿Namespace Spectra
+﻿#Region "Microsoft.VisualBasic::4c27a6d57893c9dfb68e431d6d030c50, mzmath\ms2_math-core\Spectra\Models\SpectrumPeak.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 116
+    '    Code Lines: 73 (62.93%)
+    ' Comment Lines: 21 (18.10%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 22 (18.97%)
+    '     File Size: 3.25 KB
+
+
+    '     Enum SpectrumComment
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Interface ISpectrumPeak
+    ' 
+    '         Properties: Intensity, Mass
+    ' 
+    '     Enum PeakQuality
+    ' 
+    '         Ideal, Leading, Saturated, Tailing
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class SpectrumPeak
+    ' 
+    '         Properties: Charge, IsAbsolutelyRequiredFragmentForAnnotation, IsMatched, IsotopeFrag, IsotopeParentPeakID
+    '                     IsotopeWeightNumber, PeakID, PeakQuality, Resolution, SpectrumComment
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: Clone
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Namespace Spectra
 
     <Flags>
     Public Enum SpectrumComment
@@ -29,9 +109,23 @@
         z2 = &H800000
     End Enum
 
+    ''' <summary>
+    ''' an abstract spectrum fragment peak model
+    ''' </summary>
     Public Interface ISpectrumPeak
+
+        ''' <summary>
+        ''' the ion fragment peak m/z(mass value)
+        ''' </summary>
+        ''' <returns></returns>
         Property Mass As Double
+
+        ''' <summary>
+        ''' the peak intensity value in mass spectrum
+        ''' </summary>
+        ''' <returns></returns>
         Property Intensity As Double
+
     End Interface
 
     Public Enum PeakQuality
@@ -45,7 +139,7 @@
     ''' A more details of the spectrum peak model than <see cref="ms2"/> object
     ''' </summary>
     ''' <remarks>
-    ''' MS-DIAL model
+    ''' MS-DIAL model, use the property <see cref="SpectrumComment"/> for set the metabolite related information 
     ''' </remarks>
     Public Class SpectrumPeak : Inherits ms2
         Implements ISpectrumPeak

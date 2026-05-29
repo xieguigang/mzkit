@@ -1,55 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::2aaf4a362c848f1a8f55f9159784352e, mzkit\Rscript\Library\mzkit\comprehensive\SingleCells.vb"
+﻿#Region "Microsoft.VisualBasic::5f58cf51d87db226c50ceb329b2811d7, Rscript\Library\mzkit_app\src\mzkit\comprehensive\SingleCells.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 92
-'    Code Lines: 63
-' Comment Lines: 18
-'   Blank Lines: 11
-'     File Size: 3.94 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module SingleCells
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: cellMatrix, cellStatsTable, singleCellsIons
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 722
+    '    Code Lines: 422 (58.45%)
+    ' Comment Lines: 227 (31.44%)
+    '    - Xml Docs: 93.83%
+    ' 
+    '   Blank Lines: 73 (10.11%)
+    '     File Size: 28.73 KB
+
+
+    ' Module SingleCells
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: asHTSExpression, cell_clusters, cell_embedding, cellLabels, cellMatrix
+    '               cellStatsTable, dfMzMatrix, embedding_sample, mzMatrixDf, openMatrix
+    '               readMzmatrix, rowApplyScale, singleCellsIons, spatialLabels, spot_vector
+    '               TotalPeakSumNormalize, TrIQ_normalized, writeMatrix
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -57,10 +62,18 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.File
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.MatrixMath
+Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.DataFrame
@@ -74,20 +87,33 @@ Imports HTSMatrix = SMRUCC.genomics.Analysis.HTS.DataFrame.Matrix
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.[Object].dataframe
 Imports SingleCellMath = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.Math
 Imports SingleCellMatrix = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PeakMatrix
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' Single cells metabolomics data processor
-''' </summary>
 ''' 
+''' Single-cell analysis is a technique that measures only the target cell itself and can 
+''' extract information that would be buried in bulk-cell analysis with high-resolution.
+''' </summary>
+''' <remarks>
+''' Single-cell metabolomics is a powerful tool that can reveal cellular heterogeneity and 
+''' can elucidate the mechanisms of biological phenomena in detail. It is a promising 
+''' approach in studying plants, especially when cellular heterogeneity has an impact on different 
+''' biological processes. In addition, metabolomics, which can be regarded as a detailed 
+''' phenotypic analysis, is expected to answer previously unrequited questions which will 
+''' lead to expansion of crop production, increased understanding of resistance to diseases,
+''' and in other applications as well.
+''' </remarks>
 <Package("SingleCells")>
 Module SingleCells
 
-    Sub New()
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(SingleCellIonStat()), AddressOf cellStatsTable)
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(MzMatrix), AddressOf mzMatrixDf)
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(SpatialMatrixReader), AddressOf mzMatrixDf)
+    Sub Main()
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(SingleCellIonStat()), AddressOf cellStatsTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(MzMatrix), AddressOf mzMatrixDf)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(SpatialMatrixReader), AddressOf mzMatrixDf)
     End Sub
 
+    <RGenericOverloads("as.data.frame")>
     Private Function cellStatsTable(ions As SingleCellIonStat(), args As list, env As Environment) As Rdataframe
         Dim table As New Rdataframe With {
            .columns = New Dictionary(Of String, Array),
@@ -97,13 +123,18 @@ Module SingleCells
         }
 
         Call table.add(NameOf(SingleCellIonStat.mz), ions.Select(Function(i) i.mz))
+        Call table.add(NameOf(SingleCellIonStat.mzmin), ions.Select(Function(i) i.mzmin))
+        Call table.add(NameOf(SingleCellIonStat.mzmax), ions.Select(Function(i) i.mzmax))
+        Call table.add(NameOf(SingleCellIonStat.mz_error), ions.Select(Function(i) i.mz_error))
         Call table.add(NameOf(SingleCellIonStat.cells), ions.Select(Function(i) i.cells))
         Call table.add(NameOf(SingleCellIonStat.maxIntensity), ions.Select(Function(i) i.maxIntensity))
         Call table.add(NameOf(SingleCellIonStat.baseCell), ions.Select(Function(i) i.baseCell))
         Call table.add(NameOf(SingleCellIonStat.Q1Intensity), ions.Select(Function(i) i.Q1Intensity))
         Call table.add(NameOf(SingleCellIonStat.Q2Intensity), ions.Select(Function(i) i.Q2Intensity))
         Call table.add(NameOf(SingleCellIonStat.Q3Intensity), ions.Select(Function(i) i.Q3Intensity))
-        Call table.add(NameOf(SingleCellIonStat.RSD), ions.Select(Function(i) i.RSD))
+        Call table.add(NameOf(SingleCellIonStat.rsd), ions.Select(Function(i) i.rsd))
+        Call table.add(NameOf(SingleCellIonStat.entropy), ions.Select(Function(i) i.entropy))
+        Call table.add(NameOf(SingleCellIonStat.sparsity), ions.Select(Function(i) i.sparsity))
 
         Return table
     End Function
@@ -111,13 +142,16 @@ Module SingleCells
     ''' <summary>
     ''' cast the matrix object as the dataframe
     ''' </summary>
-    ''' <param name="x"></param>
+    ''' <param name="x">should be a rawdata object in general type: <see cref="MzMatrix"/>.</param>
     ''' <param name="args"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     ''' <remarks>
     ''' implements the ``as.data.frame`` function
     ''' </remarks>
+    ''' <example>
+    ''' as.data.frame(x);
+    ''' </example>
     <ExportAPI("mz_matrix")>
     <RApiReturn(GetType(Rdataframe))>
     Public Function mzMatrixDf(x As Object,
@@ -142,7 +176,7 @@ Module SingleCells
         Dim singleCell As Boolean = args.getValue("singlecell", env, [default]:=False)
         Dim df As New Rdataframe With {
             .columns = New Dictionary(Of String, Array),
-            .rownames = If(singleCell, rawdata.getCellLabels, rawdata.getSpatialLabels)
+            .rownames = If(singleCell, rawdata.cellLabels, rawdata.spatialLabels)
         }
         Dim mz As Double() = rawdata.mz
         Dim offset As Integer
@@ -165,7 +199,17 @@ Module SingleCells
     ''' Cast the ion feature matrix as the GCModeller expression matrix object
     ''' </summary>
     ''' <param name="x"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' the gcmodeller expression matrix object, each <see cref="DataFrameRow"/> element inside the 
+    ''' generated matrix object is the expression vector of all metabolite ion features. which means
+    ''' the matrix format from this function outputs should be:
+    ''' 
+    ''' 1. cell labels, or spatial location in rows
+    ''' 2. and ion features in columns.
+    ''' </returns>
+    ''' <example>
+    ''' as.expression(x);
+    ''' </example>
     <ExportAPI("as.expression")>
     <RApiReturn(GetType(HTSMatrix))>
     Public Function asHTSExpression(x As MzMatrix, Optional single_cell As Boolean = False) As Object
@@ -193,26 +237,24 @@ Module SingleCells
         }
     End Function
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Private Function getCellLabels(x As MzMatrix) As String()
-        Return x.matrix.Select(Function(r) r.label).ToArray
-    End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Private Function getSpatialLabels(x As MzMatrix) As String()
-        Return x.matrix.Select(Function(r) $"{r.X},{r.Y}").ToArray
-    End Function
-
     ''' <summary>
     ''' scale matrix for each spot/cell sample
     ''' </summary>
     ''' <param name="x"></param>
-    ''' <param name="scaler"></param>
+    ''' <param name="scaler">A R# <see cref="RFunction"/> for apply the scale transform.</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' # use the internal function
+    ''' x &lt;- apply.scale(x, scaler = max);
+    ''' # use the lambda function
+    ''' # the symbol x of the parameter in f function is a different thing 
+    ''' # with the variable x
+    ''' let f(x) = x ^ 2;
+    ''' x &lt;- apply.scale(x, scaler = f);
+    ''' </example>
     <ExportAPI("apply.scale")>
+    <RApiReturn(GetType(MzMatrix))>
     Public Function rowApplyScale(x As Object, scaler As RFunction, Optional env As Environment = Nothing) As Object
         Dim lambda As Func(Of Double(), [Variant](Of Message, Double())) =
             Function(xi)
@@ -278,69 +320,166 @@ Module SingleCells
     ''' <summary>
     ''' export single cell expression matrix from the raw data scans
     ''' </summary>
-    ''' <param name="raw"></param>
+    ''' <param name="raw">the raw data for make epxression matrix, could be a mzkit <see cref="mzPack"/> object, 
+    ''' or a tuple list of the msdata <see cref="BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix"/></param>
     ''' <param name="mzdiff"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let rawdata = open.mzpack("/file.mzpack");
+    ''' let matrix = cell_matrix(rawdata, mz_matrix = TRUE);
+    ''' 
+    ''' write.matrix(matrix, file = "/save.dat");
+    ''' </example>
     <ExportAPI("cell_matrix")>
-    Public Function cellMatrix(raw As mzPack,
+    <RApiReturn(GetType(HTSMatrix), GetType(MzMatrix))>
+    Public Function cellMatrix(<RRawVectorArgument> raw As Object,
                                Optional mzdiff As Double = 0.005,
                                Optional freq As Double = 0.001,
+                               <RRawVectorArgument>
+                               Optional ions_mz As Object = Nothing,
+                               Optional mz_matrix As Boolean = False,
                                Optional env As Environment = Nothing) As Object
 
         Dim singleCells As New List(Of DataFrameRow)
-        Dim mzSet As Double() = SingleCellMath.GetMzIndex(raw:=raw, mzdiff:=mzdiff, freq:=freq)
+        Dim mzSet As MassWindow()
+        Dim source As String
 
-        For Each cell_scan As DataFrameRow In SingleCellMatrix.ExportScans(Of DataFrameRow)(raw, mzSet)
-            cell_scan.geneID = cell_scan.geneID _
-                .Replace("[MS1]", "") _
-                .Trim
-            singleCells.Add(cell_scan)
-        Next
+        If raw Is Nothing Then
+            Return Nothing
+        End If
 
-        Return New HTSMatrix With {
-            .expression = singleCells.ToArray,
-            .sampleID = mzSet _
-                .Select(Function(mzi) mzi.ToString("F4")) _
-                .ToArray,
-            .tag = raw.source
-        }
+        If TypeOf raw Is mzPack Then
+            Dim mzpack As mzPack = DirectCast(raw, mzPack)
+
+            source = mzpack.source
+            mzSet = SingleCellMath.GetMzIndex(
+                raw:=mzpack,
+                mzdiff:=mzdiff,
+                freq:=freq
+            )
+
+            For Each cell_scan As DataFrameRow In SingleCellMatrix.ExportScans(Of DataFrameRow)(mzpack, mzSet.Mass)
+                cell_scan.geneID = cell_scan.geneID _
+                    .Replace("[MS1]", "") _
+                    .Trim
+                singleCells.Add(cell_scan)
+            Next
+        ElseIf TypeOf raw Is list Then
+            Dim msdata As Dictionary(Of String, LibraryMatrix) = DirectCast(raw, list).AsGeneric(Of LibraryMatrix)(env)
+            Dim massList = msdata.Values.Select(Function(m) m.mz).AsList
+
+            source = "msdata"
+            mzSet = Deconvolute.Math.GetMzIndexFastBin(massList, mzdiff, freq)
+
+            For Each cell_scan As DataFrameRow In SingleCellMatrix.ExportScans(Of DataFrameRow)(msdata.Values, mzSet.Mass)
+                cell_scan.geneID = cell_scan.geneID _
+                    .Replace("[MS1]", "") _
+                    .Trim
+                singleCells.Add(cell_scan)
+            Next
+        ElseIf TypeOf raw Is dataframe Then
+            Dim ions As Double() = CLRVector.asNumeric(ions_mz)
+            Dim mat As New MzMatrix With {
+                .mz = ions,
+                .tolerance = mzdiff
+            }
+            Dim samples As New List(Of PixelData)
+
+            For Each sample In DirectCast(raw, dataframe).forEachRow
+                samples.Add(New PixelData With {
+                    .label = sample.name,
+                    .intensity = CLRVector.asNumeric(sample.value)
+                })
+            Next
+
+            mat.matrix = samples.ToArray
+
+            Return mat
+        Else
+            Return Message.InCompatibleType(GetType(mzPack), raw.GetType, env)
+        End If
+
+        If mz_matrix Then
+            Return New MzMatrix With {
+                .tolerance = $"da:{mzdiff}",
+                .matrixType = FileApplicationClass.SingleCellsMetabolomics,
+                .mz = mzSet.Mass,
+                .matrix = singleCells _
+                    .Select(Function(v) PixelData.FromSingleCellExpression(v)) _
+                    .ToArray,
+                .mzmin = mzSet.Select(Function(mzi) mzi.mzmin).ToArray,
+                .mzmax = mzSet.Select(Function(mzi) mzi.mzmax).ToArray
+            }
+        Else
+            Return New HTSMatrix With {
+                .expression = singleCells.ToArray,
+                .sampleID = mzSet _
+                    .Select(Function(mzi) mzi.mass.ToString("F4")) _
+                    .ToArray,
+                .tag = source
+            }
+        End If
     End Function
 
     ''' <summary>
-    ''' do stats of the single cell metabolomics ions
+    ''' do statistics of the single cell metabolomics ions features
     ''' </summary>
-    ''' <param name="raw"></param>
+    ''' <param name="raw">the <see cref="mzPack"/> rawdata object, or a single cells matrix object</param>
     ''' <param name="da"></param>
     ''' <param name="parallel"></param>
     ''' <returns></returns>
     <ExportAPI("SCM_ionStat")>
     <RApiReturn(GetType(SingleCellIonStat))>
-    Public Function singleCellsIons(raw As mzPack,
+    Public Function singleCellsIons(raw As Object,
                                     Optional da As Double = 0.01,
-                                    Optional parallel As Boolean = True) As Object
+                                    Optional parallel As Boolean = True,
+                                    Optional env As Environment = Nothing) As Object
 
-        Return SingleCellIonStat.DoIonStats(raw, da, parallel).ToArray
+        If TypeOf raw Is mzPack Then
+            ' needs extract the ion features
+            ' and then do cell counts analysis
+            Return SingleCellIonStat.DoIonStats(DirectCast(raw, mzPack), da, parallel).ToArray
+        ElseIf TypeOf raw Is MzMatrix Then
+            Return SingleCellIonStat.DoIonStats(DirectCast(raw, MzMatrix), parallel).ToArray
+        Else
+            Return Message.InCompatibleType(GetType(MzMatrix), raw.GetType, env)
+        End If
     End Function
 
     ''' <summary>
     ''' write the single cell ion feature data matrix
     ''' </summary>
-    ''' <param name="x"></param>
+    ''' <param name="x">the expression <see cref="MzMatrix"/> object.</param>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let rawdata = open.mzpack("/file.mzpack");
+    ''' let matrix = cell_matrix(rawdata, mz_matrix = TRUE);
+    ''' 
+    ''' write.matrix(matrix, file = "/save.dat");
+    ''' </example>
     <ExportAPI("write.matrix")>
     <RApiReturn(TypeCodes.boolean)>
-    Public Function writeMatrix(x As MzMatrix, file As Object, Optional env As Environment = Nothing) As Object
+    Public Function writeMatrix(x As MzMatrix, file As Object,
+                                Optional write_label As Boolean = False,
+                                Optional env As Environment = Nothing) As Object
+
         Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+        Dim is_csv As Boolean = TypeOf file Is String AndAlso CStr(file).ExtensionSuffix("csv")
 
         If buf Like GetType(Message) Then
             Return buf.TryCast(Of Message)
         End If
 
-        ' save
-        Call New MatrixWriter(x).Write(buf.TryCast(Of Stream))
+        If is_csv Then
+            Call x.ExportCsvSheet(buf.TryCast(Of Stream), write_label:=write_label)
+        Else
+            ' save
+            Call New MatrixWriter(x).Write(buf.TryCast(Of Stream))
+        End If
+
         Call buf.TryCast(Of Stream).Flush()
 
         If TypeOf file Is String Then
@@ -355,12 +494,24 @@ Module SingleCells
     ''' </summary>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A tuple list that contains the data elements:
+    ''' 
+    ''' 1. tolerance: the mass tolerance description for seperates the ion features
+    ''' 2. featureSize: the number of the ion features in the raw data file
+    ''' 3. ionSet: a numeric vector of the ion features m/z value.
+    ''' 4. spots: the number of the spots that read from the rawdata matrix file
+    ''' 5. reader: the rawdata <see cref="MatrixReader"/>
+    ''' </returns>
     ''' <remarks>
     ''' this function open a lazy reader of the matrix, for load all 
     ''' data into memory at once, use the ``read.mz_matrix`` 
     ''' function.
     ''' </remarks>
+    ''' <example>
+    ''' let reader = open.matrix("/file.dat");
+    ''' let matrix = read.mz_matrix(reader$reader);
+    ''' </example>
     <ExportAPI("open.matrix")>
     <RApiReturn(
         NameOf(MatrixReader.tolerance),
@@ -403,6 +554,9 @@ Module SingleCells
     ''' <remarks>
     ''' for create a lazy data reader of the matrix, use the ``open.matrix`` function.
     ''' </remarks>
+    ''' <example>
+    ''' read.mz_matrix("/file.dat");
+    ''' </example>
     <ExportAPI("read.mz_matrix")>
     <RApiReturn(GetType(MzMatrix))>
     Public Function readMzmatrix(<RRawVectorArgument>
@@ -430,10 +584,208 @@ Module SingleCells
     ''' <summary>
     ''' cast matrix object to the R liked dataframe object
     ''' </summary>
-    ''' <param name="x"></param>
+    ''' <param name="x">the matrix object that going to do the type casting</param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let matrix = read.mz_matrix("/file.dat");
+    ''' # cast object to dataframe liked object
+    ''' let df = df.mz_matrix(matrix);
+    ''' 
+    ''' # get m/z features inside this expression matrix
+    ''' print(colnames(df));
+    ''' # get single cell labels inside this expression matrix
+    ''' print(colnames(df));
+    ''' 
+    ''' # get expression of specific ion by m/z value
+    ''' print(df[, 336.8995]);
+    ''' 
+    ''' # get expression of a specific singlecell by its label
+    ''' print(df["cell_label1", ]);
+    ''' </example>
     <ExportAPI("df.mz_matrix")>
+    <RApiReturn(GetType(SpatialMatrixReader))>
     Public Function dfMzMatrix(x As MzMatrix) As Object
         Return New SpatialMatrixReader(x)
+    End Function
+
+    ''' <summary>
+    ''' create a session for create spot cell embedding
+    ''' </summary>
+    ''' <param name="ndims">the embedding vector size, greater than 30 and less than 100 dimension is recommended.</param>
+    ''' <param name="method"></param>
+    ''' <param name="freq"></param>
+    ''' <param name="diff">
+    ''' the score diff for build the tree branch
+    ''' </param>
+    ''' <returns></returns>
+    <ExportAPI("cell_embedding")>
+    <RApiReturn(GetType(SpecEmbedding))>
+    Public Function cell_embedding(Optional ndims As Integer = 30,
+                                   Optional method As TrainMethod = TrainMethod.Skip_Gram,
+                                   Optional freq As Integer = 3,
+                                   Optional diff As Double = 0.1) As Object
+
+        Return New SpecEmbedding(ndims, method, freq, diff:=diff)
+    End Function
+
+    ''' <summary>
+    ''' export the cell clustering result
+    ''' </summary>
+    ''' <param name="pool"></param>
+    ''' <returns>a tuple list of the cell clustering result,
+    ''' each tuple is a cluster result.</returns>
+    <ExportAPI("cell_clusters")>
+    Public Function cell_clusters(pool As SpecEmbedding) As list
+        Dim tree = pool.GetClusters
+        Dim clusters As New list With {
+            .slots = tree _
+                .ToDictionary(Function(t) t.Key,
+                              Function(t)
+                                  Return CObj(t.Value)
+                              End Function)
+        }
+
+        Return clusters
+    End Function
+
+    ''' <summary>
+    ''' push a sample data into the embedding session
+    ''' </summary>
+    ''' <param name="pool"></param>
+    ''' <param name="sample"></param>
+    ''' <param name="tag"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' the spectrum data will be re-order via the spectrum total ions desc
+    ''' </remarks>
+    <ExportAPI("embedding_sample")>
+    <RApiReturn(GetType(SpecEmbedding))>
+    Public Function embedding_sample(pool As SpecEmbedding, <RRawVectorArgument> sample As Object,
+                                     Optional tag As String = Nothing,
+                                     Optional vocabulary As SpectrumVocabulary = Nothing,
+                                     Optional env As Environment = Nothing) As Object
+        Dim pull As PeakMs2()
+
+        If sample Is Nothing Then
+            Return pool
+        End If
+
+        If TypeOf sample Is mzPack Then
+            Dim mzpack As mzPack = sample
+
+            tag = If(tag, mzpack.source)
+            pull = mzpack.MS _
+                .Select(Function(s)
+                            Return New PeakMs2(tag & " - " & s.scan_id, s.GetMs)
+                        End Function) _
+                .ToArray
+        ElseIf TypeOf sample Is MzMatrix Then
+            pull = DirectCast(sample, MzMatrix) _
+                .GetPeaks(tag) _
+                .ToArray
+        Else
+            Dim pip As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(sample, env)
+
+            If pip.isError Then
+                Return pip.getError
+            Else
+                pull = pip.populates(Of PeakMs2)(env).ToArray
+            End If
+        End If
+
+        ' re-order the spectrum data via total sum data
+        pull = pull _
+            .OrderByDescending(Function(s)
+                                   Return Aggregate mzi As ms2
+                                          In s.mzInto
+                                          Into Sum(mzi.intensity)
+                               End Function) _
+            .ToArray
+
+        If vocabulary Is Nothing Then
+            Call pool.AddSample(pull, centroid:=True)
+        Else
+            Dim terms As String() = pull _
+                .Select(Function(spec)
+                            Return vocabulary.ToTerm(spec.lib_guid)
+                        End Function) _
+                .ToArray
+
+            Call pool.AddSample(terms)
+        End If
+
+        Return pool
+    End Function
+
+    ''' <summary>
+    ''' get the cell spot embedding result
+    ''' </summary>
+    ''' <param name="pool"></param>
+    ''' <returns>vector data could be converts the dataframe object via ``as.data.frame``
+    ''' </returns>
+    ''' <example>
+    ''' as.data.frame(spot_vector(x));
+    ''' </example>
+    <ExportAPI("spot_vector")>
+    Public Function spot_vector(pool As SpecEmbedding) As VectorModel
+        Return pool.CreateEmbedding
+    End Function
+
+    ''' <summary>
+    ''' get the labels based on the spatial information of each spot
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    ''' <example>
+    ''' let matrix = read.mz_matrix("/file.dat");
+    ''' let xyz = spatial_labels(matrix);
+    ''' let spatial = strsplit(xyz, ",");
+    ''' 
+    ''' # x
+    ''' print(spatial@{1});
+    ''' # y
+    ''' print(spatial@{2});
+    ''' # z
+    ''' print(spatial@{3});
+    ''' </example>
+    <ExportAPI("spatial_labels")>
+    <Extension>
+    Public Function spatialLabels(x As MzMatrix) As String()
+        Return x.matrix.Select(Function(s) $"{s.X},{s.Y},{s.Z}").ToArray
+    End Function
+
+    <ExportAPI("singleCell_labels")>
+    <Extension>
+    Public Function cellLabels(x As MzMatrix) As String()
+        Return x.matrix.Select(Function(s) s.label).ToArray
+    End Function
+
+    ''' <summary>
+    ''' do matrix data normalization via total peak sum
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="scale"></param>
+    ''' <returns></returns>
+    <ExportAPI("total_peaksum")>
+    Public Function TotalPeakSumNormalize(x As MzMatrix, Optional scale As Double = 1000000.0) As MzMatrix
+        Return x.TotalPeakSumNormalization(scale)
+    End Function
+
+    ''' <summary>
+    ''' processing of the intensity value clip via TrIQ algorithm for the feature matrix
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="q"></param>
+    ''' <param name="levels"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' run processing for the feature clustering matrix, not apply for the expression matrix
+    ''' </remarks>
+    <ExportAPI("TrIQ_clip")>
+    Public Function TrIQ_normalized(x As MzMatrix, Optional q As Double = 0.6, Optional levels As Integer = 100) As MzMatrix
+        Dim clip_algorithm As New FeatureTrIQClips(x, q, levels)
+        clip_algorithm.Run()
+        Return clip_algorithm.GetClipMatrix
     End Function
 End Module

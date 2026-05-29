@@ -1,5 +1,5 @@
 .\" man page create by R# package system.
-.TH MZPACK 1 2000-Jan "ls" "ls"
+.TH MZPACK 1 2000-1月 "ls" "ls"
 .SH NAME
 ls \- Get object list inside the MS packdata
 .SH SYNOPSIS
@@ -21,6 +21,13 @@ Get object list inside the MS packdata
 show all ms1 scan id in a mzpack data object or 
  show all raw data file names in a mzwork data 
  package.
+.PP
+.SH EXAMPLES
+.PP
+let rawdata = open.mzpack(file = "./rawdata.mzPack");
+ let scan_id = mzPack::ls(mzpack = rawdata);
+ 
+ print(scan_id);
 .PP
 .SH SEE ALSO
 mzPack

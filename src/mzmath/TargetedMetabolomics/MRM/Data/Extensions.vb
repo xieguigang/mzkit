@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::800ab5cbb71708c2b559c25c3fe69932, mzkit\src\mzmath\TargetedMetabolomics\MRM\Data\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::81b4bf44c48f9fdc7a1f4dbe44d2fd4f, mzmath\TargetedMetabolomics\MRM\Data\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 109
-    '    Code Lines: 80
-    ' Comment Lines: 14
-    '   Blank Lines: 15
-    '     File Size: 5.07 KB
+    '   Total Lines: 130
+    '    Code Lines: 89 (68.46%)
+    ' Comment Lines: 25 (19.23%)
+    '    - Xml Docs: 96.00%
+    ' 
+    '   Blank Lines: 16 (12.31%)
+    '     File Size: 6.01 KB
 
 
     '     Module Extensions
@@ -55,15 +57,14 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.Scripting
 Imports chromatogramTicks = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 
 Namespace MRM.Data
@@ -83,12 +84,22 @@ Namespace MRM.Data
                 .IteratesALL _
                 .Where(Function(chr) Not chr.id Like NotMRMSelectors) _
                 .Select(Function(chr)
+                            Dim q1 = chr.precursor.MRMTargetMz
+                            Dim q3 = chr.product.MRMTargetMz
+                            Dim ms As New LibraryMatrix({
+                                New ms2(q1, 1),
+                                New ms2(q3, 1)
+                            })
+
                             Return New IonPair With {
-                                .precursor = chr.precursor.MRMTargetMz,
-                                .product = chr.product.MRMTargetMz
+                                .precursor = q1,
+                                .product = q3,
+                                .accession = ms.MsSplashId,
+                                .name = $"{q1.ToString("F2")}/{q3.ToString("F2")}"
                             }
                         End Function) _
                 .GroupBy(Function(ion)
+                             ' Isomerism
                              Return $"{ion.precursor.ToString("F1")}-{ion.product.ToString("F1")}"
                          End Function) _
                 .Select(Function(ion) ion.First) _
@@ -151,9 +162,21 @@ Namespace MRM.Data
             End With
         End Function
 
+        ''' <summary>
+        ''' Filter a single XIC data object via a given MRM ion pair data 
+        ''' </summary>
+        ''' <param name="chromatograms"></param>
+        ''' <param name="ion"></param>
+        ''' <param name="tolerance"></param>
+        ''' <returns>
+        ''' this function returns nothing if the given ion pair is not found 
+        ''' from the givne <paramref name="chromatograms"/> data collection. 
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function MRMSelector(chromatograms As IEnumerable(Of chromatogramTicks), ion As IonPair, tolerance As Tolerance) As chromatogramTicks
+        Public Function MRMSelector(chromatograms As IEnumerable(Of chromatogramTicks),
+                                    ion As IonPair,
+                                    tolerance As Tolerance) As chromatogramTicks
             Return chromatograms _
                 .Where(Function(c)
                            Return (Not c.id Like NotMRMSelectors) AndAlso ion.Assert(c, tolerance)

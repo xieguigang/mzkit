@@ -1,4 +1,4 @@
-# UVSpectroscopy
+﻿# UVSpectroscopy
 
 helper package module for read ``electromagnetic radiation spectrum`` data
 

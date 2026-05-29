@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0ded3822a3db0d50eb86c2160c6c364, mzkit\src\metadb\MoNA\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::54ef42fb96594b9b010bd6984d49d150, metadb\MoNA\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 35
-    '    Code Lines: 13
-    ' Comment Lines: 15
-    '   Blank Lines: 7
-    '     File Size: 1.11 KB
+    '    Code Lines: 13 (37.14%)
+    ' Comment Lines: 15 (42.86%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (20.00%)
+    '     File Size: 1.14 KB
 
 
     ' 

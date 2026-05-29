@@ -1,5 +1,5 @@
 .\" man page create by R# package system.
-.TH VISUAL 1 2000-Jan "mass_spectrum.plot" "mass_spectrum.plot"
+.TH VISUAL 1 2000-1月 "mass_spectrum.plot" "mass_spectrum.plot"
 .SH NAME
 mass_spectrum.plot \- Plot of the mass spectrum
 .SH SYNOPSIS
@@ -11,7 +11,14 @@ mass_spectrum.plot \- Plot of the mass spectrum
 \fBtagXFormat\fR as string = "F2", 
 \fBintoCutoff\fR as double = 0.3, 
 \fBbar_width\fR as double = 8, 
-\fBlegend_layout\fR as any = ["top-right","title","bottom"], 
+\fBcolor1\fR as string = "steelblue", 
+\fBcolor2\fR as string = "brown", 
+\fBgrid_x\fR as boolean = FALSE, 
+\fBlegend_layout\fR as any = ["top-right","title","bottom","none"], 
+\fBgridStrokeX\fR as string = "stroke: lightgray; stroke-width: 1px; stroke-dash: dash;", 
+\fBgridStrokeY\fR as string = "stroke: #EBEBEB; stroke-width: 1px; stroke-dash: solid;", 
+\fBhighlight_msn\fR as string = \fB<NULL>\fR, 
+\fBhighlight_ion\fR as any = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -38,8 +45,18 @@ Plot of the mass spectrum
 . 
 .PP
 .PP
+\fBintoCutoff\fB \fR\- 
+ the intensity cutoff value for display the m/z label on the bar
+. 
+.PP
+.PP
 \fBlegend_layout\fB \fR\- 
  the layout of the legend plot, this parameter value could affects the plot style
+. 
+.PP
+.PP
+\fBhighlight_msn\fB \fR\- 
+ make highlights of the MSn peaks, the value of this parameter should be a color string, such as "red" or "#FF0000". MS level greater than 2.
 . 
 .PP
 .SH SEE ALSO

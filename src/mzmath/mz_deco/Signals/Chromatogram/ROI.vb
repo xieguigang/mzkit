@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb4bb6e3966188ca370b922da5ecb410, mzkit\src\mzmath\ms2_math-core\Chromatogram\ROI.vb"
+﻿#Region "Microsoft.VisualBasic::bf7eac60609895c8e96dfe697388fbd7, mzmath\mz_deco\Signals\Chromatogram\ROI.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 109
-    '    Code Lines: 57
-    ' Comment Lines: 39
-    '   Blank Lines: 13
-    '     File Size: 4.00 KB
+    '   Total Lines: 113
+    '    Code Lines: 57 (50.44%)
+    ' Comment Lines: 43 (38.05%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 13 (11.50%)
+    '     File Size: 4.19 KB
 
 
     '     Class ROI
@@ -65,7 +67,7 @@ Imports Microsoft.VisualBasic.Math
 Namespace Chromatogram
 
     ''' <summary>
-    ''' Region of interest
+    ''' Region of interest(on retention time dimension).
     ''' </summary>
     Public Class ROI : Implements IRetentionTime
 
@@ -119,13 +121,17 @@ Namespace Chromatogram
             Get
                 Dim signal As Double = Aggregate tick As ChromatogramTick
                                        In ticks
-                                       Into Sum(tick.Intensity)
+                                       Into Sum(tick.Intensity - baseline)
                 Dim sn As Double = SignalProcessing.SNRatio(signal, noise)
 
                 Return sn
             End Get
         End Property
 
+        ''' <summary>
+        ''' the window length of retention <see cref="time"/>.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property peakWidth As Single
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

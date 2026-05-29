@@ -1,77 +1,82 @@
-﻿#Region "Microsoft.VisualBasic::7c327cdaa390e3c7b1c771a388566034, mzkit\Rscript\Library\mzkit\math\Formula.vb"
+﻿#Region "Microsoft.VisualBasic::dd008c01bacf6696d97d9185b995dc9d, Rscript\Library\mzkit_app\src\mzkit\math\Formula.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 575
-'    Code Lines: 390
-' Comment Lines: 102
-'   Blank Lines: 83
-'     File Size: 22.15 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module FormulaTools
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: (+5 Overloads) add, asFormula, atomGroups, canonicalFormula, CreateGraph
-'               divide, EvalFormula, FormulaCompositionString, FormulaFinder, FormulaString
-'               getElementCount, getFormulaResult, IsotopeDistributionSearch, LoadChemicalDescriptorsMatrix, (+6 Overloads) minus
-'               openChemicalDescriptorDatabase, parseSMILES, PeakAnnotation, printFormulas, readKCF
-'               readSDF, registerAnnotations, removeElement, (+2 Overloads) repeats, ScanFormula
-'               SDF2KCF
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 655
+    '    Code Lines: 403 (61.53%)
+    ' Comment Lines: 161 (24.58%)
+    '    - Xml Docs: 88.20%
+    ' 
+    '   Blank Lines: 91 (13.89%)
+    '     File Size: 28.25 KB
+
+
+    ' Module FormulaTools
+    ' 
+    '     Function: (+5 Overloads) add, canonicalFormula, CreateGraph, divide, EvalFormula
+    '               FormulaCompositionString, FormulaFinder, FormulaString, getElementCount, getFormulaResult
+    '               IonFormulaCalibration, IsotopeDistributionSearch, LoadChemicalDescriptorsMatrix, MakeIonFormula, (+6 Overloads) minus
+    '               openChemicalDescriptorDatabase, peakAnnotation_f, printFormulas, readKCF, readSDF
+    '               registerAnnotations, removeElement, (+2 Overloads) repeats, ScanFormula, SDF2KCF
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -85,20 +90,61 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports any = Microsoft.VisualBasic.Scripting
 Imports RDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal.ConsolePrinter
-Imports stdNum = System.Math
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' The chemical formulae toolkit
+''' 
+''' In chemistry, a chemical formula is a way of presenting information about the chemical proportions of 
+''' atoms that constitute a particular chemical compound or molecule, using chemical element symbols, numbers,
+''' and sometimes also other symbols, such as parentheses, dashes, brackets, commas and plus (+) and minus (−) 
+''' signs. These are limited to a single typographic line of symbols, which may include subscripts and 
+''' superscripts. A chemical formula is not a chemical name since it does not contain any words. Although a 
+''' chemical formula may imply certain simple chemical structures, it is not the same as a full chemical 
+''' structural formula. Chemical formulae can fully specify the structure of only the simplest of molecules 
+''' and chemical substances, and are generally more limited in power than chemical names and structural formulae.
 ''' </summary>
+''' <remarks>
+''' The simplest types of chemical formulae are called empirical formulae, which use letters and numbers indicating
+''' the numerical proportions of atoms of each type. Molecular formulae indicate the simple numbers of each type 
+''' of atom in a molecule, with no information on structure. For example, the empirical formula for glucose is
+''' CH2O (twice as many hydrogen atoms as carbon and oxygen), while its molecular formula is C6H12O6 (12 hydrogen 
+''' atoms, six carbon and oxygen atoms).
+''' 
+''' Sometimes a chemical formula is complicated by being written as a condensed formula (or condensed molecular 
+''' formula, occasionally called a "semi-structural formula"), which conveys additional information about the
+''' particular ways in which the atoms are chemically bonded together, either in covalent bonds, ionic bonds, or 
+''' various combinations of these types. This is possible if the relevant bonding is easy to show in one dimension. 
+''' An example is the condensed molecular/chemical formula for ethanol, which is CH3−CH2−OH or CH3CH2OH. However, 
+''' even a condensed chemical formula is necessarily limited in its ability to show complex bonding relationships 
+''' between atoms, especially atoms that have bonds to four or more different substituents.
+''' 
+''' Since a chemical formula must be expressed as a single line of chemical element symbols, it often cannot be as
+''' informative as a true structural formula, which is a graphical representation of the spatial relationship 
+''' between atoms in chemical compounds (see for example the figure for butane structural and chemical formulae,
+''' at right). For reasons of structural complexity, a single condensed chemical formula (or semi-structural formula)
+''' may correspond to different molecules, known as isomers. For example, glucose shares its molecular formula C6H12O6
+''' with a number of other sugars, including fructose, galactose and mannose. Linear equivalent chemical names exist 
+''' that can and do specify uniquely any complex structural formula (see chemical nomenclature), but such names must
+''' use many terms (words), rather than the simple element symbols, numbers, and simple typographical symbols that 
+''' define a chemical formula.
+''' 
+''' Chemical formulae may be used in chemical equations to describe chemical reactions and other chemical transformations, 
+''' such as the dissolving of ionic compounds into solution. While, as noted, chemical formulae do not have the full 
+''' power of structural formulae to show chemical relationships between atoms, they are sufficient to keep track of 
+''' numbers of atoms and numbers of electrical charges in chemical reactions, thus balancing chemical equations so that
+''' these equations can be used in chemical problems involving conservation of atoms, and conservation of electric 
+''' charge.
+''' </remarks>
 <Package("formula", Category:=APICategories.UtilityTools)>
 Module FormulaTools
 
-    Sub New()
+    Sub Main()
         Call REnv.AttachConsoleFormatter(Of FormulaComposition)(AddressOf FormulaCompositionString)
         Call REnv.AttachConsoleFormatter(Of Formula)(AddressOf FormulaString)
         Call REnv.AttachConsoleFormatter(Of FormulaComposition())(AddressOf printFormulas)
 
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(FormulaComposition()), AddressOf getFormulaResult)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(FormulaComposition()), AddressOf getFormulaResult)
     End Sub
 
     Private Function getFormulaResult(formulas As FormulaComposition(), args As list, env As Environment) As RDataframe
@@ -153,21 +199,25 @@ Module FormulaTools
     End Function
 
     ''' <summary>
-    ''' do peak annotation for the ms2 fragments
+    ''' do peak annotation for the ms2 spectrum fragments
     ''' </summary>
     ''' <param name="library">
     ''' A ms2 matrix object
     ''' </param>
-    ''' <param name="massDiff"></param>
+    ''' <param name="massDiff">
+    ''' the mass tolerance error for matches the ms2 spectrum peaks, should usually 
+    ''' be the tolerance error for make spectrum centroid process.
+    ''' </param>
     ''' <param name="isotopeFirst"></param>
     ''' <param name="adducts"></param>
     ''' <returns></returns>
-    <ExportAPI("peakAnnotations")>
+    <ExportAPI("peaks_annotation")>
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function peakAnnotation_f(library As Object, formula As Object, <RRawVectorArgument> adducts As Object,
                                      Optional massDiff As Double = 0.1,
                                      Optional isotopeFirst As Boolean = True,
                                      Optional as_list As Boolean = True,
+                                     Optional unset_scalar As Boolean = False,
                                      Optional env As Environment = Nothing) As Object
         Dim parentMz As Double
         Dim centroid As Boolean
@@ -208,30 +258,46 @@ Module FormulaTools
             Return Message.InCompatibleType(GetType(Formula), formula.GetType, env)
         End If
 
+        Dim annoHit As list
+        Dim mirror As AlignmentOutput
+        Dim cos As New CosAlignment(DAmethod.DeltaMass(massDiff), RelativeIntensityCutoff.Zero)
+
         For Each adduct As MzCalculator In adductList
-            anno = PeakAnnotation.DoPeakAnnotation(spec, parentMz, adduct, f)
+            anno = PeakAnnotation.DoPeakAnnotation(spec, adduct, f, da:=massDiff)
+            mirror = cos.CreateAlignment(spec.ToArray, anno.GetAnnotatedPeaks)
 
             If as_list Then
-                results.slots(adduct.ToString) = New list With {
+                annoHit = New list With {
                    .slots = New Dictionary(Of String, Object) From {
                        {"products", anno.products},
                        {"formula", f},
                        {"adduct", adduct.ToString},
                        {"charge", anno.formula.charge},
                        {"ppm", anno.formula.ppm},
-                       {"massdiff", anno.formula.massdiff}
+                       {"massdiff", anno.formula.massdiff},
+                       {"mirror", mirror},
+                       {"basePeak", spec.OrderByDescending(Function(i) i.intensity).First.mz},
+                       {"precursor_hit", anno.precursor_matched}
                    }
                 }
+
+                If unset_scalar AndAlso adductList.Length = 1 Then
+                    Return annoHit
+                End If
+
+                results.slots(adduct.ToString) = annoHit
+            ElseIf adductList.Length = 1 Then
+                Return anno
             Else
                 results.slots(adduct.ToString) = anno
             End If
         Next
 
-        If adductList.Length = 1 Then
+        If unset_scalar AndAlso results.length = 1 Then
             Return results.data.First
-        Else
-            Return results
         End If
+
+        Return results
     End Function
 
     ''' <summary>
@@ -246,13 +312,18 @@ Module FormulaTools
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("candidates")>
+    <RApiReturn(GetType(FormulaComposition))>
     Public Function FormulaFinder(mass#,
                                   Optional ppm# = 5,
                                   <RListObjectArgument>
                                   Optional candidateElements As list = Nothing,
-                                  Optional env As Environment = Nothing) As FormulaComposition()
+                                  Optional env As Environment = Nothing) As Object
 
         Dim opts As New SearchOption(-9999, 9999, ppm)
+
+        If candidateElements.length = 1 AndAlso TypeOf candidateElements.data.First Is list Then
+            candidateElements = DirectCast(candidateElements.data.First, list)
+        End If
 
         For Each element As String In candidateElements.getNames
             Dim value As Object = candidateElements.getByName(element)
@@ -272,7 +343,10 @@ Module FormulaTools
         Next
 
         Dim oMwtWin As New FormulaSearch(opts)
-        Dim results As FormulaComposition() = oMwtWin.SearchByExactMass(mass).ToArray
+        Dim results As FormulaComposition() = oMwtWin _
+            .SearchByExactMass(mass) _
+            .OrderBy(Function(c) c.EmpiricalFormula) _
+            .ToArray
 
         Return results
     End Function
@@ -316,6 +390,7 @@ Module FormulaTools
     ''' <returns></returns>
     <ExportAPI("scan")>
     <RSymbolLanguageMask(FormulaScanner.Pattern, True, Test:=GetType(TestFormulaSymbolLang))>
+    <RApiReturn(GetType(Formula))>
     Public Function ScanFormula(formula$, Optional env As Environment = Nothing) As Formula
         Dim globalEnv As GlobalEnvironment = env.globalEnvironment
         Dim n As Integer = globalEnv.options.getOption("formula.polymers_n", 999)
@@ -324,9 +399,83 @@ Module FormulaTools
         Return formulaObj
     End Function
 
+    ''' <summary>
+    ''' Make the given formula string into canonical format
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <returns></returns>
+    ''' <example>
+    ''' let formula = formula::scan("O3C9H6");
+    ''' let canonical = canonical_formula(formula);
+    ''' 
+    ''' print(canonical);
+    ''' # [1] "C9H6O3"
+    ''' </example>
     <ExportAPI("canonical_formula")>
     Public Function canonicalFormula(formula As Formula) As String
         Return Canonical.BuildCanonicalFormula(formula.CountsByElement)
+    End Function
+
+    ''' <summary>
+    ''' Evaluate of the molecule formula from the given adduct ion formula
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="adducts"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("formula_calibration")>
+    <RApiReturn(GetType(Formula))>
+    Public Function IonFormulaCalibration(formula As Formula, <RRawVectorArgument> adducts As Object,
+                                          Optional env As Environment = Nothing) As Object
+
+        Dim precursors = Math.GetPrecursorTypes(adducts, env)
+
+        If precursors.IsNullOrEmpty Then
+            Return RInternal.debug.stop("no adducts value was given!", env)
+        End If
+
+        If precursors.Length = 1 Then
+            Return FormulaCalculateUtility.GeneralMoleculeFormula(New Formula(formula), precursors(0).ToString)
+        Else
+            Dim list As list = list.empty
+
+            For Each type As MzCalculator In precursors
+                Call list.add(type.ToString, FormulaCalculateUtility.GeneralMoleculeFormula(New Formula(formula), type.ToString))
+            Next
+
+            Return list
+        End If
+    End Function
+
+    ''' <summary>
+    ''' Make molecule formula to adduct ion formula by add a specific adducts ion data
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="adducts"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("adduct_ion_formula")>
+    <RApiReturn(GetType(Formula))>
+    Public Function MakeIonFormula(formula As Formula, <RRawVectorArgument> adducts As Object,
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim precursors = Math.GetPrecursorTypes(adducts, env)
+
+        If precursors.IsNullOrEmpty Then
+            Return RInternal.debug.stop("no adducts value was given!", env)
+        End If
+
+        If precursors.Length = 1 Then
+            Return FormulaCalculateUtility.ConvertFormulaAdductPairToPrecursorAdduct(New Formula(formula), New AdductIon(precursors(0)))
+        Else
+            Dim list As list = list.empty
+
+            For Each type As MzCalculator In precursors
+                Call list.add(type.ToString, FormulaCalculateUtility.GeneralMoleculeFormula(New Formula(formula), New AdductIon(type)))
+            Next
+
+            Return list
+        End If
     End Function
 
 #Region "formula operators"
@@ -358,31 +507,10 @@ Module FormulaTools
     ''' <param name="ionFormula"></param>
     ''' <param name="precursor"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>molecule formula</returns>
     <ROperator("-")>
     Public Function minus(ionFormula As Formula, precursor As MzCalculator, Optional env As Environment = Nothing) As Formula
-        Dim ionName As String = precursor.name
-        Dim ion = Parser.Formula(precursor.name)
-
-        If ion Like GetType(String) Then
-            Throw New InvalidExpressionException(ion.TryCast(Of String))
-        Else
-            For Each part In ion.TryCast(Of IEnumerable(Of (sign As Integer, expr As String)))
-                Dim subIon As Formula = FormulaScanner.ScanFormula(part.expr)
-
-                subIon *= stdNum.Abs(part.sign)
-
-                If part.sign > 0 Then
-                    ' delete part
-                    ionFormula -= subIon
-                Else
-                    ' add part
-                    ionFormula += subIon
-                End If
-            Next
-        End If
-
-        Return ionFormula
+        Return FormulaCalculateUtility.GeneralMoleculeFormula(ionFormula, precursor.ToString)
     End Function
 
     <ROperator("-")>
@@ -486,6 +614,7 @@ Module FormulaTools
     ''' <param name="parseStruct"></param>
     ''' <returns></returns>
     <ExportAPI("parse.SDF")>
+    <RApiReturn(GetType(SDF))>
     Public Function readSDF(data As String, Optional parseStruct As Boolean = True) As SDF
         Return SDF.ParseSDF(data.SolveStream, parseStruct)
     End Function
@@ -527,7 +656,7 @@ Module FormulaTools
     <RApiReturn(GetType(DataSet()))>
     Public Function LoadChemicalDescriptorsMatrix(repo As PubChemDescriptorRepo, cid As Long(), Optional env As Environment = Nothing) As Object
         If repo Is Nothing Then
-            Return Internal.debug.stop("no chemical descriptor database was provided!", env)
+            Return RInternal.debug.stop("no chemical descriptor database was provided!", env)
         ElseIf cid.IsNullOrEmpty Then
             Return Nothing
         End If
@@ -571,6 +700,7 @@ Module FormulaTools
     End Function
 
     <ExportAPI("isotope_distribution")>
+    <RApiReturn(GetType(IsotopeDistribution))>
     Public Function IsotopeDistributionSearch(formula As Object,
                                               Optional prob_threshold As Double = 0.001,
                                               Optional fwhm As Double = 0.1,

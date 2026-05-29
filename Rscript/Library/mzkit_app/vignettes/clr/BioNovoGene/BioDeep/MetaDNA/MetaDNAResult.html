@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.BioDeep.MetaDNA.MetaDNAResult</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>MetaDNAResult {BioNovoGene.BioDeep.MetaDNA}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>MetaDNAResult</h2>
+
+        <h3>Description</h3>
+
+        <p>table output of the metaDNA infer annotation result</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.BioDeep.MetaDNA
+export class MetaDNAResult {
+   # mz<em>into(query)</em>into(reference)[]
+   alignment: string;
+   # entropy score
+   entropy: double;
+   exactMass: double;
+   fileName: string;
+   formula: string;
+   # forward cosine score
+   forward: double;
+   # MS1 or MS2
+   inferLevel: string;
+   inferSize: integer;
+   intensity: double;
+   # ranked jaccard score
+   jaccard: double;
+   KEGG_reaction: string;
+   KEGGId: string;
+   mirror: double;
+   mz: double;
+   # Theoretical calculated m/z value based on <a href="/vignettes/clr/BioNovoGene/BioDeep/MetaDNA/MetaDNAResult.html">MetaDNAResult</a>.<a href="#">mz</a> And <a href="/vignettes/clr/BioNovoGene/BioDeep/MetaDNA/MetaDNAResult.html">MetaDNAResult</a>.<a href="#">precursorType</a>
+   mzCalc: double;
+   name: string;
+   parentTrace: double;
+   partnerKEGGId: string;
+   # ppm error between the Theoretical <a href="/vignettes/clr/BioNovoGene/BioDeep/MetaDNA/MetaDNAResult.html">MetaDNAResult</a>.<a href="#">mzCalc</a> and <a href="/vignettes/clr/BioNovoGene/BioDeep/MetaDNA/MetaDNAResult.html">MetaDNAResult</a>.<a href="#">mz</a>
+   ppm: double;
+   # precursor adducts type
+   precursorType: string;
+   pvalue: double;
+   # the unique id of ms2 spectrum peaks
+   query_id: string;
+   reaction: string;
+   # reverse cosine score
+   reverse: double;
+   # the unique id of ms1 parent ion
+   ROI_id: string;
+   rt: double;
+   # the score match of ms1 <a href="/vignettes/clr/BioNovoGene/BioDeep/MetaDNA/MetaDNAResult.html">MetaDNAResult</a>.<a href="#">rt</a> and rt value of the KEGG compound reference
+   rt_adjust: double;
+   score1: double;
+   score2: double;
+   seed: string;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        this clr type has no other .net clr type reference.
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

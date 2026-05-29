@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c76f6084776b79f26a21e812270b8cd, mzkit\src\visualize\plot\ChromatogramPlot\ScanContour.vb"
+﻿#Region "Microsoft.VisualBasic::998594642b65f16146444903f7059118, visualize\plot\ChromatogramPlot\ScanContour.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 106
-    '    Code Lines: 86
-    ' Comment Lines: 4
-    '   Blank Lines: 16
+    '    Code Lines: 86 (81.13%)
+    ' Comment Lines: 4 (3.77%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 16 (15.09%)
     '     File Size: 3.88 KB
 
 
@@ -68,7 +70,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.MarchingSquares
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Class ScanContour : Inherits Plot
 
@@ -122,7 +124,7 @@ Public Class ScanContour : Inherits Plot
                             z:= .OrderByDescending(Function(x) x.intensity) _
                                 .First _
                                 .intensity _
-                                .DoCall(AddressOf stdNum.Log10)
+                                .DoCall(AddressOf std.Log10)
                         )
                     End If
                 End With

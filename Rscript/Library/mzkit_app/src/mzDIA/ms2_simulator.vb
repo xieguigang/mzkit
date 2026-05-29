@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b08ab440f6205908ca96adc24270c810, mzkit\Rscript\Library\mzkit.insilicons\ms2_simulator.vb"
+﻿#Region "Microsoft.VisualBasic::711714d48cc417534f60f0667a9cab17, Rscript\Library\mzkit_app\src\mzDIA\ms2_simulator.vb"
 
     ' Author:
     ' 
@@ -37,38 +37,43 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 78
-    '    Code Lines: 65
-    ' Comment Lines: 0
-    '   Blank Lines: 13
-    '     File Size: 3.03 KB
+    '   Total Lines: 169
+    '    Code Lines: 123 (72.78%)
+    ' Comment Lines: 22 (13.02%)
+    '    - Xml Docs: 95.45%
+    ' 
+    '   Blank Lines: 24 (14.20%)
+    '     File Size: 6.67 KB
 
 
     ' Module ms2_simulator
     ' 
-    '     Function: energyModel_custom, energyModel_normalDist, energyRange, loadKCF, MolecularFragmentation
-    '               MolecularGraph, writeMgf
+    '     Function: buildDocuments, embed_graph2vector, loadKCF, MolecularGraph_func, parseSingleSmiles
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.IO
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
+Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Insilicon
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry.Model
-Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
+Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine
-Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.Closure
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
+Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 
-<Package("mzkit.simulator")>
+<Package("spectral_simulator")>
 Module ms2_simulator
 
     <ExportAPI("read.kcf")>
@@ -76,58 +81,146 @@ Module ms2_simulator
         Return file.LoadKCF(False)
     End Function
 
-    <ExportAPI("molecular.graph")>
-    Public Function MolecularGraph(mol As KCF, Optional verbose As Boolean = False) As NetworkGraph
-        Dim g As NetworkGraph = mol _
-           .CreateGraph _
-           .FillBoundEnergy(New BoundEnergyFinder)
+    ''' <summary>
+    ''' build molecule documents for do embedding
+    ''' </summary>
+    ''' <param name="mols"></param>
+    ''' <returns></returns>
+    <ExportAPI("buildDocuments")>
+    Public Function buildDocuments(<RRawVectorArgument> mols As Object,
+                                   <RRawVectorArgument>
+                                   Optional id As Object = Nothing,
+                                   Optional env As Environment = Nothing) As Object
 
-        If verbose Then
-            Call Console.WriteLine($"energy range: {energyRange(g).ToString}")
+        Dim formulas As pipeline = pipeline.TryCreatePipeline(Of ChemicalFormula)(mols, env)
+
+        If formulas.isError Then
+            Return formulas.getError
         End If
 
-        Return g
+        Dim idset As String() = CLRVector.asCharacter(id)
+        Dim i As i32 = 0
+        Dim stream As IEnumerable(Of NamedValue(Of ChemicalFormula)) = (
+            Iterator Function() As IEnumerable(Of NamedValue(Of ChemicalFormula))
+                For Each f As ChemicalFormula In formulas.populates(Of ChemicalFormula)(env)
+                    Yield New NamedValue(Of ChemicalFormula)(idset.ElementAtOrDefault(++i, f?.id), f)
+                Next
+            End Function)()
+
+        Return New list With {
+            .slots = SMILESEmbedding _
+                .StructureDocuments(mols:=stream) _
+                .ToDictionary(Function(a) a.name,
+                              Function(a)
+                                  Return CObj(a.value)
+                              End Function)
+        }
     End Function
 
-    <ExportAPI("energy.range")>
-    Public Function energyRange(mol As NetworkGraph) As DoubleRange
-        Dim energies As Double() = mol.graphEdges _
-            .Select(Function(e)
-                        Return e.weight
-                    End Function) _
-            .ToArray
+    ''' <summary>
+    ''' parse the smiles structure string as molecular network graph
+    ''' </summary>
+    ''' <param name="mol"></param>
+    ''' <param name="id">
+    ''' tag the id data with the corresponding smiles graph data, this character id vector
+    ''' length should be equals to the given molecules vector size.
+    ''' </param>
+    ''' <param name="verbose"></param>
+    ''' <returns></returns>
+    <ExportAPI("molecular_graph")>
+    <RApiReturn(GetType(NetworkGraph))>
+    Public Function MolecularGraph_func(<RRawVectorArgument>
+                                        mol As Object,
+                                        <RRawVectorArgument> Optional id As Object = Nothing,
+                                        <RRawVectorArgument> Optional name As Object = Nothing,
+                                        Optional digest_formula As Boolean = True,
+                                        Optional verbose As Boolean = False,
+                                        Optional tqdm As Boolean = True,
+                                        Optional env As Environment = Nothing) As Object
 
-        Return energies
+        Dim idset As String() = CLRVector.asCharacter(id)
+        Dim nameSet As String() = CLRVector.asCharacter(name)
+        Dim i As i32 = 0
+
+        Return env.EvaluateFramework(Of String, Object)(
+            x:=mol,
+            eval:=Function(smiles)
+                      Return smiles.parseSingleSmiles(
+                            idset.ElementAtOrDefault(i),
+                            nameSet.ElementAtOrDefault(++i),
+                            verbose, digest_formula)
+                  End Function,
+            parallel:=False,
+            tqdm:=tqdm)
     End Function
 
-    <ExportAPI("fragmentation")>
-    Public Function MolecularFragmentation(mol As NetworkGraph, energy As EnergyModel,
-                                           Optional nIntervals% = 1000,
-                                           Optional precision% = 4) As LibraryMatrix
-        Return mol.MolecularFragment(energy, nIntervals, precision, verbose:=False)
+    <Extension>
+    Private Function parseSingleSmiles(smiles As String,
+                                       id As String, name As String,
+                                       verbose As Boolean,
+                                       digest_formula As Boolean) As Object
+        If verbose Then
+            Call VBDebugger.EchoLine(smiles)
+        End If
+
+        Dim chemical_struct As ChemicalFormula = ParseChain.ParseGraph(smiles, strict:=False)
+
+        ' parser error
+        If chemical_struct Is Nothing Then
+            Return Nothing
+        End If
+
+        chemical_struct.id = id
+        chemical_struct.name = name
+
+        If digest_formula Then
+            Dim molecular_graph As NetworkGraph = chemical_struct.AsGraph
+
+            If verbose Then
+                Call VBDebugger.WaitOutput()
+                Call Console.WriteLine(molecular_graph.vertex _
+                        .Select(Function(v) v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)) _
+                        .GetJson)
+            End If
+
+            Return molecular_graph
+        Else
+            Return chemical_struct
+        End If
     End Function
 
-    <ExportAPI("energy.normal")>
-    Public Function energyModel_normalDist(mu#, delta#, Optional max# = 1000) As EnergyModel
-        Return New EnergyModel(Function(x)
-                                   Return pnorm.ProbabilityDensity(x, mu, delta)
-                               End Function, 0, max)
+    ''' <summary>
+    ''' make the molecular graph embedding to vector
+    ''' </summary>
+    ''' <param name="mol"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("embedded.graph2vector")>
+    Public Function embed_graph2vector(<RRawVectorArgument> mol As Object, Optional env As Environment = Nothing) As Object
+        If TypeOf mol Is NetworkGraph Then
+            Return MolecularGraph.ToVector(DirectCast(mol, NetworkGraph))
+        End If
+
+        Dim exports As list = list.empty
+        Dim names As String() = Nothing
+        Dim graphs As pipeline = pipeline.TryCreatePipeline(Of NetworkGraph)(mol, env)
+
+        If TypeOf mol Is list Then
+            names = DirectCast(mol, list).slotKeys
+        End If
+        If graphs.isError Then
+            Return graphs.getError
+        End If
+
+        Dim i As Integer = 0
+        Dim pool As NetworkGraph() = graphs.populates(Of NetworkGraph)(env).ToArray
+
+        For Each graph As NetworkGraph In pool
+            exports.add(names.ElementAtOrDefault(i, $"mol_{i + 1}"), MolecularGraph.ToVector(graph))
+            i += 1
+        Next
+
+        Return exports
     End Function
 
-    <ExportAPI("energy.custom")>
-    Public Function energyModel_custom(fun As DeclareLambdaFunction, max#, Optional env As Environment = Nothing) As EnergyModel
-        Dim math As Func(Of Double, Double) = fun.CreateLambda(Of Double, Double)(env)
-        Dim energy As New EnergyModel(math, 0, max)
-
-        Return energy
-    End Function
-
-    <ExportAPI("write.mgf")>
-    Public Function writeMgf(fragments As LibraryMatrix, file$) As Boolean
-        Using mgf As StreamWriter = file.OpenWriter
-            Call fragments.MgfIon.WriteAsciiMgf(mgf)
-        End Using
-
-        Return True
-    End Function
 End Module

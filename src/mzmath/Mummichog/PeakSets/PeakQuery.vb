@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05c5a5d102d6cf9833ce16b6ad41b1f0, mzkit\src\mzmath\Mummichog\PeakSets\PeakQuery.vb"
+﻿#Region "Microsoft.VisualBasic::e91db8dc77de8ebec5494b8e24991c7e, mzmath\Mummichog\PeakSets\PeakQuery.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 50
-    '    Code Lines: 38
-    ' Comment Lines: 4
-    '   Blank Lines: 8
-    '     File Size: 1.39 KB
+    '   Total Lines: 76
+    '    Code Lines: 38 (50.00%)
+    ' Comment Lines: 30 (39.47%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (10.53%)
+    '     File Size: 2.43 KB
 
 
     ' Class PeakQuery
@@ -59,17 +61,39 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 
+''' <summary>
+''' a collection of the spectrum items that matched with the same exact mass value.
+''' </summary>
+''' <typeparam name="T"></typeparam>
 Public Class PeakQuery(Of T As IMS1Annotation)
 
+    ''' <summary>
+    ''' the exact mass value that multiple <see cref="peaks"/> spectrum data matched.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property exactMass As Double
+    ''' <summary>
+    ''' a collection of the spectrum object, the precursor m/z value of 
+    ''' these spectrum object maybe different, but has the same exact 
+    ''' mass value in different precursor type computation result. 
+    ''' </summary>
+    ''' <returns></returns>
     Public Property peaks As T()
 
+    ''' <summary>
+    ''' the number of the <see cref="peaks"/> collection.
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property size As Integer
         Get
             Return peaks.TryCount
         End Get
     End Property
 
+    ''' <summary>
+    ''' a collection of the matched precursor type of the precursors
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property adducts As String()
         Get
             Return peaks _
@@ -79,6 +103,10 @@ Public Class PeakQuery(Of T As IMS1Annotation)
         End Get
     End Property
 
+    ''' <summary>
+    ''' a group of unqiue reference id of <see cref="peaks"/>.
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property id_group As String()
         Get
             Return peaks _

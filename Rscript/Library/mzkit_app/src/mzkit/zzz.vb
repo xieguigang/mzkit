@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d51d6ec8d22b43800d7d49ee1106b66, mzkit\Rscript\Library\mzkit\zzz.vb"
+﻿#Region "Microsoft.VisualBasic::2081af93f4e6875236d6143d0d433117, Rscript\Library\mzkit_app\src\mzkit\zzz.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 52
-    ' Comment Lines: 0
-    '   Blank Lines: 15
-    '     File Size: 2.83 KB
+    '   Total Lines: 78
+    '    Code Lines: 62 (79.49%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 16 (20.51%)
+    '     File Size: 3.13 KB
 
 
     ' Class zzz
@@ -58,19 +60,31 @@ Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports SMRUCC.Rsharp.Runtime.Interop
-Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 <Assembly: RPackageModule>
 
 Public Class zzz
 
     Public Shared Sub onLoad()
-        Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of LibraryMatrix)(AddressOf printLib)
-        Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of ScanMS1)(AddressOf printMSScan)
-        Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of ScanMS2)(AddressOf printMSScan)
+        Call RInternal.ConsolePrinter.AttachConsoleFormatter(Of LibraryMatrix)(AddressOf printLib)
+        Call RInternal.ConsolePrinter.AttachConsoleFormatter(Of ScanMS1)(AddressOf printMSScan)
+        Call RInternal.ConsolePrinter.AttachConsoleFormatter(Of ScanMS2)(AddressOf printMSScan)
 
         Call MetaDbXref.Main()
+        Call Massbank.Main()
+        Call Mummichog.Main()
+        Call PubChemToolKit.Main()
+        Call MzWeb.Main()
+        Call SMILESTool.Main()
+        Call FormulaTools.Main()
+
+        Call library.Main()
         Call data.Main()
+        Call MSI.Main()
+        Call MzMath.Main()
+        Call HMDBTools.Main()
+        Call SingleCells.Main()
     End Sub
 
     Private Shared Function printMSScan(scan As MSScan) As String

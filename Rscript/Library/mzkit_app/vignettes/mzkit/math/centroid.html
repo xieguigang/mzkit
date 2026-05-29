@@ -5,170 +5,7 @@
     <title>Converts profiles peak data to peak data in centroid mode.</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <style rel="stylesheet" type="text/css">
-        @media screen {
-            .container {
-                padding-right: 10px;
-                padding-left: 10px;
-                margin-right: auto;
-                margin-left: auto;
-                max-width: 900px;
-            }
-        }
-
-        .rimage img {
-            /* from knitr - for examples and demos */
-            width: 96%;
-            margin-left: 2%;
-        }
-
-        .katex {
-            font-size: 1.1em;
-        }
-
-        code {
-            color: rgb(194, 42, 42);
-            background: inherit;
-            font-style: italic;
-            font-weight: bold;
-        }
-
-        pre code {
-            color: rgb(54, 54, 54);
-            font-style: normal;
-        }
-
-        body {
-            line-height: 1.4;
-            background: white;
-            color: black;
-        }
-
-        a:link {
-            background: white;
-            color: blue;
-        }
-
-        a:visited {
-            background: white;
-            color: rgb(50%, 0%, 50%);
-        }
-
-        h1 {
-            background: white;
-            color: rgb(55%, 55%, 55%);
-            font-family: monospace;
-            font-size: 1.4em;
-            /* x-large; */
-            text-align: center;
-        }
-
-        h2 {
-            background: white;
-            color: rgb(40%, 40%, 40%);
-            font-family: monospace;
-            font-size: 1.2em;
-            /* large; */
-            text-align: center;
-        }
-
-        h3 {
-            background: white;
-            color: rgb(40%, 40%, 40%);
-            font-family: monospace;
-            font-size: 1.2em;
-            /* large; */
-        }
-
-        h4 {
-            background: white;
-            color: rgb(40%, 40%, 40%);
-            font-family: monospace;
-            font-style: italic;
-            font-size: 1.2em;
-            /* large; */
-        }
-
-        h5 {
-            background: white;
-            color: rgb(40%, 40%, 40%);
-            font-family: monospace;
-        }
-
-        h6 {
-            background: white;
-            color: rgb(40%, 40%, 40%);
-            font-family: monospace;
-            font-style: italic;
-        }
-
-        img.toplogo {
-            width: 4em;
-            vertical-align: middle;
-        }
-
-        img.arrow {
-            width: 30px;
-            height: 30px;
-            border: 0;
-        }
-
-        span.acronym {
-            font-size: small;
-        }
-
-        span.env {
-            font-family: monospace;
-        }
-
-        span.file {
-            font-family: monospace;
-        }
-
-        span.option {
-            font-family: monospace;
-        }
-
-        span.pkg {
-            font-weight: bold;
-        }
-
-        span.samp {
-            font-family: monospace;
-        }
-
-        div.vignettes a:hover {
-            background: rgb(85%, 85%, 85%);
-        }
-
-        .character {
-            color: brown;
-        }
-
-        .comment {
-            color: green;
-            font-style: italic;
-        }
-
-        .number {
-            color: skyblue;
-        }
-
-        .keyword {
-            color: blue;
-            font-weight: bold;
-        }
-
-        .operator {
-            color: gray;
-            font-weight: bold;
-        }
-
-        .bracket {
-            color: rgb(197, 1, 197);
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
 </head>
 
 <body>
@@ -185,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p><br /> profile and centroid in Mass Spectrometry?<br /> <br /> 1. Profile means the continuous wave form in a mass spectrum.<br />   + Number of data points Is large.<br /> 2. Centroid means the peaks in a profile data Is changed to bars.<br />   + location of the bar Is center of the profile peak.<br />   + height of the bar Is area of the profile peak.</p>
+        <p><br /> profile and centroid in Mass Spectrometry?<br /> <br /> 1. Profile means the continuous wave form in a mass spectrum.<br /> <br />   + Number of data points Is large.<br />   <br /> 2. Centroid means the peaks in a profile data Is changed to bars.<br /> <br />   + location of the bar Is center of the profile peak.<br />   + height of the bar Is area of the profile peak.</p>
 
         <h3>Usage</h3>
 
@@ -193,23 +30,26 @@
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>centroid</strong>(<i>ions</i>,
     <i>tolerance</i> = <span style='color: brown;'><strong>"da:0.1"</strong></span>,
     <i>intoCutoff</i> = <span style='color: green;'>0.05</span>,
-    <i>parallel</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+    <i>parallel</i> = <span style='color: blue !important;'>FALSE</span>,
+    <i>aggregate</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>ions</dt>
-<dd><p><p>value of this parameter could be </p>
+<dt>aggregate</dt>
+<dd><p>default is get the max intensity value. [as <a href="/vignettes/clr/SMRUCC/Rsharp/Development/Components/AggregateFunction.html">AggregateFunction</a>]</p></dd>
 
-<ul>
-<li>a collection of peakMs2 data </li>
-<li>a library matrix data </li>
-<li>or a dataframe object which should contains at least <code>mz</code> and <code>intensity</code> columns.</li>
-<li>or just a m/z vector</li>
-<li>also could be a mzpack data object</li>
-</ul></p></dd>
+
+<dt>ions</dt>
+<dd><p>value of this parameter could be 
+ 
+ + a collection of peakMs2 data 
+ + a library matrix data 
+ + or a dataframe object which should contains at least <code>mz</code> and <code>intensity</code> columns.
+ + or just a m/z vector
+ + also could be a mzpack data object</p></dd>
 
         </table>
 
@@ -218,14 +58,35 @@
 
         
 
+        <h3 style="display: block">Authors</h3>
+
+        BioNovoGene
 
         <h3>Value</h3>
 
-        <p>Peaks data in centroid mode or a new m/z vector in centroid.</p>
+        <p>Peaks data in centroid mode or a new m/z vector in centroid.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a></li><li>double</li></ul>
 
         <h3 style="display: block;">Examples</h3>
 
-        <pre><code id="example_r"> print(centroid([452.7627 67.563 457.336 347.8 242.3], tolerance = "da:0.1"));</code></pre>
+        <pre><code id="example_r"> print(centroid([452.7627 67.563 457.336 347.8 242.3], tolerance = "da:0.1"));
+ # [1]      67.563   242.3    347.8    452.763  457.336 
+ 
+ let spec = data.frame(mz = [452.7627 67.563 457.336 347.8 242.3], 
+    intensity = [312 4353 6664 6765 1119]);
+    
+ let f = aggregate(FUN = "max");
+ 
+ print(as.data.frame(spec));
+ #              mz intensity                   
+ # --------------------------                                                                                                 
+ # <mode> <Double> <integer>                                                                                                   
+ # [1, ]   452.763       312                                             
+ # [2, ]    67.563      4353                                                                    
+ # [3, ]   457.336      6664                                                                                                
+ # [4, ]     347.8      6765                                                                                           
+ # [5, ]     242.3      1119
+ 
+ print(centroid(spec, tolerance = "da:0.1", aggregate = f));</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>math</em> version 1.0.0.0 <a
@@ -235,14 +96,7 @@
 </body>
 
 <script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
-<script type="text/javascript">
-    let example_code = document.getElementById("example_r");
-    let highlights_str = highlights(example_code.innerText);
-
-    console.log(example_code.innerText);
-    console.log(highlights_str);
-
-    example_code.innerHTML = highlights_str;
-</script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("example_r");</script>
 
 </html>

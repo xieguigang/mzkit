@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35974f38ec9248f270c4621b8f97507b, mzkit\src\assembly\BrukerDataReader\SCiLSLab\PackFile.vb"
+﻿#Region "Microsoft.VisualBasic::8a225349d49ed4a38135c7391ab06d3e, assembly\BrukerDataReader\SCiLSLab\PackFile.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 104
-    '    Code Lines: 78
-    ' Comment Lines: 10
-    '   Blank Lines: 16
-    '     File Size: 4.47 KB
+    '    Code Lines: 78 (75.00%)
+    ' Comment Lines: 10 (9.62%)
+    '    - Xml Docs: 40.00%
+    ' 
+    '   Blank Lines: 16 (15.38%)
+    '     File Size: 4.58 KB
 
 
     '     Delegate Function

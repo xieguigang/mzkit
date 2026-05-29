@@ -1,59 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::bdb34306931fb9ddfb1bbab62656f05d, mzkit\Rscript\Library\mzkit\assembly\MzWeb.vb"
+﻿#Region "Microsoft.VisualBasic::742c60a8598ad15240c69e2e90df1893, Rscript\Library\mzkit_app\src\mzkit\assembly\MzWeb.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 574
-'    Code Lines: 374
-' Comment Lines: 133
-'   Blank Lines: 67
-'     File Size: 21.55 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module MzWeb
-' 
-'     Function: GetChromatogram, loadStream, MassCalibration, Ms1Peaks, Ms1ScanPoints
-'               Ms2ScanPeaks, Open, openFile, openFromFile, readCache
-'               setMzpackThumbnail, TIC, ToMzPack, uniqueReference, writeCache
-'               writeMzpack, writeStream, writeToCDF
-' 
-'     Sub: WriteCache
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1183
+    '    Code Lines: 748 (63.23%)
+    ' Comment Lines: 287 (24.26%)
+    '    - Xml Docs: 91.64%
+    ' 
+    '   Blank Lines: 148 (12.51%)
+    '     File Size: 48.43 KB
+
+
+    ' Module MzWeb
+    ' 
+    '     Function: BPC, GetChromatogram, getMs1PointTable, loadStream, loadXcmsRData
+    '               MassCalibration, Ms1Peaks, Ms1ScanPoints, Ms2ScanPeaks, Open
+    '               openFile, openFromFile, parse_base64, parseScanMsBuffer, readCache
+    '               setMzpackThumbnail, TIC, ToMzPack, uniqueReference, writeCache
+    '               writeMzpack, writeStream, writeToCDF
+    ' 
+    '     Sub: Main, WriteCache
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -65,15 +68,21 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.Emit.Delegates
@@ -81,25 +90,66 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Components.Interface
-Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
+Imports SIMDAdd = Microsoft.VisualBasic.Math.SIMD.Add
 
 #If NET48 Then
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 #End If
 
 ''' <summary>
 ''' biodeep mzweb data viewer raw data file helper
 ''' </summary>
 <Package("mzweb")>
+<RTypeExport("ms1_data", GetType(ms1_scan))>
 Module MzWeb
+
+    Sub Main()
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(ms1_scan()), AddressOf getMs1PointTable)
+    End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Public Function getMs1PointTable(data As ms1_scan(), args As list, env As Environment) As dataframe
+        Dim df As New dataframe With {.columns = New Dictionary(Of String, Array)}
+
+        Call df.add("mz", data.Select(Function(i) i.mz))
+        Call df.add("scan_time", data.Select(Function(i) i.scan_time))
+        Call df.add("intensity", data.Select(Function(i) i.intensity))
+
+        Return df
+    End Function
 
     ''' <summary>
     ''' load the xcms cache dataset
@@ -142,7 +192,7 @@ Module MzWeb
     ''' <summary>
     ''' Get TIC from the mzpack layer reader
     ''' </summary>
-    ''' <param name="mzpack"></param>
+    ''' <param name="x">should be a file reader to a mzpack file or the mzpack in-memory data object.</param>
     ''' <returns></returns>
     ''' <example>
     ''' let rawdata = mzweb::open(file = "./LCMS-rawdata.mzPack");
@@ -151,21 +201,87 @@ Module MzWeb
     ''' plot(tic);
     ''' </example>
     <ExportAPI("TIC")>
-    Public Function TIC(mzpack As IMzPackReader) As ChromatogramTick()
-        Dim keys As String() = mzpack.EnumerateIndex.ToArray
-        Dim ticks As ChromatogramTick() = keys _
-            .Select(Function(i)
-                        Dim scan_time As Double
-                        Dim TICpoint As Double
+    <RApiReturn(GetType(ChromatogramTick))>
+    Public Function TIC(x As Object, Optional env As Environment = Nothing) As Object
+        Dim ticks As ChromatogramTick()
 
-                        Call mzpack.ReadChromatogramTick(i, scan_time, 0, TICpoint)
+        If x Is Nothing Then
+            Call env.AddMessage("the given rawdata file object is nothing for load TIC data!")
+            Return Nothing
+        End If
 
-                        Return New ChromatogramTick With {
-                            .Time = scan_time,
-                            .Intensity = TICpoint
-                        }
-                    End Function) _
-            .ToArray
+        If x.GetType.ImplementInterface(Of IMzPackReader) Then
+            Dim mzpack As IMzPackReader = x
+            Dim keys As String() = mzpack.EnumerateIndex.ToArray
+
+            ticks = keys _
+                .Select(Function(i)
+                            Dim scan_time As Double
+                            Dim TICpoint As Double
+
+                            Call mzpack.ReadChromatogramTick(i, scan_time, 0, TICpoint)
+
+                            Return New ChromatogramTick With {
+                                .Time = scan_time,
+                                .Intensity = TICpoint
+                            }
+                        End Function) _
+                .ToArray
+        ElseIf TypeOf x Is mzPack Then
+            ticks = DirectCast(x, mzPack).MS _
+                .Select(Function(a)
+                            Return New ChromatogramTick(a.rt, a.into.Sum)
+                        End Function) _
+                .ToArray
+        Else
+            Return Message.InCompatibleType(GetType(mzPack), x.GetType, env)
+        End If
+
+        Return ticks
+    End Function
+
+    ''' <summary>
+    ''' Get BPC from the mzpack layer reader
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("BPC")>
+    <RApiReturn(GetType(ChromatogramTick))>
+    Public Function BPC(x As Object, Optional env As Environment = Nothing) As Object
+        Dim ticks As ChromatogramTick()
+
+        If x Is Nothing Then
+            Call env.AddMessage("the given rawdata file object is nothing for load TIC data!")
+            Return Nothing
+        End If
+
+        If x.GetType.ImplementInterface(Of IMzPackReader) Then
+            Dim mzpack As IMzPackReader = x
+            Dim keys As String() = mzpack.EnumerateIndex.ToArray
+
+            ticks = keys _
+                .Select(Function(i)
+                            Dim scan_time As Double
+                            Dim BPCpoint As Double
+
+                            Call mzpack.ReadChromatogramTick(i, scan_time, BPCpoint, 0)
+
+                            Return New ChromatogramTick With {
+                                .Time = scan_time,
+                                .Intensity = BPCpoint
+                            }
+                        End Function) _
+                .ToArray
+        ElseIf TypeOf x Is mzPack Then
+            ticks = DirectCast(x, mzPack).MS _
+                .Select(Function(a)
+                            Return New ChromatogramTick(a.rt, If(a.into.IsNullOrEmpty, 0, a.into.Max))
+                        End Function) _
+                .ToArray
+        Else
+            Return Message.InCompatibleType(GetType(mzPack), x.GetType, env)
+        End If
 
         Return ticks
     End Function
@@ -275,7 +391,7 @@ Module MzWeb
     ''' <summary>
     ''' write ASCII text format of mzweb stream
     ''' </summary>
-    ''' <param name="scans"></param>
+    ''' <param name="x"></param>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
     ''' <remarks>
@@ -290,22 +406,30 @@ Module MzWeb
     ''' write.text_cache(ms1, file = "./msdata.txt");
     ''' </example>
     <ExportAPI("write.text_cache")>
-    Public Function writeStream(scans As pipeline,
+    Public Function writeStream(<RRawVectorArgument> x As Object,
                                 Optional file As Object = Nothing,
+                                Optional tabular As Boolean = False,
                                 Optional env As Environment = Nothing) As Object
         Dim stream As Stream
+        Dim scans As pipeline = pipeline.TryCreatePipeline(Of ScanMS1)(x, env)
 
-        If file Is Nothing Then
-            stream = Console.OpenStandardOutput
-        ElseIf TypeOf file Is String Then
-            stream = DirectCast(file, String).Open(doClear:=True)
-        ElseIf TypeOf file Is Stream Then
-            stream = DirectCast(file, Stream)
+        If scans.isError Then
+            Return scans.getError
         Else
-            Return Message.InCompatibleType(GetType(Stream), file.GetType, env)
+            Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+
+            If buf Like GetType(Message) Then
+                Return buf.TryCast(Of Message)
+            Else
+                stream = buf.TryCast(Of Stream)
+            End If
         End If
 
-        Call scans.populates(Of ScanMS1)(env).Write(stream)
+        If tabular Then
+            Call scans.populates(Of ScanMS1)(env).WriteTabularCache(stream)
+        Else
+            Call scans.populates(Of ScanMS1)(env).Write(stream)
+        End If
 
         Return True
     End Function
@@ -340,7 +464,8 @@ Module MzWeb
     <ExportAPI("read.cache")>
     <RApiReturn(GetType(PeakMs2))>
     Public Function readCache(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
-        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+        Dim is_filepath As Boolean = False
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env, is_filepath:=is_filepath)
 
         If buf Like GetType(Message) Then
             Return buf.TryCast(Of Message)
@@ -353,9 +478,69 @@ Module MzWeb
 
             Dim nsize As Integer = rd.ReadInt32
             Dim data As PeakMs2() = New PeakMs2(nsize - 1) {}
+            Dim meta As String()
+
+            If is_filepath Then
+                Dim filepath = CLRVector.asCharacter(file).First
+                Dim dir As String = filepath.ParentPath
+                Dim jsonl As String = $"{dir}/{filepath.BaseName}.jsonl"
+
+                If jsonl.FileExists Then
+                    meta = jsonl.ReadAllLines
+                Else
+                    meta = New String(nsize - 1) {}
+                End If
+            Else
+                meta = New String(nsize - 1) {}
+            End If
 
             For i As Integer = 0 To nsize - 1
                 data(i) = mzPack.CastToPeakMs2(Serialization.ReadScanMs2(file:=rd))
+
+                If is_filepath Then
+                    Dim json_str As String = meta.ElementAtOrDefault(i, "{}")
+
+                    If Not json_str.StringEmpty(, True) Then
+                        With If(json_str.LoadJSON(Of AnnotationMetadata)(throwEx:=False), New AnnotationMetadata)
+                            data(i).meta = .meta
+
+                            If Not .annotation.IsNullOrEmpty Then
+                                Dim offset As Integer = 0
+                                Dim peaks As ms2() = data(i).mzInto
+
+                                For Each str As String In .annotation
+                                    peaks(offset).Annotation = str
+                                    offset += 1
+                                Next
+                            End If
+                        End With
+
+                        If Not data(i).meta.IsNullOrEmpty Then
+                            ' 20241105
+                            ' due to the reason of scanms2 data has no file source attribute
+                            ' so we needs to restore the file source information from the metadata
+                            ' try get file source information via tags:
+                            ' source, file, rawdata, filename, etc something
+                            Dim m As Dictionary(Of String, String) = data(i).meta
+
+                            ' some possible tag name that could be used for represents 
+                            ' of the source file name metadata information.
+                            Static tags As String() = {
+                                "source", "file", "rawdata", "filename",
+                                "datafile",
+                                "data_raw",
+                                "data"
+                            }
+
+                            For Each name As String In tags
+                                If m.ContainsKey(name) Then
+                                    data(i).file = m(name)
+                                    Exit For
+                                End If
+                            Next
+                        End If
+                    End If
+                End If
             Next
 
             Return data
@@ -367,27 +552,65 @@ Module MzWeb
     ''' <summary>
     ''' Write the ms2 spectrum collection into binary cache file
     ''' </summary>
-    ''' <param name="ions">Should be a collection of the mzkit peakms2 object</param>
+    ''' <param name="ions">Should be a collection of the mzkit <see cref="PeakMs2"/> object.</param>
     ''' <param name="file">The file path to save the spectrum data collection as cache file.</param>
     ''' <returns>
     ''' this function returns a logical value for indicate operation is success or not.
     ''' </returns>
     <ExportAPI("write.cache")>
     <RApiReturn(TypeCodes.boolean)>
-    Public Function writeCache(ions As PeakMs2(), file As Object, Optional env As Environment = Nothing) As Object
-        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+    Public Function writeCache(<RRawVectorArgument>
+                               ions As Object, file As Object,
+                               Optional tag_filesource As Boolean = True,
+                               Optional env As Environment = Nothing) As Object
+
+        Dim is_filepath As Boolean = False
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env, is_filepath:=is_filepath)
+        Dim pool As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ions, env)
 
         If buf Like GetType(Message) Then
             Return buf.TryCast(Of Message)
         End If
+        If pool.isError Then
+            Return pool.getError
+        End If
+        If tag_filesource Then
+            Call VBDebugger.EchoLine("the source file name of the spectrum data will also tagged with the guid of the spectrum as unique id.")
+        Else
+            Call VBDebugger.EchoLine("the unique reference id of each spectrum data will not be changed.")
+        End If
 
         Using buffer As New BinaryDataWriter(buf.TryCast(Of Stream)) With {.ByteOrder = ByteOrder.BigEndian}
-            Call buffer.Write(mzcacheMagic, BinaryStringFormat.ZeroTerminated)
-            Call buffer.Write(ions.Length)
+            Dim all_spec As PeakMs2() = pool _
+                .populates(Of PeakMs2)(env) _
+                .ToArray
+            Dim bar As Tqdm.ProgressBar = Nothing
+            Dim metadata As New List(Of String)
 
-            For Each ion As PeakMs2 In ions
-                Call Serialization.WriteBuffer(ion.Scan2, file:=buffer)
+            Call buffer.Write(mzcacheMagic, BinaryStringFormat.ZeroTerminated)
+            Call buffer.Write(all_spec.Length)
+
+            For Each ion As PeakMs2 In Tqdm.Wrap(all_spec, bar:=bar)
+                Call bar.SetLabel(ion.lib_guid)
+                Call Serialization.WriteBuffer(ion.Scan2(tag_filesource), file:=buffer)
+
+                ' 20241022
+                ' scanms2 can not save the metadata into cache binary 
+                ' so an external json list file was generated for
+                ' save the spectrum metadata
+                ' for avoid the possible data missing problem
+                If is_filepath Then
+                    Call metadata.Add(ion.GetAnnotationJsonModel.GetJson(simpleDict:=True))
+                End If
             Next
+
+            If is_filepath Then
+                Dim filepath = CLRVector.asCharacter(file).First
+                Dim dir = filepath.ParentPath
+                Dim filename = filepath.BaseName & ".jsonl"
+
+                Call metadata.SaveTo($"{dir}/{filename}")
+            End If
         End Using
 
         Return True
@@ -444,12 +667,12 @@ Module MzWeb
     ''' <returns></returns>
     <ExportAPI("open.mzpack")>
     <RApiReturn(GetType(mzPack))>
-    Public Function Open(file As Object, Optional env As Environment = Nothing) As Object
+    Public Function Open(file As Object, Optional verbose As Boolean = True, Optional env As Environment = Nothing) As Object
         If file Is Nothing Then
-            Return Internal.debug.stop("the required file object can not be nothing!", env)
+            Return RInternal.debug.stop("the required file object can not be nothing!", env)
         End If
         If TypeOf file Is String Then
-            Dim mzpack As mzPack = openFromFile(file, env:=env)
+            Dim mzpack As mzPack = openFromFile(file, verbose:=verbose, env:=env)
 
             If mzpack.source.StringEmpty Then
                 mzpack.source = DirectCast(file, String).FileName
@@ -458,44 +681,56 @@ Module MzWeb
             Return mzpack
         ElseIf TypeOf file Is Stream Then
             Dim stream As Stream = file
-            Return mzPack.ReadAll(file:=stream)
+            Return mzPack.ReadAll(file:=stream, verbose:=verbose)
         Else
-            Return Internal.debug.stop(New NotImplementedException($"unsure for how to handling '{file.GetType.FullName}' as a file stream for read mzpack data!"), env)
+            Return RInternal.debug.stop(New NotImplementedException($"unsure for how to handling '{file.GetType.FullName}' as a file stream for read mzpack data!"), env)
         End If
     End Function
 
     ''' <summary>
     ''' open mzpack data from a raw data file in xml file format.
     ''' </summary>
-    ''' <param name="file"></param>
+    ''' <param name="file">the file path to the xml rawdata file</param>
     ''' <param name="prefer">
     ''' the prefer file format used when the given <paramref name="file"/> its extension
     ''' suffix name is ``XML``. value of this parameter could be imzml/mzml/mzxml
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>A mzkit mzpack rawdata object</returns>
     <ExportAPI("open_mzpack.xml")>
     Public Function openFromFile(file As String,
                                  Optional prefer As String = Nothing,
+                                 Optional da As Double = 0.001,
+                                 Optional noise_cutoff As Double = 0.0001,
+                                 Optional verbose As Boolean = True,
                                  Optional env As Environment = Nothing) As mzPack
+
+        Dim println As Action(Of String) = AddressOf VBDebugger.EchoLine
+
+        If Not verbose Then
+            println = Sub()
+                          ' do nothing
+                      End Sub
+        End If
 
         If file.ExtensionSuffix("mzXML", "mzML", "imzML", "xml") Then
             Return Converter.LoadRawFileAuto(
                 xml:=file,
                 prefer:=prefer,
-                progress:=AddressOf VBDebugger.EchoLine
+                progress:=If(verbose, println, Nothing),
+                tolerance:=$"da:{da}",
+                intocutoff:=noise_cutoff
             )
         ElseIf file.ExtensionSuffix("mgf", "msp") Then
             Return Converter.LoadAsciiFileAuto(file)
-#If NET48 Then
+#If NET8_0 Then
         ElseIf file.ExtensionSuffix("raw") Then
             Using msRaw As New MSFileReader(file)
-                Return msRaw.LoadFromXRaw
+                Return msRaw.LoadFromXcaliburRaw
             End Using
 #End If
         ElseIf file.ExtensionSuffix("cdf") Then
             Using cdf As New netCDFReader(file)
                 If cdf.IsLecoGCMS Then
-                    Dim println As Action(Of String) = Sub(line) base.print(line,, env)
                     Dim sig As mzPack = GCMSConvertor.ConvertGCMS(cdf, println)
                     sig.source = file.FileName
                     Return sig
@@ -506,15 +741,15 @@ Module MzWeb
                         .MS = cdf.CreateMs1.ToArray,
                         .Application = FileApplicationClass.MSImaging,
                         .source = file.FileName,
-                        .Scanners = New Dictionary(Of String, ChromatogramOverlap),
+                        .Scanners = New Dictionary(Of String, ChromatogramOverlapList),
                         .Chromatogram = Nothing,
                         .Thumbnail = Nothing
                     }
                 End If
             End Using
         Else
-            Using stream As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                Return mzPack.ReadAll(file:=stream)
+            Using stream As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True, verbose:=verbose)
+                Return mzPack.ReadAll(file:=stream, verbose:=verbose)
             End Using
         End If
     End Function
@@ -542,7 +777,7 @@ Module MzWeb
     <RApiReturn(GetType(mzPack))>
     Public Function setMzpackThumbnail(mzpack As mzPack, thumb As Object, Optional env As Environment = Nothing) As Object
         If mzpack Is Nothing Then
-            Return Internal.debug.stop("the required mzpack data object can not be nothing!", env)
+            Return RInternal.debug.stop("the required mzpack data object can not be nothing!", env)
         End If
         If thumb Is Nothing Then
             mzpack.Thumbnail = Nothing
@@ -575,16 +810,49 @@ Module MzWeb
     ''' let rawdata = open.mzpack(file = "./rawdata.mzPack");
     ''' let ms1 = rawdata |> ms1_scans();
     ''' 
+    ''' # get xic liked data
+    ''' let xic = rawdata |> ms1_scans(mz = 999.0911, tolerance = "da:0.01");
+    ''' let mz_vec = [xic]::mz;
+    ''' 
+    ''' print(as.data.frame(xic));
+    ''' 
+    ''' bitmap(file = "./mz_histogram.png") {
+    '''     plot(hist(mz_vec));
+    ''' }
     ''' </example>
     <ExportAPI("ms1_scans")>
-    Public Function Ms1ScanPoints(mzpack As mzPack) As ms1_scan()
-        Return mzpack.GetAllScanMs1.ToArray
+    <RApiReturn(GetType(ms1_scan))>
+    Public Function Ms1ScanPoints(mzpack As mzPack,
+                                  Optional mz As Double? = Nothing,
+                                  Optional tolerance As Object = "ppm:20",
+                                  Optional env As Environment = Nothing) As Object
+
+        Dim mzdiff = Math.getTolerance(tolerance, env, [default]:="ppm:20")
+
+        If mzdiff Like GetType(Message) Then
+            Return mzdiff.TryCast(Of Message)
+        End If
+
+        If mz Is Nothing Then
+            Return mzpack.GetAllScanMs1.ToArray
+        Else
+            Dim mzVal As Double = mz
+            Dim err As Tolerance = mzdiff.TryCast(Of Tolerance)
+            Dim xic As ms1_scan() = mzpack.GetAllScanMs1 _
+                .AsParallel _
+                .Where(Function(i) err(i.mz, mzVal)) _
+                .ToArray
+
+            Return xic
+        End If
     End Function
 
     ''' <summary>
     ''' get a overview ms1 spectrum data from the mzpack raw data
     ''' </summary>
-    ''' <param name="mzpack">The mzpack rawdata object</param>
+    ''' <param name="mzpack">
+    ''' usually be the <see cref="mzPack"/> rawdata object, or a general <see cref="MzMatrix"/> object.
+    ''' </param>
     ''' <param name="tolerance">The mass tolerance error</param>
     ''' <param name="cutoff">intensity cutoff percentage value for removes the noised liked peaks.</param>
     ''' <param name="ionset">
@@ -602,7 +870,7 @@ Module MzWeb
     ''' </example>
     <ExportAPI("ms1_peaks")>
     <RApiReturn(GetType(LibraryMatrix))>
-    Public Function Ms1Peaks(mzpack As mzPack,
+    Public Function Ms1Peaks(mzpack As Object,
                              Optional tolerance As Object = "da:0.001",
                              Optional cutoff As Double = 0.05,
                              <RRawVectorArgument>
@@ -616,10 +884,37 @@ Module MzWeb
             Return mzdiff.TryCast(Of Message)
         End If
 
-        Dim allMassPeaks As ms2() = mzpack.MS _
-            .Select(Function(scan) scan.GetMs) _
-            .IteratesALL _
-            .ToArray
+        Dim source_label As String
+        Dim allMassPeaks As ms2()
+
+        If mzpack Is Nothing Then
+            Call env.AddMessage("the given rawdata object is nothing.")
+            Return Nothing
+        End If
+
+        If TypeOf mzpack Is mzPack Then
+            source_label = DirectCast(mzpack, mzPack).source
+            allMassPeaks = DirectCast(mzpack, mzPack).MS _
+                .Select(Function(scan) scan.GetMs) _
+                .IteratesALL _
+                .ToArray
+        ElseIf TypeOf mzpack Is MzMatrix Then
+            Dim mat As MzMatrix = DirectCast(mzpack, MzMatrix)
+            Dim intensity_vec As Double() = New Double(mat.featureSize - 1) {}
+
+            source_label = "mzImage matrix"
+
+            For Each spot In Tqdm.Wrap(mat.matrix)
+                intensity_vec = SIMDAdd.f64_op_add_f64(intensity_vec, spot.intensity)
+            Next
+
+            Return New LibraryMatrix(mat.mz, intensity_vec) With {
+                .name = source_label
+            }
+        Else
+            Return Message.InCompatibleType(GetType(mzPack), mzpack.GetType, env)
+        End If
+
         Dim ms As ms2()
 
         If Not mzsubset.IsNullOrEmpty Then
@@ -641,7 +936,7 @@ Module MzWeb
         Return New LibraryMatrix With {
             .centroid = True,
             .ms2 = ms,
-            .name = mzpack.source & " MS1"
+            .name = source_label & " MS1"
         }
     End Function
 
@@ -660,8 +955,27 @@ Module MzWeb
     ''' <param name="centroid">
     ''' and also convert the data to centroid mode? 
     ''' </param>
+    ''' <param name="rt_window">
+    ''' the rt range for filter of the ms2 spectrum data exports, 
+    ''' should be a numeric vector that consists with two elements
+    ''' for specific the range min and range max. rt data should 
+    ''' be in data unit of seconds.
+    ''' </param>
+    ''' <param name="tag_source">
+    ''' tag the source reference to the metadata of each spectrum data object?
+    ''' </param>
+    ''' <param name="loadProductTree">
+    ''' Load MSn product tree.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' metadata of the spectrum source reference includes data slots:
+    ''' 
+    ''' 1. ``source``, the file name of the spectrum rawdata file source
+    ''' 2. ``precursor``, the precursor ion mz of the spectrum data
+    ''' 3. ``rt``, the retention time of the spectrum data object
+    ''' </remarks>
     <ExportAPI("ms2_peaks")>
     <RApiReturn(GetType(PeakMs2))>
     Public Function Ms2ScanPeaks(mzpack As mzPack,
@@ -672,20 +986,23 @@ Module MzWeb
                                  Optional norm As Boolean = False,
                                  Optional filter_empty As Boolean = True,
                                  Optional into_cutoff As Object = 0,
+                                 <RRawVectorArgument()>
+                                 Optional rt_window As Object = Nothing,
+                                 Optional loadProductTree As Boolean = False,
                                  Optional env As Environment = Nothing) As Object
 
         Dim ms2peaks As PeakMs2()
 
         If precursorMz.IsNaNImaginary Then
-            ms2peaks = mzpack.GetMs2Peaks.ToArray
+            ms2peaks = mzpack.GetMs2Peaks(loadProductTree).ToArray
         Else
-            Dim mzerr = Math.getTolerance(tolerance, env)
+            Dim mzErr = Math.getTolerance(tolerance, env)
 
-            If mzerr Like GetType(Message) Then
-                Return mzerr.TryCast(Of Message)
+            If mzErr Like GetType(Message) Then
+                Return mzErr.TryCast(Of Message)
             End If
 
-            Dim mzdiff As Tolerance = mzerr.TryCast(Of Tolerance)
+            Dim mzdiff As Tolerance = mzErr.TryCast(Of Tolerance)
             Dim ms2_xic = mzpack.MS _
                 .Select(Function(d) d.products) _
                 .IteratesALL _
@@ -693,7 +1010,11 @@ Module MzWeb
                            Return mzdiff(scan.parentMz, precursorMz)
                        End Function) _
                 .Select(Function(mz2)
-                            Return mzPack.CastToPeakMs2(mz2, file:=mzpack.source)
+                            Return mzPack.CastToPeakMs2(
+                                ms2:=mz2,
+                                file:=mzpack.source,
+                                loadProductTree:=loadProductTree
+                            )
                         End Function) _
                 .ToArray
 
@@ -746,9 +1067,27 @@ Module MzWeb
                 .ToArray
         End If
 
+        Dim rtwin As Double() = CLRVector.asNumeric(rt_window)
+
+        If Not rtwin.IsNullOrEmpty Then
+            Dim window As New DoubleRange(rtwin)
+
+            If window.Length > 0 Then
+                ms2peaks = ms2peaks _
+                    .Where(Function(a) window.IsInside(a.rt)) _
+                    .ToArray
+            End If
+        End If
+
         Return ms2peaks.uniqueReference(tag_source)
     End Function
 
+    ''' <summary>
+    ''' make unique of the spectrum reference id
+    ''' </summary>
+    ''' <param name="ms2peaks"></param>
+    ''' <param name="tag_source"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function uniqueReference(ms2peaks As PeakMs2(), tag_source As Boolean) As PeakMs2()
         Dim unique As String() = ms2peaks _
@@ -759,20 +1098,32 @@ Module MzWeb
                           Return p.lib_guid
                       End If
                   End Function) _
-          .uniqueNames
+          .UniqueNames
 
         For i As Integer = 0 To unique.Length - 1
             ms2peaks(i).lib_guid = unique(i)
-            ms2peaks(i).lib_guid = ms2peaks(i).lib_guid.Replace("ms2.mzPack#", "").Replace("queryMs2.mzPack#", "")
+            ms2peaks(i).lib_guid = ms2peaks(i).lib_guid _
+                .Replace("ms2.mzPack#", "") _
+                .Replace("queryMs2.mzPack#", "")
 
             Dim src As String = ms2peaks(i).lib_guid.Match(".+?\.mzPack[# ]")
 
             If Not src.StringEmpty Then
                 ms2peaks(i).file = src.Trim("#"c, " "c)
-                ms2peaks(i).lib_guid = ms2peaks(i).lib_guid.Replace(ms2peaks(i).lib_guid.Match(".+\.mzPack[# ]"), "")
+                ms2peaks(i).lib_guid = ms2peaks(i).lib_guid _
+                    .Replace(ms2peaks(i).lib_guid _
+                    .Match(".+\.mzPack[# ]"), "")
 
                 If tag_source Then
                     ms2peaks(i).lib_guid = $"{ms2peaks(i).file} {ms2peaks(i).lib_guid}".Trim
+
+                    If ms2peaks(i).meta Is Nothing Then
+                        ms2peaks(i).meta = New Dictionary(Of String, String)
+                    End If
+
+                    ms2peaks(i).meta("source") = ms2peaks(i).file
+                    ms2peaks(i).meta("precursor") = ms2peaks(i).mz.ToString("F4")
+                    ms2peaks(i).meta("rt") = (ms2peaks(i).rt / 60).ToString("F2") & "min"
                 End If
             End If
         Next
@@ -784,32 +1135,39 @@ Module MzWeb
     ''' convert assembly file to mzpack format data object
     ''' </summary>
     ''' <param name="assembly"></param>
-    ''' <param name="env"></param>
-    ''' <param name="modtime">
-    ''' [GCxGC]
-    ''' the modulation time of the chromatographic run. 
-    ''' modulation period in time unit 'seconds'.
-    ''' </param>
-    ''' <param name="sample_rate">
-    ''' [GCxGC]
-    ''' the sampling rate of the equipment.
-    ''' If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
-    ''' the difference of two adjacent scan time.
+    ''' <param name="args">
+    ''' 1. modtime: [GCxGC] the modulation time of the chromatographic run. 
+    '''    modulation period in time unit 'seconds'.
+    ''' 2. sample_rate: [GCxGC] the sampling rate of the equipment.
+    '''    If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
+    '''    the difference of two adjacent scan time.
+    ''' 3. imzml: [MS-Imaging] the pixel spot scan metadata collection for
+    '''    read ms data from the ibd file, the corresponding assembly object should
+    '''    be a <see cref="ibdReader"/> object
+    ''' 4. dims: [MS-Imaging] the canvas dimension size value for the ms-imaging
+    '''    heatmap rendering
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("as.mzpack")>
     <RApiReturn(GetType(mzPack))>
     Public Function ToMzPack(assembly As Object,
-                             Optional modtime As Double = -1,
-                             Optional sample_rate As Double = Double.NaN,
+                             <RListObjectArgument>
+                             Optional args As list = Nothing,
                              Optional env As Environment = Nothing) As Object
 
         If TypeOf assembly Is netCDFReader Then
+            Dim modtime As Double = args.getValue({"modtime", "modulation"}, env, [default]:=-1.0)
+            Dim sample_rate As Double = args.getValue({"sample_rate", "sample.rate"}, env, [default]:=Double.NaN)
+
             Return GC2Dimensional.ToMzPack(
                 agilentGC:=assembly,
                 modtime:=modtime,
                 sam_rate:=sample_rate
             )
+        ElseIf TypeOf assembly Is ibdReader Then
+            Dim ibd As ibdReader = DirectCast(assembly, ibdReader)
+
+            Throw New NotImplementedException
         Else
             Return Message.InCompatibleType(GetType(netCDFReader), assembly.GetType, env)
         End If
@@ -828,5 +1186,60 @@ Module MzWeb
     <RApiReturn(GetType(mzPack))>
     Public Function MassCalibration(data As mzPack, Optional mzdiff As Double = 0.1, Optional env As Environment = Nothing) As Object
         Return data.MassCalibration(da:=mzdiff)
+    End Function
+
+    ''' <summary>
+    ''' Parse the given network base64 data as spectrum
+    ''' </summary>
+    ''' <param name="mz">a character vector of the base64 string for the ms2 spectrum ion peaks</param>
+    ''' <param name="intensity">a character vector of the base64 string for the corresponding ion peaks intensity value.</param>
+    ''' <param name="id">a character vector of the spectrum reference id</param>
+    ''' <param name="auto_scalar">
+    ''' returns a scalar spectrum object if the input data just contains one spectrum data or not?
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' this function will populate a set of the ms2 spectrum data object
+    ''' that which was parsed from the given base64 data collection.
+    ''' </returns>
+    <ExportAPI("parse_base64")>
+    <RApiReturn(GetType(LibraryMatrix))>
+    Public Function parse_base64(<RRawVectorArgument> mz As Object,
+                                 <RRawVectorArgument> intensity As Object,
+                                 <RRawVectorArgument>
+                                 Optional id As Object = Nothing,
+                                 Optional auto_scalar As Boolean = True,
+                                 Optional env As Environment = Nothing) As Object
+
+        Dim mz_str As String() = CLRVector.asCharacter(mz)
+        Dim into_str As String() = CLRVector.asCharacter(intensity)
+        Dim id_str As String() = CLRVector.asCharacter(id)
+
+        If mz_str.TryCount <> into_str.TryCount Then
+            Return RInternal.debug.stop($"the vector size of the mz data({mz_str.Length}) should be matched with the intensity vector data({into_str.Length})!", env)
+        ElseIf mz_str.TryCount = 0 Then
+            Call env.AddMessage("there is no spectrum data to run base64 decoded!")
+            Return Nothing
+        End If
+
+        Dim spectrum As New List(Of LibraryMatrix)
+
+        For i As Integer = 0 To mz_str.Length - 1
+            Dim spec As ms2() = SpectraEncoder _
+                .Decode(mz_str(i), into_str(i)) _
+                .ToArray
+            Dim mat As New LibraryMatrix(
+                name:=id_str.ElementAtOrDefault(i, [default]:=$"spectral_{i + 1}"),
+                spectrum:=spec
+            )
+
+            Call spectrum.Add(mat)
+        Next
+
+        If auto_scalar AndAlso spectrum.Count = 1 Then
+            Return spectrum(0)
+        Else
+            Return spectrum.ToArray
+        End If
     End Function
 End Module

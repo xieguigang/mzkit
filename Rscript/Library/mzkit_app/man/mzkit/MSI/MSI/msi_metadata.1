@@ -1,5 +1,5 @@
 .\" man page create by R# package system.
-.TH MSI 1 2000-Jan "msi_metadata" "msi_metadata"
+.TH MSI 1 2000-1月 "msi_metadata" "msi_metadata"
 .SH NAME
 msi_metadata \- get ms-imaging metadata
 .SH SYNOPSIS
@@ -18,6 +18,13 @@ get ms-imaging metadata
 the input raw data object could be also a file path to the ms-imaging mzpack 
  rawdata, but only version 2 mzPack data file will be supported for load 
  metadata.
+.PP
+.SH EXAMPLES
+.PP
+let rawdata = open.mzpack(file = "./rawdata.mzPack");
+ let msi_data = msi_metadata(rawdata);
+ 
+ str(as.list(as.object(msi_data)$GetMetadata()));
 .PP
 .SH SEE ALSO
 MSI

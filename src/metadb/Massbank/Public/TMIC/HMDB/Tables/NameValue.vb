@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d964571334d960cf98e598afc1e7deac, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Tables\NameValue.vb"
+﻿#Region "Microsoft.VisualBasic::1e53356d519bcd37d746de39d83cfee5, metadb\Massbank\Public\TMIC\HMDB\Tables\NameValue.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
-    '    Code Lines: 23
-    ' Comment Lines: 0
-    '   Blank Lines: 6
-    '     File Size: 1.02 KB
+    '   Total Lines: 31
+    '    Code Lines: 24 (77.42%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (22.58%)
+    '     File Size: 1.13 KB
 
 
     '     Structure NameValue
@@ -55,15 +57,17 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+
 Namespace TMIC.HMDB
 
-    Public Structure NameValue : Implements IEquatable(Of NameValue)
+    Public Structure NameValue : Implements IEquatable(Of NameValue), INamedValue
 
         Public Property name As String
         Public Property match As String
         Public Property type As String
         Public Property metabolite As String
-        Public Property ID As String
+        Public Property ID As String Implements INamedValue.Key
 
         Public Overrides Function ToString() As String
             Return $"name={name}, match={match}, metabolite={metabolite}, type={type}"

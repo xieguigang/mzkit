@@ -5,6 +5,7 @@
 // ref=mzkit.Linears@mz_quantify, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**
+ * targeted linears
  * 
 */
 declare namespace Linears {
@@ -27,6 +28,13 @@ declare namespace Linears {
       */
       function table(lines: object): object;
    }
+   /**
+    * load the experiment project
+    * 
+    * 
+     * @param file -
+   */
+   function load_experiment(file: string): object;
    /**
     * Get reference input points
     * 

@@ -13,30 +13,35 @@ declare namespace mzkit {
       */
       function graph_table(nodes: any, type?: any): object;
       /**
+        * @param quietly default value Is ``false``.
       */
-      function minPos(mat: any): object;
-      /**
-        * @param args default value Is ``Call "list"("cache_dir" <- "./.cache/")``.
-      */
-      function MS1deconv(rawfile: any, args?: any): object;
-      /**
-      */
-      function onLoad(): object;
+      function onLoad(quietly?: any): object;
       /**
         * @param type default value Is ``["genes", "disease", "compounds"]``.
       */
       function term_maps(x: any, type?: any): object;
    }
    /**
-     * @param mzdiff default value Is ``da:0.001``.
+     * @param peak.width default value Is ``[3, 90]``.
    */
-   function alignment_peaksdata(peakcache: any, mzdiff?: any): object;
+   function __deconv_gcms_single(file: any, peak.width?: any): object;
+   /**
+     * @param mzdiff default value Is ``0.005``.
+     * @param outputdir default value Is ``./``.
+   */
+   function __ms1_xic_bins_single(path: any, mzdiff?: any, outputdir?: any): object;
    /**
    */
    function ANOVAGroup(data: any, sampleinfo: any): object;
    /**
    */
    function convertToMzPack(file: string): object;
+   /**
+     * @param export_dir default value Is ``./``.
+     * @param peak.width default value Is ``[3, 90]``.
+     * @param n_threads default value Is ``16``.
+   */
+   function deconv_gcms(rawdata: any, export_dir?: any, peak.width?: any, n_threads?: any): object;
    /**
    */
    function GCMS_contentTable(mslIons: any, calfiles: string): object;
@@ -88,20 +93,54 @@ declare namespace mzkit {
    */
    function lipidmaps_repo(repofile?: any, gsea?: any, category?: any): object;
    /**
+     * @param lazy default value Is ``false``.
+   */
+   function load_LMSD(filepath: any, lazy?: any): object;
+   /**
    */
    function loadTree(files: string): object;
+   /**
+     * @param export_dir default value Is ``./``.
+     * @param overlaps_size default value Is ``[2900, 1600]``.
+     * @param overlaps_layout default value Is ``padding:5% 5% 10% 12%;``.
+     * @param file_color default value Is ``blue``.
+   */
+   function make_chromatogram_exports(rawdir: any, sampleinfo: any, group_name: any, export_dir?: any, overlaps_size?: any, overlaps_layout?: any, file_color?: any): object;
+   /**
+     * @param max_rtwin default value Is ``15``.
+     * @param mzdiff default value Is ``0.01``.
+   */
+   function make_peak_alignment(peakfiles: any, max_rtwin?: any, mzdiff?: any): object;
    /**
      * @param topics default value Is ``null``.
    */
    function mesh_model(topics?: any): object;
    /**
-     * @param factor default value Is ``null``.
    */
-   function normData(mat: any, factor?: any): object;
+   function MRM_dataReport(xic: any, tpa: any): object;
+   /**
+     * @param mzdiff default value Is ``0.001``.
+   */
+   function ms1_mz_bins(files: any, mzdiff?: any): object;
+   /**
+     * @param mzdiff default value Is ``0.005``.
+     * @param peak.width default value Is ``[3, 90]``.
+   */
+   function ms1_peaktable(files: any, mzbins: any, mzdiff?: any, peak.width?: any): object;
+   /**
+     * @param mzdiff default value Is ``0.005``.
+     * @param outputdir default value Is ``./XIC/``.
+     * @param n_threads default value Is ``32``.
+   */
+   function ms1_xic_bins(files: any, mzdiff?: any, outputdir?: any, n_threads?: any): object;
    /**
      * @param output_dir default value Is ``./``.
    */
    function output_datatables(quantify: any, linears: any, output_dir?: any): object;
+   /**
+     * @param tag default value Is ``null``.
+   */
+   function pack_singleCells(rawdata: any, tag?: any): object;
    /**
    */
    function parseDescriptors(descriptors: any): object;
@@ -120,6 +159,12 @@ declare namespace mzkit {
    */
    function plotLinears(linears: any, mslIons?: any, output_dir?: any): object;
    /**
+     * @param sampleinfo default value Is ``null``.
+     * @param factor default value Is ``100000000``.
+     * @param missing default value Is ``0.5``.
+   */
+   function preprocessing_expression(x: any, sampleinfo?: any, factor?: any, missing?: any): object;
+   /**
      * @param process default value Is ``null``.
      * @param extensionCache default value Is ``./.cache/extdata/``.
    */
@@ -127,18 +172,28 @@ declare namespace mzkit {
    /**
    */
    function pubchem_meta(term: any): object;
-   module run {
-      /**
-        * @param data_dir default value Is ``./``.
-        * @param mzdiff default value Is ``da:0.001``.
-        * @param baseline default value Is ``0.65``.
-        * @param peakwidth default value Is ``[3, 20]``.
-        * @param outputdir default value Is ``./``.
-        * @param n_threads default value Is ``8``.
-      */
-      function Deconvolution(data_dir?: any, mzdiff?: any, baseline?: any, peakwidth?: any, outputdir?: any, n_threads?: any): object;
-   }
    /**
    */
-   function tolerance(kind: string, mzdiff: number): object;
+   function pugview_repo(repo_dir: any): object;
+   module read {
+      /**
+      */
+      function cfmid_3_EI(file: any): object;
+   }
+   module run {
+      /**
+        * @param outputdir default value Is ``./``.
+        * @param mzdiff default value Is ``0.001``.
+        * @param xic_mzdiff default value Is ``0.005``.
+        * @param peak.width default value Is ``[2, 30]``.
+        * @param n_threads default value Is ``16``.
+        * @param filename default value Is ``peaktable.csv``.
+      */
+      function Deconvolution(rawdata: any, outputdir?: any, mzdiff?: any, xic_mzdiff?: any, peak.width?: any, n_threads?: any, filename?: any): object;
+   }
+   /**
+     * @param kind default value Is ``ppm``.
+     * @param mzdiff default value Is ``20``.
+   */
+   function tolerance(kind?: any, mzdiff?: any): object;
 }

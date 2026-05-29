@@ -1,0 +1,33 @@
+.\" man page create by R# package system.
+.TH MZDECO 1 2000-1月 "read.xcms_peaks" "read.xcms_peaks"
+.SH NAME
+read.xcms_peaks \- read the peaktable file that in xcms2 output format
+.SH SYNOPSIS
+\fIread.xcms_peaks(\fBfile\fR as any, 
+\fBtsv\fR as boolean = FALSE, 
+\fBgeneral_method\fR as boolean = FALSE, 
+\fBmake_unique\fR as boolean = FALSE, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+read the peaktable file that in xcms2 output format
+.PP
+.SH OPTIONS
+.PP
+\fBfile\fB \fR\- should be the file path to the peaktable csv/txt file.. 
+.PP
+.PP
+\fBmake_unique\fB \fR\- 
+ set this parameter to value TRUE will ensure that the xcms reference id is always unique
+. 
+.PP
+.SH VALUE
+.PP
+A collection set of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2\fR peak features data object
+.PP
+.SH SEE ALSO
+mzDeco
+.SH FILES
+.PP
+mz_quantify.dll
+.PP

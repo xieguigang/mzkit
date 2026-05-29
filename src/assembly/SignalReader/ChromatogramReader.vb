@@ -1,4 +1,61 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::75823069f513c2e61697634482c25235, assembly\SignalReader\ChromatogramReader.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 158
+    '    Code Lines: 111 (70.25%)
+    ' Comment Lines: 29 (18.35%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 18 (11.39%)
+    '     File Size: 7.00 KB
+
+
+    ' Module ChromatogramReader
+    ' 
+    '     Function: FileAlignment, GetChromatogram, (+3 Overloads) GetIonsChromatogram, GetSignal, GetTicks
+    '               Ticks
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.Base64Decoder
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.Extensions
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
@@ -71,6 +128,13 @@ Public Module ChromatogramReader
         }
     End Function
 
+    ''' <summary>
+    ''' Construct a chromatogram object from the raw chromatogram data.
+    ''' This function will extract the TIC and BPC chromatograms from the raw data
+    ''' and return a new Chromatogram object containing the scan time, TIC, and BPC.
+    ''' </summary>
+    ''' <param name="channels"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function GetIonsChromatogram(channels As IEnumerable(Of RawChromatogram)) As Chromatogram
         Dim allTicks As ChromatogramTick() = channels _

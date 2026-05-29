@@ -1,61 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::f6cc28bf1ba6821a7d2d2725148ed45c, mzkit\src\assembly\mzPackExtensions\VendorStream\WiffRawStream.vb"
+﻿#Region "Microsoft.VisualBasic::edde5d79cfc70f1629b30fd587559e2d, assembly\mzPackExtensions\VendorStream\WiffRawStream.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 115
-'    Code Lines: 92
-' Comment Lines: 3
-'   Blank Lines: 20
-'     File Size: 3.96 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class WiffRawStream
-' 
-'     Properties: rawFileName
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: defaultScanId, pullAllScans
-' 
-'     Sub: RemoveAbNoise, walkScan
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 162
+    '    Code Lines: 129 (79.63%)
+    ' Comment Lines: 7 (4.32%)
+    '    - Xml Docs: 42.86%
+    ' 
+    '   Blank Lines: 26 (16.05%)
+    '     File Size: 5.80 KB
+
+
+    ' Class WiffRawStream
+    ' 
+    '     Properties: getExperimentType, rawFileName
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: defaultScanId, pullAllScans
+    ' 
+    '     Sub: RemoveAbNoise, walkScan
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -64,8 +66,10 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Clearcore2.Data.DataAccess.SampleData
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -168,8 +172,16 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
 
             If typeCache = FileApplicationClass.LCMSMS Then
                 ' MRM ion pair information is save in the scan1 metadata
+                ' isomer may existed
+                ' contains the same MRM ion pair id
+                ' make the tag name unique at here
+                Dim ion_tags As String() = msData.MRM _
+                    .Select(Function(t) "MRM: " & t.ToString) _
+                    .UniqueNames _
+                    .ToArray
+
                 For i As Integer = 0 To mz.Length - 1
-                    MS1.meta.Add("MRM: " & msData.MRM(i).ToString, CInt(i).ToString)
+                    Call MS1.meta.Add(ion_tags(i), CInt(i).ToString)
                 Next
             End If
         Else

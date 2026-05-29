@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b289c7769d28c4804caadd18504206d, mzkit\src\mzmath\TargetedMetabolomics\RawFile.vb"
+﻿#Region "Microsoft.VisualBasic::aa13d1d4af6326245289f417cfece099, mzmath\TargetedMetabolomics\RawFile.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 170
-    '    Code Lines: 125
-    ' Comment Lines: 25
-    '   Blank Lines: 20
-    '     File Size: 6.04 KB
+    '   Total Lines: 173
+    '    Code Lines: 128 (73.99%)
+    ' Comment Lines: 25 (14.45%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 20 (11.56%)
+    '     File Size: 6.19 KB
 
 
     ' Class RawFile
@@ -57,6 +59,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
@@ -190,6 +193,7 @@ Public Class RawFile
         }
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Shared Function hasPatternOf(path$, pattern As String) As Boolean
         Return Not path _
             .BaseName _
@@ -212,6 +216,7 @@ Public Class RawFile
         Next
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function WrapperForStandards(standards As String(), patternOfRefer$) As RawFile
         Return New RawFile With {
             .patternOfRefer = patternOfRefer,

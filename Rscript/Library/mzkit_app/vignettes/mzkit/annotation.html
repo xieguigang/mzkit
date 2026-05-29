@@ -73,24 +73,78 @@ table caption {font-size:14px;font-weight:bolder;}
                            </p>
     </blockquote>
     <div id="main-wrapper">
-      <table class="table-three-line">
+      <table class="table-three-line" style="display: block">
+        <caption>.NET clr type export</caption>
         <tbody><tr>
+  <td id="xref">
+    <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/CrossReference/xref.html">xref: xref</a>
+  </td>
+  <td><p>The database cross reference set of a specific metabolite object.</p></td>
+</tr>
+<tr>
+  <td id="library_workspace">
+    <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/LibraryWorkspace.html">library_workspace: LibraryWorkspace</a>
+  </td>
+  <td><p>A temp workspace of a single reference library</p></td>
+</tr></tbody>
+      </table>
+      <br />
+      <br />
+      <table class="table-three-line">
+        <caption>.NET clr function exports</caption>
+        <tbody><tr>
+  <td id="as.data.frame.peaktable">
+    <a href="./annotation/as.data.frame.peaktable.html">as.data.frame.peaktable</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Peaktable.html">Peaktable</a>: <p>一级信息表</p></td>
+</tr>
+<tr>
+  <td id="html.annotationpack">
+    <a href="./annotation/html.annotationpack.html">html.annotationpack</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/AnnotationPack.html">AnnotationPack</a>: <p>Result data pack for save the annotation result data</p></td>
+</tr>
+<tr>
   <td id="xref">
     <a href="./annotation/xref.html">xref</a>
   </td>
   <td><p>Create the database cross reference links</p></td>
 </tr>
 <tr>
+  <td id="library_from_mona">
+    <a href="./annotation/library_from_mona.html">library_from_mona</a>
+  </td>
+  <td><p>Create spectrum reference library from mona msp file</p></td>
+</tr>
+<tr>
+  <td id="load_local">
+    <a href="./annotation/load_local.html">load_local</a>
+  </td>
+  <td><p>Construct of the local reference library for gcms data</p></td>
+</tr>
+<tr>
+  <td id="load_metadata">
+    <a href="./annotation/load_metadata.html">load_metadata</a>
+  </td>
+  <td><p>get metabolite annotation metadata via given reference id</p></td>
+</tr>
+<tr>
   <td id="assert.adducts">
     <a href="./annotation/assert.adducts.html">assert.adducts</a>
   </td>
-  <td></td>
+  <td><p>Check of the valid adducts</p></td>
 </tr>
 <tr>
   <td id="populateIonData">
     <a href="./annotation/populateIonData.html">populateIonData</a>
   </td>
   <td><p>a shortcut method for populate the peak ms2 data from a mzpack raw data file</p></td>
+</tr>
+<tr>
+  <td id="unique_candidates">
+    <a href="./annotation/unique_candidates.html">unique_candidates</a>
+  </td>
+  <td></td>
 </tr>
 <tr>
   <td id="make.annotation">
@@ -103,6 +157,90 @@ table caption {font-size:14px;font-weight:bolder;}
     <a href="./annotation/checkInSourceFragments.html">checkInSourceFragments</a>
   </td>
   <td><p>Check the ms1 parent ion is generated via the in-source fragment or not</p></td>
+</tr>
+<tr>
+  <td id="getByKEGG">
+    <a href="./annotation/getByKEGG.html">getByKEGG</a>
+  </td>
+  <td><p>get mzkit annotation data via a given set of the kegg id for mapping</p></td>
+</tr>
+<tr>
+  <td id="open_repository">
+    <a href="./annotation/open_repository.html">open_repository</a>
+  </td>
+  <td><p>open the annotation database file</p></td>
+</tr>
+<tr>
+  <td id="config_mapping">
+    <a href="./annotation/config_mapping.html">config_mapping</a>
+  </td>
+  <td><p>config spectrum lib reference id mapping to metabolite id</p></td>
+</tr>
+<tr>
+  <td id="write_metadata">
+    <a href="./annotation/write_metadata.html">write_metadata</a>
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="open.annotation_workspace">
+    <a href="./annotation/open.annotation_workspace.html">open.annotation_workspace</a>
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="read.annotationPack">
+    <a href="./annotation/read.annotationPack.html">read.annotationPack</a>
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="filter">
+    <a href="./annotation/filter.html">filter</a>
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="get_peaktable">
+    <a href="./annotation/get_peaktable.html">get_peaktable</a>
+  </td>
+  <td><p>get annotated ms1 peak features from the result data pack</p></td>
+</tr>
+<tr>
+  <td id="get_annotations">
+    <a href="./annotation/get_annotations.html">get_annotations</a>
+  </td>
+  <td><p>get annotation data from the given workspace object</p></td>
+</tr>
+<tr>
+  <td id="set_xicCache">
+    <a href="./annotation/set_xicCache.html">set_xicCache</a>
+  </td>
+  <td><p>Set the XIC cache data into the report viewer workspace</p></td>
+</tr>
+<tr>
+  <td id="save_annotations">
+    <a href="./annotation/save_annotations.html">save_annotations</a>
+  </td>
+  <td><p>Save the reference library annotation result.</p></td>
+</tr>
+<tr>
+  <td id="push_temp">
+    <a href="./annotation/push_temp.html">push_temp</a>
+  </td>
+  <td><p>Save the ms2 alignment hits result into current temp workspace.</p></td>
+</tr>
+<tr>
+  <td id="commit">
+    <a href="./annotation/commit.html">commit</a>
+  </td>
+  <td><p>Commit library annotation</p></td>
+</tr>
+<tr>
+  <td id="peak_assign">
+    <a href="./annotation/peak_assign.html">peak_assign</a>
+  </td>
+  <td><p>Associates the ms1 peaks with the ms2 spectrum alignment result hits.</p></td>
 </tr></tbody>
       </table>
     </div>

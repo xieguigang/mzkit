@@ -1,5 +1,5 @@
 .\" man page create by R# package system.
-.TH MASSBANK 1 2000-Jan "metabo_anno" "metabo_anno"
+.TH MASSBANK 1 2000-1月 "metabo_anno" "metabo_anno"
 .SH NAME
 metabo_anno \- construct a new metabolite annotation information data
 .SH SYNOPSIS
@@ -9,7 +9,9 @@ metabo_anno \- construct a new metabolite annotation information data
 \fBiupac_name\fR as string = \fB<NULL>\fR, 
 \fBxref\fR as <generic> xref = \fB<NULL>\fR, 
 \fBsynonym\fR as any = \fB<NULL>\fR, 
-\fBdesc\fR as any = \fB<NULL>\fR);\fR
+\fBdesc\fR as any = \fB<NULL>\fR, 
+\fBorganism_source\fR as any = \fB<NULL>\fR, 
+\fBzh_name\fR as string = \fB<NULL>\fR);\fR
 .SH DESCRIPTION
 .PP
 construct a new metabolite annotation information data
@@ -19,6 +21,30 @@ construct a new metabolite annotation information data
 \fBxref\fB \fR\- 
  the database cross reference links of current metabolite.
 . 
+.PP
+.SH EXAMPLES
+.PP
+imports ["massbank", "annotation"] from "mzkit";
+ 
+ # an example of create metabolite annotation data
+ # for 'ATP'.
+ 
+ let xrefs = annotation::xref(
+     KEGG = 'C00002',
+     CAS = '56-65-5',
+     pubchem = '3304',
+     chebi = '15422',
+     KNApSAcK = 'C00001491'
+ );
+ let metabo = metabo_anno(
+     id = "ATP",
+     formula = "C10H16N5O13P3",
+     name = "ATP",
+     xref = xrefs,
+     synonym = ['ATP' 'Adenosine 5'-triphosphate']
+ );
+ 
+ print(JSON::json_encode(metabo));
 .PP
 .SH SEE ALSO
 massbank

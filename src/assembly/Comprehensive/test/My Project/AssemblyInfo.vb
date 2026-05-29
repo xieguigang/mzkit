@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2bda6f3d966ad15993878071b8ed0fe, mzkit\src\assembly\Comprehensive\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::cfdd81a171d0e9eb5cd2ea25521e0452, assembly\Comprehensive\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 35
-    '    Code Lines: 13
-    ' Comment Lines: 15
-    '   Blank Lines: 7
-    '     File Size: 1009 B
+    '    Code Lines: 13 (37.14%)
+    ' Comment Lines: 15 (42.86%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (20.00%)
+    '     File Size: 1.04 KB
 
 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfe3fc76773c90d64e113abb5da82bd6, mzkit\src\metadb\Massbank\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::fd215b54fc429ef2d2c00086c2c8ee74, metadb\Massbank\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 36
-    '    Code Lines: 15
-    ' Comment Lines: 15
-    '   Blank Lines: 6
-    '     File Size: 1.16 KB
+    '    Code Lines: 15 (41.67%)
+    ' Comment Lines: 15 (41.67%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (16.67%)
+    '     File Size: 1.19 KB
 
 
     ' 

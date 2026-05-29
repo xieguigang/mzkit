@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffe170285224efecb64f1809c8ca4091, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\MetaReference\BioSamples.vb"
+﻿#Region "Microsoft.VisualBasic::18a75eaeaedc33e421b5ff81e18c0c62, metadb\Massbank\Public\TMIC\HMDB\MetaReference\BioSamples.vb"
 
     ' Author:
     ' 
@@ -37,15 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 76
-    '    Code Lines: 53
-    ' Comment Lines: 13
-    '   Blank Lines: 10
-    '     File Size: 2.82 KB
+    '   Total Lines: 80
+    '    Code Lines: 57 (71.25%)
+    ' Comment Lines: 13 (16.25%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (12.50%)
+    '     File Size: 3.02 KB
 
 
     '     Enum BioSamples
     ' 
+    '         Feces, Urine
     ' 
     '  
     ' 

@@ -1,59 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::00e8a8a610103ccfbe8cb0c9f38c5f5e, mzkit\src\metadb\SMILES\Language\Scanner.vb"
+﻿#Region "Microsoft.VisualBasic::fe756d1ba260f881fc582463960b2eff, metadb\SMILES\Language\Scanner.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 238
-'    Code Lines: 130
-' Comment Lines: 82
-'   Blank Lines: 26
-'     File Size: 9.79 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class Scanner
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: GetTokens, MeasureElement, WalkChar
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 313
+    '    Code Lines: 172 (54.95%)
+    ' Comment Lines: 109 (34.82%)
+    '    - Xml Docs: 15.60%
+    ' 
+    '   Blank Lines: 32 (10.22%)
+    '     File Size: 15.11 KB
+
+
+    '     Class Scanner
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetTokens, GetTokensInternal, MeasureElement, WalkChar
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Text.Parser
 
@@ -206,10 +210,14 @@ Namespace Language
 
                         If buf(Scan0) = "["c Then
                             openIonStack = True
-                            Call Debug.WriteLine("[")
+                            Call System.Diagnostics.Debug.WriteLine("[")
                         Else
                             Yield MeasureElement(New String(buf.PopAllChars))
                         End If
+                    ElseIf Char.IsLower(c) AndAlso buf.Size = 2 AndAlso atoms.ContainsKey(buf.ToString) Then
+                        ' atom|c
+                        Yield MeasureElement(New String(buf.PopAllChars))
+                        Yield MeasureElement(c.ToString)
                     End If
                 ElseIf c = "]"c Then
                     buf += c
@@ -236,14 +244,15 @@ Namespace Language
 
                     tmpStr = tmpStr.GetStackValue("[", "]")
 
-                    If Not charge.StringEmpty Then
-                        ' handling some special ion group
-                        If Atom.AtomGroups.ContainsKey(tmpStr) Then
-                            Yield New Token(ElementTypes.AtomGroup, tmpStr) With {.charge = chargeVal}
-                            Return
-                        Else
-                            tmpStr = tmpStr.Replace(charge, "")
+                    ' handling some special ion group
+                    If AtomGroup.CheckDefaultLabel(tmpStr) Then
+                        If charge.StringEmpty Then
+                            chargeVal = AtomGroup.GetDefaultValence(tmpStr, -1)
                         End If
+                        Yield New Token(ElementTypes.AtomGroup, tmpStr) With {.charge = chargeVal}
+                        Return
+                    ElseIf Not charge.StringEmpty Then
+                        tmpStr = tmpStr.Replace(charge, "")
                     End If
 
                     Dim tmp As String = ""
@@ -280,6 +289,8 @@ Namespace Language
                 buf += c
             End If
         End Function
+
+        Shared ReadOnly atoms As Dictionary(Of String, Element) = Element.MemoryLoadElements
 
         ''' <summary>
         ''' 
@@ -318,7 +329,10 @@ Namespace Language
                 Case ""
                     Return New Token(ElementTypes.None, str)
                 Case Else
-                    Static aromatic As Index(Of String) = {"c", "o", "n"}
+                    ' 在 SMILES（简化分子输入线进入系统）表示法中，CCCCCC 和 cccccc 分别代表不同的化学结构：
+                    ' 1. CCCCCC：这代表六个连续的饱和碳原子，每个碳原子之间都是单键连接。在化学式中，这通常表示为 CH3-CH2-CH2-CH2-CH2-CH3，这是己烷的化学式。己烷是一种无色、无味的液体，在常温常压下为液态，广泛用作溶剂和燃料。
+                    ' 2. cccccc：这代表六个连续的芳香族碳原子，通常指的是苯环结构中的一部分。在化学式中，苯环由六个碳原子组成，形成一个六元环C6H6，每个碳原子之间交替有一个单键和一个双键。cccccc 表示一个完整的苯环。苯是一种无色液体，具有特殊的芳香气味，广泛用于化学工业中。
+                    Static aromatic As Index(Of String) = {"c", "o", "n", "s", "p"}
 
                     If Layout2D.atomMaxCharges.ContainsKey(str) Then
                         Return New Token(ElementTypes.Element, str) With {
@@ -328,7 +342,12 @@ Namespace Language
                         Return New Token(ElementTypes.None, str)
                     ElseIf str Like aromatic Then
                         ' aromatic carbon by lower case c.
-                        Return New Token(ElementTypes.Element, str.ToUpper)
+                        Return New Token(ElementTypes.Element, str.ToUpper) With {
+                            .aromatic = True
+                        }
+                    ElseIf atoms.ContainsKey(str) Then
+                        ' Au/Cu/Na/Cl elements
+                        Return New Token(ElementTypes.Element, str)
                     ElseIf str.Last Like aromatic Then
                         Dim xxx As New MultipleTokens
 
@@ -341,8 +360,10 @@ Namespace Language
                         Next
 
                         Return xxx
+                    ElseIf str = "E" OrElse str = "Z" Then
+                        Return New Token(ElementTypes.Isomers, str)
                     Else
-                        Throw New NotImplementedException(str)
+                        Throw New NotImplementedException("Unknown token text for measure element type: " & str)
                     End If
             End Select
         End Function

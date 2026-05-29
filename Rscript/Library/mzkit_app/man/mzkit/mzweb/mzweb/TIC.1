@@ -1,16 +1,24 @@
 .\" man page create by R# package system.
-.TH MZWEB 1 2000-Jan "TIC" "TIC"
+.TH MZWEB 1 2000-1月 "TIC" "TIC"
 .SH NAME
 TIC \- Get TIC from the mzpack layer reader
 .SH SYNOPSIS
-\fITIC(\fBmzpack\fR as <generic> IMzPackReader);\fR
+\fITIC(\fBx\fR as any, 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
 Get TIC from the mzpack layer reader
 .PP
 .SH OPTIONS
 .PP
-\fBmzpack\fB \fR\- -. 
+\fBx\fB \fR\- should be a file reader to a mzpack file or the mzpack in-memory data object.. 
+.PP
+.SH EXAMPLES
+.PP
+let rawdata = mzweb::open(file = "./LCMS-rawdata.mzPack");
+ let tic = mzweb::TIC(rawdata);
+ 
+ plot(tic);
 .PP
 .SH SEE ALSO
 mzweb

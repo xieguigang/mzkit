@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Microsoft.VisualBasic.Imaging.Driver.Drivers</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>Drivers {Microsoft.VisualBasic.Imaging.Driver}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>Drivers</h2>
+
+        <h3>Description</h3>
+
+        <p>The imaging graphics engine list for <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/IGraphics.html">IGraphics</a></p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace Microsoft.VisualBasic.Imaging.Driver
+export class Drivers extends <a href="/vignettes/clr/System/Enum.html">Enum</a> {
+   # 与具体上下文相关的。当用户从命令行参数之中设置了环境变量之后，这个Default的含义与用户所设置的驱动程序类型一致，但是会被程序开发人员所设置的类型值所覆盖
+   Default: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a> = 0;
+
+   # libgdi+ raster image model
+   GDI: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a> = 1;
+
+   # mime type: image/svg+xml
+   SVG: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a> = 2;
+
+   # Windows meta file
+   WMF: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a> = 3;
+
+   # application/pdf
+   PDF: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a> = 4;
+
+   # The PostScript file format is a page description language (PDL) developed by Adobe Systems, Inc. It was first 
+   #  introduced in 1982 and has since become a standard for printing and imaging in the graphics and publishing 
+   #  industries. PostScript is a powerful and flexible format used primarily for printing high-quality text and
+   #  graphics.
+   #  
+   #  Here are some key aspects of the PostScript file format:
+   #  
+   #  1. <strong>Language-Based Format</strong>: PostScript is not just a file format but a full-fledged programming language. 
+   #     It includes a set of commands that describe how text, graphics, and images should be rendered on a page.
+   #  2. <strong>Device Independence</strong>: One of the main advantages of PostScript is its device independence. This means
+   #     that a PostScript file can be created on one device and then printed or displayed on another device without 
+   #     needing to adjust the file for the specific characteristics of the output device.
+   #  3. <strong>Vector Graphics</strong>: PostScript is particularly well-suited for vector graphics, which are defined by 
+   #     mathematical equations rather than pixels. This allows for crisp, high-resolution output at any size.
+   #  4. <strong>Encapsulated PostScript (EPS)</strong>: A variant of PostScript, EPS is a file format that can be used to exchange 
+   #     graphics between different applications. EPS files can contain both vector and bitmap graphics and are often
+   #     used for logos, illustrations, and other graphics that need to be integrated into larger documents.
+   #  5. <strong>Font Handling</strong>: PostScript introduced sophisticated font handling, including the ability to scale and rotate 
+   #     text. It also supports both Type 1 and Type 3 fonts, which are outline fonts that can be scaled to any size
+   #     without losing quality.
+   #  6. <strong>Complex Page Layouts</strong>: PostScript is capable of describing very complex page layouts, including text in 
+   #     multiple columns, overlapping graphics, and nested objects.
+   #  7. <strong>Interpreted Language</strong>: PostScript files are interpreted by a PostScript interpreter, which is typically 
+   #     built into a printer or a raster image processor (RIP). The interpreter reads the PostScript commands and
+   #     renders the page accordingly.
+   #  8. <strong>Compatibility</strong>: While PostScript was once the dominant format for professional printing, its use has declined 
+   #     somewhat with the rise of PDF (Portable Document Format), also developed by Adobe. However, PostScript remains 
+   #     important in certain niches, and many printers and RIPs still support it.
+   #  9. <strong>File Extensions</strong>: PostScript files commonly have the extensions .ps (for PostScript) or .eps (for Encapsulated PostScript).
+   #  10. <strong>Programming Features</strong>: PostScript includes programming constructs such as variables, loops, and conditionals, 
+   #      which allow for a high degree of automation and customization in the creation of documents.
+   #      
+   #  Despite the rise of other formats like PDF, PostScript still has a place in the world of digital printing and publishing, 
+   #  particularly for applications where precise control over the output is required. It's also worth noting that many of the
+   #  concepts and technologies introduced with PostScript laid the groundwork for later developments in digital graphics and 
+   #  document management.
+   [@desc "application/postscript"]
+   PostScript: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a> = 5;
+
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/System/Enum.html">Enum</a> class: <a href="/vignettes/clr/System/Enum.html">Enum</a></li>
+<li>use by <i>field</i> member <code>Default</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a></li>
+<li>use by <i>field</i> member <code>GDI</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a></li>
+<li>use by <i>field</i> member <code>SVG</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a></li>
+<li>use by <i>field</i> member <code>WMF</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a></li>
+<li>use by <i>field</i> member <code>PDF</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a></li>
+<li>use by <i>field</i> member <code>PostScript</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

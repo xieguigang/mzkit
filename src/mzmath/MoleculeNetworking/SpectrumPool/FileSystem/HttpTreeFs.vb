@@ -1,6 +1,72 @@
-﻿Imports System.Collections.Specialized
+﻿#Region "Microsoft.VisualBasic::a07b75f532b8ce1f9c7905145caa241c, mzmath\MoleculeNetworking\SpectrumPool\FileSystem\HttpTreeFs.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 334
+    '    Code Lines: 227 (67.96%)
+    ' Comment Lines: 55 (16.47%)
+    '    - Xml Docs: 78.18%
+    ' 
+    '   Blank Lines: 52 (15.57%)
+    '     File Size: 13.03 KB
+
+
+    '     Class HttpTreeFs
+    ' 
+    '         Properties: HttpServices, model_id, RootHashIndex
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: CheckExists, ClusterHashIndex, CreateModel, decode, DecodeConsensus
+    '                   decodeSpectrum, encode, FindRootId, GetCluster, getParentId
+    '                   GetTreeChilds, (+2 Overloads) LoadMetadata, (+2 Overloads) ReadSpectrum, WriteSpectrum
+    ' 
+    '         Sub: Close, CommitMetadata, SetRootId
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.My.JavaScript
@@ -10,6 +76,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace PoolData
 
     Public Class HttpTreeFs : Inherits PoolFs
+        Implements IReadOnlyId
 
         ''' <summary>
         ''' the web services base url
@@ -21,7 +88,7 @@ Namespace PoolData
 
         Public Shared ReadOnly Property RootHashIndex As String = "/".MD5.ToLower
 
-        Public ReadOnly Property model_id As String
+        Public ReadOnly Property model_id As String Implements IReadOnlyId.Identity
         Public ReadOnly Property HttpServices As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -165,7 +232,7 @@ Namespace PoolData
                 key = ClusterHashIndex(dir)
 
                 If Not cluster_data.ContainsKey(key) Then
-                    cluster_data.Add(key, obj)
+                    Call cluster_data.Add(key, obj)
                 End If
 
                 Yield dir
@@ -249,20 +316,13 @@ Namespace PoolData
 
             Dim npeaks As Integer = Integer.Parse(CStr(data.info!npeaks))
             Dim hashcode As String = data.info!hashcode
-            Dim mz As Double() = decode(CStr(data.info!mz))
-            Dim into As Double() = decode(CStr(data.info!into))
+            Dim spectral As ms2() = decodeSpectrum(CStr(data.info!mz), CStr(data.info!into), npeaks) _
+                .SafeQuery _
+                .ToArray
 
-            If npeaks <> mz.Length Then
-                Return Nothing
-            ElseIf npeaks <> into.Length Then
+            If spectral.Length <> npeaks Then
                 Return Nothing
             End If
-
-            Dim spectral As ms2() = mz _
-                .Select(Function(mzi, i)
-                            Return New ms2 With {.mz = mzi, .intensity = into(i)}
-                        End Function) _
-                .ToArray
 
             Return New PeakMs2 With {
                 .lib_guid = hashcode,
@@ -281,6 +341,24 @@ Namespace PoolData
                 .ToArray
         End Function
 
+        Public Shared Function decodeSpectrum(mz_str As String, intensity_str As String, Optional npeaks As Integer? = Nothing) As IEnumerable(Of ms2)
+            Dim mz As Double() = decode(mz_str)
+            Dim into As Double() = decode(intensity_str)
+
+            If Not npeaks Is Nothing Then
+                If npeaks <> mz.Length Then
+                    Return Nothing
+                ElseIf npeaks <> into.Length Then
+                    Return Nothing
+                End If
+            End If
+
+            Return mz _
+                .Select(Function(mzi, i)
+                            Return New ms2 With {.mz = mzi, .intensity = into(i)}
+                        End Function)
+        End Function
+
         Public Shared Function DecodeConsensus(base64 As String) As (mz As Double(), into As Double())
             Dim v = base64.Base64RawBytes _
                 .UnZipStream _
@@ -294,7 +372,7 @@ Namespace PoolData
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Function encode(x As IEnumerable(Of Double)) As String
+        Public Shared Function encode(x As IEnumerable(Of Double)) As String
             Return x _
                 .Select(AddressOf NetworkByteOrderBitConvertor.GetBytes) _
                 .IteratesALL _

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f2295f1c03027b8274d7fe5fd2016fd, mzkit\src\assembly\NMRFidTool\Math\baseline\BaselineCorrector.vb"
+﻿#Region "Microsoft.VisualBasic::e4abd22468f5eb68a09cb147dbf13bab, assembly\NMRFidTool\Math\baseline\BaselineCorrector.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 35
-    '    Code Lines: 5
-    ' Comment Lines: 26
-    '   Blank Lines: 4
-    '     File Size: 1.17 KB
+    '    Code Lines: 5 (14.29%)
+    ' Comment Lines: 26 (74.29%)
+    '    - Xml Docs: 30.77%
+    ' 
+    '   Blank Lines: 4 (11.43%)
+    '     File Size: 1.21 KB
 
 
     '     Interface BaselineCorrector

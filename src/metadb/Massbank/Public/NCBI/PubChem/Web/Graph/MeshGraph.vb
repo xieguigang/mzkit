@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0e38ad12f630a8597a3631cf52d9ae4, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Graph\MeshGraph.vb"
+﻿#Region "Microsoft.VisualBasic::3642123d522b6eaa535ff443dd870ed4, metadb\Massbank\Public\NCBI\PubChem\Web\Graph\MeshGraph.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 93
-    '    Code Lines: 74
-    ' Comment Lines: 3
-    '   Blank Lines: 16
-    '     File Size: 3.00 KB
+    '   Total Lines: 134
+    '    Code Lines: 89 (66.42%)
+    ' Comment Lines: 25 (18.66%)
+    '    - Xml Docs: 80.00%
+    ' 
+    '   Blank Lines: 20 (14.93%)
+    '     File Size: 4.47 KB
 
 
     '     Class GraphId
@@ -52,16 +54,20 @@
     ' 
     '     Class Evidence
     ' 
-    '         Properties: ChemicalDiseaseNeighbor, ChemicalGeneSymbolNeighbor, ChemicalNeighbor, Graph
+    '         Properties: ChemicalDiseaseNeighbor, ChemicalGeneSymbolNeighbor, ChemicalNeighbor, GeneSymbolDiseaseNeighbor, Graph
     ' 
     '     Class MeshGraph
     ' 
     '         Properties: Evidence, ID_1, ID_2
     ' 
+    '         Function: ToString
+    ' 
     '     Class PubChemGraph
     ' 
     '         Properties: Article, ArticleCount, CooccurrenceScore, EffectiveTotalArticleCount, NeighborArticleCount
     '                     NeighborName, OrderingByCooccurrenceScore, QueryArticleCount, TotalArticleCount
+    ' 
+    '         Function: ToString
     ' 
     '     Class Article
     ' 
@@ -69,10 +75,14 @@
     '                     DiseaseName, DOI, GenericArticleId, GeneSymbolName, IsReview
     '                     Journal, PMID, PublicationDate, RelevanceScore, Title
     ' 
+    '         Function: ToString
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
+
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace NCBI.PubChem.Graph
 
@@ -82,6 +92,17 @@ Namespace NCBI.PubChem.Graph
         Public Property MeSH As String
         Public Property GeneSymbol As String
 
+        ''' <summary>
+        ''' a union method for get the current id value:
+        ''' 
+        ''' + <see cref="CID"/>
+        ''' + <see cref="MeSH"/>
+        ''' + <see cref="GeneSymbol"/>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        ''' 
+        <DataIgnored>
         Public ReadOnly Property GraphId As String
             Get
                 If Not CID.StringEmpty Then
@@ -101,12 +122,26 @@ Namespace NCBI.PubChem.Graph
         End Function
     End Class
 
+    ''' <summary>
+    ''' evidence data for the knowledge graph link
+    ''' </summary>
     Public Class Evidence
 
         Public Property ChemicalDiseaseNeighbor As PubChemGraph
         Public Property ChemicalGeneSymbolNeighbor As PubChemGraph
         Public Property ChemicalNeighbor As PubChemGraph
+        Public Property GeneSymbolDiseaseNeighbor As PubChemGraph
 
+        ''' <summary>
+        ''' a union method for get one of the evidence graph data for current knowledg graph:
+        ''' 
+        ''' + <see cref="ChemicalDiseaseNeighbor"/>
+        ''' + <see cref="ChemicalGeneSymbolNeighbor"/>
+        ''' + <see cref="ChemicalNeighbor"/>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        <DataIgnored>
         Public ReadOnly Property Graph As PubChemGraph
             Get
                 If Not ChemicalDiseaseNeighbor Is Nothing Then
@@ -115,6 +150,8 @@ Namespace NCBI.PubChem.Graph
                     Return ChemicalGeneSymbolNeighbor
                 ElseIf Not ChemicalNeighbor Is Nothing Then
                     Return ChemicalNeighbor
+                ElseIf Not GeneSymbolDiseaseNeighbor Is Nothing Then
+                    Return GeneSymbolDiseaseNeighbor
                 Else
                     Return Nothing
                 End If
@@ -132,6 +169,10 @@ Namespace NCBI.PubChem.Graph
         Public Property ID_2 As GraphId
         Public Property Evidence As Evidence
 
+        Public Overrides Function ToString() As String
+            Return $"{ID_1} - {ID_2}"
+        End Function
+
     End Class
 
     Public Class PubChemGraph
@@ -145,6 +186,10 @@ Namespace NCBI.PubChem.Graph
         Public Property ArticleCount As Integer
         Public Property CooccurrenceScore As Integer
         Public Property Article As Article()
+
+        Public Overrides Function ToString() As String
+            Return NeighborName
+        End Function
 
     End Class
 
@@ -164,6 +209,10 @@ Namespace NCBI.PubChem.Graph
         Public Property GeneSymbolName As String
         Public Property ChemicalName_1 As String
         Public Property ChemicalName_2 As String
+
+        Public Overrides Function ToString() As String
+            Return Title
+        End Function
 
     End Class
 End Namespace

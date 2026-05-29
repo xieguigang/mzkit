@@ -1,5 +1,5 @@
 .\" man page create by R# package system.
-.TH ANNOTATION 1 2000-Jan "xref" "xref"
+.TH ANNOTATION 1 2000-1月 "xref" "xref"
 .SH NAME
 xref \- Create the database cross reference links
 .SH SYNOPSIS
@@ -329,6 +329,19 @@ Create the database cross reference links
  identified by the D number and associated with KEGG original annotations including 
  therapeutic targets, drug metabolism, and other molecular interaction network 
  information.. 
+.PP
+.SH EXAMPLES
+.PP
+# an example of create metabolite annotation data
+ # for 'ATP'.
+ 
+ let xrefs = annotation::xref(
+     KEGG = 'C00002',
+     CAS = '56-65-5',
+     pubchem = '3304',
+     chebi = '15422',
+     KNApSAcK = 'C00001491'
+ );
 .PP
 .SH SEE ALSO
 annotation

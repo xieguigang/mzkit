@@ -1,6 +1,7 @@
 <link rel="manifest" href="/manifest.json">
 
 # <span style="font-size: 3em;">Mzkit</span> [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4456618.svg)](https://doi.org/10.5281/zenodo.4456618)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fxieguigang%2Fmzkit.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fxieguigang%2Fmzkit?ref=badge_shield)
 
 > Data toolkits for processing NMR, MALDI MSI, MALDI single cell, Raman Spectroscopy, LC-MS and GC-MS raw data, chemoinformatics data analysis and data visualization.
 
@@ -12,7 +13,9 @@
 + [View Mzkit Update History](HISTORY.md)
 + Found me at: https://bio.tools/mzkit 
 
-**Download Software**: [http://www.biodeep.cn/downloads?lang=en-US](http://www.biodeep.cn/downloads?lang=en-US)
+**Download Software**: [https://mzkit.org/download.html](https://mzkit.org/download.html)
+
+**Docker Image**: ``docker pull xieguigang/mzkit``
 
 ## LICENSE
 
@@ -23,7 +26,7 @@
 ```
 MIT License
 
-Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+Copyright (c) 2025 xieguigang@metabolomics.ac.cn / gg.xie@bionovogene.com, BioNovoGene Co., LTD.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -123,6 +126,9 @@ SOFTWARE.
 ![](docs/manual/plots/MS_alignment.png)
 
 <div style="page-break-after:always;"></div>
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fxieguigang%2Fmzkit.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fxieguigang%2Fmzkit?ref=badge_large)
 
 ##  1. <a name='RawDataViewerInstruction'></a>Raw Data Viewer Instruction
 
@@ -429,3 +435,4 @@ The development of MZKit workbench is based on these works:
 9. Mingxun Wang, Jeremy J. Carver, Vanessa V. Phelan, Laura M. Sanchez, Neha Garg, Yao Peng, Don Duy Nguyen et al. "Sharing and community curation of mass spectrometry data with Global Natural Products Social Molecular Networking." Nature biotechnology 34, no. 8 (2016): 828. PMID: 27504778
 10. Li, Y., Kind, T., Folz, J. et al. Spectral entropy outperforms MS/MS dot product similarity for small-molecule compound identification. Nat Methods 18, 1524–1531 (2021). https://doi.org/10.1038/s41592-021-01331-z
 11. Kind, T., Fiehn, O. Seven Golden Rules for heuristic filtering of molecular formulas obtained by accurate mass spectrometry. BMC Bioinformatics 8, 105 (2007). https://doi.org/10.1186/1471-2105-8-105
+12. Allen F, Greiner R, and Wishart D (2015) Competitive fragmentation modeling of ESI-MS/MS spectra for putative metabolite identification. Metabolomics. 11:98–110. Supporting Data

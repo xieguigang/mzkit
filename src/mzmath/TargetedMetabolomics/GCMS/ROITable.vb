@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2cb9f40fa3e896aba2be3e31f85c6b6, mzkit\src\mzmath\TargetedMetabolomics\GCMS\ROITable.vb"
+﻿#Region "Microsoft.VisualBasic::0419317f667733cc3ceaa407b8773ce1, mzmath\TargetedMetabolomics\GCMS\ROITable.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 68
-    '    Code Lines: 27
-    ' Comment Lines: 31
-    '   Blank Lines: 10
-    '     File Size: 2.04 KB
+    '   Total Lines: 64
+    '    Code Lines: 23 (35.94%)
+    ' Comment Lines: 31 (48.44%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (15.62%)
+    '     File Size: 1.97 KB
 
 
     '     Class ROITable
@@ -55,12 +57,8 @@
 
 #End Region
 
-#If netcore5 = 0 Then
-Imports System.Data.Linq.Mapping
-#Else
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
-#End If
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
 Namespace GCMS
 

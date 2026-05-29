@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2f804200a6586a26243dc9826b05339, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\Linear\Points\ReferencePoint.vb"
+﻿#Region "Microsoft.VisualBasic::393f2afe13c986ceaa448e6111aa420d, mzmath\TargetedMetabolomics\LinearQuantitative\Linear\Points\ReferencePoint.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 78
-    '    Code Lines: 40
-    ' Comment Lines: 28
-    '   Blank Lines: 10
-    '     File Size: 2.37 KB
+    '    Code Lines: 40 (51.28%)
+    ' Comment Lines: 28 (35.90%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (12.82%)
+    '     File Size: 2.36 KB
 
 
     '     Class ReferencePoint
@@ -58,8 +60,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
+Imports std = System.Math
 
 Namespace LinearQuantitative.Linear
 
@@ -106,13 +108,13 @@ Namespace LinearQuantitative.Linear
         Public Property yfit As Double
         Public ReadOnly Property [error] As Double
             Get
-                Return stdNum.Abs(stdNum.Round(yfit - Cti, 4))
+                Return std.Abs(std.Round(yfit - Cti, 4))
             End Get
         End Property
 
         Public ReadOnly Property [variant] As Double
             Get
-                Return stdNum.Round([error] / Cti, 4)
+                Return std.Round([error] / Cti, 4)
             End Get
         End Property
 

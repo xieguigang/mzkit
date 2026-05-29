@@ -2,173 +2,10 @@
 <html>
 
 <head>
-    <title>sample_bootstraping</title>
+    <title>make expression bootstrapping of the spatial data</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <style rel="stylesheet" type="text/css">
-        @media screen {
-            .container {
-                padding-right: 10px;
-                padding-left: 10px;
-                margin-right: auto;
-                margin-left: auto;
-                max-width: 900px;
-            }
-        }
-
-        .rimage img {
-            /* from knitr - for examples and demos */
-            width: 96%;
-            margin-left: 2%;
-        }
-
-        .katex {
-            font-size: 1.1em;
-        }
-
-        code {
-            color: rgb(194, 42, 42);
-            background: inherit;
-            font-style: italic;
-            font-weight: bold;
-        }
-
-        pre code {
-            color: rgb(54, 54, 54);
-            font-style: normal;
-        }
-
-        body {
-            line-height: 1.4;
-            background: white;
-            color: black;
-        }
-
-        a:link {
-            background: white;
-            color: blue;
-        }
-
-        a:visited {
-            background: white;
-            color: rgb(50%, 0%, 50%);
-        }
-
-        h1 {
-            background: white;
-            color: rgb(55%, 55%, 55%);
-            font-family: monospace;
-            font-size: 1.4em;
-            /* x-large; */
-            text-align: center;
-        }
-
-        h2 {
-            background: white;
-            color: rgb(40%, 40%, 40%);
-            font-family: monospace;
-            font-size: 1.2em;
-            /* large; */
-            text-align: center;
-        }
-
-        h3 {
-            background: white;
-            color: rgb(40%, 40%, 40%);
-            font-family: monospace;
-            font-size: 1.2em;
-            /* large; */
-        }
-
-        h4 {
-            background: white;
-            color: rgb(40%, 40%, 40%);
-            font-family: monospace;
-            font-style: italic;
-            font-size: 1.2em;
-            /* large; */
-        }
-
-        h5 {
-            background: white;
-            color: rgb(40%, 40%, 40%);
-            font-family: monospace;
-        }
-
-        h6 {
-            background: white;
-            color: rgb(40%, 40%, 40%);
-            font-family: monospace;
-            font-style: italic;
-        }
-
-        img.toplogo {
-            width: 4em;
-            vertical-align: middle;
-        }
-
-        img.arrow {
-            width: 30px;
-            height: 30px;
-            border: 0;
-        }
-
-        span.acronym {
-            font-size: small;
-        }
-
-        span.env {
-            font-family: monospace;
-        }
-
-        span.file {
-            font-family: monospace;
-        }
-
-        span.option {
-            font-family: monospace;
-        }
-
-        span.pkg {
-            font-weight: bold;
-        }
-
-        span.samp {
-            font-family: monospace;
-        }
-
-        div.vignettes a:hover {
-            background: rgb(85%, 85%, 85%);
-        }
-
-        .character {
-            color: brown;
-        }
-
-        .comment {
-            color: green;
-            font-style: italic;
-        }
-
-        .number {
-            color: skyblue;
-        }
-
-        .keyword {
-            color: blue;
-            font-weight: bold;
-        }
-
-        .operator {
-            color: gray;
-            font-weight: bold;
-        }
-
-        .bracket {
-            color: rgb(197, 1, 197);
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
 </head>
 
 <body>
@@ -181,39 +18,111 @@
             </tr>
         </table>
 
-        <h2>sample_bootstraping</h2>
+        <h2>make expression bootstrapping of the spatial data</h2>
 
         <h3>Description</h3>
 
-        sample_bootstraping
+        
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>sample_bootstraping</strong>(<i>layer</i>, <i>tissue</i>,
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>sample_bootstraping</strong>(<i>x</i>,
+    <i>tissue</i> = <span style='color: blue !important;'>NULL</span>,
     <i>n</i> = <span style='color: green;'>32</span>,
-    <i>coverage</i> = <span style='color: green;'>0.3</span>);</code></pre>
+    <i>coverage</i> = <span style='color: green;'>0.3</span>,
+    <i>scale.by.area</i> = <span style='color: blue !important;'>TRUE</span>,
+    <i>mz</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>multiple.samples</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
+<dt>x</dt>
+<dd><p>The target ion layer to run expression bootstraping, it could be
+ <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a>, or the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a> data matrix for 
+ extract the sample dataframe.</p></dd>
+
+
+<dt>tissue</dt>
+<dd><p>A collection of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/TissueRegion.html">TissueRegion</a> object. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/TissueRegion.html">TissueRegion</a>]</p></dd>
+
+
+<dt>n</dt>
+<dd><p>Get n sample points for each tissue region. [as integer]</p></dd>
+
+
+<dt>coverage</dt>
+<dd><p>The region area coverage for the bootstrapping. [as double]</p></dd>
+
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>Bootstrapping is a statistical procedure that resamples a single dataset to create
+ many simulated samples. This process allows you to calculate standard errors, 
+ construct confidence intervals, and perform hypothesis testing for numerous types of
+ sample statistics. Bootstrap methods are alternative approaches to traditional 
+ hypothesis testing and are notable for being easier to understand and valid for more 
+ conditions.</p>
 
+        <h3 style="display: block">Authors</h3>
+
+        BioNovoGene
 
         <h3>Value</h3>
 
-        this function returns data object of type <i>any</i> kind.
+        <p>For a single ion data layer, this function generates A tuple list object that contains 
+ the expression data for each <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/TissueRegion.html">TissueRegion</a>:
+ 
+ 1. the tuple key is the label of the tissue region data,
+ 2. the tuple value is the numeric expression vector that sampling from 
+    the corrisponding tissue region, the vector size is equals to the 
+    parameter <code>n</code>.
+    
+ For a raw spatial data matrix <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a> object, a tuple list object that
+ contains two elements will be generats:
+ 
+ 1. sampleinfo - a collection of the gcmodeller @<code>T:SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner.SampleInfo</code> for mark the sample spatial source
+ 2. data - a dataframe that contains the bootstrapping expression data, ion features in rows
+           and spatial features sample in columns.</p><h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> # demo code for export expression matrix from the spatial raw data
+ 
+ # load spatial rawdata file
+ let rawdata = open.mzpack(file = "./rawdata.mzPack");
+ # load ion features
+ let ions = read.csv("./features.csv", row.names = NULL, check.names = FALSE);
+ 
+ let mz = as.numeric(ions$mz);
+ 
+ print("view of the ion features m/z:");
+ print(mz);
+ 
+ # create the aligned matrix data object
+ let matrix = MSI::peakMatrix(raw = rawdata,
+                              mzError = "da:0.05",
+                              ionSet  = mz,
+                              raw_matrix = TRUE
+ );
+ 
+ # load spatial regions
+ let tissue_data = TissueMorphology::loadTissue(file = "tissue_data.cdf");
+ 
+ # finally create the sample bootstrapping result
+ let [sampleinfo, data] = MSI::sample_bootstraping(matrix, tissue_data, n = 200, coverage = 0.1);
+ 
+ print(as.data.frame(sampleinfo));
+ str(data);
+ 
+ # save expression data as csv files for the downstream data analysis.
+ write.csv(data, file = "./expression.csv", row.names = TRUE);
+ write.csv(sampleinfo, file = "./sampleinfo.csv");</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a
@@ -223,14 +132,7 @@
 </body>
 
 <script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
-<script type="text/javascript">
-    let example_code = document.getElementById("example_r");
-    let highlights_str = highlights(example_code.innerText);
-
-    console.log(example_code.innerText);
-    console.log(highlights_str);
-
-    example_code.innerHTML = highlights_str;
-</script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("example_r");</script>
 
 </html>

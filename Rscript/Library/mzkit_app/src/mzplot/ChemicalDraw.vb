@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85fad33928e52b05991f7d16ee02bf7f, mzkit\Rscript\Library\mzkit.plot\ChemicalDraw.vb"
+﻿#Region "Microsoft.VisualBasic::1b3878e9cbb0794f59861cdd18de39f4, Rscript\Library\mzkit_app\src\mzplot\ChemicalDraw.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 30
-    '    Code Lines: 27
-    ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 1.17 KB
+    '   Total Lines: 31
+    '    Code Lines: 28 (90.32%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (9.68%)
+    '     File Size: 1.22 KB
 
 
     ' Module ChemicalDraw
@@ -61,6 +63,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 <Package("ChemicalDraw")>
 Module ChemicalDraw
@@ -74,11 +77,11 @@ Module ChemicalDraw
     <RApiReturn(GetType(KCF))>
     Public Function AsKCF(chemical As Object, Optional env As Environment = Nothing) As Object
         If chemical Is Nothing Then
-            Return Internal.debug.stop("the given chemical data is nothing!", env)
+            Return RInternal.debug.stop("the given chemical data is nothing!", env)
         ElseIf TypeOf chemical Is ChemicalFormula Then
             Return DirectCast(chemical, ChemicalFormula).ToKCF
         Else
-            Return Internal.debug.stop(New NotImplementedException(chemical.GetType.FullName), env)
+            Return RInternal.debug.stop(New NotImplementedException(chemical.GetType.FullName), env)
         End If
     End Function
 End Module

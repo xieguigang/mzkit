@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c40d3574d7e6f01f23d7718f634fc544, mzkit\src\metadb\Chemoinformatics\SDF\Struct\Mol.vb"
+﻿#Region "Microsoft.VisualBasic::715f4ac61c1b66c32023cc757f92d5e1, metadb\Chemoinformatics\SDF\Struct\Mol.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 89
-    '    Code Lines: 51
-    ' Comment Lines: 27
-    '   Blank Lines: 11
-    '     File Size: 3.24 KB
+    '   Total Lines: 105
+    '    Code Lines: 57 (54.29%)
+    ' Comment Lines: 35 (33.33%)
+    '    - Xml Docs: 88.57%
+    ' 
+    '   Blank Lines: 13 (12.38%)
+    '     File Size: 3.72 KB
 
 
     '     Class [Structure]
     ' 
     '         Properties: Atoms, Bounds
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: Parse, parseCounter, ParseStream, ToString
     ' 
     ' 
@@ -65,8 +68,24 @@ Namespace SDF.Models
     ''' </summary>
     Public Class [Structure]
 
+        ''' <summary>
+        ''' the atom element vetriex collection.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Atoms As Atom()
+        ''' <summary>
+        ''' the edge connections between the atoms
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Bounds As Bound()
+
+        Sub New()
+        End Sub
+
+        Sub New(atoms As IEnumerable(Of Atom), bonds As IEnumerable(Of Bound))
+            _Atoms = atoms.ToArray
+            _Bounds = bonds.ToArray
+        End Sub
 
         Public Overrides Function ToString() As String
             Return $"{Atoms.Length} atoms with {Bounds.Length} bounds"

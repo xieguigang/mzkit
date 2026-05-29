@@ -1,58 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::1b65057ea431884728ff1a2710ab8aae, mzkit\Rscript\Library\mzkit.quantify\Linears.vb"
+﻿#Region "Microsoft.VisualBasic::720cec9f6dc48e66314877d4acda8e68, Rscript\Library\mzkit_app\src\mzquant\Linears.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 261
-'    Code Lines: 164
-' Comment Lines: 70
-'   Blank Lines: 27
-'     File Size: 10.26 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module Linears
-' 
-'     Function: CreateMRMDataSet, getIonPeakTable, GetLinearPoints, GetQuantifyResult, GetRawX
-'               printIS, printLineModel, printStandards, SampleQuantify, StandardCurveDataSet
-'               writeMRMpeaktable, writeStandardCurve
-' 
-'     Sub: Main
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 288
+    '    Code Lines: 180 (62.50%)
+    ' Comment Lines: 78 (27.08%)
+    '    - Xml Docs: 97.44%
+    ' 
+    '   Blank Lines: 30 (10.42%)
+    '     File Size: 11.17 KB
+
+
+    ' Module Linears
+    ' 
+    '     Function: CreateMRMDataSet, getIonPeakTable, GetLinearPoints, GetQuantifyResult, GetRawX
+    '               loadExperiment, printIS, printLineModel, printStandards, readLinearPack
+    '               SampleQuantify, StandardCurveDataSet, writeMRMpeaktable, writeStandardCurve
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -67,8 +69,8 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
@@ -76,9 +78,13 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports std = System.Math
 
+''' <summary>
+''' targeted linears
+''' </summary>
 <Package("Linears")>
 Module Linears
 
@@ -143,6 +149,17 @@ Module Linears
     End Function
 
     ''' <summary>
+    ''' load the experiment project
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
+    <ExportAPI("load_experiment")>
+    <RApiReturn(GetType(Experiment))>
+    Public Function loadExperiment(file As String) As Experiment
+        Return file.LoadXml(Of Experiment)
+    End Function
+
+    ''' <summary>
     ''' save reference point data into a given table file
     ''' </summary>
     ''' <param name="points"></param>
@@ -167,7 +184,7 @@ Module Linears
         Dim name As String
 
         If nameRef Is Nothing Then
-            Return Internal.debug.stop({
+            Return RInternal.debug.stop({
                 $"the required feature name reference can not be nothing!",
                 $"parameter: {nameRef}"
             }, env)

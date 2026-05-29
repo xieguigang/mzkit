@@ -1,4 +1,65 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::ce1d0a70982331febbcc1b8c708d039d, assembly\SpectrumTree\Pack\SpectrumPack.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 133
+    '    Code Lines: 81 (60.90%)
+    ' Comment Lines: 29 (21.80%)
+    '    - Xml Docs: 55.17%
+    ' 
+    '   Blank Lines: 23 (17.29%)
+    '     File Size: 5.32 KB
+
+
+    '     Class SpectrumPack
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: PathName
+    ' 
+    '         Sub: (+2 Overloads) Dispose, Push, Save
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
@@ -16,7 +77,10 @@ Namespace PackLib
     ''' A data pack of the reference spectrum data which 
     ''' is indexed via the formula data
     ''' </summary>
-    Public Class SpectrumPack : Implements IDisposable
+    ''' <remarks>
+    ''' A reference library data model in hds file pack format
+    ''' </remarks>
+    Public Class SpectrumPack : Implements IDisposable, IReferencePack
 
         ''' <summary>
         ''' Each block is a collection of the metabolite spectrum
@@ -36,7 +100,13 @@ Namespace PackLib
             Return Strings.Trim(name).Replace("\", "_").Replace("/", "_").Replace(""""c, "").Replace("?", ".").Replace("*", ".").Trim
         End Function
 
-        Public Sub Push(uuid As String, formula As String, spectrum As PeakMs2)
+        ''' <summary>
+        ''' the spectrum is reference to the given <paramref name="uuid"/> via the <see cref="PeakMs2.lib_guid"/>
+        ''' </summary>
+        ''' <param name="uuid"></param>
+        ''' <param name="formula"></param>
+        ''' <param name="spectrum"></param>
+        Public Sub Push(uuid As String, formula As String, spectrum As PeakMs2) Implements IReferencePack.Push
             Dim index As MassIndex
 
             If Not massSet.ContainsKey(uuid) Then
@@ -47,6 +117,10 @@ Namespace PackLib
                    .name = uuid,
                    .formula = formula
                 })
+            End If
+
+            If spectrum.lib_guid Is Nothing Then
+                Throw New NullReferenceException($"no unique reference id(PeakMs2.lib_guid) of your reference spectrum data: {uuid} ({formula})!")
             End If
 
             index = massSet(uuid)

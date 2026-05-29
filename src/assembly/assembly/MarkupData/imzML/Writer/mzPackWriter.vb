@@ -1,68 +1,69 @@
-﻿#Region "Microsoft.VisualBasic::5d31f58dff53baed34c401ac45337cf8, mzkit\src\assembly\assembly\MarkupData\imzML\Writer\mzPackWriter.vb"
+﻿#Region "Microsoft.VisualBasic::b405b7ff8f2298031909293a4cc701f2, assembly\assembly\MarkupData\imzML\Writer\mzPackWriter.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
-    ' Code Statistics:
 
-    '   Total Lines: 339
-    '    Code Lines: 285
-    ' Comment Lines: 21
-    '   Blank Lines: 33
-    '     File Size: 19.56 KB
+' /********************************************************************************/
+
+' Summaries:
 
 
-    '     Class mzPackWriter
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: MeasureIbdSha1, OpenOutput, SetMSImagingParameters, SetSourceLocation, SetSpectrumParameters
-    ' 
-    '         Sub: (+2 Overloads) Dispose, flushXML, WriteDataProcessing, WriteDataScans, WriteDescriptions
-    '              WriteInstruments, WriteMSImgingParameters, WriteParameters, WriteSampleInformation, WriteScan
-    '              WriteSoftwareInformation, WriteXMLHeader
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 338
+'    Code Lines: 284 (84.02%)
+' Comment Lines: 21 (6.21%)
+'    - Xml Docs: 42.86%
+' 
+'   Blank Lines: 33 (9.76%)
+'     File Size: 19.57 KB
+
+
+'     Class mzPackWriter
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: MeasureIbdSha1, OpenOutput, SetMSImagingParameters, SetSourceLocation, SetSpectrumParameters
+' 
+'         Sub: (+2 Overloads) Dispose, flushXML, WriteDataProcessing, WriteDataScans, WriteDescriptions
+'              WriteInstruments, WriteMSImgingParameters, WriteParameters, WriteSampleInformation, WriteScan
+'              WriteSoftwareInformation, WriteXMLHeader
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Security.Cryptography
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
@@ -70,11 +71,12 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.SecurityString
+Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace MarkupData.imzML
 
     ''' <summary>
-    ''' convert
+    ''' convert mzpack data as imzML file.
     ''' </summary>
     Public Class mzPackWriter : Implements IDisposable
 
@@ -86,7 +88,7 @@ Namespace MarkupData.imzML
         ReadOnly scans As New List(Of ScanData)
 
         Dim disposedValue As Boolean
-        Dim sourceLocation As String
+        Dim sourceLocation As String()
         Dim scan_type As Integer
         Dim dims As Size
         Dim resolution As Double
@@ -107,7 +109,7 @@ Namespace MarkupData.imzML
             Me.imzML = New StreamWriter(imzMLfile, text) With {.NewLine = vbLf}
         End Sub
 
-        Public Function SetSourceLocation(path As String) As mzPackWriter
+        Public Function SetSourceLocation(ParamArray path As String()) As mzPackWriter
             sourceLocation = path
             Return Me
         End Function
@@ -124,7 +126,6 @@ Namespace MarkupData.imzML
         End Function
 
         Private Function MeasureIbdSha1() As String
-            Dim hash As New SHA1CryptoServiceProvider()
             Dim checksum As String
 
             Call ibd.Flush()
@@ -163,7 +164,18 @@ Namespace MarkupData.imzML
         End Sub
 
         Private Sub WriteDescriptions()
-            Call imzML.WriteXml(
+            Dim sourceFiles As New List(Of String)
+
+            For Each path As String In sourceLocation
+                Call sourceFiles.Add(<sourceFile id=<%= "sf" & (sourceFiles.Count + 1) %> location=<%= path.ParentPath %> name=<%= path.FileName %>>
+                                         <cvParam cvRef="MS" accession="MS:1000563" name="Thermo RAW format"/>
+                                         <cvParam cvRef="MS" accession="MS:1000768" name="Thermo nativeID format"/>
+                                         <cvParam cvRef="MS" accession="MS:1000569" name="SHA-1" value=<%= Guid.NewGuid.ToString.MD5.ToUpper %>/>
+                                     </sourceFile>.ToString)
+            Next
+
+            Call imzML.WriteLine(
+                sprintf(
                 <fileDescription>
                     <fileContent>
                         <cvParam cvRef="MS" accession="MS:1000579" name="MS1 spectrum"/>
@@ -172,20 +184,16 @@ Namespace MarkupData.imzML
                         <cvParam cvRef="IMS" accession="IMS:1000091" name="ibd SHA-1" value=<%= MeasureIbdSha1() %>/>
                         <cvParam cvRef="IMS" accession="IMS:1000031" name="processed"/>
                     </fileContent>
-                    <sourceFileList count="1">
-                        <sourceFile id="sf1" location=<%= sourceLocation.ParentPath %> name=<%= sourceLocation.FileName %>>
-                            <cvParam cvRef="MS" accession="MS:1000563" name="Thermo RAW format"/>
-                            <cvParam cvRef="MS" accession="MS:1000768" name="Thermo nativeID format"/>
-                            <cvParam cvRef="MS" accession="MS:1000569" name="SHA-1" value="16899F53AF4AEF90F2DF01E6678C728517F7C3EB"/>
-                        </sourceFile>
+                    <sourceFileList count=<%= sourceFiles.Count %>>
+%s
                     </sourceFileList>
                     <contact>
-                        <cvParam cvRef="MS" accession="MS:1000586" name="contact name" value="Xieguigang"/>
-                        <cvParam cvRef="MS" accession="MS:1000590" name="contact affiliation" value="BioNovoGene Corporation"/>
+                        <cvParam cvRef="MS" accession="MS:1000586" name="contact name" value="xieguigang@metabolomics.ac.cn"/>
+                        <cvParam cvRef="MS" accession="MS:1000590" name="contact affiliation" value="PANOMIX Ltd"/>
                         <cvParam cvRef="MS" accession="MS:1000587" name="contact address" value="Building 2, 388 Xinping Street, Suzhou Industrial Park, Jiangsu Province, China"/>
                         <cvParam cvRef="MS" accession="MS:1000589" name="contact email" value="gg.xie@bionovogene.com"/>
                     </contact>
-                </fileDescription>)
+                </fileDescription>, sourceFiles.JoinBy(vbCrLf)))
         End Sub
 
         Private Sub WriteParameters()
@@ -351,7 +359,7 @@ Namespace MarkupData.imzML
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub WriteScan(scan As ScanMS1)
-            Call scans.Add(DataWriter.WriteMzPack(scan, ibd))
+            Call scans.Add(DataWriter.WriteMzPack(scan, ibd, CType(scan_type, IonModes)))
         End Sub
 
         ''' <summary>

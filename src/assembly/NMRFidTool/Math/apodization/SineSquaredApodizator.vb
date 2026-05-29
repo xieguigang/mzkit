@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fe66be694d0d6171cb0ceb65d5962f9, mzkit\src\assembly\NMRFidTool\Math\apodization\SineSquaredApodizator.vb"
+﻿#Region "Microsoft.VisualBasic::5a82f84f16a71783f1f83af4d479595a, assembly\NMRFidTool\Math\apodization\SineSquaredApodizator.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 71
-    '    Code Lines: 31
-    ' Comment Lines: 27
-    '   Blank Lines: 13
-    '     File Size: 2.68 KB
+    '    Code Lines: 31 (43.66%)
+    ' Comment Lines: 27 (38.03%)
+    '    - Xml Docs: 25.93%
+    ' 
+    '   Blank Lines: 13 (18.31%)
+    '     File Size: 2.75 KB
 
 
     '     Class SineSquaredApodizator

@@ -1,59 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::85adcb71e40aabb06132caa56ac913af, mzkit\Rscript\Library\mzkit.plot\MsImaging.vb"
+﻿#Region "Microsoft.VisualBasic::98922b4de1cc72731914f45151b48b4a, Rscript\Library\mzkit_app\src\mzplot\MsImaging.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 823
-'    Code Lines: 559
-' Comment Lines: 163
-'   Blank Lines: 101
-'     File Size: 33.22 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module MsImaging
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: asPixels, AutoScaleMax, averageStep, defaultFilter, FilterMz
-'               GetIntensityData, GetIonLayer, getMSIIons, GetMsMatrx, GetPixel
-'               KnnFill, layer, LimitIntensityRange, LoadPixels, MSICoverage
-'               openIndexedCacheFile, plotMSI, printLayer, renderRowScans, RGB
-'               testLayer, TrIQRange, viewer, WriteXICCache
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1289
+    '    Code Lines: 808 (62.68%)
+    ' Comment Lines: 343 (26.61%)
+    '    - Xml Docs: 94.46%
+    ' 
+    '   Blank Lines: 138 (10.71%)
+    '     File Size: 55.12 KB
+
+
+    ' Module MsImaging
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: apply_raster_filter, (+2 Overloads) asPixels, AutoScaleMax, averageStep, defaultFilter
+    '               FilterMz, GetIntensityData, GetIonLayer, getMSIIons, GetMsMatrx
+    '               GetPixel, intensityFilter, KnnFill, layer, layerTable
+    '               LimitIntensityRange, LoadPixels, MSICoverage, openIndexedCacheFile, parseFilters
+    '               plotMSI, printLayer, renderRowScans, RGB, splitLayer
+    '               sumLayer, tagLayers, testLayer, TrIQRange, viewer
+    '               WriteXICCache
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -68,6 +72,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.Scaler
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
@@ -95,8 +100,37 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports PixelData = BioNovoGene.Analytical.MassSpectrometry.MsImaging.PixelData
 Imports Point2D = System.Drawing.Point
+Imports std = System.Math
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
 
 ''' <summary>
 ''' ### Visual MS imaging data(*.imzML)
@@ -113,11 +147,28 @@ Imports Point2D = System.Drawing.Point
 Module MsImaging
 
     Sub New()
-        Call Internal.generic.add("plot", GetType(SingleIonLayer), AddressOf plotMSI)
-        Call Internal.generic.add("split", GetType(SingleIonLayer), AddressOf splitLayer)
+        Call RInternal.generic.add("plot", GetType(SingleIonLayer), AddressOf plotMSI)
+        Call RInternal.generic.add("split", GetType(SingleIonLayer), AddressOf splitLayer)
 
-        Call Internal.ConsolePrinter.AttachConsoleFormatter(Of SingleIonLayer)(AddressOf printLayer)
+        Call RInternal.ConsolePrinter.AttachConsoleFormatter(Of SingleIonLayer)(AddressOf printLayer)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(SingleIonLayer), AddressOf layerTable)
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Public Function layerTable(layer As SingleIonLayer, args As list, env As Environment) As Object
+        Dim df As New dataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+        Dim mz_ref As Double = Val(layer.IonMz)
+
+        Call df.add("mz", From spot In layer.MSILayer Select spot.mz)
+        Call df.add("mz_diff", From spot In layer.MSILayer Select std.Abs(spot.mz - mz_ref))
+        Call df.add("x", From spot In layer.MSILayer Select spot.x)
+        Call df.add("y", From spot In layer.MSILayer Select spot.y)
+        Call df.add("intensity", From spot In layer.MSILayer Select spot.intensity)
+
+        Return df
+    End Function
 
     ''' <summary>
     ''' split the ms-imaging layer into multiple parts
@@ -127,8 +178,9 @@ Module MsImaging
     ''' default is split layer into multiple sample source
     ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>A tuple list of the single ion ms-imaging layer objects</returns>
     <ExportAPI("split.layer")>
+    <RApiReturn(GetType(SingleIonLayer))>
     Public Function splitLayer(<RRawVectorArgument> x As Object,
                                <RListObjectArgument>
                                args As list,
@@ -151,7 +203,7 @@ Module MsImaging
 
             Return New list With {.slots = splits}
         Else
-            Return Internal.debug.stop(New NotImplementedException, envir:=env)
+            Return RInternal.debug.stop(New NotImplementedException, envir:=env)
         End If
     End Function
 
@@ -208,17 +260,19 @@ Module MsImaging
     End Function
 
     ''' <summary>
-    ''' Contrast optimization of mass
-    ''' spectrometry imaging(MSI) data
-    ''' visualization by threshold intensity
-    ''' quantization (TrIQ)
+    ''' Contrast optimization of mass spectrometry imaging(MSI) data
+    ''' visualization by threshold intensity quantization (TrIQ)
     ''' </summary>
     ''' <param name="data">
     ''' A ms-imaging ion layer data or a numeric vector of the intensity data.
     ''' </param>
     ''' <param name="q">cutoff threshold of the intensity numeric vector</param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>A signal intensity value range [min, max]</returns>
+    ''' <remarks>
+    ''' this function works based on the <see cref="TrIQThreshold"/> clr module
+    ''' </remarks>
+    ''' <keywords>algorithm</keywords>
     <ExportAPI("TrIQ")>
     <RApiReturn(GetType(Double))>
     Public Function TrIQRange(<RRawVectorArgument>
@@ -254,8 +308,10 @@ Module MsImaging
     ''' <param name="max"></param>
     ''' <param name="min"></param>
     ''' <returns></returns>
+    ''' <keywords>filter</keywords>
     <ExportAPI("intensityLimits")>
-    Public Function LimitIntensityRange(data As SingleIonLayer, max As Double, Optional min As Double = 0) As SingleIonLayer
+    <RApiReturn(GetType(SingleIonLayer))>
+    Public Function LimitIntensityRange(data As SingleIonLayer, max As Double, Optional min As Double = 0) As Object
         data.MSILayer = data.MSILayer _
             .Select(Function(p)
                         If p.intensity > max Then
@@ -272,12 +328,25 @@ Module MsImaging
     End Function
 
     ''' <summary>
+    ''' apply a single filter or a filter pipeline
+    ''' </summary>
+    ''' <param name="filter"></param>
+    ''' <param name="layer"></param>
+    ''' <returns></returns>
+    ''' <keywords>filter</keywords>
+    <ExportAPI("apply_raster_filter")>
+    Public Function apply_raster_filter(filter As LayerScaler, layer As SingleIonLayer) As SingleIonLayer
+        Return filter.DoIntensityScale(layer)
+    End Function
+
+    ''' <summary>
     ''' write mzImage data file
     ''' </summary>
     ''' <param name="pixels"></param>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>save data</keywords>
     <ExportAPI("write.mzImage")>
     <RApiReturn(GetType(Boolean))>
     Public Function WriteXICCache(<RRawVectorArgument>
@@ -334,7 +403,8 @@ Module MsImaging
     ''' </summary>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>A spatial ion xic reader object for MSI visual</returns>
+    ''' <keywords>read data</keywords>
     <ExportAPI("read.mzImage")>
     <RApiReturn(GetType(XICReader))>
     Public Function openIndexedCacheFile(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
@@ -350,9 +420,9 @@ Module MsImaging
     ''' <summary>
     ''' Extract a spectrum matrix object from MSI data by a given set of m/z values
     ''' </summary>
-    ''' <param name="viewer"></param>
-    ''' <param name="mz"></param>
-    ''' <param name="tolerance"></param>
+    ''' <param name="viewer">A ms-imaging <see cref="Drawer"/> canvas object, which contains the ms-imaging rawdata.</param>
+    ''' <param name="mz">A numeric vector that used as the ion m/z value for extract the imaging layer data from the drawer canvas.</param>
+    ''' <param name="tolerance">the mass tolerance error</param>
     ''' <param name="title"></param>
     ''' <param name="env"></param>
     ''' <returns>A spectrum matrix data of m/z value assocated with the intensity value</returns>
@@ -394,13 +464,20 @@ Module MsImaging
     ''' <param name="y"></param>
     ''' <param name="tolerance"></param>
     ''' <param name="threshold"></param>
+    ''' <param name="composed">
+    ''' by default a union ion spectrum object will be generates based on the given spatial spots data,
+    ''' for set this parameter value to false, then a tuple list object data that contains the ms1 
+    ''' spectrum data for each spatial spots will be returns.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>read data</keywords>
     <ExportAPI("MS1")>
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function GetMsMatrx(viewer As Drawer, x As Integer(), y As Integer(),
                                Optional tolerance As Object = "da:0.1",
                                Optional threshold As Double = 0.01,
+                               Optional composed As Boolean = True,
                                Optional env As Environment = Nothing) As Object
 
         Dim ms As New List(Of ms2)
@@ -409,20 +486,39 @@ Module MsImaging
         If errors Like GetType(Message) Then
             Return errors.TryCast(Of Message)
         ElseIf x.Length <> y.Length Then
-            Return Internal.debug.stop("the vector size of x should be equals to vector y!", env)
+            Return RInternal.debug.stop("the vector size of x should be equals to vector y!", env)
         End If
 
-        For i As Integer = 0 To x.Length - 1
-            ms += viewer.ReadXY(x(i), y(i))
-        Next
+        If composed Then
+            For i As Integer = 0 To x.Length - 1
+                ms += viewer.ReadXY(x(i), y(i))
+            Next
 
-        Return New LibraryMatrix With {
-            .centroid = True,
-            .ms2 = ms.ToArray _
-                .Centroid(errors.TryCast(Of Tolerance), New RelativeIntensityCutoff(threshold)) _
-                .ToArray,
-            .name = "MS1"
-        }
+            Return New LibraryMatrix With {
+                .centroid = True,
+                .ms2 = ms.ToArray _
+                    .Centroid(errors.TryCast(Of Tolerance), New RelativeIntensityCutoff(threshold)) _
+                    .ToArray,
+                .name = "MS1"
+            }
+        Else
+            Dim tuples As New list With {.slots = New Dictionary(Of String, Object)}
+
+            For i As Integer = 0 To x.Length - 1
+                ms.Clear()
+                ms.AddRange(viewer.ReadXY(x(i), y(i)))
+
+                tuples.add($"{x(i)},{y(i)}", New LibraryMatrix With {
+                    .centroid = True,
+                    .ms2 = ms.ToArray _
+                        .Centroid(errors.TryCast(Of Tolerance), New RelativeIntensityCutoff(threshold)) _
+                        .ToArray,
+                    .name = $"[MS1] {x(i)},{y(i)}"
+                })
+            Next
+
+            Return tuples
+        End If
     End Function
 
     ''' <summary>
@@ -431,34 +527,43 @@ Module MsImaging
     ''' <param name="file">
     ''' *.imzML;*.mzPack
     ''' </param>
+    ''' <param name="memoryIndex">
+    ''' read mzpack in-memory rawdata via the <see cref="MemoryIndexReader"/> instead of un-indexed reader <see cref="ReadRawPack"/>.
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks>
     ''' this function will load entire MSI matrix raw data into memory.
     ''' </remarks>
+    ''' <keywords>read data</keywords>
     <ExportAPI("viewer")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <RApiReturn(GetType(Drawer))>
-    Public Function viewer(file As Object, Optional env As Environment = Nothing) As Object
+    Public Function viewer(file As Object,
+                           Optional memoryIndex As Boolean = False,
+                           Optional env As Environment = Nothing) As Object
+
         If file Is Nothing Then
-            Return Internal.debug.stop("the required file data can not be nothing!", env)
+            Return RInternal.debug.stop("the required file data can not be nothing!", env)
         ElseIf TypeOf file Is String Then
             Return New Drawer(file:=DirectCast(file, String))
         ElseIf TypeOf file Is mzPack Then
-            Return New Drawer(DirectCast(file, mzPack))
+            Return New Drawer(DirectCast(file, mzPack), indexMemory:=memoryIndex)
         Else
             Return Message.InCompatibleType(GetType(mzPack), file.GetType, env)
         End If
     End Function
 
     ''' <summary>
-    ''' get a pixel data
+    ''' get the spatial spot pixel data
     ''' </summary>
-    ''' <param name="data"></param>
-    ''' <param name="x"></param>
-    ''' <param name="y"></param>
-    ''' <returns></returns>
+    ''' <param name="data">the rawdata source for the ms-imaging.</param>
+    ''' <param name="x">an integer vector for x axis</param>
+    ''' <param name="y">an integer vector for y axis</param>
+    ''' <returns>
+    ''' A collection of the spatial spot data
+    ''' </returns>
     <ExportAPI("pixel")>
-    <RApiReturn(GetType(ibdPixel))>
+    <RApiReturn(GetType(ibdPixel), GetType(PixelScan), GetType(iPixelIntensity))>
     Public Function GetPixel(data As Object, x As Integer(), y As Integer(), Optional env As Environment = Nothing) As Object
         If x.Length = 1 AndAlso y.Length = 1 Then
             If TypeOf data Is XICReader Then
@@ -490,6 +595,10 @@ Module MsImaging
     ''' <summary>
     ''' load the raw pixels data from imzML file 
     ''' </summary>
+    ''' <param name="imzML">
+    ''' the ms-imaging rawdata source, could be a rawdata rendering wrapper <see cref="Drawer"/>,
+    ''' or a indexed <see cref="XICReader"/> for specific ions collection.
+    ''' </param>
     ''' <param name="mz">a collection of ion m/z value for rendering on one image</param>
     ''' <param name="tolerance">m/z tolerance error for get layer data</param>
     ''' <param name="skip_zero"></param>
@@ -509,7 +618,7 @@ Module MsImaging
         End If
 
         If imzML Is Nothing Then
-            Return Internal.debug.stop("the required imzML data can not be nothing!", env)
+            Return RInternal.debug.stop("the required imzML data can not be nothing!", env)
         ElseIf TypeOf imzML Is Drawer Then
             Return DirectCast(imzML, Drawer) _
                 .LoadPixels(mz, errors, skip_zero) _
@@ -528,12 +637,18 @@ Module MsImaging
     ''' <summary>
     ''' set cluster tags to the pixel tag property data
     ''' </summary>
-    ''' <param name="layer"></param>
-    ''' <param name="segments"></param>
+    ''' <param name="layer">A ms-imaging render layer object that contains a collection of the spatial spot data.</param>
+    ''' <param name="segments">A collection of the <see cref="TissueRegion"/> data, the tissue region label 
+    ''' string value will be assigned to the corresponding spatial spot its sample tag value.</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("tag_layers")>
-    Public Function tagLayers(layer As SingleIonLayer, <RRawVectorArgument> segments As Object, Optional env As Environment = Nothing) As Object
+    <RApiReturn(GetType(SingleIonLayer))>
+    Public Function tagLayers(layer As SingleIonLayer,
+                              <RRawVectorArgument>
+                              segments As Object,
+                              Optional env As Environment = Nothing) As Object
+
         Dim pointCluster As pipeline = pipeline.TryCreatePipeline(Of TissueRegion)(segments, env)
 
         If pointCluster.isError Then
@@ -626,12 +741,13 @@ Module MsImaging
     ''' rendering ions MSI in (R,G,B) color channels
     ''' </summary>
     ''' <param name="viewer"></param>
-    ''' <param name="r"></param>
-    ''' <param name="g"></param>
-    ''' <param name="b"></param>
-    ''' <param name="tolerance"></param>
+    ''' <param name="r">the ion m/z value for the color red channel</param>
+    ''' <param name="g">the ion m/z value for the color green channel</param>
+    ''' <param name="b">the ion m/z value for the color blue channel</param>
+    ''' <param name="tolerance">the ion m/z mass tolerance error</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>read data</keywords>
     <ExportAPI("rgb")>
     <RApiReturn(GetType(Bitmap))>
     Public Function RGB(viewer As Drawer, r As Double, g As Double, b As Double,
@@ -677,6 +793,14 @@ Module MsImaging
     ''' <param name="tolerance"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let viewer = MsImaging::viewer(open.mzpack("/data.mzpack"));
+    ''' let ion_mz = 100.001;
+    ''' let single_ion_layer = viewer |> MsImaging::MSIlayer(mz = ion_mz, tolerance = "ppm:20");
+    ''' let data = as.data.frame(single_ion_layer);
+    ''' 
+    ''' print(data);
+    ''' </example>
     <ExportAPI("MSIlayer")>
     <RApiReturn(GetType(SingleIonLayer))>
     Public Function GetIonLayer(viewer As Drawer, mz As Double(),
@@ -771,6 +895,14 @@ Module MsImaging
         End If
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="layer"></param>
+    ''' <param name="xy"></param>
+    ''' <param name="samplingRegion"></param>
+    ''' <returns></returns>
+    ''' <keywords>spatial</keywords>
     <ExportAPI("MSI_coverage")>
     <Extension>
     Public Function MSICoverage(layer As SingleIonLayer, xy As Index(Of String), Optional samplingRegion As Boolean = True) As Double
@@ -803,10 +935,11 @@ Module MsImaging
     ''' <param name="viewer"></param>
     ''' <param name="mz"></param>
     ''' <param name="pixelSize"></param>
-    ''' <param name="tolerance"></param>
-    ''' <param name="color$"></param>
-    ''' <param name="levels%"></param>
+    ''' <param name="tolerance">the mass tolerance error for get ion intensity value from spatial spots.</param>
+    ''' <param name="color">the color palette name</param>
+    ''' <param name="levels"></param>
     ''' <returns></returns>
+    ''' <keywords>data visual</keywords>
     <ExportAPI("layer")>
     <RApiReturn(GetType(Bitmap))>
     Public Function layer(viewer As Drawer, mz As Double(),
@@ -819,6 +952,7 @@ Module MsImaging
                           Optional cutoff As Object = "0.1,0.75",
                           <RRawVectorArgument>
                           Optional background As Object = NameOf(Color.Transparent),
+                          Optional raster As RasterPipeline = Nothing,
                           Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
@@ -847,7 +981,8 @@ Module MsImaging
                 colorSet:=color,
                 mapLevels:=levels,
                 background:=RColorPalette.getColor(background, "Translate"),
-                driver:=Drivers.GDI
+                driver:=Drivers.GDI,
+                filter:=raster
             ).AsGDIImage
         Else
             imaging = viewer.DrawLayer(
@@ -856,10 +991,12 @@ Module MsImaging
                 colorSet:=color,
                 mapLevels:=levels,
                 background:=RColorPalette.getColor(background, "Translate"),
-                driver:=Drivers.GDI
+                driver:=Drivers.GDI,
+                filter:=raster
             ).AsGDIImage
         End If
 
+        ' resize the raster image
         Return New RasterScaler(imaging).Scale(imaging.Width * pixel_size.Width, imaging.Height * pixel_size.Height)
     End Function
 
@@ -881,6 +1018,15 @@ Module MsImaging
         Return deltas.Average
     End Function
 
+    ''' <summary>
+    ''' Get the max intensity value via TrIQ or quantile cutoff
+    ''' </summary>
+    ''' <param name="data">the MSI plot data</param>
+    ''' <param name="intensity">the intensity source which describ how to extract the intensity data from the given MSI plot data.</param>
+    ''' <param name="qcut">the threshold cutoff value for the cutoff algorithm</param>
+    ''' <param name="TrIQ">used the TrIQ cutoff algorithm or quantile cutoff? default parameter value TRUE means use the TrIQ method by default.</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("MSI_summary.scaleMax")>
     Public Function AutoScaleMax(data As MSISummary,
                                  intensity As IntensitySummary,
@@ -903,14 +1049,70 @@ Module MsImaging
     ''' <summary>
     ''' get the default ms-imaging filter pipeline
     ''' </summary>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A raster filter pipeline that consist with modules with orders:
+    ''' 
+    ''' 1. <see cref="DenoiseScaler"/>
+    ''' 2. <see cref="TrIQScaler"/>
+    ''' 3. <see cref="KNNScaler"/>
+    ''' 4. <see cref="SoftenScaler"/>
+    ''' </returns>
+    ''' <remarks>
+    ''' denoise_scale() &gt; TrIQ_scale(0.8) &gt; knn_scale() &gt; soften_scale()
+    ''' </remarks>
+    ''' <keywords>data visual</keywords>
     <ExportAPI("defaultFilter")>
+    <RApiReturn(GetType(RasterPipeline))>
     Public Function defaultFilter() As RasterPipeline
         ' denoise_scale() > TrIQ_scale(0.8) > knn_scale() > soften_scale()
         Return New DenoiseScaler() _
             .Then(New TrIQScaler) _
             .Then(New KNNScaler) _
             .Then(New SoftenScaler)
+    End Function
+
+    ''' <summary>
+    ''' Converts R raw vector input into a raster processing pipeline configuration
+    ''' </summary>
+    ''' <param name="filters">
+    ''' R-side input vector containing filter definitions. Accepts:
+    ''' <list type="bullet">
+    '''   <item>Character vector of filter expressions</item>
+    '''   <item>List of filter specification strings</item>
+    '''   <item>Other R vector types convertible via CLRVector.asCharacter</item>
+    ''' </list>
+    ''' </param>
+    ''' <returns>
+    ''' A parsed RasterPipeline object configured with the input filter sequence
+    ''' </returns>
+    ''' <remarks>
+    ''' This method handles R-to-CLR type conversion and is primarily used for:
+    ''' <list type="bullet">
+    '''   <item>Interop with R# environments</item>
+    '''   <item>Parsing pipeline configurations from script parameters</item>
+    ''' </list>
+    ''' 
+    ''' The <see cref="RasterPipeline.Parse"/> method implements the actual
+    ''' filter syntax interpretation and validation.
+    ''' </remarks>
+    ''' <exception cref="InvalidCastException">
+    ''' Thrown when input cannot be converted to character vector via CLRVector.asCharacter
+    ''' </exception>
+    ''' <seealso cref="CLRVector.asCharacter"/>
+    ''' <seealso cref="RasterPipeline.Parse"/>
+    <ExportAPI("parseFilters")>
+    Public Function parseFilters(<RRawVectorArgument> filters As Object) As RasterPipeline
+        Dim filters_str As String() = CLRVector.asCharacter(filters)
+        Dim raster As RasterPipeline = RasterPipeline.Parse(filters_str)
+        Return raster
+    End Function
+
+    <ExportAPI("intensityFilter")>
+    Public Function intensityFilter(<RRawVectorArgument> x As Object, filter As RasterPipeline, Optional env As Environment = Nothing) As Object
+        Return env.EvaluateFramework(Of SingleIonLayer, SingleIonLayer)(x,
+            eval:=Function(layer)
+                      Return filter(layer)
+                  End Function)
     End Function
 
     ''' <summary>
@@ -921,8 +1123,9 @@ Module MsImaging
     ''' 2. <see cref="SingleIonLayer"/>
     ''' </param>
     ''' <param name="intensity"></param>
-    ''' <param name="colorSet"><see cref="ScalerPalette"/></param>
-    ''' <param name="defaultFill"></param>
+    ''' <param name="colorSet">a enum flag value for rendering the spatial heatmap colors,
+    ''' all flags see the clr enum: <see cref="ScalerPalette"/></param>
+    ''' <param name="defaultFill">the color value for the spots which those intensity value is missing(ZERO or NaN)</param>
     ''' <param name="pixelSize"></param>
     ''' <param name="background">
     ''' all of the pixels in this index parameter data value will 
@@ -934,8 +1137,13 @@ Module MsImaging
     ''' size is evaluated based on the dimension <paramref name="dims"/> 
     ''' of the ms-imaging raw data and the <paramref name="pixelSize"/>
     ''' </param>
+    ''' <param name="dims">
+    ''' the raw ms-imaging canvas dimension size, should be an integer vector that contains 
+    ''' two elements inside: canvas width and canvas height value.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>data visual</keywords>
     <ExportAPI("render")>
     <RApiReturn(GetType(Bitmap))>
     Public Function renderRowScans(data As Object,
@@ -997,7 +1205,7 @@ Module MsImaging
             Return Message.InCompatibleType(GetType(MSISummary), data.GetType, env)
         End If
 
-        Dim engine As New RectangleRender(env.getDriver, heatmapRender:=False)
+        Dim engine As New RectangleRender(Drivers.GDI, heatmapRender:=False)
         Dim dimSize As Size = InteropArgumentHelper _
             .getSize(dims, env, [default]:=$"{dataSize.Width},{dataSize.Height}") _
             .SizeParser
@@ -1007,12 +1215,11 @@ Module MsImaging
             pixels = filter.DoIntensityScale(pixels, dimSize)
         End If
 
+        Dim heatmap As New HeatMapParameters(colorSet, colorLevels, defaultFill)
         Dim image As Image = engine.RenderPixels(
             pixels:=pixels,
             dimension:=dimSize,
-            colorSet:=colorSet,
-            defaultFill:=defaultFill,
-            mapLevels:=colorLevels
+            heatmap:=heatmap
         ).AsGDIImage
         Dim scaleSize As New Size(image.Width * pointSize.Width, image.Height * pointSize.Height)
 
@@ -1027,7 +1234,10 @@ Module MsImaging
             End If
         End If
 
-        Return New RasterScaler(image).Scale(scaleSize.Width, scaleSize.Height)
+        Using g As IGraphics = DriverLoad.CreateGraphicsDevice(scaleSize, defaultFill, driver:=Drivers.GDI)
+            Call g.DrawImage(image, New Rectangle(New System.Drawing.Point, scaleSize))
+            Return DirectCast(g, GdiRasterGraphics).ImageResource
+        End Using
     End Function
 
     ''' <summary>
@@ -1081,7 +1291,14 @@ Module MsImaging
     ''' </param>
     ''' <param name="densityCut"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A dataframe object that contains data fields:
+    ''' 
+    ''' 1. mz: the ion mz vector
+    ''' 2. density: the average spatial density of current ion mz layer
+    ''' 3. layer: a mzkit clr <see cref="SingleIonLayer"/> object that could be used for ms-imaging visualization
+    ''' 
+    ''' </returns>
     <ExportAPI("MeasureMSIions")>
     <RApiReturn(GetType(Double), GetType(dataframe))>
     Public Function getMSIIons(raw As mzPack,

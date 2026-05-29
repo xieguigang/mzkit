@@ -1,70 +1,81 @@
-﻿#Region "Microsoft.VisualBasic::f0eec22665fb78f2cd9251da864f4ead, mzkit\Rscript\Library\mzkit.insilicons\MoleculeNetworking.vb"
+﻿#Region "Microsoft.VisualBasic::aff42aeaf13a27955eab3b0eeac9b7f6, Rscript\Library\mzkit_app\src\mzDIA\MoleculeNetworking.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 120
-'    Code Lines: 85
-' Comment Lines: 16
-'   Blank Lines: 19
-'     File Size: 4.41 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module MoleculeNetworking
-' 
-'     Function: createGraph, MsBin, RepresentativeSpectrum, Tree, unqiueNames
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 567
+    '    Code Lines: 344 (60.67%)
+    ' Comment Lines: 159 (28.04%)
+    '    - Xml Docs: 95.60%
+    ' 
+    '   Blank Lines: 64 (11.29%)
+    '     File Size: 24.96 KB
+
+
+    ' Module MoleculeNetworking
+    ' 
+    '     Function: clustering, create_spectrum_grid, createGraph, get_spectrum_clusters, grid_assigned
+    '               loadRawdataFileMatrix, makePeakAssignTable, MsBin, RepresentativeSpectrum, splitClusterRT
+    '               Tree, unpack_assign, unpack_unmapped, unqiueNames
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.MoleculeNetworking
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -72,7 +83,8 @@ Imports SMRUCC.Rsharp.Runtime.Internal.[Object].Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
-Imports stdNum = System.Math
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
+Imports std = System.Math
 
 ''' <summary>
 ''' Molecular Networking (MN) is a computational strategy that may help visualization and interpretation of the complex data arising from MS analysis. 
@@ -108,14 +120,49 @@ Imports stdNum = System.Math
 <Package("MoleculeNetworking")>
 Module MoleculeNetworking
 
+    Sub Main()
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(RawPeakAssign()), AddressOf makePeakAssignTable)
+    End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Public Function makePeakAssignTable(assign As RawPeakAssign(), args As list, env As Environment) As rDataframe
+        Dim unzip As (spectrum As PeakMs2, assign As RawPeakAssign)() = assign _
+            .Select(Function(a) a.ms2.Select(Function(b) (b, a))) _
+            .IteratesALL _
+            .ToArray
+        Dim df As New rDataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+
+        Static network As New NetworkByteOrderBuffer
+
+        Call df.add("xcms_id", unzip.Select(Function(a) a.assign.Id))
+        Call df.add("mz", unzip.Select(Function(a) a.assign.peak.mz))
+        Call df.add("rt1", unzip.Select(Function(a) a.assign.peak.rt))
+        Call df.add("rt2", unzip.Select(Function(a) a.spectrum.rt))
+        Call df.add("ms2", unzip.Select(Function(a) a.spectrum.lib_guid))
+        Call df.add("basePeak", unzip.Select(Function(a) a.spectrum.mzInto.OrderByDescending(Function(b) b.intensity).First.mz))
+        Call df.add("intensity", unzip.Select(Function(a) a.spectrum.intensity))
+        Call df.add("cor", unzip.Select(Function(a) a.assign.cor))
+        Call df.add("score", unzip.Select(Function(a) a.assign.score))
+        Call df.add("p-value", unzip.Select(Function(a) a.assign.pval))
+        Call df.add("samplefile", unzip.Select(Function(a) a.spectrum.file))
+        ' add intensity vector data for run debug test
+        Call df.add("v1", unzip.Select(Function(a) network.Base64String(a.assign.v1)))
+        Call df.add("v2", unzip.Select(Function(a) network.Base64String(a.assign.v2)))
+
+        Return df
+    End Function
+
     ''' <summary>
     ''' makes the spectrum data its unique id reference uniqued!
     ''' </summary>
-    ''' <param name="ions"></param>
+    ''' <param name="ions">A collection of the mzkit spectrum object</param>
     ''' <returns></returns>
     <ExportAPI("uniqueNames")>
-    Public Function unqiueNames(ions As PeakMs2()) As PeakMs2()
-        Dim id As String() = ions.SafeQuery.Select(Function(i) i.lib_guid).uniqueNames
+    <RApiReturn(GetType(PeakMs2))>
+    Public Function unqiueNames(ions As PeakMs2()) As Object
+        Dim id As String() = ions.SafeQuery.Select(Function(i) i.lib_guid).UniqueNames
 
         For i As Integer = 0 To id.Length - 1
             ions(i).lib_guid = id(i)
@@ -163,6 +210,7 @@ Module MoleculeNetworking
     ''' <param name="equals"></param>
     ''' <returns></returns>
     <ExportAPI("tree")>
+    <RApiReturn(GetType(TreeCluster))>
     Public Function Tree(ions As PeakMs2(),
                          Optional mzdiff As Double = 0.3,
                          Optional intocutoff As Double = 0.05,
@@ -176,13 +224,23 @@ Module MoleculeNetworking
     ''' </summary>
     ''' <param name="clusters"></param>
     ''' <param name="rtwin"></param>
-    ''' <param name="wrap_peaks"></param>
+    ''' <param name="wrap_peaks">
+    ''' wraping the networking node data as the spectrum peak object?
+    ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' the value type of this function is affects by the <paramref name="wrap_peaks"/> parameter:
+    ''' 
+    ''' 1. for wrap_peaks is set to false by default, a vector of the raw <see cref="NetworkingNode"/> 
+    '''    which is extract from the cluster data will be returns
+    ''' 2. otherwise the spectrum peaks data will be returns if the parameter 
+    '''    value is set to value true.
+    ''' </returns>
     ''' <remarks>
     ''' This function works for the small molecular networking analysis
     ''' </remarks>
     <ExportAPI("splitClusterRT")>
+    <RApiReturn(GetType(PeakMs2), GetType(NetworkingNode))>
     Public Function splitClusterRT(<RRawVectorArgument>
                                    clusters As Object,
                                    Optional rtwin As Double = 30,
@@ -278,7 +336,7 @@ Module MoleculeNetworking
             .ProduceNodes _
             .Networking
         Dim matrix As rDataframe = ProtocolPipeline _
-            .Networking(Of IO.DataSet)(graph, Function(a, b) stdNum.Min(a, b)) _
+            .Networking(Of IO.DataSet)(graph, Function(a, b) std.Min(a, b)) _
             .RMatrix
         Dim clusters As NetworkingNode() = graph _
             .Select(Function(u) workflow.Cluster(u.reference)) _
@@ -298,7 +356,7 @@ Module MoleculeNetworking
         Next
 
         For Each link As LinkSet In graph
-            graph_score.slots(link.reference) = New dataframe With {
+            graph_score.slots(link.reference) = New rDataframe With {
                 .rownames = link.links.Keys.ToArray,
                 .columns = New Dictionary(Of String, Array) From {
                     {"forward", .rownames.Select(Function(i) link.links(i).forward).ToArray},
@@ -384,5 +442,186 @@ Module MoleculeNetworking
         Next
 
         Return output.ToArray
+    End Function
+
+    ''' <summary>
+    ''' get all aligned spectrum clusters across rawdata files
+    ''' </summary>
+    ''' <param name="grid"></param>
+    ''' <returns></returns>
+    <ExportAPI("spectrum_clusters")>
+    Public Function get_spectrum_clusters(grid As SpectrumGrid) As SpectrumLine()
+        Return grid.GetTotal.ToArray
+    End Function
+
+    ''' <summary>
+    ''' Create grid clustering of the ms2 spectrum data
+    ''' </summary>
+    ''' <param name="rawdata"></param>
+    ''' <param name="centroid"></param>
+    ''' <param name="intocutoff"></param>
+    ''' <param name="dia_n">
+    ''' set this decompose parameter to any positive integer value greater 
+    ''' than 1 may produce too many data for analysis, make the workflow 
+    ''' too slow.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("spectrum_grid")>
+    Public Function create_spectrum_grid(<RRawVectorArgument> rawdata As Object,
+                                         Optional centroid As Object = "da:0.3",
+                                         Optional intocutoff As Double = 0.05,
+                                         Optional rt_win As Double = 20,
+                                         Optional dia_n As Integer = -1,
+                                         Optional dotcutoff As Double = 0.85,
+                                         Optional env As Environment = Nothing) As Object
+
+        Dim rawPool As pipeline = pipeline.TryCreatePipeline(Of mzPack)(rawdata, env, suppress:=True)
+        Dim specData As New List(Of NamedCollection(Of PeakMs2))
+        Dim massError = Math.getTolerance(centroid, env, [default]:="da:0.3")
+
+        If massError Like GetType(Message) Then
+            Return massError.TryCast(Of Message)
+        End If
+
+        Dim massWin As Tolerance = massError.TryCast(Of Tolerance)
+        Dim cutoff As New RelativeIntensityCutoff(intocutoff)
+
+        If rawPool.isError Then
+            rawPool = pipeline.TryCreatePipeline(Of PeakMs2)(rawdata, env, suppress:=True)
+
+            If rawPool.isError Then
+                Return rawPool.getError
+            End If
+
+            ' spectrum group by source files
+            For Each file_group In rawPool.populates(Of PeakMs2)(env).GroupBy(Function(a) If(a.file, "Unknown"))
+                Call specData.Add(New NamedCollection(Of PeakMs2) With {
+                    .name = file_group.Key,
+                    .value = file_group.ToArray
+                })
+            Next
+        Else
+            ' get spectrum source from raw data files
+            Call specData.AddRange(rawPool _
+                .populates(Of mzPack)(env) _
+                .loadRawdataFileMatrix(massWin, cutoff)
+            )
+        End If
+
+        If specData.Count < 3 Then
+            Return RInternal.debug.stop("too less source file data for make spectrum alignment, at least 3 and more rawdata files is required for construct the dia matrix!", env)
+        End If
+
+        Dim grid As New SpectrumGrid(rt_win, dia_n, dotcutoff:=dotcutoff)
+        grid = grid.SetRawDataFiles(specData)
+
+        Return grid
+    End Function
+
+    <Extension>
+    Private Iterator Function loadRawdataFileMatrix(rawpool As IEnumerable(Of mzPack),
+                                                    massWin As Tolerance,
+                                                    cutoff As RelativeIntensityCutoff) As IEnumerable(Of NamedCollection(Of PeakMs2))
+        Dim filename As String
+        Dim id As String()
+        Dim specSet As PeakMs2()
+
+        For Each raw As mzPack In TqdmWrapper.Wrap(rawpool.ToArray)
+            filename = raw.source.BaseName
+            specSet = raw.GetMs2Peaks _
+                .AsParallel _
+                .Select(Function(si)
+                            si.mzInto = si.mzInto.Centroid(massWin, cutoff).ToArray
+                            si.file = filename
+                            Return si
+                        End Function) _
+                .ToArray
+            id = specSet _
+                .Select(Function(si) $"M{CInt(si.mz)}T{CInt(si.rt)}") _
+                .UniqueNames _
+                .ToArray
+
+            For i As Integer = 0 To specSet.Length - 1
+                specSet(i).lib_guid = $"{filename}#{id(i)}"
+            Next
+
+            Yield New NamedCollection(Of PeakMs2)(filename, specSet)
+        Next
+    End Function
+
+    ''' <summary>
+    ''' Make precursor assigned to the cluster node
+    ''' </summary>
+    ''' <param name="grid"></param>
+    ''' <param name="peakset"></param>
+    ''' <returns></returns>
+    <ExportAPI("grid_assigned")>
+    <RApiReturn(GetType(RawPeakAssign))>
+    Public Function grid_assigned(grid As SpectrumGrid, peakset As PeakSet, Optional assign_top As Integer = 3) As Object
+        Return grid.AssignPeaks(peakset.peaks, assign_top:=assign_top).ToArray
+    End Function
+
+    <ExportAPI("unpack_unmapped")>
+    Public Function unpack_unmapped(grid As SpectrumGrid) As Object
+        Dim unmapped As SpectrumLine() = grid.GetUnmapped.ToArray
+        Dim spec = unmapped.Select(Function(c) c.cluster).IteratesALL.ToArray
+        Dim groups = spec _
+            .GroupBy(Function(a) a.file) _
+            .ToDictionary(Function(a) a.Key,
+                          Function(a)
+                              Return CObj(a.ToArray)
+                          End Function)
+        Dim list As New list With {.slots = groups}
+
+        Call list.setAttribute("total_clusters", grid.GetTotal.Count)
+        Call list.setAttribute("total_spectrum", grid.GetTotal.Select(Function(a) a.cluster).IteratesALL.Count)
+        Call list.setAttribute("unmapped_clusters", unmapped.Length)
+        Call list.setAttribute("unmapped_spectrum", spec.Length)
+
+        Return list
+    End Function
+
+    ''' <summary>
+    ''' Unpack of the spectrum data into multiple file groups
+    ''' </summary>
+    ''' <param name="assign"></param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' A tuple list of the spectrum data in multiple file groups, 
+    ''' each slot tuple is a rawdata file content.
+    ''' </returns>
+    <ExportAPI("unpack_assign")>
+    Public Function unpack_assign(<RRawVectorArgument> assign As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of RawPeakAssign)(assign, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+        Dim data As New List(Of PeakMs2)
+
+        For Each peak As RawPeakAssign In pull.populates(Of RawPeakAssign)(env)
+            Dim id As String = peak.Id
+
+            For Each spec As PeakMs2 In peak.ms2
+                spec = New PeakMs2(spec)
+                spec.lib_guid = id & "@" & spec.file.Replace(".mzPack", "")
+                spec.mz = peak.peak.mz
+
+                Call data.Add(spec)
+            Next
+        Next
+
+        Call VBDebugger.EchoLine($"make group handling of {data.Count} spectrum data!")
+
+        Return New list With {
+            .slots = data _
+                .GroupBy(Function(a) a.file) _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return CObj(a.ToArray)
+                              End Function)
+        }
     End Function
 End Module

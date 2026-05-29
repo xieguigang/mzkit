@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27842e10890776068977ff897d35fb2f, mzkit\src\visualize\MsImaging\Blender\Scaler\QuantileScaler.vb"
+﻿#Region "Microsoft.VisualBasic::4174d0919e3bbc85b1ae30b5bfd9c757, visualize\MsImaging\Blender\Scaler\QuantileScaler.vb"
 
     ' Author:
     ' 
@@ -37,40 +37,72 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 28
-    '    Code Lines: 20
-    ' Comment Lines: 0
-    '   Blank Lines: 8
-    '     File Size: 794 B
+    '   Total Lines: 56
+    '    Code Lines: 34 (60.71%)
+    ' Comment Lines: 11 (19.64%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 11 (19.64%)
+    '     File Size: 2.02 KB
 
 
     '     Class QuantileScaler
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: DoIntensityScale, ToString
+    '         Properties: percentail, q
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: DoIntensityScale, ToScript
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.ComponentModel
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 
 Namespace Blender.Scaler
 
+    ''' <summary>
+    ''' fill the lower bound with a specific threshold value
+    ''' </summary>
     Public Class QuantileScaler : Inherits Scaler
 
-        ReadOnly q As Double
+        ''' <summary>
+        ''' the quantile or percentail threshold value for define the intensity lower bound.
+        ''' </summary>
+        ''' <returns></returns>
+        <Description("the quantile or percentail threshold value for define the intensity lower bound.")>
+        Public Property q As Double
 
-        Sub New(Optional q As Double = 0.5)
+        ''' <summary>
+        ''' set the method for measure the signal intensity lower bound value: true means measure with percentage and false means measure with the quantile algorithm.
+        ''' </summary>
+        ''' <returns></returns>
+        <Description("set the method for measure the signal intensity lower bound value: true means measure with percentage and false means measure with the quantile algorithm.")>
+        Public Property percentail As Boolean
+
+        Sub New()
+            Call Me.New(0.5, percentail:=False)
+        End Sub
+
+        Sub New(Optional q As Double = 0.5, Optional percentail As Boolean = False)
             Me.q = q
+            Me.percentail = percentail
         End Sub
 
         Public Overrides Function DoIntensityScale(into() As Double) As Double()
-            Dim quantile As QuantileEstimationGK = into.GKQuantile
-            Dim cutoff As Double = quantile.Query(q)
             Dim v As New Vector(into)
+            Dim cutoff As Double
+
+            If percentail Then
+                cutoff = v.Max * q
+            Else
+                cutoff = into _
+                    .GKQuantile _
+                    .Query(q)
+            End If
 
             v(v > cutoff) = Vector.Scalar(cutoff)
 
@@ -78,7 +110,7 @@ Namespace Blender.Scaler
         End Function
 
         Public Overrides Function ToScript() As String
-            Return $"Q({q.ToString("F4")})"
+            Return $"Q({q.ToString("F4")},percentail:={percentail.ToString.ToLower})"
         End Function
     End Class
 End Namespace

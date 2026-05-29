@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6067a10fd6d57cff7a461ad0d33fa062, mzkit\src\metadb\Massbank\SDFExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::137be0f395dfaed4145265fcdbf43a15, metadb\Massbank\SDFExtensions.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 176
-    '    Code Lines: 146
-    ' Comment Lines: 14
-    '   Blank Lines: 16
-    '     File Size: 6.52 KB
+    '    Code Lines: 146 (82.95%)
+    ' Comment Lines: 14 (7.95%)
+    '    - Xml Docs: 92.86%
+    ' 
+    '   Blank Lines: 16 (9.09%)
+    '     File Size: 6.71 KB
 
 
     ' Module SDFExtensions
@@ -57,8 +59,8 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF.Models
-Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.csv.IO.Linq
+Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO.Linq
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Scripting

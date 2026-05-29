@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63770385240196eaeb181a8f7f496656, mzkit\src\mzmath\ms2_math-core\Spectra\Models\Xml\SSM2MatrixFragment.vb"
+﻿#Region "Microsoft.VisualBasic::f4d07261dcb458a51ac57a692f870054, mzmath\ms2_math-core\Spectra\Models\Xml\SSM2MatrixFragment.vb"
 
     ' Author:
     ' 
@@ -37,31 +37,36 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 58
-    '    Code Lines: 40
-    ' Comment Lines: 8
-    '   Blank Lines: 10
-    '     File Size: 1.75 KB
+    '   Total Lines: 94
+    '    Code Lines: 56 (59.57%)
+    ' Comment Lines: 23 (24.47%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 15 (15.96%)
+    '     File Size: 3.03 KB
 
 
     '     Class SSM2MatrixFragment
     ' 
-    '         Properties: da, mz, query, ref
+    '         Properties: annotation, da, IsNeutralLossMatched, IsProductIonMatched, mz
+    '                     query, ref
     ' 
-    '         Function: createFragment, FromXml, ToString
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: createFragment, FromXml, GetSampleFragment, ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml
 Imports System.Xml.Serialization
 
 Namespace Spectra.Xml
 
     ''' <summary>
-    ''' tuple data of [mz, query_intensity, reference_intensity]
+    ''' tuple data of [mz, query_intensity, reference_intensity], a MatchedPeak model
     ''' </summary>
     Public Class SSM2MatrixFragment
 
@@ -72,15 +77,47 @@ Namespace Spectra.Xml
         <XmlAttribute> Public Property mz As Double
 
 #Region "Fragment intensity"
+        ''' <summary>
+        ''' intensity in the query spectrum data
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property query As Double
+        ''' <summary>
+        ''' intensity in the reference spectrum data
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property ref As Double
 #End Region
+
+        <XmlAttribute> Public Property IsProductIonMatched As Boolean = False
+        <XmlAttribute> Public Property IsNeutralLossMatched As Boolean = False
 
         ''' <summary>
         ''' Mass delta between the query and reference fragment in unit ``da``
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property da As String
+
+        ''' <summary>
+        ''' the annotation of current fragment peak <see cref="mz"/>.
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlText> Public Property annotation As String
+
+        Sub New()
+        End Sub
+
+        Sub New(mz As Double, query As Double, reference As Double, Optional annotation_str As String = Nothing)
+            Me.mz = mz
+            Me.query = query
+            Me.ref = reference
+            Me.annotation = annotation_str
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetSampleFragment() As ms2
+            Return New ms2(mz, query)
+        End Function
 
         Public Shared Function FromXml(node As XmlNode, nodeName$) As SSM2MatrixFragment()
             Return (From child As XmlNode

@@ -1,55 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::8328f7fba997a5ccebcda762369f4eb8, mzkit\src\assembly\assembly\MarkupData\mzXML\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e4b1a3d28cc8b614d79f7a43eeef93a5, assembly\assembly\MarkupData\mzXML\Extensions.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 103
-'    Code Lines: 58
-' Comment Lines: 32
-'   Blank Lines: 13
-'     File Size: 3.75 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Extensions
-' 
-'         Function: AsMs2, (+2 Overloads) ExtractMzI, getName, IsIntact
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 113
+    '    Code Lines: 66 (58.41%)
+    ' Comment Lines: 32 (28.32%)
+    '    - Xml Docs: 90.62%
+    ' 
+    '   Blank Lines: 15 (13.27%)
+    '     File Size: 4.24 KB
+
+
+    '     Module Extensions
+    ' 
+    '         Function: AsMs2, (+2 Overloads) ExtractMzI, getName, IsIntact
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -124,9 +126,16 @@ Namespace MarkupData.mzXML
             Return (name, peaks)
         End Function
 
+        Public ReadOnly msLevels As IReadOnlyCollection(Of String) = {
+            "Unknown", ' = 0
+            "MS1",     ' = 1
+            "MS/MS",   ' = 2
+            "MS3"      ' = 3
+        }
+
         <Extension>
         Public Function getName(scan As scan) As String
-            Dim level$ = If(scan.msLevel = 1, "MS1", "MS/MS")
+            Dim level$ = Extensions.msLevels(scan.msLevel)
             Dim empty As Boolean =
                 scan.scanType.StringEmpty AndAlso
                 scan.polarity.StringEmpty AndAlso
@@ -137,11 +146,12 @@ Namespace MarkupData.mzXML
             End If
 
             Dim rt As Double = PeakMs2.RtInSecond(scan.retentionTime)
+            Dim precursorMz As Double = scan.GetPrecursorData
 
             If scan.msLevel = 1 Then
                 Return $"[{level}] {scan.scanType} scan_{(rt / 60).ToString("F2")}min, ({scan.polarity}) basepeak_m/z={scan.basePeakMz.ToString("F4")},totalIons={scan.totIonCurrent}"
             Else
-                Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) M{CInt(scan.precursorMz.value)}T{CInt(rt)}, {scan.precursorMz.value.ToString("F4")}@{(rt / 60).ToString("F2")}min"
+                Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) M{CInt(precursorMz)}T{CInt(rt)}, {precursorMz.ToString("F4")}@{(rt / 60).ToString("F2")}min"
             End If
         End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63a2b588503664b1cb066fd09b7e4ea9, mzkit\src\mzmath\ms2_math-core\Ms1\Ms1FeatureExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::e443b56422d32dda8605350c41af7755, mzmath\ms2_math-core\Ms1\Ms1FeatureExtensions.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 87
-    '    Code Lines: 54
-    ' Comment Lines: 23
-    '   Blank Lines: 10
-    '     File Size: 3.29 KB
+    '    Code Lines: 54 (62.07%)
+    ' Comment Lines: 23 (26.44%)
+    '    - Xml Docs: 95.65%
+    ' 
+    '   Blank Lines: 10 (11.49%)
+    '     File Size: 3.30 KB
 
 
     ' Module Ms1FeatureExtensions
@@ -57,7 +59,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
+Imports std = System.Math
 
 <HideModuleName>
 Public Module Ms1FeatureExtensions
@@ -116,7 +118,7 @@ Public Module Ms1FeatureExtensions
         For Each mzBlock As NamedCollection(Of T) In mzgroup
             For Each block As NamedCollection(Of T) In mzBlock _
                 .AsEnumerable _
-                .GroupBy(Function(i) i.rt, Function(x, y) stdNum.Abs(x - y) <= rtwin) _
+                .GroupBy(Function(i) i.rt, Function(x, y) std.Abs(x - y) <= rtwin) _
                 .OrderBy(Function(a) Val(a.name))
 
                 For Each ROI In block.OrderBy(Function(a) a.rt)

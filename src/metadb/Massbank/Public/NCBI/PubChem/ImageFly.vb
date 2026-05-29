@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e04d7a0d7eed4de6a30389d267456edd, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\ImageFly.vb"
+﻿#Region "Microsoft.VisualBasic::d2f25e487e47131f8e702daf7e619159, metadb\Massbank\Public\NCBI\PubChem\ImageFly.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 61
-    '    Code Lines: 35
-    ' Comment Lines: 18
-    '   Blank Lines: 8
-    '     File Size: 2.30 KB
+    '   Total Lines: 88
+    '    Code Lines: 60 (68.18%)
+    ' Comment Lines: 18 (20.45%)
+    '    - Xml Docs: 88.89%
+    ' 
+    '   Blank Lines: 10 (11.36%)
+    '     File Size: 3.40 KB
 
 
     '     Module ImageFly
@@ -56,9 +58,34 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.BitmapImage
-Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Net.WebClient
 Imports Microsoft.VisualBasic.Scripting.Runtime
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
 
 Namespace NCBI.PubChem
 
@@ -88,7 +115,11 @@ Namespace NCBI.PubChem
         ''' 是否将得到的图片的背景设置为透明
         ''' </param>
         ''' <returns></returns>
-        Public Function GetImage(cid$, Optional width% = 300, Optional height% = 300, Optional doBgTransparent As Boolean = True) As Bitmap
+        Public Function GetImage(cid$,
+                                 Optional width% = 300,
+                                 Optional height% = 300,
+                                 Optional doBgTransparent As Boolean = True) As Bitmap
+
             Dim url$ = $"https://pubchem.ncbi.nlm.nih.gov/image/imagefly.cgi?cid={cid}&width={width}&height={height}"
             Dim tmp$ = TempFileSystem.GetAppSysTempFile(".png", sessionID:="cid__", prefix:="imageFly___")
             Dim webget As Double = False
@@ -106,9 +137,7 @@ Namespace NCBI.PubChem
             End If
 
             Dim white As Color = Color.FromArgb(245, 245, 245)
-            Dim bitmap As Bitmap = New Bitmap(tmp) _
-                .CorpBlank(margin:=20, blankColor:=white) _
-                .ColorReplace(white, Color.Transparent)
+            Dim bitmap As Bitmap = New Bitmap(tmp).ColorReplace(white, Color.Transparent)
 
             Return bitmap
         End Function

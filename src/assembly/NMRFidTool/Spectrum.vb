@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::297e7caab767de7a44b1bb9e76a652ca, mzkit\src\assembly\NMRFidTool\Spectrum.vb"
+﻿#Region "Microsoft.VisualBasic::b2f1b03e35111b96fa17a84dbe0db847, assembly\NMRFidTool\Spectrum.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 122
-    '    Code Lines: 78
-    ' Comment Lines: 26
-    '   Blank Lines: 18
-    '     File Size: 3.32 KB
+    '    Code Lines: 78 (63.93%)
+    ' Comment Lines: 26 (21.31%)
+    '    - Xml Docs: 26.92%
+    ' 
+    '   Blank Lines: 18 (14.75%)
+    '     File Size: 3.44 KB
 
 
     ' Class Spectrum

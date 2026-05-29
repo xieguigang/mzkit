@@ -69,37 +69,50 @@ table caption {font-size:14px;font-weight:bolder;}
     <p><p>Molecular Networking (MN) is a computational strategy that may help visualization and interpretation of the complex data arising from MS analysis.</p></p>
     <blockquote>
       <p style="font-style: italic; font-size: 0.9em;">
-                           <p>MN is able to identify potential similarities among all MS/MS spectra within <br />
- the dataset and to propagate annotation to unknown but related molecules <br />
- (Wang et al., 2016). This approach exploits the assumption that structurally<br />
- related molecules produce similar fragmentation patterns, and therefore they <br />
- should be related within a network (Quinn et al., 2017). In MN, MS/MS data <br />
- are represented in a graphical form, where each node represents an ion with <br />
- an associated fragmentation spectrum; the links among the nodes indicate <br />
- similarities of the spectra. By propagation of the structural information within<br />
- the network, unknown but structurally related molecules can be highlighted<br />
- and successful dereplication can be obtained (Yang et al., 2013); this may<br />
- be particularly useful for metabolite and NPS identification.</p>
-
-<p>MN has been implemented In different fields, particularly metabolomics And <br />
- drug discovery (Quinn et al., 2017); MN In forensic toxicology was previously<br />
- used by Allard et al. (2019) For the retrospective analysis Of routine <br />
- cases involving biological sample analysis. Yu et al. (2019) also used MN <br />
- analysis For the detection Of designer drugs such As NBOMe derivatives And <br />
- they showed that unknown compounds could be recognized As NBOMe-related <br />
- substances by MN.</p>
-
-<p>In the present work the Global Natural Products Social platform (GNPS) was <br />
- exploited to analyze HRMS/MS data obtained from the analysis of seizures <br />
- collected by the Italian Department of Scientific Investigation of Carabinieri <br />
- (RIS). The potential of MN to highlight And support the identification of<br />
- unknown NPS belonging to chemical classes such as fentanyls And synthetic<br />
+                           <p>MN is able to identify potential similarities among all MS/MS spectra within 
+ the dataset and to propagate annotation to unknown but related molecules 
+ (Wang et al., 2016). This approach exploits the assumption that structurally
+ related molecules produce similar fragmentation patterns, and therefore they 
+ should be related within a network (Quinn et al., 2017). In MN, MS/MS data 
+ are represented in a graphical form, where each node represents an ion with 
+ an associated fragmentation spectrum; the links among the nodes indicate 
+ similarities of the spectra. By propagation of the structural information within
+ the network, unknown but structurally related molecules can be highlighted
+ and successful dereplication can be obtained (Yang et al., 2013); this may
+ be particularly useful for metabolite and NPS identification.
+ 
+ MN has been implemented In different fields, particularly metabolomics And 
+ drug discovery (Quinn et al., 2017); MN In forensic toxicology was previously
+ used by Allard et al. (2019) For the retrospective analysis Of routine 
+ cases involving biological sample analysis. Yu et al. (2019) also used MN 
+ analysis For the detection Of designer drugs such As NBOMe derivatives And 
+ they showed that unknown compounds could be recognized As NBOMe-related 
+ substances by MN.
+ 
+ In the present work the Global Natural Products Social platform (GNPS) was 
+ exploited to analyze HRMS/MS data obtained from the analysis of seizures 
+ collected by the Italian Department of Scientific Investigation of Carabinieri 
+ (RIS). The potential of MN to highlight And support the identification of
+ unknown NPS belonging to chemical classes such as fentanyls And synthetic
  cannabinoids has been demonstrated.</p>
                            </p>
     </blockquote>
     <div id="main-wrapper">
+      <table class="table-three-line" style="display: none">
+        <caption>.NET clr type export</caption>
+        <tbody></tbody>
+      </table>
+      <br />
+      <br />
       <table class="table-three-line">
+        <caption>.NET clr function exports</caption>
         <tbody><tr>
+  <td id="as.data.frame.rawpeakassign">
+    <a href="./MoleculeNetworking/as.data.frame.rawpeakassign.html">as.data.frame.rawpeakassign</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/BioDeep/MassSpectrometry/MoleculeNetworking/RawPeakAssign.html">RawPeakAssign</a>: </td>
+</tr>
+<tr>
   <td id="uniqueNames">
     <a href="./MoleculeNetworking/uniqueNames.html">uniqueNames</a>
   </td>
@@ -140,6 +153,36 @@ table caption {font-size:14px;font-weight:bolder;}
     <a href="./MoleculeNetworking/representative.html">representative</a>
   </td>
   <td><p>create representative spectrum data</p></td>
+</tr>
+<tr>
+  <td id="spectrum_clusters">
+    <a href="./MoleculeNetworking/spectrum_clusters.html">spectrum_clusters</a>
+  </td>
+  <td><p>get all aligned spectrum clusters across rawdata files</p></td>
+</tr>
+<tr>
+  <td id="spectrum_grid">
+    <a href="./MoleculeNetworking/spectrum_grid.html">spectrum_grid</a>
+  </td>
+  <td><p>Create grid clustering of the ms2 spectrum data</p></td>
+</tr>
+<tr>
+  <td id="grid_assigned">
+    <a href="./MoleculeNetworking/grid_assigned.html">grid_assigned</a>
+  </td>
+  <td><p>Make precursor assigned to the cluster node</p></td>
+</tr>
+<tr>
+  <td id="unpack_unmapped">
+    <a href="./MoleculeNetworking/unpack_unmapped.html">unpack_unmapped</a>
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="unpack_assign">
+    <a href="./MoleculeNetworking/unpack_assign.html">unpack_assign</a>
+  </td>
+  <td><p>Unpack of the spectrum data into multiple file groups</p></td>
 </tr></tbody>
       </table>
     </div>

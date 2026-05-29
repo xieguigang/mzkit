@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::079d18f6dc76d184ee0f2394f27310a1, mzkit\src\mzmath\mz_deco\test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::6882a50af12533e561fe11cc6b179131, mzmath\mz_deco\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 74
-    '    Code Lines: 53
-    ' Comment Lines: 9
-    '   Blank Lines: 12
-    '     File Size: 2.92 KB
+    '    Code Lines: 53 (71.62%)
+    ' Comment Lines: 9 (12.16%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (16.22%)
+    '     File Size: 3.00 KB
 
 
     '     Class MySettings

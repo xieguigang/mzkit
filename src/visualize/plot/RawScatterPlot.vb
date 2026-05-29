@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fbb5f791d726b5cfa4c617c21f2aecd, mzkit\src\visualize\plot\RawScatterPlot.vb"
+﻿#Region "Microsoft.VisualBasic::429114dacf58bdaf2d6b94b7361f3695, visualize\plot\RawScatterPlot.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 127
-    '    Code Lines: 100
-    ' Comment Lines: 14
-    '   Blank Lines: 13
-    '     File Size: 5.60 KB
+    '   Total Lines: 180
+    '    Code Lines: 133 (73.89%)
+    ' Comment Lines: 31 (17.22%)
+    '    - Xml Docs: 58.06%
+    ' 
+    '   Blank Lines: 16 (8.89%)
+    '     File Size: 7.77 KB
 
 
     ' Class RawScatterPlot
@@ -69,7 +71,35 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports std = System.Math
+Imports Microsoft.VisualBasic.Linq
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
 
 ''' <summary>
 ''' 横坐标为rt，纵坐标为m/z的散点图绘制
@@ -80,10 +110,19 @@ Public Class RawScatterPlot : Inherits Plot
     ReadOnly mapLevels As Integer
     ReadOnly rawfile$
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="samples"></param>
+    ''' <param name="mapLevels"></param>
+    ''' <param name="rawfile">the serial data legend name</param>
+    ''' <param name="theme"></param>
     Public Sub New(samples As IEnumerable(Of ms1_scan), mapLevels As Integer, rawfile$, theme As Theme)
         MyBase.New(theme)
 
-        Me.samples = samples.ToArray
+        Me.samples = samples _
+            .Where(Function(a) a.intensity > 0) _
+            .ToArray
         Me.rawfile = rawfile
         Me.mapLevels = mapLevels
     End Sub
@@ -94,16 +133,25 @@ Public Class RawScatterPlot : Inherits Plot
             .GetColors(theme.colorSet, mapLevels) _
             .Select(Function(c) c.ToHtmlColor) _
             .ToArray
+        ' 20250204 data has already been filter by intensity > 0
+        Dim points As PointData() = New PointData(samples.Length - 1) {}
+        ' (From compound As ms1_scan
+        '  In samples
+        '  Select New PointData() With {
+        '     .pt = New PointF(compound.scan_time, compound.mz),
+        '     .value = std.Log(compound.intensity)
+        '  }) _
+        '.ToArray
 
-        Dim points As PointData() = samples _
-           .Where(Function(a) a.intensity > 0) _
-           .Select(Function(compound)
-                       Return New PointData() With {
-                           .pt = New PointF(compound.scan_time, compound.mz),
-                           .value = stdNum.Log(compound.intensity)
-                       }
-                   End Function) _
-           .ToArray
+        ' 20250204 there is a bug about linq expression
+        ' processing of the large array
+        For i As Integer = 0 To samples.Length - 1
+            points(i) = New PointData() With {
+                .pt = New PointF(samples(i).scan_time, samples(i).mz),
+                .value = std.Log(samples(i).intensity)
+            }
+        Next
+
         Dim serials As New SerialData With {
             .title = rawfile,
             .pts = points,
@@ -117,20 +165,23 @@ Public Class RawScatterPlot : Inherits Plot
             points(i).color = colors(CInt(intensityRange.ScaleMapping(points(i).value, indexRange)))
         Next
 
+        theme.drawLegend = False
+
         Dim brushes = colors.Select(Function(colorStr) New SolidBrush(colorStr.TranslateColor)).ToArray
-        Dim ticks = points.Select(Function(a) a.value ^ stdNum.E).CreateAxisTicks
-        Dim tickStyle As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject(g.Dpi)
-        Dim legendTitleStyle As Font = CSSFont.TryParse(theme.legendTitleCSS).GDIObject(g.Dpi)
-        Dim tickAxisStroke As Pen = Stroke.TryParse(theme.axisStroke).GDIObject
+        Dim ticks = points.Select(Function(a) a.value ^ std.E).CreateAxisTicks
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim tickStyle As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
+        Dim legendTitleStyle As Font = css.GetFont(CSSFont.TryParse(theme.legendTitleCSS))
+        Dim tickAxisStroke As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
         Dim scatter As New Scatter2D({serials}, theme, scatterReorder:=True, fillPie:=True) With {
             .xlabel = "scan_time in seconds",
-            .ylabel = "m/z ratio"
+            .ylabel = "M/Z Ratio"
         }
 
         ' 绘制标尺
-        Dim canvas = region.PlotRegion
-        Dim width = canvas.Width * 0.125
-        Dim legendLayout As New Rectangle(region.Width - width - region.Padding.Right / 3, canvas.Top, width, canvas.Height * 0.3)
+        Dim canvas = region.PlotRegion(css)
+        Dim width = css.GetWidth(region.Padding.Right) * (4 / 5)
+        Dim legendLayout As New Rectangle(canvas.Right, canvas.Top, width, canvas.Height * (5 / 6))
 
         Call scatter.Plot(g, region)
         Call g.ColorMapLegend(
@@ -138,7 +189,7 @@ Public Class RawScatterPlot : Inherits Plot
             designer:=brushes,
             ticks:=ticks,
             titleFont:=legendTitleStyle,
-            title:="Intensity Scale",
+            title:=legendTitle,
             tickFont:=tickStyle,
             tickAxisStroke:=tickAxisStroke
         )
@@ -165,6 +216,8 @@ Public Class RawScatterPlot : Inherits Plot
                                           Optional tickCSS$ = CSSFont.Win7LittleLarge,
                                           Optional axisStroke$ = Stroke.AxisStroke,
                                           Optional axisLabelFont$ = CSSFont.Win7VeryLarge,
+                                          Optional legendtitle As String = "Intensity",
+                                          Optional driver As Drivers = Drivers.Default,
                                           Optional ppi As Integer = 300) As GraphicsData
 
         Dim theme As New Theme With {
@@ -178,8 +231,10 @@ Public Class RawScatterPlot : Inherits Plot
             .padding = margin,
             .drawLegend = False
         }
-        Dim app As New RawScatterPlot(samples, mapLevels, rawfile, theme)
+        Dim app As New RawScatterPlot(samples, mapLevels, rawfile, theme) With {
+            .legendTitle = legendtitle
+        }
 
-        Return app.Plot(size, ppi:=ppi)
+        Return app.Plot(size, ppi:=ppi, driver:=driver)
     End Function
 End Class

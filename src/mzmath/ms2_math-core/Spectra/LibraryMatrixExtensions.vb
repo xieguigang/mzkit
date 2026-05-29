@@ -1,62 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::2f147acb55797cf37e4c754a952c47ce, mzkit\src\mzmath\ms2_math-core\Spectra\LibraryMatrixExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::21b7f93fc430d18c2b638220bc9b1514, mzmath\ms2_math-core\Spectra\LibraryMatrixExtensions.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 124
-'    Code Lines: 71
-' Comment Lines: 39
-'   Blank Lines: 14
-'     File Size: 4.71 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module LibraryMatrixExtensions
-' 
-'         Function: AbSciexBaselineHandling, AsMatrix, Centroid, CentroidMode, Max
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 304
+    '    Code Lines: 194 (63.82%)
+    ' Comment Lines: 73 (24.01%)
+    '    - Xml Docs: 72.60%
+    ' 
+    '   Blank Lines: 37 (12.17%)
+    '     File Size: 11.94 KB
+
+
+    '     Module LibraryMatrixExtensions
+    ' 
+    '         Function: AbSciexBaselineHandling, AsMatrix, (+2 Overloads) Centroid, CentroidMode, GetStream
+    '                   Max, Normalize, (+2 Overloads) ParseStream, SumMs
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Serialization
@@ -70,6 +72,48 @@ Namespace Spectra
     ''' 
     <HideModuleName>
     Public Module LibraryMatrixExtensions
+
+        ''' <summary>
+        ''' make spectrum intensity normalized with max intensity
+        ''' </summary>
+        ''' <param name="ms"></param>
+        ''' <param name="scale"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Iterator Function Normalize(ms As IEnumerable(Of ms2), Optional scale As Double? = Nothing) As IEnumerable(Of ms2)
+            If ms Is Nothing Then
+                Return
+            End If
+
+            Dim pool = ms.ToArray
+
+            If pool.Length = 0 Then
+                Return
+            End If
+
+            Dim max As Double = pool.Max(Function(a) a.intensity)
+
+            If max <= 0.0 Then
+                Call "the max intensity of the given spectrum is negative or ZERO!".Warning
+                Return
+            End If
+
+            If scale IsNot Nothing Then
+                Dim factor As Double = CDbl(scale)
+
+                For Each mzi As ms2 In pool
+                    Yield New ms2(mzi) With {
+                        .intensity = mzi.intensity / max * factor
+                    }
+                Next
+            Else
+                For Each mzi As ms2 In pool
+                    Yield New ms2(mzi) With {
+                        .intensity = mzi.intensity / max
+                    }
+                Next
+            End If
+        End Function
 
         ''' <summary>
         ''' SUM(<see cref="ms2.intensity"/>)
@@ -128,67 +172,6 @@ Namespace Spectra
             End If
 
             Return libM
-        End Function
-
-        ''' <summary>
-        ''' Convert profile matrix to centroid matrix
-        ''' </summary>
-        ''' <param name="[lib]"></param>
-        ''' <returns></returns>
-        ''' 
-        <Extension>
-        Public Function CentroidMode([lib] As LibraryMatrix,
-                                     tolerance As Tolerance,
-                                     Optional cutoff As LowAbundanceTrimming = Nothing) As LibraryMatrix
-
-            [lib].ms2 = [lib].ms2.Centroid(tolerance, cutoff Or LowAbundanceTrimming.Default).ToArray
-            [lib].centroid = True
-
-            Return [lib]
-        End Function
-
-        ''' <summary>
-        ''' Convert profile matrix to centroid matrix
-        ''' </summary>
-        ''' <param name="peaks"></param>
-        ''' <param name="cutoff"></param>
-        ''' <returns></returns>
-        ''' <remarks>
-        ''' order of data processing:
-        ''' 
-        ''' ``intensity_cutoff -> centroid``
-        ''' </remarks>
-        <Extension>
-        Public Function Centroid(peaks As ms2(), tolerance As Tolerance, cutoff As LowAbundanceTrimming) As IEnumerable(Of ms2)
-            Dim maxInto = If(peaks.IsNullOrEmpty, 0, peaks.Select(Function(p) p.intensity).Max)
-
-            ' removes low intensity fragment peaks
-            ' for save calculation time
-            peaks = cutoff.Trim(peaks)
-
-            If peaks.Length = 0 Then
-                Return {}
-            Else
-                ' 20200702 due to the reason of we not calculate the peakarea
-                ' so that there is no needs for populate ROI
-                ' find the highest fragment directly
-                Return peaks _
-                    .GroupBy(Function(ms2) ms2.mz, AddressOf tolerance.Equals) _
-                    .Select(Function(g)
-                                ' 合并在一起的二级碎片的相应强度取最高的为结果
-                                Dim fragments As ms2() = g.ToArray
-                                Dim maxi As Integer = which.Max(fragments.Select(Function(m) m.intensity))
-                                Dim max As ms2 = fragments(maxi)
-                                Dim annos As String = fragments _
-                                    .Where(Function(f) Not f.Annotation.StringEmpty) _
-                                    .JoinBy(", ")
-
-                                Return New ms2(max.mz, max.intensity) With {
-                                    .Annotation = annos
-                                }
-                            End Function) _
-                    .ToArray
-            End If
         End Function
 
         ''' <summary>

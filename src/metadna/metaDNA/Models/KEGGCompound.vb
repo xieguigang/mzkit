@@ -1,67 +1,74 @@
-﻿#Region "Microsoft.VisualBasic::56438ec456f24ef0d01f7c1cadcf99e3, mzkit\src\metadna\metaDNA\Models\KEGGCompound.vb"
+﻿#Region "Microsoft.VisualBasic::6cf7b1d5eceb7e9ba26b7e87289b3c6f, metadna\metaDNA\Models\KEGGCompound.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
-    ' Code Statistics:
 
-    '   Total Lines: 64
-    '    Code Lines: 47
-    ' Comment Lines: 3
-    '   Blank Lines: 14
-    '     File Size: 1.80 KB
+' /********************************************************************************/
+
+' Summaries:
 
 
-    ' Structure KEGGCompound
-    ' 
-    '     Properties: CommonName, ExactMass, Formula, kegg_id
-    ' 
-    '     Function: ToString
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 78
+'    Code Lines: 59 (75.64%)
+' Comment Lines: 3 (3.85%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 16 (20.51%)
+'     File Size: 2.28 KB
+
+
+' Structure KEGGCompound
+' 
+'     Properties: CommonName, ExactMass, Formula, kegg_id
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 
 ''' <summary>
-''' object model wrapper for the KEGG compound in order to apply of the generic ms search engine
+''' object model wrapper for the KEGG <see cref="Compound"/> in order to apply of the generic ms search engine
 ''' </summary>
-Public Structure KEGGCompound : Implements IReadOnlyId, IExactMassProvider, ICompoundNameProvider, IFormulaProvider
+Public Structure KEGGCompound
+    Implements GenericCompound
+    Implements IReadOnlyId, IExactMassProvider, ICompoundNameProvider, IFormulaProvider
 
     Public ReadOnly Property ExactMass As Double Implements IExactMassProvider.ExactMass
         Get
@@ -90,7 +97,7 @@ Public Structure KEGGCompound : Implements IReadOnlyId, IExactMassProvider, ICom
             End If
 
             If KEGG.commonNames Is Nothing Then
-                Return kegg_id
+                Return Formula
             End If
 
             Return If(KEGG.commonNames.FirstOrDefault, kegg_id)
@@ -109,6 +116,11 @@ Public Structure KEGGCompound : Implements IReadOnlyId, IExactMassProvider, ICom
 
     Dim KEGG As Compound
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Sub New(kegg As Compound)
+        Me.KEGG = kegg
+    End Sub
+
     Public Overrides Function ToString() As String
         If KEGG Is Nothing Then
             Return Nothing
@@ -117,6 +129,7 @@ Public Structure KEGGCompound : Implements IReadOnlyId, IExactMassProvider, ICom
         Return KEGG.ToString
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Narrowing Operator CType(cpd As KEGGCompound) As Compound
         Return cpd.KEGG
     End Operator

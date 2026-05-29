@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ec65b25fbbdd9575705e2e8495316c4, mzkit\src\assembly\ThermoRawFileReader\DataObjects\RawFileInfo.vb"
+﻿#Region "Microsoft.VisualBasic::3ec65b25fbbdd9575705e2e8495316c4, assembly\ThermoRawFileReader\DataObjects\RawFileInfo.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 200
-    '    Code Lines: 79
-    ' Comment Lines: 94
-    '   Blank Lines: 27
+    '    Code Lines: 79 (39.50%)
+    ' Comment Lines: 94 (47.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 27 (13.50%)
     '     File Size: 6.39 KB
 
 
@@ -251,6 +253,14 @@ Namespace DataObjects
             ScanEnd = 0
             CorruptFile = False
         End Sub
+
+        ''' <summary>
+        ''' show instrument methods
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function ToString() As String
+            Return InstMethods.JoinBy(vbCrLf & vbCrLf)
+        End Function
     End Class
 
 End Namespace

@@ -1,4 +1,4 @@
-# Mummichog
+﻿# Mummichog
 
 Mummichog searches for enrichment patterns on metabolic network, 
  bypassing metabolite identification, to generate high-quality
