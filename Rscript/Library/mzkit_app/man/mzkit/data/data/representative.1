@@ -1,0 +1,40 @@
+.\" man page create by R# package system.
+.TH DATA 1 2000-1月 "representative" "representative"
+.SH NAME
+representative \- Generates a representative spectrum by aggregating (sum or mean) input spectra.
+.SH SYNOPSIS
+\fIrepresentative(\fBx\fR as any, 
+\fBmean\fR as boolean = TRUE, 
+\fBcentroid\fR as double = 0.1, 
+\fBintocutoff\fR as double = 0.05, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+Generates a representative spectrum by aggregating (sum or mean) input spectra.
+.PP
+.SH OPTIONS
+.PP
+\fBx\fB \fR\- Input spectra (PeakMs2 or LibraryMatrix collection).. 
+.PP
+.PP
+\fBmean\fB \fR\- If true, uses mean intensity; otherwise sums intensities.. 
+.PP
+.PP
+\fBcentroid\fB \fR\- Mass tolerance for centroiding peaks.. 
+.PP
+.PP
+\fBintocutoff\fB \fR\- Relative intensity cutoff (0-1) to filter weak peaks.. 
+.PP
+.PP
+\fBenv\fB \fR\- R environment for error handling.. 
+.PP
+.SH VALUE
+.PP
+A LibraryMatrix representing the aggregated spectrum.
+.PP
+.SH SEE ALSO
+data
+.SH FILES
+.PP
+mzkit.dll
+.PP

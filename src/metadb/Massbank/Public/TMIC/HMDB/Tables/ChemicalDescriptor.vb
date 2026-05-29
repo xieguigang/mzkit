@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3f198c51bb00587f8a1e23b43d4db17, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Tables\ChemicalDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::3fe52b900b65619e5d842c034ee06876, metadb\Massbank\Public\TMIC\HMDB\Tables\ChemicalDescriptor.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 151
-    '    Code Lines: 126
-    ' Comment Lines: 12
-    '   Blank Lines: 13
-    '     File Size: 6.97 KB
+    '    Code Lines: 126 (83.44%)
+    ' Comment Lines: 12 (7.95%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 13 (8.61%)
+    '     File Size: 6.98 KB
 
 
     '     Class ChemicalDescriptor
@@ -67,7 +69,7 @@ Imports System.IO
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO.Linq
+Imports Microsoft.VisualBasic.Data.Framework.IO.Linq
 
 Namespace TMIC.HMDB
 

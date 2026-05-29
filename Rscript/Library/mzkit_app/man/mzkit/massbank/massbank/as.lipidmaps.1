@@ -1,5 +1,5 @@
 .\" man page create by R# package system.
-.TH MASSBANK 1 2000-Jan "as.lipidmaps" "as.lipidmaps"
+.TH MASSBANK 1 2000-1月 "as.lipidmaps" "as.lipidmaps"
 .SH NAME
 as.lipidmaps \- populate lipidmaps meta data objects from the loaded sdf data stream
 .SH SYNOPSIS
@@ -19,6 +19,16 @@ populate lipidmaps meta data objects from the loaded sdf data stream
 .PP
 .PP
 \fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+cast the lipidmaps sdf data as lipidmaps data model
+.PP
+.SH EXAMPLES
+.PP
+# cast sdf dataset to lipidmaps data object
+ let dataset = read.SDF(file = "./example.sdf", lazy = FALSE);
+ let lipids = dataset |> as.lipidmaps();
 .PP
 .SH SEE ALSO
 massbank

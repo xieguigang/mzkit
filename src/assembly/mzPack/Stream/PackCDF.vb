@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a85c593ca15aac34d048b269a5681095, mzkit\src\assembly\mzPack\Stream\PackCDF.vb"
+﻿#Region "Microsoft.VisualBasic::93c29630b69c66178fda73e6006adf23, assembly\mzPack\Stream\PackCDF.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 120
-    '    Code Lines: 90
-    ' Comment Lines: 17
-    '   Blank Lines: 13
-    '     File Size: 4.52 KB
+    '   Total Lines: 121
+    '    Code Lines: 91 (75.21%)
+    ' Comment Lines: 17 (14.05%)
+    '    - Xml Docs: 94.12%
+    ' 
+    '   Blank Lines: 13 (10.74%)
+    '     File Size: 4.73 KB
 
 
     ' Module PackCDF
@@ -74,7 +76,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public Module PackCDF
 
     <Extension>
-    Public Function UnionTimeSeq(overlaps As ChromatogramOverlap, Optional dt As Double = -1) As Double()
+    Public Function UnionTimeSeq(overlaps As ChromatogramOverlapList, Optional dt As Double = -1) As Double()
         Dim union As Double() = overlaps.overlaps _
             .Values _
             .Select(Function(sig) sig.scan_time) _
@@ -105,7 +107,7 @@ Public Module PackCDF
     ''' |TIC|BPC|
     ''' </remarks>
     <Extension>
-    Public Sub SavePackData(overlaps As ChromatogramOverlap, file As Stream)
+    Public Sub SavePackData(overlaps As ChromatogramOverlapList, file As Stream)
         Dim scan_time As Double() = overlaps.UnionTimeSeq
         Dim line As doubles = scan_time
         Dim length As New Dimension With {.name = "scan_length", .size = scan_time.Length}
@@ -122,7 +124,7 @@ Public Module PackCDF
             }
             Dim formatAttr As New attribute With {
                 .name = "format",
-                .type = CDFDataTypes.CHAR,
+                .type = CDFDataTypes.NC_CHAR,
                 .value = "JSON"
             }
 
@@ -152,12 +154,12 @@ Public Module PackCDF
     ''' <param name="file"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function ReadPackData(file As Stream) As ChromatogramOverlap
+    Public Function ReadPackData(file As Stream) As ChromatogramOverlapList
         Using cdf As New netCDFReader(file)
             Dim nameStr As String = DirectCast(cdf.getDataVariable("signalNames"), chars)
             Dim names As String() = nameStr.LoadJSON(Of String())
             Dim scan_time As Double() = CType(cdf.getDataVariable("scan_time"), doubles)
-            Dim overlaps As New ChromatogramOverlap With {
+            Dim overlaps As New ChromatogramOverlapList With {
                 .overlaps = New Dictionary(Of String, Chromatogram)
             }
             Dim joinData As Double()()

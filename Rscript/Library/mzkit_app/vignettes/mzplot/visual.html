@@ -10,7 +10,7 @@
     <meta name="keywords" content="R#; visual; mzplot" />
     <meta name="generator" content="https://github.com/rsharp-lang" />
     <meta name="theme-color" content="#333" />
-    <meta name="description" content="..." />
+    <meta name="description" content="Mass spectrum data visualization..." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -63,10 +63,10 @@ table caption {font-size:14px;font-weight:bolder;}
     <p style="     font-size: 1.125em;     line-height: .8em;     margin-left: 0.5%;     background-color: #fbfbfb;     padding: 24px; ">
       <code>
         <span style="color: blue;">require</span>(<span style="color: black; font-weight: bold;">mzkit</span>);
-                               <br /><br /><span style="color: green;">{$desc_comments}</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "visual"</span><span style="color: blue;"> from</span><span style="color: brown"> "mzplot"</span>;
+                               <br /><br /><span style="color: green;">#' Mass spectrum data visualization</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "visual"</span><span style="color: blue;"> from</span><span style="color: brown"> "mzplot"</span>;
                            </code>
     </p>
-    <p></p>
+    <p><p>Mass spectrum data visualization</p></p>
     <blockquote>
       <p style="font-style: italic; font-size: 0.9em;">
                            
@@ -82,6 +82,87 @@ table caption {font-size:14px;font-weight:bolder;}
       <table class="table-three-line">
         <caption>.NET clr function exports</caption>
         <tbody><tr>
+  <td id="plot.ionchromatogram">
+    <a href="./visual/plot.ionchromatogram.html">plot.ionchromatogram</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/Data/IonChromatogram.html">IonChromatogram</a>: <p>the raw data</p></td>
+</tr>
+<tr>
+  <td id="plot.rtshift">
+    <a href="./visual/plot.rtshift.html">plot.rtshift</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/RtShift.html">RtShift</a>: <p>the rt shift result</p></td>
+</tr>
+<tr>
+  <td id="plot.alignmentoutput">
+    <a href="./visual/plot.alignmentoutput.html">plot.alignmentoutput</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">AlignmentOutput</a>: <p>the spectrum similarity comparision result object</p></td>
+</tr>
+<tr>
+  <td id="plot.peakset">
+    <a href="./visual/plot.peakset.html">plot.peakset</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a>: <p>A collection of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a> peak features data</p></td>
+</tr>
+<tr>
+  <td id="plot.chromatogram2dscan">
+    <a href="./visual/plot.chromatogram2dscan.html">plot.chromatogram2dscan</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/GCxGC/Chromatogram2DScan.html">Chromatogram2DScan</a>: </td>
+</tr>
+<tr>
+  <td id="plot.chromatogramoverlap">
+    <a href="./visual/plot.chromatogramoverlap.html">plot.chromatogramoverlap</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/ChromatogramOverlap.html">ChromatogramOverlap</a>: <p>the overlaps list of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/Chromatogram.html">Chromatogram</a> objects.
+ 
+ This class is used to store the overlaps of chromatograms, which can be indexed by names.
+ It implements the <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/Interface/RNames.html">RNames</a> and <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/Interface/RNameIndex.html">RNameIndex</a> interfaces for R compatibility.</p></td>
+</tr>
+<tr>
+  <td id="plot.mzpack">
+    <a href="./visual/plot.mzpack.html">plot.mzpack</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzPack.html">mzPack</a>: <p>the unify in-memory data model of the mzkit MS data model.</p></td>
+</tr>
+<tr>
+  <td id="plot.chromatogram2dscan">
+    <a href="./visual/plot.chromatogram2dscan.html">plot.chromatogram2dscan</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/GCxGC/Chromatogram2DScan.html">Chromatogram2DScan</a>: </td>
+</tr>
+<tr>
+  <td id="plot.chromatogramtick">
+    <a href="./visual/plot.chromatogramtick.html">plot.chromatogramtick</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ChromatogramTick.html">ChromatogramTick</a>: <p>The chromatogram signal ticks (<code>{time => intensity}</code>)</p></td>
+</tr>
+<tr>
+  <td id="plot.chromatogram">
+    <a href="./visual/plot.chromatogram.html">plot.chromatogram</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/Chromatogram.html">Chromatogram</a>: <p>A data union model of TIC/BPC</p></td>
+</tr>
+<tr>
+  <td id="plot.generalsignal">
+    <a href="./visual/plot.generalsignal.html">plot.generalsignal</a>
+  </td>
+  <td><a href="/vignettes/clr/Microsoft/VisualBasic/Math/SignalProcessing/GeneralSignal.html">GeneralSignal</a>: </td>
+</tr>
+<tr>
+  <td id="plot.generalsignal">
+    <a href="./visual/plot.generalsignal.html">plot.generalsignal</a>
+  </td>
+  <td><a href="/vignettes/clr/Microsoft/VisualBasic/Math/SignalProcessing/GeneralSignal.html">GeneralSignal</a>: </td>
+</tr>
+<tr>
+  <td id="plot.object">
+    <a href="./visual/plot.object.html">plot.object</a>
+  </td>
+  <td><i>any</i> kind: </td>
+</tr>
+<tr>
   <td id="gcxgc_heatmap">
     <a href="./visual/gcxgc_heatmap.html">gcxgc_heatmap</a>
   </td>
@@ -100,6 +181,12 @@ table caption {font-size:14px;font-weight:bolder;}
   <td><p>plot raw XIC matrix based on a given sequence of ms1 scans data</p></td>
 </tr>
 <tr>
+  <td id="parse.spectrum_alignment">
+    <a href="./visual/parse.spectrum_alignment.html">parse.spectrum_alignment</a>
+  </td>
+  <td><p>Parse the spectrum alignment details from the given string data</p></td>
+</tr>
+<tr>
   <td id="mass_spectrum.plot">
     <a href="./visual/mass_spectrum.plot.html">mass_spectrum.plot</a>
   </td>
@@ -116,6 +203,12 @@ table caption {font-size:14px;font-weight:bolder;}
     <a href="./visual/plotNetworkClusterHistogram.html">plotNetworkClusterHistogram</a>
   </td>
   <td><p>Plot cluster size histogram on RT dimension</p></td>
+</tr>
+<tr>
+  <td id="xic_scatter_density">
+    <a href="./visual/xic_scatter_density.html">xic_scatter_density</a>
+  </td>
+  <td><p>make visualization of the XIC scatters</p></td>
 </tr></tbody>
       </table>
     </div>

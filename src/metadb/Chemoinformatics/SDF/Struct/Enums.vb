@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70a411ee8774a42400005b547f0a2cf8, mzkit\src\metadb\Chemoinformatics\SDF\Struct\Enums.vb"
+﻿#Region "Microsoft.VisualBasic::7bb5ffccd0f0ae2904c61c3fc28e814e, metadb\Chemoinformatics\SDF\Struct\Enums.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 35
-    '    Code Lines: 15
-    ' Comment Lines: 18
-    '   Blank Lines: 2
-    '     File Size: 798 B
+    '    Code Lines: 15 (42.86%)
+    ' Comment Lines: 18 (51.43%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 2 (5.71%)
+    '     File Size: 795 B
 
 
     '     Enum BoundTypes
@@ -66,7 +68,7 @@
 
 Namespace SDF.Models
 
-    Public Enum BoundTypes As Integer
+    Public Enum BoundTypes As Byte
         ''' <summary>
         ''' 非碳原子的化学键连接可能会存在其他数量的键
         ''' </summary>

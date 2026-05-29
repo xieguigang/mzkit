@@ -1,5 +1,5 @@
 .\" man page create by R# package system.
-.TH MATH 4 2000-Jan "centroid" "centroid"
+.TH MATH 4 2000-1月 "centroid" "centroid"
 .SH NAME
 centroid \- Converts profiles peak data to peak data in centroid mode.
 .SH SYNOPSIS
@@ -7,6 +7,7 @@ centroid \- Converts profiles peak data to peak data in centroid mode.
 \fBtolerance\fR as any = "da:0.1", 
 \fBintoCutoff\fR as double = 0.05, 
 \fBparallel\fR as boolean = FALSE, 
+\fBaggregate\fR as <generic> AggregateFunction = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -15,12 +16,20 @@ Converts profiles peak data to peak data in centroid mode.
  profile and centroid in Mass Spectrometry?
  
  1. Profile means the continuous wave form in a mass spectrum.
+ 
    + Number of data points Is large.
+   
  2. Centroid means the peaks in a profile data Is changed to bars.
+ 
    + location of the bar Is center of the profile peak.
    + height of the bar Is area of the profile peak.
 .PP
 .SH OPTIONS
+.PP
+\fBaggregate\fB \fR\- 
+ default is get the max intensity value.
+. 
+.PP
 .PP
 \fBions\fB \fR\- 
  value of this parameter could be 
@@ -36,6 +45,28 @@ Converts profiles peak data to peak data in centroid mode.
 .SH VALUE
 .PP
 Peaks data in centroid mode or a new m/z vector in centroid.
+.PP
+.SH EXAMPLES
+.PP
+print(centroid([452.7627 67.563 457.336 347.8 242.3], tolerance = "da:0.1"));
+ # [1]      67.563   242.3    347.8    452.763  457.336 
+ 
+ let spec = data.frame(mz = [452.7627 67.563 457.336 347.8 242.3], 
+    intensity = [312 4353 6664 6765 1119]);
+    
+ let f = aggregate(FUN = "max");
+ 
+ print(as.data.frame(spec));
+ #              mz intensity                   
+ # --------------------------                                                                                                 
+ # <mode> <Double> <integer>                                                                                                   
+ # [1, ]   452.763       312                                             
+ # [2, ]    67.563      4353                                                                    
+ # [3, ]   457.336      6664                                                                                                
+ # [4, ]     347.8      6765                                                                                           
+ # [5, ]     242.3      1119
+ 
+ print(centroid(spec, tolerance = "da:0.1", aggregate = f));
 .PP
 .SH SEE ALSO
 math

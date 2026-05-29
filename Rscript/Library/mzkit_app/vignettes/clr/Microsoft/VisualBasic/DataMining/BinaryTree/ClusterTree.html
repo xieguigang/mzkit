@@ -22,9 +22,16 @@
 
         <h3>Description</h3>
 
-        <p>just provides the reference id of the peaks ms2 object</p>
+        <p>A simple cluster tree builder
+ 
+ just provides the reference id of the target object for make the 
+ alignment or comparision.
+ 
+ the comparision for build the tree is under the given @<code>T:Microsoft.VisualBasic.DataMining.BinaryTree.ClusterTree.Argument</code>.</p>
 
-<p>implements the Molecule Networking via the tree clustering operation in mzkit</p>
+<p>implements the Molecule Networking via the tree clustering operation in mzkit
+ this model is a kind of tree with multiple branches, each branches standards for
+ different similarity SCORE LEVELs.</p>
 
         <h3>Declare</h3>        
 
@@ -32,18 +39,18 @@
             <code id="clr_ts">
 # namespace Microsoft.VisualBasic.DataMining.BinaryTree
 export class ClusterTree extends <a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/Tree`1.html">Tree`1</a> {
+   Childs: list;
+   Count: integer;
+   Data: string;
+   ID: integer;
+   IsLeaf: boolean;
+   IsRoot: boolean;
+   label: string;
    # This property includes all data in current cluster tree node, 
    #  also includes the <a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/Tree`1.html">Tree`1</a>.<a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/T.html">Data</a> member.
-   Members: <a href="/vignettes/clr/System/Collections/Generic/List`1.html">List`1</a>;
-   Data: string;
-   Childs: list;
+   Members: <a href="/vignettes/clr/System/String.html">iterates(String)</a>;
    Parent: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/Tree`1.html">Tree`1</a>;
-   Count: integer;
    QualifyName: string;
-   IsRoot: boolean;
-   IsLeaf: boolean;
-   label: string;
-   ID: integer;
 }
 </code>
         </pre>
@@ -52,8 +59,8 @@ export class ClusterTree extends <a href="/vignettes/clr/Microsoft/VisualBasic/D
 
         <ol>
 <li>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/Tree`1.html">Tree`1</a> class: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/Tree`1.html">Tree`1</a></li>
-<li>use by <i>property</i> member <code>Members</code>: <a href="/vignettes/clr/System/Collections/Generic/List`1.html">List`1</a></li>
 <li>use by <i>property</i> member <code>Childs</code>: list</li>
+<li>use by <i>property</i> member <code>Members</code>: <a href="/vignettes/clr/System/String.html">iterates(String)</a></li>
 <li>use by <i>property</i> member <code>Parent</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/Tree`1.html">Tree`1</a></li>
 </ol>
 

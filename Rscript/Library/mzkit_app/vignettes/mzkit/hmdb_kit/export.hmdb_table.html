@@ -36,16 +36,16 @@
         <table>
             
 <dt>hmdb</dt>
-<dd><p><p>A collection of the HMDB <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/metabolite.html">metabolite</a>.</p></p></dd>
+<dd><p>A collection of the HMDB <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/metabolite.html">metabolite</a>. [as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Internal/Object/pipeline.html">pipeline</a>]</p></dd>
 
 
 <dt>file</dt>
-<dd><p><p>this function will returns a huge metabolite table<br />
- if this parameter value default null</p></p></dd>
+<dd><p>this function will returns a huge metabolite table
+ if this parameter value default null</p></dd>
 
 
 <dt>env</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
 
         </table>
 
@@ -60,7 +60,10 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <i>any</i> kind.<h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
+        <p>this function returns the data depends of the <strong>`file`</strong> parameter is
+ existsed or not: for <code>file</code> parameter has been omit, then a vector of the hmdb 
+ <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/MetaDb.html">MetaDb</a> clr object will be returns, otherwise a logical value for indicates 
+ the write table file success or not will be returns.</p><h4>clr value class</h4><ul><li>boolean</li><li><a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/MetaDb.html">MetaDb</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

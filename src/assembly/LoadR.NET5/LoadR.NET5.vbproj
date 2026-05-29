@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.Analytical.MassSpectrometry</RootNamespace>
-    <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
+    <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
     <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.RInterop</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
@@ -12,6 +12,9 @@
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <Title>Interop between R/R# and mzkit</Title>
+    <Description>Interop between R/R# and mzkit</Description>
+    <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -61,11 +64,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Buffers" Version="4.6.1" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\studio\RData\RData.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
+    <ProjectReference Include="..\..\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj" />
     <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
+    <ProjectReference Include="..\..\mzmath\MSEngine\MSEngine.vbproj" />
+    <ProjectReference Include="..\..\mzmath\MSFinder\MSFinder.vbproj" />
     <ProjectReference Include="..\..\mzmath\SingleCells\SingleCells.vbproj" />
   </ItemGroup>
 

@@ -30,17 +30,17 @@
             <code id="clr_ts">
 # namespace Microsoft.VisualBasic.Math.SignalProcessing
 export class GeneralSignal {
+   description: string;
+   MeasureRange: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>;
    # usually is the time in unit second.(x axis)
    Measures: double;
-   # the signal strength.(y axis)
-   Strength: double;
+   measureUnit: string;
+   meta: list;
    # the unique reference id, or the variable name
    reference: string;
-   measureUnit: string;
-   description: string;
-   meta: list;
+   # the signal strength.(y axis)
+   Strength: double;
    weight: double;
-   MeasureRange: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>;
 }
 </code>
         </pre>
@@ -48,8 +48,8 @@ export class GeneralSignal {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>use by <i>property</i> member <code>meta</code>: list</li>
 <li>use by <i>property</i> member <code>MeasureRange</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a></li>
+<li>use by <i>property</i> member <code>meta</code>: list</li>
 </ol>
 
 

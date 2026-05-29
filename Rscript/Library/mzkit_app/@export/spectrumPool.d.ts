@@ -175,7 +175,7 @@ declare namespace spectrumPool {
      * @param env 
      * + default value Is ``null``.
    */
-   function openPool(link: string, model_id?: string, score_overrides?: number, env?: object): object;
+   function openPool(link: string, model_id?: string, score_overrides?: object, env?: object): object;
    /**
     * generate and set conserved guid for each spectrum data
     * 

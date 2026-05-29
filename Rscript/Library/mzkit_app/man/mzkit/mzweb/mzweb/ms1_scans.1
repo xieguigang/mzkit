@@ -1,9 +1,12 @@
 .\" man page create by R# package system.
-.TH MZWEB 1 2000-Jan "ms1_scans" "ms1_scans"
+.TH MZWEB 1 2000-1月 "ms1_scans" "ms1_scans"
 .SH NAME
 ms1_scans \- get all ms1 scan data points
 .SH SYNOPSIS
-\fIms1_scans(\fBmzpack\fR as <generic> mzPack);\fR
+\fIms1_scans(\fBmzpack\fR as <generic> mzPack, 
+\fBmz\fR as <generic> Double = \fB<NULL>\fR, 
+\fBtolerance\fR as any = "ppm:20", 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
 get all ms1 scan data points
@@ -11,6 +14,21 @@ get all ms1 scan data points
 .SH OPTIONS
 .PP
 \fBmzpack\fB \fR\- -. 
+.PP
+.SH EXAMPLES
+.PP
+let rawdata = open.mzpack(file = "./rawdata.mzPack");
+ let ms1 = rawdata |> ms1_scans();
+ 
+ # get xic liked data
+ let xic = rawdata |> ms1_scans(mz = 999.0911, tolerance = "da:0.01");
+ let mz_vec = [xic]::mz;
+ 
+ print(as.data.frame(xic));
+ 
+ bitmap(file = "./mz_histogram.png") {
+     plot(hist(mz_vec));
+ }
 .PP
 .SH SEE ALSO
 mzweb

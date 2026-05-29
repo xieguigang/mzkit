@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aafaccb9ab6d41e7d575f6eec4f78fda, mzkit\src\assembly\ProteoWizard.Interop\ProteoWizardCLI.vb"
+﻿#Region "Microsoft.VisualBasic::c55cbab147ebb554984a8a6f051d100a, assembly\ProteoWizard.Interop\ProteoWizardCLI.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 284
-    '    Code Lines: 80
-    ' Comment Lines: 177
-    '   Blank Lines: 27
-    '     File Size: 13.39 KB
+    '    Code Lines: 80 (28.17%)
+    ' Comment Lines: 177 (62.32%)
+    '    - Xml Docs: 81.92%
+    ' 
+    '   Blank Lines: 27 (9.51%)
+    '     File Size: 13.67 KB
 
 
     ' Class ProteoWizardCLI
@@ -256,7 +258,7 @@ Public Class ProteoWizardCLI : Inherits InteropService
         If Not IsAvaiable() Then
             Call WARN.FormatString(bin).Warning
         Else
-            Call $"msconvert={bin}".__INFO_ECHO
+            Call $"msconvert={bin}".info
         End If
     End Sub
 
@@ -291,7 +293,7 @@ Public Class ProteoWizardCLI : Inherits InteropService
         Dim std$ = ""
         Dim args$ = cli(input, output, type, filters.SafeQuery.ToArray, verbose)
 
-        Call input.__INFO_ECHO
+        Call input.info
         Call args.InlineCopy(args.TrimNewLine(" "))
 
         std = CommandLine.Call(ProteoWizardCLI.BIN, args)

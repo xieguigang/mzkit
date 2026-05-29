@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::474fea4ee4f8344c67f5544057a8c8df, mzkit\src\assembly\assembly\MarkupData\imzML\XML\XML.vb"
+﻿#Region "Microsoft.VisualBasic::b3d55e0a48130b2fa84a1f103626f316, assembly\assembly\MarkupData\imzML\XML\XML.vb"
 
     ' Author:
     ' 
@@ -37,22 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 88
-    '    Code Lines: 56
-    ' Comment Lines: 15
-    '   Blank Lines: 17
-    '     File Size: 3.69 KB
+    '   Total Lines: 90
+    '    Code Lines: 60 (66.67%)
+    ' Comment Lines: 15 (16.67%)
+    '    - Xml Docs: 86.67%
+    ' 
+    '   Blank Lines: 15 (16.67%)
+    '     File Size: 3.83 KB
 
 
-    '     Class PointF3D
-    ' 
-    '         Properties: X, Y, Z
-    ' 
     '     Class XML
     ' 
     '         Properties: version
     ' 
-    '         Function: Get3DPositionXYZ, Load3DScanData, LoadScanData, LoadScans, PopulateFileContentDescriptions
+    '         Function: Get3DPositionXYZ, Load3DScanData, LoadScanData, LoadScans, ParseMetadata
+    '                   PopulateFileContentDescriptions
     ' 
     '         Sub: Get3DPositionXYZ
     ' 

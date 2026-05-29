@@ -1,4 +1,62 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
+﻿#Region "Microsoft.VisualBasic::85bd13cf0b50020d2d1a90807e33b6c2, assembly\SpectrumTree\Pack\Validations\DataSetGenerator.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 162
+    '    Code Lines: 131 (80.86%)
+    ' Comment Lines: 8 (4.94%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 23 (14.20%)
+    '     File Size: 6.62 KB
+
+
+    '     Class DataSetGenerator
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: CreateOneDataSet, ExportRawDatas, GetPeaktable, Initial
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
@@ -77,7 +135,7 @@ Namespace PackLib.Validation
                         .annotation = mset.Key,
                         .name = mset.Key & $"_{++n}",
                         .index = ++i,
-                        .mz = mz.Average,
+                        .mass = mz.Average,
                         .maxo = 0,
                         .energy = "NA",
                         .intb = 0,

@@ -22,7 +22,9 @@
 
         <h3>Description</h3>
 
-        
+        <p>the spectrum similarity comparision result object</p>
+
+<p>contains the score and spectrum fragment alignment details result data.</p>
 
         <h3>Declare</h3>        
 
@@ -30,20 +32,42 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 export class AlignmentOutput {
-   forward: double;
-   reverse: double;
-   jaccard: double;
-   entropy: double;
-   mirror: double;
+   alignment_str: string;
+   # the spectrum alignment fragments details
+   alignments: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/SSM2MatrixFragment.html">SSM2MatrixFragment[]</a>;
    # the min value of <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">AlignmentOutput</a>.<a href="#">forward</a> and <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">AlignmentOutput</a>.<a href="#">reverse</a>
    cosine: double;
-   query: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/Meta.html">Meta</a>;
-   reference: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/Meta.html">Meta</a>;
-   alignments: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/SSM2MatrixFragment.html">SSM2MatrixFragment[]</a>;
+   # the spectrum entropy similarity
+   entropy: double;
+   # the forward cosine score
+   forward: double;
+   # the jaccard index between the fragment set of query vs subject
+   jaccard: double;
+   # get score mean result
+   mean: double;
+   mirror: double;
    nhits: integer;
+   # get basepeak of the reference ion as Q3 product ion
+   Q3: double;
+   Q3_ratio: double;
+   # the reference to the sample query
+   query: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/Meta.html">Meta</a>;
+   # the reference to the reference library
+   reference: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/Meta.html">Meta</a>;
+   # the reverse cosine score
+   reverse: double;
 }
 </code>
         </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>alignments</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/SSM2MatrixFragment.html">SSM2MatrixFragment</a></li>
+<li>use by <i>property</i> member <code>query</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/Meta.html">Meta</a></li>
+<li>use by <i>property</i> member <code>reference</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/Meta.html">Meta</a></li>
+</ol>
+
 
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a

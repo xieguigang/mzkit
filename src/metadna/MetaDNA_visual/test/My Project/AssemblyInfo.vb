@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d1f2e9c69dd5c00c1a3f611499a6430, mzkit\src\metadna\MetaDNA_visual\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::bc5b76a3a8c2b641efa14299c5cf4467, metadna\MetaDNA_visual\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 35
-    '    Code Lines: 13
-    ' Comment Lines: 15
-    '   Blank Lines: 7
-    '     File Size: 1009 B
+    '    Code Lines: 13 (37.14%)
+    ' Comment Lines: 15 (42.86%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (20.00%)
+    '     File Size: 1.04 KB
 
 
     ' 

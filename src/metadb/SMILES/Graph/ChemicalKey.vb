@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9a8429821c31af2fa2fe90d59fb9c97, mzkit\src\metadb\SMILES\Graph\ChemicalKey.vb"
+﻿#Region "Microsoft.VisualBasic::9b3796ac92762bab4260ab9e22312d76, metadb\SMILES\Graph\ChemicalKey.vb"
 
     ' Author:
     ' 
@@ -37,35 +37,70 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 7
-    ' Comment Lines: 7
-    '   Blank Lines: 4
-    '     File Size: 493 B
+    '   Total Lines: 51
+    '    Code Lines: 29 (56.86%)
+    ' Comment Lines: 15 (29.41%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (13.73%)
+    '     File Size: 1.45 KB
 
 
     ' Class ChemicalKey
     ' 
-    '     Properties: bond
+    '     Properties: bond, source, target
     ' 
-    '     Function: ToString
+    '     Function: AtomGroups, ToString
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
+Imports Microsoft.VisualBasic.Data.GraphTheory.SparseGraph
 
 ''' <summary>
 ''' the edge connection between the atoms
 ''' </summary>
 Public Class ChemicalKey : Inherits Edge(Of ChemicalElement)
+    Implements IInteraction
 
     ''' <summary>
     ''' the charge of current chemical key
     ''' </summary>
     ''' <returns></returns>
     Public Property bond As Bonds
+
+    ''' <summary>
+    ''' atom group of source atom, apply for build linking matrix
+    ''' </summary>
+    ''' <returns></returns>
+    Private Property source As String Implements IInteraction.source
+        Get
+            Return U.group
+        End Get
+        Set(value As String)
+            U.group = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' atom group of target atom, apply for build linking matrix
+    ''' </summary>
+    ''' <returns></returns>
+    Private Property target As String Implements IInteraction.target
+        Get
+            Return V.group
+        End Get
+        Set(value As String)
+            V.group = value
+        End Set
+    End Property
+
+    Public Iterator Function AtomGroups() As IEnumerable(Of ChemicalElement)
+        Yield U
+        Yield V
+    End Function
 
     Public Overrides Function ToString() As String
         Return $"{U.elementName}{bond.Description}{V.elementName} (+{CInt(bond)})"

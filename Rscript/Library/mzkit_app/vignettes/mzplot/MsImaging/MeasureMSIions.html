@@ -41,29 +41,29 @@
         <table>
             
 <dt>raw</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p>[as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzPack.html">mzPack</a>]</p></dd>
 
 
 <dt>gridSize</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p>[as integer]</p></dd>
 
 
 <dt>mzdiff</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p>-</p></dd>
 
 
 <dt>keepsLayer</dt>
-<dd><p><p>if the options is set to false, then this function just returns the ions mz vector.<br />
- otherwise, returns a dataframe that contains m/z, density value and ion layer <br />
- objects.</p></p></dd>
+<dd><p>if the options is set to false, then this function just returns the ions mz vector.
+ otherwise, returns a dataframe that contains m/z, density value and ion layer 
+ objects. [as boolean]</p></dd>
 
 
 <dt>densityCut</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p>[as double]</p></dd>
 
 
 <dt>env</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
 
         </table>
 
@@ -78,13 +78,11 @@
 
         <h3>Value</h3>
 
-        <p>A dataframe object that contains data fields:</p>
-
-<ol>
-<li>mz: the ion mz vector</li>
-<li>density: the average spatial density of current ion mz layer</li>
-<li>layer: a mzkit clr <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a> object that could be used for ms-imaging visualization</li>
-</ol><h4>clr value class</h4><ul><li>double</li><li><a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Internal/Object/dataframe.html">dataframe</a></li></ul>
+        <p>A dataframe object that contains data fields:
+ 
+ 1. mz: the ion mz vector
+ 2. density: the average spatial density of current ion mz layer
+ 3. layer: a mzkit clr <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a> object that could be used for ms-imaging visualization</p><h4>clr value class</h4><ul><li>double</li><li><a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Internal/Object/dataframe.html">dataframe</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

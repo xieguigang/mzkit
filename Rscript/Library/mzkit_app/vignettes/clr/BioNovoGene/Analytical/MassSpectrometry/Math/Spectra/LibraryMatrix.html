@@ -30,25 +30,25 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 export class LibraryMatrix extends <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Scripting/IVector`1.html">IVector`1</a> {
-   # The list of molecular fragment
-   ms2: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2[]</a>;
-   name: string;
+   Array: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2[]</a>;
    # mass spectrometry data in centroid mode?
    centroid: boolean;
-   parentMz: double;
-   # get the numeric vector of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a>.<a href="#">intensity</a> value
-   intensity: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">Vector</a>;
-   # sum of <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a>.<a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">intensity</a>
-   totalIon: double;
    # evaluates the spectrum peaks' shannon entropy value based on the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a>.<a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">intensity</a>
    entropy: double;
+   First: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a>;
+   # get the numeric vector of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a>.<a href="#">intensity</a> value
+   intensity: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">Vector</a>;
+   IsScalar: boolean;
+   Last: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a>;
+   Length: integer;
+   # The list of molecular fragment
+   ms2: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2[]</a>;
    # get all ms2 fragment peaks m/z values
    mz: double;
-   Length: integer;
-   IsScalar: boolean;
-   Array: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2[]</a>;
-   Last: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a>;
-   First: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a>;
+   name: string;
+   parentMz: double;
+   # sum of <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a>.<a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">intensity</a>
+   totalIon: double;
 }
 </code>
         </pre>
@@ -57,11 +57,11 @@ export class LibraryMatrix extends <a href="/vignettes/clr/Microsoft/VisualBasic
 
         <ol>
 <li>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Scripting/IVector`1.html">IVector`1</a> class: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Scripting/IVector`1.html">IVector`1</a></li>
-<li>use by <i>property</i> member <code>ms2</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a></li>
-<li>use by <i>property</i> member <code>intensity</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">Vector</a></li>
 <li>use by <i>property</i> member <code>Array</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a></li>
-<li>use by <i>property</i> member <code>Last</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a></li>
 <li>use by <i>property</i> member <code>First</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a></li>
+<li>use by <i>property</i> member <code>intensity</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">Vector</a></li>
+<li>use by <i>property</i> member <code>Last</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a></li>
+<li>use by <i>property</i> member <code>ms2</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a></li>
 </ol>
 
 

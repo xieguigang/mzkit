@@ -1,56 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::e77e51130eefab514f9640e05a15d6bc, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::76ba49b285059ca5d9794903eb947a76, metadb\Massbank\Public\NCBI\PubChem\Web\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
-    ' Code Statistics:
 
-    '   Total Lines: 201
-    '    Code Lines: 150
-    ' Comment Lines: 28
-    '   Blank Lines: 23
-    '     File Size: 8.36 KB
+' /********************************************************************************/
+
+' Summaries:
 
 
-    '     Module Extensions
-    ' 
-    '         Function: castStrings, GetInformation, (+2 Overloads) GetInformationNumber, GetInformationString, GetInformationStrings
-    '                   GetInformationTable, GetReferenceID, InformationNoNull, matchReferenceNumber
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 225
+'    Code Lines: 166 (73.78%)
+' Comment Lines: 33 (14.67%)
+'    - Xml Docs: 36.36%
+' 
+'   Blank Lines: 26 (11.56%)
+'     File Size: 9.38 KB
+
+
+'     Module Extensions
+' 
+'         Function: castStrings, GetInformation, (+2 Overloads) GetInformationNumber, GetInformationString, GetInformationStrings
+'                   GetInformationTable, GetReferenceID, InformationNoNull, matchReferenceNumber
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -80,19 +82,36 @@ Namespace NCBI.PubChem
             ElseIf Not info.Value.Number Is Nothing Then
                 Return info.Value.Number
             ElseIf Not info.Value.StringWithMarkup Is Nothing Then
-                Dim str As String = CStr(info.InfoValue)
+                Dim vals = info.InfoValue
+                Dim strs As String()
 
-                If str.IsSimpleNumber Then
-                    Return Double.Parse(str)
+                If vals Is Nothing Then
+                    Return 0.0
+                ElseIf vals.GetType.IsArray Then
+                    strs = DirectCast(vals, String())
                 Else
-                    str = str.Match(SimpleNumberPattern)
+                    strs = {CStr(vals)}
+                End If
 
-                    If Not str.StringEmpty Then
+                For Each str As String In strs
+                    If str.StringEmpty(, True) Then
+                        Continue For
+                    End If
+
+                    If str.IsSimpleNumber Then
                         Return Double.Parse(str)
                     Else
-                        Return 0.0
+                        str = str.Match(SimpleNumberPattern)
+
+                        If Not str.StringEmpty Then
+                            Return Double.Parse(str)
+                        Else
+                            Return 0.0
+                        End If
                     End If
-                End If
+                Next
+
+                Return 0
             Else
                 Return 0
             End If
@@ -151,6 +170,11 @@ Namespace NCBI.PubChem
             End If
         End Function
 
+        ''' <summary>
+        ''' cast a given object value as string array
+        ''' </summary>
+        ''' <param name="part"></param>
+        ''' <returns></returns>
         Private Function castStrings(part As Object) As String()
             If part.GetType Is GetType(String) Then
                 Return {DirectCast(part, String)}

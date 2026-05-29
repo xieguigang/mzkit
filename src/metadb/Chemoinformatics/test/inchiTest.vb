@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6af0ae85b7b44d9708f24c4cac4cd858, mzkit\src\metadb\Chemoinformatics\test\inchiTest.vb"
+﻿#Region "Microsoft.VisualBasic::0e9df32a7e1ec22039250b268bedd3c1, metadb\Chemoinformatics\test\inchiTest.vb"
 
     ' Author:
     ' 
@@ -37,27 +37,30 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 28
-    '    Code Lines: 11
-    ' Comment Lines: 8
-    '   Blank Lines: 9
-    '     File Size: 671 B
+    '   Total Lines: 34
+    '    Code Lines: 14 (41.18%)
+    ' Comment Lines: 8 (23.53%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (35.29%)
+    '     File Size: 851 B
 
 
     ' Module inchiTest
     ' 
-    '     Sub: Main
+    '     Sub: Main2
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.IUPAC
-Imports BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChILayers
+Imports BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChI
+Imports BioNovoGene.BioDeep.Chemoinformatics.SDF.Models
 
 Module inchiTest
 
-    Sub Main()
+    Sub Main2()
 
         '    8 9      10
         '    |  \    /
@@ -68,13 +71,18 @@ Module inchiTest
         '    H   12   11
         '
 
+        Dim bounds As InchiInput = MainLayer.ParseBounds("7-1-2(8)5-3(9)4(10)6(11)12-5")
+        Dim h = MainLayer.ParseHAtoms("2,5,7-10H,1H2").ToArray
+
+
         Dim ascorbicAcid As String = "InChI=1S/C6H8O6/c7-1-2(8)5-3(9)4(10)6(11)12-5/h2,5,7-10H,1H2/t2-,5+/m0/s1"
 
         Dim inchi As New InChI(ascorbicAcid)
+        Dim strct As [Structure] = inchi.GetStruct
 
         Dim key As String = inchi.Key
 
-        Dim bounds = MainLayer.ParseBounds("7-1-2(8)5-3(9)4(10)6(11)12-5").ToArray
+
 
 
         Pause()

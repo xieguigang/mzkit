@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>The chromatogram signal ticks (<code>{time =&gt; intensity}</code>)</p>
+        <p>The chromatogram signal ticks (<code>{time => intensity}</code>)</p>
 
         <h3>Declare</h3>        
 
@@ -30,10 +30,10 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 export class ChromatogramTick {
-   # The signal tick time in second
-   Time: double;
    # number of detector counts
    Intensity: double;
+   # The signal tick time in second
+   Time: double;
 }
 </code>
         </pre>

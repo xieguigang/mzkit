@@ -1,4 +1,68 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+﻿#Region "Microsoft.VisualBasic::3f0a06bb98683ce3ffae2fcc28852911, metadb\Lipidomics\SpectrumGenerator\OadDefaultSpectrumGenerator.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 86
+    '    Code Lines: 74 (86.05%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (13.95%)
+    '     File Size: 4.68 KB
+
+
+    ' Class OadDefaultSpectrumGenerator
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: CanGenerate, CreateReference, Generate
+    ' 
+    '     Sub: Add
+    ' 
+    ' Class OadClassFragment
+    ' 
+    '     Properties: nlMass, spectrum
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 
@@ -70,8 +134,6 @@ Public Class OadDefaultSpectrumGenerator
 }
     End Function
 
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
     Private ReadOnly map As Dictionary(Of LbmClass, List(Of ILipidSpectrumGenerator)) = New Dictionary(Of LbmClass, List(Of ILipidSpectrumGenerator))()
     Public Sub Add(lipidClass As LbmClass, generator As ILipidSpectrumGenerator)
         If Not map.ContainsKey(lipidClass) Then
@@ -86,4 +148,3 @@ Public Class OadClassFragment
     Public Property nlMass As Double
     Public Property spectrum As List(Of SpectrumPeak)
 End Class
-

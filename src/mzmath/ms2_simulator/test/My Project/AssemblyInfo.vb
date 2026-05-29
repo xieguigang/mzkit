@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09b7c62eb787ed2c70c47d9f9d396923, mzkit\src\mzmath\ms2_simulator\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::5897d87511a8af9ff255fb5b5754c4fd, mzmath\ms2_simulator\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 35
-    '    Code Lines: 13
-    ' Comment Lines: 15
-    '   Blank Lines: 7
-    '     File Size: 999 B
+    '    Code Lines: 13 (37.14%)
+    ' Comment Lines: 15 (42.86%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (20.00%)
+    '     File Size: 1.03 KB
 
 
     ' 

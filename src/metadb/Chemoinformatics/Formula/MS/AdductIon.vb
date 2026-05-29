@@ -1,4 +1,73 @@
-﻿Imports System.Collections.Concurrent
+﻿#Region "Microsoft.VisualBasic::ff03e5b92388171dbdfa676802233bbd, metadb\Chemoinformatics\Formula\MS\AdductIon.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 184
+    '    Code Lines: 128 (69.57%)
+    ' Comment Lines: 25 (13.59%)
+    '    - Xml Docs: 96.00%
+    ' 
+    '   Blank Lines: 31 (16.85%)
+    '     File Size: 6.95 KB
+
+
+    '     Class AdductIon
+    ' 
+    '         Properties: AdductIonAccurateMass, AdductIonName, AdductIonXmer, ChargeNumber, FormatCheck
+    '                     HasAdduct, IonMode, IsFA, IsHac, IsIncluded
+    '                     IsRadical, M1Intensity, M2Intensity
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ConvertToExactMass, ConvertToMz, GetAdductIon, GetAdductIonCore, GetStandardAdductIon
+    '                   ToString
+    '         Class AdductIons
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Function: GetOrAdd
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Collections.Concurrent
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports std = System.Math
 
@@ -33,6 +102,7 @@ Namespace Formula.MS
 
         Public Function ConvertToMz(exactMass As Double) As Double
             Dim precursorMz = (exactMass * AdductIonXmer + AdductIonAccurateMass) / ChargeNumber
+
             If IonMode = IonModes.Positive Then
                 precursorMz -= 0.0005485799 * ChargeNumber
             Else
@@ -78,13 +148,15 @@ Namespace Formula.MS
 
         Public ReadOnly Property IsFA As Boolean
             Get
-                Return Equals(AdductIonName, "[M+HCOO]-") OrElse Equals(AdductIonName, "[M+FA-H]-")
+                Return AdductIonName = "[M+HCOO]-" OrElse
+                    AdductIonName = "[M+FA-H]-"
             End Get
         End Property
 
         Public ReadOnly Property IsHac As Boolean
             Get
-                Return Equals(AdductIonName, "[M+CH3COO]-") OrElse Equals(AdductIonName, "[M+Hac-H]-")
+                Return AdductIonName = "[M+CH3COO]-" OrElse
+                    AdductIonName = "[M+Hac-H]-"
             End Get
         End Property
 
@@ -98,13 +170,14 @@ Namespace Formula.MS
         ''' <param name="adductName">Add the formula string such as "C6H12O6"</param>
         ''' <returns>AdductIon</returns>
         Public Shared Function GetAdductIon(adductName As String) As AdductIon
+            Static ADDUCT_IONS As New AdductIons()
             Return ADDUCT_IONS.GetOrAdd(adductName)
         End Function
 
         Private Shared Function GetAdductIonCore(adductName As String) As AdductIon
             Dim adduct As AdductIon = New AdductIon() With {
-            .AdductIonName = adductName
-        }
+                .AdductIonName = adductName
+            }
 
             If Not IonTypeFormatChecker(adductName) Then
                 adduct.FormatCheck = False
@@ -121,8 +194,12 @@ Namespace Formula.MS
             Dim ionType = GetIonType(adductName)
             Dim isRadical = GetRadicalInfo(adductName)
 
-            Dim accurateMass As Double = Nothing, m1Intensity As Double = Nothing, m2Intensity As Double = Nothing
-            Dim tr As (accurateMass As Double, m1Intensity As Double, m2Intensity As Double) = CalculateAccurateMassAndIsotopeRatio(adduct.AdductIonName)
+            Dim accurateMass As Double = Nothing
+            Dim m1Intensity As Double = Nothing
+            Dim m2Intensity As Double = Nothing
+            Dim tr As (accurateMass As Double, m1Intensity As Double, m2Intensity As Double) =
+                CalculateAccurateMassAndIsotopeRatio(adduct.AdductIonName)
+
             adduct.AdductIonAccurateMass += accurateMass
             adduct.M1Intensity += m1Intensity
             adduct.M2Intensity += m2Intensity
@@ -156,12 +233,12 @@ Namespace Formula.MS
             End Select
         End Function
 
-        Public Shared ReadOnly [Default] As AdductIon = New AdductIon()
+        Public Shared ReadOnly [Default] As New AdductIon()
 
-        Private Shared ReadOnly ADDUCT_IONS As AdductIons = New AdductIons()
+        Private Class AdductIons
 
-        Friend Class AdductIons
-            Private ReadOnly _dictionary As ConcurrentDictionary(Of String, AdductIon)
+            ReadOnly _dictionary As ConcurrentDictionary(Of String, AdductIon)
+
             Public Sub New()
                 _dictionary = New ConcurrentDictionary(Of String, AdductIon)()
                 _dictionary.TryAdd([Default].AdductIonName, [Default])

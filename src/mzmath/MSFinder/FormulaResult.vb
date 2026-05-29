@@ -1,14 +1,69 @@
-﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+﻿#Region "Microsoft.VisualBasic::feb4e43e7daaa87f4c7bf0522b15f6c3, mzmath\MSFinder\FormulaResult.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 32 (94.12%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (5.88%)
+    '     File Size: 1.81 KB
+
+
+    ' Class FormulaResult
+    ' 
+    '     Properties: AnnotatedIonResult, ChemicalOntologyDescriptions, ChemicalOntologyIDs, ChemicalOntologyRepresentativeInChIKeys, ChemicalOntologyScores
+    '                 Formula, IsotopicScore, IsSelected, M1IsotopicDiff, M1IsotopicIntensity
+    '                 M2IsotopicDiff, M2IsotopicIntensity, MassDiff, MassDiffScore, MatchedMass
+    '                 NeutralLossHits, NeutralLossNum, NeutralLossResult, NeutralLossScore, ProductIonHits
+    '                 ProductIonNum, ProductIonResult, ProductIonScore, PubchemResources, ResourceNames
+    '                 ResourceRecords, ResourceScore, TotalScore
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
 Public Class FormulaResult
-    Public Sub New()
-
-    End Sub
-
-#Region "properties"
-    Public Property Formula As Formula = New Formula()
-
+    Public Property Formula As New Formula()
     Public Property MatchedMass As Double
     Public Property MassDiff As Double
     Public Property M1IsotopicDiff As Double
@@ -37,5 +92,4 @@ Public Class FormulaResult
     Public Property ChemicalOntologyScores As List(Of Double) = New List(Of Double)()
     Public Property ChemicalOntologyRepresentativeInChIKeys As List(Of String) = New List(Of String)()
 
-#End Region
 End Class

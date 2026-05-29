@@ -1,5 +1,5 @@
 .\" man page create by R# package system.
-.TH MSI 1 2000-Jan "MSI_summary" "MSI_summary"
+.TH MSI 1 2000-1月 "MSI_summary" "MSI_summary"
 .SH NAME
 MSI_summary \- Fetch MSI summary data
 .SH SYNOPSIS
@@ -30,6 +30,18 @@ Fetch MSI summary data
  a numeric vector with two integer element that represents the dimension
  of the MSI data(width and height)
 . 
+.PP
+.SH EXAMPLES
+.PP
+let rawdata = open.mzpack("/path/to/rawdata.mzPack");
+ let spots = read.csv("/path/to/region.csv");
+ let into = MSI_summary(rawdata, x = as.integer(spots$x), 
+       y = as.integer(spots$y), 
+       as.vector = TRUE);
+ 
+ print(as.data.frame(into));
+ print("view of the intensity vector:");
+ print([into]::totalIon);
 .PP
 .SH SEE ALSO
 MSI

@@ -14,10 +14,12 @@ declare namespace MRMLinear {
        * Convert any compatibale type as the ion pairs data object for MRM target selected.
        * 
        * 
-        * @param mz -
+        * @param mz should be a set of the @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL.MSLIon`` object data.
         * @param env -
         * 
         * + default value Is ``null``.
+        * @return a collection of the mzkit clr ion pair data object. this MRM ion pair data object could 
+        *  be cast to dataframe vai the ``as.data.frame`` conversion.
       */
       function ion_pairs(mz: any, env?: object): object;
    }
@@ -26,14 +28,15 @@ declare namespace MRMLinear {
        * Extract ion peaks
        * 
        * 
-        * @param mzML A mzML raw file
-        * @param ionpairs metabolite targets
+        * @param mzML the file path to a mzML raw data file.
+        * @param ionpairs metabolite targets, value could be a vector of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models.IonPair`` or vector of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models.IsomerismIonPairs`` clr object.
         * @param tolerance 
         * + default value Is ``'ppm:20'``.
         * @param env 
         * + default value Is ``null``.
+        * @return vector of the ion pair corresponding xic data
       */
-      function ions(mzML: string, ionpairs: object, tolerance?: any, env?: object): object;
+      function ions(mzML: string, ionpairs: any, tolerance?: any, env?: object): object;
       /**
        * Exact ``regions of interested`` based on the given ion pair as targets.
        * 
@@ -66,11 +69,75 @@ declare namespace MRMLinear {
         * @param TPAFactors Peak factors
         * 
         * + default value Is ``null``.
+        * @param joint_peaks 
+        * + default value Is ``true``.
+        * @param time_shift_method 
+        * + default value Is ``false``.
+        * @param percentage_threshold 
+        * + default value Is ``false``.
         * @param env 
         * + default value Is ``null``.
       */
-      function peakROI(mzML: string, ionpairs: object, tolerance?: string, timeWindowSize?: number, baselineQuantile?: number, integratorTicks?: object, peakAreaMethod?: object, angleThreshold?: number, peakwidth?: any, rtshift?: object, bsplineDensity?: object, bsplineDegree?: object, sn_threshold?: number, TPAFactors?: object, env?: object): object;
+      function peakROI(mzML: string, ionpairs: object, tolerance?: string, timeWindowSize?: number, baselineQuantile?: number, integratorTicks?: object, peakAreaMethod?: object, angleThreshold?: number, peakwidth?: any, rtshift?: object, bsplineDensity?: object, bsplineDegree?: object, sn_threshold?: number, TPAFactors?: object, joint_peaks?: boolean, time_shift_method?: boolean, percentage_threshold?: boolean, env?: object): object;
    }
+   /**
+    * Extract all ion pairs information from the given rawdata file
+    * 
+    * 
+     * @param mzML the file path to the given mzML rawdata file
+     * @param env -
+     * 
+     * + default value Is ``null``.
+     * @return a collection of the MRM ion pairs data objects that extract from the precursor/product isolation window target ``m/z`` value.
+   */
+   function extract_ionpairs(mzML: string, env?: object): object;
+   /**
+    * Extract ion peaks
+    * 
+    * 
+     * @param mzML the file path to a mzML raw data file.
+     * @param tolerance 
+     * + default value Is ``'da:0.1'``.
+     * @param env 
+     * + default value Is ``null``.
+     * @return vector of the ion pair corresponding xic data
+   */
+   function extract_mrm(mzML: string, q1: number, q3: number, tolerance?: any, env?: object): object;
+   /**
+    * MRM-Ion Pair Finder is used to automatically and systematically define MRM transitions from untargeted metabolomics data. 
+    *  Our research group first introduced the concept of pseudotargeted metabolomics using the retention time locking 
+    *  GC-MS-selected ions monitoring in 2012. The pseudotargeted metabolomics method was extended to LC-MS in 2013. To define
+    *  ion pairs automatically and systematically, the in-house software “Mul-tiple Reaction Monitoring-Ion Pair Finder (MRM-Ion 
+    *  Pair Finder)” was developed, which made defining of the MRM transitions for untargeted metabolic profiling easier and 
+    *  less time consuming. Recently, MRM-Ion Pair Finder was updated to version 2.0. The new version is more convenient, consumes 
+    *  less time and is also suitable for negative ion mode. And the function of MRM-Ion Pair Finder is also performed in R so 
+    *  that users have more options when using pseudotargeted method.
+    * 
+    * > https://github.com/zhengfj1994/MRM-Ion_Pair_Finder
+    * 
+     * @param ms2 -
+     * @param ms1 
+     * + default value Is ``null``.
+     * @param diff_MS2MS1 
+     * + default value Is ``0.05``.
+     * @param ms2_intensity 
+     * + default value Is ``0.05``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function find_untargeted_ionpair(ms2: any, ms1?: object, diff_MS2MS1?: number, ms2_intensity?: number, env?: object): object;
+   /**
+    * Create the MRM peak finding arguments from a json string
+    * 
+    * 
+     * @param json_str -
+     * @param parse_single this function will try to parse the given json string as @``T:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.MRMArguments`` if **`parse_single`** is set to true,
+     *  otherwise a set of the ion parameters @``T:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.MRMArgumentSet`` will be parsed if **`parse_single`** is set to false.
+     * 
+     * + default value Is ``true``.
+   */
+   function from_arguments_json(json_str: string, parse_single?: boolean): object;
    module isomerism {
       /**
         * @param tolerance default value Is ``'ppm:20'``.
@@ -129,11 +196,17 @@ declare namespace MRMLinear {
         * @param sn_threshold -
         * 
         * + default value Is ``3``.
+        * @param joint_peaks 
+        * + default value Is ``true``.
+        * @param time_shift_method 
+        * + default value Is ``false``.
+        * @param percentage_threshold 
+        * + default value Is ``false``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function arguments(tolerance?: any, timeWindowSize?: number, angleThreshold?: number, baselineQuantile?: number, integratorTicks?: object, peakAreaMethod?: object, peakwidth?: any, TPAFactors?: object, sn_threshold?: number, env?: object): object;
+      function arguments(tolerance?: any, timeWindowSize?: number, angleThreshold?: number, baselineQuantile?: number, integratorTicks?: object, peakAreaMethod?: object, peakwidth?: any, TPAFactors?: object, sn_threshold?: number, joint_peaks?: boolean, time_shift_method?: boolean, percentage_threshold?: boolean, env?: object): object;
       /**
        * Get MRM ions peaks data from a given raw data file
        * 
@@ -147,6 +220,22 @@ declare namespace MRMLinear {
         * + default value Is ``null``.
       */
       function peak2(mzML: string, ions: object, args: object, rtshifts?: object, env?: object): object;
+      /**
+       * Extract the peak area data from the given xic data object.
+       *  
+       *  This function is used to extract the peak area data from the given xic data object, 
+       *  which is usually a result of the @``M:mzkit.MRMkit.ExtractIonData(System.String,System.Double,System.Double,System.Object,SMRUCC.Rsharp.Runtime.Environment)`` function.
+       * 
+       * 
+        * @param xic -
+        * @param args the arguments for peak finding
+        * @param env -
+        * 
+        * + default value Is ``null``.
+        * @return A vector of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.IonTPA`` mzkit clr object, and the ``rtshifts`` tuple
+        *  list data is tagged inside this vector attributes data.
+      */
+      function peakarea(xic: any, args: object, env?: object): object;
       /**
        * Get MRM ions peaks data from a given raw data file
        * 
@@ -176,11 +265,17 @@ declare namespace MRMLinear {
         * @param sn_threshold -
         * 
         * + default value Is ``3``.
+        * @param joint_peaks 
+        * + default value Is ``true``.
+        * @param time_shift_method 
+        * + default value Is ``false``.
+        * @param percentage_threshold 
+        * + default value Is ``false``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function peaks(mzML: string, ions: object, peakAreaMethod?: object, tolerance?: string, timeWindowSize?: number, angleThreshold?: number, baselineQuantile?: number, rtshifts?: object, TPAFactors?: object, peakwidth?: any, sn_threshold?: number, env?: object): object;
+      function peaks(mzML: string, ions: object, peakAreaMethod?: object, tolerance?: string, timeWindowSize?: number, angleThreshold?: number, baselineQuantile?: number, rtshifts?: object, TPAFactors?: object, peakwidth?: any, sn_threshold?: number, joint_peaks?: boolean, time_shift_method?: boolean, percentage_threshold?: boolean, env?: object): object;
       /**
         * @param args default value Is ``null``.
       */
@@ -245,10 +340,16 @@ declare namespace MRMLinear {
         * + default value Is ``null``.
         * @param sn_threshold 
         * + default value Is ``3``.
+        * @param joint_peaks 
+        * + default value Is ``true``.
+        * @param time_shift_method 
+        * + default value Is ``false``.
+        * @param percentage_threshold 
+        * + default value Is ``false``.
         * @param env 
         * + default value Is ``null``.
       */
-      function quantify(model: object, file: string, ions: object, peakAreaMethod?: object, tolerance?: string, timeWindowSize?: number, angleThreshold?: number, baselineQuantile?: number, peakwidth?: any, TPAFactors?: object, sn_threshold?: number, env?: object): object;
+      function quantify(model: object, file: string, ions: object, peakAreaMethod?: object, tolerance?: string, timeWindowSize?: number, angleThreshold?: number, baselineQuantile?: number, peakwidth?: any, TPAFactors?: object, sn_threshold?: number, joint_peaks?: boolean, time_shift_method?: boolean, percentage_threshold?: boolean, env?: object): object;
       /**
        * Do sample quantify
        * 
@@ -344,9 +445,15 @@ declare namespace MRMLinear {
         * + default value Is ``null``.
         * @param sn_threshold 
         * + default value Is ``3``.
+        * @param joint_peaks 
+        * + default value Is ``true``.
+        * @param time_shift_method 
+        * + default value Is ``false``.
+        * @param percentage_threshold 
+        * + default value Is ``false``.
         * @param env 
         * + default value Is ``null``.
       */
-      function scans(wiffConverts: string, ions: object, peakAreaMethod?: object, tolerance?: string, angleThreshold?: number, baselineQuantile?: number, removesWiffName?: boolean, timeWindowSize?: number, rtshifts?: object, bsplineDensity?: object, bsplineDegree?: object, resolution?: object, peakwidth?: any, TPAFactors?: object, sn_threshold?: number, env?: object): object;
+      function scans(wiffConverts: string, ions: object, peakAreaMethod?: object, tolerance?: string, angleThreshold?: number, baselineQuantile?: number, removesWiffName?: boolean, timeWindowSize?: number, rtshifts?: object, bsplineDensity?: object, bsplineDegree?: object, resolution?: object, peakwidth?: any, TPAFactors?: object, sn_threshold?: number, joint_peaks?: boolean, time_shift_method?: boolean, percentage_threshold?: boolean, env?: object): object;
    }
 }

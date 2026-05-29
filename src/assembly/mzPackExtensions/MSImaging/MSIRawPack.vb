@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed3dd3c8f12973aea38f1aadeefd97ff, mzkit\src\assembly\mzPackExtensions\MSImaging\MSIRawPack.vb"
+﻿#Region "Microsoft.VisualBasic::975ee345a33d12ff7c2666f81f55bbb4, assembly\mzPackExtensions\MSImaging\MSIRawPack.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 259
-    '    Code Lines: 189
-    ' Comment Lines: 26
-    '   Blank Lines: 44
-    '     File Size: 9.80 KB
+    '   Total Lines: 255
+    '    Code Lines: 187 (73.33%)
+    ' Comment Lines: 26 (10.20%)
+    '    - Xml Docs: 65.38%
+    ' 
+    '   Blank Lines: 42 (16.47%)
+    '     File Size: 9.83 KB
 
 
     ' Module MSIRawPack
@@ -53,30 +55,27 @@
 
 #End Region
 
-#If NET48 Then
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
-#End If
-
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader.SCiLSLab
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' read SCiLSLab table export or Xcalibur Raw data file for MS-imaging
 ''' </summary>
 Public Module MSIRawPack
 
-#If NET48 Then
+#If NET8_0 Then
 
     ''' <summary>
     ''' single raw data file as MSI data
@@ -112,8 +111,6 @@ Public Module MSIRawPack
                End Function
     End Function
 
-#End If
-
     <Extension>
     Public Function ExactPixelTable(mzpack As mzPack) As DataSet()
         Dim mz As New Dictionary(Of String, DataSet)
@@ -128,7 +125,7 @@ Public Module MSIRawPack
                     mz.Add(mzi, New DataSet With {.ID = mzi})
                 End If
 
-                mz(mzi)(pixel) = stdNum.Max(mz(mzi)(pixel), scan.into(i))
+                mz(mzi)(pixel) = std.Max(mz(mzi)(pixel), scan.into(i))
             Next
         Next
 
@@ -261,6 +258,7 @@ Public Module MSIRawPack
             .source = spotsXy.raw.FileName
         }
     End Function
+#End If
 
     <Extension>
     Public Function PixelScaler(raw As ScanMS1()) As SizeF

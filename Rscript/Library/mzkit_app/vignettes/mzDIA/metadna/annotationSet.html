@@ -30,7 +30,8 @@
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>annotationSet</strong>(<i>kegg</i>,
     <i>precursors</i> = <span style='color: brown;'><strong>"[M]+|[M+H]+|[M+H-H2O]+"</strong></span>,
     <i>mzdiff</i> = <span style='color: brown;'><strong>"ppm:20"</strong></span>,
-    <i>excludes</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
+    <i>excludes</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>mass.range</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -38,23 +39,23 @@
         <table>
             
 <dt>kegg</dt>
-<dd><p><p>a set of kegg compound data</p></p></dd>
+<dd><p>a set of kegg/pubchem/chebi/hmdb compound data.</p></dd>
 
 
 <dt>precursors</dt>
-<dd><p><p>a character vector of the ms1 precursor ion names or <br />
- a list of the given mzcalculator object models.</p></p></dd>
+<dd><p>a character vector of the ms1 precursor ion names or 
+ a list of the given mzcalculator object models.</p></dd>
 
 
 <dt>mzdiff</dt>
-<dd><p><p>the mass tolerance value to match between the <br />
- experiment m/z value and the reference m/z value<br />
- which is calculated from the compound exact mass<br />
- with a given specific ion precursor type.</p></p></dd>
+<dd><p>the mass tolerance value to match between the 
+ experiment m/z value and the reference m/z value
+ which is calculated from the compound exact mass
+ with a given specific ion precursor type.</p></dd>
 
 
 <dt>env</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
 
         </table>
 
@@ -69,8 +70,8 @@
 
         <h3>Value</h3>
 
-        <p>a data query engine model to run ms1 data search <br />
- for the kegg metaolite compounds.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/BioDeep/MetaDNA/KEGGHandler.html">KEGGHandler</a></li></ul>
+        <p>a data query engine model to run ms1 data search 
+ for the kegg metaolite compounds.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/BioDeep/MetaDNA/CompoundSolver.html">CompoundSolver</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

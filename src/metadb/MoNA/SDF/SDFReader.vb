@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0a251ac779b2c811473f32d6f71cfa8, mzkit\src\metadb\MoNA\SDF\SDFReader.vb"
+﻿#Region "Microsoft.VisualBasic::61b6f009359bf218c6d15ed8e5639bee, metadb\MoNA\SDF\SDFReader.vb"
 
 ' Author:
 ' 
@@ -37,11 +37,13 @@
 
 ' Code Statistics:
 
-'   Total Lines: 320
-'    Code Lines: 237
-' Comment Lines: 45
-'   Blank Lines: 38
-'     File Size: 12.77 KB
+'   Total Lines: 321
+'    Code Lines: 238 (74.14%)
+' Comment Lines: 45 (14.02%)
+'    - Xml Docs: 71.11%
+' 
+'   Blank Lines: 38 (11.84%)
+'     File Size: 12.85 KB
 
 
 ' Module SDFReader
@@ -60,8 +62,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
@@ -224,7 +226,7 @@ Public Module SDFReader
             ' 默认为阳离子
             If ion_mode = "0" Then
                 ion_mode = "+"
-                Call $"[{info.ion_mode}] is invalid, use positive mode as default".__DEBUG_ECHO
+                Call $"[{info.ion_mode}] is invalid, use positive mode as default".debug
             End If
         End If
 
@@ -245,7 +247,7 @@ Public Module SDFReader
                     info.ion_mode = ion_mode
                 End With
             Else
-                Call $"Recalculate m/z precursor_type for [{info.precursor_type}]".__DEBUG_ECHO
+                Call $"Recalculate m/z precursor_type for [{info.precursor_type}]".debug
 
                 ' 对于其他的类型,则重新计算为[M+H]+或者[M-H]-类型的数据
                 If ion_mode = "1" Then

@@ -1,61 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::0e25e4296f47527875c1da779619a2e8, mzkit\src\assembly\mzPack\v2.0\mzStream.vb"
+﻿#Region "Microsoft.VisualBasic::f0bd8fe8bce60107727c308d8e164b78, assembly\mzPack\v2.0\mzStream.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 350
-'    Code Lines: 254
-' Comment Lines: 38
-'   Blank Lines: 58
-'     File Size: 12.27 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class mzStream
-' 
-'     Properties: Application, MS1, rtmax, SampleScans, sourceName
-' 
-'     Constructor: (+2 Overloads) Sub New
-' 
-'     Function: findScan1Name, GetMetadata, GetSampleTags, GetThumbnail, hasMs2
-'               ReadModel, ReadMS1, ReadScan, safeParseClassType
-' 
-'     Sub: cacheScanIndex, (+2 Overloads) Dispose, ReadChromatogramTick
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 454
+    '    Code Lines: 320 (70.48%)
+    ' Comment Lines: 63 (13.88%)
+    '    - Xml Docs: 73.02%
+    ' 
+    '   Blank Lines: 71 (15.64%)
+    '     File Size: 16.48 KB
+
+
+    ' Class mzStream
+    ' 
+    '     Properties: Application, metadata, MS1, rtmax, SampleScans
+    '                 sourceName
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: findScan1Name, GetMetadata, GetSampleTags, GetThumbnail, hasMs2
+    '               loadAnnotations, loadMultipleStageProductTree, ReadModel, ReadMS1, ReadScan
+    '               safeParseClassType, (+2 Overloads) SafeParseClassType
+    ' 
+    '     Sub: cacheScanIndex, (+2 Overloads) Dispose, ReadChromatogramTick
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -78,7 +82,33 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports any = Microsoft.VisualBasic.Scripting
 Imports asciiA = Microsoft.VisualBasic.Text.ASCII
-Imports stdNum = System.Math
+Imports std = System.Math
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
 
 ''' <summary>
 ''' v2 mzPack format in HDS stream file
@@ -232,6 +262,11 @@ Public Class mzStream : Implements IMzPackReader
         End If
     End Function
 
+    ''' <summary>
+    ''' just read the ms1 scan data
+    ''' </summary>
+    ''' <param name="scan_id"></param>
+    ''' <returns></returns>
     Public Function ReadMS1(scan_id As String) As ScanMS1
         Dim refer As String = $"{findScan1Name(scan_id)}/Scan1.mz"
         Dim buffer As Stream = pack.OpenBlock(refer)
@@ -302,6 +337,15 @@ Public Class mzStream : Implements IMzPackReader
         Return meta
     End Function
 
+    ''' <summary>
+    ''' read ms1 scan data and corresponding msn product scan data
+    ''' </summary>
+    ''' <param name="scan_id"></param>
+    ''' <param name="skipProducts"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' this function also read the multiple stage product tree
+    ''' </remarks>
     Public Function ReadScan(scan_id As String, Optional skipProducts As Boolean = False) As ScanMS1 Implements IMzPackReader.ReadScan
         Dim ms1 As ScanMS1 = ReadMS1(scan_id)
         Dim refer As String = findScan1Name(scan_id)
@@ -314,18 +358,38 @@ Public Class mzStream : Implements IMzPackReader
             ms1.products = New ScanMS2(n - 1) {}
 
             For i As Integer = 0 To n - 1
-                Dim buffer As Stream = pack.OpenBlock($"{refer}/{id2(i).MD5}.mz")
-                Dim reader As New BinaryDataReader(buffer) With {
-                    .ByteOrder = ByteOrder.LittleEndian
-                }
-
-                ms1.products(i) = Serialization.ReadScanMs2(reader)
+                ms1.products(i) = loadMultipleStageProductTree(refer, id2(i).MD5)
             Next
         Else
             ms1.products = {}
         End If
 
         Return ms1
+    End Function
+
+    Private Function loadMultipleStageProductTree(refer$, scan_hash$) As ScanMS2
+        Dim relpath = $"{refer}/{scan_hash}.mz"
+        Dim msnProduct As ScanMS2 = Nothing
+
+        If pack.FileExists(relpath) Then
+            Dim buffer As Stream = pack.OpenBlock(relpath)
+            Dim reader As New BinaryDataReader(buffer) With {
+                .ByteOrder = ByteOrder.LittleEndian
+            }
+            ' 20241227 v2.1 format updates
+            ' read peak list annotation metadata
+            Dim metadata As String = $"{refer}/{scan_hash}.txt"
+
+            msnProduct = Serialization.ReadScanMs2(reader)
+
+            If pack.FileExists(metadata, ZERO_Nonexists:=True) Then
+                msnProduct.metadata = pack.ReadText(metadata).LineTokens
+            End If
+
+            msnProduct.product = loadMultipleStageProductTree(refer & "/products", scan_hash:=msnProduct.scan_id.MD5)
+        End If
+
+        Return msnProduct
     End Function
 
     Public Function GetThumbnail() As Image
@@ -367,7 +431,7 @@ Public Class mzStream : Implements IMzPackReader
 
             If ++i = d Then
                 If verbose Then
-                    RunSlavePipeline.SendProgress(stdNum.Round(j / allIndex.Length, 2), id & $" ({(j / allIndex.Length * 100).ToString("F2")}%)")
+                    RunSlavePipeline.SendProgress(std.Round(j / allIndex.Length, 2), id & $" ({(j / allIndex.Length * 100).ToString("F2")}%)")
                 End If
 
                 i = 0

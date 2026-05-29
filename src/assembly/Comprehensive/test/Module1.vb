@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfd007683eee29aaec4325ab8c1ffd72, mzkit\src\assembly\Comprehensive\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::99547276ceb3581488eaec0ebf297310, assembly\Comprehensive\test\Module1.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 21
-    '    Code Lines: 16
-    ' Comment Lines: 0
-    '   Blank Lines: 5
-    '     File Size: 672 B
+    '    Code Lines: 16 (76.19%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (23.81%)
+    '     File Size: 676 B
 
 
     ' Module Module1
@@ -54,7 +56,7 @@
 
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
-Imports Microsoft.VisualBasic.Data.IO.netCDF
+Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 

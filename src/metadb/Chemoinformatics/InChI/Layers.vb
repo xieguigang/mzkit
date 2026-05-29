@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a79a82e0473f78c9958fabb0ed52864, mzkit\src\metadb\Chemoinformatics\InChI\Layers.vb"
+﻿#Region "Microsoft.VisualBasic::15755ea1ca662f1e028790c1bd1b63d1, metadb\Chemoinformatics\InChI\Layers.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 129
-    '    Code Lines: 65
-    ' Comment Lines: 45
-    '   Blank Lines: 19
-    '     File Size: 4.72 KB
+    '   Total Lines: 100
+    '    Code Lines: 40 (40.00%)
+    ' Comment Lines: 45 (45.00%)
+    '    - Xml Docs: 84.44%
+    ' 
+    '   Blank Lines: 15 (15.00%)
+    '     File Size: 3.39 KB
 
 
     '     Class Layer
     ' 
-    '         Function: GetByPrefix, ParseChargeLayer, ParseFixedHLayer, ParseIsotopicLayer, ParseMainLayer
-    '                   ParseReconnectedLayer, ParseStereochemicalLayer
+    '         Function: ParseChargeLayer, ParseFixedHLayer, ParseIsotopicLayer, ParseMainLayer, ParseReconnectedLayer
+    '                   ParseStereochemicalLayer
     ' 
     '     Enum StereoType
     ' 
@@ -61,12 +63,10 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 
-Namespace IUPAC.InChILayers
+Namespace IUPAC.InChI
 
     ''' <summary>
     ''' ### Layers of the identifier
@@ -115,71 +115,44 @@ Namespace IUPAC.InChILayers
     ''' </summary>
     Public MustInherit Class Layer
 
-        Shared ReadOnly prefixes As Index(Of Char) = "chpqbtmsihfr"
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Friend Shared Function GetByPrefix(tokens As String()) As Func(Of [Variant](Of Char, Char()), String)
-            Return Function(c As [Variant](Of Char, Char()))
-                       Dim str As String
-
-                       If c Like GetType(Char) Then
-                           If c = ASCII.NUL Then
-                               Return tokens.First(Function(t) Not t.First Like prefixes)
-                           Else
-                               str = tokens.FirstOrDefault(Function(t) c = t.First)
-                           End If
-                       Else
-                           With CType(c, Char())
-                               str = tokens.FirstOrDefault(Function(t) .Any(Function(cc) cc = t.First))
-                           End With
-                       End If
-
-                       If str.StringEmpty Then
-                           Return ""
-                       Else
-                           Return str.Substring(1)
-                       End If
-                   End Function
-        End Function
-
-        Friend Shared Function ParseMainLayer(tokens As Func(Of [Variant](Of Char, Char()), String)) As MainLayer
+        Friend Shared Function ParseMainLayer(tokens As InChIStringReader) As MainLayer
             Dim main As New MainLayer With {
-                .Formula = tokens(ASCII.NUL),
-                .Bounds = MainLayer.ParseBounds(tokens("c"c)).ToArray,
-                .Hydrogen = tokens("h"c)
+                .Formula = tokens.GetByPrefix(ASCII.NUL),
+                .Struct = MainLayer.ParseBounds(tokens.GetByPrefix("c"c)),
+                .Hydrogen = MainLayer.ParseHAtoms(tokens.GetByPrefix("h"c)).ToArray
             }
 
             Return main
         End Function
 
-        Friend Shared Function ParseChargeLayer(tokens As Func(Of [Variant](Of Char, Char()), String)) As ChargeLayer
+        Friend Shared Function ParseChargeLayer(tokens As InChIStringReader) As ChargeLayer
             Dim charge As New ChargeLayer With {
-                .Proton = tokens("p"c).ParseInteger,
-                .Charge = tokens("q"c)
+                .Proton = tokens.GetByPrefix("p"c).ParseInteger,
+                .Charge = tokens.GetByPrefix("q"c)
             }
 
             Return charge
         End Function
 
-        Friend Shared Function ParseStereochemicalLayer(tokens As Func(Of [Variant](Of Char, Char()), String)) As StereochemicalLayer
+        Friend Shared Function ParseStereochemicalLayer(tokens As InChIStringReader) As StereochemicalLayer
             Dim stereochemical As New StereochemicalLayer With {
-                .DoubleBounds = tokens("b"c),
-                .Tetrahedral = tokens({"t"c, "m"c}),
-                .Type = tokens("s"c)
+                .DoubleBounds = tokens.GetByPrefix("b"c),
+                .Tetrahedral = tokens.GetByPrefix({"t"c, "m"c}),
+                .Type = tokens.GetByPrefix("s"c)
             }
 
             Return stereochemical
         End Function
 
-        Friend Shared Function ParseIsotopicLayer(tokens As Func(Of [Variant](Of Char, Char()), String)) As IsotopicLayer
+        Friend Shared Function ParseIsotopicLayer(tokens As InChIStringReader) As IsotopicLayer
 
         End Function
 
-        Friend Shared Function ParseFixedHLayer(tokens As Func(Of [Variant](Of Char, Char()), String)) As FixedHLayer
+        Friend Shared Function ParseFixedHLayer(tokens As InChIStringReader) As FixedHLayer
 
         End Function
 
-        Friend Shared Function ParseReconnectedLayer(tokens As Func(Of [Variant](Of Char, Char()), String)) As ReconnectedLayer
+        Friend Shared Function ParseReconnectedLayer(tokens As InChIStringReader) As ReconnectedLayer
 
         End Function
     End Class

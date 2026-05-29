@@ -34,7 +34,9 @@
     <i>centroid</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>norm</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>filter.empty</i> = <span style='color: blue !important;'>TRUE</span>,
-    <i>into.cutoff</i> = <span style='color: green;'>0</span>);</code></pre>
+    <i>into.cutoff</i> = <span style='color: green;'>0</span>,
+    <i>rt.window</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>loadProductTree</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -42,32 +44,51 @@
         <table>
             
 <dt>mzpack</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p>[as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzPack.html">mzPack</a>]</p></dd>
 
 
 <dt>precursorMz</dt>
-<dd><p><p>if the precursor m/z data is assign by this parameter<br />
- value, then this function will extract the ms2 xic data<br />
- only</p></p></dd>
+<dd><p>if the precursor m/z data is assign by this parameter
+ value, then this function will extract the ms2 xic data
+ only. [as double]</p></dd>
 
 
 <dt>tolerance</dt>
-<dd><p><p>ppm toleracne error for extract ms2 xic data.</p></p></dd>
+<dd><p>ppm toleracne error for extract ms2 xic data.</p></dd>
 
 
 <dt>centroid</dt>
-<dd><p><p>and also convert the data to centroid mode? </p></p></dd>
+<dd><p>and also convert the data to centroid mode?. [as boolean]</p></dd>
+
+
+<dt>rt.window</dt>
+<dd><p>the rt range for filter of the ms2 spectrum data exports, 
+ should be a numeric vector that consists with two elements
+ for specific the range min and range max. rt data should 
+ be in data unit of seconds.</p></dd>
+
+
+<dt>tag.source</dt>
+<dd><p>tag the source reference to the metadata of each spectrum data object?. [as boolean]</p></dd>
+
+
+<dt>loadProductTree</dt>
+<dd><p>Load MSn product tree. [as boolean]</p></dd>
 
 
 <dt>env</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
 
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>metadata of the spectrum source reference includes data slots:
+ 
+ 1. <code>source</code>, the file name of the spectrum rawdata file source
+ 2. <code>precursor</code>, the precursor ion mz of the spectrum data
+ 3. <code>rt</code>, the retention time of the spectrum data object</p>
 
         <h3 style="display: block">Authors</h3>
 

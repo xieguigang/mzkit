@@ -1,58 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::9271f21379201257d8cab1580516ef5c, mzkit\src\mzmath\ms2_math-core\Spectra\Alignment\AlignmentProvider.vb"
+﻿#Region "Microsoft.VisualBasic::86335ede5a43a26f35ef01e1e24c2679, mzmath\ms2_math-core\Spectra\Alignment\AlignmentProvider.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 61
-'    Code Lines: 48
-' Comment Lines: 0
-'   Blank Lines: 13
-'     File Size: 2.11 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class AlignmentProvider
-' 
-'         Properties: Tolerance
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: (+2 Overloads) CreateAlignment, GetMeta
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 122
+    '    Code Lines: 80 (65.57%)
+    ' Comment Lines: 20 (16.39%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 22 (18.03%)
+    '     File Size: 4.79 KB
+
+
+    '     Class AlignmentProvider
+    ' 
+    '         Properties: Tolerance
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Cosine, (+3 Overloads) CreateAlignment, GetCosineScore, GetEntropyScore, GetJaccardIndex
+    '                   GetMeta, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -81,12 +84,24 @@ Namespace Spectra
             Me.intocutoff = intocutoff
         End Sub
 
+        ''' <summary>
+        ''' default is get the min forward and reverse consine score
+        ''' </summary>
+        ''' <param name="mzwidth"></param>
+        ''' <param name="intocutoff"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Cosine(mzwidth As Tolerance, intocutoff As LowAbundanceTrimming) As CosAlignment
             Return New CosAlignment(mzwidth, intocutoff)
         End Function
 
         Public MustOverride Function GetScore(a As ms2(), b As ms2()) As Double
+
+        ''' <summary>
+        ''' evaluate the [forward,reverse] cosine score
+        ''' </summary>
+        ''' <param name="alignment"></param>
+        ''' <returns></returns>
         Public MustOverride Function GetScore(alignment As SSM2MatrixFragment()) As (forward#, reverse#)
 
         Public Overrides Function ToString() As String
@@ -125,13 +140,19 @@ Namespace Spectra
             }
         End Function
 
+        ''' <summary>
+        ''' Creates only the ms2 spectrum alignment result output, missing precursor ion and reference information metadata.
+        ''' </summary>
+        ''' <param name="a">the spectrum peaks of the query.</param>
+        ''' <param name="b">the spectrum peaks of the reference.</param>
+        ''' <returns></returns>
         Public Overloads Function CreateAlignment(a As ms2(), b As ms2()) As AlignmentOutput
             Dim align As SSM2MatrixFragment() = GlobalAlignment _
                 .CreateAlignment(a, b, mzwidth) _
                 .ToArray
             Dim scores As (forward#, reverse#) = GetScore(align)
             Dim jIdx As Double = GlobalAlignment.JaccardIndex(a, b, mzwidth)
-            Dim entropy As Double = SpectralEntropy.calculate_entropy_similarity(align)
+            Dim entropy As Double = SpectralEntropy.calculate_entropy_similarity(align.StandardizeAlignment.ToArray)
 
             Return New AlignmentOutput With {
                 .alignments = align,
@@ -140,6 +161,22 @@ Namespace Spectra
                 .jaccard = jIdx,
                 .entropy = entropy
             }
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function GetCosineScore(align As SSM2MatrixFragment()) As (forward#, reverse#)
+            Static alg As New CosAlignment(Tolerance.DeltaMass(0.3), New RelativeIntensityCutoff(0))
+            Return alg.GetScore(align)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function GetJaccardIndex(align As SSM2MatrixFragment()) As Double
+            Return align.JaccardIndex
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function GetEntropyScore(align As SSM2MatrixFragment()) As Double
+            Return SpectralEntropy.calculate_entropy_similarity(align.StandardizeAlignment.ToArray)
         End Function
 
     End Class

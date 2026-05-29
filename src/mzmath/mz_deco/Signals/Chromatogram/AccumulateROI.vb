@@ -1,55 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::30ecf81309e4fd42a7eba536fb9ca06e, mzkit\src\mzmath\ms2_math-core\Chromatogram\AccumulateROI.vb"
+﻿#Region "Microsoft.VisualBasic::b85955ef614e224ad0e3712b3887b78d, mzmath\mz_deco\Signals\Chromatogram\AccumulateROI.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 96
-'    Code Lines: 57
-' Comment Lines: 32
-'   Blank Lines: 7
-'     File Size: 4.54 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module AccumulateROI
-' 
-'         Function: (+2 Overloads) PopulateROI
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 211
+    '    Code Lines: 137 (64.93%)
+    ' Comment Lines: 47 (22.27%)
+    '    - Xml Docs: 74.47%
+    ' 
+    '   Blank Lines: 27 (12.80%)
+    '     File Size: 8.52 KB
+
+
+    '     Module AccumulateROI
+    ' 
+    '         Function: dt, JointPeak, JointPeaks, (+2 Overloads) PopulateROI
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +61,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -122,7 +125,7 @@ Namespace Chromatogram
                                              Optional joint As Boolean = False,
                                              Optional nticks As Integer = 6) As IEnumerable(Of ROI)
             ' 先计算出基线和累加线
-            Dim baseline# = chromatogram.Baseline(baselineQuantile)
+            Dim baseline# = chromatogram.SignalBaseline(baselineQuantile)
             Dim time As Vector = chromatogram!time
             Dim peaks As SignalPeak() = New ElevationAlgorithm(angleThreshold, baselineQuantile) _
                 .FindAllSignalPeaks(chromatogram.As(Of ITimeSignal)) _
@@ -130,7 +133,7 @@ Namespace Chromatogram
                 .ToArray
 
             If joint Then
-                peaks = peaks.JointPeaks().ToArray
+                peaks = peaks.JointPeaks(peakwidth.Max).ToArray
             End If
 
             For Each window As SignalPeak In peaks
@@ -142,7 +145,7 @@ Namespace Chromatogram
                     Continue For
                 End If
 
-                Dim max# = peak.Max(Function(a) a.Intensity)
+                Dim max# = peak.Max(Function(a) a.Intensity) - window.baseline
                 Dim rt# = window(which.Max(window.region.Select(Function(a) a.intensity))).time
                 Dim ROI As New ROI With {
                     .ticks = peak,
@@ -161,7 +164,7 @@ Namespace Chromatogram
         End Function
 
         <Extension>
-        Private Iterator Function JointPeaks(raw As SignalPeak()) As IEnumerable(Of SignalPeak)
+        Private Iterator Function JointPeaks(raw As SignalPeak(), max_width As Double) As IEnumerable(Of SignalPeak)
             Dim q2 As Double
 
             If raw.IsNullOrEmpty Then
@@ -183,22 +186,36 @@ Namespace Chromatogram
             Dim jointPeak As New List(Of SignalPeak) From {
                 raw(0)
             }
+            Dim quar As DataQuartile = dt.Quartile
 
             'If dt.Length > 2 Then
             '    q2 = dt(dt.Length * (3 / 4)) * 1.25
             'Else
             '    q2 = 0
             'End If
-            q2 = dt.Average * (3 / 4)
+
+            ' q2 = dt.Average * (3 / 4)
+            q2 = quar.Outlier(dt).normal.Average
+
+            If q2 > max_width Then
+                q2 = max_width * 3 / 4
+            End If
+
+            Dim left As Double = raw(0).rtmin
+            Dim right As Double = 0
 
             For i As Integer = 1 To raw.Length - 1
-                If AccumulateROI.dt(raw(i), raw(i - 1)) <= q2 Then
+                right = raw(i).rtmax
+
+                If (right - left) <= max_width AndAlso AccumulateROI.dt(raw(i), raw(i - 1)) <= q2 Then
                     jointPeak.Add(raw(i))
                 Else
                     If jointPeak.Count > 0 Then
                         ' break
                         Yield AccumulateROI.JointPeak(jointPeak)
                     End If
+
+                    left = raw(i).rtmin
 
                     jointPeak.Clear()
                     jointPeak.Add(raw(i))

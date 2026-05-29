@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8952d6cbd6bb90fe59af7d6ea04728d8, mzkit\src\metadna\metaDNA\Models\UnknownSet.vb"
+﻿#Region "Microsoft.VisualBasic::0172e90993d7899b87b77dab531a645e, metadna\metaDNA\Models\UnknownSet.vb"
 
     ' Author:
     ' 
@@ -37,14 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 196
-    '    Code Lines: 136
-    ' Comment Lines: 33
-    '   Blank Lines: 27
-    '     File Size: 7.12 KB
+    '   Total Lines: 207
+    '    Code Lines: 144 (69.57%)
+    ' Comment Lines: 33 (15.94%)
+    '    - Xml Docs: 93.94%
+    ' 
+    '   Blank Lines: 30 (14.49%)
+    '     File Size: 7.33 KB
 
 
     ' Class UnknownSet
+    ' 
+    '     Properties: is_empty
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
@@ -64,7 +68,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' 未知Feature列表
@@ -86,12 +90,18 @@ Public Class UnknownSet
 
     Friend ReadOnly rtmax As Double
 
+    Public ReadOnly Property is_empty As Boolean
+        Get
+            Return spectrumIndex.Count = 0
+        End Get
+    End Property
+
     Private Sub New(rtmax As Double)
         Me.rtmax = rtmax
     End Sub
 
     Public Function rtAdjust(rt1 As Double, rtKegg As Double) As Double
-        Return stdNum.Abs(rt1 / rtmax - rtKegg)
+        Return std.Abs(rt1 / rtmax - rtKegg)
     End Function
 
     Public Function QueryByKey(key As String) As PeakMs2
@@ -184,9 +194,14 @@ Public Class UnknownSet
             ROIlist(ROI).Item2.Add(product.lib_guid)
         Next
 
-        Dim rtmax As Double = Aggregate peak As PeakMs2
-                              In index.Values
-                              Into Max(peak.rt)
+        Dim rtmax As Double = 0
+
+        If index.Count > 0 Then
+            rtmax = Aggregate peak As PeakMs2
+                    In index.Values
+                    Into Max(peak.rt)
+        End If
+
         Dim ROImaps As Dictionary(Of String, String) = ROIlist _
             .Select(Function(ROI)
                         Return ROI.Value.Item2.Select(Function(peakId) (ROI.Key, peakId))
@@ -211,7 +226,7 @@ Public Class UnknownSet
 
     Public Iterator Function EnumerateAllUnknownFeatures() As IEnumerable(Of PeakMs2)
         For Each node As BinaryTree(Of Double, PeakMs2) In features.GetAllNodes
-            For Each peak In node.Members
+            For Each peak As PeakMs2 In node.Members
                 Yield peak
             Next
         Next

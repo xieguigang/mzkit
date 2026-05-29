@@ -1,5 +1,5 @@
 .\" man page create by R# package system.
-.TH MZWEB 1 2000-Jan "load.chromatogram" "load.chromatogram"
+.TH MZWEB 1 2000-1月 "load.chromatogram" "load.chromatogram"
 .SH NAME
 load.chromatogram \- load chromatogram data from the raw file data
 .SH SYNOPSIS
@@ -21,6 +21,11 @@ load chromatogram data from the raw file data
 .SH VALUE
 .PP
 the chromatogram data wrapper of TIC/BPC
+.PP
+.SH EXAMPLES
+.PP
+let rawdata = mzweb::open.mzpack(file = "./lcms-rawdata.mzPack");
+ let chromatogram = rawdata |> load.chromatogram();
 .PP
 .SH SEE ALSO
 mzweb

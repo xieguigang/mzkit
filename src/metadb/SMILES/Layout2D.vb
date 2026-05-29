@@ -1,63 +1,66 @@
-﻿#Region "Microsoft.VisualBasic::a129dc6362ebc9002a03bee2072254dd, mzkit\src\metadb\SMILES\Layout2D.vb"
+﻿#Region "Microsoft.VisualBasic::115e59fe77c7e02293031acfffffdc90, metadb\SMILES\Layout2D.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
-    ' Code Statistics:
 
-    '   Total Lines: 120
-    '    Code Lines: 87
-    ' Comment Lines: 9
-    '   Blank Lines: 24
-    '     File Size: 3.91 KB
+' /********************************************************************************/
+
+' Summaries:
 
 
-    ' Module Layout2D
-    ' 
-    '     Function: AutoLayout, EvaluateAngleDelta
-    ' 
-    '     Sub: LayoutTarget
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 132
+'    Code Lines: 97 (73.48%)
+' Comment Lines: 9 (6.82%)
+'    - Xml Docs: 33.33%
+' 
+'   Blank Lines: 26 (19.70%)
+'     File Size: 4.38 KB
+
+
+' Module Layout2D
+' 
+'     Function: AutoLayout, EvaluateAngleDelta
+' 
+'     Sub: LayoutTarget
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' methods for evaluate 2D layout of the molecule atoms
@@ -69,9 +72,13 @@ Module Layout2D
                                Optional radius As Double = 10,
                                Optional strict As Boolean = True) As ChemicalFormula
 
-        Dim atom As ChemicalElement = chemical.AllElements.First
+        Dim atom As ChemicalElement = chemical.AllElements.FirstOrDefault
 
-        atom.coordinate = New Double() {0, 0}
+        If Not chemical.AllElements.Any Then
+            Return chemical
+        Else
+            atom.coordinate = New Double() {0, 0}
+        End If
 
         Do While True
             chemical.LayoutTarget(atom, radius, 0, strict)
@@ -90,7 +97,7 @@ Module Layout2D
 
     Friend ReadOnly atomMaxCharges As Dictionary(Of String, Atom) = Atom _
         .DefaultElements _
-        .JoinIterates(Atom.DefaultAtomGroups) _
+        .JoinIterates(AtomGroup.DefaultAtomGroups) _
         .ToDictionary(Function(a)
                           Return a.label
                       End Function)
@@ -100,11 +107,18 @@ Module Layout2D
                                         strict As Boolean) As Double
 
         Dim maxN As Integer
+        Dim key As String = atom.elementName
 
-        If atomMaxCharges.ContainsKey(atom.elementName) Then
-            maxN = atomMaxCharges(atom.elementName).maxKeys
+        If atom.elementName.StartsWith("["c) AndAlso atom.elementName.EndsWith("]"c) Then
+            key = atom.elementName.GetStackValue("[", "]")
+        End If
+
+        If atomMaxCharges.ContainsKey(key) Then
+            maxN = atomMaxCharges(key).maxKeys
+        ElseIf AtomGroup.CheckDefaultLabel(key) Then
+            maxN = AtomGroup.AtomGroups(key).maxKeys
         Else
-            maxN = SMILES.Atom.AtomGroups(atom.elementName).maxKeys
+            maxN = 1
         End If
 
         n = Aggregate b As ChemicalKey
@@ -117,9 +131,9 @@ Module Layout2D
             If strict Then
                 Throw New InvalidConstraintException(msg)
             Else
-                Call VBDebugger.EchoLine(msg)
+                Call msg.warning
 
-                Return 2 * stdNum.PI / n
+                Return 2 * std.PI / n
             End If
         End If
 
@@ -128,7 +142,7 @@ Module Layout2D
         n = maxN - n
         n += bonds.Length
 
-        Return 2 * stdNum.PI / n
+        Return 2 * std.PI / n
     End Function
 
     <Extension>
@@ -149,7 +163,7 @@ Module Layout2D
 
         If alpha = 0 Then
             If atom.elementName = "C" AndAlso bonds.Length = 1 Then
-                alpha = 2 * stdNum.PI * 2 / 3
+                alpha = 2 * std.PI * 2 / 3
             Else
                 alpha = angleDelta
             End If
@@ -164,8 +178,8 @@ Module Layout2D
         For Each bond As ChemicalKey In From b In bonds Where b.U Is atom
             Dim [next] As ChemicalElement = bond.V
             Dim layout As New PointF With {
-                .X = center.X + (radius * stdNum.Cos(alpha)),
-                .Y = center.Y + (radius * stdNum.Sin(alpha))
+                .X = center.X + (radius * std.Cos(alpha)),
+                .Y = center.Y + (radius * std.Sin(alpha))
             }
 
             [next].coordinate = {layout.X, layout.Y}

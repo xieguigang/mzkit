@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdf112021270a0a645b50d7db6660ed5, mzkit\src\assembly\assembly\UnifyReader\FileFormats\mzXMLScan.vb"
+﻿#Region "Microsoft.VisualBasic::652693c768c2dba3af465d08663480f5, assembly\assembly\UnifyReader\FileFormats\mzXMLScan.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 69
-    ' Comment Lines: 11
-    '   Blank Lines: 15
-    '     File Size: 3.79 KB
+    '   Total Lines: 126
+    '    Code Lines: 88 (69.84%)
+    ' Comment Lines: 19 (15.08%)
+    '    - Xml Docs: 94.74%
+    ' 
+    '   Blank Lines: 19 (15.08%)
+    '     File Size: 4.93 KB
 
 
     '     Class mzXMLScan
     ' 
     '         Function: GetActivationMethod, GetBPC, GetCentroided, GetCharge, GetCollisionEnergy
-    '                   GetMsLevel, GetMsMs, GetParentMz, GetPolarity, GetScanId
-    '                   GetScanTime, GetTIC, IsEmpty
+    '                   GetMsLevel, GetMsMs, GetParentMz, GetParentScanNumber, GetPolarity
+    '                   GetScanId, GetScanNumber, GetScanTime, GetTIC, IsEmpty
     ' 
     ' 
     ' /********************************************************************************/
@@ -57,11 +59,14 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace DataReader
 
+    ''' <summary>
+    ''' the mass spectrum data reader for mzXML file format
+    ''' </summary>
     Public Class mzXMLScan : Inherits MsDataReader(Of scan)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -90,6 +95,11 @@ Namespace DataReader
             Return scan.peaks Is Nothing OrElse scan.peaks.value.StringEmpty
         End Function
 
+        ''' <summary>
+        ''' try to extract the mass spectrum data from the given data scan
+        ''' </summary>
+        ''' <param name="scan"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetMsMs(scan As scan) As ms2()
             Return scan.peaks _
@@ -121,7 +131,7 @@ Namespace DataReader
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetParentMz(scan As scan) As Double
-            Return scan.precursorMz.value
+            Return scan.GetPrecursorData.value
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -131,12 +141,17 @@ Namespace DataReader
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetCharge(scan As scan) As Integer
-            Return scan.precursorMz.precursorCharge
+            Return scan.GetPrecursorData.precursorCharge
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetActivationMethod(scan As scan) As ActivationMethods
-            Return [Enum].Parse(GetType(ActivationMethods), scan.precursorMz.activationMethod)
+            Dim method As String = scan.GetPrecursorData.activationMethod
+
+            If String.IsNullOrWhiteSpace(method) OrElse method = "" Then
+                Return ActivationMethods.Unknown
+            End If
+            Return [Enum].Parse(GetType(ActivationMethods), method)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -147,6 +162,24 @@ Namespace DataReader
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetCentroided(scan As scan) As Boolean
             Return scan.centroided = "1"
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function GetScanNumber(scan As scan) As String
+            Return scan.num
+        End Function
+
+        Public Overrides Function GetParentScanNumber(scan As scan) As String
+            Dim precursor = scan.precursorMz
+
+            If precursor.IsNullOrEmpty Then
+                Return ""
+            Else
+                Return precursor _
+                    .Where(Function(a) Not a.precursorScanNum.StringEmpty(, True)) _
+                    .FirstOrDefault _
+                    .precursorScanNum
+            End If
         End Function
     End Class
 End Namespace

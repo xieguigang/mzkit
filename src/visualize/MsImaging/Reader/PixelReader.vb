@@ -1,58 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::82aa6ebe86e49f71899d45c0854d84dd, mzkit\src\visualize\MsImaging\Reader\PixelReader.vb"
+﻿#Region "Microsoft.VisualBasic::837e9bc01109331d0f73a8978125bf3f, visualize\MsImaging\Reader\PixelReader.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 324
-'    Code Lines: 237
-' Comment Lines: 41
-'   Blank Lines: 46
-'     File Size: 13.08 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class PixelReader
-' 
-'         Function: (+2 Overloads) FindMatchedPixels, GetIntensitySummary, (+2 Overloads) GetPixel, GetSummary, LoadLayer
-'                   LoadPixels, LoadRatioPixels, LoadRatioPixelsInternal, ReadDimensions
-' 
-'         Sub: (+2 Overloads) Dispose
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 349
+    '    Code Lines: 246 (70.49%)
+    ' Comment Lines: 51 (14.61%)
+    '    - Xml Docs: 72.55%
+    ' 
+    '   Blank Lines: 52 (14.90%)
+    '     File Size: 14.63 KB
+
+
+    '     Class PixelReader
+    ' 
+    '         Function: (+2 Overloads) FindMatchedPixels, GetIntensitySummary, (+2 Overloads) GetPixel, GetSummary, LoadLayer
+    '                   (+2 Overloads) LoadPixels, LoadRatioPixels, LoadRatioPixelsInternal, ReadDimensions
+    ' 
+    '         Sub: (+2 Overloads) Dispose
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -67,7 +69,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 #If UNIX = 0 Then
 Imports Microsoft.VisualBasic.ApplicationServices
@@ -233,7 +235,7 @@ Namespace Reader
                 Dim b As Double = If(p.b = 0.0, bmin, p.b)
 
                 Yield New PixelData With {
-                    .intensity = stdNum.Log(a / b, 2),
+                    .intensity = std.Log(a / b, 2),
                     .x = p.x,
                     .y = p.y
                 }
@@ -288,32 +290,12 @@ Namespace Reader
         ''' <param name="mz"></param>
         ''' <param name="tolerance"></param>
         ''' <param name="skipZero"></param>
-        ''' <param name="polygonFilter">
-        ''' Only select the pixels in this polygon
-        ''' </param>
         ''' <returns></returns>
-        Public Iterator Function LoadPixels(mz As Double(), tolerance As Tolerance,
-                                            Optional skipZero As Boolean = True,
-                                            Optional polygonFilter As Point() = Nothing) As IEnumerable(Of PixelData)
+        Public Shared Iterator Function LoadPixels(filterMatches As PixelScan(),
+                                                   mz As Double(),
+                                                   tolerance As Tolerance,
+                                                   Optional skipZero As Boolean = True) As IEnumerable(Of PixelData)
             Dim pixel As PixelData
-            Dim filter As Index(Of String) = Nothing
-
-            If Not polygonFilter.IsNullOrEmpty Then
-                filter = polygonFilter _
-                    .Select(Function(p) $"{p.X},{p.Y}") _
-                    .Indexing
-            End If
-
-            Dim rawMatches = FindMatchedPixels(mz, tolerance).ToArray
-            Dim filterMatches = rawMatches _
-                .Where(Function(p)
-                           If filter Is Nothing Then
-                               Return True
-                           Else
-                               Return $"{p.X},{p.Y}" Like filter
-                           End If
-                       End Function) _
-                .ToArray
             Dim mzbin As Tolerance = Tolerance.DeltaMass(0.01)
 
             ' group the mzbins always by a smaller tolerance 
@@ -353,6 +335,42 @@ Namespace Reader
                     Next
                 End If
             Next
+        End Function
+
+        ''' <summary>
+        ''' load pixels data for match a given list of m/z ions with tolerance
+        ''' </summary>
+        ''' <param name="mz"></param>
+        ''' <param name="tolerance"></param>
+        ''' <param name="skipZero"></param>
+        ''' <param name="polygonFilter">
+        ''' Only select the pixels in this polygon
+        ''' </param>
+        ''' <returns></returns>
+        Public Function LoadPixels(mz As Double(), tolerance As Tolerance,
+                                   Optional skipZero As Boolean = True,
+                                   Optional polygonFilter As Point() = Nothing) As IEnumerable(Of PixelData)
+
+            Dim filter As Index(Of String) = Nothing
+
+            If Not polygonFilter.IsNullOrEmpty Then
+                filter = polygonFilter _
+                    .Select(Function(p) $"{p.X},{p.Y}") _
+                    .Indexing
+            End If
+
+            Dim rawMatches = FindMatchedPixels(mz, tolerance).ToArray
+            Dim filterMatches = rawMatches _
+                .Where(Function(p)
+                           If filter Is Nothing Then
+                               Return True
+                           Else
+                               Return $"{p.X},{p.Y}" Like filter
+                           End If
+                       End Function) _
+                .ToArray
+
+            Return LoadPixels(filterMatches, mz, tolerance, skipZero:=skipZero)
         End Function
 
         ''' <summary>

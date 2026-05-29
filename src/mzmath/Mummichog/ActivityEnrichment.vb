@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6d87abe9a92cfd7039207f3d0d7eb51, mzkit\src\mzmath\Mummichog\ActivityEnrichment.vb"
+﻿#Region "Microsoft.VisualBasic::7d2c1a91888f148616684b42f5f8c422, mzmath\Mummichog\ActivityEnrichment.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 151
-    '    Code Lines: 91
-    ' Comment Lines: 43
-    '   Blank Lines: 17
-    '     File Size: 5.11 KB
+    '   Total Lines: 160
+    '    Code Lines: 91 (56.88%)
+    ' Comment Lines: 52 (32.50%)
+    '    - Xml Docs: 86.54%
+    ' 
+    '   Blank Lines: 17 (10.62%)
+    '     File Size: 5.57 KB
 
 
     ' Class ActivityEnrichment

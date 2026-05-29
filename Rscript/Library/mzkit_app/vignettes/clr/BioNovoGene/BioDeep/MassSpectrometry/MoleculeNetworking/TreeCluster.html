@@ -22,7 +22,8 @@
 
         <h3>Description</h3>
 
-        
+        <p>A tuple object that wrap the <a href="/vignettes/clr/Microsoft/VisualBasic/DataMining/BinaryTree/ClusterTree.html">ClusterTree</a> and
+ spectrum data <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a>.</p>
 
         <h3>Declare</h3>        
 
@@ -30,8 +31,10 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 export class TreeCluster {
-   tree: <a href="/vignettes/clr/Microsoft/VisualBasic/DataMining/BinaryTree/ClusterTree.html">ClusterTree</a>;
+   clusters: string;
+   # the input spectrum data, keeps the original order with the input sequence
    spectrum: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2[]</a>;
+   tree: <a href="/vignettes/clr/Microsoft/VisualBasic/DataMining/BinaryTree/ClusterTree.html">ClusterTree</a>;
 }
 </code>
         </pre>
@@ -39,8 +42,8 @@ export class TreeCluster {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>use by <i>property</i> member <code>tree</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/DataMining/BinaryTree/ClusterTree.html">ClusterTree</a></li>
 <li>use by <i>property</i> member <code>spectrum</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a></li>
+<li>use by <i>property</i> member <code>tree</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/DataMining/BinaryTree/ClusterTree.html">ClusterTree</a></li>
 </ol>
 
 

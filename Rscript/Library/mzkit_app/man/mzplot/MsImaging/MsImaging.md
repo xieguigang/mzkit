@@ -1,4 +1,4 @@
-# MsImaging
+﻿# MsImaging
 
 ### Visual MS imaging data(*.imzML)
  
@@ -13,6 +13,7 @@
 + [split.layer](MsImaging/split.layer.1) split the ms-imaging layer into multiple parts
 + [TrIQ](MsImaging/TrIQ.1) Contrast optimization of mass spectrometry imaging(MSI) data
 + [intensityLimits](MsImaging/intensityLimits.1) trim the intensity data value in a pixels of a ion MS-Imaging layer
++ [apply_raster_filter](MsImaging/apply_raster_filter.1) apply a single filter or a filter pipeline
 + [write.mzImage](MsImaging/write.mzImage.1) write mzImage data file
 + [read.mzImage](MsImaging/read.mzImage.1) open the existed mzImage cache file
 + [FilterMz](MsImaging/FilterMz.1) Extract a spectrum matrix object from MSI data by a given set of m/z values
@@ -29,9 +30,10 @@
 + [MSI_coverage](MsImaging/MSI_coverage.1) 
 + [assert](MsImaging/assert.1) test of a given MSI layer is target?
 + [layer](MsImaging/layer.1) render a ms-imaging layer by a specific ``m/z`` scan.
-+ [MSI_summary.scaleMax](MsImaging/MSI_summary.scaleMax.1) 
++ [MSI_summary.scaleMax](MsImaging/MSI_summary.scaleMax.1) Get the max intensity value via TrIQ or quantile cutoff
 + [defaultFilter](MsImaging/defaultFilter.1) get the default ms-imaging filter pipeline
-+ [parseFilters](MsImaging/parseFilters.1) 
++ [parseFilters](MsImaging/parseFilters.1) Converts R raw vector input into a raster processing pipeline configuration
++ [intensityFilter](MsImaging/intensityFilter.1) 
 + [render](MsImaging/render.1) MS-imaging of the MSI summary data result.
 + [as.pixels](MsImaging/as.pixels.1) extract the pixel [x,y] information for all of
 + [MeasureMSIions](MsImaging/MeasureMSIions.1) 

@@ -1,11 +1,16 @@
 .\" man page create by R# package system.
-.TH MZDECO 1 2000-Jan "peak_alignment" "peak_alignment"
+.TH MZDECO 1 2000-1月 "peak_alignment" "peak_alignment"
 .SH NAME
 peak_alignment \- Do COW peak alignment and export peaktable
 .SH SYNOPSIS
 \fIpeak_alignment(\fBsamples\fR as any, 
-\fBmzdiff\fR as any = "da:0.001", 
+\fBmzdiff\fR as double = 0.01, 
+\fBri_win\fR as double = 10, 
 \fBnorm\fR as boolean = FALSE, 
+\fBri_alignment\fR as boolean = FALSE, 
+\fBmax_intensity_ion\fR as boolean = FALSE, 
+\fBcow_alignment\fR as boolean = FALSE, 
+\fBaggregate\fR as <integer> Aggregates = [Sum], 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -28,6 +33,18 @@ Do COW peak alignment and export peaktable
 .PP
 .PP
 \fBenv\fB \fR\- -. 
+.PP
+.SH EXAMPLES
+.PP
+let peaksdata = lapply(files, function(ms1) {
+     mz_deco(ms1, tolerance = "da:0.01", 
+         peak.width = [3,30]);
+ });
+ let peaktable = peak_alignment(samples = peaksdata);
+ 
+ write.csv(peaktable, 
+     file = "/path/to/peaktable.csv", 
+     row.names = TRUE);
 .PP
 .SH SEE ALSO
 mzDeco

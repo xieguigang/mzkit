@@ -1,5 +1,5 @@
 .\" man page create by R# package system.
-.TH CHROMATOGRAM 1 2000-Jan "as.chromatogram" "as.chromatogram"
+.TH CHROMATOGRAM 1 2000-1月 "as.chromatogram" "as.chromatogram"
 .SH NAME
 as.chromatogram \- convert dataset to chromatography dataset
 .SH SYNOPSIS
@@ -27,6 +27,13 @@ convert dataset to chromatography dataset
 .PP
 .PP
 \fBenv\fB \fR\- -. 
+.PP
+.SH EXAMPLES
+.PP
+let rt = 1:5;
+ let intensity = [242 374 8923 74234 23];
+ 
+ print(as.chromatogram(rt, intensity));
 .PP
 .SH SEE ALSO
 chromatogram

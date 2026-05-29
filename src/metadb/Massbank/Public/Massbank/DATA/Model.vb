@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::383a616be156354e38d3f46855d127f3, mzkit\src\metadb\Massbank\Public\Massbank\DATA\Model.vb"
+﻿#Region "Microsoft.VisualBasic::7f0f5de5eff1edc1389f7c7b3d10fb5b, metadb\Massbank\Public\Massbank\DATA\Model.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 54
-    '    Code Lines: 42
-    ' Comment Lines: 0
-    '   Blank Lines: 12
-    '     File Size: 1.77 KB
+    '    Code Lines: 42 (77.78%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (22.22%)
+    '     File Size: 1.78 KB
 
 
     '     Class MASS_SPECTROMETRY
@@ -69,7 +71,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Massbank.DATA

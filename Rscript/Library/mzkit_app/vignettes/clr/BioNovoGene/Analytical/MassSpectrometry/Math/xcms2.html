@@ -22,29 +22,38 @@
 
         <h3>Description</h3>
 
-        <p>the peak table format table file model of xcms version 2</p>
+        <p>an ion peak ROI data object, the peak table format table file model of xcms version 2</p>
+
+<p>a <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/IMs1Scan.html">IMs1Scan</a> peak object</p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math
-export class xcms2 extends <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/DataSourceModel/DynamicPropertyBase`1.html">DynamicPropertyBase`1</a> {
+export class xcms2 extends <a href="/vignettes/clr/System/Double.html">iterates(Double)</a> {
+   # number of the peak groups that merged in this ion ROI
+   groups: integer;
    # the feature unique id
    ID: string;
+   into: double;
    # the ion m/z
    mz: double;
-   # the min of ion m/z value
-   mzmin: double;
    # the max of the ion m/z value
    mzmax: double;
-   # the rt value in max peak data point
-   rt: double;
-   rtmin: double;
-   rtmax: double;
+   # the min of ion m/z value
+   mzmin: double;
    # this feature has n sample data(value should be a positive number)
    npeaks: integer;
    Properties: list;
+   # the retention index value based on the rt transformation
+   RI: double;
+   RImax: double;
+   RImin: double;
+   # the rt value in max peak data point
+   rt: double;
+   rtmax: double;
+   rtmin: double;
 }
 </code>
         </pre>
@@ -52,7 +61,7 @@ export class xcms2 extends <a href="/vignettes/clr/Microsoft/VisualBasic/Compone
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/DataSourceModel/DynamicPropertyBase`1.html">DynamicPropertyBase`1</a> class: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/DataSourceModel/DynamicPropertyBase`1.html">DynamicPropertyBase`1</a></li>
+<li>this class extends from <a href="/vignettes/clr/System/Double.html">iterates(Double)</a> class: <a href="/vignettes/clr/System/Double.html">iterates(Double)</a></li>
 <li>use by <i>property</i> member <code>Properties</code>: list</li>
 </ol>
 

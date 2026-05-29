@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>find_xcms_ionPeaks</title>
+    <title>helper function for find ms1 peaks based on the given mz/rt tuple data</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -18,24 +18,45 @@
             </tr>
         </table>
 
-        <h2>find_xcms_ionPeaks</h2>
+        <h2>helper function for find ms1 peaks based on the given mz/rt tuple data</h2>
 
         <h3>Description</h3>
 
-        find_xcms_ionPeaks
+        
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>find_xcms_ionPeaks</strong>(<i>peaktable</i>, <i>mz</i>, <i>rt</i>,
     <i>mzdiff</i> = <span style='color: green;'>0.01</span>,
-    <i>rt.win</i> = <span style='color: green;'>90</span>);</code></pre>
+    <i>rt.win</i> = <span style='color: green;'>90</span>,
+    <i>find.RI</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
+<dt>peaktable</dt>
+<dd><p>the peaktable object, is a collection of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a> object. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a>]</p></dd>
+
+
+<dt>mz</dt>
+<dd><p>target ion m/z. [as double]</p></dd>
+
+
+<dt>rt</dt>
+<dd><p>target ion rt in seconds. [as double]</p></dd>
+
+
+<dt>mzdiff</dt>
+<dd><p>the mass tolerance error in data unit delta dalton, 
+ apply for matches between the peaktable precursor m/z and the given ion mz value. [as double]</p></dd>
+
+
+<dt>rt.win</dt>
+<dd><p>the rt window size for matches the rt. should be in data unit seconds. [as double]</p></dd>
+
         </table>
 
 
@@ -49,7 +70,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a></li></ul>
+        <p>data is re-ordered via the tolerance error</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

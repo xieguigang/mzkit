@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb401e477db5a58ec155d1f30b5013dd, mzkit\src\assembly\assembly\ASCII\MGF\MgfWriter.vb"
+﻿#Region "Microsoft.VisualBasic::29e38df4f9e1eec9ebc52cba1fd228da, assembly\assembly\ASCII\MGF\MgfWriter.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 161
-    '    Code Lines: 126
-    ' Comment Lines: 15
-    '   Blank Lines: 20
-    '     File Size: 6.05 KB
+    '   Total Lines: 195
+    '    Code Lines: 142 (72.82%)
+    ' Comment Lines: 30 (15.38%)
+    '    - Xml Docs: 90.00%
+    ' 
+    '   Blank Lines: 23 (11.79%)
+    '     File Size: 7.36 KB
 
 
     '     Module MgfWriter
     ' 
-    '         Function: ionTitle, (+2 Overloads) MgfIon, (+2 Overloads) SaveTo
+    '         Function: ionTitle, (+2 Overloads) MgfIon, SaveAsMgfIons, (+2 Overloads) SaveTo
     ' 
-    '         Sub: WriteAsciiMgf, writeIf
+    '         Sub: SaveTo, WriteAsciiMgf, writeIf
     ' 
     ' 
     ' /********************************************************************************/
@@ -65,6 +67,11 @@ Namespace ASCII.MGF
 
     Public Module MgfWriter
 
+        ''' <summary>
+        ''' cast the mzkit spectrum model as the mgf ion model
+        ''' </summary>
+        ''' <param name="matrix"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function MgfIon(matrix As PeakMs2) As Ions
@@ -142,6 +149,11 @@ Namespace ASCII.MGF
         ''' <param name="ion"></param>
         ''' <param name="out"></param>
         ''' <param name="relativeIntensity"></param>
+        ''' <remarks>
+        ''' this function supports write peak annotation metadata into the mgf file, 
+        ''' the msn peak <see cref="ms2.Annotation"/> data will be write beside the 
+        ''' [m/z, intensity] tuple line.
+        ''' </remarks>
         <Extension>
         Public Sub WriteAsciiMgf(ion As Ions, out As TextWriter, Optional relativeIntensity As Boolean = False)
             Call out.WriteLine("BEGIN IONS")
@@ -149,6 +161,7 @@ Namespace ASCII.MGF
             Call out.WriteLine("RTINSECONDS=" & ion.RtInSeconds)
             Call out.WriteLine($"PEPMASS={ion.PepMass.name} {ion.PepMass.text}")
             Call out.WriteLine("CHARGE=" & ion.Charge)
+            Call out.WriteLine("MSLEVEL=2")
 
             ' Optional
             Call out.writeIf("ACCESSION", ion.Accession)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff5d4a850732b77a2c993116b5ab991b, mzkit\src\metadb\Chemoinformatics\Formula\Models\Formula.vb"
+﻿#Region "Microsoft.VisualBasic::7541f7642f5b90ada6b9e56e7342f262, metadb\Chemoinformatics\Formula\Models\Formula.vb"
 
 ' Author:
 ' 
@@ -37,21 +37,25 @@
 
 ' Code Statistics:
 
-'   Total Lines: 203
-'    Code Lines: 124
-' Comment Lines: 52
-'   Blank Lines: 27
-'     File Size: 7.71 KB
+'   Total Lines: 456
+'    Code Lines: 251 (55.04%)
+' Comment Lines: 151 (33.11%)
+'    - Xml Docs: 98.01%
+' 
+'   Blank Lines: 54 (11.84%)
+'     File Size: 17.79 KB
 
 
 '     Class Formula
 ' 
 '         Properties: AllAtomElements, Counts, CountsByElement, Elements, EmpiricalFormula
-'                     ExactMass
+'                     Empty, ExactMass, H
 ' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: ToString
-'         Operators: (+3 Overloads) -, (+2 Overloads) *, /, (+3 Overloads) +
+'         Constructor: (+3 Overloads) Sub New
+'         Function: CanonicalFormula, CheckElement, CompareFormalCharge, EqualsTo, ToString
+'                   TryEvaluateExactMass
+'         Operators: (+4 Overloads) -, (+2 Overloads) *, /, (+4 Overloads) +, <>
+'                    =
 ' 
 ' 
 ' /********************************************************************************/
@@ -60,7 +64,9 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
+Imports std = System.Math
 
 Namespace Formula
 
@@ -116,6 +122,12 @@ Namespace Formula
             End Get
         End Property
 
+        Public Shared ReadOnly Property H As Formula
+            Get
+                Return FormulaScanner.ScanFormula("H")
+            End Get
+        End Property
+
         Public Shared ReadOnly Property AllAtomElements As IReadOnlyDictionary(Of String, Element) = Element.MemoryLoadElements
 
         ''' <summary>
@@ -158,7 +170,7 @@ Namespace Formula
         End Property
 
         ''' <summary>
-        ''' 
+        ''' constructor will make a value copy of the input element composition <paramref name="counts"/> vector.
         ''' </summary>
         ''' <param name="counts">
         ''' constructor will make a value copy of this element composition vector.
@@ -174,26 +186,72 @@ Namespace Formula
             End If
         End Sub
 
+        ''' <summary>
+        ''' make value copy of the given formula
+        ''' </summary>
+        ''' <param name="copy">make the copy of the element counts</param>
+        ''' <remarks>
+        ''' this constructor function will removes all elements with zero count.
+        ''' </remarks>
+        Sub New(copy As Formula)
+            CountsByElement = New Dictionary(Of String, Integer)
+            m_formula = copy.m_formula
+
+            For Each element As KeyValuePair(Of String, Integer) In copy.CountsByElement
+                If element.Value > 0 Then
+                    Call CountsByElement.Add(element.Key, element.Value)
+                End If
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' construct a new empty formula object
+        ''' </summary>
+        ''' <remarks>
+        ''' you can create a new formula string by adding new atom number 
+        ''' profiles into atom composition <see cref="CountsByElement"/>.
+        ''' </remarks>
         Sub New()
             CountsByElement = New Dictionary(Of String, Integer)
+            m_formula = ""
         End Sub
+
+        ''' <summary>
+        ''' Check of the specific element is inside current formula object?
+        ''' </summary>
+        ''' <param name="elementName"></param>
+        ''' <returns>
+        ''' this function returns true if the given element is existsed inside the
+        ''' formula composition list and also the corresponding element counts 
+        ''' is greater than zero. 
+        ''' </returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CheckElement(elementName As String) As Boolean
+            Return CountsByElement.ContainsKey(elementName) AndAlso CountsByElement(elementName) > 0
+        End Function
+
+        Public Function CanonicalFormula() As String
+            Return Canonical.BuildCanonicalFormula(CountsByElement)
+        End Function
 
         Private Function TryEvaluateExactMass() As Double
             Try
                 Return Aggregate element
-                   In CountsByElement
-                   Let isotopic As Double = AllAtomElements(element.Key).isotopic
-                   Let mass As Double = isotopic * element.Value
-                   Into Sum(mass)
+                    In CountsByElement
+                    Let isotopic As Double = AllAtomElements(element.Key).isotopic
+                    Let mass As Double = isotopic * element.Value
+                    Into Sum(mass)
             Catch ex As Exception
-                Dim notFound As String = CountsByElement _
-                    .Keys _
+                Dim notFound As String = CountsByElement.Keys _
                     .Where(Function(e)
                                Return Not AllAtomElements.ContainsKey(e)
                            End Function) _
                     .First
 
-                Call $"Formula element key: '{notFound}' (inside {ToString()}) is not a valid atom element!".Warning
+                If FormulaScanner.verbose Then
+                    Call $"Formula element key: '{notFound}' (inside {ToString()}) is not a valid atom element!".warning
+                End If
+
                 Return -1
             End Try
         End Function
@@ -246,6 +304,48 @@ Namespace Formula
         End Function
 
         ''' <summary>
+        ''' Check of the two formula has formal charge 
+        ''' </summary>
+        ''' <param name="fb"></param>
+        ''' <param name="deltaCharge"></param>
+        ''' <returns>
+        ''' does these two formula reference to a same compound but with different formal charge value?
+        ''' false means these formula reference to different compound object
+        ''' </returns>
+        Public Function CompareFormalCharge(fb As Formula, Optional ByRef deltaCharge As Integer = Nothing) As Boolean
+            If fb Is Nothing Then
+                Return False
+            ElseIf Me Is fb Then
+                Return True
+            End If
+
+            Dim unionKeys As String() = CountsByElement.Keys.Union(fb.CountsByElement.Keys).ToArray
+            Dim c1 = CountsByElement
+            Dim c2 = fb.CountsByElement
+
+            ' check for H, Na, Cl, K
+            Static check_ions As Index(Of String) = {"H", "Na", "Cl", "K"}
+
+            For Each atom As String In unionKeys
+                If c1.ContainsKey(atom) AndAlso c2.ContainsKey(atom) Then
+                    If c1(atom) <> c2(atom) Then
+                        If atom <> "H" Then
+                            Return False
+                        Else
+                            deltaCharge += std.Abs(c1(atom) - c2(atom))
+                        End If
+                    End If
+                ElseIf atom Like check_ions Then
+                    deltaCharge += std.Abs(c1.TryGetValue(atom) - c2.TryGetValue(atom))
+                Else
+                    Return False
+                End If
+            Next
+
+            Return True
+        End Function
+
+        ''' <summary>
         ''' check <paramref name="f1"/> equals to <paramref name="f2"/> via <see cref="EqualsTo(Formula, Boolean)"/> function.
         ''' </summary>
         ''' <param name="f1"></param>
@@ -263,6 +363,15 @@ Namespace Formula
             Return Not (f1 = f2)
         End Operator
 
+        ''' <summary>
+        ''' Multiply of the formula composition
+        ''' </summary>
+        ''' <param name="composition"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this function will create a new formula object
+        ''' </remarks>
         Public Shared Operator *(composition As Formula, n%) As Formula
             Dim newFormula$ = $"({composition}){n}"
             Dim newComposition = composition.CountsByElement _
@@ -274,19 +383,45 @@ Namespace Formula
             Return New Formula(newComposition, newFormula)
         End Operator
 
+        ''' <summary>
+        ''' Multiply of the formula composition
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="composition"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this function will create a new formula object
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator *(n%, composition As Formula) As Formula
             Return composition * n
         End Operator
 
+        ''' <summary>
+        ''' make union of the atom count number profile <see cref="CountsByElement"/> 
+        ''' between two given formula object.
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         Public Shared Operator +(a As Formula, b As Formula) As Formula
-            Dim newComposition = a.CountsByElement.Keys _
-                .JoinIterates(b.CountsByElement.Keys) _
-                .Distinct _
-                .ToDictionary(Function(e) e,
-                              Function(e)
-                                  Return a(e) + b(e)
-                              End Function)
+            Dim newComposition As Dictionary(Of String, Integer)
+
+            If a Is Nothing AndAlso b Is Nothing Then
+                Return New Formula
+            ElseIf a Is Nothing Then
+                newComposition = b.CountsByElement
+            ElseIf b Is Nothing Then
+                newComposition = a.CountsByElement
+            Else
+                newComposition = a.CountsByElement.Keys _
+                    .JoinIterates(b.CountsByElement.Keys) _
+                    .Distinct _
+                    .ToDictionary(Function(e) e,
+                                  Function(e)
+                                      Return a(e) + b(e)
+                                  End Function)
+            End If
 
             Return New Formula(newComposition)
         End Operator
@@ -296,7 +431,9 @@ Namespace Formula
         ''' </summary>
         ''' <param name="a"></param>
         ''' <param name="b"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' the generated formula may contains the negative count element
+        ''' </returns>
         Public Shared Operator -(a As Formula, b As Formula) As Formula
             Dim newComposition = a.CountsByElement.Keys _
                 .JoinIterates(b.CountsByElement.Keys) _
@@ -323,11 +460,26 @@ Namespace Formula
             Return mass - f.ExactMass
         End Operator
 
+        ''' <summary>
+        ''' Parse the formula string <paramref name="fs"/> and then substract the element counts from the given formula <paramref name="f"/>.
+        ''' </summary>
+        ''' <param name="f"></param>
+        ''' <param name="fs"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' the generated formula may contains the negative count element
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(f As Formula, fs As String) As Formula
             Return f - FormulaScanner.ScanFormula(fs)
         End Operator
 
+        ''' <summary>
+        ''' Parse the formula string <paramref name="fs"/> and then add the element counts into the given formula <paramref name="f"/>.
+        ''' </summary>
+        ''' <param name="f"></param>
+        ''' <param name="fs"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator +(f As Formula, fs As String) As Formula
             Return f + FormulaScanner.ScanFormula(fs)

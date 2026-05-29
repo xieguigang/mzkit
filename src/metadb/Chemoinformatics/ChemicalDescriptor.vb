@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::747c9d75361d901c1b661ff31b0012e2, mzkit\src\metadb\Chemoinformatics\ChemicalDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::44c4790d90303be74f42cc20f330b3ac, metadb\Chemoinformatics\ChemicalDescriptor.vb"
 
     ' Author:
     ' 
@@ -37,35 +37,42 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 191
-    '    Code Lines: 136
-    ' Comment Lines: 22
-    '   Blank Lines: 33
-    '     File Size: 6.62 KB
+    '   Total Lines: 254
+    '    Code Lines: 182 (71.65%)
+    ' Comment Lines: 32 (12.60%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 40 (15.75%)
+    '     File Size: 8.92 KB
 
 
+    ' Class Value
+    ' 
+    '     Properties: reference, value
+    ' 
     ' Class UnitValue
     ' 
-    '     Properties: unit, value
+    '     Properties: condition, unit
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: ToString
     ' 
     ' Class CCS
     ' 
-    '     Properties: reference, value
+    '     Properties: ion, reference, value
     ' 
     '     Function: ToString
     ' 
     ' Class ChemicalDescriptor
     ' 
-    '     Properties: AtomDefStereoCount, AtomUdefStereoCount, BondDefStereoCount, BondUdefStereoCount, CCS
-    '                 Complexity, ComponentCount, CovalentlyBonded, ExactMass, FormalCharge
-    '                 HeavyAtoms, HydrogenAcceptor, HydrogenDonors, IsotopicAtomCount, LogP
-    '                 MeltingPoint, RotatableBonds, schema, Solubility, TautoCount
-    '                 TopologicalPolarSurfaceArea, XLogP3, XLogP3_AA
+    '     Properties: AtomDefStereoCount, AtomUdefStereoCount, BoilingPoint, BondDefStereoCount, BondUdefStereoCount
+    '                 CCS, Color, Complexity, ComponentCount, CovalentlyBonded
+    '                 Density, ExactMass, FlashPoint, FormalCharge, HeavyAtoms
+    '                 HydrogenAcceptor, HydrogenDonors, IsotopicAtomCount, LogP, MeltingPoint
+    '                 Odor, RotatableBonds, schema, Solubility, Taste
+    '                 TautoCount, TopologicalPolarSurfaceArea, VaporPressure, XLogP3, XLogP3_AA
     ' 
-    '     Constructor: (+2 Overloads) Sub New
+    '     Constructor: (+3 Overloads) Sub New
     '     Function: FromBytes, GetBytesBuffer, GetEnumerator, getOne, TryParseDouble
     '               TryParseInteger
     ' 
@@ -76,7 +83,11 @@
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
+''' <summary>
+''' value with reference source
+''' </summary>
 Public Class Value
 
     Public Property value As Double
@@ -84,8 +95,15 @@ Public Class Value
 
 End Class
 
+''' <summary>
+''' value with data unit tagged
+''' </summary>
 Public Class UnitValue : Inherits Value
 
+    ''' <summary>
+    ''' the data unit of the <see cref="value"/>.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property unit As String
     Public Property condition As String
 
@@ -121,7 +139,6 @@ Public Class ChemicalDescriptor
     ''' <returns></returns>
     Public Property XLogP3 As Double
     Public Property XLogP3_AA As Double
-
     ''' <summary>
     ''' Hydrogen Bond Donor Count
     ''' </summary>
@@ -142,7 +159,6 @@ Public Class ChemicalDescriptor
     Public Property HeavyAtoms As Integer
     Public Property FormalCharge As Integer
     Public Property Complexity As Integer
-
     Public Property IsotopicAtomCount As Integer
     Public Property AtomDefStereoCount As Integer
     Public Property AtomUdefStereoCount As Integer
@@ -151,6 +167,9 @@ Public Class ChemicalDescriptor
     Public Property ComponentCount As Integer
     Public Property TautoCount As Integer
     Public Property CovalentlyBonded As Integer
+
+#Region ""
+
     Public Property MeltingPoint As UnitValue()
     Public Property Solubility As UnitValue()
     Public Property BoilingPoint As UnitValue()
@@ -161,6 +180,10 @@ Public Class ChemicalDescriptor
     Public Property LogP As Value()
     Public Property CCS As CCS()
     Public Property Odor As UnitValue()
+    Public Property Taste As UnitValue()
+    Public Property Color As UnitValue()
+
+#End Region
 
     ''' <summary>
     ''' All of the property reflection info of <see cref="ChemicalDescriptor"/> object.
@@ -170,6 +193,39 @@ Public Class ChemicalDescriptor
         .Values _
         .OrderBy(Function(p) p.Name) _
         .ToArray
+
+    Sub New(clone As ChemicalDescriptor)
+        MeltingPoint = clone.MeltingPoint.SafeQuery.ToArray
+        Solubility = clone.Solubility.SafeQuery.ToArray
+        BoilingPoint = clone.BoilingPoint.SafeQuery.ToArray
+        FlashPoint = clone.FlashPoint.SafeQuery.ToArray
+        Density = clone.Density.SafeQuery.ToArray
+        VaporPressure = clone.VaporPressure.SafeQuery.ToArray
+        LogP = clone.LogP.SafeQuery.ToArray
+        CCS = clone.CCS.SafeQuery.ToArray
+        Odor = clone.Odor.SafeQuery.ToArray
+        Taste = clone.Taste.SafeQuery.ToArray
+        Color = clone.Color.SafeQuery.ToArray
+
+        XLogP3 = clone.XLogP3
+        XLogP3_AA = clone.XLogP3_AA
+        HydrogenDonors = clone.HydrogenDonors
+        HydrogenAcceptor = clone.HydrogenAcceptor
+        RotatableBonds = clone.RotatableBonds
+        ExactMass = clone.ExactMass
+        TopologicalPolarSurfaceArea = clone.TopologicalPolarSurfaceArea
+        HeavyAtoms = clone.HeavyAtoms
+        FormalCharge = clone.FormalCharge
+        Complexity = clone.Complexity
+        IsotopicAtomCount = clone.IsotopicAtomCount
+        AtomDefStereoCount = clone.AtomDefStereoCount
+        AtomUdefStereoCount = clone.AtomUdefStereoCount
+        BondDefStereoCount = clone.BondDefStereoCount
+        BondUdefStereoCount = clone.BondUdefStereoCount
+        ComponentCount = clone.ComponentCount
+        TautoCount = clone.TautoCount
+        CovalentlyBonded = clone.CovalentlyBonded
+    End Sub
 
     Sub New(data As Dictionary(Of String, String()))
         Dim read = getOne(data)

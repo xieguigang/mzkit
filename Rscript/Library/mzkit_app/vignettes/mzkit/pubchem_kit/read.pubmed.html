@@ -28,7 +28,8 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>read.pubmed</strong>(<i>file</i>,
-    <i>lazy</i> = <span style='color: blue !important;'>TRUE</span>);</code></pre>
+    <i>lazy</i> = <span style='color: blue !important;'>TRUE</span>,
+    <i>parse.json</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -36,16 +37,16 @@
         <table>
             
 <dt>file</dt>
-<dd><p><p>A collection of the pubmed database ascii text file</p></p></dd>
+<dd><p>A collection of the pubmed database ascii text file. [as string]</p></dd>
 
 
 <dt>lazy</dt>
-<dd><p><p>just create a lazy loader instead of read all <br />
- content into memory at once?</p></p></dd>
+<dd><p>just create a lazy loader instead of read all 
+ content into memory at once?. [as boolean]</p></dd>
 
 
 <dt>env</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
 
         </table>
 
@@ -60,7 +61,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/PubMed.html">PubMed</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/PubMed.html">PubMed</a></li></ul>
+        this function returns data object of type <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/PubMed/PubMedTextTable.html">PubMedTextTable</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/PubMed/PubMedTextTable.html">PubMedTextTable</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::892d0e2f3344f73e04a28ffd0f53a770, mzkit\Rscript\Library\mzkit\assembly\Assembly.vb"
+﻿#Region "Microsoft.VisualBasic::ed5f28c9f67e44a930296ef7dc0d8c02, Rscript\Library\mzkit_app\src\mzkit\assembly\Assembly.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 554
-    '    Code Lines: 420
-    ' Comment Lines: 70
-    '   Blank Lines: 64
-    '     File Size: 23.31 KB
+    '   Total Lines: 620
+    '    Code Lines: 450 (72.58%)
+    ' Comment Lines: 101 (16.29%)
+    '    - Xml Docs: 97.03%
+    ' 
+    '   Blank Lines: 69 (11.13%)
+    '     File Size: 26.85 KB
 
 
     ' Module Assembly
@@ -85,6 +87,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports mzXMLAssembly = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' The mass spectrum assembly file read/write library module.
@@ -109,10 +112,10 @@ Module Assembly
 
     <RInitialize>
     Sub Main()
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(Ions()), AddressOf summaryIons)
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(PeakMs2), AddressOf MatrixDataFrame)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(Ions()), AddressOf summaryIons)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(PeakMs2), AddressOf MatrixDataFrame)
 
-        Call Internal.ConsolePrinter.AttachConsoleFormatter(Of PeakMs2)(AddressOf printPeak)
+        Call RInternal.ConsolePrinter.AttachConsoleFormatter(Of PeakMs2)(AddressOf printPeak)
     End Sub
 
     Private Function MatrixDataFrame(peak As PeakMs2, args As Rlist, env As Environment) As dataframe
@@ -131,14 +134,14 @@ Module Assembly
         Dim xcms_id As String = $"M{CInt(peak.mz)}T{CInt(peak.rt) + 1}"
         Dim top6 As Double() = peak.mzInto _
             .OrderByDescending(Function(m) m.intensity) _
-            .Take(6) _
+            .Take(5) _
             .Select(Function(m) m.mz) _
             .ToArray
         Dim top6Str As String = top6 _
-            .Select(Function(d) d.ToString("F4")) _
-            .JoinBy(vbTab)
+            .Select(Function(d) d.ToString("F3")) _
+            .JoinBy(", ")
 
-        Return $"[{xcms_id}, {peak.intensity}] {peak.activation}-{peak.collisionEnergy}eV,{vbTab}{peak.fragments} fragments: {top6Str}..."
+        Return $"[{xcms_id}, {peak.mz.ToString("F4")}@{DateTimeHelper.ReadableElapsedTime(peak.rt * 1000)} intensity:{peak.intensity.ToString("G2")}] {peak.activation}-{peak.collisionEnergy}eV; MS/MS top 5: {top6Str}..."
     End Function
 
     ''' <summary>
@@ -289,7 +292,7 @@ Module Assembly
     <RApiReturn(GetType(XmlSeek))>
     Public Function openXmlSeeks(file As String, Optional env As Environment = Nothing) As Object
         If Not file.FileExists Then
-            Return Internal.debug.stop({
+            Return RInternal.debug.stop({
                 $"the given file '{file}' is not found on your file system!",
                 $"file: {file}"
             }, env)
@@ -338,10 +341,21 @@ Module Assembly
                                  Optional relativeInto As Boolean = False,
                                  Optional env As Environment = Nothing) As Object
         If ions Is Nothing Then
-            Return Internal.debug.stop("the required ions data can not be nothing!", env)
+            Return RInternal.debug.stop("the required ions data can not be nothing!", env)
         ElseIf ions.GetType.IsArray AndAlso DirectCast(ions, Array).Length = 0 Then
             env.AddMessage($"write empty mgf data to file '{file}', as the given ions collection is empty...", MSG_TYPES.WRN)
             Return True
+        End If
+
+        If TypeOf ions Is vector Then
+            ions = DirectCast(ions, vector).data
+        End If
+        If ions.GetType.IsArray Then
+            ions = TryCastGenericArray(ions, env)
+
+            If TypeOf ions Is Message Then
+                Return ions
+            End If
         End If
 
         If ions.GetType() Is GetType(pipeline) Then
@@ -391,7 +405,7 @@ Module Assembly
                     .WriteAsciiMgf(mgfWriter, relativeInto)
             End Using
         Else
-            Return Internal.debug.stop(Message.InCompatibleType(GetType(PeakMs2), ions.GetType, env), env)
+            Return RInternal.debug.stop(Message.InCompatibleType(GetType(PeakMs2), ions.GetType, env), env)
         End If
 
         Return True
@@ -446,7 +460,7 @@ Module Assembly
         Dim type As Type = GetFileType(file)
 
         If type Is Nothing Then
-            Return Internal.debug.stop({"the given file is not exists or file format not supported!", "file: " & file}, env)
+            Return RInternal.debug.stop({"the given file is not exists or file format not supported!", "file: " & file}, env)
         ElseIf type Is GetType(indexedmzML) Then
             raw = file.mzMLScanLoader(relativeInto, onlyMs2)
         Else
@@ -472,7 +486,7 @@ Module Assembly
         Dim type As Type = GetFileType(file)
 
         If type Is Nothing Then
-            Return Internal.debug.stop({"the given file is not exists or file format not supported!", "file: " & file}, env)
+            Return RInternal.debug.stop({"the given file is not exists or file format not supported!", "file: " & file}, env)
         ElseIf type Is GetType(indexedmzML) Then
             Return indexedmzML.LoadScans(file).DoCall(AddressOf pipeline.CreateFromPopulator)
         Else
@@ -490,6 +504,7 @@ Module Assembly
     <RApiReturn(GetType(Integer))>
     Public Function ionMode(scans As Object, Optional env As Environment = Nothing) As Object
         Dim polar As New List(Of Integer)
+        Dim verbose As Boolean = env.verboseOption
 
         If TypeOf scans Is BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack Then
             Dim ms = DirectCast(scans, BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack).MS
@@ -507,13 +522,13 @@ Module Assembly
                 Dim reader As mzXMLScan = MsDataReader(Of mzXMLAssembly.scan).ScanProvider()
 
                 For Each scanVal As mzXMLAssembly.scan In scanPip.populates(Of mzXMLAssembly.scan)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
-                    Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
+                    Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal), verbose:=verbose))
                 Next
             ElseIf scanPip.elementType Like GetType(spectrum) Then
                 Dim reader As mzMLScan = MsDataReader(Of spectrum).ScanProvider()
 
                 For Each scanVal As spectrum In scanPip.populates(Of spectrum)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
-                    Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
+                    Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal), verbose:=verbose))
                 Next
             Else
                 Return Message.InCompatibleType(GetType(mzXMLAssembly.scan), scanPip.elementType, env)

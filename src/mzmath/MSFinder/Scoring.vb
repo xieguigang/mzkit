@@ -1,10 +1,69 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+﻿#Region "Microsoft.VisualBasic::0748b31af2bc0153d023807e0257e69e, mzmath\MSFinder\Scoring.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 95
+    '    Code Lines: 75 (78.95%)
+    ' Comment Lines: 4 (4.21%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 16 (16.84%)
+    '     File Size: 4.24 KB
+
+
+    ' Class Scoring
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: DatabaseScore, FragmentHitsScore, IsotopicDifferenceScore, MassDifferenceScore, (+2 Overloads) NeutralLossScore
+    '               TotalScore
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports std = System.Math
 
 Public NotInheritable Class Scoring
+
     Private Sub New()
     End Sub
 
@@ -20,7 +79,7 @@ Public NotInheritable Class Scoring
         Dim devi = 0.0
         If peaklist.Count = 0 Then Return 0
 
-        Dim monoisotopicCount = peaklist.Where(Function(n) Equals(n.Annotation, "M")).Count
+        Dim monoisotopicCount = peaklist.Where(Function(n) n.Annotation = "M").Count
 
         If peaklist IsNot Nothing AndAlso peaklist.Count <> 0 Then
             Dim totalDiff As Double = 0
@@ -71,11 +130,10 @@ Public NotInheritable Class Scoring
         Return hitsDouble / countDouble
     End Function
 
-
     Public Shared Function DatabaseScore(recordNum As Integer, recordName As String) As Double
         Dim lDatabaseScore = 0.0
         Dim isMineIncluded = False
-        If Not Equals(recordName, Nothing) AndAlso recordName.Contains("MINE") Then isMineIncluded = True
+        If recordName IsNot Nothing AndAlso recordName.Contains("MINE") Then isMineIncluded = True
 
         Dim recordNumber = recordNum
         If isMineIncluded Then recordNumber -= 1

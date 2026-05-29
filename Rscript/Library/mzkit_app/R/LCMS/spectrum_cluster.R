@@ -4,6 +4,10 @@ imports "MoleculeNetworking" from "mzDIA";
 #' 
 #' @param ions a collection of the peakms2 dataset
 #' @param top_n this function returns top n spectrum data
+#' @param mzdiff the mass tolerance error for make spectrum centroid and 
+#'    matched of the ms2 spectrum fragments.
+#' @param intocutoff the relative intensity percentage value for removes the noise fragments.
+#' @param equals the spectrum similarity cutoff value for check of the two spectrum is equals or not.
 #' 
 #' @return a collection of peakms2 data object, number of
 #'    the spectrum is specificed via the ``top_n`` parameter.

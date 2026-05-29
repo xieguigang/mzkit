@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd718b29d7fb5b29679b75c88e6f5852, mzkit\src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\ScanOfTPA.vb"
+﻿#Region "Microsoft.VisualBasic::e8a4453ef6f85229c142b2ea08af5557, mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\ScanOfTPA.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 73
-    '    Code Lines: 48
-    ' Comment Lines: 12
-    '   Blank Lines: 13
-    '     File Size: 3.02 KB
+    '   Total Lines: 83
+    '    Code Lines: 56 (67.47%)
+    ' Comment Lines: 12 (14.46%)
+    '    - Xml Docs: 50.00%
+    ' 
+    '   Blank Lines: 15 (18.07%)
+    '     File Size: 3.52 KB
 
 
     '     Module ScanOfTPA
     ' 
-    '         Function: GetFactor, ScanTPA
+    '         Function: GetFactor, (+2 Overloads) ScanTPA
     ' 
     ' 
     ' /********************************************************************************/
@@ -58,7 +60,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.Math
+Imports std = System.Math
 
 Namespace MRM
 
@@ -71,7 +74,7 @@ Namespace MRM
         ''' <param name="ionpairs"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function ScanTPA(raw$, ionpairs As IonPair(), rtshifts As Dictionary(Of String, Double), args As MRMArguments) As IEnumerable(Of IonTPA)
+        Public Function ScanTPA(raw$, ionpairs As IonPair(), ByRef rtshifts As Dictionary(Of String, Double), args As MRMArguments) As IEnumerable(Of IonTPA)
             ' 从原始文件之中读取出所有指定的离子对数据
             Dim ionData As IonChromatogram() = IonPair.GetIsomerism(ionpairs, args.tolerance) _
                 .ExtractIonData(
@@ -80,14 +83,20 @@ Namespace MRM
                     tolerance:=args.tolerance
                 )
 
+            Return ionData.ScanTPA(rtshifts, args)
+        End Function
+
+        <Extension>
+        Public Iterator Function ScanTPA(ionData As IEnumerable(Of IonChromatogram), rtshifts As Dictionary(Of String, Double), argList As IArgumentSet) As IEnumerable(Of IonTPA)
             If rtshifts Is Nothing Then
                 rtshifts = New Dictionary(Of String, Double)
             End If
 
             For Each ion As IonChromatogram In ionData
                 Dim shiftVal As Double = rtshifts.TryGetValue(ion.ion.target.accession)
+                Dim args As MRMArguments = argList.GetArgument(ion.ion.target.accession)
 
-                If stdNum.Abs(shiftVal) > args.timeWindowSize Then
+                If std.Abs(shiftVal) > args.timeWindowSize Then
                     ' required rt calibration
                     ion.chromatogram = ion.chromatogram _
                         .Select(Function(tick)
@@ -99,6 +108,10 @@ Namespace MRM
                 ' 进行最大峰的查找，然后计算出净峰面积，用于回归建模
                 Dim factorVal As Double = args.TPAFactors.GetFactor(ion.name)
                 Dim result As IonTPA = ion.ionTPA(factorVal, args)
+
+                result.source = ion.source
+                result.refer_rt = If(ion.ion.target.rt, 0)
+                result.sn = SignalProcessing.SNRatio(result.area, result.baseline)
 
                 Yield result
             Next

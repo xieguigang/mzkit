@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16452bc74559931395666b8be6e1db32, mzkit\src\assembly\assembly\MarkupData\imzML\Writer\DataWriter.vb"
+﻿#Region "Microsoft.VisualBasic::16452bc74559931395666b8be6e1db32, assembly\assembly\MarkupData\imzML\Writer\DataWriter.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 41
-    '    Code Lines: 31
-    ' Comment Lines: 3
-    '   Blank Lines: 7
+    '    Code Lines: 31 (75.61%)
+    ' Comment Lines: 3 (7.32%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (17.07%)
     '     File Size: 1.28 KB
 
 
@@ -56,6 +58,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.Data.IO
 
 Namespace MarkupData.imzML
@@ -66,14 +69,15 @@ Namespace MarkupData.imzML
     Module DataWriter
 
         <Extension>
-        Public Function WriteMzPack(mzpack As ScanMS1, ibd As BinaryDataWriter) As ScanData
+        Public Function WriteMzPack(mzpack As ScanMS1, ibd As BinaryDataWriter, ionMode As IonModes) As ScanData
             Dim pixel As Point = mzpack.GetMSIPixel
             Dim scan As New ScanData With {
                 .x = pixel.X,
                 .y = pixel.Y,
                 .totalIon = mzpack.into.Sum,
                 .MzPtr = WriteArray(mzpack.mz, ibd),
-                .IntPtr = WriteArray(mzpack.into, ibd)
+                .IntPtr = WriteArray(mzpack.into, ibd),
+                .polarity = ionMode
             }
 
             Return scan

@@ -1,5 +1,5 @@
 .\" man page create by R# package system.
-.TH MSI 1 2000-Jan "correction" "correction"
+.TH MSI 1 2000-1月 "correction" "correction"
 .SH NAME
 correction \- calculate the X axis scale
 .SH SYNOPSIS
@@ -29,6 +29,12 @@ A x axis correction function wrapper, the clr object type of this
  1. for has ms2 data inside your ms-imaging rawdata, a @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging.ScanMs2Correction\fR object should be used,
  2. for has no ms2 data, a @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging.ScanTimeCorrection\fR object is used 
     for run x axis correction based on the average rt diff.
+.PP
+.SH EXAMPLES
+.PP
+# create x-axis correction object based on the row scans data
+ let cor = MSI::correction(totalTime = 120, pixels = 300, 
+      hasMs2 = FALSE);
 .PP
 .SH SEE ALSO
 MSI

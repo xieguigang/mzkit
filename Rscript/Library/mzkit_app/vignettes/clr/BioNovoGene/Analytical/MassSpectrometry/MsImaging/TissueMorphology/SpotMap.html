@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>A spot of spatial transcriptomics mapping to a <br />
+        <p>A spot of spatial transcriptomics mapping to a 
  collection of spatial metabolism pixels</p>
 
         <h3>Declare</h3>        
@@ -35,8 +35,12 @@ export class SpotMap {
    barcode: string;
    # tissue flag
    flag: integer;
+   # The optional heatmap scale data
+   heatmap: <a href="/vignettes/clr/System/Nullable`1.html">Nullable`1</a>;
    # the physical xy
    physicalXY: integer;
+   SMX: integer;
+   SMY: integer;
    # the original raw spot xy
    spotXY: integer;
    # pixel x of the spatial transcriptomics spot.
@@ -45,19 +49,17 @@ export class SpotMap {
    # pixel y of the spatial transcriptomics spot.
    #  (after spatial transform)
    STY: double;
-   SMX: integer;
-   SMY: integer;
    # tissue tag data of the SMdata
    TissueMorphology: string;
-   # The optional heatmap scale data
-   heatmap: double;
 }
 </code>
         </pre>
 
         <h3>.NET clr type reference tree</h3>
 
-        this clr type has no other .net clr type reference.
+        <ol>
+<li>use by <i>property</i> member <code>heatmap</code>: <a href="/vignettes/clr/System/Nullable`1.html">Nullable`1</a></li>
+</ol>
 
 
         <hr />

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0e53af5314e8eba94919001f49f8f52, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Models\PugView.vb"
+﻿#Region "Microsoft.VisualBasic::ba9de90281d6dd1e4cc638cb534a7591, metadb\Massbank\Public\NCBI\PubChem\Web\Models\PugView.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 22
-    '    Code Lines: 16
-    ' Comment Lines: 0
-    '   Blank Lines: 6
-    '     File Size: 695 B
+    '   Total Lines: 29
+    '    Code Lines: 16 (55.17%)
+    ' Comment Lines: 7 (24.14%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (20.69%)
+    '     File Size: 948 B
 
 
     '     Class PugViewRecord
@@ -70,6 +72,10 @@ Namespace NCBI.PubChem
     Public Class PugViewRecord : Inherits InformationSection
 
         Public Property RecordType As String
+        ''' <summary>
+        ''' the pubchem cid
+        ''' </summary>
+        ''' <returns></returns>
         Public Property RecordNumber As String
         Public Property RecordTitle As String
 

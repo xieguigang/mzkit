@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a5a6220b5e1c32f99585f9738c19b74, mzkit\src\mzmath\mz_deco\PeakAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::75ca11d2aef1a9dea5778288f0523521, mzmath\mz_deco\PeakAlignment.vb"
 
     ' Author:
     ' 
@@ -37,26 +37,35 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 55
-    ' Comment Lines: 6
-    '   Blank Lines: 6
-    '     File Size: 2.78 KB
+    '   Total Lines: 190
+    '    Code Lines: 145 (76.32%)
+    ' Comment Lines: 22 (11.58%)
+    '    - Xml Docs: 81.82%
+    ' 
+    '   Blank Lines: 23 (12.11%)
+    '     File Size: 8.14 KB
 
 
     ' Module PeakAlignment
     ' 
-    '     Function: CreateMatrix
+    '     Function: CowAlignment, CreatePeak, PickReferenceSampleMaxIntensity, RIAlignment
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.SignalProcessing.COW
+Imports Microsoft.VisualBasic.Math.Statistics
+Imports Microsoft.VisualBasic.Scripting.Expressions
+Imports std = System.Math
 
 ''' <summary>
 ''' 峰对齐操作主要是针对保留时间漂移进行矫正
@@ -97,12 +106,102 @@ Public Module PeakAlignment
     End Function
 
     ''' <summary>
+    ''' create peaktable matrix by retention index alignment.
+    ''' </summary>
+    ''' <param name="samples"></param>
+    ''' <param name="top_ion">
+    ''' use the top intensity/area ion its m/z value as peak ion m/z.
+    ''' </param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function RIAlignment(samples As IEnumerable(Of NamedCollection(Of PeakFeature)),
+                                         Optional rt_shift As List(Of RtShift) = Nothing,
+                                         Optional mzdiff As Double = 0.005,
+                                         Optional ri_offset As Double = 1,
+                                         Optional top_ion As Boolean = False,
+                                         Optional aggregate As Aggregates = Aggregates.Sum) As IEnumerable(Of xcms2)
+        Dim allData = samples.ToArray
+        ' make data bins by RI
+        Dim RI_rawdata = allData.IteratesAll.GroupBy(Function(i) i.RI, offsets:=ri_offset).ToArray
+        Dim unique_id As New Dictionary(Of String, Counter)
+        Dim refer As String = allData.PickReferenceSampleMaxIntensity.name
+        Dim mz_bin As New GroupBins(Of PeakFeature)(Function(i) i.mz, Function(a, b) std.Abs(a - b) < mzdiff, left_margin_bin:=True)
+        Dim ion_mz As Double
+        Dim f As Func(Of Double, Double, Double) = aggregate.GetAggregateFunction2
+
+        If rt_shift Is Nothing Then
+            rt_shift = New List(Of RtShift)
+        End If
+
+        For Each ri_point As NamedCollection(Of PeakFeature) In Tqdm.Wrap(RI_rawdata, wrap_console:=App.EnableTqdm)
+            ' make data bins by mz
+            ' where the given data all has the same RI value
+            Dim mz_group As NamedCollection(Of PeakFeature)() = mz_bin _
+                .GroupBy(ri_point) _
+                .ToArray
+
+            For Each peak As NamedCollection(Of PeakFeature) In mz_group
+                Dim ri As Double = peak.Average(Function(a) a.RI)
+                Dim mzri As String = $"M{CInt(Val(peak.name))}RI{CInt(ri)}"
+                Dim refer_rt As PeakFeature = peak.Where(Function(p) p.rawfile = refer).FirstOrDefault
+                Dim mz_set = peak.Select(Function(a) a.mz).ToArray
+
+                If top_ion Then
+                    ion_mz = peak _
+                       .OrderByDescending(Function(i) i.area) _
+                       .First.mz
+                Else
+                    ion_mz = mz_set.TabulateMode(topBin:=True, bags:=10)
+                End If
+
+                Dim peak1 As New xcms2 With {
+                    .ID = mzri,
+                    .mz = ion_mz,
+                    .RI = ri,
+                    .rt = peak.OrderByDescending(Function(pi) pi.maxInto).First.rt,
+                    .mzmin = peak.Select(Function(pi) pi.mz).Min,
+                    .mzmax = peak.Select(Function(pi) pi.mz).Max,
+                    .rtmax = peak.Select(Function(pi) pi.rt).Max,
+                    .rtmin = peak.Select(Function(pi) pi.rt).Min,
+                    .RImin = peak.Select(Function(pi) pi.RI).Min,
+                    .RImax = peak.Select(Function(pi) pi.RI).Max,
+                    .groups = peak.Length
+                }
+
+                If refer_rt Is Nothing Then
+                    refer_rt = peak _
+                        .OrderByDescending(Function(p) p.maxInto) _
+                        .First
+                End If
+
+                For Each sample As PeakFeature In peak
+                    If peak1.HasProperty(sample.rawfile) Then
+                        peak1(sample.rawfile) = f(peak1(sample.rawfile), sample.area)
+                    Else
+                        peak1(sample.rawfile) = sample.area
+                    End If
+
+                    rt_shift.Add(New RtShift() With {
+                        .refer_rt = refer_rt.rt,
+                        .RI = ri,
+                        .sample = sample.rawfile,
+                        .sample_rt = sample.rt,
+                        .xcms_id = mzri
+                    })
+                Next
+
+                Yield peak1
+            Next
+        Next
+    End Function
+
+    ''' <summary>
     ''' Make peak alignment via COW alignment algorithm.
     ''' </summary>
     ''' <param name="samples">the peak collection for each sample file, a sample </param>
     ''' <returns></returns>
     <Extension>
-    Public Function CreateMatrix(samples As IEnumerable(Of NamedCollection(Of PeakFeature))) As IEnumerable(Of xcms2)
+    Public Function CowAlignment(samples As IEnumerable(Of NamedCollection(Of PeakFeature))) As IEnumerable(Of xcms2)
         Dim cow As New CowAlignment(Of PeakFeature)(AddressOf CreatePeak)
         Dim rawdata = samples.ToArray
         Dim refer = rawdata.PickReferenceSampleMaxIntensity

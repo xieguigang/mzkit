@@ -1,66 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::6ff59cf49dd40998018f362bbc1bafab, mzkit\src\assembly\Comprehensive\MsImaging\MergeSliders.vb"
+﻿#Region "Microsoft.VisualBasic::29ae9be23a51314923f4165dc4f1a58d, assembly\Comprehensive\MsImaging\MergeSliders\MergeSliders.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 199
-'    Code Lines: 135
-' Comment Lines: 43
-'   Blank Lines: 21
-'     File Size: 7.55 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module MergeSliders
-' 
-'     Function: generateNormScan, JoinMSISamples
-' 
-'     Sub: JoinOneSample
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 170
+    '    Code Lines: 116 (68.24%)
+    ' Comment Lines: 34 (20.00%)
+    '    - Xml Docs: 76.47%
+    ' 
+    '   Blank Lines: 20 (11.76%)
+    '     File Size: 6.40 KB
+
+
+    ' Module MergeSliders
+    ' 
+    '     Function: generateNormScan, JoinMSISamples, PullPolygons
+    ' 
+    '     Sub: MoveLayout
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
+Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module MergeSliders
 
@@ -162,6 +164,16 @@ Public Module MergeSliders
         }
     End Function
 
+    Public Sub MoveLayout(<Out> ByRef x As Integer,
+                          <Out> ByRef y As Integer,
+                          minX As Integer,
+                          left As Integer,
+                          deltaY As Integer)
+
+        x = x - minX + left
+        y = deltaY + y
+    End Sub
+
     ''' <summary>
     ''' adjust of the sample spot location
     ''' </summary>
@@ -170,37 +182,34 @@ Public Module MergeSliders
     ''' <param name="left"></param>
     ''' <param name="deltaY"></param>
     ''' <param name="sampleid"></param>
-    ''' <param name="norm"></param>
     ''' <returns></returns>
     <Extension>
     Friend Function generateNormScan(scan As ScanMS1,
                                      minX As Integer,
                                      left As Integer,
                                      deltaY As Double,
-                                     sampleid As String,
-                                     norm As Boolean) As ScanMS1
+                                     sampleid As String) As ScanMS1
 
         Dim meta As New Dictionary(Of String, String)(scan.meta)
         Dim xy = scan.GetMSIPixel
-        Dim x As Integer = xy.X - minX + left
-        Dim y As Integer = deltaY + xy.Y
+        Dim x As Integer = xy.X
+        Dim y As Integer = xy.Y
         ' 20221013 try to avoid the duplicated scan id
         ' confliction in data merge by adding a prefix
         ' of the source tag
         Dim scan_id As String = $"{sampleid} - {scan.scan_id}"
-        'Dim normInto As New Vector(scan.into)
 
-        'If norm Then
-        '    normInto = (normInto / normInto.Sum) * (10 ^ 8)
-        'End If
+        Call MoveLayout(x, y, minX, left, deltaY)
 
         meta!x = x
         meta!y = y
         meta.Remove("X")
         meta.Remove("Y")
 
-        If Not meta.ContainsKey("sample") Then
-            meta.Add("sample", sampleid)
+        If Not meta.ContainsKey(mzStreamWriter.SampleMetaName) Then
+            Call meta.Add(mzStreamWriter.SampleMetaName, sampleid)
+        ElseIf meta(mzStreamWriter.SampleMetaName).StringEmpty Then
+            meta(mzStreamWriter.SampleMetaName) = sampleid
         End If
 
         ' the location of current pixel must be

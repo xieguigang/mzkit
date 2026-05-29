@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p><br /> profile and centroid in Mass Spectrometry?<br /> <br /> 1. Profile means the continuous wave form in a mass spectrum.<br />   + Number of data points Is large.<br /> 2. Centroid means the peaks in a profile data Is changed to bars.<br />   + location of the bar Is center of the profile peak.<br />   + height of the bar Is area of the profile peak.</p>
+        <p><br /> profile and centroid in Mass Spectrometry?<br /> <br /> 1. Profile means the continuous wave form in a mass spectrum.<br /> <br />   + Number of data points Is large.<br />   <br /> 2. Centroid means the peaks in a profile data Is changed to bars.<br /> <br />   + location of the bar Is center of the profile peak.<br />   + height of the bar Is area of the profile peak.</p>
 
         <h3>Usage</h3>
 
@@ -30,23 +30,26 @@
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>centroid</strong>(<i>ions</i>,
     <i>tolerance</i> = <span style='color: brown;'><strong>"da:0.1"</strong></span>,
     <i>intoCutoff</i> = <span style='color: green;'>0.05</span>,
-    <i>parallel</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+    <i>parallel</i> = <span style='color: blue !important;'>FALSE</span>,
+    <i>aggregate</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>ions</dt>
-<dd><p><p>value of this parameter could be </p>
+<dt>aggregate</dt>
+<dd><p>default is get the max intensity value. [as <a href="/vignettes/clr/SMRUCC/Rsharp/Development/Components/AggregateFunction.html">AggregateFunction</a>]</p></dd>
 
-<ul>
-<li>a collection of peakMs2 data </li>
-<li>a library matrix data </li>
-<li>or a dataframe object which should contains at least <code>mz</code> and <code>intensity</code> columns.</li>
-<li>or just a m/z vector</li>
-<li>also could be a mzpack data object</li>
-</ul></p></dd>
+
+<dt>ions</dt>
+<dd><p>value of this parameter could be 
+ 
+ + a collection of peakMs2 data 
+ + a library matrix data 
+ + or a dataframe object which should contains at least <code>mz</code> and <code>intensity</code> columns.
+ + or just a m/z vector
+ + also could be a mzpack data object</p></dd>
 
         </table>
 
@@ -65,7 +68,25 @@
 
         <h3 style="display: block;">Examples</h3>
 
-        <pre><code id="example_r"> print(centroid([452.7627 67.563 457.336 347.8 242.3], tolerance = "da:0.1"));</code></pre>
+        <pre><code id="example_r"> print(centroid([452.7627 67.563 457.336 347.8 242.3], tolerance = "da:0.1"));
+ # [1]      67.563   242.3    347.8    452.763  457.336 
+ 
+ let spec = data.frame(mz = [452.7627 67.563 457.336 347.8 242.3], 
+    intensity = [312 4353 6664 6765 1119]);
+    
+ let f = aggregate(FUN = "max");
+ 
+ print(as.data.frame(spec));
+ #              mz intensity                   
+ # --------------------------                                                                                                 
+ # <mode> <Double> <integer>                                                                                                   
+ # [1, ]   452.763       312                                             
+ # [2, ]    67.563      4353                                                                    
+ # [3, ]   457.336      6664                                                                                                
+ # [4, ]     347.8      6765                                                                                           
+ # [5, ]     242.3      1119
+ 
+ print(centroid(spec, tolerance = "da:0.1", aggregate = f));</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>math</em> version 1.0.0.0 <a

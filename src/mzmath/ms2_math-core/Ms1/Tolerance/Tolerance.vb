@@ -1,67 +1,80 @@
-﻿#Region "Microsoft.VisualBasic::3e88b7221f56eeb530b085aabefa6bed, mzkit\src\mzmath\ms2_math-core\Ms1\Tolerance\Tolerance.vb"
+﻿#Region "Microsoft.VisualBasic::1c7059c03e013d176abd762ab7fddbe1, mzmath\ms2_math-core\Ms1\Tolerance\Tolerance.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 180
-'    Code Lines: 99
-' Comment Lines: 56
-'   Blank Lines: 25
-'     File Size: 6.45 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Tolerance
-' 
-'         Properties: [Interface], DefaultTolerance
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: AddPPM, DeltaMass, GetScript, MatchTolerance, ParseScript
-'                   PPM, SubPPM, ToScript
-'         Operators: *, /
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 335
+    '    Code Lines: 161 (48.06%)
+    ' Comment Lines: 135 (40.30%)
+    '    - Xml Docs: 88.89%
+    ' 
+    '   Blank Lines: 39 (11.64%)
+    '     File Size: 12.41 KB
+
+
+    '     Enum MassToleranceType
+    ' 
+    '         Da, Ppm
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class Tolerance
+    ' 
+    '         Properties: [Interface], DefaultTolerance
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: AddPPM, CheckScriptText, Compares, DeltaMass, Equals
+    '                   GetHashCode, GetScript, MatchTolerance, ParseScript, PPM
+    '                   SubPPM, (+2 Overloads) ToScript
+    '         Operators: *, /, <, >
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Ms1
 
@@ -80,10 +93,13 @@ Namespace Ms1
     End Enum
 
     ''' <summary>
-    ''' The m/z tolerance methods.
-    ''' (可以直接使用这个对象的索引属性来进行计算判断,索引属性表示两个``m/z``值之间是否相等)
+    ''' The m/z tolerance methods, spectrum equality comparer.
     ''' </summary>
+    ''' <remarks>
+    ''' (可以直接使用这个对象的索引属性来进行计算判断,索引属性表示两个``m/z``值之间是否相等)
+    ''' </remarks>
     Public MustInherit Class Tolerance : Inherits NumberEqualityComparer
+        Implements IEqualityComparer(Of ISpectrumPeak)
 
         ''' <summary>
         ''' <see cref="DeltaTolerance"/>(分子质量误差的上限值)
@@ -200,7 +216,7 @@ Namespace Ms1
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function MatchTolerance([error] As Double) As Boolean
-            Return stdNum.Abs([error]) <= DeltaTolerance
+            Return std.Abs([error]) <= DeltaTolerance
         End Function
 
         Public Function GetScript() As String
@@ -272,6 +288,8 @@ Namespace Ms1
         End Operator
 
         ''' <summary>
+        ''' Parse the given string value as the tolerance error object
+        ''' 
         ''' + da:xxx
         ''' + ppm:xxx
         ''' </summary>
@@ -281,13 +299,23 @@ Namespace Ms1
         ''' 1. if less than 1, means da:xxx
         ''' 2. if greater than or equals to 1, means ppm:xxx
         ''' </param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function will returns nothing if the given script string is in in-correct format.
+        ''' </returns>
         Public Shared Function ParseScript(script As String) As Tolerance
             Dim tokens = script.GetTagValue(":", trim:=True)
             Dim method = tokens.Name.ToLower
             Dim tolerance# = tokens.Value.ParseDouble
 
             If method.StringEmpty Then
+                If tolerance = 0.0 Then
+                    ' method is empty andalso tolerance is zero
+                    ' means string in invalid format
+                    ' returns nothing directly
+                    Call $"the given string({script}) that represent the tolerance error in invalid format!".Warning
+                    Return Nothing
+                End If
+
                 ' 20230608 when the given script text value just a number, then
                 '
                 ' + less than 1, means da tolerance error
@@ -307,12 +335,33 @@ Namespace Ms1
             End If
         End Function
 
-        Public Shared Function ToScript(err As Tolerance) As String
+        ''' <summary>
+        ''' check of the input script text is in valid format or not
+        ''' </summary>
+        ''' <param name="script"></param>
+        ''' <returns></returns>
+        Public Shared Function CheckScriptText(script As String) As Boolean
+            Dim tokens = script.GetTagValue(":", trim:=True)
+            Dim method = tokens.Name.ToLower
+            Dim tolerance# = tokens.Value.ParseDouble
+
+            If (method = "da" OrElse method = "ppm") AndAlso tolerance > 0 Then
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+
+        Public Overloads Shared Function ToScript(err As Tolerance) As String
             If TypeOf err Is DAmethod Then
                 Return $"da:{err.DeltaTolerance}"
             Else
                 Return $"ppm:{err.DeltaTolerance}"
             End If
+        End Function
+
+        Public Overloads Function ToScript() As String
+            Return ToScript(Me)
         End Function
 
         Public Shared Operator *(mzdiff As Tolerance, scale As Double) As Tolerance
@@ -336,5 +385,22 @@ Namespace Ms1
         Public Shared Operator <(d1 As Tolerance, d2 As Tolerance) As Boolean
             Return Not d1 > d2
         End Operator
+
+        ''' <summary>
+        ''' SpectrumEqualityComparer
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' could be used for group the peaks data via the .net framework internal groupby function by implements this interface.
+        ''' </remarks>
+        Public Overloads Function Equals(x As ISpectrumPeak, y As ISpectrumPeak) As Boolean Implements IEqualityComparer(Of ISpectrumPeak).Equals
+            Return Equals(x.Mass, y.Mass)
+        End Function
+
+        Friend Overloads Function GetHashCode(obj As ISpectrumPeak) As Integer Implements IEqualityComparer(Of ISpectrumPeak).GetHashCode
+            Return std.Round(obj.Mass, 6).GetHashCode()
+        End Function
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c8189429ba6c91f0795864f13c7832a, mzkit\src\assembly\mzPackExtensions\ToCDFWriter.vb"
+﻿#Region "Microsoft.VisualBasic::1b9144d438a659e09de7e7fcf2cbb940, assembly\mzPackExtensions\ToCDFWriter.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 74
-    '    Code Lines: 60
-    ' Comment Lines: 5
-    '   Blank Lines: 9
-    '     File Size: 4.06 KB
+    '    Code Lines: 60 (81.08%)
+    ' Comment Lines: 5 (6.76%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (12.16%)
+    '     File Size: 4.11 KB
 
 
     ' Module ToCDFWriter
@@ -86,19 +88,19 @@ Public Module ToCDFWriter
                     .Select(Function(t)
                                 Return New attribute With {
                                     .name = t.Key,
-                                    .type = CDFDataTypes.CHAR,
+                                    .type = CDFDataTypes.NC_CHAR,
                                     .value = t.Value
                                 }
                             End Function) _
                     .ToList
                 Dim size As New Dimension With {.name = $"sizeof_scan{++i}", .size = data.Length}
 
-                meta.Add(New attribute With {.name = "n_products", .type = CDFDataTypes.INT, .value = scan.products.TryCount})
-                meta.Add(New attribute With {.name = "n_points", .type = CDFDataTypes.INT, .value = scan.size})
-                meta.Add(New attribute With {.name = "tic", .type = CDFDataTypes.DOUBLE, .value = scan.TIC})
-                meta.Add(New attribute With {.name = "bpc", .type = CDFDataTypes.DOUBLE, .value = scan.BPC})
-                meta.Add(New attribute With {.name = "retention_time", .type = CDFDataTypes.DOUBLE, .value = scan.rt})
-                meta.Add(New attribute With {.name = "mslevel", .type = CDFDataTypes.INT, .value = 1})
+                meta.Add(New attribute With {.name = "n_products", .type = CDFDataTypes.NC_INT, .value = scan.products.TryCount})
+                meta.Add(New attribute With {.name = "n_points", .type = CDFDataTypes.NC_INT, .value = scan.size})
+                meta.Add(New attribute With {.name = "tic", .type = CDFDataTypes.NC_DOUBLE, .value = scan.TIC})
+                meta.Add(New attribute With {.name = "bpc", .type = CDFDataTypes.NC_DOUBLE, .value = scan.BPC})
+                meta.Add(New attribute With {.name = "retention_time", .type = CDFDataTypes.NC_DOUBLE, .value = scan.rt})
+                meta.Add(New attribute With {.name = "mslevel", .type = CDFDataTypes.NC_INT, .value = 1})
 
                 If Not ms2Only Then
                     writer.AddVariable(scan.scan_id, data, size, meta.ToArray)
@@ -108,11 +110,11 @@ Public Module ToCDFWriter
                     data = New doubles(ms2.mz.JoinIterates(ms2.into))
                     size = New Dimension With {.name = $"sizeof_scan{++i}", .size = data.Length}
                     meta.Clear()
-                    meta.Add(New attribute With {.name = "mz", .type = CDFDataTypes.DOUBLE, .value = ms2.parentMz})
-                    meta.Add(New attribute With {.name = "rt", .type = CDFDataTypes.DOUBLE, .value = ms2.rt})
-                    meta.Add(New attribute With {.name = "n_fragments", .type = CDFDataTypes.DOUBLE, .value = ms2.size})
-                    meta.Add(New attribute With {.name = "scan_ms1", .type = CDFDataTypes.CHAR, .value = scan.scan_id})
-                    meta.Add(New attribute With {.name = "mslevel", .type = CDFDataTypes.INT, .value = 2})
+                    meta.Add(New attribute With {.name = "mz", .type = CDFDataTypes.NC_DOUBLE, .value = ms2.parentMz})
+                    meta.Add(New attribute With {.name = "rt", .type = CDFDataTypes.NC_DOUBLE, .value = ms2.rt})
+                    meta.Add(New attribute With {.name = "n_fragments", .type = CDFDataTypes.NC_DOUBLE, .value = ms2.size})
+                    meta.Add(New attribute With {.name = "scan_ms1", .type = CDFDataTypes.NC_CHAR, .value = scan.scan_id})
+                    meta.Add(New attribute With {.name = "mslevel", .type = CDFDataTypes.NC_INT, .value = 2})
 
                     writer.AddVariable(ms2.scan_id, data, size, meta.ToArray)
                 Next
@@ -122,9 +124,9 @@ Public Module ToCDFWriter
 
     <Extension>
     Private Iterator Function getFileAttributes(file As mzPack) As IEnumerable(Of attribute)
-        Yield New attribute With {.name = "application", .type = CDFDataTypes.CHAR, .value = file.Application.Description}
-        Yield New attribute With {.name = "url", .type = CDFDataTypes.CHAR, .value = "https://mzkit.org"}
-        Yield New attribute With {.name = "n_scans", .type = CDFDataTypes.INT, .value = file.MS.Length}
-        Yield New attribute With {.name = "timestamp", .type = CDFDataTypes.CHAR, .value = Now.ToString}
+        Yield New attribute With {.name = "application", .type = CDFDataTypes.NC_CHAR, .value = file.Application.Description}
+        Yield New attribute With {.name = "url", .type = CDFDataTypes.NC_CHAR, .value = "https://mzkit.org"}
+        Yield New attribute With {.name = "n_scans", .type = CDFDataTypes.NC_INT, .value = file.MS.Length}
+        Yield New attribute With {.name = "timestamp", .type = CDFDataTypes.NC_CHAR, .value = Now.ToString}
     End Function
 End Module

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d85437e3bddd7a018c6f0f5e31968208, mzkit\src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\WiffRaw.vb"
+﻿#Region "Microsoft.VisualBasic::e5b4655263a946b9ad4a6619480ceda1, mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\WiffRaw.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 126
-    '    Code Lines: 97
-    ' Comment Lines: 10
-    '   Blank Lines: 19
+    '    Code Lines: 97 (76.98%)
+    ' Comment Lines: 10 (7.94%)
+    '    - Xml Docs: 60.00%
+    ' 
+    '   Blank Lines: 19 (15.08%)
     '     File Size: 5.60 KB
 
 
@@ -56,12 +58,12 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace MRM
 
@@ -80,7 +82,7 @@ Namespace MRM
                                 .ID = ion.name,
                                 .Properties = New Dictionary(Of String, Double) From {
                                     {"rt", ion.rt},
-                                    {"rt(min)", stdNum.Round(ion.rt / 60, 2)},
+                                    {"rt(min)", std.Round(ion.rt / 60, 2)},
                                     {"rtmin", ion.peakROI.Min},
                                     {"rtmax", ion.peakROI.Max},
                                     {"area", ion.area},
@@ -139,7 +141,7 @@ Namespace MRM
                 .First _
                 .Key
 
-            Call $"The wiff raw file name is: {wiffName}".__DEBUG_ECHO
+            Call $"The wiff raw file name is: {wiffName}".debug
 
             For Each ion As IonPair In ions
                 ionTPAs(ion.accession) = New Dictionary(Of String, Double)

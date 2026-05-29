@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cc4eeeefff98e53e6d751f71c5cb4a8, mzkit\src\mzmath\ms2_math-core\Ms1\PrecursorType\Formula\Positive.vb"
+﻿#Region "Microsoft.VisualBasic::d5c93b873846f1afe7e79e62d3651c6c, mzmath\ms2_math-core\Ms1\PrecursorType\Formula\Positive.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 90
-    '    Code Lines: 83
-    ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 10.94 KB
+    '   Total Lines: 91
+    '    Code Lines: 84 (92.31%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (7.69%)
+    '     File Size: 11.06 KB
 
 
     '     Module PositiveFormula
@@ -77,6 +79,7 @@ Namespace Ms1.PrecursorType
                 {"M+3ACN+2H", New MzCalculator("[M+3ACN+2H]2+", charge:=2, M:=1, adducts:=62.547097, mode:="+")},         ' M/2 + 62.547097	    2+	0.50	62.547097	 489.212542	 375.612903
                 {"M+H", New MzCalculator("[M+H]+", charge:=1, M:=1, adducts:=1.007276, mode:="+")},                       '  M  + 1.007276	    1+	1.00	 1.007276	 854.338166	 875.312724
                 {"M+Li", New MzCalculator("[M+Li]+", charge:=1, M:=1, adducts:=ExactMass.Eval("+Li"), mode:="+")},
+                {"M-Cl", New MzCalculator("[M-Cl]+", charge:=1, M:=1, adducts:=ExactMass.Eval("-Cl"), mode:="+")},
                 {"M-H2O+NH4", New MzCalculator("[M-H2O+NH4]+", charge:=1, M:=1, adducts:=ExactMass.Eval("-H2O+NH4"), mode:="+")},
                 {"M+H-2H2O", New MzCalculator("[M+H-2H2O]+", charge:=1, M:=1, adducts:=ExactMass.Eval("+H-2H2O"), mode:="+")},
                 {"M+H-H2O", New MzCalculator("[M+H-H2O]+", charge:=1, M:=1, adducts:=ExactMass.Eval("+H-H2O"), mode:="+")},

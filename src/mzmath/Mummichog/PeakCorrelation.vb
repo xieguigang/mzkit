@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::700c4abba9e42e309fc1fbb06580ed3e, mzkit\src\mzmath\Mummichog\PeakCorrelation.vb"
+﻿#Region "Microsoft.VisualBasic::e7c7bbb9ad2aef2eed2685b1919471c4, mzmath\Mummichog\PeakCorrelation.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 196
-    '    Code Lines: 158
-    ' Comment Lines: 13
-    '   Blank Lines: 25
-    '     File Size: 7.43 KB
+    '   Total Lines: 236
+    '    Code Lines: 162 (68.64%)
+    ' Comment Lines: 44 (18.64%)
+    '    - Xml Docs: 29.55%
+    ' 
+    '   Blank Lines: 30 (12.71%)
+    '     File Size: 11.76 KB
 
 
     ' Class PeakCorrelation
@@ -182,7 +184,7 @@ Public Class PeakCorrelation
             .into = peak.into,
             .ionization = peak.ionization,
             .maxo = peak.maxo,
-            .mz = peak.mz,
+            .mass = peak.mass,
             .mzmax = peak.mzmax,
             .mzmin = peak.mzmin,
             .name = peak.name,
@@ -246,8 +248,8 @@ Public Class PeakCorrelation
 
         Dim peakList As Peaktable() = (From d As Peaktable
                                        In peaktable
-                                       Where d.mz > 0
-                                       Order By d.mz).ToArray
+                                       Where d.mass > 0
+                                       Order By d.mass).ToArray
 
         Return FindExactMass(peakList, ms1_isotopic, ms1_adducts, deltaRt, mzdiff)
     End Function

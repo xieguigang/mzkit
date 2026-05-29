@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdf07d0e5a7e57428e43caff4fa8a49a, mzkit\src\metadb\MoNA\MSP\MspReader.vb"
+﻿#Region "Microsoft.VisualBasic::d9a0ed8e83f821fb97d372ea54b2e92d, metadb\MoNA\MSP\MspReader.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 35
-    '    Code Lines: 30
-    ' Comment Lines: 0
-    '   Blank Lines: 5
-    '     File Size: 1.40 KB
+    '   Total Lines: 52
+    '    Code Lines: 39 (75.00%)
+    ' Comment Lines: 5 (9.62%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (15.38%)
+    '     File Size: 1.91 KB
 
 
     ' Module MspReader
     ' 
-    '     Function: GetMetadata, ParseFile, ParseSpectrumData
+    '     Function: GetMetadata, GetSpectra, ParseFile, ParseSpectrumData
     ' 
     ' /********************************************************************************/
 
@@ -59,12 +61,7 @@ Public Module MspReader
 
     Public Iterator Function ParseFile(path$, Optional parseMs2 As Boolean = True) As IEnumerable(Of SpectraSection)
         For Each spectrum As MspData In MspData.Load(path, ms2:=parseMs2)
-            Dim metadata As MetaData = MspReader.GetMetadata(spectrum)
-            Dim ms2 As SpectraInfo = ParseSpectrumData(spectrum, metadata)
-
-            Yield New SpectraSection(metadata) With {
-                .SpectraInfo = ms2
-            }
+            Yield spectrum.GetSpectra
         Next
     End Function
 
@@ -79,6 +76,16 @@ Public Module MspReader
             .mz = Val(spectrum.PrecursorMZ),
             .precursor_type = spectrum.Precursor_type,
             .ion_mode = spectrum.Ion_mode
+        }
+    End Function
+
+    <Extension>
+    Public Function GetSpectra(spectrum As MspData) As SpectraSection
+        Dim metadata As MetaData = MspReader.GetMetadata(spectrum)
+        Dim ms2 As SpectraInfo = ParseSpectrumData(spectrum, metadata)
+
+        Return New SpectraSection(metadata) With {
+            .SpectraInfo = ms2
         }
     End Function
 

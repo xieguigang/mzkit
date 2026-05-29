@@ -1,4 +1,66 @@
-﻿Imports System.Runtime.InteropServices
+﻿#Region "Microsoft.VisualBasic::aa005b038d435c94c90247e90032f4cb, mzmath\MSFinder\FormulaGenerator.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 986
+    '    Code Lines: 605 (61.36%)
+    ' Comment Lines: 197 (19.98%)
+    '    - Xml Docs: 17.26%
+    ' 
+    '   Blank Lines: 184 (18.66%)
+    '     File Size: 58.94 KB
+
+
+    ' Class FormulaGenerator
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: getCandidateFormulaBean, (+2 Overloads) GetFormulaCandidateList, getFormulaResult, getFormulaResultCandidates, getFormulaResultInsertID
+    '               (+2 Overloads) getFormulaResults, getFormulaResultStartIndex, GetFormulaScore, (+2 Overloads) getFormulaSearchResults, getQueryStartIndex
+    '               getUniqueNeutralLossCount, getUniqueNeutralLossCountByMass, tryGetFormulaResultCandidate
+    ' 
+    '     Sub: maxFoldInitialize, setExistFormulaDbInfo, setFragmentProperties, tryExistFormulaDbSearch
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -120,6 +182,7 @@ Public Class FormulaGenerator
         End Select
 
         Me.maxMassFoldChange = Me.hMaxFold * hMass
+
         If fCheck Then Me.maxMassFoldChange += Me.fMaxFold * fMass
         If clCheck Then Me.maxMassFoldChange += Me.clMaxFold * clMass
         If brCheck Then Me.maxMassFoldChange += Me.brMaxFold * brMass
@@ -140,7 +203,10 @@ Public Class FormulaGenerator
     ''' <param name="rawData"></param>
     ''' <param name="adductIon"></param>
     ''' <returns></returns>
-    Public Function GetFormulaCandidateList(productIonDB As List(Of ProductIon), neutralLossDB As List(Of NeutralLoss), existFormulaDB As List(Of ExistFormulaQuery), param As AnalysisParamOfMsfinder, mass As Double, m1Intensity As Double, m2Intensity As Double, rawData As RawData, adductIon As AdductIon, isotopeCheck As Boolean) As List(Of FormulaResult)
+    Public Function GetFormulaCandidateList(productIonDB As List(Of ProductIon), neutralLossDB As List(Of NeutralLoss), existFormulaDB As List(Of ExistFormulaQuery),
+                                            param As AnalysisParamOfMsfinder,
+                                            mass As Double, m1Intensity As Double, m2Intensity As Double,
+                                            rawData As RawData, adductIon As AdductIon, isotopeCheck As Boolean) As List(Of FormulaResult)
 
         'param set
         Dim ms1Tol = param.Mass1Tolerance
@@ -639,8 +705,9 @@ Public Class FormulaGenerator
     End Function
 
     Private Function getUniqueNeutralLossCountByMass(neutralLosses As List(Of NeutralLoss), ms2Tol As Double, massTolType As MassToleranceType) As Integer
-
-        If neutralLosses.Count = 0 Then Return 0
+        If neutralLosses.Count = 0 Then
+            Return 0
+        End If
 
         Dim masses = New List(Of Double)() From {
                 neutralLosses(CInt((0))).MassLoss
@@ -653,7 +720,7 @@ Public Class FormulaGenerator
 
             If massTolType = MassToleranceType.Ppm Then massTol = PPMmethod.ConvertPpmToMassAccuracy(neutralLosses(CInt((i))).PrecursorMz, ms2Tol)
             Dim flg = False
-            For Each mass In masses
+            For Each mass As Double In masses
                 If std.Abs(mass - lossMass) < massTol Then
                     flg = True
                     Exit For

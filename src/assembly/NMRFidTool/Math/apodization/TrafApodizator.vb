@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::baa378320d6f578dd4f5a1e4275930f7, mzkit\src\assembly\NMRFidTool\Math\apodization\TrafApodizator.vb"
+﻿#Region "Microsoft.VisualBasic::8d3b23400f3485b3a333f660066debc6, assembly\NMRFidTool\Math\apodization\TrafApodizator.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 57
-    '    Code Lines: 20
-    ' Comment Lines: 28
-    '   Blank Lines: 9
-    '     File Size: 1.95 KB
+    '    Code Lines: 20 (35.09%)
+    ' Comment Lines: 28 (49.12%)
+    '    - Xml Docs: 25.00%
+    ' 
+    '   Blank Lines: 9 (15.79%)
+    '     File Size: 2.00 KB
 
 
     '     Class TrafApodizator

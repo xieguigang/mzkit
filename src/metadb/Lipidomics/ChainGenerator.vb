@@ -1,16 +1,89 @@
-﻿Imports std = System.Math
+﻿#Region "Microsoft.VisualBasic::4b8ac7847c62019b307e16bc634b6386, metadb\Lipidomics\ChainGenerator.vb"
 
-Public Class ChainGenerator
-    Implements IChainGenerator
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 112
+    '    Code Lines: 83 (74.11%)
+    ' Comment Lines: 12 (10.71%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 17 (15.18%)
+    '     File Size: 5.06 KB
+
+
+    ' Class ChainGenerator
+    ' 
+    '     Properties: [End], Begin, Skip
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: CarbonIsValid, DoubleBondIsValid, EnumerateBonds, EnumerateOxidized, (+3 Overloads) Generate
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports std = System.Math
+
+Public Class ChainGenerator : Implements IChainGenerator
+
     Public Sub New(Optional begin As Integer = 3, Optional [end] As Integer = 3, Optional skip As Integer = 3)
         Me.Begin = begin
         Me.End = [end]
         Me.Skip = skip
     End Sub
 
-    Public ReadOnly Property Begin As Integer ' if begin is 3, first double bond is 3-4 at the earliest counting from ketone carbon.
-    Public ReadOnly Property [End] As Integer ' if end is 3 and number of carbon is 18, last double bond is 15-16 at latest.
-    Public ReadOnly Property Skip As Integer ' if skip is 3 and 6-7 is double bond, next one is 9-10 at the earliest.
+    ''' <summary>
+    ''' if begin is 3, first double bond is 3-4 at the earliest counting from ketone carbon.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property Begin As Integer
+    ''' <summary>
+    ''' if end is 3 and number of carbon is 18, last double bond is 15-16 at latest.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property [End] As Integer
+    ''' <summary>
+    ''' if skip is 3 and 6-7 is double bond, next one is 9-10 at the earliest.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property Skip As Integer
 
     Public Function Generate(chain As AcylChain) As IEnumerable(Of IChain) Implements IChainGenerator.Generate
         Dim bs = EnumerateBonds(chain.CarbonCount, chain.DoubleBond).ToArray()

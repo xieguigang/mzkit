@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e9c6bf55afe3bbec1505611f2674bfe, mzkit\src\metadb\MoNA\Metadata\SchemaMapper.vb"
+﻿#Region "Microsoft.VisualBasic::2ea6989e39da14d1d360bfcd9a9f825e, metadb\MoNA\Metadata\SchemaMapper.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 100
-    '    Code Lines: 73
-    ' Comment Lines: 12
-    '   Blank Lines: 15
-    '     File Size: 3.58 KB
+    '    Code Lines: 73 (73.00%)
+    ' Comment Lines: 12 (12.00%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 15 (15.00%)
+    '     File Size: 3.68 KB
 
 
     ' Module SchemaMapper
@@ -58,7 +60,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Linq
 
 <HideModuleName>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::735b2d3f20a2c6ee489fd6a360e0732b, mzkit\src\mzmath\TargetedMetabolomics\MRM\IsomerismIonPairs.vb"
+﻿#Region "Microsoft.VisualBasic::977e73724158492eaec86e72114b5471, mzmath\TargetedMetabolomics\MRM\IsomerismIonPairs.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 64
-    '    Code Lines: 45
-    ' Comment Lines: 8
-    '   Blank Lines: 11
-    '     File Size: 2.10 KB
+    '   Total Lines: 90
+    '    Code Lines: 53 (58.89%)
+    ' Comment Lines: 23 (25.56%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 14 (15.56%)
+    '     File Size: 2.96 KB
 
 
     '     Class IsomerismIonPairs
     ' 
     '         Properties: hasIsomerism, index, ions, target
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: GetEnumerator, groupKey, IEnumerable_GetEnumerator, ToString
     ' 
     ' 
@@ -55,17 +58,27 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Linq
 
 Namespace MRM.Models
 
+    ''' <summary>
+    ''' isomer ion with identical Q1/Q3 ions mz 
+    ''' </summary>
     Public Class IsomerismIonPairs : Implements IEnumerable(Of IonPair)
 
         ''' <summary>
-        ''' all isomerism ion list data
+        ''' all isomerism ion list data that has the identical Q1/Q3 ion data with <see cref="target"/>
         ''' </summary>
         ''' <returns></returns>
-        Public Property ions As IonPair()
+        <XmlElement> Public Property ions As IonPair()
+
+        ''' <summary>
+        ''' the scalar element
+        ''' </summary>
+        ''' <returns></returns>
         Public Property target As IonPair
 
         ''' <summary>
@@ -77,6 +90,7 @@ Namespace MRM.Models
                 If ions.IsNullOrEmpty Then
                     Return Scan0
                 Else
+                    ' already sort by rt
                     Dim vec As IonPair() = Me.ToArray
 
                     For i As Integer = 0 To vec.Length - 1
@@ -90,12 +104,24 @@ Namespace MRM.Models
             End Get
         End Property
 
+        ''' <summary>
+        ''' check of the isomer <see cref="ions"/> list is empty or not?
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property hasIsomerism As Boolean
             Get
                 Return Not ions.IsNullOrEmpty
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(ion As IonPair)
+            target = ion
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Friend Function groupKey() As String
             Return Me.Select(Function(i) i.accession).JoinBy("|->|")
         End Function
@@ -108,8 +134,12 @@ Namespace MRM.Models
             End If
         End Function
 
+        ''' <summary>
+        ''' populate a set of the <see cref="IonPair"/> which is sorted by the rt in asc order
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function GetEnumerator() As IEnumerator(Of IonPair) Implements IEnumerable(Of IonPair).GetEnumerator
-            For Each i In ions.Join(target).OrderBy(Function(ion) ion.rt)
+            For Each i As IonPair In ions.Join(target).OrderBy(Function(ion) ion.rt)
                 Yield i
             Next
         End Function

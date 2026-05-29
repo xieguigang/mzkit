@@ -1,66 +1,67 @@
-﻿#Region "Microsoft.VisualBasic::c74c94e8d299627be80685a811692d52, mzkit\src\visualize\MsImaging\Analysis\GridScanner.vb"
+﻿#Region "Microsoft.VisualBasic::cf849794a94c423aa66fbf662f184451, visualize\MsImaging\Analysis\GridScanner.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 262
-'    Code Lines: 192
-' Comment Lines: 31
-'   Blank Lines: 39
-'     File Size: 10.68 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module GridScanner
-' 
-'     Function: (+2 Overloads) IonColocalization, PCAGroups, PopulateClusters, PopulateIonMatrix
-'     Class CorrelationAligner
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: GetSimilarity
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 269
+    '    Code Lines: 182 (67.66%)
+    ' Comment Lines: 45 (16.73%)
+    '    - Xml Docs: 46.67%
+    ' 
+    '   Blank Lines: 42 (15.61%)
+    '     File Size: 10.94 KB
+
+
+    ' Module GridScanner
+    ' 
+    '     Function: (+2 Overloads) IonColocalization, PCAGroups, PCAProject, PopulateClusters, PopulateIonMatrix
+    '     Class CorrelationAligner
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetObject, GetSimilarity
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -72,10 +73,31 @@ Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
-Imports Microsoft.VisualBasic.Math.LinearAlgebra.Prcomp
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 
 Public Module GridScanner
+
+    <Extension>
+    Private Iterator Function PCAProject(matrix As EntityClusterModel()) As IEnumerable(Of EntityClusterModel)
+        Dim block_tags As String() = matrix(Scan0).Properties.Keys.ToArray
+        Dim matrix2 = matrix.Z.Select(Function(r) r(block_tags)).ToArray
+        'Dim PCA As New PCA(matrix2, center:=False)
+        'Dim pc3 = PCA _
+        '    .Project(nPC:=3) _
+        '    .Select(Function(r, i)
+        '                Return New EntityClusterModel With {
+        '                    .ID = matrix(i).ID,
+        '                    .Properties = New Dictionary(Of String, Double) From {
+        '                        {"PC1", r(0)},
+        '                        {"PC2", r(1)},
+        '                        {"PC3", r(2)}
+        '                    }
+        '                }
+        '            End Function) _
+        '    .ToArray
+
+        Throw New NotImplementedException
+    End Function
 
     <Extension>
     Public Iterator Function PCAGroups(raw As IEnumerable(Of PixelScan),
@@ -97,27 +119,11 @@ Public Module GridScanner
 
         Dim region As New Size(grid_width / 2, grid_height / 2)
         Dim matrix As EntityClusterModel() = grid2.PopulateIonMatrix(region, repeats, bag_size, mzdiff).ToArray
-        Dim block_tags = matrix(Scan0).Properties.Keys
-        Dim PCA As New PCA(matrix.Z.Select(Function(r) r(block_tags)), center:=False)
-        Dim pc3 = PCA _
-            .Project(nPC:=3) _
-            .Select(Function(r, i)
-                        Return New EntityClusterModel With {
-                            .ID = matrix(i).ID,
-                            .Properties = New Dictionary(Of String, Double) From {
-                                {"PC1", r(0)},
-                                {"PC2", r(1)},
-                                {"PC3", r(2)}
-                            }
-                        }
-                    End Function) _
-            .ToArray
-        Dim metric As New Metric(block_tags)
         ' run dbscan cluster?
         'Dim pc3_groups = New DbscanAlgorithm(Of EntityClusterModel)(AddressOf metric.DistanceTo) _
         '    .ComputeClusterDBSCAN(pc3, eps, 3) _
         '    .ToArray
-        Dim pc3_groups = pc3.Kmeans(expected:=k).ToArray
+        Dim pc3_groups = matrix.PCAProject.Kmeans(expected:=k).ToArray
 
         'For Each group In pc3_groups
         '    For Each x As EntityClusterModel In group
@@ -184,7 +190,7 @@ Public Module GridScanner
     ''' <param name="equals"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function IonColocalization(raw As mzPack,
+    Public Function IonColocalization(raw As IMZPack,
                                       Optional grid_width As Integer = 5,
                                       Optional grid_height As Integer = 5,
                                       Optional repeats As Integer = 3,
@@ -220,9 +226,10 @@ Public Module GridScanner
         Dim align As New CorrelationAligner(matrix)
         Dim root As New ClusterTree
         Dim i As Integer = 1
+        Dim args As New ClusterTree.Argument With {.alignment = align, .threshold = equals}
 
         For Each key As String In matrix.Keys
-            Call ClusterTree.Add(root, key, align, equals)
+            Call ClusterTree.Add(root, args.SetTargetKey(key))
         Next
 
         For Each cluster As ClusterTree In ClusterTree.GetClusters(root)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5db68384beac8033192c651d52a6e72, mzkit\src\metadb\Massbank\Public\lipidMAPS\MetaTable.vb"
+﻿#Region "Microsoft.VisualBasic::2ad3664d212085e47bdbb89074953865, metadb\Massbank\Public\lipidMAPS\MetaTable.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 53
-    '    Code Lines: 33
-    ' Comment Lines: 11
-    '   Blank Lines: 9
-    '     File Size: 1.91 KB
+    '    Code Lines: 33 (62.26%)
+    ' Comment Lines: 11 (20.75%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (16.98%)
+    '     File Size: 1.96 KB
 
 
     '     Module MetaTable
@@ -56,8 +58,11 @@
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
+Imports lipidMetab = BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib
 
 Namespace LipidMaps
 
@@ -100,9 +105,43 @@ Namespace LipidMaps
             Return True
         End Function
 
+        ''' <summary>
+        ''' read the msgpack file that contains the lipidmaps annotation data
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function ReadRepository(file As Stream) As MetaData()
             Return MsgPackSerializer.Deserialize(Of MetaData())(file)
+        End Function
+
+        <Extension>
+        Public Function CreateMetabolite(lipid As MetaData) As lipidMetab
+            Return New lipidMetab With {
+                .ID = lipid.LM_ID,
+                .name = If(lipid.COMMON_NAME.StringEmpty(, True), lipid.NAME, lipid.COMMON_NAME),
+                .IUPACName = lipid.SYSTEMATIC_NAME,
+                .description = lipid.NAME,
+                .[class] = lipid.MAIN_CLASS,
+                .formula = lipid.FORMULA,
+                .exact_mass = FormulaScanner.EvaluateExactMass(.formula),
+                .sub_class = lipid.SUB_CLASS,
+                .super_class = lipid.CATEGORY,
+                .molecular_framework = lipid.CLASS_LEVEL4,
+                .synonym = lipid.SYNONYMS,
+                .xref = New xref With {
+                    .CAS = {},
+                    .chebi = lipid.CHEBI_ID,
+                    .HMDB = lipid.HMDB_ID,
+                    .KEGG = lipid.KEGG_ID,
+                    .SMILES = lipid.SMILES,
+                    .lipidmaps = lipid.LM_ID,
+                    .pubchem = lipid.PUBCHEM_CID,
+                    .InChI = lipid.INCHI,
+                    .InChIkey = lipid.INCHI_KEY
+                },
+                .kingdom = "Lipid"
+            }
         End Function
     End Module
 End Namespace

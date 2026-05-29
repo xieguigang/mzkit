@@ -37,26 +37,26 @@
         <table>
             
 <dt>viewer</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p>[as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/Drawer.html">Drawer</a>]</p></dd>
 
 
 <dt>mz</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p>[as double]</p></dd>
 
 
 <dt>split</dt>
-<dd><p><p>returns a single layer object for multiple input m/z<br />
- vector if not split by default, otherwise returns <br />
- multiple layer objects in a list for each corresponding <br />
- ion m/z if split parameter value is set to TRUE.</p></p></dd>
+<dd><p>returns a single layer object for multiple input m/z
+ vector if not split by default, otherwise returns 
+ multiple layer objects in a list for each corresponding 
+ ion m/z if split parameter value is set to TRUE. [as boolean]</p></dd>
 
 
 <dt>tolerance</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p>-</p></dd>
 
 
 <dt>env</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
 
         </table>
 
@@ -73,9 +73,14 @@
 
         this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a></li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> let viewer = MsImaging::viewer(open.mzpack("/data.mzpack"));
+ let ion_mz = 100.001;
+ let single_ion_layer = viewer |> MsImaging::MSIlayer(mz = ion_mz, tolerance = "ppm:20");
+ let data = as.data.frame(single_ion_layer);
+ 
+ print(data);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>MsImaging</em> version 1.0.0.0 <a

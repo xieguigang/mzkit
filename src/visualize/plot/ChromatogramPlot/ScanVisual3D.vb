@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0aec02485ee9da870224c2211c62955a, mzkit\src\visualize\plot\ChromatogramPlot\ScanVisual3D.vb"
+﻿#Region "Microsoft.VisualBasic::d512de7281d1f8e0a04a79e8a5c4a387, visualize\plot\ChromatogramPlot\ScanVisual3D.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 253
-    '    Code Lines: 183
-    ' Comment Lines: 32
-    '   Blank Lines: 38
-    '     File Size: 9.79 KB
+    '   Total Lines: 282
+    '    Code Lines: 211 (74.82%)
+    ' Comment Lines: 32 (11.35%)
+    '    - Xml Docs: 15.62%
+    ' 
+    '   Blank Lines: 39 (13.83%)
+    '     File Size: 11.37 KB
 
 
     ' Class ScanVisual3D
@@ -73,7 +75,34 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports std = System.Math
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
 
 ' intensity
 '  ^ y   z
@@ -134,7 +163,7 @@ Public Class ScanVisual3D : Inherits Plot
         ' cos(a) = dx / dc
         ' dx = cos(a) * dc
         Dim dc As Double = evalDc(canvas)
-        Dim dx As Double = stdNum.Cos(angle.ToRadians) * dc
+        Dim dx As Double = std.Cos(angle.ToRadians) * dc
 
         Return dx / (scans.Length + 1)
     End Function
@@ -145,7 +174,7 @@ Public Class ScanVisual3D : Inherits Plot
     ''' <param name="canvas"></param>
     ''' <returns></returns>
     Private Function evalDc(canvas As GraphicsRegion) As Double
-        Dim rect As Rectangle = canvas.PlotRegion
+        Dim rect As Rectangle = canvas.PlotRegion(New CSSEnvirnment(canvas.Size))
         Dim height As Double = 0 ' Me.height * rect.Height
         Dim y1 As Double = rect.Bottom - height
         Dim y2 As Double = rect.Top
@@ -154,7 +183,7 @@ Public Class ScanVisual3D : Inherits Plot
         ' tan(a) = dh / dw
         ' dw = dh / tan(a)
 
-        Dim dw As Double = dh / stdNum.Tan(a:=angle.ToRadians)
+        Dim dw As Double = dh / std.Tan(a:=angle.ToRadians)
 
         ' c/|
         ' /a|
@@ -164,7 +193,7 @@ Public Class ScanVisual3D : Inherits Plot
         ' cos(a) = dw / c
         ' c = dw / cos(a)
 
-        Dim c As Double = dw / stdNum.Cos(d:=angle.ToRadians)
+        Dim c As Double = dw / std.Cos(d:=angle.ToRadians)
 
         Return c
     End Function
@@ -173,26 +202,29 @@ Public Class ScanVisual3D : Inherits Plot
         ' sin(a) = dy / dc
         ' dy = sin(a) * dc
         Dim dc As Double = evalDc(canvas)
-        Dim dy As Double = stdNum.Sin(angle.ToRadians) * dc
+        Dim dy As Double = std.Sin(angle.ToRadians) * dc
 
         Return dy / (scans.Length + 1)
     End Function
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim plotRect = canvas.PlotRegion(css)
         Dim dx As Double = evalDx(canvas)
-        Dim dy As Double = canvas.PlotRegion.Height * Me.height / (scans.Length + 1)  ' evalDy(canvas)
+        Dim dy As Double = plotRect.Height * Me.height / (scans.Length + 1)  ' evalDy(canvas)
         Dim theme As Theme = Me.theme.Clone
         Dim colors As String() = Designer _
             .GetColors(theme.colorSet, scans.Length) _
             .Select(AddressOf ToHtmlColor) _
             .ToArray
+        Dim padding As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, canvas.Padding)
         Dim parallelCanvas As New GraphicsRegion With {
             .Size = canvas.Size,
             .Padding = New Padding With {
-                .Top = canvas.Padding.Top,
-                .Left = canvas.Padding.Left + dx * scans.Length,
-                .Right = canvas.Padding.Right,
-                .Bottom = canvas.Padding.Bottom + Me.height * canvas.PlotRegion.Height
+                .Top = padding.Top,
+                .Left = padding.Left + dx * scans.Length,
+                .Right = padding.Right,
+                .Bottom = padding.Bottom + Me.height * plotRect.Height
             }
         }
         Dim labelList As New List(Of Label)
@@ -207,9 +239,9 @@ Public Class ScanVisual3D : Inherits Plot
 
         parallelCanvas = parallelCanvas.Offset2D(dx, -dy)
 
-        Dim firstFrame As GraphicsRegion
-        Dim lastFrame As GraphicsRegion
-        Dim parallelXAxisPen As Pen = Stroke.TryParse(theme.gridStrokeX)
+        Dim firstFrame As GraphicsRegion = Nothing
+        Dim lastFrame As GraphicsRegion = Nothing
+        Dim parallelXAxisPen As Pen = CSS.GetPen(Stroke.TryParse(theme.gridStrokeX))
         Dim maxinto As Double = Aggregate scan As NamedCollection(Of ChromatogramTick)
                                 In scans
                                 Let into As Double = scan _
@@ -253,10 +285,10 @@ Public Class ScanVisual3D : Inherits Plot
             End If
 
             If drawParallelAxis Then
-                Dim x0 = parallelCanvas.Padding.Left
-                Dim y0 = canvas.Height - parallelCanvas.Padding.Bottom
-                Dim x1 = canvas.Width - parallelCanvas.Padding.Right
-                Dim y1 = canvas.Height - parallelCanvas.Padding.Bottom
+                Dim x0 = css.GetWidth(parallelCanvas.Padding.Left)
+                Dim y0 = canvas.Height - css.GetHeight(parallelCanvas.Padding.Bottom)
+                Dim x1 = canvas.Width - css.GetWidth(parallelCanvas.Padding.Right)
+                Dim y1 = canvas.Height - css.GetHeight(parallelCanvas.Padding.Bottom)
 
                 Call g.DrawLine(parallelXAxisPen, x0, y0, x1, y1)
             End If
@@ -269,13 +301,12 @@ Public Class ScanVisual3D : Inherits Plot
                 fillCurve:=fillCurve,
                 fillAlpha:=fillAlpha,
                 labelLayoutTicks:=-1,
-                deln:=10,
                 theme:=theme,
-                bspline:=0
+                bspline:=Nothing
             ) With {
                 .xlabel = xlabel,
                 .ylabel = ylabel,
-                .main = main
+                .main = ""
             }.RunPlot(g, parallelCanvas, labels, legends)
 
             Call labelList.AddRange(labels)
@@ -291,21 +322,23 @@ Public Class ScanVisual3D : Inherits Plot
         '   c ----------/
         '               f
 
-        Dim a As New PointF(firstFrame.Padding.Left, firstFrame.Padding.Top)
-        Dim b As New PointF(firstFrame.Padding.Left, canvas.Height - firstFrame.Padding.Bottom)
-        Dim c As New PointF(lastFrame.Padding.Left, canvas.Height - lastFrame.Padding.Bottom)
-        Dim d As New PointF(lastFrame.Padding.Left, lastFrame.Padding.Top)
-        Dim e As New PointF(canvas.Width - firstFrame.Padding.Right, canvas.Height - firstFrame.Padding.Bottom)
-        Dim f As New PointF(canvas.Width - lastFrame.Padding.Right, canvas.Height - lastFrame.Padding.Bottom)
+        Dim a As New PointF(css.GetWidth(firstFrame.Padding.Left), css.GetHeight(firstFrame.Padding.Top))
+        Dim b As New PointF(css.GetWidth(firstFrame.Padding.Left), canvas.Height - css.GetHeight(firstFrame.Padding.Bottom))
+        Dim c As New PointF(css.GetWidth(lastFrame.Padding.Left), canvas.Height - css.GetHeight(lastFrame.Padding.Bottom))
+        Dim d As New PointF(css.GetWidth(lastFrame.Padding.Left), css.GetHeight(lastFrame.Padding.Top))
+        Dim e As New PointF(canvas.Width - css.GetWidth(firstFrame.Padding.Right), canvas.Height - css.GetHeight(firstFrame.Padding.Bottom))
+        Dim f As New PointF(canvas.Width - css.GetWidth(lastFrame.Padding.Right), canvas.Height - css.GetHeight(lastFrame.Padding.Bottom))
 
-        Dim axisPen As Pen = Stroke.TryParse(theme.axisStroke)
+        Dim axisPen As Pen = CSS.GetPen(Stroke.TryParse(theme.axisStroke))
 
         Call g.DrawLine(axisPen, a, d)
         Call g.DrawLine(axisPen, a, b)
         Call g.DrawLine(axisPen, c, b)
         Call g.DrawLine(axisPen, e, f)
 
-        If Me.theme.drawLabels Then Call TICplot.DrawLabels(g, canvas.PlotRegion, labelList.ToArray, theme, 1500)
+        If Me.theme.drawLabels Then Call TICplot.DrawLabels(g, canvas.PlotRegion(css), labelList.ToArray, theme, 1500)
         If Me.theme.drawLegend Then Call TICplot.DrawTICLegends(g, canvas, legendList.ToArray, 100, outside:=True)
+
+        Call DrawMainTitle(g, plotRegion:=canvas.PlotRegion(css))
     End Sub
 End Class

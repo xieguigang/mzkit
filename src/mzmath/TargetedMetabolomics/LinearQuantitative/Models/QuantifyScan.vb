@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e923a8f5b43461fa59f96fe0ac35a63, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\Models\QuantifyScan.vb"
+﻿#Region "Microsoft.VisualBasic::fc38a701f173eba15423f1ce27d9050b, mzmath\TargetedMetabolomics\LinearQuantitative\Models\QuantifyScan.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 25
-    '    Code Lines: 11
-    ' Comment Lines: 8
-    '   Blank Lines: 6
-    '     File Size: 658 B
+    '   Total Lines: 26
+    '    Code Lines: 10 (38.46%)
+    ' Comment Lines: 11 (42.31%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 5 (19.23%)
+    '     File Size: 709 B
 
 
     '     Class QuantifyScan
     ' 
-    '         Properties: ionPeaks, quantify, rawX
+    '         Properties: quantify, rawX
     ' 
     '         Function: ToString
     ' 
@@ -55,13 +57,14 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 
 Namespace LinearQuantitative
 
-    Public Class QuantifyScan
-
-        Public Property ionPeaks As IonPeakTableRow()
+    ''' <summary>
+    ''' peak data of a single sample file
+    ''' </summary>
+    Public Class QuantifyScan : Inherits DataFile
 
         ''' <summary>
         ''' 定量结果

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::531ad7dff0a5f9a658ceee99def95b36, mzkit\src\metadb\Chemoinformatics\Formula\FormalCharge.vb"
+﻿#Region "Microsoft.VisualBasic::d87980255f467547957938874f565259, metadb\Chemoinformatics\Formula\FormalCharge.vb"
 
     ' Author:
     ' 
@@ -37,23 +37,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 76
-    '    Code Lines: 48
-    ' Comment Lines: 13
-    '   Blank Lines: 15
-    '     File Size: 3.30 KB
+    '   Total Lines: 97
+    '    Code Lines: 62 (63.92%)
+    ' Comment Lines: 19 (19.59%)
+    '    - Xml Docs: 63.16%
+    ' 
+    '   Blank Lines: 16 (16.49%)
+    '     File Size: 3.85 KB
 
 
     '     Module FormalCharge
     ' 
-    '         Function: CorrectChargeEmpirical, EvaluateCharge
+    '         Function: (+2 Overloads) CorrectChargeEmpirical, EvaluateCharge
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports stdNum = System.Math
+Imports System.Runtime.CompilerServices
+Imports std = System.Math
 
 Namespace Formula
 
@@ -62,35 +65,55 @@ Namespace Formula
         ''' <summary>
         ''' Correct charge using rules for an empirical formula
         ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns>Corrected charge</returns>
+        ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CorrectChargeEmpirical(x As Formula) As Double
+            Return CorrectChargeEmpirical(0, New ElementNumType(x))
+        End Function
+
+        ''' <summary>
+        ''' Correct charge using rules for an empirical formula
+        ''' </summary>
         ''' <param name="totalCharge"></param>
-        ''' <param name="elementNum"></param>
         ''' <returns>Corrected charge</returns>
         ''' <remarks></remarks>
         Friend Function CorrectChargeEmpirical(totalCharge As Double, elementNum As ElementNumType) As Double
-            Dim correctedCharge = totalCharge
+            Dim correctedCharge As Double = totalCharge
+            Dim C = elementNum.C
+            Dim Si = elementNum.Si
+            Dim H = elementNum.H
+            Dim N = elementNum.N
+            Dim P = elementNum.P
+            Dim F = elementNum.F
+            Dim Cl = elementNum.Cl
+            Dim Br = elementNum.Br
+            Dim I = elementNum.I
 
-            If elementNum.C + elementNum.Si >= 1 Then
-                If elementNum.H > 0 And stdNum.Abs(Formula.AllAtomElements("H").charge - 1) < Single.Epsilon Then
+            If C + Si >= 1 Then
+                If H > 0 And std.Abs(Formula.AllAtomElements("H").charge - 1) < Single.Epsilon Then
                     ' Since carbon or silicon are present, assume the hydrogens should be negative
                     ' Subtract udtElementNum.H * 2 since hydrogen is assigned a +1 charge if ElementStats(1).Charge = 1
-                    correctedCharge -= elementNum.H * 2
+                    correctedCharge -= H * 2
                 End If
 
                 ' Correct for udtElementNumber of C and Si
-                If elementNum.C + elementNum.Si > 1 Then
-                    correctedCharge -= (elementNum.C + elementNum.Si - 1) * 2
+                If C + Si > 1 Then
+                    correctedCharge -= (C + Si - 1) * 2
                 End If
             End If
 
-            If elementNum.N + elementNum.P > 0 And elementNum.C > 0 Then
+            If N + P > 0 And C > 0 Then
                 ' Assume 2 hydrogens around each Nitrogen or Phosphorus, thus add back +2 for each H
                 ' First, decrease udtElementNumber of halogens by udtElementNumber of hydrogens & halogens taken up by the carbons
                 ' Determine # of H taken up by all the carbons in a compound without N or P, then add back 1 H for each N and P
-                Dim intNumHalogens = elementNum.H + elementNum.F + elementNum.Cl + elementNum.Br + elementNum.I
-                intNumHalogens = intNumHalogens - (elementNum.C * 2 + 2) + elementNum.N + elementNum.P
+                Dim intNumHalogens = H + F + Cl + Br + I
+                intNumHalogens = intNumHalogens - (C * 2 + 2) + N + P
 
                 If intNumHalogens >= 0 Then
-                    For intIndex = 1 To elementNum.N + elementNum.P
+                    For intIndex = 1 To N + P
                         correctedCharge += 2
                         intNumHalogens -= 1
 
@@ -109,7 +132,7 @@ Namespace Formula
             Return correctedCharge
         End Function
 
-        Public Function EvaluateCharge(formula As Formula) As Integer
+        Public Function EvaluateCharge(formula As Formula) As Double
             Dim nC4 As Integer = formula("C") * 3
             Dim nH1 As Integer = formula("H")
             Dim totalCharge As Integer = nC4 - nH1 - 1

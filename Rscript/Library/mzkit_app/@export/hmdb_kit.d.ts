@@ -5,7 +5,7 @@
 // ref=mzkit.HMDBTools@mzkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**
- * toolkit for handling of the hmdb database
+ * ### toolkit for handling of the hmdb database
  *  
  *  The Human Metabolome Database (HMDB) is a comprehensive, high-quality, freely accessible, 
  *  online database of small molecule metabolites found in the human body. It bas been created 
@@ -31,8 +31,8 @@
  *  Four additional databases, DrugBank, T3DB, SMPDB And FooDB are also part Of the HMDB suite Of 
  *  databases. DrugBank contains equivalent information On ~1,600 drug And drug metabolites, T3DB 
  *  contains information On 3,100 common toxins And environmental pollutants, SMPDB contains pathway 
- *  diagrams For 700 human metabolic And disease pathways, While FooDB contains equivalent information 
- *  On ~28,000 food components And food additives.
+ *  diagrams For 700 human metabolic And disease pathways, While FooDB contains equivalent 
+ *  information On ~28,000 food components And food additives.
  * 
 */
 declare namespace hmdb_kit {
@@ -68,8 +68,12 @@ declare namespace hmdb_kit {
         * @param env -
         * 
         * + default value Is ``null``.
+        * @return this function returns the data depends of the **`file`** parameter is
+        *  existsed or not: for ``file`` parameter has been omit, then a vector of the hmdb 
+        *  @``T:BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.MetaDb`` clr object will be returns, otherwise a logical value for indicates 
+        *  the write table file success or not will be returns.
       */
-      function hmdb_table(hmdb: object, file?: any, env?: object): any;
+      function hmdb_table(hmdb: object, file?: any, env?: object): boolean|object;
    }
    /**
     * get metabolite via a given hmdb id from the hmdb.ca online web services
@@ -90,9 +94,14 @@ declare namespace hmdb_kit {
        * 
        * 
         * @param xml the file path of the hmdb metabolite database xml file
+        * @param convert_std convert the metabolite annotation data as the mzkit standard metabolite annotation data model(@``T:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib``)?
+        * 
+        * + default value Is ``false``.
+        * @param tqdm 
+        * + default value Is ``true``.
         * @return this function populate a collection of the hmdb metabolites data
       */
-      function hmdb(xml: string): object;
+      function hmdb(xml: string, convert_std?: boolean, tqdm?: boolean): object;
       /**
        * read hmdb spectral data collection
        * 

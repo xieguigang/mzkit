@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<RootNamespace>mzkit</RootNamespace>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
 		<AssemblyName>mzkit</AssemblyName>
 		<Platforms>AnyCPU;x64</Platforms>
 		<Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release</Configurations>
@@ -16,7 +16,7 @@
 		<PackageIcon>Flask.png</PackageIcon>
     <OutputPath>../..\assembly\</OutputPath>
 		<PackageIconUrl />
-		<RuntimeIdentifiers>win7-x64;win7-x86;win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
+		<RuntimeIdentifiers>win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 		<UseApplicationFramework>True</UseApplicationFramework>
 		<ApplicationIcon>favicon.ico</ApplicationIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -273,6 +273,7 @@
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\GCModeller\core\Bio.InteractionModel\InteractionModel.NET5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\GCModeller\models\Networks\KEGG\KEGGNetwork.NET5.vbproj" />
+	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\graphics.common_runtime\R_graphics.common_runtime.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\repository\Bio.Repository\repository.NET5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\HDSPack\HDSPack.vbproj" />
@@ -289,6 +290,7 @@
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%html\html_netcore5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\workbench\modules\ExperimentDesigner\designer-netcore5.vbproj" />
+	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\workbench\modules\Knowledge_base\ncbi_kb\ncbi_kb.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\assembly\Comprehensive\Comprehensive.NET5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\assembly\LoadR.NET5\LoadR.NET5.vbproj" />
@@ -305,12 +307,14 @@
 	  <ProjectReference Include="..\..\..\..\..\src\metadb\SMILES\SMILES.NET5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\metadb\XrefEngine\XrefEngine.NET5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\metadna\metaDNA\metaDNA.NET5.vbproj" />
+	  <ProjectReference Include="..\..\..\..\..\src\mzmath\GCxGC\GCxGC.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\mzmath\MSEngine\MSEngine.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\mzmath\MSFinder\MSFinder.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\mzmath\Mummichog\Mummichog.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\mzmath\SingleCells\SingleCells.vbproj" />
+	  <ProjectReference Include="..\..\..\..\..\src\mzmath\SpatialMath\SpatialMath.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\visualize\MsImaging\MsImaging.NET5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\visualize\TissueMorphology\TissueMorphology.vbproj" />

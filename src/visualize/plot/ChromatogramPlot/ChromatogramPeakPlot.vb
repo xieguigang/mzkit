@@ -1,54 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::a7cb6779754808366d1f91786395ed66, mzkit\src\visualize\plot\ChromatogramPlot\ChromatogramPeakPlot.vb"
+﻿#Region "Microsoft.VisualBasic::ac925b75735333853e8e1db9f246a9cd, visualize\plot\ChromatogramPlot\ChromatogramPeakPlot.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 209
-'    Code Lines: 158
-' Comment Lines: 25
-'   Blank Lines: 26
-'     File Size: 9.87 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module ChromatogramPeakPlot
-' 
-'     Function: Plot
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 293
+    '    Code Lines: 232 (79.18%)
+    ' Comment Lines: 31 (10.58%)
+    '    - Xml Docs: 90.32%
+    ' 
+    '   Blank Lines: 30 (10.24%)
+    '     File Size: 13.38 KB
+
+
+    ' Class ChromatogramPeakPlot
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Plot
+    ' 
+    '     Sub: DrawChromatogramCurve, DrawLegends, PlotInternal, showMRMRegion
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -67,7 +73,35 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
 
 ''' <summary>
 ''' time -> into
@@ -96,7 +130,7 @@ Public Class ChromatogramPeakPlot : Inherits Plot
 
         Me.chromatogram = TIC
         Me.MRM_ROIs = MRM_ROIs
-        Me.base = chromatogram.Baseline(baselineQuantile)
+        Me.base = chromatogram.SignalBaseline(baselineQuantile)
         Me.showAccumulateLine = showAccumulateLine
         Me.ROI_styleCSS = ROI_styleCSS
         Me.baseLine_styleCSS = baseLine_styleCSS
@@ -118,13 +152,14 @@ Public Class ChromatogramPeakPlot : Inherits Plot
                 accumulate += If(into < 0, 0, into)
                 Return (accumulate / sumAll) * maxInto
             End Function
-        Dim curvePen As Pen = Stroke.TryParse(theme.lineStroke).GDIObject
-        Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS).GDIObject(ppi)
-        Dim ROIpen As Pen = Stroke.TryParse(ROI_styleCSS).GDIObject
-        Dim baselinePen As Pen = Stroke.TryParse(baseLine_styleCSS).GDIObject
-        Dim accumulateLine As Pen = Stroke.TryParse(accumulateLineStyleCss).GDIObject
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim curvePen As Pen = css.GetPen(Stroke.TryParse(theme.lineStroke))
+        Dim titleFont As Font = css.GetFont(CSSFont.TryParse(theme.mainCSS))
+        Dim ROIpen As Pen = css.GetPen(Stroke.TryParse(ROI_styleCSS))
+        Dim baselinePen As Pen = css.GetPen(Stroke.TryParse(baseLine_styleCSS))
+        Dim accumulateLine As Pen = css.GetPen(Stroke.TryParse(accumulateLineStyleCss))
         Dim legends As New List(Of NamedValue(Of Pen))
-        Dim rect As Rectangle = canvas.PlotRegion
+        Dim rect As Rectangle = canvas.PlotRegion(css)
         Dim X = d3js.scale.linear.domain(values:=timeTicks).range(integers:={rect.Left, rect.Right})
         Dim Y = d3js.scale.linear.domain(values:=intoTicks).range(integers:={rect.Top, rect.Bottom})
         Dim scaler As New DataScaler With {
@@ -161,7 +196,7 @@ Public Class ChromatogramPeakPlot : Inherits Plot
         End If
 
         If Not MRM_ROIs.IsNullOrEmpty Then
-            legends += New NamedValue(Of Pen) With {.Name = "Chromatography ROI", .Value = Stroke.TryParse(ROI_styleCSS).GDIObject}
+            legends += New NamedValue(Of Pen) With {.Name = "Chromatography ROI", .Value = css.GetPen(Stroke.TryParse(ROI_styleCSS))}
             legends += New NamedValue(Of Pen) With {.Name = "Baseline", .Value = baselinePen}
         End If
 
@@ -200,7 +235,8 @@ Public Class ChromatogramPeakPlot : Inherits Plot
     End Sub
 
     Private Overloads Sub DrawLegends(legends As List(Of NamedValue(Of Pen)), g As IGraphics, rect As Rectangle)
-        Dim legendFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim legendFont As Font = css.GetFont(CSSFont.TryParse(theme.legendLabelCSS))
         Dim lineWidth% = 100
         Dim maxLegend As SizeF = g.MeasureString(legends.Keys.MaxLengthString, legendFont)
         Dim offset = maxLegend.Height / 2
@@ -230,7 +266,6 @@ Public Class ChromatogramPeakPlot : Inherits Plot
         For Each roi As ROI In MRM_ROIs
             curvePen = New Pen(colors(++i), ROIpen.Width) With {
                 .Alignment = ROIpen.Alignment,
-                .Transform = ROIpen.Transform,
                 .StartCap = ROIpen.StartCap,
                 .MiterLimit = ROIpen.MiterLimit,
                 .LineJoin = ROIpen.LineJoin,

@@ -22,28 +22,21 @@
 
         <h3>Description</h3>
 
-        <p>gdi+ images: <a href="/vignettes/clr/System/Drawing/Image.html">Image</a>, <a href="/vignettes/clr/System/Drawing/Bitmap.html">Bitmap</a> / SVG image: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/SVG/XML/SVGXml.html">SVGXml</a></p>
+        <p>gdi+ images: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Image.html">Image</a>, <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Bitmap.html">Bitmap</a> / SVG image: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/SVG/XML/SvgDocument.html">SvgDocument</a></p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
 # namespace Microsoft.VisualBasic.Imaging.Driver
-export class GraphicsData {
-   # The graphics engine driver type indicator, 
-   # 
-   # <ul>
-   # <li>for <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a>.<a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">GDI</a> -> <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/ImageData.html">ImageData</a>(<a href="/vignettes/clr/System/Drawing/Image.html">Image</a>, <a href="/vignettes/clr/System/Drawing/Bitmap.html">Bitmap</a>)</li>
-   # <li>for <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a>.<a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">SVG</a> -> <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/SVGData.html">SVGData</a>(<a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/SVG/XML/SVGXml.html">SVGXml</a>)
-   # 
-   # (驱动程序的类型)</li>
-   # </ul>
-   Driver: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a>;
+export class GraphicsData extends <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/IGraphicsData.html">IGraphicsData</a> {
    content_type: string;
+   Driver: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a>;
+   Height: integer;
    # The image size
    Layout: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Drawing2D/GraphicsRegion.html">GraphicsRegion</a>;
+   Previews: string;
    Width: integer;
-   Height: integer;
 }
 </code>
         </pre>
@@ -51,6 +44,7 @@ export class GraphicsData {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
+<li>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/IGraphicsData.html">IGraphicsData</a> class: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/IGraphicsData.html">IGraphicsData</a></li>
 <li>use by <i>property</i> member <code>Driver</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a></li>
 <li>use by <i>property</i> member <code>Layout</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Drawing2D/GraphicsRegion.html">GraphicsRegion</a></li>
 </ol>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d31b7ba2592f23d9591b46ed873ac417, mzkit\src\visualize\MsImaging\PixelsCDF.vb"
+﻿#Region "Microsoft.VisualBasic::3d4331d5305d813555f2870e05161fa7, visualize\MsImaging\Layer\PixelsCDF.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 202
-    '    Code Lines: 155
-    ' Comment Lines: 19
-    '   Blank Lines: 28
-    '     File Size: 7.71 KB
+    '   Total Lines: 227
+    '    Code Lines: 166 (73.13%)
+    ' Comment Lines: 30 (13.22%)
+    '    - Xml Docs: 93.33%
+    ' 
+    '   Blank Lines: 31 (13.66%)
+    '     File Size: 8.69 KB
 
 
     ' Module PixelsCDF
@@ -68,8 +70,11 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Language
-Imports stdNum = System.Math
+Imports std = System.Math
 
+''' <summary>
+''' Helper for read/write of the imaging pixel data into cdf file
+''' </summary>
 Public Module PixelsCDF
 
     ''' <summary>
@@ -80,7 +85,11 @@ Public Module PixelsCDF
     ''' <param name="dimension"></param>
     ''' <param name="tolerance"></param>
     <Extension>
-    Public Sub CreateCDF(loadedPixels As PixelData(), file As Stream, dimension As Size, tolerance As Tolerance, Optional rgb As RGBConfigs = Nothing)
+    Public Sub CreateCDF(loadedPixels As PixelData(), file As Stream,
+                         dimension As Size,
+                         tolerance As Tolerance,
+                         Optional rgb As RGBConfigs = Nothing)
+
         Using matrix As New CDFWriter(file)
             Dim mz As New List(Of Double)
             Dim intensity As New List(Of Double)
@@ -95,16 +104,16 @@ Public Module PixelsCDF
                 y.Add(p.y)
             Next
 
-            matrix.GlobalAttributes(New attribute With {.name = "width", .value = dimension.Width, .type = CDFDataTypes.INT})
-            matrix.GlobalAttributes(New attribute With {.name = "height", .value = dimension.Height, .type = CDFDataTypes.INT})
-            matrix.GlobalAttributes(New attribute With {.name = "program", .value = "mzkit_win32", .type = CDFDataTypes.CHAR})
-            matrix.GlobalAttributes(New attribute With {.name = "github", .value = "https://github.com/xieguigang/mzkit", .type = CDFDataTypes.CHAR})
-            matrix.GlobalAttributes(New attribute With {.name = "time", .value = Now.ToString, .type = CDFDataTypes.CHAR})
+            matrix.GlobalAttributes(New attribute With {.name = "width", .value = dimension.Width, .type = CDFDataTypes.NC_INT})
+            matrix.GlobalAttributes(New attribute With {.name = "height", .value = dimension.Height, .type = CDFDataTypes.NC_INT})
+            matrix.GlobalAttributes(New attribute With {.name = "program", .value = "mzkit_win32", .type = CDFDataTypes.NC_CHAR})
+            matrix.GlobalAttributes(New attribute With {.name = "github", .value = "https://github.com/xieguigang/mzkit", .type = CDFDataTypes.NC_CHAR})
+            matrix.GlobalAttributes(New attribute With {.name = "time", .value = Now.ToString, .type = CDFDataTypes.NC_CHAR})
             matrix.Dimensions(New Dimension("pixels", loadedPixels.Length))
 
             Dim mzErr As New attribute With {
                 .name = "tolerance",
-                .type = CDFDataTypes.CHAR,
+                .type = CDFDataTypes.NC_CHAR,
                 .value = tolerance.GetScript
             }
 
@@ -200,7 +209,7 @@ Public Module PixelsCDF
         If Not excludesMz.IsNullOrEmpty Then
             matrix = matrix _
                 .Where(Function(mzi)
-                           Return Not excludesMz.Any(Function(d) stdNum.Abs(d - mzi.mz) <= mzdiff)
+                           Return Not excludesMz.Any(Function(d) std.Abs(d - mzi.mz) <= mzdiff)
                        End Function) _
                 .ToArray
         End If
@@ -247,7 +256,8 @@ Public Module PixelsCDF
                                       Optional offsetX As Integer = 0,
                                       Optional offsetY As Integer = 0,
                                       Optional excludesMz As Double() = Nothing,
-                                      Optional mzdiff As Double = 0.05) As ReadRawPack
+                                      Optional mzdiff As Double = 0.05,
+                                      Optional verbose As Boolean = True) As ReadRawPack
 
         Dim w = Aggregate i In allPixels Into Max(i.X)
         Dim h = Aggregate i In allPixels Into Max(i.Y)
@@ -270,6 +280,6 @@ Public Module PixelsCDF
             End If
         Next
 
-        Return New ReadRawPack(pixels, size, resolution:=17)
+        Return New ReadRawPack(pixels, size, resolution:=17, verbose:=verbose)
     End Function
 End Module

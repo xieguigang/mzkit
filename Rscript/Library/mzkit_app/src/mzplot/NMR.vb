@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c7020fca5b93170beacac0ae8cb3da4, mzkit\Rscript\Library\mzkit.plot\NMR.vb"
+﻿#Region "Microsoft.VisualBasic::88e4aa299d45aec14517cc31bdf60c1a, Rscript\Library\mzkit_app\src\mzplot\NMR.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 55
-    '    Code Lines: 44
-    ' Comment Lines: 3
-    '   Blank Lines: 8
-    '     File Size: 2.37 KB
+    '   Total Lines: 56
+    '    Code Lines: 45 (80.36%)
+    ' Comment Lines: 3 (5.36%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (14.29%)
+    '     File Size: 2.48 KB
 
 
     ' Module plotNMR
@@ -63,16 +65,17 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' plot NMR spectrum data
 ''' </summary>
-<Package("NMR")>
+<Package("plotNMR")>
 Public Module plotNMR
 
     Friend Sub Main()
-        Call Internal.generic.add("plot", GetType(Fid), AddressOf plotFidData)
-        Call Internal.generic.add("plot", GetType(Spectrum), AddressOf plotFrequencyData)
+        Call RInternal.generic.add("plot", GetType(Fid), AddressOf plotFidData)
+        Call RInternal.generic.add("plot", GetType(Spectrum), AddressOf plotFrequencyData)
     End Sub
 
     Public Function plotFrequencyData(freq As Spectrum, args As list, env As Environment) As Object

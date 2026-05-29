@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be71a5d908ad43092ac1ae1fba1c5eab, mzkit\src\assembly\NMRFidTool\Math\apodization\ApodizationTool.vb"
+﻿#Region "Microsoft.VisualBasic::d33d3a39b24d43cf76c0a95c61442345, assembly\NMRFidTool\Math\apodization\ApodizationTool.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 150
-    '    Code Lines: 51
-    ' Comment Lines: 74
-    '   Blank Lines: 25
-    '     File Size: 6.07 KB
+    '   Total Lines: 138
+    '    Code Lines: 51 (36.96%)
+    ' Comment Lines: 74 (53.62%)
+    '    - Xml Docs: 24.32%
+    ' 
+    '   Blank Lines: 13 (9.42%)
+    '     File Size: 6.11 KB
 
 
     '     Class ApodizationTool
@@ -57,30 +59,30 @@
 
 #End Region
 
-''' <summary>
-''' Copyright (C) 2010  Pascal Fricke
-''' Copyright (C) 2000-2010  Kirk Marat, The University of Manitoba
-''' 
-''' 
-''' This file is part of nmr-fid library. 
-''' nmr-fid library is free software: you can redistribute it and/or modify
-''' it under the terms of the GNU General Public License as published by
-''' the Free Software Foundation, either version 3 of the License, or
-''' (at your option) any later version.
-''' 
-''' nmr-fid library is distributed in the hope that it will be useful,
-''' but WITHOUT ANY WARRANTY; without even the implied warranty of
-''' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-''' GNU General Public License for more details.
-''' 
-''' You should have received a copy of the GNU General Public License
-''' along with cuteNMR.  If not, see </>.
-''' 
-''' This code is based upon the libraries released by Dr Kirk Marat from the University
-''' of Manitoba and cuteNMR:
-'''      ftp://davinci.chem.umanitoba.ca/pub/marat/SpinWorks/source_library/
-'''      https://sourceforge.net/projects/cutenmr/
-''' </summary>
+' 
+' Copyright (C) 2010  Pascal Fricke
+' Copyright (C) 2000-2010  Kirk Marat, The University of Manitoba
+' 
+' 
+' This file is part of nmr-fid library. 
+' nmr-fid library is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' nmr-fid library is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with cuteNMR.  If not, see </>.
+' 
+' This code is based upon the libraries released by Dr Kirk Marat from the University
+' of Manitoba and cuteNMR:
+'      ftp://davinci.chem.umanitoba.ca/pub/marat/SpinWorks/source_library/
+'      https://sourceforge.net/projects/cutenmr/
+' 
 Namespace fidMath.Apodization
 
     ''' <summary>
@@ -120,41 +122,29 @@ Namespace fidMath.Apodization
         '        return spectrum;
         '    }
 
-        ''' <summary>
-        ''' performs the exponential apodization of the fid using the function F(x,i)= x.exp(-i*dw*lb)
-        ''' where i*dw gives the time coordinate in (s) and the line broadening is in Hz.
-        ''' The cuteNMR implementation is W(x,i) = x.exp(-(dw*i) * lb * pi)
-        ''' @return
-        ''' </summary>
+        ' <summary>
+        ' performs the exponential apodization of the fid using the function F(x,i)= x.exp(-i*dw*lb)
+        ' where i*dw gives the time coordinate in (s) and the line broadening is in Hz.
+        ' The cuteNMR implementation is W(x,i) = x.exp(-(dw*i) * lb * pi)
+        ' @return
+        ' </summary>
         '    public double [] exponential(){
         '        double data[] = new double[processing.getTdEffective()];
         '        if (acquisitionMode.equals(Acqu.AcquisitionMode.SEQUENTIAL)) {
         '            for (int i =0 ; i< processing.getTdEffective() && i < spectrum.length; i++)
         '                data[i]*= Math.exp(-i*processing.getDwellTime()*Math.PI*processing.getLineBroadning());
-        '''                data[i] = spectrum[i]* Math.exp(-i*processing.getDwellTime()*processing.getLineBroadning());
+        '                data[i] = spectrum[i]* Math.exp(-i*processing.getDwellTime()*processing.getLineBroadning());
         '        } else { // simultaneous data
         '            for (int i =0 ; i< processing.getTdEffective()-1 && i < spectrum.length; i+=2){
         '                double factor = Math.exp(-i*processing.getDwellTime()*Math.PI*processing.getLineBroadning());
-        '''                double factor = Math.exp(-i*processing.getDwellTime()*processing.getLineBroadning());
+        '                double factor = Math.exp(-i*processing.getDwellTime()*processing.getLineBroadning());
         '                data[i]= spectrum[i]* factor;
         '                data[i+1]=spectrum[i+1]* factor;
-        '''                spectrum[i+1]*= Math.exp(-i*processing.getDwellTime()*Math.PI*processing.getLineBroadning());
+        '                spectrum[i+1]*= Math.exp(-i*processing.getDwellTime()*Math.PI*processing.getLineBroadning());
         '            }
         '        }
         '        return data;
         '    }
-
-
-
-
-
-
-
-
-
-
-
-
 
         ''' <summary>
         ''' performs the guassian apodization according to Bramer 2001: F(x,i)=x*exp(-(i*dw*lb)^2)

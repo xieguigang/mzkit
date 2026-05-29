@@ -1,5 +1,5 @@
 .\" man page create by R# package system.
-.TH HMDB_KIT 1 2000-Jan "export.hmdb_table" "export.hmdb_table"
+.TH HMDB_KIT 1 2000-1月 "export.hmdb_table" "export.hmdb_table"
 .SH NAME
 export.hmdb_table \- save the hmdb database as a csv table file
 .SH SYNOPSIS
@@ -22,6 +22,13 @@ save the hmdb database as a csv table file
 .PP
 .PP
 \fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+this function returns the data depends of the **`file`** parameter is
+ existsed or not: for \fBfile\fR parameter has been omit, then a vector of the hmdb 
+ @\fBT:BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.MetaDb\fR clr object will be returns, otherwise a logical value for indicates 
+ the write table file success or not will be returns.
 .PP
 .SH SEE ALSO
 hmdb_kit

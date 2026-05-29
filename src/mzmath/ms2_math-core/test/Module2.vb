@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::077b9c3cb4ef66876ec602d10c6f516b, mzkit\src\mzmath\ms2_math-core\test\Module2.vb"
+﻿#Region "Microsoft.VisualBasic::077b9c3cb4ef66876ec602d10c6f516b, mzmath\ms2_math-core\test\Module2.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 24
-    '    Code Lines: 18
-    ' Comment Lines: 0
-    '   Blank Lines: 6
+    '    Code Lines: 18 (75.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (25.00%)
     '     File Size: 1.06 KB
 
 
@@ -53,8 +55,8 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
-Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework
+Imports Microsoft.VisualBasic.Data.Framework.IO
 
 Module Module2
 

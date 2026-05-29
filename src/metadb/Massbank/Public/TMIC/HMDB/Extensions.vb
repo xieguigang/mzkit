@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5a76eeef2c5aca3d5f83059b6fdd19b, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3c302c0675abac64c032b588a11507bc, metadb\Massbank\Public\TMIC\HMDB\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 304
-    '    Code Lines: 232
-    ' Comment Lines: 34
-    '   Blank Lines: 38
-    '     File Size: 13.38 KB
+    '   Total Lines: 306
+    '    Code Lines: 234 (76.47%)
+    ' Comment Lines: 34 (11.11%)
+    '    - Xml Docs: 94.12%
+    ' 
+    '   Blank Lines: 38 (12.42%)
+    '     File Size: 13.44 KB
 
 
     '     Module HMDBExtensions
@@ -218,8 +220,8 @@ Namespace TMIC.HMDB
         ''' <param name="path$"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function LoadXML(path$) As IEnumerable(Of metabolite)
-            Return metabolite.Load(path)
+        Public Function LoadXML(path$, Optional tqdm As Boolean = True) As IEnumerable(Of metabolite)
+            Return metabolite.Load(path, tqdm:=tqdm)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

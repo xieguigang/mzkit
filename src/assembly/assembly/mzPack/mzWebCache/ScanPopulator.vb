@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5d9380bd3e258e329642d52b59bfd97, mzkit\src\assembly\assembly\mzPack\mzWebCache\ScanPopulator.vb"
+﻿#Region "Microsoft.VisualBasic::36de6d3df39ce308adbb114d2de539c6, assembly\assembly\mzPack\mzWebCache\ScanPopulator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 153
-    '    Code Lines: 123
-    ' Comment Lines: 5
-    '   Blank Lines: 25
-    '     File Size: 6.12 KB
+    '   Total Lines: 232
+    '    Code Lines: 165 (71.12%)
+    ' Comment Lines: 34 (14.66%)
+    '    - Xml Docs: 52.94%
+    ' 
+    '   Blank Lines: 33 (14.22%)
+    '     File Size: 10.18 KB
 
 
     '     Interface IScanReader
@@ -49,6 +51,8 @@
     '         Function: CreateScan
     ' 
     '     Class ScanPopulator
+    ' 
+    '         Properties: verbose
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: CreateScan, CreateScanGeneral, (+2 Overloads) Load, PopulateValidScans, yieldFakeMs1
@@ -64,6 +68,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports std = System.Math
 
 Namespace mzData.mzWebCache
 
@@ -81,6 +86,10 @@ Namespace mzData.mzWebCache
     Public MustInherit Class ScanPopulator(Of Scan) : Implements IScanReader
 
         Protected ms1 As ScanMS1
+
+        ''' <summary>
+        ''' cache of the current MSn products list, this cache pool will be clear when move to next MS1 scan data.
+        ''' </summary>
         Protected products As New List(Of ScanMS2)
         Protected trim As LowAbundanceTrimming
         Protected ms1Err As Tolerance
@@ -88,6 +97,8 @@ Namespace mzData.mzWebCache
 
         Protected ReadOnly reader As MsDataReader(Of Scan)
         Protected ReadOnly invalidScans As New List(Of Scan)
+
+        Public Property verbose As Boolean = False
 
         Sub New(mzErr As String, intocutoff As Double)
             ms1Err = Tolerance.ParseScript(mzErr)
@@ -167,6 +178,7 @@ Namespace mzData.mzWebCache
         Public Iterator Function Load(scans As IEnumerable(Of Scan), Optional progress As Action(Of String) = Nothing) As IEnumerable(Of ScanMS1)
             Dim i As i32 = 1
             Dim ms1Yields As Integer = 0
+            Dim lastProduct As New Dictionary(Of String, ScanMS2)
 
             For Each scan As Scan In PopulateValidScans(scans)
                 Dim scanVal As MSScan = CreateScan(scan, ++i)
@@ -183,11 +195,65 @@ Namespace mzData.mzWebCache
 
                     ms1 = scanVal
                 Else
-                    Call products.Add(scanVal)
+                    ' 20250401 the scan model is the mzkit mzpack data model
+                    ' scan id is not the raw id string that parsed from the
+                    ' xml file
+                    ' MS level prefix has been added into this scan id data
+                    ' MS1 - for mslevel = 1
+                    ' MS/MS - for mslevel = 2
+                    ' MSx - for mslevel > 2
+                    Dim isMS2 As Boolean = InStr(scanVal.scan_id, "MS/MS") > 0
+                    Dim parent_id As String = reader.GetParentScanNumber(scan)
+
+                    If parent_id Is Nothing AndAlso products.Any AndAlso Not isMS2 Then
+                        ' 20250401
+                        ' is MSn scan but missing parent scan id,
+                        ' this happends in mzML rawdata file, but
+                        ' the mzXML file does not.
+                        ' needs fix this problem for mzML file.
+                        Dim parentMz As Double = DirectCast(scanVal, ScanMS2).parentMz
+                        Dim check As ScanMS2 = products _
+                            .AsParallel _
+                            .Where(Function(ms2)
+                                       If ms2.mz Is Nothing Then
+                                           Return False
+                                       Else
+                                           For Each mzi As Double In ms2.mz
+                                               If std.Abs(mzi - parentMz) < 0.1 Then
+                                                   Return True
+                                               End If
+                                           Next
+
+                                           Return False
+                                       End If
+                                   End Function) _
+                            .OrderByDescending(Function(a) a.rt) _
+                            .FirstOrDefault
+
+                        If Not check Is Nothing Then
+                            parent_id = check.scan_id
+                        Else
+                            parent_id = products.Last.scan_id
+                        End If
+                    End If
+
+                    If isMS2 OrElse parent_id Is Nothing Then
+                        Call products.Add(scanVal)
+                    ElseIf lastProduct.ContainsKey(parent_id) Then
+                        lastProduct(parent_id).product = scanVal
+                    Else
+                        Call products.Add(scanVal)
+                        Call $"missing precursor scan of number({parent_id}) for {scanVal.scan_id}".Warning
+                    End If
+
+                    ' add current product scan to the hash index
+                    ' for build next tree node
+                    Call lastProduct.Add(reader.GetScanNumber(scan), scanVal)
+                    Call lastProduct.Add(scanVal.scan_id, scanVal)
                 End If
 
                 ' adjust to 17 for make progress less verbose
-                If isMs1 AndAlso progress IsNot Nothing AndAlso CInt(i) Mod 17 = 0 Then
+                If isMs1 AndAlso progress IsNot Nothing AndAlso CInt(i) Mod 111 = 0 Then
                     Call progress(scanVal.scan_id)
                 End If
             Next

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>load_asQueryHits</title>
+    <title>cast the given dataframe as the ion feature annotation result</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>load_asQueryHits</h2>
+        <h2>cast the given dataframe as the ion feature annotation result</h2>
 
         <h3>Description</h3>
 
-        load_asQueryHits
+        
 
         <h3>Usage</h3>
 
@@ -34,6 +34,20 @@
 
         <table>
             
+<dt>x</dt>
+<dd><p>a dataframe of the ion annotation data that required of the data fields:
+ 
+ 1. unique_id: metabolite reference id
+ 2. name: metabolite name
+ 3. mz: target ion feature m/z value
+ 4. ppm: the ppm error between the sample m/z and evaluated mz valuefrom the exact mass
+ 5. adducts: ion feature adducts type for the annotation
+ 6. score: the ion annotation score for the result. [as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Internal/Object/dataframe.html">dataframe</a>]</p></dd>
+
+
+<dt>env</dt>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
+
         </table>
 
 

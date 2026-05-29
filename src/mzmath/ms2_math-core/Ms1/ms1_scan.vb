@@ -1,56 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::5e97d6823d3d3bc57d4b0f3b10dc79eb, mzkit\src\mzmath\ms2_math-core\Ms1\ms1_scan.vb"
+﻿#Region "Microsoft.VisualBasic::e24b40559b151a48dca6399f1ba6c443, mzmath\ms2_math-core\Ms1\ms1_scan.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 55
-'    Code Lines: 35
-' Comment Lines: 14
-'   Blank Lines: 6
-'     File Size: 2.31 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class ms1_scan
-' 
-'     Properties: intensity, mz, scan_time
-' 
-'     Function: GroupByMz, ToString
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 42 (58.33%)
+    ' Comment Lines: 21 (29.17%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (12.50%)
+    '     File Size: 2.81 KB
+
+
+    ' Class ms1_scan
+    ' 
+    '     Properties: intensity, mz, scan_time
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    '     Function: GroupByMz, ToString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -64,11 +67,31 @@ Imports std = System.Math
 ''' <summary>
 ''' A TICPoint [mz, rt, intensity]
 ''' </summary>
+''' <remarks>
+''' a <see cref="ITimeSignal"/> data point
+''' </remarks>
 Public Class ms1_scan : Implements IMs1, IMs1Scan, INumericKey, ITimeSignal
 
     <XmlAttribute> Public Property mz As Double Implements IMs1.mz, INumericKey.key
     <XmlAttribute> Public Property scan_time As Double Implements IMs1.rt, ITimeSignal.time
     <XmlAttribute> Public Property intensity As Double Implements IMs1Scan.intensity, ITimeSignal.intensity
+
+    Sub New()
+    End Sub
+
+    Sub New(mz As Double, rt As Double, intensity As Double)
+        _mz = mz
+        _scan_time = rt
+        _intensity = intensity
+    End Sub
+
+    ''' <summary>
+    ''' make value copy from an general abstract ms1 scatter peak model.
+    ''' </summary>
+    ''' <param name="scan"></param>
+    Sub New(scan As IMs1Scan)
+        Call Me.New(scan.mz, scan.rt, scan.intensity)
+    End Sub
 
     Public Overrides Function ToString() As String
         Return $"{mz.ToString("F4")}@{std.Round(scan_time)} ({intensity})"

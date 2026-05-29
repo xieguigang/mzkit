@@ -43,6 +43,18 @@ declare namespace GCxGC {
    */
    function demodulate_2D(rawdata: any, modtime: number, env?: object): object;
    /**
+    * make 2d peak detection and extract the related peak feature ROI set
+    * 
+    * 
+     * @param raw the GCxGC rawdata set, should be one encoded GCxGC @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack`` rawdata object, 
+     *  or a deconded GCxGC @``T:BioNovoGene.Analytical.MassSpectrometry.GCxGC.DimensionalSpectrum`` dimension 1 rawdata.
+     * @param rt_win 
+     * + default value Is ``[3,8]``.
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function extract_2D_peaks(raw: any, rt_win?: any, env?: object): object;
+   /**
     * extract GCxGC 2d peaks from the mzpack raw data file
     * 
     * > this function will extract the TIC data by default.
@@ -60,7 +72,7 @@ declare namespace GCxGC {
      * @param env 
      * + default value Is ``null``.
    */
-   function extract_2D_peaks(raw: object, mz?: number, mzdiff?: any, env?: object): object;
+   function extract_xic_layer(raw: object, mz?: number, mzdiff?: any, env?: object): object;
    module read {
       /**
        * read GCxGC 2D Chromatogram data from a given netcdf file.

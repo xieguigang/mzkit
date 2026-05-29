@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::210565aa034a4f531af861f1ce5cf44e, mzkit\src\assembly\assembly\MarkupData\mzXML\MsData\MSData.vb"
+﻿#Region "Microsoft.VisualBasic::e5b5356b24b84c2a862e564b3024012c, assembly\assembly\MarkupData\mzXML\MsData\MSData.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
-    '    Code Lines: 22
-    ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 997 B
+    '   Total Lines: 40
+    '    Code Lines: 26 (65.00%)
+    ' Comment Lines: 7 (17.50%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (17.50%)
+    '     File Size: 1.39 KB
 
 
     '     Class MSData
@@ -49,7 +51,7 @@
     '         Properties: dataProcessing, endTime, msInstrument, parentFile, scanCount
     '                     scans, startTime
     ' 
-    '         Function: ToString
+    '         Function: GenericEnumerator, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -58,14 +60,14 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Linq
 
 Namespace MarkupData.mzXML
 
-    <XmlType("msRun")> Public Class MSData
+    ''' <summary>
+    ''' a collection of the ms <see cref="scan"/> data
+    ''' </summary>
+    <XmlType("msRun")> Public Class MSData : Implements Enumeration(Of scan)
 
         <XmlAttribute> Public Property scanCount As Integer
         <XmlAttribute> Public Property startTime As String
@@ -75,6 +77,10 @@ Namespace MarkupData.mzXML
         Public Property msInstrument As msInstrument
         Public Property dataProcessing As dataProcessing
 
+        ''' <summary>
+        ''' the mass spectrum scan data collection
+        ''' </summary>
+        ''' <returns></returns>
         <XmlElement("scan")>
         Public Property scans As scan()
 
@@ -83,5 +89,12 @@ Namespace MarkupData.mzXML
             Return parentFile.ToString
         End Function
 
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of scan) Implements Enumeration(Of scan).GenericEnumerator
+            If Not scans Is Nothing Then
+                For Each scan As scan In scans
+                    Yield scan
+                Next
+            End If
+        End Function
     End Class
 End Namespace

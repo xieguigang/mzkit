@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53c53be0fd6d7ba48e56f9b823bbfe0a, mzkit\src\metadb\MoNA\ReaderViews.vb"
+﻿#Region "Microsoft.VisualBasic::8242b16da5ac8cc59ce1f2a0fe60da65, metadb\MoNA\ReaderViews.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 94
-    '    Code Lines: 73
-    ' Comment Lines: 6
-    '   Blank Lines: 15
-    '     File Size: 2.86 KB
+    '   Total Lines: 91
+    '    Code Lines: 70 (76.92%)
+    ' Comment Lines: 6 (6.59%)
+    '    - Xml Docs: 83.33%
+    ' 
+    '   Blank Lines: 15 (16.48%)
+    '     File Size: 2.89 KB
 
 
     ' Module ReaderViews
@@ -53,9 +55,6 @@
 
 #End Region
 
-#If netcore5 = 0 Then
-Imports System.Data.Linq.Mapping
-#End If
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Scripting.Runtime

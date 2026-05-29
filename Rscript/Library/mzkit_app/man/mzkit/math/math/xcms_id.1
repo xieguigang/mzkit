@@ -1,20 +1,30 @@
 .\" man page create by R# package system.
-.TH MATH 4 2000-Jan "xcms_id" "xcms_id"
+.TH MATH 4 2000-1月 "xcms_id" "xcms_id"
 .SH NAME
 xcms_id \- makes xcms_id format liked ROI unique id
 .SH SYNOPSIS
 \fIxcms_id(\fBmz\fR as double, 
-\fBrt\fR as double);\fR
+\fBrt\fR as double, 
+\fBprefix\fR as string = "", 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
 makes xcms_id format liked ROI unique id
 .PP
 .SH OPTIONS
 .PP
-\fBmz\fB \fR\- -. 
+\fBmz\fB \fR\- a numeric vector of the ion m/z value. 
 .PP
 .PP
-\fBrt\fB \fR\- -. 
+\fBrt\fB \fR\- the corresponding scan time rt vector.. 
+.PP
+.SH VALUE
+.PP
+a character vector of the generated unique id based on the given m/z and rt ROI features.
+.PP
+.SH DETAILS
+.PP
+the dimension size of the ion m/z vector and the corresponding scan time vector should be equals.
 .PP
 .SH SEE ALSO
 math

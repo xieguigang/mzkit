@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da9195e916225859407a710d97056eea, mzkit\src\metadb\Massbank\test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::eb6c369b27c8a0f374dde9e73a6cef0a, metadb\Massbank\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 74
-    '    Code Lines: 53
-    ' Comment Lines: 9
-    '   Blank Lines: 12
-    '     File Size: 2.92 KB
+    '    Code Lines: 53 (71.62%)
+    ' Comment Lines: 9 (12.16%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (16.22%)
+    '     File Size: 3.00 KB
 
 
     '     Class MySettings

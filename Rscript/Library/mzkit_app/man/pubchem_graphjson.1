@@ -1,21 +1,25 @@
-﻿.TH PUBCHEM_GRAPHJSON 1 2024-Jan "" "Parse the pugview xml as the metabolite data object"
+﻿.TH PUBCHEM_GRAPHJSON 1 2026-5月 "" "Parse the pugview xml as the metabolite data object"
 .SH NAME
 pubchem_graphjson \- pubchem_graphjson(dataXml,
     <i>process</i> = <span style='color: blue !important;'>NULL</span>,
-    <i>extensionCache</i> = ./.cache/extdata/)
+    <i>extensionCache</i> = <span style='color: brown;'><strong>'./.cache/extdata/'</strong></span>)
 .SH SYNOPSIS
 \fIpubchem_graphjson(dataXml,
     <i>process</i> = <span style='color: blue !important;'>NULL</span>,
-    <i>extensionCache</i> = ./.cache/extdata/)\fR
+    <i>extensionCache</i> = <span style='color: brown;'><strong>'./.cache/extdata/'</strong></span>)\fR
 .SH OPTIONS
 .PP
 \fBdataXml\fB \fR\- . the xml content of the pugview data object
 .PP
 .PP
-\fBprocess\fB \fR\- NULL. a callable function that used for additional object processing, example like attach a additional database cross reference id to the xrefs of the generated pugview metabolite data object
+\fBprocess\fB \fR\- NULL. a callable function that used for additional object processing, example like
+attach a additional database cross reference id to the xrefs of the generated pugview
+metabolite data object
 .PP
 .PP
-\fBextensionCache\fB \fR\- ./.cache/extdata/. a cache dir for save the extension data of the current metabolite object, example as pathway query, reaction query, and reaction query. This parameter value also could be a filesystem wrapper object.
+\fBextensionCache\fB \fR\- './.cache/extdata/'. a cache dir for save the extension data of the current metabolite object,
+example as pathway query, reaction query, and reaction query. This parameter value also
+could be a filesystem wrapper object.
 .PP
 .SH VALUE
 .PP
@@ -26,4 +30,4 @@ A generated metabolite object that could be used for dump well formatted json
 SMRUCC/R#.declare_function.pubchem_graphjson at graph_json.R:line 15
 .PP
 .SH COPYRIGHT
-Copyright © xieguigang, MIT Licensed 2024
+Copyright © xieguigang, MIT Licensed 2026

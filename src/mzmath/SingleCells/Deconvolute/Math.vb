@@ -1,69 +1,75 @@
-﻿#Region "Microsoft.VisualBasic::5b68614dd78aa5bb23387afc3d2c6e08, mzkit\src\mzmath\SingleCells\Deconvolute\Math.vb"
+﻿#Region "Microsoft.VisualBasic::e577b462a9257235ec7f1000a098c77b, mzmath\SingleCells\Deconvolute\Math.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 104
-'    Code Lines: 60
-' Comment Lines: 31
-'   Blank Lines: 13
-'     File Size: 4.00 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Math
-' 
-'         Function: DeconvoluteScan, (+3 Overloads) GetMzIndex
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 167
+    '    Code Lines: 106 (63.47%)
+    ' Comment Lines: 34 (20.36%)
+    '    - Xml Docs: 85.29%
+    ' 
+    '   Blank Lines: 27 (16.17%)
+    '     File Size: 6.74 KB
+
+
+    '     Module Math
+    ' 
+    '         Function: (+5 Overloads) GetMzIndex, GetMzIndexFastBin
+    '         Class IndexTask
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: Solve
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Parallel
-Imports std = System.Math
 
 Namespace Deconvolute
 
@@ -77,7 +83,7 @@ Namespace Deconvolute
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function GetMzIndex(raw As IMZPack, mzdiff As Double, topN As Integer) As Double()
+        Public Function GetMzIndex(raw As IMZPack, mzdiff As Double, topN As Integer) As MassWindow()
             Dim scanMz As New List(Of Double)
             Dim top As IEnumerable(Of ms2)
 
@@ -104,7 +110,7 @@ Namespace Deconvolute
         ''' </returns>
         Public Function GetMzIndex(raw As IMZPack, mzdiff As Double, freq As Double,
                                    Optional fast As Boolean = True,
-                                   Optional verbose As Boolean = False) As Double()
+                                   Optional verbose As Boolean = False) As MassWindow()
             If fast Then
                 Dim scanMz As New List(Of Double())
 
@@ -112,32 +118,13 @@ Namespace Deconvolute
                     Call scanMz.Add(x)
                 Next
 
-                scanMz.Shuffle
-                ' VectorTask.n_threads = App.CPUCoreNumbers
+                Call scanMz.Shuffle
 
                 If verbose Then
                     Call VBDebugger.EchoLine($"processing {scanMz.Count} ion feature blocks...")
                 End If
 
-                Dim par As New IndexTask(scanMz, mzdiff, verbose)
-                Dim subgroups = DirectCast(par.Run(), IndexTask).groups
-                Dim merge = subgroups.IteratesALL _
-                    .Where(Function(n) n.Length > 0) _
-                    .GroupBy(Function(a) a.Average, offsets:=mzdiff) _
-                    .ToArray
-                Dim bins = merge _
-                    .Select(Function(g)
-                                Dim bin As Double() = g _
-                                    .Select(Function(i) i.value) _
-                                    .IteratesALL _
-                                    .ToArray
-
-                                Return New NamedCollection(Of Double)(bin.Average.ToString, bin)
-                            End Function) _
-                    .OrderByDescending(Function(g) g.Length) _
-                    .ToArray
-
-                Return GetMzIndex(bins, freq)
+                Return GetMzIndexFastBin(scanMz, mzdiff, freq, verbose:=verbose)
             Else
                 Dim scanMz As New List(Of Double)
 
@@ -147,6 +134,29 @@ Namespace Deconvolute
 
                 Return GetMzIndex(scanMz, mzdiff, freq)
             End If
+        End Function
+
+        <Extension>
+        Public Function GetMzIndexFastBin(scanMz As List(Of Double()), mzdiff As Double, freq As Double, Optional verbose As Boolean = False) As MassWindow()
+            Dim par As New IndexTask(scanMz, mzdiff, verbose)
+            Dim subgroups = DirectCast(par.Run(), IndexTask).groups
+            Dim merge = subgroups.IteratesALL _
+                .Where(Function(n) n.Length > 0) _
+                .GroupBy(Function(a) a.Average, offsets:=mzdiff) _
+                .ToArray
+            Dim bins = merge _
+                .Select(Function(g)
+                            Dim bin As Double() = g _
+                                .Select(Function(i) i.value) _
+                                .IteratesALL _
+                                .ToArray
+
+                            Return New NamedCollection(Of Double)(bin.Average.ToString, bin)
+                        End Function) _
+                .OrderByDescending(Function(g) g.Length) _
+                .ToArray
+
+            Return GetMzIndex(bins, freq)
         End Function
 
         Private Class IndexTask : Inherits VectorTask
@@ -160,7 +170,7 @@ Namespace Deconvolute
 
                 Me.blocks = blocks
                 Me.mzdiff = mzdiff
-                Me.groups = Me.Allocate(Of NamedCollection(Of Double)())()
+                Me.groups = Me.Allocate(Of NamedCollection(Of Double)())(all:=False)
             End Sub
 
             Protected Overrides Sub Solve(start As Integer, ends As Integer, thread_id As Integer)
@@ -175,7 +185,7 @@ Namespace Deconvolute
         End Class
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetMzIndex(raw As IEnumerable(Of ms2), mzdiff As Double, freq As Double) As Double()
+        Public Function GetMzIndex(raw As IEnumerable(Of ms2), mzdiff As Double, freq As Double) As MassWindow()
             Return GetMzIndex(raw.Select(Function(r) r.mz), mzdiff, freq)
         End Function
 
@@ -187,15 +197,15 @@ Namespace Deconvolute
         ''' </param>
         ''' <param name="freq"></param>
         ''' <returns></returns>
-        Private Function GetMzIndex(mzBins As NamedCollection(Of Double)(), freq As Double) As Double()
+        Private Function GetMzIndex(mzBins As NamedCollection(Of Double)(), freq As Double) As MassWindow()
             Dim counts As Vector = mzBins.Select(Function(a) a.Length).AsVector
             ' normalize to [0,1]
             Dim norm As Vector = counts / counts.Max
             Dim n As Integer = (norm > freq).Sum
-            Dim mzUnique As Double() = mzBins _
+            Dim mzUnique As MassWindow() = mzBins _
                 .Take(n) _
-                .Select(Function(v) v.Average) _
-                .OrderBy(Function(mzi) mzi) _
+                .Select(Function(v) New MassWindow(v)) _
+                .OrderBy(Function(mzi) mzi.mass) _
                 .ToArray
 
             Return mzUnique
@@ -208,7 +218,7 @@ Namespace Deconvolute
         ''' <param name="mzdiff"></param>
         ''' <param name="freq">[0,1] percentage</param>
         ''' <returns></returns>
-        Public Function GetMzIndex(scanMz As IEnumerable(Of Double), mzdiff As Double, freq As Double) As Double()
+        Public Function GetMzIndex(scanMz As IEnumerable(Of Double), mzdiff As Double, freq As Double) As MassWindow()
             Dim mzBins As NamedCollection(Of Double)() = scanMz _
                 .GroupBy(offset:=mzdiff) _
                 .Where(Function(v) v.Length > 0) _
@@ -216,52 +226,6 @@ Namespace Deconvolute
                 .ToArray
 
             Return GetMzIndex(mzBins, freq)
-        End Function
-
-        <Extension>
-        Public Function DeconvoluteMS(sp As LibraryMatrix, len As Integer, mzIndex As BlockSearchFunction(Of (mz As Double, Integer))) As Double()
-            Return DeconvoluteScan(sp.Select(Function(a) a.mz).ToArray, sp.Select(Function(a) a.intensity).ToArray, len, mzIndex)
-        End Function
-
-        ''' <summary>
-        ''' make alignment of the scan data to a given set of the mz index data
-        ''' </summary>
-        ''' <param name="mz"></param>
-        ''' <param name="into"></param>
-        ''' <param name="len"></param>
-        ''' <param name="mzIndex"></param>
-        ''' <returns>
-        ''' a vector of the intensity data which is aligned with the mz vector
-        ''' </returns>
-        Public Function DeconvoluteScan(mz As Double(),
-                                        into As Double(),
-                                        len As Integer,
-                                        mzIndex As BlockSearchFunction(Of (mz As Double, Integer))) As Double()
-
-            Dim v As Double() = New Double(len - 1) {}
-            Dim mzi As Double
-            Dim hit As (mz As Double, idx As Integer)
-            Dim scan_size As Integer = mz.Length
-
-            For i As Integer = 0 To scan_size - 1
-                mzi = mz(i)
-                hit = mzIndex _
-                    .Search((mzi, -1)) _
-                    .OrderBy(Function(a) std.Abs(a.mz - mzi)) _
-                    .FirstOrDefault
-
-                If hit.mz < 1 AndAlso hit.idx = 0 Then
-                    ' 20221102
-                    '
-                    ' missing data
-                    ' could be caused by the selective ion data export
-                    ' just ignores of this problem
-                Else
-                    v(hit.idx) += into(i)
-                End If
-            Next
-
-            Return v
         End Function
     End Module
 End Namespace

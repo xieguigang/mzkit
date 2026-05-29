@@ -1,5 +1,5 @@
 .\" man page create by R# package system.
-.TH MZPACK 1 2000-Jan "scaninfo" "scaninfo"
+.TH MZPACK 1 2000-1月 "scaninfo" "scaninfo"
 .SH NAME
 scaninfo \- get ms scan information metadata list
 .SH SYNOPSIS
@@ -15,6 +15,17 @@ get ms scan information metadata list
 .PP
 .PP
 \fBindex\fB \fR\- the scan id of the target ms1 scan data. 
+.PP
+.SH EXAMPLES
+.PP
+let rawdata = open.mzpack(file = "./rawdata.mzPack");
+ let scan_id = mzPack::ls(mzpack = rawdata);
+ 
+ print(scan_id);
+ 
+ for(id in scan_id) {
+     str(mzPack::scaninfo(rawdata, id));
+ }
 .PP
 .SH SEE ALSO
 mzPack

@@ -1,9 +1,111 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::a6bd640ed257883bb0f678c3a6810ac0, metadb\SMILES\Embedding\Embedding.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 136
+    '    Code Lines: 114 (83.82%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 22 (16.18%)
+    '     File Size: 5.40 KB
+
+
+    '     Class VectorEmbedding
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Cosine, Euclidean, Jaccard
+    ' 
+    '     Module Embedding
+    ' 
+    '         Function: GetAtomTable, GraphEmbedding
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Embedding
+
+    Public Class VectorEmbedding
+
+        ReadOnly v1 As AtomLink(), v2 As AtomLink()
+        ReadOnly unique_keys As String()
+        ReadOnly key1 As String()
+        ReadOnly key2 As String()
+        ReadOnly u As Double()
+        ReadOnly v As Double()
+
+        Sub New(v1 As AtomLink(), v2 As AtomLink())
+            Dim w1 = v1.Select(Function(vi) (vi.GetSortUniqueId, vi.score)).GroupBy(Function(a) a.GetSortUniqueId).ToDictionary(Function(a) a.Key, Function(a) a.Sum(Function(vi) vi.score))
+            Dim w2 = v2.Select(Function(vi) (vi.GetSortUniqueId, vi.score)).GroupBy(Function(a) a.GetSortUniqueId).ToDictionary(Function(a) a.Key, Function(a) a.Sum(Function(vi) vi.score))
+            Dim unique_labels As String() = w1.JoinIterates(w2).Select(Function(vi) vi.Key).Distinct.ToArray
+            Dim u As Double() = (From link As String In unique_labels Select w1.TryGetValue(link, [default]:=0.0)).ToArray
+            Dim v As Double() = (From link As String In unique_labels Select w2.TryGetValue(link, [default]:=0.0)).ToArray
+
+            Me.key1 = w1.Keys.ToArray
+            Me.key2 = w2.Keys.ToArray
+            Me.v1 = v1
+            Me.v2 = v2
+            Me.unique_keys = unique_labels
+            Me.u = u
+            Me.v = v
+        End Sub
+
+        Public Function Cosine() As Double
+            Return SSM_SIMD(u, v)
+        End Function
+
+        Public Function Euclidean() As Double
+            Return u.EuclideanDistance(v)
+        End Function
+
+        Public Function Jaccard() As Double
+            Return key1.jaccard_coeff(key2) * 2
+        End Function
+
+    End Class
 
     <HideModuleName>
     Public Module Embedding
@@ -27,7 +129,9 @@ Namespace Embedding
                         .Select(Function(a)
                                     Return $"{CInt(a.keys)}({a.Item2.group})"
                                 End Function) _
-                        .ToArray
+                        .ToArray,
+                    .graph_id = e.graph_id,
+                    .aromatic = e.aromatic
                 }
 
                 Yield atom

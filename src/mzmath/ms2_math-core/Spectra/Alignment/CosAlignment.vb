@@ -1,56 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::e863c3f63f4a3bb248dff26d1a855230, mzkit\src\mzmath\ms2_math-core\Spectra\Alignment\CosAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::2c408428b45b3ee18bc73d94556b0ea3, mzmath\ms2_math-core\Spectra\Alignment\CosAlignment.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 71
-'    Code Lines: 48
-' Comment Lines: 7
-'   Blank Lines: 16
-'     File Size: 2.65 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class CosAlignment
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: (+2 Overloads) GetScore
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 53 (63.86%)
+    ' Comment Lines: 13 (15.66%)
+    '    - Xml Docs: 84.62%
+    ' 
+    '   Blank Lines: 17 (20.48%)
+    '     File Size: 3.15 KB
+
+
+    '     Class CosAlignment
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetCosScore, (+2 Overloads) GetScore
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -59,7 +61,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 Imports vec = Microsoft.VisualBasic.Math
 
 Namespace Spectra
@@ -77,14 +79,20 @@ Namespace Spectra
             MyBase.New(mzwidth, intocutoff)
 
             Select Case aggregate
-                Case ScoreAggregates.min : scoreAggregate = AddressOf stdNum.Min
-                Case ScoreAggregates.max : scoreAggregate = AddressOf stdNum.Max
+                Case ScoreAggregates.min : scoreAggregate = AddressOf std.Min
+                Case ScoreAggregates.max : scoreAggregate = AddressOf std.Max
                 Case ScoreAggregates.sum : scoreAggregate = Function(a, b) a + b
                 Case Else
                     Throw New InvalidProgramException(aggregate)
             End Select
         End Sub
 
+        ''' <summary>
+        ''' default is get min score of forward and reverse
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         Public Overrides Function GetScore(a As ms2(), b As ms2()) As Double
             Dim scores = GlobalAlignment.TwoDirectionSSM(a, b, mzwidth)
             Dim min As Double = scoreAggregate(scores.forward, scores.reverse)

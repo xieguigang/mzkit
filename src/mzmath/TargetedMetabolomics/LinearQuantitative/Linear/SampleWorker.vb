@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f3888d4dc0861e87488bb3e52157fca, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\Linear\SampleWorker.vb"
+﻿#Region "Microsoft.VisualBasic::b29b967501c8892c1d3a2002cdcc4950, mzmath\TargetedMetabolomics\LinearQuantitative\Linear\SampleWorker.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 108
-    '    Code Lines: 78
-    ' Comment Lines: 15
-    '   Blank Lines: 15
-    '     File Size: 4.57 KB
+    '    Code Lines: 78 (72.22%)
+    ' Comment Lines: 15 (13.89%)
+    '    - Xml Docs: 86.67%
+    ' 
+    '   Blank Lines: 15 (13.89%)
+    '     File Size: 4.58 KB
 
 
     '     Module SampleWorker
@@ -56,7 +58,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 

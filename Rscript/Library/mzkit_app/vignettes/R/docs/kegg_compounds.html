@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title><p>Load the kegg database for the annotation</p></title>
+    <title>Load the kegg database for the annotation</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -18,7 +18,7 @@
             </tr>
         </table>
 
-        <h2><p>Load the kegg database for the annotation</p></h2>
+        <h2>Load the kegg database for the annotation</h2>
 
         <h3>Description</h3>
 
@@ -28,9 +28,9 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>kegg_compounds</strong>(
-    <i>precursors</i> = [[M]+, [M+H]+, [M+H-H2O]+],
-    <i>mzdiff</i> = ppm:20,
-    <i>repofile</i> = KEGG_compounds.msgpack,
+    <i>precursors</i> = [<span style='color: brown;'><strong>'[M+H]+'</strong></span>,<span style='color: brown;'><strong>'[M+H-H2O]+'</strong></span>],
+    <i>mzdiff</i> = <span style='color: brown;'><strong>'ppm:20'</strong></span>,
+    <i>repofile</i> = <span style='color: brown;'><strong>'KEGG_compounds.msgpack'</strong></span>,
     <i>strict</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
@@ -38,6 +38,26 @@
 
         <table>
             
+<dt>precursors</dt>
+<dd><p><p>a character vector of the precursor adducts type,
+apply for the precursor m/z evaluation.</p></p></dd>
+
+
+<dt>mzdiff</dt>
+<dd><p><p>a tolerance error value for make ms1 matches</p></p></dd>
+
+
+<dt>repofile</dt>
+<dd><p><p>the local database file for the kegg compounds. should be a
+messagepack data file of a collection of the GCModeller compound object.</p></p></dd>
+
+
+<dt>strict</dt>
+<dd><p><p>option strict for check of the file exists or not of the repo file.
+an error was throw if the given repo file is missing from the local filesystem,
+or use the kegg compound data repo file from GCModeller internal resource file
+if not strict and also the given repo file is invalid</p></p></dd>
+
         </table>
 
 
@@ -51,7 +71,7 @@
 
         <h3>Value</h3>
 
-        This function has no value returns.
+        <p>a wrapper of the mass search engine which have kegg compound library loaded.</p>
 
         <h3 style="display: none;">Examples</h3>
 

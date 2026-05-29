@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d862072387a9d63f9bec850f5ce5d06, mzkit\src\visualize\SDF.Extensions\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::8491a87d0b8d128c23a520531822b291, visualize\SDF.Extensions\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 74
-    '    Code Lines: 53
-    ' Comment Lines: 9
-    '   Blank Lines: 12
-    '     File Size: 2.98 KB
+    '    Code Lines: 53 (71.62%)
+    ' Comment Lines: 9 (12.16%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (16.22%)
+    '     File Size: 3.05 KB
 
 
     '     Class MySettings

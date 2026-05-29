@@ -1,4 +1,4 @@
-# MSI
+﻿# MSI
 
 MS-Imaging data handler
  
@@ -6,6 +6,7 @@ MS-Imaging data handler
  to visualize the spatial distribution of molecules, as biomarkers, 
  metabolites, peptides or proteins by their molecular masses.
 
++ [index_reader](MSI/index_reader.1) create memory index reader for the large profile raw MS data
 + [scale](MSI/scale.1) scale the spatial matrix by column
 + [msi_metadata](MSI/msi_metadata.1) get ms-imaging metadata
 + [as.layer](MSI/as.layer.1) cast the pixel collection to a ion imaging layer data
@@ -14,7 +15,9 @@ MS-Imaging data handler
 + [pixels](MSI/pixels.1) get pixels size from the raw data file
 + [dimension_size](MSI/dimension_size.1) get or set the dimension size of the ms-imaging mzpack raw data object
 + [open.imzML](MSI/open.imzML.1) open the reader for the imzML ms-imaging file
++ [load_spectrum](MSI/load_spectrum.1) load the spectrum of a specific spot scan inside the imzML
 + [write.imzML](MSI/write.imzML.1) Save and write the given ms-imaging mzpack object as imzML file
++ [read.imzml_metadata](MSI/read.imzml_metadata.1) read the metadata from the imzml file header
 + [row.scans](MSI/row.scans.1) each raw data file is a row scan data
 + [MSI_summary](MSI/MSI_summary.1) Fetch MSI summary data
 + [correction](MSI/correction.1) calculate the X axis scale
@@ -24,15 +27,16 @@ MS-Imaging data handler
 + [scans2D](MSI/scans2D.1) combine each row scan raw data files as the pixels 2D matrix
 + [scanMatrix](MSI/scanMatrix.1) combine each row scan summary vector as the pixels 2D matrix
 + [peakMatrix](MSI/peakMatrix.1) Extract the ion data matrix
++ [peakMatrix_stream](MSI/peakMatrix_stream.1) create the peak matrix alignment in stream mode
 + [peakSamples](MSI/peakSamples.1) split the raw MSI 2D data into multiple parts with given resolution parts
-+ [pixelIons](MSI/pixelIons.1) get number of ions in each pixel scans
++ [pixelIons](MSI/pixelIons.1) get number of ions in each pixel scans or get ion peaks data for specific pixels
 + [getMatrixIons](MSI/getMatrixIons.1) get matrix ions feature m/z vector
 + [pixelMatrix](MSI/pixelMatrix.1) dumping raw data matrix as text table file.
 + [levels.convolution](MSI/levels.convolution.1) sum pixels for create pixel spot convolution
 + [spatial.convolution](MSI/spatial.convolution.1) sum pixels for create pixel spot convolution
 + [pack_matrix](MSI/pack_matrix.1) pack the matrix file as the MSI mzpack
 + [moran_I](MSI/moran_I.1) evaluate the moran index for each ion layer
-+ [sample_bootstraping](MSI/sample_bootstraping.1) make expression bootstrapping of current ion layer
++ [sample_bootstraping](MSI/sample_bootstraping.1) make expression bootstrapping of the spatial data
 + [cast.spatial_layers](MSI/cast.spatial_layers.1) cast the rawdata matrix as the ms-imaging ion layer
-+ [z_assembler](MSI/z_assembler.1) Create mzpack object for ms-imaging in 3D
 + [raster](MSI/raster.1) cast the ms-imaging layer data to raster object 
++ [reset_padding](MSI/reset_padding.1) re-located of the sample of the ms-imaging for a location which is evaluated by the given **`padding`**.

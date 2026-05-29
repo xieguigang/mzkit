@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7e7bc497292b1dd9d3cb7d535f75a51, mzkit\src\metadb\FormulaSearch.Extensions\PrecursorIonSearch.vb"
+﻿#Region "Microsoft.VisualBasic::64b02e30593c675f4c2179532aa491f7, metadb\FormulaSearch.Extensions\PrecursorIonSearch.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 81
-    '    Code Lines: 59
-    ' Comment Lines: 8
-    '   Blank Lines: 14
-    '     File Size: 3.19 KB
+    '   Total Lines: 82
+    '    Code Lines: 59 (71.95%)
+    ' Comment Lines: 9 (10.98%)
+    '    - Xml Docs: 66.67%
+    ' 
+    '   Blank Lines: 14 (17.07%)
+    '     File Size: 3.26 KB
 
 
     ' Class PrecursorIonSearch
@@ -59,7 +61,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Class PrecursorIonSearch : Inherits FormulaSearch
 
@@ -106,9 +108,9 @@ Public Class PrecursorIonSearch : Inherits FormulaSearch
         End If
 
         If ionMode = 1 Then
-            parents = Provider.Positives.Where(Function(p) stdNum.Abs(p.charge) = stdNum.Abs(charge)).ToArray
+            parents = Provider.Positives.Where(Function(p) std.Abs(p.charge) = std.Abs(charge)).ToArray
         Else
-            parents = Provider.Negatives.Where(Function(p) stdNum.Abs(p.charge) = stdNum.Abs(charge)).ToArray
+            parents = Provider.Negatives.Where(Function(p) std.Abs(p.charge) = std.Abs(charge)).ToArray
         End If
 
         If Not (LimitPrecursorTypes Is Nothing OrElse LimitPrecursorTypes.Count = 0) Then

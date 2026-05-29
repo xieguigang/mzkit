@@ -1,4 +1,68 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::8096a12569e9cce25a90c0de5f182b2e, mzmath\MoleculeNetworking\SpectrumPool\FileSystem\TreeFs.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 191
+    '    Code Lines: 131 (68.59%)
+    ' Comment Lines: 29 (15.18%)
+    '    - Xml Docs: 93.10%
+    ' 
+    '   Blank Lines: 31 (16.23%)
+    '     File Size: 7.39 KB
+
+
+    '     Class TreeFs
+    ' 
+    '         Properties: baseStream
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: CheckExists, FindRootId, GetMetadata, GetTreeChilds, (+2 Overloads) LoadMetadata
+    '                   OpenFolder, ReadSpectrum, ReadText, WriteSpectrum
+    ' 
+    '         Sub: Close, CommitMetadata, SetRootId, WriteText
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -8,7 +72,7 @@ Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Text
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 Namespace PoolData
 
@@ -144,6 +208,8 @@ Namespace PoolData
                     .JoinBy("/") & "]"
             End If
 
+            Static xref_keys As String() = {"biodeep_id", "xref_id", "db_xref"}
+
             Return New Metadata With {
                 .guid = spectral.lib_guid,
                 .intensity = spectral.intensity,
@@ -152,7 +218,7 @@ Namespace PoolData
                 .rt = spectral.rt,
                 .sample_source = spectral.meta("biosample"),
                 .source_file = spectral.file,
-                .biodeep_id = spectral.meta.TryGetValue("biodeep_id", [default]:="unknown conserved"),
+                .biodeep_id = spectral.meta.TryGetValue(xref_keys, [default]:="unknown conserved"),
                 .formula = spectral.meta.TryGetValue("formula", [default]:="NA"),
                 .name = name,
                 .adducts = If(spectral.precursor_type.StringEmpty, "NA", spectral.precursor_type),

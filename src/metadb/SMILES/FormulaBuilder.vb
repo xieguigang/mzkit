@@ -1,62 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::649de142c48b98acf881f9493af76b54, mzkit\src\metadb\SMILES\FormulaBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::9cc5605aac0cac319d8eaf9f75779066, metadb\SMILES\FormulaBuilder.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
-    ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 59
-    ' Comment Lines: 0
-    '   Blank Lines: 15
-    '     File Size: 2.28 KB
+' /********************************************************************************/
+
+' Summaries:
 
 
-    ' Class FormulaBuilder
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: GetComposition
-    ' 
-    '     Sub: (+2 Overloads) Push, WalkElement
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 108
+'    Code Lines: 77 (71.30%)
+' Comment Lines: 12 (11.11%)
+'    - Xml Docs: 83.33%
+' 
+'   Blank Lines: 19 (17.59%)
+'     File Size: 3.75 KB
+
+
+' Class FormulaBuilder
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: GetComposition
+' 
+'     Sub: (+2 Overloads) Push, WalkElement
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Text
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Public Class FormulaBuilder
@@ -67,17 +70,20 @@ Public Class FormulaBuilder
     Dim composition As New Dictionary(Of String, Integer)
     Dim visited As New Index(Of String)
     Dim atomProfile As Dictionary(Of String, Atom)
-    Dim atomGroups As Dictionary(Of String, Atom)
+    Dim atomGroups As New Dictionary(Of String, AtomGroup)
 
     Sub New(graph As ChemicalFormula)
         Me.graph = graph
         Me.atomProfile = Atom _
             .DefaultElements _
-            .ToDictionary(Function(a) a.label)
-        Me.atomGroups = Atom.DefaultAtomGroups _
             .ToDictionary(Function(a)
-                              Return a.GetIonLabel
+                              Return a.label
                           End Function)
+
+        For Each group As AtomGroup In AtomGroup.DefaultAtomGroups
+            atomGroups(group.GetIonLabel) = group
+            atomGroups($"[{group.label}]") = group
+        Next
     End Sub
 
     Public Function GetComposition(ByRef empirical As String) As Dictionary(Of String, Integer)
@@ -87,7 +93,16 @@ Public Class FormulaBuilder
                 Call WalkElement(graph.AllElements.First, Bonds.NA)
             End If
         Else
-            For Each bond As ChemicalKey In graph.AllBonds
+            Dim last_graph As Integer = -1
+
+            For Each bond As ChemicalKey In graph.AllBonds.OrderBy(Function(k) k.U.graph_id)
+                If last_graph > -1 AndAlso bond.U.graph_id <> last_graph Then
+                    ' start a new independent chemical graph
+                    Call Me.empirical.Append(".")
+                End If
+
+                last_graph = bond.U.graph_id
+
                 Call WalkElement(bond.U, bond.bond)
                 Call WalkElement(bond.V, bond.bond)
             Next
@@ -114,7 +129,26 @@ Public Class FormulaBuilder
                 ElseIf atomGroups.ContainsKey(element.elementName) Then
                     Call Push(atomGroups(element.elementName), element)
                 Else
-                    Throw New NotImplementedException(element.elementName)
+                    If element.elementName.IsPattern("\[.+\]") Then
+                        Dim ion As String = element.elementName.GetStackValue("[", "]")
+                        Dim charge As String = ion.Match("[+\-]\d+")
+                        Dim chargeVal As Integer = 0
+
+                        If charge.StringEmpty Then
+                            charge = ion.Match("[+\-]+")
+                            chargeVal = charge.Length
+                        Else
+                            chargeVal = Integer.Parse(charge)
+                        End If
+
+                        ion = ion.Replace(charge, "")
+
+                        Dim atom As New Atom(ion, chargeVal)
+
+                        Call Push(atom, element)
+                    Else
+                        Throw New NotImplementedException("Unknown element name for build formula: " & element.elementName)
+                    End If
                 End If
         End Select
     End Sub

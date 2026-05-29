@@ -39,34 +39,35 @@
         <table>
             
 <dt>raw</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p>[as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzPack.html">mzPack</a>]</p></dd>
 
 
 <dt>topN</dt>
-<dd><p><p>select top N ion feature in each spot and then union the ion features as <br />
- the features set, this parameter only works when the <strong><code>ionSet</code></strong> <br />
- parameter is empty or null.</p></p></dd>
+<dd><p>select top N ion feature in each spot and then union the ion features as 
+ the features set, this parameter only works when the <strong>`ionSet`</strong> 
+ parameter is empty or null. [as integer]</p></dd>
 
 
 <dt>ionSet</dt>
-<dd><p><p>A tuple list of the ion dataset range, the tuple list object should <br />
- be in data format of [unique_id => mz]. Or this parameter value could also<br />
- be a numeric vector of the target m/z feature values</p></p></dd>
+<dd><p>A tuple list of the ion dataset range, the tuple list object should 
+ be in data format of [unique_id => mz]. Or this parameter value could also
+ be a numeric vector of the target m/z feature values</p></dd>
 
 
 <dt>mzError</dt>
-<dd><p><p>The mass tolerance of the ion m/z</p></p></dd>
+<dd><p>The mass tolerance of the ion m/z</p></dd>
 
 
 <dt>env</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
 
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>feature elements inside the generated matrix object keeps the same order with 
+ the input ion features.</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -74,13 +75,11 @@
 
         <h3>Value</h3>
 
-        <p>the data format of the two kind of the output data result is keeps the same:</p>
-
-<ul>
-<li>for a raw matrix object, the column is the ion features and the rows is the spatial spots.</li>
-<li>for a dataset collection vector, the column is also the ion features and the <br />
-rows is the spatial spots.</li>
-</ul><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a></li><li><a href="/vignettes/clr/Microsoft/VisualBasic/Data/csv/IO/DataSet.html">DataSet</a></li></ul>
+        <p>the data format of the two kind of the output data result is keeps the same:
+ 
+ + for a raw matrix object, the column is the ion features and the rows is the spatial spots.
+ + for a dataset collection vector, the column is also the ion features and the 
+   rows is the spatial spots.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a></li><li><a href="/vignettes/clr/Microsoft/VisualBasic/Data/Framework/IO/DataSet.html">DataSet</a></li></ul>
 
         <h3 style="display: block;">Examples</h3>
 

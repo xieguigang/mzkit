@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bfaca5b5afa6584ccb3a41541f6d188, mzkit\src\visualize\MsImaging\Plot\RGBMSIPlot.vb"
+﻿#Region "Microsoft.VisualBasic::101dfbd20b0217142b5f6dd4add06a5b, visualize\MsImaging\Plot\RGBMSIPlot.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 98
-    '    Code Lines: 85
-    ' Comment Lines: 1
-    '   Blank Lines: 12
-    '     File Size: 4.14 KB
+    '   Total Lines: 99
+    '    Code Lines: 86 (86.87%)
+    ' Comment Lines: 1 (1.01%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (12.12%)
+    '     File Size: 4.20 KB
 
 
     ' Class RGBMSIPlot
@@ -54,7 +56,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
@@ -66,6 +67,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Public Class RGBMSIPlot : Inherits Plot
 
@@ -94,9 +96,10 @@ Public Class RGBMSIPlot : Inherits Plot
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim Xtick As Double() = New DoubleRange({0, dimensionSize.Width}).CreateAxisTicks()
         Dim Ytick As Double() = New DoubleRange({0, dimensionSize.Height}).CreateAxisTicks
-        Dim rect As Rectangle = canvas.PlotRegion
-        Dim scaleX = d3js.scale.linear.domain(values:=Xtick).range(New Double() {rect.Left, rect.Right})
-        Dim scaleY = d3js.scale.linear.domain(values:=Ytick).range(New Double() {rect.Top, rect.Bottom})
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim rect As Rectangle = canvas.PlotRegion(css)
+        Dim scaleX = d3js.scale.linear.domain(values:=Xtick).range(values:=New Double() {rect.Left, rect.Right})
+        Dim scaleY = d3js.scale.linear.domain(values:=Ytick).range(values:=New Double() {rect.Top, rect.Bottom})
         Dim scale As New DataScaler With {
             .AxisTicks = (Xtick.AsVector, Ytick.AsVector),
             .region = rect,
@@ -110,13 +113,13 @@ Public Class RGBMSIPlot : Inherits Plot
         Dim iB = Me.B?.MSILayer
 
         MSI = engine.ChannelCompositions(Me.R.MSILayer, Me.G?.MSILayer, Me.B?.MSILayer, dimensionSize, background:=theme.background).AsGDIImage
-        MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height, InterpolationMode.Bilinear)
+        MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height)
 
         Call g.DrawAxis(canvas, scale, showGrid:=False, xlabel:=xlabel, ylabel:=ylabel, XtickFormat:="F0", YtickFormat:="F0", htmlLabel:=False)
         Call g.DrawImageUnscaled(MSI, rect)
 
         ' draw ion m/z
-        Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
+        Dim labelFont As Font = css.GetFont(CSSFont.TryParse(theme.legendLabelCSS))
         Dim label As String = SingleIonLayer.ToString(Me.R)
         Dim labelSize As SizeF = g.MeasureString(label, labelFont)
         Dim pos As New Point(rect.Right + canvas.Padding.Right * 0.05, rect.Top + labelSize.Height)

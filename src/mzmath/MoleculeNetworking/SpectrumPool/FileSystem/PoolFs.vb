@@ -1,4 +1,64 @@
-﻿
+﻿#Region "Microsoft.VisualBasic::3ad95e0b93807c410b544927e2907940, mzmath\MoleculeNetworking\SpectrumPool\FileSystem\PoolFs.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 90 (60.00%)
+    ' Comment Lines: 37 (24.67%)
+    '    - Xml Docs: 64.86%
+    ' 
+    '   Blank Lines: 23 (15.33%)
+    '     File Size: 6.11 KB
+
+
+    '     Class PoolFs
+    ' 
+    '         Properties: level, split, splitDelta
+    ' 
+    '         Function: CreateAuto, GetScore, OpenAuto
+    ' 
+    '         Sub: (+2 Overloads) Dispose, SetLevel, SetScore
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -62,7 +122,7 @@ Namespace PoolData
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Friend Sub SetScore(da As Double, intocutoff As Double)
+        Public Sub SetScore(da As Double, intocutoff As Double)
             score = AlignmentProvider.Cosine(Tolerance.DeltaMass(da), New RelativeIntensityCutoff(intocutoff))
         End Sub
 
@@ -73,7 +133,7 @@ Namespace PoolData
         ''' the score threshold for assign the given spectrum as current cluster member
         ''' </param>
         ''' <param name="split">split into n parts</param>
-        Friend Overridable Sub SetLevel(level As Double, split As Integer)
+        Public Overridable Sub SetLevel(level As Double, split As Integer)
             m_level = level
             m_split = split
             _splitDelta = level / split

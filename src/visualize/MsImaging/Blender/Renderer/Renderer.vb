@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf5663f578641da677db290724e63f7c, mzkit\src\visualize\MsImaging\Blender\Renderer\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::ef86af696b3d13c1c92acb5ddaf1bc40, visualize\MsImaging\Blender\Renderer\Renderer.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 151
-    '    Code Lines: 91
-    ' Comment Lines: 40
-    '   Blank Lines: 20
-    '     File Size: 6.44 KB
+    '   Total Lines: 238
+    '    Code Lines: 145 (60.92%)
+    ' Comment Lines: 62 (26.05%)
+    '    - Xml Docs: 90.32%
+    ' 
+    '   Blank Lines: 31 (13.03%)
+    '     File Size: 9.56 KB
 
 
     '     Class Renderer
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetPixelChannelReader
+    '         Function: DrawBackground, GetPixelChannelReader
     ' 
     '     Class PixelChannelRaster
     ' 
@@ -63,26 +65,102 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports RasterPixel = Microsoft.VisualBasic.Imaging.Pixel
 
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+Imports PixelFormat = System.Drawing.Imaging.PixelFormat
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+Imports PixelFormat = Microsoft.VisualBasic.Imaging.PixelFormat
+#End If
+
 Namespace Blender
 
+    ''' <summary>
+    ''' abstract model for pixel based heatmap render or the rectangle based pixel heatmap render
+    ''' </summary>
     Public MustInherit Class Renderer
 
         Protected heatmapMode As Boolean
         Protected gauss As Integer = 8
         Protected sigma As Integer = 32
 
+        ''' <summary>
+        ''' overlaps raster image as background
+        ''' </summary>
+        Protected ReadOnly overlaps As Image
+
         <DebuggerStepThrough>
-        Sub New(heatmapRender As Boolean)
-            heatmapMode = heatmapRender
+        Sub New(heatmapRender As Boolean, overlaps As Image)
+            Me.heatmapMode = heatmapRender
+            Me.overlaps = overlaps
         End Sub
+
+        ''' <summary>
+        ''' draw background
+        ''' </summary>
+        ''' <remarks>
+        ''' <paramref name="dimension"/> defines the image size directly
+        ''' </remarks>
+        Protected Function DrawBackground(dimension As Size, defaultBackground As Color) As Bitmap
+            Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
+
+#If NET8_0_OR_GREATER Then
+            Dim buffer As Byte() = raw.MemoryBuffer.RawBuffer
+
+            For i As Integer = 0 To buffer.Length - 1 Step 4
+                ' set background color manually
+                buffer(i + 3) = defaultBackground.A
+                buffer(i + 2) = defaultBackground.R
+                buffer(i + 1) = defaultBackground.G
+                buffer(i + 0) = defaultBackground.B
+            Next
+#End If
+
+            Using g As IGraphics = DriverLoad.CreateGraphicsDevice(raw)
+#If NET48 Then
+                Call g.Clear(defaultBackground)
+#End If
+                If Not overlaps Is Nothing Then
+                    Call g.DrawImage(overlaps, New Rectangle(New Point, raw.Size))
+                End If
+
+                Call g.Flush()
+
+#If NETCOREAPP Then
+                Return New Bitmap(DirectCast(g, GdiRasterGraphics).ImageResource)
+#End If
+            End Using
+
+            Return raw
+        End Function
 
         ''' <summary>
         ''' 每一种离子一种对应的颜色生成多个图层，然后叠在在一块进行可视化
@@ -92,10 +170,8 @@ Namespace Blender
         ''' <param name="colorSet">
         ''' [mz(F4) => color]
         ''' </param>
-        ''' <param name="scale"></param>
         ''' <returns></returns>
         Public MustOverride Function LayerOverlaps(pixels As PixelData()(), dimension As Size, colorSet As MzLayerColorSet,
-                                                   Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                    Optional defaultFill As String = "Transparent",
                                                    Optional mapLevels As Integer = 25) As GraphicsData
 
@@ -106,11 +182,18 @@ Namespace Blender
         ''' <param name="G"></param>
         ''' <param name="B"></param>
         ''' <param name="dimension"></param>
-        ''' <param name="scale"></param>
         ''' <returns></returns>
         Public MustOverride Function ChannelCompositions(R As PixelData(), G As PixelData(), B As PixelData(),
                                                          dimension As Size,
-                                                         Optional scale As InterpolationMode = InterpolationMode.Bilinear,
+                                                         Optional background As String = "black") As GraphicsData
+
+        ''' <summary>
+        ''' 最多只支持四种离子（C,M,Y,K）
+        ''' </summary>
+        ''' <param name="dimension"></param>
+        ''' <returns></returns>
+        Public MustOverride Function ChannelCompositions(C As PixelData(), M As PixelData(), Y As PixelData(), K As PixelData(),
+                                                         dimension As Size,
                                                          Optional background As String = "black") As GraphicsData
 
         ''' <summary>
@@ -118,25 +201,19 @@ Namespace Blender
         ''' </summary>
         ''' <param name="pixels"></param>
         ''' <param name="dimension">the scan size</param>
-        ''' <param name="colorSet"></param>
-        ''' <param name="mapLevels"></param>
         ''' <returns></returns>
-        Public MustOverride Function RenderPixels(pixels As PixelData(), dimension As Size,
-                                                  Optional colorSet As String = "YlGnBu:c8",
-                                                  Optional mapLevels% = 25,
-                                                  Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                                  Optional defaultFill As String = "Transparent") As GraphicsData
+        ''' <remarks>
+        ''' <see cref="HeatMapParameters.defaultFill"/> configs of the background of the MS-imaging chartting.
+        ''' </remarks>
+        Public MustOverride Function RenderPixels(pixels As PixelData(), dimension As Size, heatmap As HeatMapParameters) As GraphicsData
 
         ''' <summary>
         ''' 将所有的离子混合叠加再一个图层中可视化
         ''' </summary>
         ''' <param name="pixels"></param>
         ''' <param name="dimension">the scan size</param>
-        ''' <param name="colorSet"></param>
         ''' <returns></returns>
-        Public MustOverride Function RenderPixels(pixels As PixelData(), dimension As Size, colorSet As SolidBrush(),
-                                                  Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                                  Optional defaultFill As String = "Transparent") As GraphicsData
+        Public MustOverride Function RenderPixels(pixels As PixelData(), dimension As Size, heatmap As HeatMapBrushes) As GraphicsData
 
         ''' <summary>
         ''' 
@@ -153,12 +230,16 @@ Namespace Blender
 
     End Class
 
+    ''' <summary>
+    ''' A single signal channel data spatial reader helper
+    ''' </summary>
     Friend Class PixelChannelRaster
 
         Dim raster As RasterPixel()
         Dim intensityRange As DoubleRange
         Dim xy As Dictionary(Of Integer, Dictionary(Of Integer, Double))
         Dim byteRange As DoubleRange = New Double() {8, 255}
+        Dim delta As Double
 
         Sub New(gauss As Integer, sigma As Integer, channel As PixelData())
             Me.raster = New HeatMapRaster(Of PixelData)(gauss, sigma) _
@@ -186,6 +267,7 @@ Namespace Blender
             Me.intensityRange = raster _
                 .Select(Function(p) p.Scale) _
                 .ToArray
+            Me.delta = intensityRange.Length
         End Sub
 
         Public Function GetPixelChannelReader(x As Integer, y As Integer) As Byte
@@ -197,6 +279,13 @@ Namespace Blender
 
             If Not ylist.ContainsKey(y) Then
                 Return 0
+            End If
+
+            ' 20250123 just a single pixel spot data
+            ' so scale range is zero
+            ' returns 255 directly
+            If delta = 0.0 Then
+                Return 255
             End If
 
             Dim into As Double = ylist.Item(y)

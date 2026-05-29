@@ -1,76 +1,69 @@
-﻿#Region "Microsoft.VisualBasic::5c7be424c2e8f6e46406db3b36eda97c, mzkit\src\mzmath\ms2_math-core\Ms1\PrecursorType\MzCalculator.vb"
+﻿#Region "Microsoft.VisualBasic::4fc0a7bd1ff992a2320591db6bb022ac, mzmath\ms2_math-core\Ms1\PrecursorType\MzCalculator.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 178
-'    Code Lines: 101
-' Comment Lines: 56
-'   Blank Lines: 21
-'     File Size: 6.00 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class MzCalculator
-' 
-'         Properties: adducts, charge, IsEmpty, M, mode
-'                     name
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: AdductMZ, CalcMass, CalcMZ, EvaluateAll, ReverseMass
-'                   (+2 Overloads) ToString
-' 
-'     Class PrecursorInfo
-' 
-'         Properties: adduct, charge, ionMode, M, mz
-'                     precursor_type
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 187
+    '    Code Lines: 97 (51.87%)
+    ' Comment Lines: 67 (35.83%)
+    '    - Xml Docs: 94.03%
+    ' 
+    '   Blank Lines: 23 (12.30%)
+    '     File Size: 7.16 KB
+
+
+    '     Class MzCalculator
+    ' 
+    '         Properties: adducts, charge, IsEmpty, M, mode
+    '                     name
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: AdductMZ, CalcMass, CalcMZ, (+2 Overloads) EvaluateAll, GetIonMode
+    '                   ReverseMass, (+2 Overloads) ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
+Imports std = System.Math
 
 Namespace Ms1.PrecursorType
 
@@ -122,10 +115,10 @@ Namespace Ms1.PrecursorType
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="type$"></param>
-        ''' <param name="charge%"></param>
-        ''' <param name="M#"></param>
-        ''' <param name="adducts#"></param>
+        ''' <param name="type"></param>
+        ''' <param name="charge"></param>
+        ''' <param name="M"></param>
+        ''' <param name="adducts"></param>
         ''' <param name="mode">只允许``+/-``这两种符号出现</param>
         Sub New(type$, charge%, M#, adducts#, Optional mode As Char = Nothing)
             Me.name = type
@@ -153,6 +146,10 @@ Namespace Ms1.PrecursorType
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CalcMZ(mass#) As Double
             Return AdductMZ(mass, adducts, charge, IonMode:=If(mode = "+"c, IonModes.Positive, IonModes.Negative), M:=M)
+        End Function
+
+        Public Function GetIonMode() As IonModes
+            Return Provider.ParseIonMode(mode)
         End Function
 
         <DebuggerStepThrough>
@@ -188,7 +185,7 @@ Namespace Ms1.PrecursorType
                                         IonMode As IonModes,
                                         Optional M As Integer = 1) As Double
 
-            Dim precursorMz = (exactMass * M + AdductIonAccurateMass) / chargeNumber
+            Dim precursorMz = std.abs((exactMass * M + AdductIonAccurateMass) / chargeNumber)
 
             If IonMode = IonModes.Positive Then
                 precursorMz -= ElectronMassInDalton * chargeNumber
@@ -229,63 +226,24 @@ Namespace Ms1.PrecursorType
         ''' </param>
         ''' <param name="mode"><see cref="ParseIonMode"/></param>
         ''' <returns></returns>
-        Public Shared Iterator Function EvaluateAll(mass#, mode As String, Optional exact_mass As Boolean = False) As IEnumerable(Of PrecursorInfo)
-            For Each type In Provider.Calculator(mode).Values
+        Public Shared Function EvaluateAll(mass#, mode As String, Optional exact_mass As Boolean = False) As IEnumerable(Of PrecursorInfo)
+            Return EvaluateAll(mass, Provider.GetCalculator(mode).Values, exact_mass)
+        End Function
+
+        Public Shared Iterator Function EvaluateAll(mass As Double,
+                                                    ions As IEnumerable(Of MzCalculator),
+                                                    Optional exact_mass As Boolean = False) As IEnumerable(Of PrecursorInfo)
+            For Each type As MzCalculator In ions
                 Yield New PrecursorInfo With {
                     .adduct = type.adducts,
                     .charge = type.charge,
                     .M = type.M,
                     .mz = If(exact_mass, type.CalcMass(mass), type.CalcMZ(mass)),
-                    .precursor_type = type.name
+                    .precursor_type = type.name,
+                    .ionMode = type.GetIonMode
                 }
             Next
         End Function
     End Class
 
-    ''' <summary>
-    ''' a ion m/z data model, includes the adducts data and <see cref="IonModes"/> polarity data.
-    ''' </summary>
-    Public Class PrecursorInfo
-
-        ''' <summary>
-        ''' the precursor adducts information
-        ''' </summary>
-        ''' <returns></returns>
-        <XmlAttribute>
-        Public Property precursor_type As String
-        Public Property charge As Double
-        Public Property M As Double
-        ''' <summary>
-        ''' the exact mass value of the <see cref="precursor_type"/> adducts information.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property adduct As Double
-
-        ''' <summary>
-        ''' mz or exact mass
-        ''' </summary>
-        ''' <returns></returns>
-        <Column(Name:="m/z")>
-        Public Property mz As String
-        ''' <summary>
-        ''' the ion polarity data, related to the <see cref="charge"/> value
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property ionMode As IonModes
-
-        Sub New()
-        End Sub
-
-        Sub New(mz As MzCalculator)
-            precursor_type = mz.ToString
-            charge = mz.charge
-            M = mz.M
-            adduct = mz.adducts
-            ionMode = ParseIonMode(mz.mode)
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return $"{precursor_type} m/z={mz}"
-        End Function
-    End Class
 End Namespace

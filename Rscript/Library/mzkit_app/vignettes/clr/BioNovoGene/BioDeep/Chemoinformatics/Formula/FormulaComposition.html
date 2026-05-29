@@ -32,15 +32,15 @@
 export class FormulaComposition extends <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Formula/Formula.html">Formula</a> {
    # the charge value of current formula
    charge: double;
-   # the ppm error between the theriocal mass value and the input mass value
-   ppm: double;
-   massdiff: double;
+   CountsByElement: list;
+   Elements: string;
+   EmpiricalFormula: string;
+   ExactMass: double;
    # Hydrogen/Carbon element ratio
    HCRatio: double;
-   CountsByElement: list;
-   EmpiricalFormula: string;
-   Elements: string;
-   ExactMass: double;
+   massdiff: double;
+   # the ppm error between the theriocal mass value and the input mass value
+   ppm: double;
 }
 </code>
         </pre>

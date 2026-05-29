@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d87a7286a1e52018f320745026acbdc, mzkit\src\assembly\assembly\MarkupData\MS1.vb"
+﻿#Region "Microsoft.VisualBasic::b37872260e4b0eea05eb8cb6e0e11e34, mzmath\mz_deco\Signals\MRM\MS1.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 52
-    ' Comment Lines: 5
-    '   Blank Lines: 8
-    '     File Size: 2.88 KB
+    '   Total Lines: 68
+    '    Code Lines: 52 (76.47%)
+    ' Comment Lines: 8 (11.76%)
+    '    - Xml Docs: 87.50%
+    ' 
+    '   Blank Lines: 8 (11.76%)
+    '     File Size: 2.98 KB
 
 
     '     Module MS1Extensions
@@ -63,6 +65,9 @@ Imports Microsoft.VisualBasic.Math.Quantile
 
 Namespace MarkupData
 
+    ''' <summary>
+    ''' Helper for processing of the MRM ms1 chromatogram data
+    ''' </summary>
     <HideModuleName>
     Public Module MS1Extensions
 

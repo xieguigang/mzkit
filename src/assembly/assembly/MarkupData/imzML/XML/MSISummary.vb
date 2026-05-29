@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eca7400f950202e20553a8e431489fb0, mzkit\src\assembly\assembly\MarkupData\imzML\XML\MSISummary.vb"
+﻿#Region "Microsoft.VisualBasic::ba41d4dfb296494a7243b055f8a9da22, assembly\assembly\MarkupData\imzML\XML\MSISummary.vb"
 
     ' Author:
     ' 
@@ -37,27 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 123
-    '    Code Lines: 87
-    ' Comment Lines: 19
-    '   Blank Lines: 17
-    '     File Size: 4.39 KB
+    '   Total Lines: 144
+    '    Code Lines: 100 (69.44%)
+    ' Comment Lines: 26 (18.06%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 18 (12.50%)
+    '     File Size: 5.37 KB
 
 
     '     Class MSISummary
     ' 
-    '         Properties: rowScans, size
+    '         Properties: rowScans, size, x, y
     ' 
-    '         Function: FromPixels, GetBasePeakMz, GetLayer, GetRowScan, ToArray
-    '                   ToString
-    ' 
-    '     Enum IntensitySummary
-    ' 
-    '         Average, BasePeak, Total
-    ' 
-    '  
-    ' 
-    ' 
+    '         Function: FromPixels, GetBasePeakMz, GetLayer, GetPixel, GetRowScan
+    '                   ToArray, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -206,7 +200,5 @@ Namespace MarkupData.imzML
         Public Overrides Function ToString() As String
             Return $"[width:={size.Width}, height:={size.Height}]"
         End Function
-
     End Class
-
 End Namespace

@@ -1,4 +1,9 @@
-﻿<pre>Package: mzkit
+﻿<head>
+<title>MZKit: The BioNovoGene Mass Spectrum Data Toolkit</title>
+</head>
+<body>
+<h1>MZKit: The BioNovoGene Mass Spectrum Data Toolkit</h1>
+<pre>Package: mzkit
 Type: Package
 Title: MZKit: The BioNovoGene Mass Spectrum Data Toolkit
 Version: 3.2.56.56444
@@ -12,23 +17,31 @@ Encoding: UTF-8
 LazyData: true
 </pre>
 <br />
+<a href="./keywords.html">View package by keywords.</a>
 <h2>R Package Symbols</h2>
 <ul>
 <li><a href="./R/docs/kegg_compounds.html">kegg_compounds</a></li>
 <li><a href="./R/docs/lipidmaps_repo.html">lipidmaps_repo</a></li>
 <li><a href="./R/docs/load_LMSD.html">load_LMSD</a></li>
 <li><a href="./R/docs/tolerance.html">tolerance</a></li>
-<li><a href="./R/docs/normData.html">normData</a></li>
-<li><a href="./R/docs/.minPos.html">.minPos</a></li>
+<li><a href="./R/docs/preprocessing_expression.html">preprocessing_expression</a></li>
 <li><a href="./R/docs/ANOVAGroup.html">ANOVAGroup</a></li>
 <li><a href="./R/docs/loadTree.html">loadTree</a></li>
 <li><a href="./R/docs/convertToMzPack.html">convertToMzPack</a></li>
 <li><a href="./R/docs/.onLoad.html">.onLoad</a></li>
+<li><a href="./R/docs/read.cfmid_3_EI.html">read.cfmid_3_EI</a></li>
+<li><a href="./R/docs/deconv_gcms.html">deconv_gcms</a></li>
+<li><a href="./R/docs/__deconv_gcms_single.html">__deconv_gcms_single</a></li>
+<li><a href="./R/docs/make_chromatogram_exports.html">make_chromatogram_exports</a></li>
 <li><a href="./R/docs/run.Deconvolution.html">run.Deconvolution</a></li>
-<li><a href="./R/docs/alignment_peaksdata.html">alignment_peaksdata</a></li>
-<li><a href="./R/docs/.MS1deconv.html">.MS1deconv</a></li>
+<li><a href="./R/docs/make_peak_alignment.html">make_peak_alignment</a></li>
+<li><a href="./R/docs/ms1_mz_bins.html">ms1_mz_bins</a></li>
+<li><a href="./R/docs/ms1_peaktable.html">ms1_peaktable</a></li>
+<li><a href="./R/docs/ms1_xic_bins.html">ms1_xic_bins</a></li>
+<li><a href="./R/docs/__ms1_xic_bins_single.html">__ms1_xic_bins_single</a></li>
 <li><a href="./R/docs/get_representives.html">get_representives</a></li>
 <li><a href="./R/docs/pubchem_graphjson.html">pubchem_graphjson</a></li>
+<li><a href="./R/docs/pugview_repo.html">pugview_repo</a></li>
 <li><a href="./R/docs/mesh_model.html">mesh_model</a></li>
 <li><a href="./R/docs/knowledge_graph.html">knowledge_graph</a></li>
 <li><a href="./R/docs/.graph_table.html">.graph_table</a></li>
@@ -41,24 +54,30 @@ LazyData: true
 <li><a href="./R/docs/getDataValues.html">getDataValues</a></li>
 <li><a href="./R/docs/parseNames.html">parseNames</a></li>
 <li><a href="./R/docs/getQuery.html">getQuery</a></li>
+<li><a href="./R/docs/pack_singleCells.html">pack_singleCells</a></li>
 <li><a href="./R/docs/GCMS_linears.html">GCMS_linears</a></li>
 <li><a href="./R/docs/GCMS_contentTable.html">GCMS_contentTable</a></li>
 <li><a href="./R/docs/GCMS_quantify.html">GCMS_quantify</a></li>
 <li><a href="./R/docs/GCMS_linearReport.html">GCMS_linearReport</a></li>
+<li><a href="./R/docs/MRM_dataReport.html">MRM_dataReport</a></li>
 <li><a href="./R/docs/plotLinears.html">plotLinears</a></li>
 <li><a href="./R/docs/output_datatables.html">output_datatables</a></li>
 <li><a href="./R/docs/ionPairsFromMsl.html">ionPairsFromMsl</a></li>
 </ul>
 <h2>Library: mzDIA.dll</h2>
 <ul>
+<li><a href="./mzDIA/DIA.html">DIA</a></li>
 <li><a href="./mzDIA/lipidomics.html">lipidomics</a></li>
 <li><a href="./mzDIA/metadna.html">metadna</a></li>
 <li><a href="./mzDIA/spectrumPool.html">spectrumPool</a></li>
 <li><a href="./mzDIA/MoleculeNetworking.html">MoleculeNetworking</a></li>
-<li><a href="./mzDIA/mzkit.simulator.html">mzkit.simulator</a></li>
+<li><a href="./mzDIA/spectral_simulator.html">spectral_simulator</a></li>
+<li><a href="./mzDIA/Oligonucleotide_MS.html">Oligonucleotide_MS</a></li>
+<li><a href="./mzDIA/taxonomy.html">taxonomy</a></li>
 </ul>
 <h2>Library: mzkit.dll</h2>
 <ul>
+<li><a href="./mzkit/foodb.html">foodb</a></li>
 <li><a href="./mzkit/hmdb_kit.html">hmdb_kit</a></li>
 <li><a href="./mzkit/massbank.html">massbank</a></li>
 <li><a href="./mzkit/metadb.html">metadb</a></li>
@@ -67,20 +86,23 @@ LazyData: true
 <li><a href="./mzkit/assembly.html">assembly</a></li>
 <li><a href="./mzkit/chromatogram.html">chromatogram</a></li>
 <li><a href="./mzkit/data.html">data</a></li>
+<li><a href="./mzkit/GCMS.html">GCMS</a></li>
 <li><a href="./mzkit/mzPack.html">mzPack</a></li>
 <li><a href="./mzkit/mzweb.html">mzweb</a></li>
 <li><a href="./mzkit/NMR.html">NMR</a></li>
 <li><a href="./mzkit/RamanSpectroscopy.html">RamanSpectroscopy</a></li>
 <li><a href="./mzkit/UVSpectroscopy.html">UVSpectroscopy</a></li>
-<li><a href="./mzkit/flexImaging.html">flexImaging</a></li>
 <li><a href="./mzkit/ProteoWizard.html">ProteoWizard</a></li>
-<li><a href="./mzkit/ThermoRaw.html">ThermoRaw</a></li>
 <li><a href="./mzkit/GCxGC.html">GCxGC</a></li>
 <li><a href="./mzkit/MSI.html">MSI</a></li>
 <li><a href="./mzkit/SingleCells.html">SingleCells</a></li>
+<li><a href="./mzkit/cellsPack.html">cellsPack</a></li>
 <li><a href="./mzkit/TissueMorphology.html">TissueMorphology</a></li>
+<li><a href="./mzkit/z_assembler.html">z_assembler</a></li>
 <li><a href="./mzkit/formula.html">formula</a></li>
+<li><a href="./mzkit/InChI.html">InChI</a></li>
 <li><a href="./mzkit/math.html">math</a></li>
+<li><a href="./mzkit/QSAR.html">QSAR</a></li>
 <li><a href="./mzkit/SMILES.html">SMILES</a></li>
 <li><a href="./mzkit/annotation.html">annotation</a></li>
 <li><a href="./mzkit/spectrumTree.html">spectrumTree</a></li>
@@ -89,7 +111,7 @@ LazyData: true
 <ul>
 <li><a href="./mzplot/ChemicalDraw.html">ChemicalDraw</a></li>
 <li><a href="./mzplot/MsImaging.html">MsImaging</a></li>
-<li><a href="./mzplot/NMR.html">NMR</a></li>
+<li><a href="./mzplot/plotNMR.html">plotNMR</a></li>
 <li><a href="./mzplot/tissue.html">tissue</a></li>
 <li><a href="./mzplot/visual.html">visual</a></li>
 </ul>
@@ -101,4 +123,6 @@ LazyData: true
 <li><a href="./mz_quantify/MRMLinear.html">MRMLinear</a></li>
 <li><a href="./mz_quantify/mzDeco.html">mzDeco</a></li>
 <li><a href="./mz_quantify/visualPlots.html">visualPlots</a></li>
+<li><a href="./mz_quantify/xcms.html">xcms</a></li>
 </ul>
+</body>

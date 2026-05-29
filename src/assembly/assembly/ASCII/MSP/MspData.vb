@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4c71f513c0b9ba0aa21adfa61083d85, mzkit\src\assembly\assembly\ASCII\MSP\MspData.vb"
+﻿#Region "Microsoft.VisualBasic::9cfc2fa25188bcb5daecaff892242c2a, assembly\assembly\ASCII\MSP\MspData.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 51
-    ' Comment Lines: 13
-    '   Blank Lines: 10
-    '     File Size: 3.05 KB
+    '   Total Lines: 88
+    '    Code Lines: 51 (57.95%)
+    ' Comment Lines: 27 (30.68%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (11.36%)
+    '     File Size: 3.53 KB
 
 
     '     Class MspData

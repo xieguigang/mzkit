@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0b7f4ea30fdb432563adc4c010ad491, mzkit\src\mzmath\TargetedMetabolomics\test\testGCMS.vb"
+﻿#Region "Microsoft.VisualBasic::7276b31e20263bfe271235c0f1463339, mzmath\TargetedMetabolomics\test\testGCMS.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 37
-    ' Comment Lines: 0
-    '   Blank Lines: 16
-    '     File Size: 1.71 KB
+    '   Total Lines: 54
+    '    Code Lines: 38 (70.37%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 16 (29.63%)
+    '     File Size: 1.79 KB
 
 
     ' Module testGCMS
@@ -56,9 +58,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.QuantifyAnalysis
-Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
-Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
@@ -80,7 +82,7 @@ Module testGCMS
         Dim ref = "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA.csv".LoadCsv(Of ROITable)
         Dim result As New List(Of ROITable)
 
-        For Each target In ref.ScanIons(data, {5, 10})
+        For Each target In ref.ScanIons(data, New DoubleRange({5, 10}))
             result += target.Item1
 
         Next

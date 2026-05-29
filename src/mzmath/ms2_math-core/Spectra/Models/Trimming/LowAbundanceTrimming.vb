@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a74689eb08aed4fc5b7821842e1c984, mzkit\src\mzmath\ms2_math-core\Spectra\Models\Trimming\LowAbundanceTrimming.vb"
+﻿#Region "Microsoft.VisualBasic::f67e31cb261cb321d5c6c8cb26ce39a0, mzmath\ms2_math-core\Spectra\Models\Trimming\LowAbundanceTrimming.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 87
-    '    Code Lines: 56
-    ' Comment Lines: 16
-    '   Blank Lines: 15
-    '     File Size: 3.05 KB
+    '   Total Lines: 102
+    '    Code Lines: 57 (55.88%)
+    ' Comment Lines: 29 (28.43%)
+    '    - Xml Docs: 96.55%
+    ' 
+    '   Blank Lines: 16 (15.69%)
+    '     File Size: 3.81 KB
 
 
     '     Class LowAbundanceTrimming
     ' 
-    '         Properties: [Default], intoCutff, quantCutoff, threshold
+    '         Properties: [Default], intoCutff, quantCutoff, threshold, Zero
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: ParseScript, (+2 Overloads) Trim
@@ -62,6 +64,14 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Spectra
 
+    ''' <summary>
+    ''' algorithm wrapper of the noise fragment filter by theirs intensity cutoff 
+    ''' </summary>
+    ''' <remarks>
+    ''' the peak fragment <see cref="ms2.Annotation"/> metadata maybe lost due 
+    ''' to the reason of intensity filter will removes some fragment object 
+    ''' that with lower intensity value.
+    ''' </remarks>
     Public MustInherit Class LowAbundanceTrimming
 
         Protected ReadOnly m_threshold As Double
@@ -97,6 +107,8 @@ Namespace Spectra
         ''' </summary>
         ''' <returns></returns>
         Public Shared ReadOnly Property [Default] As New [Default](Of LowAbundanceTrimming)(intoCutff)
+
+        Public Shared ReadOnly Property Zero As New RelativeIntensityCutoff(0)
 
         ''' <summary>
         ''' Removes the fragment peaks which its intensity value which is lower than the specific threshold

@@ -54,13 +54,13 @@ declare namespace metadb {
     * get metabolite annotation metadata by a set of given unique reference id
     * 
     * 
-     * @param engine -
-     * @param uniqueId -
+     * @param engine A local annotation repository object that should implements of the @``T:BioNovoGene.BioDeep.MSEngine.IMetaDb`` interface.
+     * @param uniqueId a set of the unique reference id
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function getMetadata(engine: any, uniqueId: object, env?: object): any;
+   function getMetadata(engine: any, uniqueId: any, env?: object): any;
    module has {
       /**
        * Check the formula string has metal ion inside?
@@ -73,16 +73,56 @@ declare namespace metadb {
       */
       function metal_ion(formula: any, env?: object): boolean;
    }
+   module is {
+      /**
+       * check of the given formula is metal ion or not?
+       * 
+       * 
+        * @param formula -
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function metal_ion(formula: any, env?: object): boolean;
+      /**
+       * check of the given formula is organic or not?
+       *  this function will return TRUE if the formula is organic,
+       *  otherwise it returns FALSE.
+       * 
+       * 
+        * @param formula -
+        * @param strict 
+        * + default value Is ``false``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function organic(formula: any, strict?: boolean, env?: object): boolean;
+   }
    /**
-     * @param env default value Is ``null``.
+    * cast the given dataframe as the ion feature annotation result
+    * 
+    * 
+     * @param x a dataframe of the ion annotation data that required of the data fields:
+     *  
+     *  1. unique_id: metabolite reference id
+     *  2. name: metabolite name
+     *  3. mz: target ion feature m/z value
+     *  4. ppm: the ppm error between the sample m/z and evaluated mz valuefrom the exact mass
+     *  5. adducts: ion feature adducts type for the annotation
+     *  6. score: the ion annotation score for the result.
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function load_asQueryHits(x: object, env?: object): object;
    module mass_search {
       /**
+       * A general method for build exact mass search index
        * 
        * 
         * @param massSet -
-        * @param type -
+        * @param type the clr type description string of the elements in the given **`massSet`** collection
         * @param tolerance -
         * 
         * + default value Is ``'da:0.01'``.
@@ -106,12 +146,12 @@ declare namespace metadb {
      * 
      * + default value Is ``null``.
    */
-   function ms1_handler(compounds: any, precursors: any, tolerance?: any, env?: object): any;
+   function ms1_handler(compounds: any, precursors: any, tolerance?: any, env?: object): object;
    /**
     * get duplictaed raw annotation results.
     * 
     * 
-     * @param engine -
+     * @param engine the ms1 search engine which implements the clr interface @``T:BioNovoGene.BioDeep.MSEngine.IMzQuery``
      * @param mz a m/z numeric vector or a object list that 
      *  contains the data mapping of unique id to 
      *  m/z value.
@@ -121,13 +161,27 @@ declare namespace metadb {
      *  value is set to value TRUE.
      * 
      * + default value Is ``false``.
+     * @param field_mz the field name of the ion m/z, options for list and dataframe input.
+     * 
+     * + default value Is ``'mz'``.
+     * @param field_score the field name of the ion score, options for list and dataframe input.
+     * 
+     * + default value Is ``'score'``.
      * @param env 
      * + default value Is ``null``.
    */
-   function ms1_search(engine: any, mz: any, unique?: boolean, uniqueByScore?: boolean, env?: object): object;
+   function ms1_search(engine: any, mz: any, unique?: boolean, uniqueByScore?: boolean, field_mz?: string, field_score?: string, env?: object): object;
    /**
-     * @param keepsRaw default value Is ``false``.
-     * @param env default value Is ``null``.
+    * Parse the lipid names
+    * 
+    * 
+     * @param name a character vector of the lipid names
+     * @param keepsRaw keeps the mzkit clr object instead of convert the clr object as R# runtime tuple list value.
+     * 
+     * + default value Is ``false``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function parseLipidName(name: any, keepsRaw?: boolean, env?: object): object;
    /**
@@ -138,6 +192,12 @@ declare namespace metadb {
    */
    function precursorIon(ion: string): object;
    /**
+    * A general interface method for query the exact mass search index
+    * 
+    * > this function will return a list of the matched results, which it could be empty if no matched results.
+    * 
+     * @param search the mass search index engine
+     * @param mass the target exact mass value
    */
    function queryByMass(search: object, mass: number): any;
    /**
@@ -157,6 +217,13 @@ declare namespace metadb {
      *  given threshold value, then this function returns nothing
    */
    function searchMz(mz: any, exactMass: number, adducts: object, mzdiff?: any, env?: object): object;
+   /**
+    * take the valid cas number from a collection of the given id set
+    * 
+    * 
+     * @param x the target id collection set for taks the valid cas number.
+   */
+   function select_cas_number(x: any): string;
    /**
     * unique of the peak annotation features
     * 
@@ -185,7 +252,7 @@ declare namespace metadb {
    /**
     * verify that the given cas registry number is correct or not
     * 
-    * > based on the @``M:BioNovoGene.BioDeep.Chemoinformatics.CASNumber.Verify(System.String)`` clr function.
+    * > based on the @``M:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference.CASNumber.Verify(System.String)`` clr function.
     * 
      * @param num -
      * @param env -

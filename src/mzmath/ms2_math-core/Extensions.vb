@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9b73f290e51030c1e1fa2f07c8ddd45, mzkit\src\mzmath\ms2_math-core\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::c27780cdc5a7e745dbf2d70703067bf1, mzmath\ms2_math-core\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 109
-    '    Code Lines: 68
-    ' Comment Lines: 30
-    '   Blank Lines: 11
-    '     File Size: 4.07 KB
+    '   Total Lines: 166
+    '    Code Lines: 99 (59.64%)
+    ' Comment Lines: 49 (29.52%)
+    '    - Xml Docs: 97.96%
+    ' 
+    '   Blank Lines: 18 (10.84%)
+    '     File Size: 6.17 KB
 
 
     ' Module Extensions
     ' 
-    '     Function: CreateLibraryMatrix, GroupByMz, RetentionIndex, Ticks, Trim
-    '               TrimBaseline
+    '     Function: CreateLibraryMatrix, (+2 Overloads) CreateMzIndex, GroupByMz, KovatsRI, (+2 Overloads) RetentionIndex
+    '               Trim, TrimBaseline, UnifyTag
     ' 
     ' /********************************************************************************/
 
@@ -61,18 +63,47 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports std = System.Math
 
+''' <summary>
+''' Some common helper function for the mass spectrum data
+''' </summary>
 <HideModuleName> Public Module Extensions
 
     <Extension>
-    Public Function CreateMzIndex(mzSet As Double(), Optional win_size As Double = 1) As BlockSearchFunction(Of (mz As Double, Integer))
-        Call VBDebugger.EchoLine($"tolerance window size: {win_size}")
+    Public Iterator Function UnifyTag(source As IEnumerable(Of ms2), tag As String) As IEnumerable(Of ms2)
+        For Each f As ms2 In source
+            If f.Annotation.StringEmpty(, True) Then
+                f.Annotation = tag
+            Else
+                f.Annotation = f.Annotation & $"; [{tag}]"
+            End If
 
-        Return New BlockSearchFunction(Of (mz As Double, Integer))(
-            data:=mzSet.Select(Function(mzi, i) (mzi, i)),
+            Yield f
+        Next
+    End Function
+
+    <Extension>
+    Public Function CreateMzIndex(mzSet As Double(),
+                                  Optional win_size As Double = 1,
+                                  Optional verbose As Boolean = True) As BlockSearchFunction(Of MzIndex)
+        If verbose Then
+            Call VBDebugger.EchoLine($"tolerance window size: {win_size}")
+        End If
+
+        Return New BlockSearchFunction(Of MzIndex)(
+            data:=mzSet.Select(Function(mzi, i) New MzIndex(mzi, i)),
             eval:=Function(i) i.mz,
             tolerance:=win_size,
             fuzzy:=True
         )
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function CreateMzIndex(spectrum As IEnumerable(Of ms2), Optional win_size As Double = 1) As BlockSearchFunction(Of MzIndex)
+        Return spectrum _
+            .Select(Function(mzi) mzi.mz) _
+            .ToArray _
+            .CreateMzIndex(win_size)
     End Function
 
     ''' <summary>
@@ -125,6 +156,35 @@ Imports std = System.Math
     End Function
 
     ''' <summary>
+    ''' Kovats retention index
+    ''' </summary>
+    ''' <param name="small_n"></param>
+    ''' <param name="large_N"></param>
+    ''' <param name="ti"></param>
+    ''' <param name="t_smalln"></param>
+    ''' <param name="t_largeN"></param>
+    ''' <returns></returns>
+    Public Function KovatsRI(small_n As Integer, large_N As Integer, ti As Double, t_smalln As Double, t_largeN As Double) As Double
+        Return 100 * (small_n + (large_N - small_n) * (std.Log(ti) - std.Log(t_smalln)) / (std.Log(t_largeN) - std.Log(t_smalln)))
+    End Function
+
+    ''' <summary>
+    ''' 根据保留时间来计算出保留指数
+    ''' </summary>
+    ''' <param name="rt"></param>
+    ''' <param name="A"></param>
+    ''' <param name="B"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function RetentionIndex(Of RI As {IRetentionTime, IRetentionIndex})(rt As IRetentionTime, A As RI, B As RI) As Double
+        Dim rtScale = (rt.rt - A.rt) / (B.rt - A.rt)
+        Dim riScale = (B.RI - A.RI) * rtScale
+        Dim retention_index = A.RI + riScale
+
+        Return retention_index
+    End Function
+
+    ''' <summary>
     ''' 在一定的误差范围内按照m/z对碎片进行分组操作，并取出该分组内的信号响应值最大值作为该分组的信号响应
     ''' </summary>
     ''' <param name="mz"></param>
@@ -157,7 +217,7 @@ Imports std = System.Math
 
         Return New LibraryMatrix With {
             .ms2 = ms2,
-            .Name = name
+            .name = name
         }
     End Function
 End Module

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6090b4399058fd9badf1f8af8b4162fd, mzkit\src\metadb\Massbank\Public\Massbank\PeakDataHelper.vb"
+﻿#Region "Microsoft.VisualBasic::8f8b3f5aced15c2943db99204bc48d80, metadb\Massbank\Public\Massbank\PeakDataHelper.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 68
-    '    Code Lines: 40
-    ' Comment Lines: 21
-    '   Blank Lines: 7
-    '     File Size: 2.72 KB
+    '   Total Lines: 67
+    '    Code Lines: 38 (56.72%)
+    ' Comment Lines: 21 (31.34%)
+    '    - Xml Docs: 90.48%
+    ' 
+    '   Blank Lines: 8 (11.94%)
+    '     File Size: 2.73 KB
 
 
     '     Module PeakDataHelper
@@ -78,8 +80,8 @@ Namespace Massbank
         <Extension>
         Public Function Join(peakData As IEnumerable(Of DoubleTagged(Of Double))) As String
             Return peakData _
-            .Select(Function(pk) $"{pk.Tag},{pk.Value}") _
-            .JoinBy(" ")
+                .Select(Function(pk) $"{pk.Tag},{pk.Value}") _
+                .JoinBy(" ")
         End Function
 
         ''' <summary>
@@ -116,16 +118,15 @@ Namespace Massbank
                     Throw New NotImplementedException
             End Select
 
-            Dim out As DoubleTagged(Of Double)() =
-            record _
-            .PK _
-            .PEAK _
-            .Select(Function(pk)
-                        Return New DoubleTagged(Of Double) With {
-                            .Tag = pk.mz,
-                            .Value = pk.relint / base
-                        }
-                    End Function).ToArray
+            Dim out As DoubleTagged(Of Double)() = record.PK.PEAK _
+                .Select(Function(pk)
+                            Return New DoubleTagged(Of Double) With {
+                                .Tag = pk.mz,
+                                .Value = pk.relint / base
+                            }
+                        End Function) _
+                .ToArray
+
             Return out
         End Function
     End Module

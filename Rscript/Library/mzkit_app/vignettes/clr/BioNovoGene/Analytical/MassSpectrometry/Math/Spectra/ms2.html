@@ -24,16 +24,14 @@
 
         <p>A spectra fragment with m/z and into data.</p>
 
-<p>[mz, into, annotation]</p>
-
-<p>the mass spectrum data model that based on this peak collection has:</p>
-
-<ul>
-<li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a></li>
-<li><p><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakList.html">PeakList</a></p>
-
-<p>a more complex of this spectrum peak data model is <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/SpectrumPeak.html">SpectrumPeak</a> object</p></li>
-</ul>
+<p>[mz, into, annotation]
+ 
+ the mass spectrum data model that based on this peak collection has:
+ 
+ + <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a>
+ + <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakList.html">PeakList</a>
+ 
+ a more complex of this spectrum peak data model is <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/SpectrumPeak.html">SpectrumPeak</a> object</p>
 
         <h3>Declare</h3>        
 
@@ -41,12 +39,12 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 export class ms2 {
-   # Molecular fragment m/z.(or the mass value)
-   mz: double;
-   # Relative intensity.(percentage)
-   intensity: double;
    # Peak annotation data or something else
    Annotation: string;
+   # Relative intensity.(percentage)
+   intensity: double;
+   # Molecular fragment m/z.(or the mass value)
+   mz: double;
 }
 </code>
         </pre>

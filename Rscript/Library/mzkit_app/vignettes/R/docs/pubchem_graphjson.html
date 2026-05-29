@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title><p>Parse the pugview xml as the metabolite data object</p></title>
+    <title>Parse the pugview xml as the metabolite data object</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -18,7 +18,7 @@
             </tr>
         </table>
 
-        <h2><p>Parse the pugview xml as the metabolite data object</p></h2>
+        <h2>Parse the pugview xml as the metabolite data object</h2>
 
         <h3>Description</h3>
 
@@ -29,7 +29,7 @@
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>pubchem_graphjson</strong>(<i>dataXml</i>,
     <i>process</i> = <span style='color: blue !important;'>NULL</span>,
-    <i>extensionCache</i> = ./.cache/extdata/);</code></pre>
+    <i>extensionCache</i> = <span style='color: brown;'><strong>'./.cache/extdata/'</strong></span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -41,11 +41,15 @@
 
 
 <dt>process</dt>
-<dd><p><p>a callable function that used for additional object processing, example like attach a additional database cross reference id to the xrefs of the generated pugview metabolite data object</p></p></dd>
+<dd><p><p>a callable function that used for additional object processing, example like
+attach a additional database cross reference id to the xrefs of the generated pugview
+metabolite data object</p></p></dd>
 
 
 <dt>extensionCache</dt>
-<dd><p><p>a cache dir for save the extension data of the current metabolite object, example as pathway query, reaction query, and reaction query. This parameter value also could be a filesystem wrapper object.</p></p></dd>
+<dd><p><p>a cache dir for save the extension data of the current metabolite object,
+example as pathway query, reaction query, and reaction query. This parameter value also
+could be a filesystem wrapper object.</p></p></dd>
 
         </table>
 

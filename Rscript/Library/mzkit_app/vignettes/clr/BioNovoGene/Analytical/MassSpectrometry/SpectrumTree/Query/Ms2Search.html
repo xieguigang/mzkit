@@ -30,6 +30,9 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 export class Ms2Search {
+   # for waters instrument data, the proteowizard has bug about processing the precorsor ion
+   #  data, so we need to discard the precursor ion filter for the spectrum alignment
+   discardPrecursorFilter: boolean;
 }
 </code>
         </pre>

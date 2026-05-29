@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b54dc94547f5dd69acfe56f93461c3e4, mzkit\src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\ScanMode.vb"
+﻿#Region "Microsoft.VisualBasic::ae6d1e243047dbf02c3ea650b65ea449, mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\ScanMode.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 232
-    '    Code Lines: 168
-    ' Comment Lines: 39
-    '   Blank Lines: 25
-    '     File Size: 10.75 KB
+    '   Total Lines: 228
+    '    Code Lines: 164 (71.93%)
+    ' Comment Lines: 39 (17.11%)
+    '    - Xml Docs: 74.36%
+    ' 
+    '   Blank Lines: 25 (10.96%)
+    '     File Size: 10.51 KB
 
 
     '     Module ScanModeWorker
@@ -60,9 +62,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.DataStorage.netCDF
-Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
-Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
-Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -233,7 +232,7 @@ Namespace GCMS.QuantifyAnalysis
         End Function
 
         <Extension>
-        Public Iterator Function FitContent(Of T As ROITable)(ROIlist As IEnumerable(Of (fileName$, data As T)), standardCurves As Dictionary(Of String, LinearQuantitative.StandardCurve)) As IEnumerable(Of ChromatographyPeaktable)
+        Public Iterator Function FitContent(Of T As ROITable)(ROIlist As IEnumerable(Of (fileName$, data As T)), standardCurves As Dictionary(Of String, StandardCurve)) As IEnumerable(Of ChromatographyPeaktable)
             Dim fileTable = ROIlist.SafeQuery _
                 .GroupBy(Function(file) file.fileName) _
                 .ToDictionary(Function(file) file.Key,
@@ -248,14 +247,13 @@ Namespace GCMS.QuantifyAnalysis
                 Dim rawFile$ = targetVal.Key
                 Dim detections As Dictionary(Of String, T) = targetVal.Value
 
-                For Each target As T In detections _
-                    .Values _
+                For Each target As T In detections.Values _
                     .Where(Function(tt)
                                Return Not tt.ID.TextEquals(tt.IS) AndAlso standardCurves.ContainsKey(tt.ID)
                            End Function)
 
                     Dim TPA#
-                    Dim standardCurve As LinearQuantitative.StandardCurve = standardCurves(target.ID)
+                    Dim standardCurve As StandardCurve = standardCurves(target.ID)
 
                     If Not standardCurve.IS Is Nothing Then
                         ' 需要做内标校正

@@ -30,6 +30,7 @@
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>read.MoNA</strong>(<i>rawfile</i>,
     <i>skipSpectraInfo</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>is.gcms</i> = <span style='color: blue !important;'>FALSE</span>,
+    <i>lazy</i> = <span style='color: blue !important;'>TRUE</span>,
     <i>verbose</i> = <span style='color: blue !important;'>TRUE</span>);</code></pre>
         </div>
 
@@ -38,13 +39,21 @@
         <table>
             
 <dt>rawfile</dt>
-<dd><p><p>a vector of the mona database file, could be a set of multiple mona database file.<br />
- the database reader is switched automatically based on this file path its <br />
- extension name.</p></p></dd>
+<dd><p>a vector of the mona database file, could be a set of multiple mona database file.
+ the database reader is switched automatically based on this file path its 
+ extension name. currently supported data file formats: <code>sdf</code> and <code>msp</code>. [as string]</p></dd>
+
+
+<dt>is.gcms</dt>
+<dd><p>Load gcms reference dataset?. [as boolean]</p></dd>
+
+
+<dt>lazy</dt>
+<dd><p>Create a lazy data populator or load all data in memory and returns a vector of the spectral data. [as boolean]</p></dd>
 
 
 <dt>env</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
 
         </table>
 
@@ -59,8 +68,8 @@
 
         <h3>Value</h3>
 
-        <p>a linq pipeline for populate the spectrum data <br />
- from the MoNA database.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Internal/Object/pipeline.html">pipeline</a></li></ul>
+        <p>a linq pipeline for populate the spectrum data 
+ from the MoNA database.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/SpectraSection.html">SpectraSection</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

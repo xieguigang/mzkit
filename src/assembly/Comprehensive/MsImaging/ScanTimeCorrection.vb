@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::505a65ff61d8c4b16e2ecfab90d19733, mzkit\src\assembly\Comprehensive\MsImaging\ScanTimeCorrection.vb"
+﻿#Region "Microsoft.VisualBasic::cbf2664d73fb428fd43eb6a1d483cf9d, assembly\Comprehensive\MsImaging\ScanTimeCorrection.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 56
-    '    Code Lines: 29
-    ' Comment Lines: 19
-    '   Blank Lines: 8
-    '     File Size: 2.01 KB
+    '   Total Lines: 117
+    '    Code Lines: 73 (62.39%)
+    ' Comment Lines: 27 (23.08%)
+    '    - Xml Docs: 92.59%
+    ' 
+    '   Blank Lines: 17 (14.53%)
+    '     File Size: 4.32 KB
 
 
     '     Class ScanTimeCorrection
@@ -49,7 +51,7 @@
     '         Properties: pixels, pixelsTime, totalTime
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetPixelPoint, GetPixelRow, GetPixelRowX
+    '         Function: GetPixelPoint, GetPixelRow, GetPixelRowX, ScanMeltdown
     ' 
     ' 
     ' /********************************************************************************/
@@ -59,12 +61,13 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
 Namespace MsImaging
 
     ''' <summary>
-    ''' 在这里必须要假设每一个像素点的扫描时间是等长的
+    ''' implements the x-axis encoder based on the scan time offsets
     ''' </summary>
     Public Class ScanTimeCorrection : Inherits Correction
 
@@ -109,6 +112,66 @@ Namespace MsImaging
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetPixelRowX(scanMs1 As ScanMS1) As Integer
             Return GetPixelRow(scanMs1.rt)
+        End Function
+
+        ''' <summary>
+        ''' make bugs fixed for RT pixel correction
+        ''' </summary>
+        ''' <param name="MSI"></param>
+        ''' <param name="println">
+        ''' set this parameter value to nothing will mute the log message echo. 
+        ''' </param>
+        ''' <returns></returns>
+        Public Shared Function ScanMeltdown(MSI As mzPack,
+                                            Optional gridSize As Integer = 2,
+                                            Optional println As Action(Of String) = Nothing) As mzPack
+
+            Dim graph = Grid(Of ScanMS1).Create(MSI.MS, Function(d) d.GetMSIPixel)
+            Dim scans As New List(Of ScanMS1)
+            Dim dims As New Size(graph.width, graph.height)
+            Dim pixel As ScanMS1
+
+            If println Is Nothing Then
+                println =
+                    Sub()
+
+                    End Sub
+            Else
+                Call println("make bugs fixed for RT pixel correction!")
+            End If
+
+            For i As Integer = 1 To dims.Width
+                For j As Integer = 1 To dims.Height
+                    pixel = graph.GetData(i, j)
+
+                    If pixel Is Nothing Then
+                        For xi As Integer = -1 To -gridSize Step -1
+                            pixel = graph.GetData(i + xi, j)
+
+                            If Not pixel Is Nothing Then
+                                Exit For
+                            End If
+                        Next
+                    End If
+
+                    If Not pixel Is Nothing Then
+                        scans.Add(pixel)
+                    Else
+                        Call println($"Missing pixel data at [{i}, {j}]!")
+                    End If
+                Next
+            Next
+
+            Return New mzPack With {
+                .Application = FileApplicationClass.MSImaging,
+                .Chromatogram = MSI.Chromatogram,
+                .MS = scans.ToArray,
+                .Scanners = MSI.Scanners,
+                .source = MSI.source,
+                .Thumbnail = MSI.Thumbnail,
+                .Annotations = MSI.Annotations,
+                .metadata = MSI.metadata
+            }
         End Function
     End Class
 End Namespace

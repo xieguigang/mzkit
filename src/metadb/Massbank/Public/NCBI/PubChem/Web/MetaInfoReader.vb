@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::010356209f2376e27bfa3522fb41cecd, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\MetaInfoReader.vb"
+﻿#Region "Microsoft.VisualBasic::2b93fa7f11a13f5a65c2e4de7d6f950b, metadb\Massbank\Public\NCBI\PubChem\Web\MetaInfoReader.vb"
 
 ' Author:
 ' 
@@ -37,17 +37,21 @@
 
 ' Code Statistics:
 
-'   Total Lines: 335
-'    Code Lines: 282
-' Comment Lines: 18
-'   Blank Lines: 35
-'     File Size: 14.97 KB
+'   Total Lines: 428
+'    Code Lines: 357 (83.41%)
+' Comment Lines: 19 (4.44%)
+'    - Xml Docs: 78.95%
+' 
+'   Blank Lines: 52 (12.15%)
+'     File Size: 19.38 KB
 
 
 '     Module MetaInfoReader
 ' 
-'         Function: GetInform, GetInformList, GetMetaInfo, getSynonyms, getXrefId
-'                   navigateView, parseChemical, removesDbEntry, safeProject, stripMarkupString
+'         Function: CCSValue, CCSValues, GetBiosampleList, GetInform, GetInformList
+'                   GetMetaInfo, getSynonyms, getValues, getXrefId, logPValues
+'                   navigateView, parseChemical, parseExperimentals, removesDbEntry, safeProject
+'                   stripMarkupString
 ' 
 ' 
 ' /********************************************************************************/
@@ -56,14 +60,13 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports any = Microsoft.VisualBasic.Scripting
-Imports MetaInfo = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
+Imports MetaInfo = BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib
 
 Namespace NCBI.PubChem
 
@@ -187,6 +190,9 @@ Namespace NCBI.PubChem
                 InChIKey = descriptors("InChIKey") _
                     .GetInformationString("#0") _
                     .stripMarkupString
+            End If
+            If SMILES.StringEmpty Then
+                SMILES = descriptors("SMILES").GetInformationString("#0").stripMarkupString
             End If
 
             Dim InChI = descriptors("InChI").GetInformationString("#0").stripMarkupString
@@ -426,7 +432,16 @@ Namespace NCBI.PubChem
                 desc.FlashPoint = experiments.safeProject(key:="Flash Point", AddressOf getValues)
                 desc.Density = experiments.safeProject(key:="Density", AddressOf getValues)
                 desc.VaporPressure = experiments.safeProject(key:="Vapor Pressure", AddressOf getValues)
+
                 desc.Odor = experiments.safeProject(key:="Odor", AddressOf getValues)
+                desc.Taste = experiments.safeProject(key:="Taste", AddressOf getValues)
+                desc.Color = experiments.safeProject(key:="Color/Form", AddressOf getValues)
+
+                Dim physical = experiments.safeProject("Physical Description", AddressOf getValues)
+
+                If desc.Odor Is Nothing Then
+                    desc.Odor = physical
+                End If
             End If
 
             Return desc

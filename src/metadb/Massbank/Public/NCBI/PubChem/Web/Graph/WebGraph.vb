@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73de2e4e3ed37d78c325914073ed47e2, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Graph\WebGraph.vb"
+﻿#Region "Microsoft.VisualBasic::0ba5d7e8848ddbc0fb2909eb3a4b1f8b, metadb\Massbank\Public\NCBI\PubChem\Web\Graph\WebGraph.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 79
-    '    Code Lines: 63
-    ' Comment Lines: 0
-    '   Blank Lines: 16
-    '     File Size: 2.96 KB
+    '   Total Lines: 130
+    '    Code Lines: 94 (72.31%)
+    ' Comment Lines: 12 (9.23%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 24 (18.46%)
+    '     File Size: 4.94 KB
 
 
     '     Enum Types
     ' 
-    '         ChemicalDiseaseNeighbor, ChemicalGeneSymbolNeighbor, ChemicalNeighbor
+    '         ChemicalDiseaseNeighbor, ChemicalGeneSymbolNeighbor, ChemicalNeighbor, GeneSymbolDiseaseNeighbor
     ' 
     '  
     ' 
@@ -58,29 +60,55 @@
     ' 
     '     Class WebGraph
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: getJSONUrl, parseJSON, Query
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: getJSONUrl, parseJSON, (+2 Overloads) Query
     ' 
     '     Class GraphJSON
     ' 
     '         Properties: LinkDataSet
+    ' 
+    '         Function: GenericEnumerator
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace NCBI.PubChem.Graph
 
     Public Enum Types
+
+        ''' <summary>
+        ''' Metabolite Gene Association
+        ''' </summary>
+        <Description("Metabolite Gene Association")>
         ChemicalGeneSymbolNeighbor
+
+        ''' <summary>
+        ''' Metabolite Disease Association
+        ''' </summary>
+        <Description("Metabolite Disease Association")>
         ChemicalDiseaseNeighbor
+
+        ''' <summary>
+        ''' Metabolite Literature Co-Occurrence
+        ''' </summary>
+        <Description("Metabolite Literature Co-Occurrence")>
         ChemicalNeighbor
+
+        ''' <summary>
+        ''' Gene Disease Association
+        ''' </summary>
+        <Description("Gene Disease Association")>
+        GeneSymbolDiseaseNeighbor
     End Enum
 
     Public Class LinkDataSet
@@ -108,6 +136,17 @@ Namespace NCBI.PubChem.Graph
             )
         End Sub
 
+        Sub New(cache As IFileSystemEnvironment, Optional interval As Integer = -1, Optional offline As Boolean = False)
+            MyBase.New(
+                url:=AddressOf getJSONUrl,
+                contextGuid:=Function(q) $"{q.type}_{q.cid}",
+                parser:=AddressOf parseJSON,
+                prefix:=Function(q) q.Split("_"c).First & "/" & MD5(q).Substring(1, 2),
+                cache:=cache,
+                interval:=interval,
+                offline:=offline)
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function parseJSON(data As String, schema As Type) As Object
             Return data.LoadJSON(Of GraphJSON)(throwEx:=False)
@@ -126,16 +165,23 @@ Namespace NCBI.PubChem.Graph
 
             Static web As New Dictionary(Of String, WebGraph)
 
-            Dim json As GraphJSON = web.ComputeIfAbsent(
-                key:=cache,
-                lazyValue:=Function() New WebGraph(cache, interval, offline)
-            ) _
-                .Query(Of GraphJSON)(
-                    context:=(cid, type),
-                    cacheType:=".json"
-                )
+            Return web _
+                .ComputeIfAbsent(
+                    key:=cache,
+                    lazyValue:=Function()
+                                   Return New WebGraph(cache, interval, offline)
+                               End Function
+                ) _
+                .Query(cid, type)
+        End Function
 
-            If json Is Nothing OrElse json.LinkDataSet Is Nothing OrElse json.LinkDataSet.LinkData Is Nothing Then
+        Public Overloads Function Query(cid As String, type As Types) As MeshGraph()
+            Dim json As GraphJSON = Query(Of GraphJSON)(context:=(cid, type), cacheType:=".json")
+
+            If json Is Nothing OrElse
+                json.LinkDataSet Is Nothing OrElse
+                json.LinkDataSet.LinkData Is Nothing Then
+
                 Return Nothing
             Else
                 Return json.LinkDataSet.LinkData
@@ -143,9 +189,18 @@ Namespace NCBI.PubChem.Graph
         End Function
     End Class
 
-    Public Class GraphJSON
+    Public Class GraphJSON : Implements Enumeration(Of MeshGraph)
 
         Public Property LinkDataSet As LinkDataSet
 
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of MeshGraph) Implements Enumeration(Of MeshGraph).GenericEnumerator
+            If LinkDataSet Is Nothing Then
+                Return
+            End If
+
+            For Each item As MeshGraph In LinkDataSet.LinkData.SafeQuery
+                Yield item
+            Next
+        End Function
     End Class
 End Namespace

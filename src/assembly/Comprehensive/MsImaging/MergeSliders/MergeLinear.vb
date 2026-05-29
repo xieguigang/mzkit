@@ -1,7 +1,72 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::8e3193edb715bfb4da8962ac8ee75d4f, assembly\Comprehensive\MsImaging\MergeSliders\MergeLinear.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 138
+    '    Code Lines: 93 (67.39%)
+    ' Comment Lines: 18 (13.04%)
+    '    - Xml Docs: 16.67%
+    ' 
+    '   Blank Lines: 27 (19.57%)
+    '     File Size: 5.42 KB
+
+
+    ' Class MergeLinear
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class MergeSMSlides
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: JoinOneSample, Padding
+    ' 
+    ' Class MergeSTSlides
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: JoinOneSample, Padding
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
@@ -37,7 +102,6 @@ Public Class MergeSMSlides : Inherits MergeLinear
 
     Public Overrides Iterator Function JoinOneSample(shape As Polygon2D, sample As mzPack, left As Integer, top As Integer) As IEnumerable(Of ScanMS1)
         Dim minX As Integer = shape.xpoints.Min
-        Dim height As Integer = shape.height
         Dim deltaY As Integer = shape.ypoints.Min * -1 + top
         Dim sampleid As String = sample.source
 
@@ -62,7 +126,7 @@ Public Class MergeSMSlides : Inherits MergeLinear
             End If
 
             If relativePos Then
-                Yield scan.generateNormScan(minX, left, deltaY, sampleid, norm)
+                Yield scan.generateNormScan(minX, left, deltaY, sampleid)
             Else
                 ' is absolute position, just merge the collection
                 Yield scan
@@ -126,7 +190,7 @@ Public Class MergeSTSlides : Inherits MergeLinear
             scan.mz = union_maps
 
             If relativePos Then
-                Yield scan.generateNormScan(minX, left, deltaY, sampleid, norm)
+                Yield scan.generateNormScan(minX, left, deltaY, sampleid)
             Else
                 ' is absolute position, just merge the collection
                 Yield scan

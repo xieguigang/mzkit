@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Microsoft.VisualBasic.Imaging.SVG.XML.SvgElement</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>SvgElement {Microsoft.VisualBasic.Imaging.SVG.XML}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>SvgElement</h2>
+
+        <h3>Description</h3>
+
+        <p>The basically SVG XML document node, it can be tweaks on the style by using CSS</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace Microsoft.VisualBasic.Imaging.SVG.XML
+export class SvgElement {
+   # The `aria-label` attribute is part of the Accessible Rich Internet Applications (ARIA) specification,
+   #  which is designed to make web content and web applications more accessible to people with disabilities.
+   #  Here's an overview of the `aria-label` attribute:
+   #  
+   #  <strong>Purpose:</strong>
+   #  - The `aria-label` attribute is used to provide a text label for an element that is not otherwise 
+   #    labeled through text content or other attributes like `aria-labelledby`.
+   #  - It is particularly useful for elements that do not have a visible text label, such as icons,
+   #    buttons, or other interactive elements.
+   #    
+   #  <strong>Usage:</strong>
+   #  - The value of the `aria-label` attribute is a string that contains the text label for the element.
+   #  - This text label is intended to be read by assistive technologies like screen readers, which can 
+   #    announce the label to users who cannot see the screen.
+   #    
+   #  <strong>Example:</strong>
+   # 
+   # 
+   # <pre><code class="html"> &lt;button aria-label="Close">×&lt;!-- This is an icon representing a close action -->&lt;/button>
+   # </code></pre>
+   # 
+   # 
+   # 
+   # In this example, a screen reader would announce "Close" when the user navigates to the button, even 
+   #  though the visible content of the button is just an "×" symbol.
+   #  
+   #  <strong>Benefits:</strong>
+   #  - Improves accessibility by providing a clear description of the element's purpose or content.
+   #  - Allows developers to create more semantic and accessible user interfaces without relying on off-screen 
+   #    text or other less semantic methods.
+   #    
+   #  <strong>Considerations:</strong>
+   #  - The `aria-label` should be concise and descriptive.
+   #  - It should not duplicate text that is already provided in the visible content of the element.
+   #  - Avoid using `aria-label` for elements that already have a text label visible on the screen, as this
+   #    can cause redundancy for screen reader users.
+   #    
+   #  <strong>Compatibility:</strong>
+   #  - The `aria-label` attribute is supported by most modern web browsers and assistive technologies.
+   AriaLabel: string;
+   Fill: string;
+   FillOpacity: double;
+   # html element node id liked identifer
+   Id: string;
+   # the stroke color, value of this property should be html color code
+   Stroke: string;
+   # The stroke-dasharray attribute is a presentation attribute defining the pattern of 
+   #  dashes and gaps used to paint the outline of the shape;
+   StrokeDashArray: double;
+   StrokeLineCap: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/SVG/XML/Enums/SvgStrokeLineCap.html">SvgStrokeLineCap</a>;
+   StrokeOpacity: double;
+   StrokeWidth: double;
+   # current element node css style
+   Style: string;
+   TabIndex: <a href="/vignettes/clr/System/Nullable`1.html">Nullable`1</a>;
+   # get the xml tag name of current svg element
+   Tag: string;
+   Transform: string;
+   Visible: boolean;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>StrokeLineCap</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/SVG/XML/Enums/SvgStrokeLineCap.html">SvgStrokeLineCap</a></li>
+<li>use by <i>property</i> member <code>TabIndex</code>: <a href="/vignettes/clr/System/Nullable`1.html">Nullable`1</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

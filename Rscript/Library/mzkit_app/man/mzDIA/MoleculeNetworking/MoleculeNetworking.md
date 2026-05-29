@@ -1,4 +1,4 @@
-# MoleculeNetworking
+﻿# MoleculeNetworking
 
 Molecular Networking (MN) is a computational strategy that may help visualization and interpretation of the complex data arising from MS analysis.
 > MN is able to identify potential similarities among all MS/MS spectra within 
@@ -35,3 +35,8 @@ Molecular Networking (MN) is a computational strategy that may help visualizatio
 + [clustering](MoleculeNetworking/clustering.1) Do spectrum clustering on a small bundle of the ms2 spectrum from a single raw data file
 + [msBin](MoleculeNetworking/msBin.1) populate a list of peak ms2 cluster data
 + [representative](MoleculeNetworking/representative.1) create representative spectrum data
++ [spectrum_clusters](MoleculeNetworking/spectrum_clusters.1) get all aligned spectrum clusters across rawdata files
++ [spectrum_grid](MoleculeNetworking/spectrum_grid.1) Create grid clustering of the ms2 spectrum data
++ [grid_assigned](MoleculeNetworking/grid_assigned.1) Make precursor assigned to the cluster node
++ [unpack_unmapped](MoleculeNetworking/unpack_unmapped.1) 
++ [unpack_assign](MoleculeNetworking/unpack_assign.1) Unpack of the spectrum data into multiple file groups

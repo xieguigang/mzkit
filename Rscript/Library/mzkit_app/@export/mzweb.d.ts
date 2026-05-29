@@ -32,6 +32,16 @@ declare namespace mzweb {
       */
       function mzpack(assembly: any, args?: object, env?: object): object;
    }
+   /**
+    * Get BPC from the mzpack layer reader
+    * 
+    * 
+     * @param x -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function BPC(x: any, env?: object): object;
    module load {
       /**
        * load chromatogram data from the raw file data
@@ -85,7 +95,7 @@ declare namespace mzweb {
     * get a overview ms1 spectrum data from the mzpack raw data
     * 
     * 
-     * @param mzpack The mzpack rawdata object
+     * @param mzpack usually be the @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack`` rawdata object, or a general @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix`` object.
      * @param tolerance The mass tolerance error
      * 
      * + default value Is ``'da:0.001'``.
@@ -102,17 +112,28 @@ declare namespace mzweb {
      * + default value Is ``null``.
      * @return A ms peaks object
    */
-   function ms1_peaks(mzpack: object, tolerance?: any, cutoff?: number, ionset?: any, env?: object): object;
+   function ms1_peaks(mzpack: any, tolerance?: any, cutoff?: number, ionset?: any, env?: object): object;
    /**
     * get all ms1 scan data points
     * 
     * 
      * @param mzpack -
+     * @param mz 
+     * + default value Is ``null``.
+     * @param tolerance 
+     * + default value Is ``'ppm:20'``.
+     * @param env 
+     * + default value Is ``null``.
    */
-   function ms1_scans(mzpack: object): object;
+   function ms1_scans(mzpack: object, mz?: object, tolerance?: any, env?: object): object;
    /**
     * extract ms2 peaks data from the mzpack data object
     * 
+    * > metadata of the spectrum source reference includes data slots:
+    * >  
+    * >  1. ``source``, the file name of the spectrum rawdata file source
+    * >  2. ``precursor``, the precursor ion mz of the spectrum data
+    * >  3. ``rt``, the retention time of the spectrum data object
     * 
      * @param mzpack -
      * @param precursorMz if the precursor m/z data is assign by this parameter
@@ -123,7 +144,8 @@ declare namespace mzweb {
      * @param tolerance ppm toleracne error for extract ms2 xic data.
      * 
      * + default value Is ``'ppm:30'``.
-     * @param tag_source 
+     * @param tag_source tag the source reference to the metadata of each spectrum data object?
+     * 
      * + default value Is ``true``.
      * @param centroid and also convert the data to centroid mode?
      * 
@@ -134,11 +156,20 @@ declare namespace mzweb {
      * + default value Is ``true``.
      * @param into_cutoff 
      * + default value Is ``0``.
+     * @param rt_window the rt range for filter of the ms2 spectrum data exports, 
+     *  should be a numeric vector that consists with two elements
+     *  for specific the range min and range max. rt data should 
+     *  be in data unit of seconds.
+     * 
+     * + default value Is ``null``.
+     * @param loadProductTree Load MSn product tree.
+     * 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function ms2_peaks(mzpack: object, precursorMz?: number, tolerance?: any, tag_source?: boolean, centroid?: boolean, norm?: boolean, filter_empty?: boolean, into_cutoff?: any, env?: object): object;
+   function ms2_peaks(mzpack: object, precursorMz?: number, tolerance?: any, tag_source?: boolean, centroid?: boolean, norm?: boolean, filter_empty?: boolean, into_cutoff?: any, rt_window?: any, loadProductTree?: boolean, env?: object): object;
    module open {
       /**
        * open a raw data files in common raw data format and then returns 
@@ -146,25 +177,34 @@ declare namespace mzweb {
        * 
        * 
         * @param file the ``*.mzXML``/``*.mzML``/``*.mzPack``/``*.raw`` raw data file
+        * @param verbose 
+        * + default value Is ``true``.
         * @param env 
         * + default value Is ``null``.
       */
-      function mzpack(file: any, env?: object): object;
+      function mzpack(file: any, verbose?: boolean, env?: object): object;
    }
    module open_mzpack {
       /**
        * open mzpack data from a raw data file in xml file format.
        * 
        * 
-        * @param file -
+        * @param file the file path to the xml rawdata file
         * @param prefer the prefer file format used when the given **`file`** its extension
         *  suffix name is ``XML``. value of this parameter could be imzml/mzml/mzxml
         * 
         * + default value Is ``null``.
+        * @param da 
+        * + default value Is ``0.001``.
+        * @param noise_cutoff 
+        * + default value Is ``0.0001``.
+        * @param verbose 
+        * + default value Is ``true``.
         * @param env 
         * + default value Is ``null``.
+        * @return A mzkit mzpack rawdata object
       */
-      function xml(file: string, prefer?: string, env?: object): object;
+      function xml(file: string, prefer?: string, da?: number, noise_cutoff?: number, verbose?: boolean, env?: object): object;
    }
    /**
     * write binary format of mzweb stream data
@@ -189,6 +229,25 @@ declare namespace mzweb {
       */
       function scanMs(bytes: any, level?: any, env?: object): any;
    }
+   /**
+    * Parse the given network base64 data as spectrum
+    * 
+    * 
+     * @param mz a character vector of the base64 string for the ms2 spectrum ion peaks
+     * @param intensity a character vector of the base64 string for the corresponding ion peaks intensity value.
+     * @param id a character vector of the spectrum reference id
+     * 
+     * + default value Is ``null``.
+     * @param auto_scalar returns a scalar spectrum object if the input data just contains one spectrum data or not?
+     * 
+     * + default value Is ``true``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+     * @return this function will populate a set of the ms2 spectrum data object
+     *  that which was parsed from the given base64 data collection.
+   */
+   function parse_base64(mz: any, intensity: any, id?: any, auto_scalar?: boolean, env?: object): object;
    module read {
       /**
        * read the mzPack data file liked simple msn cached data
@@ -223,19 +282,23 @@ declare namespace mzweb {
     * Get TIC from the mzpack layer reader
     * 
     * 
-     * @param mzpack -
+     * @param x should be a file reader to a mzpack file or the mzpack in-memory data object.
+     * @param env 
+     * + default value Is ``null``.
    */
-   function TIC(mzpack: object): object;
+   function TIC(x: any, env?: object): object;
    module write {
       /**
        * write binary format of mzweb stream data
        * 
        * 
         * @param file -
+        * @param tag_filesource 
+        * + default value Is ``true``.
         * @param env 
         * + default value Is ``null``.
       */
-      function cache(ions: object, file: any, env?: object): boolean;
+      function cache(ions: any, file: any, tag_filesource?: boolean, env?: object): boolean;
       /**
         * @param Ms2Only default value Is ``false``.
         * @param env default value Is ``null``.
@@ -263,14 +326,16 @@ declare namespace mzweb {
        * > this method used for create ascii text package data for the biodeep
        * >  web application js code to read the ms rawdata.
        * 
-        * @param scans -
+        * @param x -
         * @param file -
         * 
         * + default value Is ``null``.
+        * @param tabular 
+        * + default value Is ``false``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function text_cache(scans: object, file?: any, env?: object): any;
+      function text_cache(x: any, file?: any, tabular?: boolean, env?: object): any;
    }
 }

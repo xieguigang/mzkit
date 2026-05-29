@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5e83a2d742bd34445737f89540a11fe, mzkit\src\assembly\ThermoRawFileReader\MSFileReader.vb"
+﻿#Region "Microsoft.VisualBasic::e773244b895c9178440490e44c51bd32, assembly\ThermoRawFileReader\MSFileReader.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 209
-    '    Code Lines: 143
-    ' Comment Lines: 31
-    '   Blank Lines: 35
-    '     File Size: 7.41 KB
+    '    Code Lines: 143 (68.42%)
+    ' Comment Lines: 31 (14.83%)
+    '    - Xml Docs: 80.65%
+    ' 
+    '   Blank Lines: 35 (16.75%)
+    '     File Size: 7.43 KB
 
 
     ' Class MSFileReader
@@ -61,13 +63,16 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
-Imports stdNum = System.Math
+Imports std = System.Math
 
+''' <summary>
+''' the file reader wrapper of the Xcalibur raw data file
+''' </summary>
 Public Class MSFileReader : Implements IDisposable
 
     Public Const GET_SCAN_DATA_WARNING As String = "GetScanData2D returned no data for scan"
 
-    Dim mRawFileReader As XRawFileIO
+    Dim mRawFileReader As XcaliburRawFileIO
 
     Public Property ScanMin As Integer
     Public Property ScanMax As Integer
@@ -84,7 +89,7 @@ Public Class MSFileReader : Implements IDisposable
         End Get
     End Property
 
-    Public ReadOnly Property ThermoReader As XRawFileIO
+    Public ReadOnly Property ThermoReader As XcaliburRawFileIO
         Get
             Return mRawFileReader
         End Get
@@ -108,7 +113,7 @@ Public Class MSFileReader : Implements IDisposable
         End If
 
         filePath = filePath.GetFullPath
-        mRawFileReader = New XRawFileIO(readerOptions)
+        mRawFileReader = New XcaliburRawFileIO(readerOptions)
         mRawFileReader.OpenRawFile(filePath)
         ScanMin = 1
         ScanMax = mRawFileReader.GetNumScans()
@@ -175,7 +180,7 @@ Public Class MSFileReader : Implements IDisposable
             Dim maxInt As Double = data.Max(Function(x) x.Intensity)
 
             ' Check for the maximum intensity being zero
-            If skipEmptyScan AndAlso (stdNum.Abs(maxInt) < Single.Epsilon) Then
+            If skipEmptyScan AndAlso (std.Abs(maxInt) < Single.Epsilon) Then
                 Continue For
             End If
 

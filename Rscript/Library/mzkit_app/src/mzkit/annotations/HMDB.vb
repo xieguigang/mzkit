@@ -1,55 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::716473ea2ff8400bc315a27c7955c012, mzkit\Rscript\Library\mzkit\annotations\HMDB.vb"
+﻿#Region "Microsoft.VisualBasic::681c11d1e3ee0178c546a935a8dd6250, Rscript\Library\mzkit_app\src\mzkit\annotations\HMDB.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 108
-'    Code Lines: 69
-' Comment Lines: 27
-'   Blank Lines: 12
-'     File Size: 3.94 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module HMDBTools
-' 
-'     Function: biospecimen_slicer, chemical_taxonomy, exportTable, readHMDB, subCellular_slicer
-'               tissue_slicer
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 338
+    '    Code Lines: 209 (61.83%)
+    ' Comment Lines: 93 (27.51%)
+    '    - Xml Docs: 91.40%
+    ' 
+    '   Blank Lines: 36 (10.65%)
+    '     File Size: 14.80 KB
+
+
+    ' Module HMDBTools
+    ' 
+    '     Function: biospecimen_slicer, chemical_taxonomy, Convert, exportTable, getHMDB
+    '               loadMessageDb, readHMDB, readHMDBSpectrals, saveHmdbMessage, saveHmdbMessage2
+    '               subCellular_slicer, tissue_slicer
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +64,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.TMIC
+Imports BioNovoGene.BioDeep.Chemistry.TMIC.HMDB
 Imports BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.Repository
 Imports BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.Spectra
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
@@ -71,9 +77,10 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
-''' toolkit for handling of the hmdb database
+''' ### toolkit for handling of the hmdb database
 ''' 
 ''' The Human Metabolome Database (HMDB) is a comprehensive, high-quality, freely accessible, 
 ''' online database of small molecule metabolites found in the human body. It bas been created 
@@ -99,12 +106,38 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 ''' Four additional databases, DrugBank, T3DB, SMPDB And FooDB are also part Of the HMDB suite Of 
 ''' databases. DrugBank contains equivalent information On ~1,600 drug And drug metabolites, T3DB 
 ''' contains information On 3,100 common toxins And environmental pollutants, SMPDB contains pathway 
-''' diagrams For 700 human metabolic And disease pathways, While FooDB contains equivalent information 
-''' On ~28,000 food components And food additives.
+''' diagrams For 700 human metabolic And disease pathways, While FooDB contains equivalent 
+''' information On ~28,000 food components And food additives.
 ''' </summary>
 <Package("hmdb_kit")>
 <RTypeExport("hmdb_metabolite", GetType(HMDB.metabolite))>
+<RTypeExport("hmdb", GetType(MetaboliteTable))>
 Module HMDBTools
+
+    Sub Main()
+        Call RInternal.generic.add("readBin.hmdb", GetType(Stream), AddressOf loadMessageDb)
+        Call RInternal.generic.add("writeBin", GetType(MetaboliteTable()), AddressOf saveHmdbMessage)
+        Call RInternal.generic.add("writeBin", GetType(MetaDb()), AddressOf saveHmdbMessage2)
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <RGenericOverloads("writeBin")>
+    Private Function saveHmdbMessage2(hmdb As MetaDb(), args As list, env As Environment) As Object
+        Return saveHmdbMessage(hmdb.Select(Function(a) DirectCast(a, MetaboliteTable)).ToArray, args, env)
+    End Function
+
+    <RGenericOverloads("writeBin")>
+    Private Function saveHmdbMessage(hmdb As MetaboliteTable(), args As list, env As Environment) As Object
+        Dim con As Stream = args!con
+        Call MetaboliteTable.SaveMessagePack(hmdb, con)
+        Call con.Flush()
+        Return True
+    End Function
+
+    <RGenericOverloads("readBin")>
+    Public Function loadMessageDb(file As Stream, args As list, env As Environment) As Object
+        Return MetaboliteTable.LoadMessagePack(file)
+    End Function
 
     ''' <summary>
     ''' read hmdb spectral data collection
@@ -168,7 +201,7 @@ Module HMDBTools
         Dim hmdbId As String = file.database_id.value
 
         If Not file.references.IsNullOrEmpty Then
-            Dim ref0 As reference = file.references(Scan0)
+            Dim ref0 As Spectra.reference = file.references(Scan0)
             Dim xref_id As String = ref0.database_id
 
             ' biodeepMSMS package use the delimiter | symbol
@@ -230,17 +263,26 @@ Module HMDBTools
     ''' <param name="xml">
     ''' the file path of the hmdb metabolite database xml file
     ''' </param>
+    ''' <param name="convert_std">
+    ''' convert the metabolite annotation data as the mzkit standard metabolite annotation data model(<see cref="BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib"/>)?
+    ''' </param>
     ''' <returns>
     ''' this function populate a collection of the hmdb metabolites data
     ''' </returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("read.hmdb")>
-    <RApiReturn(GetType(HMDB.metabolite))>
-    Public Function readHMDB(xml As String) As pipeline
-        Return TMIC.HMDB _
-            .LoadXML(xml) _
-            .DoCall(AddressOf pipeline.CreateFromPopulator)
+    <RApiReturn(GetType(HMDB.metabolite), GetType(BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib))>
+    Public Function readHMDB(xml As String, Optional convert_std As Boolean = False, Optional tqdm As Boolean = True) As pipeline
+        Dim pull As IEnumerable(Of metabolite) = TMIC.HMDB.LoadXML(xml, tqdm)
+
+        If convert_std Then
+            Return pull _
+                .ConvertInternal _
+                .DoCall(AddressOf pipeline.CreateFromPopulator)
+        Else
+            Return pipeline.CreateFromPopulator(pull)
+        End If
     End Function
 
     ''' <summary>
@@ -252,11 +294,28 @@ Module HMDBTools
     ''' if this parameter value default null
     ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this function returns the data depends of the <paramref name="file"/> parameter is
+    ''' existsed or not: for ``file`` parameter has been omit, then a vector of the hmdb 
+    ''' <see cref="MetaDb"/> clr object will be returns, otherwise a logical value for indicates 
+    ''' the write table file success or not will be returns.
+    ''' </returns>
     <ExportAPI("export.hmdb_table")>
-    Public Function exportTable(hmdb As pipeline, Optional file As Object = Nothing, Optional env As Environment = Nothing) As Object
+    <RApiReturn(GetType(Boolean), GetType(TMIC.HMDB.MetaDb))>
+    Public Function exportTable(hmdb As pipeline,
+                                Optional file As Object = Nothing,
+                                Optional env As Environment = Nothing) As Object
+
+        Dim pull As IEnumerable(Of TMIC.HMDB.metabolite)
+
+        If Not hmdb.elementType Is RType.TypeOf(Of TMIC.HMDB.metabolite) Then
+            Return Message.InCompatibleType(GetType(TMIC.HMDB.metabolite), hmdb.elementType.GetRawElementType, env)
+        Else
+            pull = hmdb.populates(Of TMIC.HMDB.metabolite)(env)
+        End If
+
         If file Is Nothing Then
-            Return TMIC.HMDB.MetaDb.PopulateTable(hmdb.populates(Of TMIC.HMDB.metabolite)(env)).ToArray
+            Return TMIC.HMDB.MetaDb.PopulateTable(pull).ToArray
         End If
 
         Dim con = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
@@ -266,7 +325,7 @@ Module HMDBTools
         End If
 
         Using buffer As Stream = con.TryCast(Of Stream)
-            Call TMIC.HMDB.MetaDb.WriteTable(hmdb.populates(Of TMIC.HMDB.metabolite)(env), out:=buffer)
+            Call TMIC.HMDB.MetaDb.WriteTable(pull, out:=buffer)
             Call buffer.Flush()
         End Using
 

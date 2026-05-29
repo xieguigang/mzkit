@@ -106,14 +106,27 @@ declare namespace MSI {
      * @param mzdiff -
      * 
      * + default value Is ``0.001``.
-     * @param q -
+     * @param q sparsity cutoff, the higher q cutoff value
+     *  the less ions we keeps As more sparse ion was 
+     *  removed.
      * 
      * + default value Is ``0.001``.
      * @param fast_bins -
      * 
      * + default value Is ``true``.
+     * @param verbose 
+     * + default value Is ``false``.
+     * @param env 
+     * + default value Is ``null``.
    */
-   function getMatrixIons(raw: object, mzdiff?: number, q?: number, fast_bins?: boolean): number;
+   function getMatrixIons(raw: any, mzdiff?: number, q?: number, fast_bins?: boolean, verbose?: boolean, env?: object): object;
+   /**
+    * create memory index reader for the large profile raw MS data
+    * 
+    * 
+     * @param x -
+   */
+   function index_reader(x: object): object;
    /**
      * @param env default value Is ``null``.
    */
@@ -153,6 +166,14 @@ declare namespace MSI {
       */
       function convolution(mat: object, clusters?: object, win_size?: object): object;
    }
+   /**
+    * load the spectrum of a specific spot scan inside the imzML
+    * 
+    * 
+     * @param ibd a file reader of the ibd rawdata file
+     * @param scan contains the address information for read the spectrum inside a specific spot
+   */
+   function load_spectrum(ibd: object, scan: object): object;
    /**
     * evaluate the moran index for each ion layer
     * 
@@ -213,6 +234,7 @@ declare namespace MSI {
         *  1. scans: is the [x,y] spatial scans data: @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ScanData``.
         *  2. ibd: is the binary data reader wrapper object for the corresponding 
         *        ``ibd`` file of the given input imzML file: @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ibdReader``.
+        *  3. metadata: get file @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.imzMLMetadata`` from the imzML header.
       */
       function imzML(file: string, env?: object): object;
    }
@@ -239,6 +261,8 @@ declare namespace MSI {
    /**
     * Extract the ion data matrix
     * 
+    * > feature elements inside the generated matrix object keeps the same order with 
+    * >  the input ion features.
     * 
      * @param raw -
      * @param topN select top N ion feature in each spot and then union the ion features as 
@@ -266,6 +290,21 @@ declare namespace MSI {
      *    rows is the spatial spots.
    */
    function peakMatrix(raw: object, topN?: object, mzError?: any, ionSet?: any, raw_matrix?: boolean, env?: object): object|object;
+   /**
+    * create the peak matrix alignment in stream mode
+    * 
+    * 
+     * @param raw -
+     * @param ionSet -
+     * @param out stream file to save the matrix data file
+     * @param mzErr -
+     * 
+     * + default value Is ``'da:0.05'``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function peakMatrix_stream(raw: object, ionSet: any, out: any, mzErr?: any, env?: object): any;
    /**
     * split the raw MSI 2D data into multiple parts with given resolution parts
     * 
@@ -302,19 +341,27 @@ declare namespace MSI {
    */
    function pixelId(raw: object, mz: number, tolerance?: any, env?: object): string;
    /**
-    * get number of ions in each pixel scans
+    * get number of ions in each pixel scans or get ion peaks data for specific pixels
     * 
     * 
      * @param raw should be a mzpack object that contains multiple spatial spot scans data.
+     * @param x 
+     * + default value Is ``null``.
+     * @param y 
+     * + default value Is ``null``.
+     * @param label 
+     * + default value Is ``null``.
+     * @param env 
+     * + default value Is ``null``.
      * @return an integer vector of the number of ions in each spatial spot scans
    */
-   function pixelIons(raw: object): object;
+   function pixelIons(raw: any, x?: any, y?: any, label?: any, env?: object): object;
    /**
     * dumping raw data matrix as text table file.
     * 
     * 
      * @param raw -
-     * @param file -
+     * @param file write the generated data matrix into this file
      * 
      * + default value Is ``null``.
      * @param mzdiff the mass tolerance width for extract the feature ions
@@ -369,6 +416,27 @@ declare namespace MSI {
      * + default value Is ``null``.
    */
    function raster(x: any, layer?: object, env?: object): object;
+   module read {
+      /**
+       * read the metadata from the imzml file header
+       * 
+       * 
+        * @param imzML -
+      */
+      function imzml_metadata(imzML: string): object;
+   }
+   /**
+    * re-located of the sample of the ms-imaging for a location which is evaluated by the given **`padding`**.
+    * 
+    * 
+     * @param x -
+     * @param padding -
+     * 
+     * + default value Is ``'padding: 20px 20px 20px 20px;'``.
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function reset_padding(x: object, padding?: any, env?: object): object;
    module row {
       /**
        * each raw data file is a row scan data
@@ -385,11 +453,13 @@ declare namespace MSI {
         * @param env -
         * 
         * + default value Is ``null``.
+        * @return the function return value should be a collection of the spot data if the y
+        *  scan line has been specific, or a collection of the mzpack object.
       */
       function scans(raw: string, y?: object, correction?: object, env?: object): object;
    }
    /**
-    * make expression bootstrapping of current ion layer
+    * make expression bootstrapping of the spatial data
     * 
     * > Bootstrapping is a statistical procedure that resamples a single dataset to create
     * >  many simulated samples. This process allows you to calculate standard errors, 
@@ -398,22 +468,42 @@ declare namespace MSI {
     * >  hypothesis testing and are notable for being easier to understand and valid for more 
     * >  conditions.
     * 
-     * @param layer The target ion layer to run expression bootstraping
+     * @param x The target ion layer to run expression bootstraping, it could be
+     *  @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer``, or the @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix`` data matrix for 
+     *  extract the sample dataframe.
      * @param tissue A collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion`` object.
+     * 
+     * + default value Is ``null``.
      * @param n Get n sample points for each tissue region
      * 
      * + default value Is ``32``.
      * @param coverage The region area coverage for the bootstrapping.
      * 
      * + default value Is ``0.3``.
-     * @return A tuple list object that contains the expression data for each @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion``:
+     * @param scale_by_area 
+     * + default value Is ``true``.
+     * @param mz 
+     * + default value Is ``null``.
+     * @param multiple_samples 
+     * + default value Is ``false``.
+     * @param env 
+     * + default value Is ``null``.
+     * @return For a single ion data layer, this function generates A tuple list object that contains 
+     *  the expression data for each @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion``:
      *  
      *  1. the tuple key is the label of the tissue region data,
      *  2. the tuple value is the numeric expression vector that sampling from 
      *     the corrisponding tissue region, the vector size is equals to the 
      *     parameter ``n``.
+     *     
+     *  For a raw spatial data matrix @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix`` object, a tuple list object that
+     *  contains two elements will be generats:
+     *  
+     *  1. sampleinfo - a collection of the gcmodeller @``T:SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner.SampleInfo`` for mark the sample spatial source
+     *  2. data - a dataframe that contains the bootstrapping expression data, ion features in rows
+     *            and spatial features sample in columns.
    */
-   function sample_bootstraping(layer: object, tissue: object, n?: object, coverage?: number): any;
+   function sample_bootstraping(x: any, tissue?: object, n?: object, coverage?: number, scale_by_area?: boolean, mz?: object, multiple_samples?: boolean, env?: object): any;
    /**
     * scale the spatial matrix by column
     * 
@@ -446,7 +536,8 @@ declare namespace MSI {
     * 
     * 
      * @param rowScans data result comes from the function ``row.scans``.
-     * @param correction 
+     * @param correction the x-axis encoder, use the ``correction`` function for construct this object.
+     * 
      * + default value Is ``null``.
      * @param intocutoff 
      * + default value Is ``0.05``.
@@ -507,14 +598,4 @@ declare namespace MSI {
       */
       function imzML(mzpack: object, file: string, res?: number, ionMode?: object, dims?: any, env?: object): boolean;
    }
-   /**
-    * Create mzpack object for ms-imaging in 3D
-    * 
-    * 
-     * @param x the z axis value should be encoded in the @``P:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.source`` tag
-     * @param env -
-     * 
-     * + default value Is ``null``.
-   */
-   function z_assembler(x: any, file: any, env?: object): any;
 }

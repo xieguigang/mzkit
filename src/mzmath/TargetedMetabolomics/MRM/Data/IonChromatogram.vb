@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2514c3d65f9bb32aaa78119688ffe64, mzkit\src\mzmath\TargetedMetabolomics\MRM\Data\IonChromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::0c03cea7b7a590909d916fc062ddc296, mzmath\TargetedMetabolomics\MRM\Data\IonChromatogram.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 39
-    '    Code Lines: 32
-    ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 1.23 KB
+    '   Total Lines: 66
+    '    Code Lines: 40 (60.61%)
+    ' Comment Lines: 17 (25.76%)
+    '    - Xml Docs: 88.24%
+    ' 
+    '   Blank Lines: 9 (13.64%)
+    '     File Size: 2.29 KB
 
 
     '     Structure IonChromatogram
     ' 
     '         Properties: chromatogram, description, hasRTwin, ion, name
+    '                     source
     ' 
-    '         Function: GetTimeWindow, ToString
+    '         Function: GetSplineData, GetTimeWindow, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -56,18 +59,40 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Math.SignalProcessing
+Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
 
 Namespace MRM.Data
 
+    ''' <summary>
+    ''' the raw data 
+    ''' </summary>
     Public Structure IonChromatogram
 
         Public Property name As String
         Public Property description As String
         Public Property chromatogram As ChromatogramTick()
+        ''' <summary>
+        ''' the ion pair data of this ion chromatogram xic data
+        ''' 
+        ''' this is used to record the original ion pair data
+        ''' that this ion chromatogram data is extracted from.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property ion As IsomerismIonPairs
+
+        ''' <summary>
+        ''' the source file of the ion chromatogram xic data
+        ''' 
+        ''' this is used to record the original raw data file name
+        ''' that this ion chromatogram data is extracted from.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property source As String
 
         Public ReadOnly Property hasRTwin As Boolean
             Get
@@ -86,6 +111,20 @@ Namespace MRM.Data
             Else
                 Return Nothing
             End If
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetSplineData(degree As Double, res As Integer) As ChromatogramTick()
+            Return chromatogram _
+                .BSpline(Function(t, i) New ChromatogramTick(t, i), degree, res) _
+                .ToArray
+        End Function
+
+        Public Function GetResampleSignal(q As Double) As ChromatogramTick()
+            Dim baseline As Double = chromatogram.SignalBaseline(q)
+            Dim reshape = New BinSampler(chromatogram.TimeArray, (chromatogram.IntensityArray - baseline).Select(Function(i) If(i < 0, 0, i)).ToArray)
+            Dim preprocess = reshape.AggregateSignal(2500, Function(t, i) New ChromatogramTick(t, i), Function(x) x.Sum).ToArray
+            Return preprocess
         End Function
 
         Public Overrides Function ToString() As String

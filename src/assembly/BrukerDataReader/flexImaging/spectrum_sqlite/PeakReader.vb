@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::044ac8df237972425fbf5e152ffce067, mzkit\src\assembly\BrukerDataReader\flexImaging\spectrum_sqlite\PeakReader.vb"
+﻿#Region "Microsoft.VisualBasic::1c535a8c60fe85976da5b144f1db29d8, assembly\BrukerDataReader\flexImaging\spectrum_sqlite\PeakReader.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 105
-    '    Code Lines: 77
-    ' Comment Lines: 15
-    '   Blank Lines: 13
-    '     File Size: 4.02 KB
+    '    Code Lines: 77 (73.33%)
+    ' Comment Lines: 15 (14.29%)
+    '    - Xml Docs: 20.00%
+    ' 
+    '   Blank Lines: 13 (12.38%)
+    '     File Size: 4.15 KB
 
 
     ' Class PeakReader
@@ -75,7 +77,7 @@ Public Class PeakReader : Implements IDisposable
 
     Public Iterator Function GetSpectra() As IEnumerable(Of Spectra)
         Dim table As Sqlite3Table = peaks.GetTable("Spectra")
-        Dim schema As Schema = table.SchemaDefinition.ParseSchema
+        Dim schema As SQLSchema.Schema = table.SchemaDefinition.ParseSchema
         Dim id As Integer = schema.GetOrdinal(NameOf(Spectra.Id))
         Dim chip As Integer = schema.GetOrdinal(NameOf(Spectra.Chip))
         Dim spot As Integer = schema.GetOrdinal(NameOf(Spectra.SpotName))
@@ -123,7 +125,7 @@ Public Class PeakReader : Implements IDisposable
 
     Public Iterator Function GetProperties() As IEnumerable(Of Properties)
         Dim table As Sqlite3Table = peaks.GetTable("Properties")
-        Dim schema As Schema = table.SchemaDefinition.ParseSchema
+        Dim schema As SQLSchema.Schema = table.SchemaDefinition.ParseSchema
         Dim key As Integer = schema.GetOrdinal("Key")
         Dim value As Integer = schema.GetOrdinal("Value")
 

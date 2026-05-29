@@ -1,4 +1,4 @@
-# RamanSpectroscopy
+﻿# RamanSpectroscopy
 
 Raman spectroscopy (/ˈrɑːmən/) (named after physicist C. V. Raman) is a spectroscopic 
  technique typically used to determine vibrational modes of molecules, although rotational

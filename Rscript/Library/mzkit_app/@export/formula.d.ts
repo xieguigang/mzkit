@@ -49,6 +49,17 @@
 */
 declare namespace formula {
    /**
+    * Make molecule formula to adduct ion formula by add a specific adducts ion data
+    * 
+    * 
+     * @param formula -
+     * @param adducts -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function adduct_ion_formula(formula: object, adducts: any, env?: object): object;
+   /**
     * find all of the candidate chemical formulas by a 
     *  specific exact mass value and a specific mass 
     *  tolerance value in ppm
@@ -96,6 +107,17 @@ declare namespace formula {
    */
    function eval(formula: any, env?: object): number;
    /**
+    * Evaluate of the molecule formula from the given adduct ion formula
+    * 
+    * 
+     * @param formula -
+     * @param adducts -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function formula_calibration(formula: object, adducts: any, env?: object): object;
+   /**
    */
    function getElementCount(formula: object, element: string): object;
    /**
@@ -140,12 +162,13 @@ declare namespace formula {
       function SDF(data: string, parseStruct?: boolean): object;
    }
    /**
-    * do peak annotation for the ms2 fragments
+    * do peak annotation for the ms2 spectrum fragments
     * 
     * 
      * @param library A ms2 matrix object
      * @param adducts -
-     * @param massDiff -
+     * @param massDiff the mass tolerance error for matches the ms2 spectrum peaks, should usually 
+     *  be the tolerance error for make spectrum centroid process.
      * 
      * + default value Is ``0.1``.
      * @param isotopeFirst -
@@ -153,10 +176,12 @@ declare namespace formula {
      * + default value Is ``true``.
      * @param as_list 
      * + default value Is ``true``.
+     * @param unset_scalar 
+     * + default value Is ``false``.
      * @param env 
      * + default value Is ``null``.
    */
-   function peakAnnotations(library: any, formula: any, adducts: any, massDiff?: number, isotopeFirst?: boolean, as_list?: boolean, env?: object): object;
+   function peaks_annotation(library: any, formula: any, adducts: any, massDiff?: number, isotopeFirst?: boolean, as_list?: boolean, unset_scalar?: boolean, env?: object): object;
    module read {
       /**
        * Read KCF model data

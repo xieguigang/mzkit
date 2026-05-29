@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f34aa1f2c5836a758615c4004c72cf9, mzkit\src\metadb\Massbank\MetaLib\KEGGExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::68b3348ed668e3f2b76f5a722276fbb7, metadb\Massbank\MetaLib\KEGGExtensions.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 32
-    ' Comment Lines: 10
-    '   Blank Lines: 11
-    '     File Size: 1.96 KB
+    '   Total Lines: 87
+    '    Code Lines: 57 (65.52%)
+    ' Comment Lines: 15 (17.24%)
+    '    - Xml Docs: 93.33%
+    ' 
+    '   Blank Lines: 15 (17.24%)
+    '     File Size: 3.57 KB
 
 
     '     Module KEGGExtensions
     ' 
-    '         Function: KEGGDrugGlyan2Compound
+    '         Function: KEGGDrugGlyan2Compound, Xref
     ' 
     ' 
     ' /********************************************************************************/
@@ -54,14 +56,48 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.Assembly.KEGG
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Assembly.KEGG.Medical
+Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
 
 Namespace MetaLib
 
     Public Module KEGGExtensions
+
+        ''' <summary>
+        ''' extract the cross reference link data from kegg compound annotation data model
+        ''' </summary>
+        ''' <param name="kegg"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Xref(kegg As Compound) As xref
+            Dim xl As New xref With {.extras = New Dictionary(Of String, String())}
+
+            For Each link As IGrouping(Of String, DBLink) In kegg.DbLinks.SafeQuery.GroupBy(Function(xr) xr.DBName)
+                Select Case link.Key.ToLower
+                    Case "cas" : xl.CAS = link.Select(Function(l) l.entry).Distinct.ToArray
+                    Case "pubchem" : xl.pubchem = link.OrderBy(Function(l) CLng(Val(l.entry))).FirstOrDefault?.entry.Match("\d+")
+                    Case "chebi"
+                        Dim id = link.FirstOrDefault?.entry
+
+                        If Not id.StringEmpty(, True) Then
+                            xl.chebi = "CHEBI:" & id.Match("\d+")
+                        End If
+                    Case "knapsack" : xl.KNApSAcK = link.FirstOrDefault?.entry
+                    Case "lipidmaps" : xl.lipidmaps = link.FirstOrDefault?.entry
+                    Case Else
+                        xl.extras(link.Key) = link _
+                            .Select(Function(l) l.entry) _
+                            .ToArray
+                End Select
+            Next
+
+            Return xl
+        End Function
 
         ''' <summary>
         ''' 将KEGG数据库之中的药物编号以及Glyan物质的编号转换为Compound编号
@@ -78,7 +114,7 @@ Namespace MetaLib
             Dim drugs = DrugParser.ParseStream(input.keggDrug).ToArray
             Dim idMaps As New Dictionary(Of String, String)
 
-            Call "Convert drug id to compound id...".__DEBUG_ECHO
+            Call "Convert drug id to compound id...".debug
 
             For Each d As Medical.Drug In drugs
                 Dim CId As String() = d.CompoundID
@@ -92,7 +128,7 @@ Namespace MetaLib
                 .Where(Function(f) f.BaseName.IsPattern("G\d+")) _
                 .Select(AddressOf LoadXml(Of Glycan))
 
-            Call "Scan glycan and convert glucan id to compound id...".__DEBUG_ECHO
+            Call "Scan glycan and convert glucan id to compound id...".debug
 
             For Each glycan As Glycan In gl
                 Dim CId = glycan.CompoundId

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::002257d8a6672a904a0b91884826230f, mzkit\src\metadb\MoNA\UnionReader.vb"
+﻿#Region "Microsoft.VisualBasic::fb90b996e7175208bba0e413e2f52785, metadb\MoNA\UnionReader.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 176
-    '    Code Lines: 140
-    ' Comment Lines: 8
-    '   Blank Lines: 28
-    '     File Size: 4.78 KB
+    '   Total Lines: 183
+    '    Code Lines: 146 (79.78%)
+    ' Comment Lines: 8 (4.37%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 29 (15.85%)
+    '     File Size: 5.12 KB
 
 
     ' Class UnionReader
     ' 
     '     Properties: CAS, chebi, collision_energy, compound_source, exact_mass
-    '                 formula, hmdb, instrument_type, ionMode, precursor_type
-    '                 pubchem, retention_time, sourcefile
+    '                 formula, hmdb, instrument_type, ionMode, name
+    '                 precursor_type, pubchem, retention_time, sourcefile
     ' 
     '     Constructor: (+2 Overloads) Sub New
     '     Function: numericIdInternal, ToString
@@ -60,6 +62,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 Imports Microsoft.VisualBasic.Language
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 Public Class UnionReader
 
@@ -189,6 +192,12 @@ Public Class UnionReader
             Return meta.compound_class
         End Get
     End Property
+
+    Public ReadOnly Property name As String
+        Get
+            Return meta.name
+        End Get
+    End Property
 #End Region
 
     Sub New(meta As MetaData, Optional msp As MspData = Nothing)
@@ -202,7 +211,7 @@ Public Class UnionReader
     End Sub
 
     Private Function numericIdInternal(idStr As String, <CallerMemberName> Optional name$ = Nothing) As Long
-        Static delimiter As Char() = {":"c, " "c, Text.ASCII.TAB, "="c}
+        Static delimiter As Char() = {":"c, " "c, ASCII.TAB, "="c}
 
         idStr = Strings.Trim(idStr)
 

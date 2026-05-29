@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        <p>the rt shift result</p>
 
         <h3>Declare</h3>        
 
@@ -30,10 +30,15 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math
 export class RtShift {
-   sample: string;
+   # the reference rt
    refer_rt: double;
+   RI: double;
+   # the sample name
+   sample: string;
    sample_rt: double;
+   # <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/RtShift.html">RtShift</a>.<a href="#">sample_rt</a> - <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/RtShift.html">RtShift</a>.<a href="#">refer_rt</a>.
    shift: double;
+   xcms_id: string;
 }
 </code>
         </pre>

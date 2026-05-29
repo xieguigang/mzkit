@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87d1df9edb91fc6368f4594f0e00b718, mzkit\src\visualize\MsImaging\Plot\MSIPlot.vb"
+﻿#Region "Microsoft.VisualBasic::900b51a9b0d541727fd749d9b7879403, visualize\MsImaging\Plot\MSIPlot.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 111
-    '    Code Lines: 94
-    ' Comment Lines: 1
-    '   Blank Lines: 16
-    '     File Size: 4.90 KB
+    '   Total Lines: 115
+    '    Code Lines: 95 (82.61%)
+    ' Comment Lines: 4 (3.48%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 16 (13.91%)
+    '     File Size: 5.06 KB
 
 
     ' Class MSIPlot
@@ -57,7 +59,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -71,7 +72,11 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
+''' <summary>
+''' do ms-imaging plot with axis [x,y]
+''' </summary>
 Public Class MSIPlot : Inherits Plot
 
     ReadOnly ion As SingleIonLayer
@@ -111,9 +116,10 @@ Public Class MSIPlot : Inherits Plot
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim Xtick As Double() = New DoubleRange({0, ion.DimensionSize.Width}).CreateAxisTicks()
         Dim Ytick As Double() = New DoubleRange({0, ion.DimensionSize.Height}).CreateAxisTicks
-        Dim rect As Rectangle = canvas.PlotRegion
-        Dim scaleX = d3js.scale.linear.domain(values:=Xtick).range(New Double() {rect.Left, rect.Right})
-        Dim scaleY = d3js.scale.linear.domain(values:=Ytick).range(New Double() {rect.Top, rect.Bottom})
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim rect As Rectangle = canvas.PlotRegion(css)
+        Dim scaleX = d3js.scale.linear.domain(values:=Xtick).range(values:=New Double() {rect.Left, rect.Right})
+        Dim scaleY = d3js.scale.linear.domain(values:=Ytick).range(values:=New Double() {rect.Top, rect.Bottom})
         Dim scale As New DataScaler With {
             .AxisTicks = (Xtick.AsVector, Ytick.AsVector),
             .region = rect,
@@ -140,7 +146,7 @@ Public Class MSIPlot : Inherits Plot
         Call engine.RenderPixels(g, rect.Location, ion.MSILayer, colorScale)
 
         ' draw ion m/z
-        Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
+        Dim labelFont As Font = css.GetFont(CSSFont.TryParse(theme.legendLabelCSS))
         Dim label As String = ion.IonMz
         Dim labelSize As SizeF = g.MeasureString(label, labelFont)
         Dim pos As New Point(rect.Right + canvas.Padding.Right * 0.05, rect.Top + labelSize.Height)
@@ -161,8 +167,8 @@ Public Class MSIPlot : Inherits Plot
             width:=canvas.Padding.Right * 0.8,
             height:=rect.Height * 0.5
         )
-        Dim tickFont As Font = CSSFont.TryParse(theme.legendTickCSS).GDIObject(g.Dpi)
-        Dim tickPen As Pen = Stroke.TryParse(theme.legendTickAxisStroke)
+        Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.legendTickCSS))
+        Dim tickPen As Pen = css.GetPen(Stroke.TryParse(theme.legendTickAxisStroke))
 
         Call g.ColorMapLegend(layout, colors, intensityTicks, labelFont, "Intensity", tickFont, tickPen, format:="G3")
     End Sub

@@ -24,8 +24,8 @@
 
         <p>a pixels point of [x,y,color]</p>
 
-<p>the property <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">PixelData</a>.<a href="#">intensity</a> value is the<br />
- <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Pixel.html">Pixel</a>.<a href="#">Scale</a> value that could be used for <br />
+<p>the property <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">PixelData</a>.<a href="#">intensity</a> value is the
+ <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Pixel.html">Pixel</a>.<a href="#">Scale</a> value that could be used for 
  create heatmap raster data.</p>
 
         <h3>Declare</h3>        
@@ -34,14 +34,16 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.MsImaging
 export class PixelData {
-   x: integer;
-   y: integer;
+   # the raw intensity data of current pixel
    intensity: double;
+   # the scaled <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">PixelData</a>.<a href="#">intensity</a> level of current pixel
    level: double;
    # target m/z of current raster pixel data for rendering
    mz: double;
    # the string tag value could be the sample tag or the cluster region tag data
    sampleTag: string;
+   x: integer;
+   y: integer;
 }
 </code>
         </pre>

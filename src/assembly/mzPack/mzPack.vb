@@ -1,60 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::f706985f66d876c52f0a97d4b52ff660, mzkit\src\assembly\mzPack\mzPack.vb"
+﻿#Region "Microsoft.VisualBasic::f1748d8e88fc512b33051fca6dec2b3e, assembly\mzPack\mzPack.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 281
-'    Code Lines: 191
-' Comment Lines: 61
-'   Blank Lines: 29
-'     File Size: 9.77 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class mzPack
-' 
-'     Properties: Application, Chromatogram, CountMs2, maxIntensity, metadata
-'                 MS, rtmax, rtmin, Scanners, size
-'                 source, Thumbnail, totalIons
-' 
-'     Function: CastToPeakMs2, GetAllParentMz, GetAllScanMs1, GetBasePeak, GetMs2Peaks
-'               GetXIC, hasMs2, Read, ReadAll, ToString
-'               Write
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 412
+    '    Code Lines: 277 (67.23%)
+    ' Comment Lines: 92 (22.33%)
+    '    - Xml Docs: 94.57%
+    ' 
+    '   Blank Lines: 43 (10.44%)
+    '     File Size: 15.44 KB
+
+
+    ' Class mzPack
+    ' 
+    '     Properties: Annotations, Application, Chromatogram, CountMs2, maxIntensity
+    '                 metadata, MS, rtmax, rtmin, Scanners
+    '                 size, source, Thumbnail, totalIons
+    ' 
+    '     Function: CastToPeakMs2, FromStream, get_ms1, GetAllParentMz, GetAllScanMs1
+    '               GetBasePeak, GetMs2Peaks, hasMs2, PickIonScatter, Read
+    '               ReadAll, ToString, Write, WriteV2
+    ' 
+    '     Sub: checkVer1DuplicatedId
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -69,12 +73,41 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports std = System.Math
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
 
 ''' <summary>
 ''' the unify in-memory data model of the mzkit MS data model.
-''' (mzPack文件格式模型)
 ''' </summary>
-Public Class mzPack : Implements IMZPack
+''' <remarks>
+''' (mzPack文件格式模型)
+''' </remarks>
+Public Class mzPack : Implements IMZPack, IMsAssemblyPack
 
     ''' <summary>
     ''' 一般为二维散点图
@@ -93,14 +126,14 @@ Public Class mzPack : Implements IMZPack
     ''' the file name of the raw data source file
     ''' </summary>
     ''' <returns></returns>
-    Public Property source As String Implements IMZPack.source
+    Public Property source As String Implements IMZPack.source, IMsAssemblyPack.source
     Public Property metadata As New Dictionary(Of String, String) Implements IMZPack.metadata
 
     ''' <summary>
     ''' 其他的扫描器数据，例如紫外扫描
     ''' </summary>
     ''' <returns></returns>
-    Public Property Scanners As Dictionary(Of String, ChromatogramOverlap)
+    Public Property Scanners As Dictionary(Of String, ChromatogramOverlapList)
     ''' <summary>
     ''' m/z annotation
     ''' </summary>
@@ -111,6 +144,12 @@ Public Class mzPack : Implements IMZPack
     ''' the annotation data could be a JSON string, this property only works for v2 format
     ''' </remarks>
     Public Property Annotations As Dictionary(Of String, String)
+
+    ''' <summary>
+    ''' the description note about this raw data file
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property note As String
 
     Public ReadOnly Property rtmin As Double
         Get
@@ -178,6 +217,14 @@ Public Class mzPack : Implements IMZPack
             .FirstOrDefault
     End Function
 
+    Public Function GetMetadata(key As String) As String
+        If metadata Is Nothing OrElse Not metadata.ContainsKey(key) Then
+            Return Nothing
+        Else
+            Return metadata(key)
+        End If
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return source
@@ -205,18 +252,11 @@ Public Class mzPack : Implements IMZPack
             .ToArray
     End Function
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function GetXIC(mz As Double, mzErr As Tolerance) As ChromatogramTick()
-        Return MS _
-            .Select(Function(i)
-                        Return New ChromatogramTick With {
-                            .Time = i.rt,
-                            .Intensity = i.GetIntensity(mz, mzErr)
-                        }
-                    End Function) _
-            .ToArray
-    End Function
-
+    ''' <summary>
+    ''' get all ms1 scan data points
+    ''' </summary>
+    ''' <param name="centroid"></param>
+    ''' <returns></returns>
     Public Function GetAllScanMs1(Optional centroid As Tolerance = Nothing) As IEnumerable(Of ms1_scan)
         If Not centroid Is Nothing Then
             Return MS.GetAllCentroidScanMs1(centroid)
@@ -225,6 +265,21 @@ Public Class mzPack : Implements IMZPack
                 .Select(AddressOf get_ms1) _
                 .IteratesALL
         End If
+    End Function
+
+    Public Function PickIonScatter(mz As Double, rt As Double,
+                                   Optional mass_da As Double = 0.25,
+                                   Optional dt As Double = 7.5) As IEnumerable(Of ms1_scan) Implements IMsAssemblyPack.PickIonScatter
+
+        Dim range = MS.AsParallel.Where(Function(s) s.rt >= rt - dt AndAlso s.rt <= rt + dt).ToArray
+        Dim ms1 As IEnumerable(Of ms1_scan) = range _
+            .Select(Function(s) s.GetMs1Scans) _
+            .IteratesALL _
+            .AsParallel _
+            .Where(Function(mzi) mzi.intensity > 0 AndAlso std.Abs(mzi.mz - mz) < mass_da) _
+            .OrderBy(Function(a) a.scan_time)
+
+        Return ms1
     End Function
 
     Private Shared Iterator Function get_ms1(scan As ScanMS1) As IEnumerable(Of ms1_scan)
@@ -240,10 +295,15 @@ Public Class mzPack : Implements IMZPack
         Next
     End Function
 
-    Public Iterator Function GetMs2Peaks() As IEnumerable(Of PeakMs2)
+    ''' <summary>
+    ''' Load Msn products scans data
+    ''' </summary>
+    ''' <param name="loadProductTree"></param>
+    ''' <returns></returns>
+    Public Iterator Function GetMs2Peaks(Optional loadProductTree As Boolean = False) As IEnumerable(Of PeakMs2)
         For Each ms1 As ScanMS1 In MS
             For Each ms2 As ScanMS2 In ms1.products
-                Yield CastToPeakMs2(ms2, file:=source)
+                Yield CastToPeakMs2(ms2, file:=source, loadProductTree:=loadProductTree)
             Next
         Next
     End Function
@@ -255,7 +315,7 @@ Public Class mzPack : Implements IMZPack
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function CastToPeakMs2(ms2 As ScanMS2, Optional file As String = "n/a") As PeakMs2
+    Public Shared Function CastToPeakMs2(ms2 As ScanMS2, Optional file As String = "n/a", Optional loadProductTree As Boolean = False) As PeakMs2
         Return New PeakMs2 With {
             .activation = ms2.activationMethod.ToString,
             .collisionEnergy = ms2.collisionEnergy,
@@ -267,18 +327,21 @@ Public Class mzPack : Implements IMZPack
             .precursor_type = "",
             .rt = ms2.rt,
             .scan = ms2.scan_id,
-            .mzInto = ms2.GetMs.ToArray
+            .mzInto = ms2.GetMs(loadProductTree, MSn:=2).ToArray
         }
     End Function
 
     ''' <summary>
-    ''' a wrapper of <see cref="ReadAll(Stream, Boolean, Boolean, Boolean, Boolean)"/>
+    ''' a wrapper of <see cref="ReadAll"/>
     ''' </summary>
     ''' <param name="filepath"></param>
     ''' <param name="ignoreThumbnail"></param>
     ''' <param name="skipMsn"></param>
     ''' <param name="verbose"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' auto check of the file format version.
+    ''' </remarks>
     Public Shared Function Read(filepath As String,
                                 Optional ignoreThumbnail As Boolean = False,
                                 Optional skipMsn As Boolean = False,
@@ -327,7 +390,6 @@ Public Class mzPack : Implements IMZPack
     ''' <summary>
     ''' load all content data in <see cref="mzPack"/> object into memory at one time.
     ''' the file format version is test from the magic number.
-    ''' (一次性加载所有原始数据)
     ''' </summary>
     ''' <param name="file">
     ''' the file version will be automatically detected
@@ -340,11 +402,15 @@ Public Class mzPack : Implements IMZPack
     ''' <returns>
     ''' a unify mzpack in-memory data model
     ''' </returns>
+    ''' <remarks>
+    ''' read data with format version auto checks.(一次性加载所有原始数据)
+    ''' </remarks>
     Public Shared Function ReadAll(file As Stream,
                                    Optional ignoreThumbnail As Boolean = False,
                                    Optional skipMsn As Boolean = False,
                                    Optional verbose As Boolean = True,
-                                   Optional checkVer1DuplicatedId As Boolean = False) As mzPack
+                                   Optional checkVer1DuplicatedId As Boolean = False,
+                                   Optional leaveOpen As Boolean = False) As mzPack
 
         Dim ver As Integer = file.GetFormatVersion
         Dim pack As mzPack
@@ -377,7 +443,21 @@ Public Class mzPack : Implements IMZPack
             End If
         End If
 
+        If Not leaveOpen Then
+            Try
+                Call file.Dispose()
+            Catch ex As Exception
+                Call App.LogException(ex)
+            End Try
+        End If
+
         Return pack
+    End Function
+
+    Public Function WriteV2(filepath As String, Optional progress As Action(Of String) = Nothing) As Boolean
+        Using s As Stream = filepath.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+            Return Write(s, version:=2, progress:=progress)
+        End Using
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

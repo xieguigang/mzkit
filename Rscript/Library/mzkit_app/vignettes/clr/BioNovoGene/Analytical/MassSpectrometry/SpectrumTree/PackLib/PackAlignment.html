@@ -24,8 +24,8 @@
 
         <p>alignment the query spectrum to the reference spectrum</p>
 
-<p>the data <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/PackLib/PackAlignment.html">PackAlignment</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/PackLib/SpectrumReader.html">spectrum</a> is the file stream connection<br />
- to the reference database file, spectrum could be get via id<br />
+<p>the data <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/PackLib/PackAlignment.html">PackAlignment</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/PackLib/SpectrumReader.html">spectrum</a> is the file stream connection
+ to the reference database file, spectrum could be get via id
  based on the id elements inside <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/PackLib/PackAlignment.html">PackAlignment</a>.<a href="#">libnames</a> list.</p>
 
         <h3>Declare</h3>        
@@ -34,13 +34,16 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib
 export class PackAlignment extends <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Query/Ms2Search.html">Ms2Search</a> {
-   # a stream data reader for the reference spectrum
-   spectrum: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/PackLib/SpectrumReader.html">SpectrumReader</a>;
+   discardPrecursorFilter: boolean;
    # cutoff of the cos similarity
    dotcutoff: double;
    libnames: string;
+   # make the spectrum alignment of @<code>M:BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib.PackAlignment.Search(BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.ms2[],System.Double)</code> parallel?
+   parallel: boolean;
    # the library size, get the number of the spectrum in current reference library
    size: integer;
+   # a stream data reader for the reference spectrum
+   spectrum: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/PackLib/SpectrumReader.html">SpectrumReader</a>;
 }
 </code>
         </pre>

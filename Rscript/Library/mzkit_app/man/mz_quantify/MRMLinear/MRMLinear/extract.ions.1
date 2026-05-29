@@ -1,10 +1,10 @@
 .\" man page create by R# package system.
-.TH MRMLINEAR 2 2000-Jan "extract.ions" "extract.ions"
+.TH MRMLINEAR 2 2000-1月 "extract.ions" "extract.ions"
 .SH NAME
 extract.ions \- Extract ion peaks
 .SH SYNOPSIS
 \fIextract.ions(\fBmzML\fR as string, 
-\fBionpairs\fR as <generic> IonPair[], 
+\fBionpairs\fR as any, 
 \fBtolerance\fR as any = "ppm:20", 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
@@ -13,10 +13,14 @@ Extract ion peaks
 .PP
 .SH OPTIONS
 .PP
-\fBmzML\fB \fR\- A mzML raw file. 
+\fBmzML\fB \fR\- the file path to a mzML raw data file.. 
 .PP
 .PP
-\fBionpairs\fB \fR\- metabolite targets. 
+\fBionpairs\fB \fR\- metabolite targets, value could be a vector of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models.IonPair\fR or vector of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models.IsomerismIonPairs\fR clr object.. 
+.PP
+.SH VALUE
+.PP
+vector of the ion pair corresponding xic data
 .PP
 .SH SEE ALSO
 MRMLinear

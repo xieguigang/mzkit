@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        <p>the raw data</p>
 
         <h3>Declare</h3>        
 
@@ -30,11 +30,20 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 export class IonChromatogram extends <a href="/vignettes/clr/System/ValueType.html">ValueType</a> {
-   name: string;
-   description: string;
    chromatogram: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ChromatogramTick.html">ChromatogramTick[]</a>;
-   ion: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/Models/IsomerismIonPairs.html">IsomerismIonPairs</a>;
+   description: string;
    hasRTwin: boolean;
+   # the ion pair data of this ion chromatogram xic data
+   #  
+   #  this is used to record the original ion pair data
+   #  that this ion chromatogram data is extracted from.
+   ion: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/Models/IsomerismIonPairs.html">IsomerismIonPairs</a>;
+   name: string;
+   # the source file of the ion chromatogram xic data
+   #  
+   #  this is used to record the original raw data file name
+   #  that this ion chromatogram data is extracted from.
+   source: string;
 }
 </code>
         </pre>

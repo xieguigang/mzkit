@@ -27,7 +27,9 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>read.hmdb</strong>(<i>xml</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>read.hmdb</strong>(<i>xml</i>,
+    <i>convert.std</i> = <span style='color: blue !important;'>FALSE</span>,
+    <i>tqdm</i> = <span style='color: blue !important;'>TRUE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -35,7 +37,11 @@
         <table>
             
 <dt>xml</dt>
-<dd><p><p>the file path of the hmdb metabolite database xml file</p></p></dd>
+<dd><p>the file path of the hmdb metabolite database xml file. [as string]</p></dd>
+
+
+<dt>convert.std</dt>
+<dd><p>convert the metabolite annotation data as the mzkit standard metabolite annotation data model(<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/MetaLib.html">MetaLib</a>)?. [as boolean]</p></dd>
 
         </table>
 

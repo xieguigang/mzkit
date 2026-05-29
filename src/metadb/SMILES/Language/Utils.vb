@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc91edfdedb339579074716deaa11b0b, mzkit\src\metadb\SMILES\Language\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::6070d9f550baa91af94ee666a2049279, metadb\SMILES\Language\Utils.vb"
 
     ' Author:
     ' 
@@ -37,14 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
-    '    Code Lines: 10
-    ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 300 B
+    '   Total Lines: 16
+    '    Code Lines: 12 (75.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (25.00%)
+    '     File Size: 373 B
 
 
-    ' Module Utils
+    '     Module Utils
+    ' 
     ' 
     ' 
     ' 

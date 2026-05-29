@@ -1,59 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::d9b25d3eed3358524d383e2fdb072054, mzkit\Rscript\Library\mzkit\math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::8107553dec6f34f967e6f447b96367e0, Rscript\Library\mzkit_app\src\mzkit\math\Math.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 695
-'    Code Lines: 477
-' Comment Lines: 124
-'   Blank Lines: 94
-'     File Size: 27.74 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module MzMath
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: centroid, cosine, CreateMSMatrix, createTolerance, defaultPrecursors
-'               exact_mass, getAlignmentTable, GetClusters, getPrecursorTable, jaccard
-'               jaccardSet, mz, MzUnique, peaktable, ppm
-'               precursorTypes, printCalculator, printMzTable, sequenceOrder, spectrumEntropy
-'               SpectrumTreeCluster, SSMCompares, xcms_id, XICTable
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1423
+    '    Code Lines: 881 (61.91%)
+    ' Comment Lines: 365 (25.65%)
+    '    - Xml Docs: 89.59%
+    ' 
+    '   Blank Lines: 177 (12.44%)
+    '     File Size: 60.78 KB
+
+
+    ' Module MzMath
+    ' 
+    '     Function: adducts_table, alignIntensity, centroid, centroidDataframe, (+2 Overloads) cosine
+    '               cosine_pairwise, CreateAlignmentTable, CreateMSMatrix, CreateMzIndex, createTolerance
+    '               defaultPrecursors, exact_mass, find_precursor, getAlignmentTable, GetClusters
+    '               getPrecursorTable, jaccard, jaccardSet, mass_tabular, mz
+    '               MzUnique, normMs2, ppm, precursorTypes, printCalculator
+    '               printMzTable, rank_adducts, sequenceOrder, spectrumEntropy, SpectrumTreeCluster
+    '               SSMCompares, summaryTolerance, union, xcms_id, XICTable
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -81,36 +86,72 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Information
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
+Imports SMRUCC.Rsharp.Development.Components
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
-Imports any = Microsoft.VisualBasic.Scripting
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
+Imports std = System.Math
 Imports stdVector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 
 ''' <summary>
 ''' mass spectrometry data math toolkit
 ''' </summary>
 <Package("math", Category:=APICategories.UtilityTools, Publisher:="gg.xie@bionovogene.com")>
+<RTypeExport("spectrum_alignment", GetType(AlignmentOutput))>
+<RTypeExport("mass_window", GetType(MassWindow))>
 Module MzMath
 
-    Sub New()
-        Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of PrecursorInfo())(AddressOf printMzTable)
-        Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of MzCalculator)(AddressOf printCalculator)
+    Friend Sub Main()
+        Call RInternal.ConsolePrinter.AttachConsoleFormatter(Of PrecursorInfo())(AddressOf printMzTable)
+        Call RInternal.ConsolePrinter.AttachConsoleFormatter(Of MzCalculator)(AddressOf printCalculator)
 
-        Call REnv.Internal.Object.Converts.addHandler(GetType(MzGroup), AddressOf XICTable)
-        Call REnv.Internal.Object.Converts.addHandler(GetType(AlignmentOutput), AddressOf getAlignmentTable)
-        Call REnv.Internal.Object.Converts.addHandler(GetType(PrecursorInfo()), AddressOf getPrecursorTable)
+        Call RInternal.Object.Converts.addHandler(GetType(MzGroup), AddressOf XICTable)
+        Call RInternal.Object.Converts.addHandler(GetType(AlignmentOutput()), AddressOf CreateAlignmentTable)
+        Call RInternal.Object.Converts.addHandler(GetType(PrecursorInfo()), AddressOf getPrecursorTable)
+        Call RInternal.Object.Converts.addHandler(GetType(MassWindow()), AddressOf mass_tabular)
+        Call RInternal.Object.Converts.addHandler(GetType(MzCalculator()), AddressOf adducts_table)
 
-        Call REnv.Internal.add("as.list", GetType(Tolerance), AddressOf summaryTolerance)
-        Call REnv.Internal.add("as.list", GetType(PPMmethod), AddressOf summaryTolerance)
-        Call REnv.Internal.add("as.list", GetType(DAmethod), AddressOf summaryTolerance)
+        Call RInternal.add("as.list", GetType(Tolerance), AddressOf summaryTolerance)
+        Call RInternal.add("as.list", GetType(PPMmethod), AddressOf summaryTolerance)
+        Call RInternal.add("as.list", GetType(DAmethod), AddressOf summaryTolerance)
 
         Call ExactMass.SetExactMassParser(Function(f) FormulaScanner.EvaluateExactMass(f))
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Private Function adducts_table(adducts As MzCalculator(), args As list, env As Environment) As dataframe
+        Dim df As New dataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = adducts _
+                .Select(Function(a) a.ToString) _
+                .ToArray
+        }
+
+        Call df.add("name", From a As MzCalculator In adducts Select a.name)
+        Call df.add("charge", From a As MzCalculator In adducts Select a.charge)
+        Call df.add("M", From a As MzCalculator In adducts Select a.M)
+        Call df.add("adducts", From a As MzCalculator In adducts Let mass = a.adducts Select mass)
+        Call df.add("mode", From a As MzCalculator In adducts Select a.mode)
+
+        Return df
+    End Function
+
+    <RGenericOverloads("as.data.frame")>
+    Private Function mass_tabular(masslist As MassWindow(), args As list, env As Environment) As Object
+        Dim df As New dataframe With {.columns = New Dictionary(Of String, Array)}
+
+        Call df.add("mass", From mzi As MassWindow In masslist Select mzi.mass)
+        Call df.add("mzmin", From mzi As MassWindow In masslist Select mzi.mzmin)
+        Call df.add("mzmax", From mzi As MassWindow In masslist Select mzi.mzmax)
+        Call df.add("annotation", From mzi As MassWindow In masslist Select mzi.annotation)
+
+        Return df
+    End Function
 
     Private Function summaryTolerance(mzdiff As Tolerance, args As list, env As Environment) As Object
         Dim summary As New list With {.slots = New Dictionary(Of String, Object)}
@@ -153,6 +194,7 @@ Module MzMath
         Return ms
     End Function
 
+    <RGenericOverloads("as.data.frame")>
     Private Function getPrecursorTable(list As PrecursorInfo(), args As list, env As Environment) As dataframe
         Dim precursor_type As String() = list.Select(Function(i) i.precursor_type).ToArray
         Dim charge As Double() = list.Select(Function(i) i.charge).ToArray
@@ -160,6 +202,7 @@ Module MzMath
         Dim adduct As Double() = list.Select(Function(i) i.adduct).ToArray
         Dim mz As String() = list.Select(Function(i) i.mz).ToArray
         Dim ionMode As Integer() = list.Select(Function(i) i.ionMode).ToArray
+        Dim is_exact_mass As Boolean = args.getValue(Of Boolean)({"exact_mass", "is.exact_mass"}, env, [default]:=False)
 
         Return New dataframe With {
             .rownames = precursor_type,
@@ -168,26 +211,83 @@ Module MzMath
                 {"charge", charge},
                 {"M", M},
                 {"adduct", adduct},
-                {"m/z", mz},
+                {If(is_exact_mass, "exact_mass", "m/z"), mz},
                 {"ionMode", ionMode}
             }
         }
     End Function
 
-    Private Function getAlignmentTable(align As AlignmentOutput, args As list, env As Environment) As dataframe
-        Dim mz As Double() = align.alignments.Select(Function(a) a.mz).ToArray
-        Dim query As Double() = align.alignments.Select(Function(a) a.query).ToArray
-        Dim reference As Double() = align.alignments.Select(Function(a) a.ref).ToArray
-        Dim da As String() = align.alignments.Select(Function(a) a.da).ToArray
+    <RGenericOverloads("as.data.frame")>
+    Public Function CreateAlignmentTable(alignments As AlignmentOutput(), args As list, env As Environment) As dataframe
+        Dim df As New dataframe With {.columns = New Dictionary(Of String, Array)}
 
-        Return New dataframe With {
-            .columns = New Dictionary(Of String, Array) From {
-                {"m/z", mz},
-                {"query", query},
-                {"ref", reference},
-                {"da", da}
+        Call df.add("query_id", From i As AlignmentOutput In alignments Select i.query.id)
+        Call df.add("mz", From i As AlignmentOutput In alignments Select i.query.mz)
+        Call df.add("rt", From i As AlignmentOutput In alignments Select i.query.scan_time)
+        Call df.add("intensity", From i As AlignmentOutput In alignments Select i.query.intensity)
+
+        Call df.add("subject_id", From i As AlignmentOutput In alignments Select i.reference.id)
+        Call df.add("reference_rt", From i As AlignmentOutput In alignments Select i.reference.scan_time)
+
+        Call df.add("forward", From i As AlignmentOutput In alignments Select i.forward)
+        Call df.add("reverse", From i As AlignmentOutput In alignments Select i.reverse)
+        Call df.add("jaccard", From i As AlignmentOutput In alignments Select i.jaccard)
+        Call df.add("entropy", From i As AlignmentOutput In alignments Select i.entropy)
+        Call df.add("nhits", From i As AlignmentOutput In alignments Select i.nhits)
+        Call df.add("alignment_str", From i As AlignmentOutput In alignments Select i.alignment_str)
+
+        Return df
+    End Function
+
+    ''' <summary>
+    ''' convert a single spectrum alignment details as dataframe
+    ''' </summary>
+    ''' <param name="align"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("summary_result")>
+    Public Function getAlignmentTable(align As AlignmentOutput, args As list, env As Environment) As Object
+        Dim scores_df As Boolean = args.getValue("scores_df", env, [default]:=False)
+
+        If scores_df Then
+            Dim df As New dataframe With {
+                .columns = New Dictionary(Of String, Array)
             }
-        }
+
+            Call df.add("dimension", {
+                "forward cosine", "reverse cosine",
+                "cosine",
+                "jaccard",
+                "entropy",
+                "mirror",
+                "mean",
+                "fragments"})
+            Call df.add("scores", {
+                align.forward, align.reverse,
+                align.cosine,
+                align.jaccard,
+                align.entropy,
+                align.mirror,
+                align.mean,
+                align.nhits})
+
+            Return df
+        Else
+            Dim mz As Double() = align.alignments.Select(Function(a) a.mz).ToArray
+            Dim query As Double() = align.alignments.Select(Function(a) a.query).ToArray
+            Dim reference As Double() = align.alignments.Select(Function(a) a.ref).ToArray
+            Dim da As String() = align.alignments.Select(Function(a) a.da).ToArray
+
+            Return New dataframe With {
+                .columns = New Dictionary(Of String, Array) From {
+                    {"m/z", mz},
+                    {"query", query},
+                    {"ref", reference},
+                    {"da", da}
+                }
+            }
+        End If
     End Function
 
     Private Function printCalculator(type As MzCalculator) As String
@@ -202,6 +302,7 @@ Module MzMath
         Return summary.ToString
     End Function
 
+    <RGenericOverloads("as.data.frame")>
     Private Function XICTable(x As MzGroup, args As list, env As Environment) As dataframe
         Dim mz As Array = {x.mz}
         Dim into As Array = x.XIC.Select(Function(t) t.Intensity).ToArray
@@ -217,8 +318,99 @@ Module MzMath
         Return table
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function printMzTable(obj As Object) As String
         Return DirectCast(obj, PrecursorInfo()).Print(addBorder:=False)
+    End Function
+
+    ''' <summary>
+    ''' find precursor adducts type for a given mass and the corresponding precursor mz
+    ''' </summary>
+    ''' <param name="mass">the exact mass value</param>
+    ''' <param name="mz">the m/z value from the ion, usually be the mz value from the xcms peaktable.</param>
+    ''' <param name="libtype">
+    ''' the ion mode polarity value of the adducts for matches, value could be an integer value [1,-1].
+    ''' and also this parameter value could be a set of the precursor adducts type character vector 
+    ''' for do the data matches job.
+    ''' </param>
+    ''' <param name="da"></param>
+    ''' <returns>
+    ''' a matched adducts result, for no matched data, a details error message will be returns.
+    ''' generally, the result tuple list contains the slot data:
+    ''' 
+    ''' 1. precursor_type: the result adducts type that could be used for matches the given mass and mz value
+    ''' 2. error: the mass error in unit delta dalton between the given mz and the theoretical m/z value that evaluated from the given mass and the matched adducts type.
+    ''' 3. theoretical: the theoretical m/z value that evaluated from the given mass and the matched adducts type.
+    ''' 4. ppm: the mass ppm error between the given mz and the theoretical m/z value that evaluated from the given mass and the matched adducts type.
+    ''' 5. message: usually be the error message.
+    ''' </returns>
+    <ExportAPI("find_precursor")>
+    <RApiReturn("precursor_type", "error", "theoretical", "ppm", "message")>
+    Public Function find_precursor(mass As Double, mz As Double,
+                                   <RRawVectorArgument>
+                                   Optional libtype As Object = 1,
+                                   Optional da As Double = 0.3,
+                                   Optional safe As Boolean = False,
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim adducts_source As String() = CLRVector.asCharacter(libtype)
+        Dim match As TypeMatch
+
+        If adducts_source.IsNullOrEmpty Then
+            Return RInternal.debug.stop("the required of the adducts source(libtype) should not be empty!", env)
+        End If
+
+        Dim ionMode As IonModes = IonModes.Unknown
+
+        If adducts_source.Length = 1 AndAlso Provider.ParseIonMode(adducts_source(0), ionMode, allowsUnknown:=True, verbose:=env.verboseOption) <> IonModes.Unknown Then
+            ' is polarity ion mode value
+            ' 1 or -1
+            Dim charge As Integer = CInt(ionMode)
+            ' +/-
+            Dim polarity As String = If(charge = 1, "+", "-")
+
+            match = PrecursorType.FindPrecursorType(
+                mass, mz, charge,
+                chargeMode:=polarity,
+                tolerance:=DAmethod.DeltaMass(da)
+            )
+            libtype = adducts_source(0)
+        Else
+            ' make matches from given multiple adducts type
+            match = PrecursorType.FindPrecursorType(
+                mass, mz,
+                adducts:=adducts_source,
+                tolerance:=DAmethod.DeltaMass(da)
+            )
+            libtype = adducts_source.JoinBy(", ")
+        End If
+
+        If match.adducts Is Nothing Then
+            Dim msgs = {
+                "invalid precursor adducts type data matches input:",
+                "mass: " & mass,
+                "mz: " & mz,
+                "libtype: " & CStr(libtype),
+                "da_error: " & da
+            }
+
+            If safe Then
+                Return New list(
+                    slot("message") = msgs,
+                    slot("error") = std.Abs(mass - mz)
+                )
+            Else
+                Return RInternal.debug.stop(msgs, env)
+            End If
+        End If
+
+        Return New list(
+            slot("precursor_type") = match.precursorType,
+            slot("error") = match.errors,
+            slot("theoretical") = match.adducts.CalcMZ(mass),
+            slot("ppm") = PPMmethod.PPM(match.adducts.CalcMZ(mass), mz),
+            slot("message") = match.message
+        )
     End Function
 
     ''' <summary>
@@ -240,7 +432,24 @@ Module MzMath
     Public Function mz(mass As Double,
                        <RRawVectorArgument>
                        Optional mode As Object = "+",
+                       Optional unsafe As Boolean = True,
                        Optional env As Environment = Nothing) As Object
+
+        If mode Is Nothing Then
+            Const null_value = "the required polarity mode or precursor adducts object should not be nothing!"
+
+            Call env.AddMessage(null_value)
+
+            If unsafe Then
+                Return RInternal.debug.stop(null_value, env)
+            Else
+                Return 0
+            End If
+        End If
+
+        If TypeOf mode Is vector Then
+            mode = DirectCast(mode, vector).data
+        End If
 
         If TypeOf mode Is MzCalculator Then
             Return DirectCast(mode, MzCalculator).CalcMZ(mass)
@@ -285,13 +494,35 @@ Module MzMath
     ''' <summary>
     ''' evaluate all exact mass for all known precursor type.
     ''' </summary>
-    ''' <param name="mz"></param>
-    ''' <param name="mode"></param>
-    ''' <returns></returns>
+    ''' <param name="mz">a single ion m/z value.</param>
+    ''' <param name="mode">the ion polarity mode ``+/-`` for evaluate all kind of 
+    ''' precursor type under the specific polarity mode, or a vector of the 
+    ''' <see cref="MzCalculator"/> precursor type model which is generates from 
+    ''' the ``math::precursor_types`` function.
+    ''' </param>
+    ''' <returns>a collection of the exact mass evaluation result, could be cast
+    ''' to dataframe via ``as.data.frame`` function.</returns>
     <ExportAPI("exact_mass")>
     <RApiReturn(GetType(PrecursorInfo))>
-    Public Function exact_mass(mz As Double, Optional mode As Object = "+") As Object
-        Return MzCalculator.EvaluateAll(mz, any.ToString(mode, "+"), True).ToArray
+    Public Function exact_mass(mz As Double,
+                               <RRawVectorArgument>
+                               Optional mode As Object = "+",
+                               Optional env As Environment = Nothing) As Object
+
+        Dim sym = CLRVector.asCharacter(mode)
+
+        If sym.IsNullOrEmpty Then
+            Return RInternal.debug.stop("the required ion mode value should not be nothing!", env)
+        ElseIf sym.Length = 1 AndAlso ParseIonMode(sym(0),
+                                                   allowsUnknown:=True,
+                                                   verbose:=env.verboseOption) <> IonModes.Unknown Then
+
+            Return MzCalculator.EvaluateAll(mz, sym(0), True).ToArray
+        Else
+            Dim ions As MzCalculator() = Math.GetPrecursorTypes(mode, env)
+            Dim mass As PrecursorInfo() = MzCalculator.EvaluateAll(mz, ions, exact_mass:=True).ToArray
+            Return mass
+        End If
     End Function
 
     ''' <summary>
@@ -323,7 +554,8 @@ Module MzMath
     ''' <param name="equals_score"></param>
     ''' <param name="gt_score"></param>
     ''' <param name="score_aggregate">
-    ''' ``<see cref="Func(Of Double, Double, Double)"/>``
+    ''' A <see cref="ScoreAggregates"/> method, should be a function in clr delegate 
+    ''' liked: ``<see cref="Func(Of Double, Double, Double)"/>``.
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("spectrum.compares")>
@@ -452,25 +684,117 @@ Module MzMath
     ''' <summary>
     ''' Do evaluate the spectra cosine similarity score
     ''' </summary>
-    ''' <param name="query"></param>
-    ''' <param name="ref"></param>
+    ''' <param name="query">the query input could be a collection of the sample spectrum data inputs.</param>
+    ''' <param name="ref">should be a single reference spectrum object</param>
     ''' <param name="tolerance"></param>
     ''' <param name="intocutoff"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' this function andalso produce the jaccard/entropy similarity of the spectrum inside the similarity result object
+    ''' </remarks>
+    ''' <example>
+    ''' # create the spectrum matrix object
+    ''' # fragment data tagged with the source name title
+    ''' let spec1 = libraryMatrix(
+    '''     matrix = data.frame(
+    '''         mz = c(169.071, 186.066, 186.0769),
+    '''         intensity = c(7.917962, 1.021589, 100.0)
+    '''     ),
+    '''     title = "Demo MS1 Spectra",
+    '''     centroid = TRUE
+    ''' );
+    ''' let spec2 = libraryMatrix(
+    '''     matrix = data.frame(
+    '''         mz = c(120.212, 169.071, 186.066),
+    '''         intensity = c(37.16, 66.83, 999.0)
+    '''     ),
+    '''     title = "Demo MS1 Spectra",
+    '''     centroid = TRUE
+    ''' );
+    ''' let compares = math::cosine(spec1, spec2);
+    ''' let scores = as.data.frame(compares, scores_df = TRUE);
+    '''
+    ''' print(scores);
+    ''' #               dimension    scores 
+    ''' # ----------------------------------
+    ''' # &lt;mode>         &lt;string>  &lt;double>
+    ''' # [1, ]  "forward cosine"  0.999925
+    ''' # [2, ]  "reverse cosine"  0.999925
+    ''' # [3, ]          "cosine"  0.999925
+    ''' # [4, ]         "jaccard"         1
+    ''' # [5, ]         "entropy"  0.999949
+    ''' # [6, ]          "mirror"         1
+    ''' # [7, ]            "mean"   0.99995
+    ''' # [8, ]   "fragment hits"         2
+    '''
+    ''' svg(file = "figures/00_Mass_spectrometry/Math/03_compares.svg") {
+    '''     plot(compares);
+    ''' }
+    ''' </example>
     <ExportAPI("cosine")>
     <RApiReturn(GetType(AlignmentOutput))>
-    Public Function cosine(query As LibraryMatrix, ref As LibraryMatrix,
+    Public Function cosine(<RRawVectorArgument> query As Object, ref As Object,
                            Optional tolerance As Object = "da:0.3",
                            Optional intocutoff As Double = 0.05,
                            Optional env As Environment = Nothing) As Object
 
         Dim mzErr = Math.getTolerance(tolerance, env)
+        Dim refSpec = getSpectrum(ref, env)
 
         If mzErr Like GetType(Message) Then
             Return mzErr.TryCast(Of Message)
+        End If
+        If refSpec Like GetType(Message) Then
+            Return refSpec.TryCast(Of Message)
+        End If
+
+        Dim mzdiff As Tolerance = mzErr
+        Dim cutoff As New RelativeIntensityCutoff(intocutoff)
+
+        If TypeOf query Is LibraryMatrix Then
+            Return cosine(
+                query:=DirectCast(query, LibraryMatrix),
+                ref:=refSpec.TryCast(Of LibraryMatrix),
+                mzErr:=mzdiff,
+                intocutoff:=cutoff
+            )
+        ElseIf TypeOf query Is MzMatrix AndAlso TypeOf ref Is LibraryMatrix Then
+            ' compares each spot with a reference spectrum
+            Dim m As MzMatrix = query
+            Dim cos As New list() With {.slots = New Dictionary(Of String, Object)}
+
+            For Each q As LibraryMatrix In m.GetSpectrum
+                cos.add(q.name, cosine(q, New LibraryMatrix(refSpec.TryCast(Of LibraryMatrix)), mzdiff, cutoff))
+            Next
+
+            Return cos
         Else
-            Return cosine(query, ref, mzErr.TryCast(Of Tolerance), New RelativeIntensityCutoff(intocutoff))
+            Dim peaks As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(query, env)
+
+            If Not peaks.isError Then
+                Dim querySet As PeakMs2() = peaks.populates(Of PeakMs2)(env).ToArray
+                Dim cos As list = list.empty
+                Dim input As LibraryMatrix
+                Dim score As AlignmentOutput
+
+                For Each q As PeakMs2 In querySet
+                    input = New LibraryMatrix(q.lib_guid, q.mzInto)
+                    score = cosine(input, New LibraryMatrix(refSpec.TryCast(Of LibraryMatrix)), mzdiff, cutoff)
+                    score.query = New Meta With {
+                        .id = q.lib_guid,
+                        .intensity = q.intensity,
+                        .mz = q.mz,
+                        .scan_time = q.rt
+                    }
+
+                    Call cos.add(q.lib_guid, score)
+                Next
+
+                Return cos
+            End If
+
+            Return New NotImplementedException
         End If
     End Function
 
@@ -491,6 +815,38 @@ Module MzMath
         Return align
     End Function
 
+    <ExportAPI("mrm_array")>
+    Public Function MRMArray(<RRawVectorArgument> alignments As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of AlignmentOutput)(alignments, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+        Dim norm = pull.populates(Of AlignmentOutput)(env).Select(Function(a) a.GetNormalized).ToArray
+        Dim Q3 As Double() = norm.Select(Function(a) a.Q3).ToArray
+        Dim ratio As Double() = norm.Select(Function(a) a.Q3_ratio).ToArray
+        Dim data As New dataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+
+        Call data.add("Q3", Q3)
+        Call data.add("ratio", ratio)
+
+        Return data
+    End Function
+
+    ''' <summary>
+    ''' pairwise alignment of the spectrum peak set
+    ''' </summary>
+    ''' <param name="query">a spectrum set of the sample query input.</param>
+    ''' <param name="ref">a spectrum set of the reference library</param>
+    ''' <param name="tolerance">the ion m/z mass tolerance value for make the peak alignment</param>
+    ''' <param name="intocutoff">spectrum peak cutoff by relative intensity</param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' a collection of the <see cref="AlignmentOutput"/> from the pairwise alignment between the query and reference.
+    ''' </returns>
     <ExportAPI("cosine.pairwise")>
     <RApiReturn(GetType(AlignmentOutput))>
     Public Function cosine_pairwise(<RRawVectorArgument> query As Object, <RRawVectorArgument> ref As Object,
@@ -636,12 +992,18 @@ Module MzMath
     ''' profile and centroid in Mass Spectrometry?
     ''' 
     ''' 1. Profile means the continuous wave form in a mass spectrum.
+    ''' 
     '''   + Number of data points Is large.
+    '''   
     ''' 2. Centroid means the peaks in a profile data Is changed to bars.
+    ''' 
     '''   + location of the bar Is center of the profile peak.
     '''   + height of the bar Is area of the profile peak.
     '''   
     ''' </summary>
+    ''' <param name="aggregate">
+    ''' default is get the max intensity value.
+    ''' </param>
     ''' <param name="ions">
     ''' value of this parameter could be 
     ''' 
@@ -657,6 +1019,24 @@ Module MzMath
     ''' </returns>
     ''' <example>
     ''' print(centroid([452.7627 67.563 457.336 347.8 242.3], tolerance = "da:0.1"));
+    ''' # [1]      67.563   242.3    347.8    452.763  457.336 
+    ''' 
+    ''' let spec = data.frame(mz = [452.7627 67.563 457.336 347.8 242.3], 
+    '''    intensity = [312 4353 6664 6765 1119]);
+    '''    
+    ''' let f = aggregate(FUN = "max");
+    ''' 
+    ''' print(as.data.frame(spec));
+    ''' #              mz intensity                   
+    ''' # --------------------------                                                                                                 
+    ''' # &lt;mode> &lt;Double> &lt;integer>                                                                                                   
+    ''' # [1, ]   452.763       312                                             
+    ''' # [2, ]    67.563      4353                                                                    
+    ''' # [3, ]   457.336      6664                                                                                                
+    ''' # [4, ]     347.8      6765                                                                                           
+    ''' # [5, ]     242.3      1119
+    ''' 
+    ''' print(centroid(spec, tolerance = "da:0.1", aggregate = f));
     ''' </example>
     <ExportAPI("centroid")>
     <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix), GetType(Double))>
@@ -665,6 +1045,7 @@ Module MzMath
                              Optional tolerance As Object = "da:0.1",
                              Optional intoCutoff As Double = 0.05,
                              Optional parallel As Boolean = False,
+                             Optional aggregate As AggregateFunction = Nothing,
                              Optional env As Environment = Nothing) As Object
 
         Dim inputType As Type = ions.GetType
@@ -675,6 +1056,7 @@ Module MzMath
         Else
             Dim mzvec As pipeline = pipeline.TryCreatePipeline(Of Double)(ions, env, suppress:=True)
 
+            ' make centroid bins of the m/z numeric vector
             If Not mzvec.isError Then
                 Return mzvec _
                     .populates(Of Double)(env) _
@@ -731,12 +1113,21 @@ Module MzMath
             Dim ms2 As LibraryMatrix = DirectCast(ions, LibraryMatrix)
 
             If Not ms2.centroid Then
-                ms2 = ms2.CentroidMode(errors, threshold)
+                ms2 = ms2.CentroidMode(errors, threshold, aggregate:=aggregate?.aggregate)
             End If
 
             Return ms2
         ElseIf inputType Is GetType(dataframe) Then
-            Return DirectCast(ions, dataframe).centroidDataframe(errors, threshold, env)
+            Return DirectCast(ions, dataframe).centroidDataframe(errors, threshold, aggregate, env)
+        ElseIf inputType Is GetType(ms1_scan()) Then
+            Dim ms1 = DirectCast(ions, ms1_scan())
+            Dim ms As New LibraryMatrix With {
+                .ms2 = ms1.Select(Function(i) New ms2(i)).ToArray
+            }
+
+            ms = ms.CentroidMode(errors, threshold, aggregate:=aggregate?.aggregate)
+
+            Return ms
         ElseIf inputType Is GetType(ScanMS1) Then
             Dim scan1 As ScanMS1 = DirectCast(ions, ScanMS1)
             Dim msdata As ms2() = scan1 _
@@ -756,32 +1147,25 @@ Module MzMath
                 .TIC = scan1.TIC
             }
         Else
-            Return Internal.debug.stop(New InvalidCastException(inputType.FullName), env)
+            Return RInternal.debug.stop(New InvalidCastException(inputType.FullName), env)
         End If
     End Function
 
     <Extension>
-    Private Function centroidDataframe(data As dataframe,
+    Private Function centroidDataframe(msdata As dataframe,
                                        errors As Tolerance,
                                        threshold As LowAbundanceTrimming,
+                                       fun As AggregateFunction,
                                        env As Environment) As Object
 
-        Dim mz As Double(), into As Double()
+        Dim mz As Double() = CLRVector.asNumeric(msdata.getBySynonym("mz", "m/z", "MZ"))
+        Dim into As Double() = CLRVector.asNumeric(msdata.getBySynonym("into", "intensity"))
+        Dim annos As String() = CLRVector.asCharacter(msdata.getBySynonym("annotation", "text", "metadata", "info"))
 
-        If data.hasName("mz") Then
-            mz = CLRVector.asNumeric(data!mz)
-        ElseIf data.hasName("m/z") Then
-            mz = CLRVector.asNumeric(data("m/z"))
-        Else
-            Return Internal.debug.stop("mz column in dataframe should be 'mz' or 'm/z'!", env)
-        End If
-
-        If data.hasName("into") Then
-            into = CLRVector.asNumeric(data!into)
-        ElseIf data.hasName("intensity") Then
-            into = CLRVector.asNumeric(data!intensity)
-        Else
-            Return Internal.debug.stop("intensity column in dataframe should be 'into' or 'intensity'!", env)
+        If mz.IsNullOrEmpty Then
+            Return RInternal.debug.stop("mz column in dataframe should be 'mz' or 'm/z'!", env)
+        ElseIf into.IsNullOrEmpty Then
+            Return RInternal.debug.stop("intensity column in dataframe should be 'into' or 'intensity'!", env)
         End If
 
         Dim ms2 As New LibraryMatrix With {
@@ -791,13 +1175,14 @@ Module MzMath
                 .Select(Function(mzi, i)
                             Return New ms2 With {
                                 .mz = mzi,
-                                .intensity = into(i)
+                                .intensity = into(i),
+                                .Annotation = annos.ElementAtOrNull(i)
                             }
                         End Function) _
                 .ToArray
         }
 
-        Return ms2.CentroidMode(errors, threshold)
+        Return ms2.CentroidMode(errors, threshold, aggregate:=fun.aggregate)
     End Function
 
     ''' <summary>
@@ -820,7 +1205,7 @@ Module MzMath
             Case "da" : Return Tolerance.DeltaMass(threshold)
             Case "ppm" : Return Tolerance.PPM(threshold)
             Case Else
-                Return Internal.debug.stop({
+                Return RInternal.debug.stop({
                     $"invalid method name: '{methodVec(Scan0)}'!",
                     $"given: {methodVec(Scan0)}"
                 }, env)
@@ -862,14 +1247,56 @@ Module MzMath
     ''' <summary>
     ''' create precursor type calculator
     ''' </summary>
-    ''' <param name="types"></param>
+    ''' <param name="types">a character vector of the precursor type symbols, example as ``[M+H]+``, etc.</param>
+    ''' <param name="unsafe">
+    ''' this parameter indicates that how the function handling of the string parser error when the given string value is empty:
+    ''' 
+    ''' 1. for unsafe, an exception will be throw
+    ''' 2. for unsafe is false, corresponding null value will be generated.
+    ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' a collection of the ion precursor adducts object.
+    ''' </returns>
     <ExportAPI("precursor_types")>
     <RApiReturn(GetType(MzCalculator))>
-    Public Function precursorTypes(<RRawVectorArgument> types As Object, Optional env As Environment = Nothing) As Object
+    Public Function precursorTypes(<RRawVectorArgument> types As Object,
+                                   Optional unsafe As Boolean = True,
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim adducts = CLRVector.asCharacter(types)
+
+        Const empty_string = "the given string is empty which is not valid for parse the precursor adducts object!"
+
+        If adducts.TryCount = 1 Then
+            Dim adduct_str = adducts(0)
+            Dim adduct_type = Provider.ParseIonMode(adduct_str,
+                                                    allowsUnknown:=True,
+                                                    allowAdductParser:=False,
+                                                    verbose:=env.verboseOption)
+
+            If adduct_type <> IonModes.Unknown Then
+                ' returns all
+                If adduct_type = IonModes.Positive Then
+                    Return Provider.Positives
+                Else
+                    Return Provider.Negatives
+                End If
+            End If
+        End If
+
         Return env.EvaluateFramework(Of String, MzCalculator)(
             types, Function(type)
+                       If type.StringEmpty Then
+                           Call env.AddMessage(empty_string)
+
+                           If unsafe Then
+                               Throw New InvalidExpressionException(empty_string)
+                           Else
+                               Return Nothing
+                           End If
+                       End If
+
                        Return Ms1.PrecursorType.ParseMzCalculator(type, type.Last)
                    End Function)
     End Function
@@ -882,6 +1309,36 @@ Module MzMath
     <ExportAPI("defaultPrecursors")>
     Public Function defaultPrecursors(ionMode As String) As MzCalculator()
         Return Provider.GetCalculator(ionMode).Values.ToArray
+    End Function
+
+    ''' <summary>
+    ''' evaluate of the adduct annotation ranking score
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="adducts"></param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' A ranking score numeric vector
+    ''' </returns>
+    <ExportAPI("rank_adducts")>
+    <RApiReturn(TypeCodes.double)>
+    Public Function rank_adducts(<RRawVectorArgument> formula As Object,
+                                 <RRawVectorArgument> adducts As Object,
+                                 Optional max_score As Double = 10,
+                                 <RRawVectorArgument(TypeCodes.string)>
+                                 Optional orders As Object = Nothing,
+                                 Optional env As Environment = Nothing) As Object
+
+        Dim adducts_str As String() = CLRVector.asCharacter(adducts)
+        Dim formula_str As String() = CLRVector.asCharacter(formula)
+        Dim rank As New AdductsRanking(max_score, CLRVector.asCharacter(orders))
+
+        Return BinaryCoreInternal(Of String, String, Double)(
+            formula_str, adducts_str,
+            do:=Function(sformula, sadduct, envir)
+                    Return rank.Rank(CStr(sformula), CStr(sadduct))
+                End Function,
+            env:=env)
     End Function
 
     <ExportAPI("toMS")>
@@ -903,22 +1360,41 @@ Module MzMath
     ''' <summary>
     ''' makes xcms_id format liked ROI unique id
     ''' </summary>
-    ''' <param name="mz"></param>
-    ''' <param name="rt"></param>
-    ''' <returns></returns>
+    ''' <param name="mz">a numeric vector of the ion m/z value</param>
+    ''' <param name="rt">the corresponding scan time rt vector.</param>
+    ''' <returns>
+    ''' a character vector of the generated unique id based on the given m/z and rt ROI features.
+    ''' </returns>
+    ''' <remarks>
+    ''' the dimension size of the ion m/z vector and the corresponding scan time vector should be equals.
+    ''' </remarks>
     <ExportAPI("xcms_id")>
-    Public Function xcms_id(mz As Double(), rt As Double()) As String()
+    <RApiReturn(TypeCodes.string)>
+    Public Function xcms_id(mz As Double(), rt As Double(),
+                            Optional prefix As String = "",
+                            Optional env As Environment = Nothing) As Object
+
+        If mz.TryCount <> rt.TryCount Then
+            Return RInternal.debug.stop("the dimension size of the ion m/z and its scan time rt should be equals!", env)
+        End If
+        ' size of mz is equals to rt
+        ' and also the size is zero
+        If mz.IsNullOrEmpty Then
+            Return Nothing
+        End If
+
         Dim allId As String() = mz _
             .Select(Function(mzi, i)
                         If CInt(rt(i)) = 0 Then
-                            Return $"M{CInt(mzi)}"
+                            Return $"{prefix}M{CInt(mzi)}"
                         Else
-                            Return $"M{CInt(mzi)}T{CInt(rt(i))}"
+                            Return $"{prefix}M{CInt(mzi)}T{CInt(rt(i))}"
                         End If
                     End Function) _
             .ToArray
         Dim uniques As String() = base.makeNames(allId, unique:=True, allow_:=True)
 
+        ' generated id is uniqued
         Return uniques
     End Function
 
@@ -928,8 +1404,8 @@ Module MzMath
     ''' <param name="mz">A numeric vector of the peak m/z vector</param>
     ''' <returns></returns>
     <ExportAPI("mz_index")>
-    Public Function CreateMzIndex(mz As Double()) As BlockSearchFunction(Of (mz As Double, Integer))
-        Return mz.CreateMzIndex
+    Public Function CreateMzIndex(<RRawVectorArgument> mz As Object, Optional win_size As Double = 1) As MzPool
+        Return New MzPool(CLRVector.asNumeric(mz), win_size)
     End Function
 
     ''' <summary>
@@ -953,9 +1429,9 @@ Module MzMath
     <RApiReturn(TypeCodes.double)>
     <ExportAPI("intensity_vec")>
     Public Function alignIntensity(<RRawVectorArgument>
-                                   ms As Object,
-                                   mzSet As BlockSearchFunction(Of (mz As Double, Integer)),
-                                   Optional env As Environment = Nothing) As Object
+ms As Object,
+mzSet As MzPool,
+Optional env As Environment = Nothing) As Object
 
         If TypeOf ms Is LibraryMatrix Then
             Return DirectCast(ms, LibraryMatrix).DeconvoluteMS(mzSet.size, mzSet)
@@ -979,9 +1455,9 @@ Module MzMath
             Dim size As Integer = matrix.First.Value.Length
             Dim names = matrix.Keys.ToArray
             Dim cols As String() = mzSet.raw _
-                    .OrderBy(Function(m) m.Item2) _
-                    .Select(Function(m) m.mz.ToString) _
-                    .ToArray
+                .OrderBy(Function(m) m.index) _
+                .Select(Function(m) m.mz.ToString) _
+                .ToArray
             Dim df As New dataframe With {
                 .columns = New Dictionary(Of String, Array),
                 .rownames = names
@@ -996,7 +1472,7 @@ Module MzMath
 
             Return df
         Else
-            Return Internal.debug.stop("not implemented", env)
+            Return RInternal.debug.stop("not implemented", env)
         End If
     End Function
 
@@ -1017,9 +1493,9 @@ Module MzMath
     <ExportAPI("norm_msdata")>
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function normMs2(<RRawVectorArgument>
-                            msdata As Object,
-                            Optional sum As Boolean = False,
-                            Optional env As Environment = Nothing) As Object
+msdata As Object,
+Optional sum As Boolean = False,
+Optional env As Environment = Nothing) As Object
 
         Dim norm As Func(Of LibraryMatrix, LibraryMatrix)
 

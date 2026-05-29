@@ -82,6 +82,49 @@ table caption {font-size:14px;font-weight:bolder;}
       <table class="table-three-line">
         <caption>.NET clr function exports</caption>
         <tbody><tr>
+  <td id="as.data.frame.iontpa">
+    <a href="./MRMLinear/as.data.frame.iontpa.html">as.data.frame.iontpa</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/IonTPA.html">IonTPA</a>: <p>ROI Peak data of the given ion</p></td>
+</tr>
+<tr>
+  <td id="as.data.frame.ionchromatogram">
+    <a href="./MRMLinear/as.data.frame.ionchromatogram.html">as.data.frame.ionchromatogram</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/Data/IonChromatogram.html">IonChromatogram</a>: <p>the raw data</p></td>
+</tr>
+<tr>
+  <td id="as.data.frame.ionpair">
+    <a href="./MRMLinear/as.data.frame.ionpair.html">as.data.frame.ionpair</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/Models/IonPair.html">IonPair</a>: <p>Data model for the MRM ion pair</p></td>
+</tr>
+<tr>
+  <td id="as.data.frame.rtalignment">
+    <a href="./MRMLinear/as.data.frame.rtalignment.html">as.data.frame.rtalignment</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MRM/RTAlignment.html">RTAlignment</a>: </td>
+</tr>
+<tr>
+  <td id="find_untargeted_ionpair">
+    <a href="./MRMLinear/find_untargeted_ionpair.html">find_untargeted_ionpair</a>
+  </td>
+  <td><p>MRM-Ion Pair Finder is used to automatically and systematically define MRM transitions from untargeted metabolomics data. 
+ Our research group first introduced the concept of pseudotargeted metabolomics using the retention time locking 
+ GC-MS-selected ions monitoring in 2012. The pseudotargeted metabolomics method was extended to LC-MS in 2013. To define
+ ion pairs automatically and systematically, the in-house software “Mul-tiple Reaction Monitoring-Ion Pair Finder (MRM-Ion 
+ Pair Finder)” was developed, which made defining of the MRM transitions for untargeted metabolic profiling easier and 
+ less time consuming. Recently, MRM-Ion Pair Finder was updated to version 2.0. The new version is more convenient, consumes 
+ less time and is also suitable for negative ion mode. And the function of MRM-Ion Pair Finder is also performed in R so 
+ that users have more options when using pseudotargeted method.</p></td>
+</tr>
+<tr>
+  <td id="from_arguments_json">
+    <a href="./MRMLinear/from_arguments_json.html">from_arguments_json</a>
+  </td>
+  <td><p>Create the MRM peak finding arguments from a json string</p></td>
+</tr>
+<tr>
   <td id="MRM.arguments">
     <a href="./MRMLinear/MRM.arguments.html">MRM.arguments</a>
   </td>
@@ -98,6 +141,18 @@ table caption {font-size:14px;font-weight:bolder;}
     <a href="./MRMLinear/extract.ions.html">extract.ions</a>
   </td>
   <td><p>Extract ion peaks</p></td>
+</tr>
+<tr>
+  <td id="extract_mrm">
+    <a href="./MRMLinear/extract_mrm.html">extract_mrm</a>
+  </td>
+  <td><p>Extract ion peaks</p></td>
+</tr>
+<tr>
+  <td id="extract_ionpairs">
+    <a href="./MRMLinear/extract_ionpairs.html">extract_ionpairs</a>
+  </td>
+  <td><p>Extract all ion pairs information from the given rawdata file</p></td>
 </tr>
 <tr>
   <td id="extract.peakROI">
@@ -148,6 +203,15 @@ table caption {font-size:14px;font-weight:bolder;}
   <td><p>Get MRM ions peaks data from a given raw data file</p></td>
 </tr>
 <tr>
+  <td id="MRM.peakarea">
+    <a href="./MRMLinear/MRM.peakarea.html">MRM.peakarea</a>
+  </td>
+  <td><p>Extract the peak area data from the given xic data object.
+ 
+ This function is used to extract the peak area data from the given xic data object, 
+ which is usually a result of the @<code>M:mzkit.MRMkit.ExtractIonData(System.String,System.Double,System.Double,System.Object,SMRUCC.Rsharp.Runtime.Environment)</code> function.</p></td>
+</tr>
+<tr>
   <td id="MRM.peaks">
     <a href="./MRMLinear/MRM.peaks.html">MRM.peaks</a>
   </td>
@@ -159,7 +223,7 @@ table caption {font-size:14px;font-weight:bolder;}
   </td>
   <td><h1>Scan the raw file data</h1>
 
-<p>Get the peak area data of the metabolites in each given sample <br />
+<p>Get the peak area data of the metabolites in each given sample 
  data files</p></td>
 </tr>
 <tr>
@@ -168,7 +232,7 @@ table caption {font-size:14px;font-weight:bolder;}
   </td>
   <td><h1>Scan the raw file data</h1>
 
-<p>Get the peak area data of the metabolites in each given sample <br />
+<p>Get the peak area data of the metabolites in each given sample 
  data files</p></td>
 </tr>
 <tr>

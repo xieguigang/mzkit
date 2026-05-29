@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9a2e3a66eb93c9f3e1eec7bb28c9fe4, mzkit\Rscript\Library\mzkit.quantify\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::df4810dc46cf282e65071c9f7dcc7449, Rscript\Library\mzkit_app\src\mzquant\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 63
-    '    Code Lines: 32
-    ' Comment Lines: 23
-    '   Blank Lines: 8
-    '     File Size: 2.72 KB
+    '    Code Lines: 32 (50.79%)
+    ' Comment Lines: 23 (36.51%)
+    '    - Xml Docs: 17.39%
+    ' 
+    '   Blank Lines: 8 (12.70%)
+    '     File Size: 2.78 KB
 
 
     '     Module Resources

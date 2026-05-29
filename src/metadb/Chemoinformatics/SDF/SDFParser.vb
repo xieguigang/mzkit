@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cab025b7c179822cf12a802c9678124d, mzkit\src\metadb\Chemoinformatics\SDF\SDFParser.vb"
+﻿#Region "Microsoft.VisualBasic::c101da74529ecb4441f825acde0990ec, metadb\Chemoinformatics\SDF\SDFParser.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 197
-    '    Code Lines: 135
-    ' Comment Lines: 34
-    '   Blank Lines: 28
-    '     File Size: 7.61 KB
+    '    Code Lines: 135 (68.53%)
+    ' Comment Lines: 34 (17.26%)
+    '    - Xml Docs: 73.53%
+    ' 
+    '   Blank Lines: 28 (14.21%)
+    '     File Size: 7.67 KB
 
 
     '     Module SDFParser
@@ -150,7 +152,7 @@ Namespace SDF
                 End If
             Next
 
-            Throw New BadImageFormatException
+            Throw New BadImageFormatException("invalid sdf molecule structure text data for parsed")
         End Function
 
         Public Function StreamParser(block$(), parseStruct As Boolean) As SDF
@@ -241,7 +243,7 @@ Namespace SDF
 
             For Each path As String In list
                 If echo Then
-                    Call path.__INFO_ECHO
+                    Call path.info
                 End If
 
                 For Each model As SDF In SDFParser.IterateParser(path, parseStruct)

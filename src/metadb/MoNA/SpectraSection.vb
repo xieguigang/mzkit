@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41ef46ae57cf6439acea6b55ae740cc7, mzkit\src\metadb\MoNA\SpectraSection.vb"
+﻿#Region "Microsoft.VisualBasic::89364ae72b0d344ca017340adcdc1445, metadb\MoNA\SpectraSection.vb"
 
 ' Author:
 ' 
@@ -37,27 +37,22 @@
 
 ' Code Statistics:
 
-'   Total Lines: 83
-'    Code Lines: 60
-' Comment Lines: 10
-'   Blank Lines: 13
-'     File Size: 2.64 KB
+'   Total Lines: 158
+'    Code Lines: 106 (67.09%)
+' Comment Lines: 34 (21.52%)
+'    - Xml Docs: 97.06%
+' 
+'   Blank Lines: 18 (11.39%)
+'     File Size: 5.25 KB
 
 
 ' Class SpectraSection
 ' 
-'     Properties: Comment, MetaDB, MetaReader, SpectraInfo
+'     Properties: Comment, GetSpectrumPeaks, libtype, MetaDB, MetaReader
+'                 ms_level, SpectraInfo
 ' 
 '     Constructor: (+2 Overloads) Sub New
-' 
-' Class SpectraInfo
-' 
-'     Properties: collision_energy, column, flow_gradient, flow_rate, fragmentation_mode
-'                 instrument, instrument_type, ion_mode, ionization, MassPeaks
-'                 MsLevel, mz, precursor_type, resolution, retention_time
-'                 solvent_a, solvent_b
-' 
-'     Function: ToPeaksMs2
+'     Function: GetCrossReference, GetMetabolite
 ' 
 ' /********************************************************************************/
 
@@ -67,9 +62,10 @@ Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
+Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite
+Imports BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference
 
 ''' <summary>
 ''' Union of the spectrum data and the metabolite annotation metadata
@@ -77,6 +73,8 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 ''' <remarks>
 ''' this data object used for union the metabolite annotation <see cref="MetaData"/> and 
 ''' the spectrum data(<see cref="SpectraInfo"/>).
+''' 
+''' also is a sub class of the <see cref="MetaInfo"/> annotation information object
 ''' </remarks>
 Public Class SpectraSection : Inherits MetaInfo
 
@@ -118,6 +116,13 @@ Public Class SpectraSection : Inherits MetaInfo
         End Get
     End Property
 
+    ''' <summary>
+    ''' get the current reference spectrum object
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' the <see cref="ID"/> will be tagged as the <see cref="PeakMs2.lib_guid"/>.
+    ''' </remarks>
     Public ReadOnly Property GetSpectrumPeaks As PeakMs2
         Get
             Return SpectraInfo.ToPeaksMs2(id:=ID)
@@ -157,107 +162,58 @@ Public Class SpectraSection : Inherits MetaInfo
         Me.ID = metadata.accession
         Me.name = metadata.name
         Me.IUPACName = metadata.name
-        Me.exact_mass = metadata.exact_mass
         Me.formula = metadata.GetFormula
+        Me.exact_mass = FormulaScanner.EvaluateExactMass(formula)
+
+        If exact_mass <= 0 Then
+            exact_mass = metadata.exact_mass
+        End If
+
+        Me.xref = GetCrossReference()
     End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetCrossReference() As xref
+        Return New xref With {
+            .CAS = meta.cas_number,
+            .chebi = meta.chebi,
+            .ChEMBL = meta.chembl,
+            .ChemIDplus = meta.ChemIDplus,
+            .DrugBank = meta.drugbank,
+            .HMDB = meta.hmdb,
+            .InChI = meta.InChI,
+            .InChIkey = meta.InChIKey,
+            .KEGG = meta.kegg,
+            .KNApSAcK = meta.knapsack,
+            .lipidmaps = meta.lipidmaps,
+            .MeSH = meta.Mesh,
+            .MetaCyc = "",
+            .metlin = "",
+            .pubchem = meta.pubchem_cid,
+            .SMILES = meta.SMILES.ElementAtOrDefault(0, ""),
+            .Wikipedia = meta.wikipedia,
+            .extras = New Dictionary(Of String, String()) From {
+                {"MoNA", {Me.ID}}
+            }
+        }
+    End Function
 
     ''' <summary>
     ''' get metabolite information based on the metadata
     ''' </summary>
     ''' <returns></returns>
-    Public Function GetMetabolite() As MetaLib.Models.MetaLib
+    Public Function GetMetabolite() As Metabolite.MetaLib
         Dim mass As Double = FormulaScanner.ScanFormula(formula)
 
-        Return New MetaLib.Models.MetaLib With {
+        Return New Metabolite.MetaLib With {
             .ID = Me.ID,
             .name = Me.name,
             .IUPACName = If(Me.IUPACName, .name),
             .formula = Me.formula,
             .exact_mass = If(mass > 0, mass, Me.exact_mass),
-            .xref = New xref With {
-                .CAS = meta.cas_number,
-                .chebi = meta.chebi,
-                .ChEMBL = meta.chembl,
-                .ChemIDplus = meta.ChemIDplus,
-                .DrugBank = meta.drugbank,
-                .HMDB = meta.hmdb,
-                .InChI = meta.InChI,
-                .InChIkey = meta.InChIKey,
-                .KEGG = meta.kegg,
-                .KNApSAcK = meta.knapsack,
-                .lipidmaps = meta.lipidmaps,
-                .MeSH = meta.Mesh,
-                .MetaCyc = "",
-                .metlin = "",
-                .pubchem = meta.pubchem_cid,
-                .SMILES = meta.SMILES.ElementAtOrDefault(0, ""),
-                .Wikipedia = meta.wikipedia
-            },
+            .xref = GetCrossReference(),
             .description = meta.comment.JoinBy(vbCrLf),
             .synonym = {meta.name}
-        }
-    End Function
-End Class
-
-''' <summary>
-''' The reference spectra data which is parsed from the MoNA database
-''' </summary>
-''' <remarks>
-''' is a collection of the mass spectrum <see cref="ms2"/> data.
-''' </remarks>
-Public Class SpectraInfo
-
-    Public Property MsLevel As String
-    Public Property mz As Double
-    Public Property precursor_type As String
-    Public Property instrument_type As String
-    Public Property instrument As String
-    Public Property collision_energy As String
-    Public Property ion_mode As String
-    Public Property ionization As String
-    Public Property fragmentation_mode As String
-    Public Property resolution As String
-    Public Property column As String
-    Public Property flow_gradient As String
-    Public Property flow_rate As String
-    Public Property retention_time As String
-    Public Property solvent_a As String
-    Public Property solvent_b As String
-
-    Public Property MassPeaks As ms2()
-
-    Public Function ToPeaksMs2(Optional id As String = Nothing) As PeakMs2
-        Dim precursor_type As String = Me.precursor_type
-
-        If precursor_type.StringEmpty Then
-            Dim ionMode As Integer = Provider.ParseIonMode(ion_mode, allowsUnknown:=True)
-
-            If ionMode <> 0 Then
-                precursor_type = $"[M]{If(ionMode > 0, "+", "-")}"
-            End If
-        End If
-        If (Not precursor_type.StringEmpty) AndAlso (precursor_type.Last <> "+" AndAlso precursor_type.Last <> "-") Then
-            Dim ionMode As Integer = Provider.ParseIonMode(ion_mode, allowsUnknown:=True)
-
-            If ionMode <> 0 Then
-                precursor_type = precursor_type.Trim("["c, "]"c)
-                precursor_type = $"[{precursor_type}]{If(ionMode > 0, "+", "-")}"
-            End If
-        End If
-
-        Return New PeakMs2 With {
-            .activation = ionization,
-            .collisionEnergy = Val(collision_energy.Match("\d+(\.\d+)?")),
-            .intensity = MassPeaks.Sum(Function(a) a.intensity),
-            .lib_guid = If(id, $"M{mz.ToString("F0")}T{retention_time}, m/z={mz} {precursor_type}"),
-            .mz = mz,
-            .mzInto = MassPeaks,
-            .precursor_type = precursor_type,
-            .rt = Val(retention_time),
-            .meta = New Dictionary(Of String, String) From {
-                {NameOf(instrument), instrument},
-                {NameOf(fragmentation_mode), fragmentation_mode}
-            }
         }
     End Function
 End Class

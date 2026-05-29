@@ -1,4 +1,78 @@
-﻿Public Interface IDoubleBondInfo
+﻿#Region "Microsoft.VisualBasic::729c39b264c92e1024045a507db83a10, metadb\Lipidomics\IDoubleBondInfo.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 79
+    '    Code Lines: 64 (81.01%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 15 (18.99%)
+    '     File Size: 2.94 KB
+
+
+    ' Interface IDoubleBondInfo
+    ' 
+    '     Properties: Determined, Position, State
+    ' 
+    '     Function: Includes
+    ' 
+    ' Enum DoubleBondState
+    ' 
+    '     E, Unknown, Z
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Class DoubleBondInfo
+    ' 
+    '     Properties: Determined, Position, State
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Create, E, (+2 Overloads) Equals, GetHashCode, Includes
+    '               ToString, Z
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Public Interface IDoubleBondInfo
     Inherits IEquatable(Of IDoubleBondInfo)
     ReadOnly Property Position As Integer
     ReadOnly Property State As DoubleBondState
@@ -12,13 +86,14 @@ Public Enum DoubleBondState
     Z
 End Enum
 
-Public Class DoubleBondInfo
-    Implements IDoubleBondInfo
-    Private Shared ReadOnly CACHE As Dictionary(Of (Integer, DoubleBondState), DoubleBondInfo) = New Dictionary(Of (Integer, DoubleBondState), DoubleBondInfo)()
-    Private Shared ReadOnly LOCKOBJ As Object = New Object()
+Public Class DoubleBondInfo : Implements IDoubleBondInfo
 
     Public Shared Function Create(position As Integer, Optional state As DoubleBondState = DoubleBondState.Unknown) As DoubleBondInfo
         Dim info As DoubleBondInfo = Nothing
+
+        Static CACHE As New Dictionary(Of (Integer, DoubleBondState), DoubleBondInfo)()
+        Static LOCKOBJ As Object = New Object()
+
         SyncLock LOCKOBJ
             If Not CACHE.TryGetValue((position, state), info) Then
                 CACHE((position, state)) = New DoubleBondInfo(position, state)
@@ -76,4 +151,3 @@ Public Class DoubleBondInfo
         Return Position = other.Position AndAlso State = other.State
     End Function
 End Class
-

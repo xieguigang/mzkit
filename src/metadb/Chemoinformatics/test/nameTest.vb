@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e0f28ad0b1c72a173510b336a8f1ac9, mzkit\src\metadb\Chemoinformatics\test\nameTest.vb"
+﻿#Region "Microsoft.VisualBasic::dd0cc5789dadea3bc48a8d9301447e47, metadb\Chemoinformatics\test\nameTest.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 36
-    ' Comment Lines: 3
-    '   Blank Lines: 14
-    '     File Size: 2.27 KB
+    '   Total Lines: 56
+    '    Code Lines: 39 (69.64%)
+    ' Comment Lines: 3 (5.36%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 14 (25.00%)
+    '     File Size: 2.40 KB
 
 
     ' Module nameTest
@@ -52,6 +54,7 @@
 
 #End Region
 
+Imports BioNovoGene.BioDeep.Chemoinformatics.Lipidomics
 Imports BioNovoGene.BioDeep.Chemoinformatics.NaturalProduct
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -60,6 +63,8 @@ Module nameTest
     Dim parser As New GlycosylNameSolver
 
     Sub Main()
+        Call fingerprintTest.Main333()
+        Call inchiTest.Main2()
         Call parseLipids()
 
         Call echo(" 3-o-[6-o-(malonyl)-beta-d-glucopyranoside]-7-o-[6-o-(trans-p-coumaryl)-beta-d-glucopyranoside]-3'-o-[6-o-(trans-4-o-(6-o-(trans-4-o-(beta-d-glucopyranosyl)-p-coumaryl)-beta-d-glucopyranoside]")

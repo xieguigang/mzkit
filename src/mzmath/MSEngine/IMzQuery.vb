@@ -1,60 +1,69 @@
-﻿#Region "Microsoft.VisualBasic::ded11b00b65592d5334cbd59eec0b265, mzkit\src\mzmath\MSEngine\IMzQuery.vb"
+﻿#Region "Microsoft.VisualBasic::b4d7e46fc422ccb55ac0d20a175780d5, mzmath\MSEngine\IMzQuery.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 49
-'    Code Lines: 35
-' Comment Lines: 5
-'   Blank Lines: 9
-'     File Size: 1.52 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Interface IMzQuery
-' 
-'     Function: GetAnnotation, GetDbXref, GetMetadata, MSetAnnotation, QueryByMz
-' 
-' Module MetalIons
-' 
-'     Function: HasMetalIon, IsOrganic
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 99
+    '    Code Lines: 50 (50.51%)
+    ' Comment Lines: 35 (35.35%)
+    '    - Xml Docs: 97.14%
+    ' 
+    '   Blank Lines: 14 (14.14%)
+    '     File Size: 3.16 KB
+
+
+    ' Interface IMzQuery
+    ' 
+    '     Function: MSetAnnotation, QueryByMz
+    ' 
+    ' Interface IMetaDb
+    ' 
+    '     Function: GetAnnotation, GetDbXref, GetMetadata
+    ' 
+    ' Module MetalIons
+    ' 
+    '     Function: HasMetalIon, IsMetalIon, IsOrganic
+    ' 
+    ' /********************************************************************************/
 
 #End Region
+
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 ''' <summary>
 ''' Query annotation candidates by the given m/z mass value
@@ -77,10 +86,24 @@ Public Interface IMzQuery : Inherits IMetaDb
 
 End Interface
 
+''' <summary>
+''' annotation data getter
+''' </summary>
+''' <remarks>
+''' get by unique reference id
+''' </remarks>
 Public Interface IMetaDb
+
     Function GetAnnotation(uniqueId As String) As (name As String, formula As String)
+
+    ''' <summary>
+    ''' get the general annotation metadata object by its unique reference id
+    ''' </summary>
+    ''' <param name="uniqueId"></param>
+    ''' <returns></returns>
     Function GetMetadata(uniqueId As String) As Object
     Function GetDbXref(uniqueId As String) As Dictionary(Of String, String)
+
 End Interface
 
 Public Module MetalIons
@@ -104,9 +127,25 @@ Public Module MetalIons
     .Distinct _
     .ToArray
 
+    ''' <summary>
+    ''' check of the given formula is metal ion or not?
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <returns></returns>
+    Public Function IsMetalIon(formula As String) As Boolean
+        Static ions As Index(Of String) = MetalIons.ions
+        Return formula Like ions
+    End Function
+
+    ''' <summary>
+    ''' check of the given formula has metal ion or not?
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <returns></returns>
     Public Function HasMetalIon(formula As String) As Boolean
         For Each ion As String In ions
-            If InStr(formula, ion) > 0 Then
+            ' must be case sensitive
+            If InStr(formula, ion, CompareMethod.Binary) > 0 Then
                 Return True
             End If
         Next
@@ -114,7 +153,18 @@ Public Module MetalIons
         Return False
     End Function
 
-    Public Function IsOrganic(formula As String) As Boolean
-        Return InStr(formula, "C") > 0 AndAlso InStr(formula, "H") > 0
+    Public Function IsOrganic(formula As String, Optional strict As Boolean = False) As Boolean
+        Dim atoms As Formula = FormulaScanner.ScanFormula(formula)
+        If atoms Is Nothing Then
+            Return False
+        End If
+
+        If strict Then
+            Return atoms.CheckElement("C") AndAlso
+                atoms.CheckElement("H") AndAlso
+                atoms.CheckElement("O")
+        Else
+            Return atoms.CheckElement("C") AndAlso (atoms.CheckElement("H") OrElse atoms.CheckElement("O"))
+        End If
     End Function
 End Module

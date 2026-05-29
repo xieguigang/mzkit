@@ -1,20 +1,83 @@
-﻿
+﻿#Region "Microsoft.VisualBasic::e2433a5c6b909d4cfb113b6ffc60db4a, Rscript\Library\mzkit_app\src\mzquant\Math.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 383
+    '    Code Lines: 269 (70.23%)
+    ' Comment Lines: 67 (17.49%)
+    '    - Xml Docs: 86.57%
+    ' 
+    '   Blank Lines: 47 (12.27%)
+    '     File Size: 15.86 KB
+
+
+    ' Module QuantifyMath
+    ' 
+    '     Function: asChromatogram, combineVector, GetPeakROIList, impute_f, impute_knn
+    '               MapSampleNames, mergeTables, removes_missing, resample
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Components.[Interface]
+Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 <Package("math")>
 Module QuantifyMath
@@ -55,6 +118,151 @@ Module QuantifyMath
     End Function
 
     ''' <summary>
+    ''' data matrix pre-processing before run data analysis
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    <ExportAPI("preprocessing")>
+    Public Function impute_f(x As PeakSet,
+                             Optional scale As Double = 10 ^ 8,
+                             Optional impute As Imputation = Imputation.Min) As PeakSet
+
+        Dim imputes As xcms2() = x.peaks _
+            .AsParallel _
+            .Select(Function(k)
+                        If impute = Imputation.None Then
+                            Return New xcms2(k)
+                        Else
+                            Return k.Impute(impute)
+                        End If
+                    End Function) _
+            .ToArray
+        Dim norm As xcms2() = xcms2.TotalPeakSum(imputes, scale).ToArray
+        Dim peaktable As New PeakSet With {
+            .peaks = norm,
+            .annotations = x.annotations
+        }
+
+        Return peaktable
+    End Function
+
+    <ExportAPI("preprocessing.knn")>
+    Public Function impute_knn(x As PeakSet, Optional scale As Double = 10 ^ 8, Optional k As Integer = 3) As PeakSet
+        Dim samples As Dictionary(Of String, Double()) = x.sampleNames _
+            .ToDictionary(Function(name) name,
+                          Function(name)
+                              Return x.SampleVector(name)
+                          End Function)
+        ' find knn for each sample
+        Dim ksamples = samples.AsParallel _
+            .Select(Function(name)
+                        Dim sample As Double() = name.Value
+                        Dim sortDist = samples _
+                            .Where(Function(other) other.Key <> name.Key) _
+                            .OrderBy(Function(other) sample.EuclideanDistance(other.Value)) _
+                            .Take(k) _
+                            .ToArray
+
+                        Return (name, KNN:=sortDist)
+                    End Function) _
+            .ToArray
+        Dim peaks As xcms2() = x.peaks.Select(Function(clone) New xcms2(clone)).ToArray
+
+        ' fill by knn
+        For Each sample In TqdmWrapper.Wrap(ksamples)
+            Dim v As Double() = sample.name.Value
+            Dim m As Double()() = sample.KNN.Select(Function(a) a.Value).ToArray
+            Dim sample_name As String = sample.name.Key
+
+            For i As Integer = 0 To v.Length - 1
+                Dim offset As Integer = i
+
+                If v(i) <= 0 OrElse v(i).IsNaNImaginary Then
+                    Dim impute As Double() = m _
+                        .Select(Function(si) si(offset)) _
+                        .Where(Function(si) si > 0 AndAlso Not si.IsNaNImaginary) _
+                        .ToArray
+
+                    If impute.Length = 0 Then
+                        v(i) = randf(0.5, 1)
+                    Else
+                        v(i) = impute.Average
+                    End If
+                End If
+
+                ' update peakset matrix
+                peaks(i)(sample_name) = v(i)
+            Next
+        Next
+
+        Dim norm As xcms2() = xcms2.TotalPeakSum(peaks, scale).ToArray
+
+        Return New PeakSet(peaks) With {
+            .annotations = x.annotations
+        }
+    End Function
+
+    ''' <summary>
+    ''' removes the missing peaks
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="sampleinfo">a sample info data vector for provides the sample group information about each sample. 
+    ''' if this parameter value is omit missing then the missing feature will be checked across all sample files, 
+    ''' otherwise the missing will be check across the multiple sample groups</param>
+    ''' <param name="percent">the missing percentage threshold</param>
+    ''' <returns></returns>
+    <ExportAPI("removes_missing")>
+    Public Function removes_missing(x As PeakSet,
+                                    Optional sampleinfo As SampleInfo() = Nothing,
+                                    Optional percent As Double = 0.5) As PeakSet
+
+        If sampleinfo.IsNullOrEmpty Then
+            ' check missing based on all samples
+            Dim peaks As New List(Of xcms2)
+            Dim sampleNames As String() = x.peaks.Select(Function(k) k.Properties.Keys).IteratesALL.Distinct.ToArray
+
+            For Each peak As xcms2 In x.peaks
+                Dim missing As Integer = Aggregate xi In peak.Properties Where xi.Value <= 0 Into Count()
+
+                If (missing / sampleNames.Length) < percent Then
+                    Call peaks.Add(peak)
+                End If
+            Next
+
+            Return New PeakSet With {.peaks = peaks.ToArray}
+        Else
+            ' check missing based on sample groups
+            Dim peaks As New List(Of xcms2)
+            Dim groups = sampleinfo _
+                .GroupBy(Function(k) k.sample_info) _
+                .ToDictionary(Function(k) k.Key,
+                              Function(k)
+                                  Return k.Select(Function(s) s.ID).ToArray
+                              End Function)
+
+            For Each peak As xcms2 In x.peaks
+                Dim missing As Integer() = groups _
+                    .Select(Function(group)
+                                Return Aggregate xi As Double
+                                       In peak(group.Value)
+                                       Where xi <= 0
+                                       Into Count()
+                            End Function) _
+                    .ToArray
+
+                ' has one group contains value more than
+                ' the given missing percentage cutoff
+                ' then we keeps this feature
+                If missing.Any(Function(m) m / sampleinfo.Length < percent) Then
+                    Call peaks.Add(peak)
+                End If
+            Next
+
+            Return New PeakSet With {.peaks = peaks.ToArray}
+        End If
+    End Function
+
+    ''' <summary>
     ''' Create a chromatogram data from a dataframe object
     ''' </summary>
     ''' <param name="x">Should be a dataframe object that contains 
@@ -90,7 +298,7 @@ Module QuantifyMath
             timeVec = DirectCast(x, DataSet()).Vector(time_str)
             intoVec = DirectCast(x, DataSet()).Vector(into_str)
         Else
-            Return Internal.debug.stop($"invalid data sequence: {x.GetType.FullName}", env)
+            Return RInternal.debug.stop($"invalid data sequence: {x.GetType.FullName}", env)
         End If
 
         Return combineVector(timeVec, intoVec)
@@ -152,5 +360,97 @@ Module QuantifyMath
                 joint:=joint
             ) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' merge all peakset tables into one peaktable object
+    ''' </summary>
+    ''' <param name="tables"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' this function merge two peaktable directly via the unique id reference
+    ''' </remarks>
+    <ExportAPI("merge_tables")>
+    <RApiReturn(GetType(PeakSet))>
+    Public Function mergeTables(<RRawVectorArgument> tables As Object, Optional env As Environment = Nothing) As Object
+        Dim peaksets = pipeline.TryCreatePipeline(Of PeakSet)(tables, env)
+
+        If peaksets.isError Then
+            Return peaksets.getError
+        End If
+
+        Dim unions As New Dictionary(Of String, xcms2)
+        Dim annos As New List(Of Dictionary(Of String, MetID))
+
+        For Each part As PeakSet In peaksets.populates(Of PeakSet)(env)
+            If Not part.annotations.IsNullOrEmpty Then
+                Call annos.Add(part.annotations)
+            End If
+
+            For Each peak As xcms2 In part.peaks
+                Dim datapeak As xcms2 = unions.TryGetValue(peak.ID)
+
+                If datapeak Is Nothing Then
+                    Call unions.Add(New xcms2(peak))
+                Else
+                    Call datapeak.AddSamples(peak.Properties)
+                End If
+            Next
+        Next
+
+        Return New PeakSet(unions.Values) With {
+            .annotations = annos _
+                .IteratesALL _
+                .GroupBy(Function(a) a.Key) _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return a.First.Value
+                              End Function)
+        }
+    End Function
+
+    ''' <summary>
+    ''' mapping sample id to sample names
+    ''' </summary>
+    ''' <param name="x">the sample id is used as the sample identifier</param>
+    ''' <param name="samples">the mapping of sample id to sample name</param>
+    ''' <returns>
+    ''' the peaktable that use the sample name as the sample identifier.
+    ''' </returns>
+    <ExportAPI("map_samplenames")>
+    Public Function MapSampleNames(x As PeakSet, samples As SampleInfo()) As PeakSet
+        Dim mapIndex As Dictionary(Of String, String) = samples.ToDictionary(Function(a) a.ID, Function(a) a.sample_name)
+        Dim mapNames = x.peaks _
+            .Select(Function(xi)
+                        Return MapIonFeatureSamples(xi, mapIndex)
+                    End Function) _
+            .ToArray
+
+        Return New PeakSet(mapNames) With {.annotations = x.annotations}
+    End Function
+
+    Private Function MapIonFeatureSamples(xi As xcms2, mapIndex As Dictionary(Of String, String)) As xcms2
+        ' 20260516
+        ' handling of the pos/neg name mapping
+        ' example as pos: XXX -> sample1
+        '            neg: YYY -> sample1
+        ' will generates two sample1       
+        xi = New xcms2(xi)
+        xi.Properties = xi.Properties _
+            .GroupBy(Function(si)
+                         Return If(mapIndex.ContainsKey(si.Key), mapIndex(si.Key), si.Key)
+                     End Function) _
+            .ToDictionary(Function(a) a.Key,
+                          Function(a)
+                              ' if the POS/NEG different sample id mapping
+                              ' to one name, then it means always one sample is
+                              ' zero
+                              ' make sum of these two sample directly
+                              Return Aggregate ai As KeyValuePair(Of String, Double)
+                                     In a
+                                     Into Sum(ai.Value)
+                          End Function)
+        Return xi
     End Function
 End Module

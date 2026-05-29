@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e8beb9e180efadc0c4194390c6af86e, mzkit\src\assembly\BrukerDataReader\flexImaging\mcf\index_sqlite\ContainerIndex.vb"
+﻿#Region "Microsoft.VisualBasic::0e5b2d754e450bc2872997a90bbfaefd, assembly\BrukerDataReader\flexImaging\mcf\index_sqlite\ContainerIndex.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 9
-    '    Code Lines: 7
-    ' Comment Lines: 0
-    '   Blank Lines: 2
-    '     File Size: 225 B
+    '    Code Lines: 7 (77.78%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (22.22%)
+    '     File Size: 233 B
 
 
     ' Class ContainerIndex

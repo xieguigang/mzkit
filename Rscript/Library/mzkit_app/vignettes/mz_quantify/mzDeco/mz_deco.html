@@ -30,11 +30,13 @@
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>mz_deco</strong>(<i>ms1</i>,
     <i>tolerance</i> = <span style='color: brown;'><strong>"ppm:20"</strong></span>,
     <i>baseline</i> = <span style='color: green;'>0.65</span>,
-    <i>peak.width</i> = <span style='color: brown;'><strong>"3,20"</strong></span>,
+    <i>peak.width</i> = <span style='color: brown;'><strong>"3,15"</strong></span>,
     <i>joint</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>parallel</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>dtw</i> = <span style='color: blue !important;'>FALSE</span>,
-    <i>feature</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
+    <i>feature</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>rawfile</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>sn.threshold</i> = <span style='color: green;'>1</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -42,16 +44,20 @@
         <table>
             
 <dt>ms1</dt>
-<dd><p><p>a collection of the ms1 data or the mzpack raw data object, this parameter could also be<br />
- a XIC pool object which contains a collection of the ion XIC data for run deconvolution.</p></p></dd>
+<dd><p>a collection of the ms1 data or the mzpack raw data object, this parameter could also be
+ a XIC pool object which contains a collection of the ion XIC data for run deconvolution.</p></dd>
 
 
 <dt>tolerance</dt>
-<dd><p><p>the mass tolerance for extract the XIC data for run deconvolution.</p></p></dd>
+<dd><p>the mass tolerance for extract the XIC data for run deconvolution.</p></dd>
 
 
 <dt>feature</dt>
-<dd><p><p>a numeric vector of target feature ion m/z value for extract the XIC data.</p></p></dd>
+<dd><p>a numeric vector of target feature ion m/z value for extract the XIC data.</p></dd>
+
+
+<dt>parallel</dt>
+<dd><p>run peak detection algorithm on mutliple xic data in parallel mode?. [as boolean]</p></dd>
 
         </table>
 
@@ -66,11 +72,11 @@
 
         <h3>Value</h3>
 
-        <p>a vector of the peak deconvolution data,<br />
- in format of xcms peak table liked or mzkit <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakFeature.html">PeakFeature</a><br />
- data object.</p>
-
-<p>the result data vector may contains the rt shift data result, where you can get this shift<br />
+        <p>a vector of the peak deconvolution data,
+ in format of xcms peak table liked or mzkit <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakFeature.html">PeakFeature</a>
+ data object.
+ 
+ the result data vector may contains the rt shift data result, where you can get this shift
  value via the <code>rt.shift</code> attribute name, rt shift data model is clr type: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/RtShift.html">RtShift</a>.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakFeature.html">PeakFeature</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a></li></ul>
 
         <h3 style="display: block;">Examples</h3>

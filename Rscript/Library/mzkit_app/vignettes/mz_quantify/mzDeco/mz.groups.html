@@ -37,27 +37,27 @@
         <table>
             
 <dt>ms1</dt>
-<dd><p><p>a LCMS mzpack rawdata object or a collection of the ms1 point data</p></p></dd>
+<dd><p>a LCMS mzpack rawdata object or a collection of the ms1 point data</p></dd>
 
 
 <dt>mzdiff</dt>
-<dd><p><p>the mass tolerance error for extract the XIC from the rawdata set</p></p></dd>
+<dd><p>the mass tolerance error for extract the XIC from the rawdata set</p></dd>
 
 
 <dt>rtwin</dt>
-<dd><p><p>the rt tolerance window size for merge data points</p></p></dd>
+<dd><p>the rt tolerance window size for merge data points. [as double]</p></dd>
 
 
 <dt>env</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
 
         </table>
 
 
         <h3 style="display: block;">Details</h3>
 
-        <p>the ion mz value is generated via the max intensity point in each ion <br />
- feature group, and the xic data has already been re-order via the <br />
+        <p>the ion mz value is generated via the max intensity point in each ion 
+ feature group, and the xic data has already been re-order via the 
  time asc.</p>
 
         <h3 style="display: block">Authors</h3>
@@ -66,12 +66,15 @@
 
         <h3>Value</h3>
 
-        <p>create a list of XIC dataset for run downstream deconv operation</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MzGroup.html">MzGroup[]</a></li></ul>
+        <p>create a list of XIC dataset for run downstream deconv operation</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MzGroup.html">MzGroup</a></li></ul>
 
         <h3 style="display: block;">Examples</h3>
 
         <pre><code id="example_r"> let rawdata = open.mzpack(file = "/path/to/rawdata.mzpack");
- let XIC = mz.groups(ms1 = rawdata, mzdiff = "ppm:20");</code></pre>
+ let xic = mz.groups(ms1 = rawdata, mzdiff = "ppm:20");
+ 
+ # export the XIC data as binary data file.
+ writeBin(xic, con = "/path/to/xic_data.dat");</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>mzDeco</em> version 1.0.0.0 <a

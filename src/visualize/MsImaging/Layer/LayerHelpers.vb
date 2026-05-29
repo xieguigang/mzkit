@@ -1,60 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::8a347ec482773a817c275aa44259b755, mzkit\src\visualize\MsImaging\LayerHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::a5f6537fd34a856ffeef4c1117bb33df, visualize\MsImaging\Layer\LayerHelpers.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 115
-'    Code Lines: 97
-' Comment Lines: 8
-'   Blank Lines: 10
-'     File Size: 4.75 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module LayerHelpers
-' 
-'     Function: evalMz, GetMSIIons
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 115
+    '    Code Lines: 97 (84.35%)
+    ' Comment Lines: 8 (6.96%)
+    '    - Xml Docs: 87.50%
+    ' 
+    '   Blank Lines: 10 (8.70%)
+    '     File Size: 4.79 KB
+
+
+    ' Module LayerHelpers
+    ' 
+    '     Function: evalMz, GetMSIIons
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -68,7 +69,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Module LayerHelpers
 
@@ -81,16 +82,17 @@ Public Module LayerHelpers
     ''' a collection of m/z tagged density value
     ''' </returns>
     <Extension>
-    Public Iterator Function GetMSIIons(raw As mzPack,
+    Public Iterator Function GetMSIIons(raw As IMZPack,
                                         Optional mzdiff As Tolerance = Nothing,
                                         Optional gridSize As Integer = 5,
                                         Optional qcut As Double = 0.05,
-                                        Optional intoCut As Double = 0) As IEnumerable(Of DoubleTagged(Of SingleIonLayer))
+                                        Optional intoCut As Double = 0,
+                                        Optional verbose As Boolean = True) As IEnumerable(Of DoubleTagged(Of SingleIonLayer))
 
         Dim cellSize As New Size(gridSize, gridSize)
         Dim graph As Grid(Of ScanMS1) = Grid(Of ScanMS1).Create(raw.MS, Function(scan) scan.GetMSIPixel)
         Dim mzErr As Tolerance = mzdiff Or Tolerance.DefaultTolerance
-        Dim reader As PixelReader = New ReadRawPack(raw)
+        Dim reader As PixelReader = New ReadRawPack(raw, verbose:=verbose)
         Dim ncut As Integer = graph.size * qcut
         Dim allMz As NamedCollection(Of (mzi As ms2, pt As Point))() = graph _
             .EnumerateData _
@@ -119,7 +121,7 @@ Public Module LayerHelpers
                 j = 0
                 info = $"({CInt(100 * i / allMz.Length)}%) {Val(allMz(i).name).ToString("F4")}"
 
-                Call RunSlavePipeline.SendProgress(stdNum.Round(i / allMz.Length, 2), info)
+                Call RunSlavePipeline.SendProgress(std.Round(i / allMz.Length, 2), info)
             End If
         Next
     End Function

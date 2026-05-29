@@ -32,24 +32,24 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.HEMap
 export class Cell {
-   # the physical image x
-   X: integer;
-   # the physical image y
-   Y: integer;
+   # average value of Blue channel
+   B: double;
+   black: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/HEMap/Object.html">Object</a>;
+   # average value of Green channel
+   G: double;
+   # does current cell block is in color black?
+   isBlack: boolean;
+   layers: list;
+   # average value of Red channel
+   R: double;
    # the location X of the grid
    ScaleX: integer;
    # the location Y of the grid
    ScaleY: integer;
-   # average value of Red channel
-   R: double;
-   # average value of Green channel
-   G: double;
-   # average value of Blue channel
-   B: double;
-   black: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/HEMap/Object.html">Object</a>;
-   layers: list;
-   # does current cell block is in color black?
-   isBlack: boolean;
+   # the physical image x
+   X: integer;
+   # the physical image y
+   Y: integer;
 }
 </code>
         </pre>

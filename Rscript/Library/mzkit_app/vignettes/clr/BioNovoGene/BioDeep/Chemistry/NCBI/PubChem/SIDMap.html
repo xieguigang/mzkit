@@ -22,11 +22,11 @@
 
         <h3>Description</h3>
 
-        <p>This is a listing of all (live) SIDs with their source names and<br />
- registry identifiers, and the standardized CID If present. It Is <br />
- a gzipped text file where Each line contains at least three<br />
- columns: SID, tab, source name, tab, registry identifier; then<br />
- a fourth column Of tab, CID If there Is a standardized CID For <br />
+        <p>This is a listing of all (live) SIDs with their source names and
+ registry identifiers, and the standardized CID If present. It Is 
+ a gzipped text file where Each line contains at least three
+ columns: SID, tab, source name, tab, registry identifier; then
+ a fourth column Of tab, CID If there Is a standardized CID For 
  the given SID.</p>
 
         <h3>Declare</h3>        
@@ -35,12 +35,12 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
 export class SIDMap {
+   CID: integer;
+   # the external database id, example as KEGG id, HMDB id or something.
+   registryIdentifier: string;
    SID: integer;
    # the source database name, example as: KEGG, ChEBI, etc
    sourceName: string;
-   # the external database id, example as KEGG id, HMDB id or something.
-   registryIdentifier: string;
-   CID: integer;
 }
 </code>
         </pre>

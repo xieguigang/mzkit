@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d45bc976323645d096500bcc1e74dabf, mzkit\src\visualize\MsImaging\Plot\MSIRegionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::5baddbbae79774bf2dc3dbe5334f89fd, visualize\MsImaging\Plot\MSIRegionPlot.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 15
-    '    Code Lines: 12
-    ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 488 B
+    '   Total Lines: 35
+    '    Code Lines: 25 (71.43%)
+    ' Comment Lines: 3 (8.57%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (20.00%)
+    '     File Size: 1.35 KB
 
 
     ' Class MSIRegionPlot
     ' 
     '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: MeasureRegionPolygon
+    ' 
     '     Sub: PlotInternal
     ' 
     ' /********************************************************************************/
@@ -57,7 +62,11 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.MarchingSquares
 
+''' <summary>
+''' plot a specific spatial cluster region
+''' </summary>
 Public Class MSIRegionPlot : Inherits Plot
 
     Public Sub New(theme As Theme)
@@ -67,4 +76,20 @@ Public Class MSIRegionPlot : Inherits Plot
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Throw New NotImplementedException()
     End Sub
+
+    Public Shared Function MeasureRegionPolygon(x As Integer(), y As Integer(),
+                                                Optional scale As Integer = 5,
+                                                Optional degree As Double = 20,
+                                                Optional resolution As Integer = 100,
+                                                Optional q As Double = 0.1) As GeneralPath
+
+        Dim shape As GeneralPath = ContourLayer.GetOutline(x, y, scale)
+
+        If degree > 0 AndAlso resolution > 0 Then
+            shape = shape.Bspline(degree, resolution)
+            shape = shape.FilterSmallPolygon(q)
+        End If
+
+        Return shape
+    End Function
 End Class

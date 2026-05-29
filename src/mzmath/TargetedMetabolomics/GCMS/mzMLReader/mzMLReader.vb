@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::141d9bb0dbc495a2a6e0421e64727aff, mzkit\src\mzmath\TargetedMetabolomics\GCMS\mzMLReader\mzMLReader.vb"
+﻿#Region "Microsoft.VisualBasic::3229b1f9f8eb9b0912484b27f578638e, mzmath\TargetedMetabolomics\GCMS\mzMLReader\mzMLReader.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 71
-    '    Code Lines: 62
-    ' Comment Lines: 0
-    '   Blank Lines: 9
-    '     File Size: 2.80 KB
+    '   Total Lines: 72
+    '    Code Lines: 63 (87.50%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 9 (12.50%)
+    '     File Size: 2.91 KB
 
 
     '     Module mzMLReader

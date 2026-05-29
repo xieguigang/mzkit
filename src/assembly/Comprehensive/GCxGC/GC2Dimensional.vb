@@ -1,67 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::63d3aa95872be663e82b0c9015e3636c, mzkit\src\assembly\Comprehensive\GCxGC\GC2Dimensional.vb"
+﻿#Region "Microsoft.VisualBasic::0726a04bcade8635090cd870832d8270, assembly\Comprehensive\GCxGC\GC2Dimensional.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 249
-'    Code Lines: 142
-' Comment Lines: 77
-'   Blank Lines: 30
-'     File Size: 9.60 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module GC2Dimensional
-' 
-'     Function: Convert2dRT, (+2 Overloads) Demodulate2D, Demodulate2DShape, (+2 Overloads) scan1, tickInternal
-'               ToMzPack
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 201
+    '    Code Lines: 124 (61.69%)
+    ' Comment Lines: 58 (28.86%)
+    '    - Xml Docs: 87.93%
+    ' 
+    '   Blank Lines: 19 (9.45%)
+    '     File Size: 7.63 KB
+
+
+    ' Module GC2Dimensional
+    ' 
+    '     Function: (+3 Overloads) Demodulate2D, IsLecoGCMS, (+2 Overloads) scan1, ToMzPack
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.GCxGC
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.Linq
-Imports std = System.Math
 
 ''' <summary>
 ''' GCxGC assembly data
@@ -89,20 +90,6 @@ Public Module GC2Dimensional
     End Function
 
     ''' <summary>
-    ''' Function To calculate 2D RT from the 1D RT
-    ''' </summary>
-    ''' <param name="rt"></param>
-    ''' <param name="Modtime"></param>
-    ''' <param name="delay_time"></param>
-    ''' <returns></returns>
-    Public Function Convert2dRT(rt As Double, Modtime As Double, Optional delay_time As Double = 0) As Double
-        Dim rt_adj = rt - delay_time
-        Dim rt_2d = rt_adj - (Modtime * std.Floor(rt_adj / Modtime))
-
-        Return rt_2d
-    End Function
-
-    ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="agilentGC"></param>
@@ -124,6 +111,11 @@ Public Module GC2Dimensional
         Dim println As Action(Of String) = AddressOf Console.WriteLine
         Dim raw1D As mzPack = GCMSConvertor.ConvertGCMS(agilentGC, println)
 
+        Return raw1D.Demodulate2D(modtime, sam_rate)
+    End Function
+
+    <Extension>
+    Public Function Demodulate2D(raw1D As mzPack, modtime As Double, Optional sam_rate As Double = Double.NaN) As mzPack
         ' agilentGC.ToString
         '
         ' 2022-01-12
@@ -141,20 +133,6 @@ Public Module GC2Dimensional
         }
 
         Return gc2D
-    End Function
-
-    <Extension>
-    Public Function Demodulate2D(rawdata As mzPack, modtime As Double) As mzPack
-        Return New mzPack With {
-            .MS = rawdata.MS.Demodulate2D(modtime),
-            .Application = FileApplicationClass.GCxGC,
-            .source = "LECO GCxGC CDF",
-            .metadata = rawdata.metadata,
-            .Chromatogram = rawdata.Chromatogram,
-            .Annotations = rawdata.Annotations,
-            .Scanners = rawdata.Scanners,
-            .Thumbnail = rawdata.Thumbnail
-        }
     End Function
 
     ''' <summary>
@@ -208,7 +186,7 @@ Public Module GC2Dimensional
     <Extension>
     Public Function Demodulate2D(sig As ChromatogramTick(),
                                  modtime As Double,
-                                 Optional sampleRate As Double = Double.NaN) As D2Chromatogram()
+                                 Optional sampleRate As Double = Double.NaN) As Chromatogram2DScan()
 
         Dim size As Size = sig.Demodulate2DShape(modtime, sampleRate)
         Dim matrix = sig.Split(size.Width) _
@@ -233,7 +211,7 @@ Public Module GC2Dimensional
         Dim d2 As ScanMS2() = rt1 _
             .Select(Function(t)
                         Return New ScanMS2 With {
-                            .activationMethod = mzData.ActivationMethods.AnyType,
+                            .activationMethod = ActivationMethods.AnyType,
                             .centroided = False,
                             .charge = 0,
                             .collisionEnergy = 0,
@@ -260,10 +238,10 @@ Public Module GC2Dimensional
     End Function
 
     <Extension>
-    Private Function scan1(t As ChromatogramTick()) As D2Chromatogram
+    Private Function scan1(t As ChromatogramTick()) As Chromatogram2DScan
         Dim t0 As Double = t(0).Time
 
-        Return New D2Chromatogram With {
+        Return New Chromatogram2DScan With {
             .scan_time = t0,
             .intensity = t.Sum(Function(i) i.Intensity),
             .chromatogram = t _
@@ -275,70 +253,5 @@ Public Module GC2Dimensional
                         End Function) _
                 .ToArray
         }
-    End Function
-
-    ''' <summary>
-    ''' converts 1D signal into 2D with xp x yp dimensions
-    ''' </summary>
-    ''' <param name="sig">
-    ''' data should be re-order by scan time
-    ''' </param>
-    ''' <param name="modtime">
-    ''' the modulation time of the chromatographic run. 
-    ''' modulation period in time unit 'seconds'.
-    ''' </param>
-    ''' <param name="sampleRate">
-    ''' the sampling rate of the equipment.
-    ''' If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
-    ''' the difference of two adjacent scan time.
-    ''' </param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function Demodulate2DShape(Of Tick As ITimeSignal)(sig As Tick(),
-                                                              modtime As Double,
-                                                              Optional sampleRate As Double = Double.NaN) As Size
-        Dim numpoints As Integer = sig.Length
-        Dim runtime As Double = Aggregate t As Tick
-                                In sig
-                                Let time As Double = t.time
-                                Into Max(time)
-        Dim rate As Double = If(sampleRate.IsNaNImaginary OrElse sampleRate <= 0, 1 / sig.tickInternal, sampleRate)
-
-        Call Console.WriteLine($"Found {numpoints} data points")
-        Call Console.WriteLine($"Runtime is {(runtime / 60).ToString("F2")} minutes")
-        Call Console.WriteLine($"GCxGC modulation period is {modtime} second")
-        Call Console.WriteLine($"Acquisition rate is {rate} Hz")
-
-        ' Pad matrix so it can be resized
-        Dim xp = CInt(modtime * rate)
-        Dim yp = CInt(std.Ceiling(numpoints / xp))
-
-        Call Console.WriteLine($"Dimension1: {xp}")
-        Call Console.WriteLine($"Dimension2: {yp}")
-        Call Console.WriteLine()
-
-        Dim delta As Integer = std.Abs(xp * yp - numpoints)
-
-        If delta <> 0 Then
-            Dim msg As String = $"the last {delta} signals points will be omitted."
-
-            Call msg.Warning
-            Call Console.WriteLine(msg)
-        End If
-
-        Return New Size(xp, yp)
-    End Function
-
-    <Extension>
-    Private Function tickInternal(Of Tick As ITimeSignal)(sig As Tick()) As Double
-        Dim diff As New List(Of Double)
-
-        sig = (From t As Tick In sig Order By t.time).ToArray
-
-        For i As Integer = 1 To sig.Length - 1
-            Call diff.Add(sig(i).time - sig(i - 1).time)
-        Next
-
-        Return diff.Average
     End Function
 End Module

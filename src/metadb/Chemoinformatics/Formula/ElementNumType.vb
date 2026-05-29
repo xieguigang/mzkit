@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8cad86751bcc452b861ffa1e4c16eff2, mzkit\src\metadb\Chemoinformatics\Formula\ElementNumType.vb"
+﻿#Region "Microsoft.VisualBasic::f0905ea45deeec0943adc19c98b3bc6a, metadb\Chemoinformatics\Formula\ElementNumType.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 48
-    '    Code Lines: 42
-    ' Comment Lines: 0
-    '   Blank Lines: 6
-    '     File Size: 1.38 KB
+    '   Total Lines: 51
+    '    Code Lines: 44 (86.27%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (13.73%)
+    '     File Size: 1.40 KB
 
 
     '     Structure ElementNumType
@@ -55,7 +57,7 @@
 
 Namespace Formula
 
-    Friend Structure ElementNumType
+    Public Structure ElementNumType
 
         Public H As Integer
         Public C As Integer
@@ -73,17 +75,17 @@ Namespace Formula
         Public Formula As Formula
 
         Sub New(f As Formula)
-            H = f("H")
-            C = f("C")
-            Si = f("Si")
-            N = f("N")
-            P = f("P")
-            O = f("O")
-            S = f("S")
-            Cl = f("Cl")
-            I = f("I")
+            Me.H = f("H")
+            Me.C = f("C")
+            Me.Si = f("Si")
+            Me.N = f("N")
+            Me.P = f("P")
+            Me.O = f("O")
+            Me.S = f("S")
+            Me.Cl = f("Cl")
+            Me.I = f("I")
             Me.F = f("F")
-            Br = f("Br")
+            Me.Br = f("Br")
 
             Dim counts As New Dictionary(Of String, Integer)(f.CountsByElement)
 

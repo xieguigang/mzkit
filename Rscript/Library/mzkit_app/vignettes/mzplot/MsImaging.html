@@ -68,12 +68,12 @@ table caption {font-size:14px;font-weight:bolder;}
     </p>
     <p><h3>Visual MS imaging data(*.imzML)</h3>
 
-<p>Mass spec imaging (MSI) is a technique measuring chemical composition and <br />
- linking it to spatial coordinates on a surface.  The chemical composition<br />
- is determined by mass spectrometry, which measures the mass-to-charge ratios<br />
- (m/z's) of any ions that can be generated from the surface.  Most commonly,<br />
- the surface is a tissue section on a microscope slide; however, any flat <br />
- surface could be analyzed given it has suitable dimensions and is properly <br />
+<p>Mass spec imaging (MSI) is a technique measuring chemical composition and 
+ linking it to spatial coordinates on a surface.  The chemical composition
+ is determined by mass spectrometry, which measures the mass-to-charge ratios
+ (m/z's) of any ions that can be generated from the surface.  Most commonly,
+ the surface is a tissue section on a microscope slide; however, any flat 
+ surface could be analyzed given it has suitable dimensions and is properly 
  prepared.</p></p>
     <blockquote>
       <p style="font-style: italic; font-size: 0.9em;">
@@ -90,6 +90,13 @@ table caption {font-size:14px;font-weight:bolder;}
       <table class="table-three-line">
         <caption>.NET clr function exports</caption>
         <tbody><tr>
+  <td id="as.data.frame.singleionlayer">
+    <a href="./MsImaging/as.data.frame.singleionlayer.html">as.data.frame.singleionlayer</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a>: <p>a collection of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">PixelData</a> spots, the spot pixel
+ data was used to the spatial heatmap rendering.</p></td>
+</tr>
+<tr>
   <td id="split.layer">
     <a href="./MsImaging/split.layer.html">split.layer</a>
   </td>
@@ -99,7 +106,7 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="TrIQ">
     <a href="./MsImaging/TrIQ.html">TrIQ</a>
   </td>
-  <td><p>Contrast optimization of mass spectrometry imaging(MSI) data<br />
+  <td><p>Contrast optimization of mass spectrometry imaging(MSI) data
  visualization by threshold intensity quantization (TrIQ)</p></td>
 </tr>
 <tr>
@@ -107,6 +114,12 @@ table caption {font-size:14px;font-weight:bolder;}
     <a href="./MsImaging/intensityLimits.html">intensityLimits</a>
   </td>
   <td><p>trim the intensity data value in a pixels of a ion MS-Imaging layer</p></td>
+</tr>
+<tr>
+  <td id="apply_raster_filter">
+    <a href="./MsImaging/apply_raster_filter.html">apply_raster_filter</a>
+  </td>
+  <td><p>apply a single filter or a filter pipeline</p></td>
 </tr>
 <tr>
   <td id="write.mzImage">
@@ -208,7 +221,7 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="MSI_summary.scaleMax">
     <a href="./MsImaging/MSI_summary.scaleMax.html">MSI_summary.scaleMax</a>
   </td>
-  <td></td>
+  <td><p>Get the max intensity value via TrIQ or quantile cutoff</p></td>
 </tr>
 <tr>
   <td id="defaultFilter">
@@ -219,6 +232,12 @@ table caption {font-size:14px;font-weight:bolder;}
 <tr>
   <td id="parseFilters">
     <a href="./MsImaging/parseFilters.html">parseFilters</a>
+  </td>
+  <td><p>Converts R raw vector input into a raster processing pipeline configuration</p></td>
+</tr>
+<tr>
+  <td id="intensityFilter">
+    <a href="./MsImaging/intensityFilter.html">intensityFilter</a>
   </td>
   <td></td>
 </tr>
@@ -232,8 +251,8 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="as.pixels">
     <a href="./MsImaging/as.pixels.html">as.pixels</a>
   </td>
-  <td><p>extract the pixel [x,y] information for all of<br />
- the points in the target <strong><code>layer</code></strong></p></td>
+  <td><p>extract the pixel [x,y] information for all of
+ the points in the target <strong>`layer`</strong></p></td>
 </tr>
 <tr>
   <td id="MeasureMSIions">

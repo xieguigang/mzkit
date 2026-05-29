@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>tuple data of [mz, query_intensity, reference_intensity]</p>
+        <p>tuple data of [mz, query<em>intensity, reference</em>intensity], a MatchedPeak model</p>
 
         <h3>Declare</h3>        
 
@@ -30,12 +30,18 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 export class SSM2MatrixFragment {
-   # The m/z value of the query fragment
-   mz: double;
-   query: double;
-   ref: double;
+   # the annotation of current fragment peak <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/SSM2MatrixFragment.html">SSM2MatrixFragment</a>.<a href="#">mz</a>.
+   annotation: string;
    # Mass delta between the query and reference fragment in unit <code>da</code>
    da: string;
+   IsNeutralLossMatched: boolean;
+   IsProductIonMatched: boolean;
+   # The m/z value of the query fragment
+   mz: double;
+   # intensity in the query spectrum data
+   query: double;
+   # intensity in the reference spectrum data
+   ref: double;
 }
 </code>
         </pre>

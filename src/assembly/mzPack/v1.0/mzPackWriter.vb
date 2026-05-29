@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2cdf0d4969a432e114b5a262bdd2300c, mzkit\src\assembly\mzPack\v1.0\mzPackWriter.vb"
+﻿#Region "Microsoft.VisualBasic::d0de2ffe78f83d9604dc6f36b836ea2f, assembly\mzPack\v1.0\mzPackWriter.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 138
-    '    Code Lines: 93
-    ' Comment Lines: 19
-    '   Blank Lines: 26
-    '     File Size: 4.38 KB
+    '   Total Lines: 176
+    '    Code Lines: 124 (70.45%)
+    ' Comment Lines: 24 (13.64%)
+    '    - Xml Docs: 62.50%
+    ' 
+    '   Blank Lines: 28 (15.91%)
+    '     File Size: 5.95 KB
 
 
     ' Class mzPackWriter
@@ -54,17 +56,45 @@
 
 #End Region
 
-Imports System.Drawing
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Data.IO
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+Imports Microsoft.VisualBasic.Imaging
+#End If
+
+''' <summary>
+''' version 1.0 data file format
+''' </summary>
 Public Class mzPackWriter : Inherits BinaryStreamWriter
 
     ''' <summary>
@@ -90,12 +120,21 @@ Public Class mzPackWriter : Inherits BinaryStreamWriter
 
     Public Sub SetThumbnail(img As Image)
         If Not img Is Nothing Then
+            ' save image to temp workspace
+            ' copy to file stream at dispose
             thumbnail = $"{worktemp}/thumbnail.png"
-            img.SaveAs(thumbnail)
+
+#If NET48 Then
+            Call img.Save(thumbnail)
+#Else
+            Using file As Stream = thumbnail.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+                Call img.Save(file, format:=ImageFormats.Bmp)
+            End Using
+#End If
         End If
     End Sub
 
-    Public Sub AddOtherScanner(key As String, data As ChromatogramOverlap)
+    Public Sub AddOtherScanner(key As String, data As ChromatogramOverlapList)
         Dim file As String = $"{worktemp}/{key.NormalizePathString}.cdf"
 
         Using buffer As Stream = file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)

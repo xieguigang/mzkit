@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fadc357702b7336a0281fabce1397e8, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\LinearPack\LinearPack.vb"
+﻿#Region "Microsoft.VisualBasic::4d7ca6386c32fdc8305f2a91c38af265, mzmath\TargetedMetabolomics\LinearQuantitative\LinearPack\LinearPack.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 38
-    ' Comment Lines: 7
-    '   Blank Lines: 8
-    '     File Size: 1.97 KB
+    '   Total Lines: 83
+    '    Code Lines: 41 (49.40%)
+    ' Comment Lines: 31 (37.35%)
+    '    - Xml Docs: 96.77%
+    ' 
+    '   Blank Lines: 11 (13.25%)
+    '     File Size: 3.07 KB
 
 
     '     Class LinearPack
@@ -57,6 +59,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports Microsoft.VisualBasic.Linq
@@ -69,12 +72,17 @@ Namespace LinearQuantitative.Data
     Public Class LinearPack
 
         Public Property linears As StandardCurve()
+
+        ''' <summary>
+        ''' the peak area data points of different compound feature on different raw data file
+        ''' </summary>
+        ''' <returns></returns>
         Public Property peakSamples As TargetPeakPoint()
         Public Property title As String
         Public Property time As Date
 
         ''' <summary>
-        ''' 
+        ''' reference standards content levels for multiple ions
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>
@@ -83,7 +91,7 @@ Namespace LinearQuantitative.Data
         Public Property reference As Dictionary(Of String, SampleContentLevels)
 
         ''' <summary>
-        ''' 
+        ''' a collection of the id and name of the internal standards reference
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>
@@ -92,6 +100,7 @@ Namespace LinearQuantitative.Data
         Public Property [IS] As [IS]()
         Public Property targetted As TargettedData
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetLinear(id As String) As StandardCurve
             Return linears.Where(Function(line) line.name = id).FirstOrDefault
         End Function
@@ -100,6 +109,8 @@ Namespace LinearQuantitative.Data
         ''' 直接返回所有的参考标曲的样本名称
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetLevelKeys() As String()
             Return reference.Values _
                 .Select(Function(ref) ref.levels.Keys) _
@@ -118,6 +129,11 @@ Namespace LinearQuantitative.Data
             End Using
         End Function
 
+        ''' <summary>
+        ''' read the cdf file that pack the linear reference standard information data
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         Public Shared Function OpenFile(file As String) As LinearPack
             Using infile As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                 Return CDFReader.Load(infile)

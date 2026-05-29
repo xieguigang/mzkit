@@ -1,13 +1,85 @@
-﻿
+﻿#Region "Microsoft.VisualBasic::1d8e75bf0eaf888979fe792a2a7aa13a, mzmath\MSFinder\AnalysisParamOfMsfinder.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 295
+    '    Code Lines: 233 (78.98%)
+    ' Comment Lines: 23 (7.80%)
+    '    - Xml Docs: 13.04%
+    ' 
+    '   Blank Lines: 39 (13.22%)
+    '     File Size: 11.68 KB
+
+
+    ' Class AnalysisParamOfMsfinder
+    ' 
+    '     Properties: BrLabelMass, CanExcuteMS1AdductSearch, CanExcuteMS2AdductSearch, CcsAdductInChIKeyDictionaryFilepath, CcsToleranceForSpectralSearching
+    '                 CcsToleranceForStructureElucidation, CLabelMass, ClLabelMass, Coeff_RtPrediction, CoverRange
+    '                 DatabaseQuery, FLabelMass, FormulaMaximumReportNumber, FormulaPredictionTimeOut, FormulaScoreCutOff
+    '                 FseanonsignificantDef, FseaPvalueCutOff, FseaRelativeAbundanceCutOff, HLabelMass, ILabelMass
+    '                 Intercept_RtPrediction, IsAllProcess, IsBrCheck, IsClCheck, IsElementProbabilityCheck
+    '                 IsFcheck, IsFormulaFinder, IsIcheck, IsLewisAndSeniorCheck, IsMinesAllTime
+    '                 IsMinesNeverUse, IsMinesOnlyUseForNecessary, IsMmnFormulaBioreaction, IsMmnLocalCytoscape, IsMmnMsdialOutput
+    '                 IsMmnOntologySimilarityUsed, IsMmnRetentionRestrictionUsed, IsMmnSelectedFileCentricProcess, IsNcheck, IsNeutralLossCheck
+    '                 IsNitrogenRule, IsOcheck, IsotopicAbundanceTolerance, IsPcheck, IsPrecursorOrientedSearch
+    '                 IsPubChemAllTime, IsPubChemNeverUse, IsPubChemOnlyUseForNecessary, IsRunInSilicoFragmenterSearch, IsRunSpectralDbSearch
+    '                 IsScheck, IsSiCheck, IsStructureFinder, IsTmsMeoxDerivative, IsUseCcsForFilteringCandidates
+    '                 IsUseCcsInchikeyAdductLibrary, IsUseEiFragmentDB, IsUseExperimentalCcsForSpectralSearching, IsUseExperimentalRtForSpectralSearching, IsUseInSilicoSpectralDbForLipids
+    '                 IsUseInternalExperimentalSpectralDb, IsUsePredictedCcsForStructureElucidation, IsUsePredictedRtForStructureElucidation, IsUserDefinedDB, IsUseRtForFilteringCandidates
+    '                 IsUseRtInchikeyLibrary, IsUseUserDefinedSpectralDb, IsUseXlogpPrediction, Mass1Tolerance, Mass2Tolerance
+    '                 MassRangeMax, MassRangeMin, MassTolType, MinimumMeoxCount, MinimumTmsCount
+    '                 MmnMassSimilarityCutOff, MmnMassTolerance, MmnOntologySimilarityCutOff, MmnOutputFolderPath, MmnRelativeCutoff
+    '                 MmnRtTolerance, MmnRtToleranceForReaction, MS1NegativeAdductIonList, MS1PositiveAdductIonList, MS2NegativeAdductIonList
+    '                 MS2PositiveAdductIonList, NLabelMass, OLabelMass, PLabelMass, RelativeAbundanceCutOff
+    '                 RtInChIKeyDictionaryFilepath, RtPredictionSummaryReport, RtSmilesDictionaryFilepath, RtToleranceForSpectralSearching, RtToleranceForStructureElucidation
+    '                 ScoreCutOffForSpectralMatch, SiLabelMass, SLabelMass, StructureMaximumReportNumber, StructurePredictionTimeOut
+    '                 StructureScoreCutOff, TreeDepth, TryTopNmolecularFormulaSearch, UserDefinedDbFilePath, UserDefinedSpectralDbFilePath
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 
-Public Enum FseaNonsignificantDef
-    OntologySpace
-    ReverseSpectrum
-    LowAbundantIons
-End Enum
 ''' <summary>
 ''' This is the storage of analysis parameters used in MS-FINDER program.
 ''' </summary>
@@ -57,25 +129,25 @@ Public Class AnalysisParamOfMsfinder
         TryTopNmolecularFormulaSearch = 5
 
         DatabaseQuery = New DatabaseQuery() With {
-.Chebi = True,
-.Ymdb = True,
-.Unpd = True,
-.Smpdb = True,
-.Pubchem = True,
-.Hmdb = True,
-.Plantcyc = True,
-.Knapsack = True,
-.Bmdb = True,
-.Drugbank = True,
-.Ecmdb = True,
-.Foodb = True,
-.T3db = True,
-.Stoff = True,
-.Nanpdb = True,
-.Blexp = True,
-.Npa = True,
-.Coconut = True
-}
+            .Chebi = True,
+            .Ymdb = True,
+            .Unpd = True,
+            .Smpdb = True,
+            .Pubchem = True,
+            .Hmdb = True,
+            .Plantcyc = True,
+            .Knapsack = True,
+            .Bmdb = True,
+            .Drugbank = True,
+            .Ecmdb = True,
+            .Foodb = True,
+            .T3db = True,
+            .Stoff = True,
+            .Nanpdb = True,
+            .Blexp = True,
+            .Npa = True,
+            .Coconut = True
+        }
 
         IsUserDefinedDB = False
         UserDefinedDbFilePath = String.Empty

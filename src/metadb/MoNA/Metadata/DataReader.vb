@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a33567ab4c3c5680b0747273660b5ecc, mzkit\src\metadb\MoNA\Metadata\DataReader.vb"
+﻿#Region "Microsoft.VisualBasic::261a7adb465aaa91501de3bbec5f134d, metadb\MoNA\Metadata\DataReader.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 42
-    '    Code Lines: 30
-    ' Comment Lines: 5
-    '   Blank Lines: 7
-    '     File Size: 1.51 KB
+    '    Code Lines: 30 (71.43%)
+    ' Comment Lines: 5 (11.90%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (16.67%)
+    '     File Size: 1.56 KB
 
 
     ' Module DataReader
@@ -56,7 +58,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Linq
 
 Public Module DataReader

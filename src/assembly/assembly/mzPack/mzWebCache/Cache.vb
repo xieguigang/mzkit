@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::faba8430c9585a626cf67d1b28930e5f, mzkit\src\assembly\assembly\mzPack\mzWebCache\Cache.vb"
+﻿#Region "Microsoft.VisualBasic::ad519c5d27317e93762953d295bfe2d7, assembly\assembly\mzPack\mzWebCache\Cache.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 84
-    '    Code Lines: 51
-    ' Comment Lines: 20
-    '   Blank Lines: 13
-    '     File Size: 3.30 KB
+    '   Total Lines: 85
+    '    Code Lines: 52 (61.18%)
+    ' Comment Lines: 19 (22.35%)
+    '    - Xml Docs: 89.47%
+    ' 
+    '   Blank Lines: 14 (16.47%)
+    '     File Size: 3.40 KB
 
 
     '     Module Cache
     ' 
-    '         Function: (+2 Overloads) Load, vectorBase64
+    '         Function: (+2 Overloads) Load
     ' 
-    '         Sub: Write
+    '         Sub: Write, WriteTabularCache
     ' 
     ' 
     ' /********************************************************************************/
@@ -59,7 +61,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
-Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
 Namespace mzData.mzWebCache
 
@@ -96,18 +98,20 @@ Namespace mzData.mzWebCache
         ''' <param name="file">auto flush to file</param>
         <Extension>
         Public Sub Write(scans As IEnumerable(Of ScanMS1), file As Stream)
+            Static network As New NetworkByteOrderBuffer
+
             Using writer As New StreamWriter(file)
                 For Each scan As ScanMS1 In scans
                     Call writer.WriteLine(scan.scan_id)
                     Call writer.WriteLine({scan.rt, scan.BPC, scan.TIC}.JoinBy(","))
-                    Call writer.WriteLine(scan.mz.vectorBase64)
-                    Call writer.WriteLine(scan.into.vectorBase64)
+                    Call writer.WriteLine(network.Base64String(scan.mz))
+                    Call writer.WriteLine(network.Base64String(scan.into))
 
                     For Each product As ScanMS2 In scan.products
                         Call writer.WriteLine(product.scan_id)
                         Call writer.WriteLine({product.parentMz, product.rt, product.intensity, product.polarity}.JoinBy(","))
-                        Call writer.WriteLine(product.mz.vectorBase64)
-                        Call writer.WriteLine(product.into.vectorBase64)
+                        Call writer.WriteLine(network.Base64String(product.mz))
+                        Call writer.WriteLine(network.Base64String(product.into))
                     Next
 
                     Call writer.WriteLine("-----")
@@ -118,24 +122,23 @@ Namespace mzData.mzWebCache
         End Sub
 
         <Extension>
-        Private Function vectorBase64(vec As Double()) As String
-            Dim convertToNetworkByteOrder As Boolean = BitConverter.IsLittleEndian
-            Dim data As Byte()
+        Public Sub WriteTabularCache(scans As IEnumerable(Of ScanMS1), file As Stream)
+            Dim mz, intensity As String
+            Dim row As String()
 
-            Using buffer As New MemoryStream
-                For Each x As Double In vec
-                    data = BitConverter.GetBytes(x)
+            Static network As New NetworkByteOrderBuffer
 
-                    If convertToNetworkByteOrder Then
-                        ' 需要颠倒为network byteorder
-                        Call Array.Reverse(data)
-                    End If
+            Using writer As New StreamWriter(file)
+                For Each scan As ScanMS1 In scans
+                    mz = network.Base64String(scan.mz)
+                    intensity = network.Base64String(scan.into)
+                    row = {scan.rt, scan.BPC, scan.TIC, mz, intensity}
 
-                    buffer.Write(data, Scan0, data.Length)
+                    Call writer.WriteLine(row.JoinBy(vbTab))
                 Next
 
-                Return buffer.ToArray.ToBase64String
+                Call writer.Flush()
             End Using
-        End Function
+        End Sub
     End Module
 End Namespace

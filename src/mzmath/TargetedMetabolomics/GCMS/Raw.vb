@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5debeec0ef142ab1216a1e8ab7de257e, mzkit\src\mzmath\TargetedMetabolomics\GCMS\Raw.vb"
+﻿#Region "Microsoft.VisualBasic::b8bb546f12ca564e37eee2b8b2cf1740, mzmath\TargetedMetabolomics\GCMS\Raw.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 101
-    '    Code Lines: 53
-    ' Comment Lines: 36
-    '   Blank Lines: 12
-    '     File Size: 3.80 KB
+    '   Total Lines: 97
+    '    Code Lines: 49 (50.52%)
+    ' Comment Lines: 36 (37.11%)
+    '    - Xml Docs: 88.89%
+    ' 
+    '   Blank Lines: 12 (12.37%)
+    '     File Size: 3.64 KB
 
 
     '     Class Raw

@@ -1,0 +1,39 @@
+.\" man page create by R# package system.
+.TH DATA 1 2000-1月 "groupBy_ROI" "groupBy_ROI"
+.SH NAME
+groupBy_ROI \- make a tuple list via grouping of the spectrum data via the ROI id inside the metadata list
+.SH SYNOPSIS
+\fIgroupBy_ROI(\fBpeakms2\fR as any, 
+\fBdefault\fR as string = "Not_Assigned", 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+make a tuple list via grouping of the spectrum data via the ROI id inside the metadata list
+.PP
+.SH OPTIONS
+.PP
+\fBpeakms2\fB \fR\- a collection of the spectrum data to make spectrum data grouping.. 
+.PP
+.PP
+\fBdefault\fB \fR\- the default ROI id for make the data groups if the metadata 
+ is null or the \fBROI\fR id tag is missing from the spectrum object metadata.
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+A tuple list object that contains the spectrum data grouping by the ROI id.
+ 
+ The key of the tuple list is the ROI id, and the value is a list of spectrum data
+ that belongs to this ROI id.
+ 
+ If no ROI id was assigned, a warning message will be added to the runtime environment.
+.PP
+.SH SEE ALSO
+data
+.SH FILES
+.PP
+mzkit.dll
+.PP

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ee9f80b8a0d2c382b6087cc0a869b8e, mzkit\src\assembly\NMRFidTool\Math\apodization\ExponentialApodizator.vb"
+﻿#Region "Microsoft.VisualBasic::2d51b177fdc616bdde87e6042eb4db2a, assembly\NMRFidTool\Math\apodization\ExponentialApodizator.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 65
-    '    Code Lines: 15
-    ' Comment Lines: 39
-    '   Blank Lines: 11
-    '     File Size: 2.32 KB
+    '    Code Lines: 15 (23.08%)
+    ' Comment Lines: 39 (60.00%)
+    '    - Xml Docs: 51.28%
+    ' 
+    '   Blank Lines: 11 (16.92%)
+    '     File Size: 2.38 KB
 
 
     '     Class ExponentialApodizator

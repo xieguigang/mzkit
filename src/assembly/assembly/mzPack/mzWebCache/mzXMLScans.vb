@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6405e8c7cc2dd242d06442cb27b0a4c, mzkit\src\assembly\assembly\mzPack\mzWebCache\mzXMLScans.vb"
+﻿#Region "Microsoft.VisualBasic::6e1445e210c574582cc2640c6e280a9e, assembly\assembly\mzPack\mzWebCache\mzXMLScans.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 19
-    ' Comment Lines: 0
-    '   Blank Lines: 5
-    '     File Size: 901 B
+    '   Total Lines: 34
+    '    Code Lines: 26 (76.47%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 8 (23.53%)
+    '     File Size: 1.27 KB
 
 
     '     Class mzXMLScans
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: dataReader, loadScans
+    '         Function: dataReader, loadScans, msManufacturer
     ' 
     ' 
     ' /********************************************************************************/
@@ -69,7 +71,11 @@ Namespace mzData.mzWebCache
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Overrides Function loadScans(rawfile As String) As IEnumerable(Of scan)
             rawName = SolveTagSource(rawfile)
-            VBDebugger.EchoLine($"[open_xmlfile] {rawName}")
+
+            If verbose Then
+                VBDebugger.EchoLine($"[open_xmlfile] {rawName}")
+            End If
+
             Return XML.LoadScans(rawfile)
         End Function
 

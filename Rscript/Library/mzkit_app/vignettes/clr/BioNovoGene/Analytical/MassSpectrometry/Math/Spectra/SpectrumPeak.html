@@ -24,7 +24,7 @@
 
         <p>A more details of the spectrum peak model than <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a> object</p>
 
-<p>MS-DIAL model, use the property <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/SpectrumPeak.html">SpectrumPeak</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/SpectrumComment.html">SpectrumComment</a> for set the metabolite related information</p><br /><p>this class extends from <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a> class.</p>
+<p>MS-DIAL model, use the property <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/SpectrumPeak.html">SpectrumPeak</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/SpectrumComment.html">SpectrumComment</a> for set the metabolite related information</p>
 
         <h3>Declare</h3>        
 
@@ -32,22 +32,31 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 export class SpectrumPeak extends <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a> {
-   SpectrumComment: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/SpectrumComment.html">SpectrumComment</a>;
-   Resolution: double;
+   Annotation: string;
    Charge: integer;
+   intensity: double;
+   IsAbsolutelyRequiredFragmentForAnnotation: boolean;
+   IsMatched: boolean;
    IsotopeFrag: boolean;
-   PeakQuality: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakQuality.html">PeakQuality</a>;
-   PeakID: integer;
    IsotopeParentPeakID: integer;
    IsotopeWeightNumber: integer;
-   IsMatched: boolean;
-   IsAbsolutelyRequiredFragmentForAnnotation: boolean;
    mz: double;
-   intensity: double;
-   Annotation: string;
+   PeakID: integer;
+   PeakQuality: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakQuality.html">PeakQuality</a>;
+   Resolution: double;
+   SpectrumComment: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/SpectrumComment.html">SpectrumComment</a>;
 }
 </code>
         </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a> class: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a></li>
+<li>use by <i>property</i> member <code>PeakQuality</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakQuality.html">PeakQuality</a></li>
+<li>use by <i>property</i> member <code>SpectrumComment</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/SpectrumComment.html">SpectrumComment</a></li>
+</ol>
+
 
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a

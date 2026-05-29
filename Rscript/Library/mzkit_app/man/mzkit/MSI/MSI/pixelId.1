@@ -1,5 +1,5 @@
 .\" man page create by R# package system.
-.TH MSI 1 2000-Jan "pixelId" "pixelId"
+.TH MSI 1 2000-1月 "pixelId" "pixelId"
 .SH NAME
 pixelId \- get pixels [x,y] tags collection for a specific ion
 .SH SYNOPSIS
@@ -27,6 +27,13 @@ get pixels [x,y] tags collection for a specific ion
 .SH VALUE
 .PP
 a character vector of the pixel [x,y] tags.
+.PP
+.SH EXAMPLES
+.PP
+let rawdata = open.mzpack("/path/to/msi_rawdata.mzPack");
+ let xy = MSI::pixelId(rawdata, mz = 100.0023, tolerance = "da:0.01");
+ 
+ print(xy);
 .PP
 .SH SEE ALSO
 MSI

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eba7b68f9d2d602681d9f25daa6fc964, mzkit\src\assembly\mzPack\v1.0\mzPackReader.vb"
+﻿#Region "Microsoft.VisualBasic::cd68ffdc36677309e2efc4ccd0c9218f, assembly\mzPack\v1.0\mzPackReader.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 150
-    '    Code Lines: 110
-    ' Comment Lines: 9
-    '   Blank Lines: 31
-    '     File Size: 4.24 KB
+    '   Total Lines: 186
+    '    Code Lines: 144 (77.42%)
+    ' Comment Lines: 9 (4.84%)
+    '    - Xml Docs: 77.78%
+    ' 
+    '   Blank Lines: 33 (17.74%)
+    '     File Size: 5.91 KB
 
 
     ' Class mzPackReader
@@ -50,7 +52,7 @@
     ' 
     '     Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: GetThumbnail, OpenScannerData
+    '     Function: GetThumbnail, OpenScannerData, ReadThumbnailInternal
     ' 
     '     Sub: loadChromatogram, loadIndex, loadScannerIndex
     ' 
@@ -65,6 +67,32 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Net.Http
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
 
 ''' <summary>
 ''' v1 mzpack stream reader
@@ -178,34 +206,43 @@ Public Class mzPackReader : Inherits BinaryStreamReader
         If Not hasThumbnail Then
             Return Nothing
         Else
-            Dim offset As Long
-            Dim bytes As Byte()
-            Dim nsize As Long
-
-            file.Seek(file.Length - 8, SeekOrigin.Begin)
-            offset = file.ReadInt64
-
-            If offset <= 16 Then
+            Try
+                Return ReadThumbnailInternal()
+            Catch ex As Exception
+                Call App.LogException(New Exception("error while read the ver1 mzpack thumbnail image.", ex))
                 Return Nothing
-            End If
-
-            file.Seek(offset, SeekOrigin.Begin)
-            nsize = file.Length - 8 - offset
-
-            If nsize <= 0 Then
-                Call "negative bytes count?".Warning
-                Return Nothing
-            End If
-
-            bytes = file.ReadBytes(nsize)
-
-            If bytes.IsNullOrEmpty Then
-                Return Nothing
-            End If
-
-            Using buffer As New MemoryStream(bytes), img As Stream = buffer.UnGzipStream
-                Return Image.FromStream(img)
-            End Using
+            End Try
         End If
+    End Function
+
+    Private Function ReadThumbnailInternal() As Bitmap
+        Dim offset As Long
+        Dim bytes As Byte()
+        Dim nsize As Long
+
+        file.Seek(file.Length - 8, SeekOrigin.Begin)
+        offset = file.ReadInt64
+
+        If offset <= 16 Then
+            Return Nothing
+        End If
+
+        file.Seek(offset, SeekOrigin.Begin)
+        nsize = file.Length - 8 - offset
+
+        If nsize <= 0 Then
+            Call "mzpack stream offset error while read v1 mzpack thumbnail image: negative bytes count?".Warning
+            Return Nothing
+        End If
+
+        bytes = file.ReadBytes(nsize)
+
+        If bytes.IsNullOrEmpty Then
+            Return Nothing
+        End If
+
+        Using buffer As New MemoryStream(bytes), img As Stream = buffer.UnGzipStream
+            Return Image.FromStream(img)
+        End Using
     End Function
 End Class

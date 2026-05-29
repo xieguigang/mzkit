@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="description" content="BioDeep代谢组数据库平台" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="xieguigang, 'gg.xie@bionovogene.com'" />
+    <meta name="github" content="https://github.com/xieguigang" />
+    <meta name="theme-color" content="#712cf9" />
+
+    <title>BioDeep代谢组数据库平台 · 苏州帕诺米克生物医药科技有限公司 BioDeep™</title>
+
+    <script type="text/javascript" src="https://query.biodeep.cn/resources/vendor/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="https://query.biodeep.cn/resources/vendor/linq.js"></script>
+    <script type="text/javascript" src="https://query.biodeep.cn/resources/vendor/fontawesome/js/all.min.js"></script>
+
+    <script type="text/javascript"
+        src="https://query.biodeep.cn/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript"
+        src="https://query.biodeep.cn/resources/vendor/echarts-5.5.0/echarts.min.js"></script>
+    <script type="text/javascript" src="https://query.biodeep.cn/resources/js/biodeepdb_v3.js?var=20250613"></script>
+
+    <link href="https://query.biodeep.cn/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://query.biodeep.cn/resources/vendor/fontawesome/css/all.min.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" href="https://query.biodeep.cn/favicon.ico" />
+</head>
+
+<body class="d-flex flex-column h-100">
+    <!-- Begin page content -->
+    <main class="flex-shrink-0">
+        <div class="container" style="max-width: 100%;">
+            <h1>View MRM Chromatogram</h1>
+
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                        type="button" role="tab" aria-controls="nav-home" aria-selected="true">File Viewer</button>
+                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                        type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Ion Viewer</button>
+
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <br />
+                    <div class="row">
+                        <div id="files" class="col" style="height:650px; overflow: scroll; font-size: 0.9rem;">
+
+                        </div>
+                        <div class="col-10">
+                            <h3 id="filename"></h3>
+                            <br />
+                            <div class="row">
+                                <div id="xic" class="col" style="height:600px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <br />
+                    <div class="row">
+                        <div id="ions" class="col" style="height:650px; overflow: scroll; font-size: 0.9rem;">
+
+                        </div>
+                        <div class="col-10">
+                            <h3 id="ionname"></h3>
+                            <br />
+                            <div class="row">
+                                <div id="overlaps" class="col" style="height:600px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <hr />
+
+            <h1>View Peaks Data</h1>
+            <br />
+            <div class="row">
+                <div id="tpa-pca" class="col" style="height: 500px;">
+
+                </div>
+                <div id="tpa-loading" class="col" style="height: 500px;">
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div id="tpa-tbl" class="col">
+
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+<script type="plain/text" id="xic-data">{$xic}</script>
+<script type="plain/text" id="area-data">{$area}</script>
+<script type="plain/text" id="pca-data">{$pca}</script>
+<script type="plain/text" id="loading-data">{$loading}</script>
+
+<script type="text/javascript">
+    let xic = JSON.parse(base64_decode($ts.text("#xic-data")));
+    let tpa = JSON.parse(base64_decode($ts.text("#area-data")));
+    let pca = JSON.parse(base64_decode($ts.text("#pca-data")));
+    let loading = JSON.parse(base64_decode($ts.text("#loading-data")));
+    let fileset = $ts("<ul>");
+    let totalIons = [];
+    let ion_size = loading.PC1.length;
+    let show_tic = function (data, tag) {
+        var spectrum = pages.spectrum;
+        var chartDom = $ts("#" + tag);
+        var myChart = window.echarts.init(chartDom);
+        var option;
+        var xic_lines = $from(spectrum.tic_aggregate(data)).Select(a => spectrum.format_xic(a));
+
+        option = {
+            xAxis: {},
+            yAxis: {},
+            series: xic_lines.ToArray(),
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                data: xic_lines.Select(a => a.name).ToArray(),
+                textStyle: {
+                    fontSize: 12,  // 设置字体大小（单位：px）
+                    color: '#333'  // 可选：修改文字颜色
+                },
+                itemWidth: 12,  // 图标宽度（px）
+                itemHeight: 12 // 图标高度（px）
+            },
+            grid: {
+                top: ion_size > 20 ? '33%' : "15%",
+                bottom: '3%',
+                left: '7%',
+                right: '3%'
+            }
+        };
+        option && myChart.setOption(option);
+    };
+    let all_tpa = [];
+
+    for (let name of Object.keys(tpa)) {
+        all_tpa = [...all_tpa, ...tpa[name]];
+    }
+
+    all_tpa = $from(all_tpa).Select(function (i) {
+        return {
+            name: i.name,
+            rt: i.rt.toString(),
+            rtmin: i.peakROI.Min.toString(),
+            rtmax: i.peakROI.Max.toString(),
+            area: i.area.toString(),
+            maxinto: i.maxPeakHeight.toString(),
+            baseline: i.baseline.toString(),
+            sn: i.sn.toString(),
+            source: i.source
+        };
+    });
+
+    let show_tpa_table = function (all_tpa) {
+        $ts("#tpa-tbl").clear();
+
+        if (all_tpa.Count > 0) {
+            $ts.appendTable(all_tpa, "#tpa-tbl", null, { class: "table" });
+        }
+    }
+
+    show_tpa_table(all_tpa);
+    $ts("#files").display(fileset);
+
+    // console.log(xic);
+    // console.log(tpa);
+    console.log(loading);
+
+    for (let name of Object.keys(xic)) {
+        let fileLink = $ts("<li>").display($ts("<a>", { href: "#" }).display(name));
+        let fileXic = $from(xic[name]);
+        let xic_data = fileXic.Select(function (a) {
+            let data = $from(a.chromatogram);
+
+            return {
+                rt: data.Select(i => i.Time).ToArray(),
+                intensity: data.Select(i => i.Intensity).ToArray(),
+                adducts: a.description
+            };
+        }).ToArray();
+
+        totalIons = [...totalIons, ...xic[name]];
+        fileset.appendElement(fileLink);
+        fileLink.onclick = function () {
+            // console.log(fileXic);
+            $ts("#filename").display(name);
+            show_tic(xic_data, "xic");
+            show_tpa_table(all_tpa.Where(a => a.source == name));
+        }
+    }
+
+    // console.table(totalIons);
+
+    let ions_menu = $ts("#ions");
+    let ions_list = $ts("<ul>");
+
+    ions_menu.appendElement(ions_list);
+    totalIons = $from(totalIons).GroupBy(i => i.description);
+
+    for (let ion of totalIons.ToArray()) {
+        let name = ion.Key;
+        let name_short = ion.First.name;
+        let ionLink = $ts("<li>").display($ts("<a>", { href: "#" }).display(name));
+        let ionXic = ion.Select(function (a) {
+            let data = $from(a.chromatogram);
+
+            return {
+                rt: data.Select(i => i.Time).ToArray(),
+                intensity: data.Select(i => i.Intensity).ToArray(),
+                adducts: a.source
+            };
+        }).ToArray();
+
+        ions_list.appendElement(ionLink);
+        ionLink.onclick = function () {
+            $ts("#ionname").display(name);
+            show_tic(ionXic, "overlaps");
+            show_tpa_table(all_tpa.Where(a => a.name == name_short));
+        }
+    }
+
+    let xy = [];
+    let pc1 = pca.PC1;
+    let pc2 = pca.PC2;
+
+    for (let i = 0; i < pca.sample.length; i++) {
+        xy.push([pc1[i], pc2[i]]);
+    }
+
+    let plot_scatter = function (xy, labels, title, main, id) {
+        let option = {
+            title: {
+                text: main
+            },
+            tooltip: {
+                formatter: function (params) {
+                    let i = params.dataIndex;
+                    let name = labels[i];
+
+                    if (params.value.length > 1) {
+                        return name + ': ' + "(".concat(params.value[0], ", ").concat(params.value[1], ")");
+                    }
+                    else {
+                        return name + ': ' + "(".concat(params.name, ", ").concat(params.value, ")");
+                    }
+                }
+            },
+            legend: {
+                data: [title],
+                show: true,
+                orient: 'vertical',
+                x: 'right',
+                y: 'center'
+            },
+            xAxis: [
+                {
+                    type: 'value',
+                    scale: true,
+                    axisLabel: {
+                        formatter: '{value}'
+                    },
+                    name: "PC1"
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    scale: true,
+                    axisLabel: {
+                        formatter: '{value}'
+                    },
+                    name: "PC2"
+                }
+            ],
+            series: [{
+                name: title,
+                type: 'scatter',
+                emphasis: {
+                    focus: 'series'
+                },
+                symbolSize: 8,
+                // prettier-ignore
+                data: xy
+            }]
+        };
+
+        var chartDom = $ts(id);
+        var myChart = window.echarts.init(chartDom);
+
+        myChart.setOption(option);
+    }
+
+    plot_scatter(xy, pca.sample, "Sample", "Samples PCA Score", "#tpa-pca");
+
+    xy = [];
+    pc1 = loading.PC1;
+    pc2 = loading.PC2;
+
+    for (let i = 0; i < loading.ion.length; i++) {
+        xy.push([pc1[i], pc2[i]]);
+    }
+
+    plot_scatter(xy, loading.ion, "Metabolite", "Metabolites PCA Loading", "#tpa-loading");
+</script>
+
+</html>

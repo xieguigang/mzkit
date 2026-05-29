@@ -82,16 +82,28 @@ table caption {font-size:14px;font-weight:bolder;}
       <table class="table-three-line">
         <caption>.NET clr function exports</caption>
         <tbody><tr>
+  <td id="as.data.frame.mzsearch">
+    <a href="./metadb/as.data.frame.mzsearch.html">as.data.frame.mzsearch</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MzSearch.html">MzSearch</a>: </td>
+</tr>
+<tr>
+  <td id="as.data.frame.mzquery">
+    <a href="./metadb/as.data.frame.mzquery.html">as.data.frame.mzquery</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/MzQuery.html">MzQuery</a>: <p>query result of a ms1 m/z ion</p></td>
+</tr>
+<tr>
   <td id="mass_search.index">
     <a href="./metadb/mass_search.index.html">mass_search.index</a>
   </td>
-  <td></td>
+  <td><p>A general method for build exact mass search index</p></td>
 </tr>
 <tr>
   <td id="queryByMass">
     <a href="./metadb/queryByMass.html">queryByMass</a>
   </td>
-  <td></td>
+  <td><p>A general interface method for query the exact mass search index</p></td>
 </tr>
 <tr>
   <td id="verify_cas_number">
@@ -100,10 +112,16 @@ table caption {font-size:14px;font-weight:bolder;}
   <td><p>verify that the given cas registry number is correct or not</p></td>
 </tr>
 <tr>
+  <td id="select_cas_number">
+    <a href="./metadb/select_cas_number.html">select_cas_number</a>
+  </td>
+  <td><p>take the valid cas number from a collection of the given id set</p></td>
+</tr>
+<tr>
   <td id="parseLipidName">
     <a href="./metadb/parseLipidName.html">parseLipidName</a>
   </td>
-  <td></td>
+  <td><p>Parse the lipid names</p></td>
 </tr>
 <tr>
   <td id="annotationStream">
@@ -139,7 +157,7 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="searchMz">
     <a href="./metadb/searchMz.html">searchMz</a>
   </td>
-  <td><p>Found the best matched mz value with the target <strong><code>exactMass</code></strong></p></td>
+  <td><p>Found the best matched mz value with the target <strong>`exactMass`</strong></p></td>
 </tr>
 <tr>
   <td id="getMetadata">
@@ -151,7 +169,7 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="excludeFeatures">
     <a href="./metadb/excludeFeatures.html">excludeFeatures</a>
   </td>
-  <td><p>removes all of the annotation result which is not <br />
+  <td><p>removes all of the annotation result which is not 
  hits in the given <code>id</code> set.</p></td>
 </tr>
 <tr>
@@ -159,6 +177,20 @@ table caption {font-size:14px;font-weight:bolder;}
     <a href="./metadb/has.metal_ion.html">has.metal_ion</a>
   </td>
   <td><p>Check the formula string has metal ion inside?</p></td>
+</tr>
+<tr>
+  <td id="is.metal_ion">
+    <a href="./metadb/is.metal_ion.html">is.metal_ion</a>
+  </td>
+  <td><p>check of the given formula is metal ion or not?</p></td>
+</tr>
+<tr>
+  <td id="is.organic">
+    <a href="./metadb/is.organic.html">is.organic</a>
+  </td>
+  <td><p>check of the given formula is organic or not?
+ this function will return TRUE if the formula is organic,
+ otherwise it returns FALSE.</p></td>
 </tr>
 <tr>
   <td id="uniqueFeatures">
@@ -176,7 +208,7 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="load_asQueryHits">
     <a href="./metadb/load_asQueryHits.html">load_asQueryHits</a>
   </td>
-  <td></td>
+  <td><p>cast the given dataframe as the ion feature annotation result</p></td>
 </tr></tbody>
       </table>
     </div>

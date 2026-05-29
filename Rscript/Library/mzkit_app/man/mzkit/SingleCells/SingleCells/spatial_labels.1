@@ -1,0 +1,33 @@
+.\" man page create by R# package system.
+.TH SINGLECELLS 1 2000-1月 "spatial_labels" "spatial_labels"
+.SH NAME
+spatial_labels \- get the labels based on the spatial information of each spot
+.SH SYNOPSIS
+\fIspatial_labels(\fBx\fR as <generic> MzMatrix);\fR
+.SH DESCRIPTION
+.PP
+get the labels based on the spatial information of each spot
+.PP
+.SH OPTIONS
+.PP
+\fBx\fB \fR\- -. 
+.PP
+.SH EXAMPLES
+.PP
+let matrix = read.mz_matrix("/file.dat");
+ let xyz = spatial_labels(matrix);
+ let spatial = strsplit(xyz, ",");
+ 
+ # x
+ print(spatial@{1});
+ # y
+ print(spatial@{2});
+ # z
+ print(spatial@{3});
+.PP
+.SH SEE ALSO
+SingleCells
+.SH FILES
+.PP
+mzkit.dll
+.PP

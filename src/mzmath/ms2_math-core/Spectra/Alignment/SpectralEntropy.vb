@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e0451c87ca548c0ecab829a4ef4a559, mzkit\src\mzmath\ms2_math-core\Spectra\Alignment\SpectralEntropy.vb"
+﻿#Region "Microsoft.VisualBasic::9c312c8495db2126fc36a8db54b2ebbf, mzmath\ms2_math-core\Spectra\Alignment\SpectralEntropy.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 135
-    '    Code Lines: 85
-    ' Comment Lines: 28
-    '   Blank Lines: 22
-    '     File Size: 5.62 KB
+    '   Total Lines: 192
+    '    Code Lines: 125 (65.10%)
+    ' Comment Lines: 37 (19.27%)
+    '    - Xml Docs: 89.19%
+    ' 
+    '   Blank Lines: 30 (15.62%)
+    '     File Size: 7.82 KB
 
 
     '     Module SpectralEntropy
     ' 
-    '         Function: _entropy_similarity, _get_entropy_and_weighted_intensity, (+3 Overloads) calculate_entropy_similarity, entropy_distance, StandardizeSpectrum
-    '                   unweighted_entropy_distance, WeightIntensityByEntropy
+    '         Function: _entropy_similarity, _get_entropy_and_weighted_intensity, (+3 Overloads) calculate_entropy_similarity, Entropy, entropy_distance
+    '                   StandardizeAlignment, (+2 Overloads) StandardizeSpectrum, unweighted_entropy_distance, WeightIntensityByEntropy
     ' 
     ' 
     ' /********************************************************************************/
@@ -60,7 +62,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.Math.Information
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Spectra
 
@@ -136,12 +138,48 @@ Namespace Spectra
         End Function
 
         <Extension>
+        Public Function StandardizeSpectrum(ms As ms2()) As ms2()
+            Dim sum As Double = ms.Sum(Function(a) a.intensity)
+            Dim norm = ms _
+                .Select(Function(a)
+                            Return New ms2(a.mz, a.intensity / sum) With {
+                                .Annotation = a.Annotation
+                            }
+                        End Function) _
+                .ToArray
+
+            Return norm
+        End Function
+
+        <Extension>
+        Public Iterator Function StandardizeAlignment(align As SSM2MatrixFragment()) As IEnumerable(Of SSM2MatrixFragment)
+            Dim qsum As Double = align.Sum(Function(a) a.query)
+            Dim rsum As Double = align.Sum(Function(a) a.ref)
+
+            For Each fragment As SSM2MatrixFragment In align
+                Yield New SSM2MatrixFragment With {
+                    .da = fragment.da,
+                    .mz = fragment.mz,
+                    .query = fragment.query / qsum,
+                    .ref = fragment.ref / rsum
+                }
+            Next
+        End Function
+
+        <Extension>
         Public Function Entropy(ms As PeakMs2) As Double
             Dim msms As New LibraryMatrix With {.ms2 = ms.mzInto}
             Dim ent As Double = StandardizeSpectrum(msms).intensity.ShannonEntropy
             Return ent
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="alignment">
+        ''' the intensity value must be standardized
+        ''' </param>
+        ''' <returns></returns>
         <Extension>
         Public Function calculate_entropy_similarity(alignment As SSM2MatrixFragment()) As Double
             Dim p As New Vector(From mzi In alignment Select mzi.query)
@@ -156,7 +194,7 @@ Namespace Spectra
             Return GlobalAlignment _
                 .CreateAlignment(
                     query:=StandardizeSpectrum(New LibraryMatrix(spectrum_a)).ms2,
-                    ref:=StandardizeSpectrum(New LibraryMatrix(spectrum_b)).ms2,
+                    refrs:=StandardizeSpectrum(New LibraryMatrix(spectrum_b)).ms2,
                     tolerance:=tolerance
                 ) _
                 .ToArray _
@@ -169,7 +207,7 @@ Namespace Spectra
             Return GlobalAlignment _
                 .CreateAlignment(
                     query:=StandardizeSpectrum(New LibraryMatrix(spectrum_a)).ms2,
-                    ref:=StandardizeSpectrum(New LibraryMatrix(spectrum_b)).ms2,
+                    refrs:=StandardizeSpectrum(New LibraryMatrix(spectrum_b)).ms2,
                     tolerance:=Tolerance.DeltaMass(ms2_da)
                 ) _
                 .ToArray _
@@ -182,7 +220,7 @@ Namespace Spectra
             Dim merged As Vector = ia.intensity + ib.intensity
             Dim entropy_merged = (merged / merged.Sum).ShannonEntropy
 
-            Static log4 As Double = stdNum.Log(4)
+            Static log4 As Double = std.Log(4)
 
             Dim similarity As Double = 1 - (2 * entropy_merged - ia.spectral_entropy - ib.spectral_entropy) / log4
 
@@ -193,11 +231,11 @@ Namespace Spectra
         End Function
 
         Private Function _get_entropy_and_weighted_intensity(intensity As Vector) As (spectral_entropy As Double, intensity As Vector)
-            Dim spectral_entropy = intensity.ShannonEntropy
+            Dim spectral_entropy As Double = intensity.ShannonEntropy
 
             If spectral_entropy < 3 Then
                 Dim weight = 0.25 + 0.25 * spectral_entropy
-                Dim weighted_intensity = intensity ^ weight
+                Dim weighted_intensity As Vector = intensity ^ weight
                 Dim intensity_sum = weighted_intensity.Sum
 
                 weighted_intensity /= intensity_sum

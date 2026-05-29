@@ -1,55 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::f3f74c76a1357983451641a9e6adcf24, mzkit\src\visualize\MsImaging\Blender\KnnInterpolation.vb"
+﻿#Region "Microsoft.VisualBasic::cfa4f95f81e861935d6c2caa8ad85725, visualize\MsImaging\Blender\KnnInterpolation.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 205
-'    Code Lines: 153
-' Comment Lines: 18
-'   Blank Lines: 34
-'     File Size: 7.97 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module KnnInterpolation
-' 
-'         Function: (+5 Overloads) KnnFill, (+2 Overloads) KnnInterpolation
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 228
+    '    Code Lines: 170 (74.56%)
+    ' Comment Lines: 22 (9.65%)
+    '    - Xml Docs: 45.45%
+    ' 
+    '   Blank Lines: 36 (15.79%)
+    '     File Size: 9.24 KB
+
+
+    '     Module KnnInterpolation
+    ' 
+    '         Function: (+5 Overloads) KnnFill, (+2 Overloads) KnnInterpolation
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -63,7 +65,12 @@ Namespace Blender
     Public Module KnnInterpolation
 
         <Extension>
-        Private Function KnnInterpolation(Of T As PixelScanIntensity)(graph As Grid(Of T), x As Integer, y As Integer, deltaSize As Size, q As Double, aggregate As Func(Of Integer, Integer, T(), T)) As T
+        Private Function KnnInterpolation(Of T As PixelScanIntensity)(graph As Grid(Of T),
+                                                                      x As Integer,
+                                                                      y As Integer,
+                                                                      deltaSize As Size,
+                                                                      q As Double,
+                                                                      aggregate As Func(Of Integer, Integer, T(), T)) As T
             Dim query As T() = graph.Query(x, y, deltaSize).ToArray
 
             If query.IsNullOrEmpty Then
@@ -126,7 +133,11 @@ Namespace Blender
         End Function
 
         <Extension>
-        Public Function KnnFill(summary As MSISummary, Optional dx As Integer = 10, Optional dy As Integer = 10, Optional q As Double = 0.65) As MSISummary
+        Public Function KnnFill(summary As MSISummary,
+                                Optional dx As Integer = 10,
+                                Optional dy As Integer = 10,
+                                Optional q As Double = 0.65) As MSISummary
+
             Dim aggregate As Func(Of Integer, Integer, iPixelIntensity(), iPixelIntensity) =
                 Function(x, y, query)
                     Dim total = query.Select(Function(p) p.totalIon).Min
@@ -154,10 +165,11 @@ Namespace Blender
         Public Function KnnFill(layer As SingleIonLayer,
                                 Optional dx As Integer = 10,
                                 Optional dy As Integer = 10,
-                                Optional q As Double = 0.65) As SingleIonLayer
+                                Optional q As Double = 0.65,
+                                Optional random As Boolean = False) As SingleIonLayer
 
             Dim size As Size = layer.DimensionSize
-            Dim pixels As PixelData() = KnnFill(layer.MSILayer, size, dx, dy, q)
+            Dim pixels As PixelData() = KnnFill(layer.MSILayer, size, dx, dy, q, random:=random)
 
             Return New SingleIonLayer With {
                 .DimensionSize = layer.DimensionSize,
@@ -191,7 +203,8 @@ Namespace Blender
         Public Function KnnFill(pixels As PixelData(), size As Size,
                                 Optional dx As Integer = 3,
                                 Optional dy As Integer = 3,
-                                Optional q As Double = 0.65) As PixelData()
+                                Optional q As Double = 0.65,
+                                Optional random As Boolean = False) As PixelData()
 
             Dim graph As Grid(Of PixelData) = Grid(Of PixelData).Create(pixels)
             Dim outPixels As New List(Of PixelData)
@@ -203,7 +216,7 @@ Namespace Blender
                     point = graph.GetData(i, j)
 
                     If point Is Nothing Then
-                        point = graph.KnnInterpolation(i, j, deltaSize, q)
+                        point = graph.KnnInterpolation(i, j, deltaSize, q, random)
 
                         'If Not point Is Nothing Then
                         '    Call graph.Add(point)
@@ -220,7 +233,13 @@ Namespace Blender
         End Function
 
         <Extension>
-        Private Function KnnInterpolation(graph As Grid(Of PixelData), x As Integer, y As Integer, deltaSize As Size, q As Double) As PixelData
+        Private Function KnnInterpolation(graph As Grid(Of PixelData),
+                                          x As Integer,
+                                          y As Integer,
+                                          deltaSize As Size,
+                                          q As Double,
+                                          random As Boolean) As PixelData
+
             ' get non-empty pixels in current region block
             Dim query As PixelData() = graph.Query(x, y, deltaSize).ToArray
             Dim A As Double = deltaSize.Width * deltaSize.Height
@@ -231,6 +250,7 @@ Namespace Blender
                 Return Nothing
             End If
 
+            ' get intensity value around the current pixel [x,y]
             Dim intensity As Double() = (From p As PixelData
                                          In query
                                          Where p.intensity > 0
@@ -238,8 +258,12 @@ Namespace Blender
                                          Select into).ToArray
             Dim mean As Double
 
+            ' no pixel intensity data
             If intensity.Length = 0 Then
                 Return Nothing
+            ElseIf random Then
+                ' using random point
+                mean = intensity.Random
             Else
                 mean = intensity.Min
             End If

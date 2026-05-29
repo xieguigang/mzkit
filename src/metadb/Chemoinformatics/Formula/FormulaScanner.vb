@@ -1,59 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::079dc907878ee6374a3c510b071dbcd4, mzkit\src\metadb\Chemoinformatics\Formula\FormulaScanner.vb"
+﻿#Region "Microsoft.VisualBasic::0e049a21433e36778126b9ed918d2d3d, metadb\Chemoinformatics\Formula\FormulaScanner.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 211
-'    Code Lines: 140
-' Comment Lines: 33
-'   Blank Lines: 38
-'     File Size: 7.24 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class FormulaScanner
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: EvaluateExactMass, (+2 Overloads) ScanFormula, Val
-' 
-'         Sub: push
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 388
+    '    Code Lines: 266 (68.56%)
+    ' Comment Lines: 67 (17.27%)
+    '    - Xml Docs: 67.16%
+    ' 
+    '   Blank Lines: 55 (14.18%)
+    '     File Size: 14.96 KB
+
+
+    '     Class FormulaScanner
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: Convert2FormulaObjV2, EvaluateExactMass, (+2 Overloads) ScanFormula, Val
+    ' 
+    '         Sub: push, SetupAdductsScanner
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -62,6 +64,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace Formula
@@ -81,8 +84,14 @@ Namespace Formula
         End Sub
 
         Shared Sub New()
+            Call SetupAdductsScanner()
+        End Sub
+
+        Public Shared Sub SetupAdductsScanner()
             Call ExactMass.SetExactMassParser(Function(f) EvaluateExactMass(f))
         End Sub
+
+        Public Shared verbose As Boolean = True
 
         Public Shared Function Convert2FormulaObjV2(formulaString As String) As Formula
             ' Console.WriteLine(formulaString);
@@ -161,6 +170,9 @@ Namespace Formula
         ''' <returns>
         ''' this function will returns -1 if the <paramref name="formula"/> input is invalid
         ''' </returns>
+        ''' <remarks>
+        ''' the mapping from <paramref name="formula"/> string to the exact mass value will be cached in this function.
+        ''' </remarks>
         Public Shared Function EvaluateExactMass(formula$, Optional n% = 9999) As Double
             Static cache As New Dictionary(Of String, Double)
 
@@ -170,7 +182,50 @@ Namespace Formula
             If cache.ContainsKey(key) Then
                 Return cache(key)
             Else
-                mass = CDbl(ScanFormula(formula, n))
+                Try
+                    mass = CDbl(ScanFormula(formula, n))
+                Catch ex As Exception
+                    Throw New Exception($"the given formula string is: '{formula}'", ex)
+                End Try
+
+                SyncLock cache
+                    If Not cache.ContainsKey(key) Then
+                        Call cache.Add(key, mass)
+                    End If
+                End SyncLock
+
+                Return mass
+            End If
+        End Function
+
+        Public Shared Function EvaluateAverageMolecularMass(formula As Formula) As Double
+            Return Aggregate element As KeyValuePair(Of String, Integer)
+                   In formula.CountsByElement
+                   Let mean As Double = Formula.AllAtomElements(element.Key).AverageMolecularMass
+                   Let mass As Double = mean * element.Value
+                   Into Sum(mass)
+        End Function
+
+        Public Shared Function EvaluateAverageMolecularMass(formula As String, Optional n As Integer = 9999) As Double
+            Static cache As New Dictionary(Of String, Double)
+
+            Dim key As String = $"{formula} ~ {n}"
+            Dim mass As Double
+
+            If cache.ContainsKey(key) Then
+                Return cache(key)
+            Else
+                Try
+                    Dim elements As Formula = ScanFormula(formula, n)
+
+                    If elements Is Nothing OrElse elements.CountsByElement.IsNullOrEmpty Then
+                        mass = 0
+                    Else
+                        mass = EvaluateAverageMolecularMass(elements)
+                    End If
+                Catch ex As Exception
+                    Throw New Exception($"the given formula string is: '{formula}'", ex)
+                End Try
 
                 SyncLock cache
                     If Not cache.ContainsKey(key) Then
@@ -218,6 +273,8 @@ Namespace Formula
 
             Static cache As New Dictionary(Of String, Formula)
 
+            formula = Strings.Trim(formula).Replace(" ", "")
+
             If formula.StringEmpty Then
                 Return Nothing
             Else
@@ -227,7 +284,43 @@ Namespace Formula
             If cache.ContainsKey(key) Then
                 formula2 = cache(key)
                 formula2 = New Formula(formula2.CountsByElement, formula2.m_formula)
+            ElseIf formula.Contains("."c) Then
+                Dim parts As String() = formula.Split("."c)
+                Dim f As New Formula
+
+                ' 4[O2Si].2[Al+3].3[O-2].H2O
+                For Each part As String In parts
+                    formula2 = ScanFormula(part, n)
+                    f = f + formula2
+
+                    If formula2 Is Nothing Then
+                        Call $"invalid formula string '{part}' of the given input formula: '{formula}'".Warning
+                    End If
+                Next
+
+                SyncLock cache
+                    If Not cache.ContainsKey(key) Then
+                        Call cache.Add(key, f)
+                    End If
+                End SyncLock
+
+                formula2 = f
             Else
+                ' [formula] charge value
+                ' [O]2- for free O atom
+                If formula.Contains("["c) OrElse formula.Contains("]"c) Then
+                    If formula.IsPattern("\d+\[.+\]") Then
+                        formula = $"({formula.GetStackValue("[", "]")}){Val(formula)}"
+                    Else
+                        formula = formula.GetStackValue("[", "]")
+                    End If
+                ElseIf formula.IsPattern("\d+.+") Then
+                    ' 3H2O -> (H2O)3
+                    Dim multiply As String = formula.Match("\d+")
+                    formula = formula.Substring(multiply.Length)
+                    formula = $"({formula}){multiply}"
+                End If
+
                 formula2 = New FormulaScanner(n).ScanFormula(New CharPtr(formula))
 
                 SyncLock cache
@@ -244,7 +337,15 @@ Namespace Formula
         Dim buf As New List(Of Char)
         Dim digits As New List(Of Char)
         Dim formula As New List(Of Char)
+        Dim charge As Integer
 
+        ''' <summary>
+        ''' end of current atom and clear the buffer
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <remarks>
+        ''' the method will populate a new atom and its atom number
+        ''' </remarks>
         Private Sub push(c As Char)
             Dim element$ = buf.CharString
 
@@ -267,7 +368,7 @@ Namespace Formula
             buf *= 0
             digits *= 0
 
-            If c <> "("c AndAlso c <> ")"c Then
+            If c <> "("c AndAlso c <> ")"c AndAlso c <> ASCII.NUL Then
                 buf += c
             End If
         End Sub
@@ -340,6 +441,37 @@ Namespace Formula
 
                 ElseIf c = ")"c Then
                     ' 结束当前的堆栈
+                    Exit Do
+                ElseIf c = "-"c Or c = "+" Then
+                    ' end of the formula
+                    ' parse the charge value
+                    Call push(Nothing)
+
+                    ' all is charge number for here
+                    Dim all As New List(Of Char)
+
+                    Do While Not scaner.EndRead
+                        c = ++scaner
+
+                        If Char.IsDigit(c) Then
+                            all.Add(c)
+                        Else
+                            Exit Do
+                        End If
+                    Loop
+
+                    If all.IsNullOrEmpty Then
+                        ' just do nothing at here
+                        ' charge +1 or -1
+                        charge = If(c = "-", -1, 1)
+                    ElseIf all.All(Function(ci) Char.IsDigit(ci)) Then
+                        charge = Integer.Parse(New String(all))
+                        charge = If(c = "-", -1, 1) * charge
+                    Else
+                        charge = 0
+                        Call $"string in invalid charge value format: {New String(all)}".Warning
+                    End If
+
                     Exit Do
                 End If
             Loop

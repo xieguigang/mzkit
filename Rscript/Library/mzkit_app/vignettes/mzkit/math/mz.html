@@ -28,7 +28,8 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>mz</strong>(<i>mass</i>,
-    <i>mode</i> = <span style='color: brown;'><strong>"+"</strong></span>);</code></pre>
+    <i>mode</i> = <span style='color: brown;'><strong>"+"</strong></span>,
+    <i>unsafe</i> = <span style='color: blue !important;'>TRUE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -36,18 +37,16 @@
         <table>
             
 <dt>mass</dt>
-<dd><p><p>the target exact mass value</p></p></dd>
+<dd><p>the target exact mass value. [as double]</p></dd>
 
 
 <dt>mode</dt>
-<dd><p><p>this parameter could be two type of data:</p>
-
-<ol>
-<li>character of value <code>+</code> or <code>-</code>, means evaluate all m/z for all known precursor types in given ion mode</li>
-<li>character of value in precursor type format means calculate mz for the target precursor type</li>
-<li>mzcalculator type means calculate mz for the traget precursor type</li>
-<li>a list of the mz calculator object and a list of corresponding mz value will be evaluated.</li>
-</ol></p></dd>
+<dd><p>this parameter could be two type of data:
+ 
+ 1. character of value <code>+</code> or <code>-</code>, means evaluate all m/z for all known precursor types in given ion mode
+ 2. character of value in precursor type format means calculate mz for the target precursor type
+ 3. mzcalculator type means calculate mz for the traget precursor type
+ 4. a list of the mz calculator object and a list of corresponding mz value will be evaluated.</p></dd>
 
         </table>
 

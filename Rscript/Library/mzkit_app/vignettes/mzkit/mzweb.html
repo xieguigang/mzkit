@@ -73,15 +73,26 @@ table caption {font-size:14px;font-weight:bolder;}
                            </p>
     </blockquote>
     <div id="main-wrapper">
-      <table class="table-three-line" style="display: none">
+      <table class="table-three-line" style="display: block">
         <caption>.NET clr type export</caption>
-        <tbody></tbody>
+        <tbody><tr>
+  <td id="ms1_data">
+    <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/ms1_scan.html">ms1_data: ms1_scan</a>
+  </td>
+  <td><p>A TICPoint [mz, rt, intensity]</p></td>
+</tr></tbody>
       </table>
       <br />
       <br />
       <table class="table-three-line">
         <caption>.NET clr function exports</caption>
         <tbody><tr>
+  <td id="as.data.frame.ms1_scan">
+    <a href="./mzweb/as.data.frame.ms1_scan.html">as.data.frame.ms1_scan</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/ms1_scan.html">ms1_scan</a>: <p>A TICPoint [mz, rt, intensity]</p></td>
+</tr>
+<tr>
   <td id="loadXcmsRData">
     <a href="./mzweb/loadXcmsRData.html">loadXcmsRData</a>
   </td>
@@ -98,6 +109,12 @@ table caption {font-size:14px;font-weight:bolder;}
     <a href="./mzweb/TIC.html">TIC</a>
   </td>
   <td><p>Get TIC from the mzpack layer reader</p></td>
+</tr>
+<tr>
+  <td id="BPC">
+    <a href="./mzweb/BPC.html">BPC</a>
+  </td>
+  <td><p>Get BPC from the mzpack layer reader</p></td>
 </tr>
 <tr>
   <td id="load.chromatogram">
@@ -157,7 +174,7 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="open.mzpack">
     <a href="./mzweb/open.mzpack.html">open.mzpack</a>
   </td>
-  <td><p>open a raw data files in common raw data format and then returns <br />
+  <td><p>open a raw data files in common raw data format and then returns 
  in a unify mzpack data format.</p></td>
 </tr>
 <tr>
@@ -201,6 +218,12 @@ table caption {font-size:14px;font-weight:bolder;}
     <a href="./mzweb/mass_calibration.html">mass_calibration</a>
   </td>
   <td><p>do mass calibration</p></td>
+</tr>
+<tr>
+  <td id="parse_base64">
+    <a href="./mzweb/parse_base64.html">parse_base64</a>
+  </td>
+  <td><p>Parse the given network base64 data as spectrum</p></td>
 </tr></tbody>
       </table>
     </div>

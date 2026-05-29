@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51f30316862d3af89adacf0f93da22f6, mzkit\src\visualize\plot\NMR\fidDataPlot.vb"
+﻿#Region "Microsoft.VisualBasic::4fdad3b6a0ce4f90a6c8847661ee3c29, visualize\plot\NMR\fidDataPlot.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 51
-    '    Code Lines: 45
-    ' Comment Lines: 0
-    '   Blank Lines: 6
-    '     File Size: 1.78 KB
+    '   Total Lines: 79
+    '    Code Lines: 72 (91.14%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (8.86%)
+    '     File Size: 3.07 KB
 
 
     ' Class fidDataPlot
@@ -65,6 +67,33 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
 
 Public Class fidDataPlot : Inherits Plot
 
@@ -83,7 +112,8 @@ Public Class fidDataPlot : Inherits Plot
         Dim points As PointData() = fid.Real _
             .Select(Function(t, i) New PointData(t, fid.Imaginary(i))) _
             .ToArray
-        Dim lineStyle As Pen = Stroke.TryParse(theme.lineStroke).GDIObject
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim lineStyle As Pen = css.GetPen(Stroke.TryParse(theme.lineStroke))
         Dim line As New SerialData With {
             .color = lineStyle.Color,
             .lineType = DashStyle.Solid,

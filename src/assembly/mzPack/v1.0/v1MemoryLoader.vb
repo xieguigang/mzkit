@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bf840b580b2636b85b1a45b253748c5, mzkit\src\assembly\mzPack\v1.0\v1MemoryLoader.vb"
+﻿#Region "Microsoft.VisualBasic::635ac2e1aa8c0234b4d677a761ab4540, assembly\mzPack\v1.0\v1MemoryLoader.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 87
-    '    Code Lines: 66
-    ' Comment Lines: 5
-    '   Blank Lines: 16
-    '     File Size: 3.25 KB
+    '   Total Lines: 103
+    '    Code Lines: 71 (68.93%)
+    ' Comment Lines: 15 (14.56%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 17 (16.50%)
+    '     File Size: 3.81 KB
 
 
     ' Class v1MemoryLoader
@@ -54,11 +56,15 @@
 
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
+''' <summary>
+''' handling file format for mzPack version 1
+''' </summary>
 Public Class v1MemoryLoader
 
     ''' <summary>
@@ -73,7 +79,7 @@ Public Class v1MemoryLoader
 
         Using mzpack As New mzPackReader(file)
             Dim allMSscans As ScanMS1() = PopulateAllScans(mzpack, skipMsn, verbose).ToArray
-            Dim scanners As New Dictionary(Of String, ChromatogramOverlap)
+            Dim scanners As New Dictionary(Of String, ChromatogramOverlapList)
             Dim source As String = Nothing
 
             If TypeOf file Is FileStream Then
@@ -109,7 +115,7 @@ Public Class v1MemoryLoader
 
             If ++i = d Then
                 If verbose Then
-                    RunSlavePipeline.SendProgress(stdNum.Round(j / allIndex.Length, 2), id & $" ({(j / allIndex.Length * 100).ToString("F2")}%)")
+                    RunSlavePipeline.SendProgress(std.Round(j / allIndex.Length, 2), id & $" ({(j / allIndex.Length * 100).ToString("F2")}%)")
                 End If
 
                 i = 0
@@ -117,13 +123,25 @@ Public Class v1MemoryLoader
         Next
     End Function
 
+    ''' <summary>
+    ''' write mzpack data file in version 1 format
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="file"></param>
+    ''' <param name="progress"></param>
+    ''' <returns></returns>
     Public Shared Function Write(data As mzPack, file As Stream, Optional progress As Action(Of String) = Nothing) As Boolean
         Using mzpack As New mzPackWriter(file)
+            Dim d As Integer = data.MS.TryCount / 7
+            Dim i As i32 = 0
+
             For Each scan As ScanMS1 In data.MS
                 Call mzpack.Write(scan)
 
                 If Not progress Is Nothing Then
-                    Call progress("write: " & scan.scan_id)
+                    If ++i Mod d = 0 Then
+                        Call progress($"write: {(i / d * 100).ToString("F0")}%" & scan.scan_id)
+                    End If
                 End If
             Next
 

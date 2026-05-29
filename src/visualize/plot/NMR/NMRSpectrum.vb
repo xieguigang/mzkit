@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88f48497c9f9f2b46d69d9858fd67f20, mzkit\src\visualize\plot\NMR\NMRSpectrum.vb"
+﻿#Region "Microsoft.VisualBasic::e9ef4afddc44a14b419dcaa1483a16ee, visualize\plot\NMR\NMRSpectrum.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 59
-    ' Comment Lines: 9
-    '   Blank Lines: 6
-    '     File Size: 2.41 KB
+    '   Total Lines: 102
+    '    Code Lines: 86 (84.31%)
+    ' Comment Lines: 9 (8.82%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (6.86%)
+    '     File Size: 3.72 KB
 
 
     ' Class NMRSpectrum
@@ -66,6 +68,33 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
 
 Public Class NMRSpectrum : Inherits Plot
 
@@ -100,7 +129,8 @@ Public Class NMRSpectrum : Inherits Plot
         Dim points As PointData() = ppm _
             .Select(Function(ppmi, i) New PointData(ppmi, intensity(i))) _
             .ToArray
-        Dim lineStyle As Pen = Stroke.TryParse(theme.lineStroke).GDIObject
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim lineStyle As Pen = css.GetPen(Stroke.TryParse(theme.lineStroke))
         Dim line As New SerialData With {
             .color = lineStyle.Color,
             .lineType = DashStyle.Solid,

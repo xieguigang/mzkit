@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86b23c33e2d41e238c6908b6d7b7e744, mzkit\src\metadna\metaDNA\Result\MetaDNAResult.vb"
+﻿#Region "Microsoft.VisualBasic::09135ac7400efa7eb9a14be40f24f851, metadna\metaDNA\Result\MetaDNAResult.vb"
 
     ' Author:
     ' 
@@ -37,25 +37,34 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 51
-    '    Code Lines: 30
-    ' Comment Lines: 19
-    '   Blank Lines: 2
-    '     File Size: 1.77 KB
+    '   Total Lines: 122
+    '    Code Lines: 61 (50.00%)
+    ' Comment Lines: 51 (41.80%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (8.20%)
+    '     File Size: 3.98 KB
 
 
     ' Class MetaDNAResult
     ' 
-    '     Properties: exactMass, fileName, formula, forward, inferLevel
-    '                 inferSize, intensity, jaccard, KEGG_reaction, KEGGId
-    '                 mirror, mz, mzCalc, name, parentTrace
-    '                 partnerKEGGId, ppm, precursorType, pvalue, query_id
-    '                 reaction, reverse, ROI_id, rt, rt_adjust
-    '                 score1, score2, seed
+    '     Properties: alignment, entropy, exactMass, fileName, formula
+    '                 forward, inferLevel, inferSize, intensity, jaccard
+    '                 KEGG_reaction, KEGGId, mirror, mz, mzCalc
+    '                 name, parentTrace, partnerKEGGId, ppm, precursorType
+    '                 pvalue, query_id, reaction, reverse, ROI_id
+    '                 rt, rt_adjust, score1, score2, seed
+    ' 
+    '     Function: FilterInferenceHits, GetAlignment, ToString
     ' 
     ' /********************************************************************************/
 
 #End Region
+
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports BioNovoGene.BioDeep.MetaDNA.Infer
+Imports Microsoft.VisualBasic.Linq
+Imports std = System.Math
 
 ''' <summary>
 ''' table output of the metaDNA infer annotation result
@@ -79,23 +88,52 @@ Public Class MetaDNAResult
     Public Property exactMass As Double
     Public Property formula As String
     Public Property name As String
+    ''' <summary>
+    ''' precursor adducts type
+    ''' </summary>
+    ''' <returns></returns>
     Public Property precursorType As String
     ''' <summary>
-    ''' calculated m/z value based on <see cref="mz"/> and <see cref="precursorType"/>
+    ''' Theoretical calculated m/z value based on <see cref="mz"/> And <see cref="precursorType"/>
     ''' </summary>
     ''' <returns></returns>
     Public Property mzCalc As Double
+    ''' <summary>
+    ''' ppm error between the Theoretical <see cref="mzCalc"/> and <see cref="mz"/>
+    ''' </summary>
+    ''' <returns></returns>
     Public Property ppm As Double
     ''' <summary>
     ''' the score match of ms1 <see cref="rt"/> and rt value of the KEGG compound reference
     ''' </summary>
     ''' <returns></returns>
     Public Property rt_adjust As Double
+    ''' <summary>
+    ''' MS1 or MS2
+    ''' </summary>
+    ''' <returns></returns>
     Public Property inferLevel As String
+    ''' <summary>
+    ''' forward cosine score
+    ''' </summary>
+    ''' <returns></returns>
     Public Property forward As Double
+    ''' <summary>
+    ''' reverse cosine score
+    ''' </summary>
+    ''' <returns></returns>
     Public Property reverse As Double
+    ''' <summary>
+    ''' ranked jaccard score
+    ''' </summary>
+    ''' <returns></returns>
     Public Property jaccard As Double
     Public Property mirror As Double
+    ''' <summary>
+    ''' entropy score
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property entropy As Double
     Public Property parentTrace As Double
     Public Property inferSize As Integer
     Public Property score1 As Double
@@ -106,5 +144,42 @@ Public Class MetaDNAResult
     Public Property KEGG_reaction As String
     Public Property reaction As String
     Public Property fileName As String
+
+    ''' <summary>
+    ''' mz_into(query)_into(reference)[]
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property alignment As String
+
+    Public Overrides Function ToString() As String
+        Return $"{KEGGId}: {name}"
+    End Function
+
+    Public Shared Iterator Function GetAlignment(infer As InferLink) As IEnumerable(Of String)
+        If infer Is Nothing Then
+            Return
+        ElseIf infer.level = MetaDNA.Infer.InferLevel.Ms1 Then
+            Return
+        End If
+
+        For Each match As SSM2MatrixFragment In infer.alignments.SafeQuery
+            If Not match Is Nothing Then
+                Yield $"{match.mz.ToString("F4")}_{match.query}_{match.ref}"
+            End If
+        Next
+    End Function
+
+    Public Shared Iterator Function FilterInferenceHits(result As IEnumerable(Of MetaDNAResult), cutoff As Double) As IEnumerable(Of MetaDNAResult)
+        For Each hit As MetaDNAResult In result.SafeQuery
+            Dim score As Double = std.Min(hit.forward, hit.reverse)
+
+            score = std.Max(score, hit.jaccard)
+            score = std.Max(score, hit.entropy)
+
+            If score > cutoff Then
+                Yield hit
+            End If
+        Next
+    End Function
 
 End Class

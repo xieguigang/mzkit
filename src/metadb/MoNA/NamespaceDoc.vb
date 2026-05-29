@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::802e5994cbe3c73822a32a86a1cba847, mzkit\src\metadb\MoNA\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::f16c9b475f6e0b8284518130918bae43, metadb\MoNA\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 7
-    '    Code Lines: 4
-    ' Comment Lines: 3
-    '   Blank Lines: 0
-    '     File Size: 250 B
+    '   Total Lines: 13
+    '    Code Lines: 4 (30.77%)
+    ' Comment Lines: 9 (69.23%)
+    '    - Xml Docs: 88.89%
+    ' 
+    '   Blank Lines: 0 (0.00%)
+    '     File Size: 581 B
 
 
     ' Class NamespaceDoc
@@ -53,6 +55,12 @@
 #End Region
 
 ''' <summary>
+''' MassBank of North America (MoNA) is a metadata-centric, auto-curating 
+''' repository designed for efficient storage and querying of mass spectral 
+''' records. It intends to serve as a the framework for a centralized, 
+''' collaborative database of metabolite mass spectra, metadata and 
+''' associated compounds. 
+''' 
 ''' 这个模块是专门用于读取MoNA数据库文件的, 包括二级质谱图数据以及相对应的物质注释信息相关
 ''' </summary>
 Friend NotInheritable Class NamespaceDoc

@@ -22,8 +22,9 @@
 
         <h3>Description</h3>
 
-        <p>The database cross reference set of a specific metabolite object.<br />
- (对某一个物质在数据库之间的相互引用编号)</p>
+        <p>The database cross reference set of a specific metabolite object.</p>
+
+<p>(对某一个物质在数据库之间的相互引用编号)</p>
 
         <h3>Declare</h3>        
 
@@ -31,31 +32,31 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 export class xref {
-   # chebi main id, Chemical Entities of Biological Interest (ChEBI)
-   chebi: string;
-   KEGG: string;
-   KEGGdrug: string;
-   # The pubchem cid
-   pubchem: string;
-   HMDB: string;
-   metlin: string;
-   DrugBank: string;
-   ChEMBL: string;
-   Wikipedia: string;
-   lipidmaps: string;
-   MeSH: string;
-   ChemIDplus: string;
-   MetaCyc: string;
-   KNApSAcK: string;
-   foodb: string;
-   chemspider: string;
    # Multiple CAS id may exists
    CAS: string;
-   InChIkey: string;
-   InChI: string;
-   SMILES: string;
+   # chebi main id, Chemical Entities of Biological Interest (ChEBI)
+   chebi: string;
+   ChEMBL: string;
+   ChemIDplus: string;
+   chemspider: string;
+   DrugBank: string;
    # other additional database id set
    extras: list;
+   foodb: string;
+   HMDB: string;
+   InChI: string;
+   InChIkey: string;
+   KEGG: string;
+   KEGGdrug: string;
+   KNApSAcK: string;
+   lipidmaps: string;
+   MeSH: string;
+   MetaCyc: string;
+   metlin: string;
+   # The pubchem cid
+   pubchem: string;
+   SMILES: string;
+   Wikipedia: string;
 }
 </code>
         </pre>

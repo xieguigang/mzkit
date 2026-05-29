@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1013dbd40a75d76793ab8a9d8ba923fe, mzkit\src\visualize\MsImaging\FeatureRegions.vb"
+﻿#Region "Microsoft.VisualBasic::7cd0138cc98c3b36b4b82aa8ce7c28b6, visualize\MsImaging\FeatureRegions.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 79
-    ' Comment Lines: 5
-    '   Blank Lines: 11
-    '     File Size: 3.99 KB
+    '   Total Lines: 81
+    '    Code Lines: 67 (82.72%)
+    ' Comment Lines: 5 (6.17%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (11.11%)
+    '     File Size: 3.38 KB
 
 
     ' Module FeatureRegions
     ' 
-    '     Function: GetDimensionSize, TakeRegion, TrimRegion, WriteRegionPoints
+    '     Function: GetDimensionSize, TakeRegion, TrimRegion
     ' 
     ' /********************************************************************************/
 
@@ -54,31 +56,13 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 
 Public Module FeatureRegions
-
-    <Extension>
-    Public Function WriteRegionPoints(raw As mzPack, index As IEnumerable(Of NamedValue(Of Point))) As mzPack
-        Dim dimensionSize As Size = GetDimensionSize(raw)
-        Dim evalIndex As Func(Of Point, Integer) = Function(i) BitmapBuffer.GetIndex(i.X, i.Y, dimensionSize.Width, channels:=1)
-        Dim regions As Dictionary(Of String, Point()) = index _
-            .GroupBy(Function(i) i.Name) _
-            .ToDictionary(Function(region) region.Key,
-                          Function(region)
-                              Return region.Select(Function(i) i.Value).ToArray
-                          End Function)
-
-        Throw New NotImplementedException
-    End Function
 
     ''' <summary>
     ''' get the dimension size of the ms-imaging canvas
@@ -86,7 +70,7 @@ Public Module FeatureRegions
     ''' <param name="raw"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function GetDimensionSize(raw As mzPack) As Size
+    Public Function GetDimensionSize(raw As IMZPack) As Size
         Dim allPixels As Point() = raw.MS.Select(Function(p) p.GetMSIPixel).ToArray
         Dim width As Integer = Aggregate pi As Point In allPixels Into Max(pi.X)
         Dim height As Integer = Aggregate pi As Point In allPixels Into Max(pi.Y)
@@ -95,7 +79,9 @@ Public Module FeatureRegions
     End Function
 
     <Extension>
-    Public Iterator Function TrimRegion(Of T As IMSIPixel)(layer As IEnumerable(Of T), polygon As Polygon2D, unionSize As Size) As IEnumerable(Of T)
+    Public Iterator Function TrimRegion(Of T As IMSIPixel)(layer As IEnumerable(Of T),
+                                                           polygon As Polygon2D,
+                                                           unionSize As Size) As IEnumerable(Of T)
         Dim xy As Index(Of String) = polygon.xpoints _
             .Select(Iterator Function(xi, idx) As IEnumerable(Of String)
                         For i As Integer = 0 To unionSize.Width
@@ -117,7 +103,9 @@ Public Module FeatureRegions
     End Function
 
     <Extension>
-    Public Iterator Function TakeRegion(Of T As IMSIPixel)(layer As IEnumerable(Of T), polygon As Polygon2D, unionSize As Size) As IEnumerable(Of T)
+    Public Iterator Function TakeRegion(Of T As IMSIPixel)(layer As IEnumerable(Of T),
+                                                           polygon As Polygon2D,
+                                                           unionSize As Size) As IEnumerable(Of T)
         Dim xy = layer _
             .GroupBy(Function(p) p.x) _
             .ToDictionary(Function(xr) xr.Key,

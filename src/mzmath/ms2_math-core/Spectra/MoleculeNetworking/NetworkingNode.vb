@@ -1,66 +1,66 @@
-﻿#Region "Microsoft.VisualBasic::ded47aed874407dc877dca5b6b1754ae, mzkit\src\mzmath\ms2_math-core\Spectra\MoleculeNetworking\NetworkingNode.vb"
+﻿#Region "Microsoft.VisualBasic::2804167243a4e5e3dfdb0144f672c0b0, mzmath\ms2_math-core\Spectra\MoleculeNetworking\NetworkingNode.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 102
-'    Code Lines: 75
-' Comment Lines: 14
-'   Blank Lines: 13
-'     File Size: 4.20 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class NetworkingNode
-' 
-'         Properties: members, mz, referenceId, representation
-' 
-'         Function: Create, GetXIC, ToString, unionRepresentative
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 102
+    '    Code Lines: 64 (62.75%)
+    ' Comment Lines: 22 (21.57%)
+    '    - Xml Docs: 86.36%
+    ' 
+    '   Blank Lines: 16 (15.69%)
+    '     File Size: 3.94 KB
+
+
+    '     Class NetworkingNode
+    ' 
+    '         Properties: members, mz, referenceId, representation, size
+    ' 
+    '         Function: (+2 Overloads) Create, CreateReferenceId, ToString, UnionRepresentative
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 
 Namespace Spectra.MoleculeNetworking
 
@@ -136,21 +136,8 @@ Namespace Spectra.MoleculeNetworking
         End Function
 
         Public Shared Function UnionRepresentative(ions As PeakMs2(), tolerance As Tolerance, cutoff As LowAbundanceTrimming) As LibraryMatrix
-            Dim mz As NamedCollection(Of ms2)() = ions _
-                .Select(Function(i) i.mzInto) _
-                .IteratesALL _
-                .GroupBy(Function(a) a.mz, tolerance) _
-                .ToArray
-            Dim matrix As ms2() = mz _
-                .Select(Function(a)
-                            Return New ms2 With {
-                                .mz = Val(a.name),
-                                .intensity = a.Select(Function(x) x.intensity).Sum
-                            }
-                        End Function) _
-                .ToArray _
-                .Centroid(tolerance, cutoff) _
-                .ToArray
+            Dim represent As LibraryMatrix = ions.SpectrumSum(centroid:=tolerance.GetErrorDalton)
+            Dim matrix As ms2() = cutoff.Trim(represent.Array)
 
             Return New LibraryMatrix With {
                 .centroid = True,

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d144d91c308ea2d0fa0dcbd40a6670c3, mzkit\Rscript\Library\mzkit.quantify\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::e0c2013b74f8c4f226f70248e888acf5, Rscript\Library\mzkit_app\src\mzquant\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 74
-    '    Code Lines: 53
-    ' Comment Lines: 9
-    '   Blank Lines: 12
-    '     File Size: 2.93 KB
+    '    Code Lines: 53 (71.62%)
+    ' Comment Lines: 9 (12.16%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (16.22%)
+    '     File Size: 3.00 KB
 
 
     '     Class MySettings

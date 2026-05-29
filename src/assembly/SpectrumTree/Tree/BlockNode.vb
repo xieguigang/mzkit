@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de2b694f3b7baf864bcbc139f1622216, mzkit\src\assembly\SpectrumTree\BlockNode.vb"
+﻿#Region "Microsoft.VisualBasic::6373e239db73407826cd1aa230d90c11, assembly\SpectrumTree\Tree\BlockNode.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 107
-    '    Code Lines: 55
-    ' Comment Lines: 46
-    '   Blank Lines: 6
-    '     File Size: 3.06 KB
+    '   Total Lines: 132
+    '    Code Lines: 70 (53.03%)
+    ' Comment Lines: 53 (40.15%)
+    '    - Xml Docs: 84.91%
+    ' 
+    '   Blank Lines: 9 (6.82%)
+    '     File Size: 4.47 KB
 
 
-    ' Class BlockNode
+    '     Class BlockNode
     ' 
-    '     Properties: Block, centroid, childs, Id, isBlank
-    '                 isLeaf, Members, mz, rt
+    '         Properties: Block, centroid, childs, Id, isBlank
+    '                     isLeaf, Members, mz, precursor, rt
     ' 
-    '     Function: GetBinaryIndex, GetIndex
+    '         Function: GetBinaryIndex, GetIndex, ToString
+    ' 
     ' 
     ' /********************************************************************************/
 
@@ -106,6 +109,23 @@ Namespace Tree
         Public ReadOnly Property isLeaf As Boolean
             Get
                 Return childs.IsNullOrEmpty
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' get the m/z of the reference spectrum of its precursor ion
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this property works for the library reference data pack, not working for tree cluster data
+        ''' </remarks>
+        Public ReadOnly Property precursor As Double
+            Get
+                If mz.Count = 0 OrElse mz.Count > 1 Then
+                    Return 0
+                Else
+                    Return mz(0)
+                End If
             End Get
         End Property
 

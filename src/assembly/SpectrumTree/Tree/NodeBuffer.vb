@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7383557ab94437fd42fa5cb7042ec53b, mzkit\src\assembly\SpectrumTree\NodeBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::f32332c6af9dcf01711040f4ceb36b0f, assembly\SpectrumTree\Tree\NodeBuffer.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 56
-    ' Comment Lines: 3
-    '   Blank Lines: 8
-    '     File Size: 2.50 KB
+    '   Total Lines: 70
+    '    Code Lines: 58 (82.86%)
+    ' Comment Lines: 3 (4.29%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (12.86%)
+    '     File Size: 2.82 KB
 
 
-    ' Module NodeBuffer
+    '     Module NodeBuffer
     ' 
-    '     Function: Read
+    '         Function: Read
     ' 
-    '     Sub: Write
+    '         Sub: Write
+    ' 
     ' 
     ' /********************************************************************************/
 

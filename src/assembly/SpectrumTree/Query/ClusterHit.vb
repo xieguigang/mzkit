@@ -1,60 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::338848518556edfcdb35c1f85011890f, mzkit\src\assembly\SpectrumTree\Query\ClusterHit.vb"
+﻿#Region "Microsoft.VisualBasic::b85ccb5721fd4e186b3e5afb4c93081c, assembly\SpectrumTree\Query\ClusterHit.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 41
-'    Code Lines: 26
-' Comment Lines: 8
-'   Blank Lines: 7
-'     File Size: 1.35 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class ClusterHit
-' 
-'         Properties: basePeak, ClusterEntropy, ClusterForward, ClusterId, ClusterJaccard
-'                     ClusterReverse, ClusterRt, entropy, forward, Id
-'                     jaccard, queryId, queryMz, queryRt, representive
-'                     reverse
-' 
-'         Function: ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 105
+    '    Code Lines: 45 (42.86%)
+    ' Comment Lines: 47 (44.76%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 13 (12.38%)
+    '     File Size: 3.47 KB
+
+
+    '     Class ClusterHit
+    ' 
+    '         Properties: alignment_str, basePeak, ClusterEntropy, ClusterForward, ClusterId
+    '                     ClusterJaccard, ClusterReverse, ClusterRt, entropy, forward
+    '                     Id, jaccard, queryId, queryIntensity, queryMz
+    '                     queryRt, representive, reverse, size, theoretical_mz
+    '                     totalScore
+    ' 
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -76,6 +79,12 @@ Namespace Query
         ''' this property value usually be the metabolite id from the metabolite annotation database
         ''' </remarks>
         Public Property Id As String
+
+        ''' <summary>
+        ''' the representive alignment result with the max
+        ''' score of current cluster alignment.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property representive As SSM2MatrixFragment()
         Public Property forward As Double
         Public Property reverse As Double
@@ -119,6 +128,12 @@ Namespace Query
         Public Property ClusterId As String()
 
         ''' <summary>
+        ''' mz value which is evaluated based on the formula and adducts
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property theoretical_mz As Double
+
+        ''' <summary>
         ''' hit size
         ''' </summary>
         ''' <returns></returns>
@@ -131,6 +146,16 @@ Namespace Query
         Public ReadOnly Property totalScore As Double
             Get
                 Return (forward + reverse + jaccard + entropy) * size
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' converts the spectrum peaks <see cref="representive"/> alignment result as linear string
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property alignment_str As String
+            Get
+                Return AlignmentOutput.CreateLinearMatrix(representive).JoinBy(" ")
             End Get
         End Property
 

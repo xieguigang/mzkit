@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2b66f5dd1abb70db25df2fbf6ace5df, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\Models\IS.vb"
+﻿#Region "Microsoft.VisualBasic::f783e30291be14c3bab994ab7a66c112, mzmath\TargetedMetabolomics\LinearQuantitative\Models\IS.vb"
 
     ' Author:
     ' 
@@ -37,23 +37,28 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 20
-    '    Code Lines: 10
-    ' Comment Lines: 7
-    '   Blank Lines: 3
-    '     File Size: 496 B
+    '   Total Lines: 35
+    '    Code Lines: 21 (60.00%)
+    ' Comment Lines: 7 (20.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (20.00%)
+    '     File Size: 1011 B
 
 
     '     Class [IS]
     ' 
     '         Properties: CIS, ID, name
     ' 
-    '         Function: ToString
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: CheckIsEmpty, ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
+
+Imports System.Xml.Serialization
 
 Namespace LinearQuantitative
 
@@ -62,13 +67,26 @@ Namespace LinearQuantitative
     ''' </summary>
     Public Class [IS]
 
-        Public Property ID As String
-        Public Property name As String
+        <XmlAttribute> Public Property ID As String
+        <XmlAttribute> Public Property name As String
         ''' <summary>
         ''' 内标的浓度
         ''' </summary>
         ''' <returns></returns>
-        Public Property CIS As Double
+        <XmlText> Public Property CIS As Double
+
+        Sub New()
+        End Sub
+
+        Sub New(id As String, Optional name As String = Nothing)
+            Me.ID = id
+            Me.name = If(name, id)
+            Me.CIS = 1
+        End Sub
+
+        Public Function CheckIsEmpty() As Boolean
+            Return (ID.StringEmpty(, True) OrElse ID.TextEquals("None")) AndAlso CIS <= 0 AndAlso (name.StringEmpty(, True) OrElse name.TextEquals("None"))
+        End Function
 
         Public Overrides Function ToString() As String
             Return $"Dim {name} As {ID} = {CIS}"

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58950ea696dcfdc4d85f07e24fdaeccf, mzkit\src\mzmath\ms2_math-core\Ms1\Tolerance\PPM.vb"
+﻿#Region "Microsoft.VisualBasic::d1f60dd3ba97aad9818d3119211540f6, mzmath\ms2_math-core\Ms1\Tolerance\PPM.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 40
-    ' Comment Lines: 12
-    '   Blank Lines: 13
-    '     File Size: 2.21 KB
+    '   Total Lines: 88
+    '    Code Lines: 57 (64.77%)
+    ' Comment Lines: 14 (15.91%)
+    '    - Xml Docs: 71.43%
+    ' 
+    '   Blank Lines: 17 (19.32%)
+    '     File Size: 3.01 KB
 
 
     '     Class PPMmethod
     ' 
+    '         Properties: Type
+    ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: AsScore, Equals, MassError, MassErrorDescription, PPM
-    '                   Scale, ToString
+    '         Function: AsScore, ConvertPpmToMassAccuracy, Equals, GetErrorDalton, GetErrorPPM
+    '                   MassError, MassErrorDescription, PPM, Scale, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -56,11 +60,13 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Ms1
 
     ''' <summary>
+    ''' part per million ``1/10^6``.
+    ''' 
     ''' PPM tolerance calculator
     ''' </summary>
     Public Class PPMmethod : Inherits Tolerance
@@ -86,13 +92,13 @@ Namespace Ms1
         ''' <summary>
         ''' 分子量差值
         ''' </summary>
-        ''' <param name="measured#"></param>
-        ''' <param name="actualValue#"></param>
+        ''' <param name="measured"></param>
+        ''' <param name="actualValue"></param>
         ''' <returns></returns>
         Public Overloads Shared Function PPM(measured#, actualValue#) As Double
             ' （测量值-实际分子量）/ 实际分子量
             ' |(实验数据 - 数据库结果)| / 实验数据 * 1000000
-            Dim ppmd# = (stdNum.Abs(measured - actualValue) / actualValue) * 1000000
+            Dim ppmd# = (std.Abs(measured - actualValue) / actualValue) * 1000000
 
             If ppmd < 0 Then
                 ' 计算溢出了

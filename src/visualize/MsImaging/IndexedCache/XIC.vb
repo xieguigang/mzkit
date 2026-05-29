@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b51bf44b0e1550efe58ee391929ff937, mzkit\src\visualize\MsImaging\IndexedCache\XIC.vb"
+﻿#Region "Microsoft.VisualBasic::be75034bb9743d2de114c0a9fbf7ce22, visualize\MsImaging\IndexedCache\XIC.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 133
-    '    Code Lines: 92
-    ' Comment Lines: 22
-    '   Blank Lines: 19
-    '     File Size: 4.43 KB
+    '   Total Lines: 85
+    '    Code Lines: 61 (71.76%)
+    ' Comment Lines: 10 (11.76%)
+    '    - Xml Docs: 70.00%
+    ' 
+    '   Blank Lines: 14 (16.47%)
+    '     File Size: 2.90 KB
 
 
     '     Class MatrixXIC
@@ -49,14 +51,6 @@
     '         Properties: intensity, mz
     ' 
     '         Function: Decode, GetLayer
-    ' 
-    '         Sub: Serialize
-    ' 
-    '     Class PointXIC
-    ' 
-    '         Properties: pixels, x, y
-    ' 
-    '         Function: GetLayer
     ' 
     '         Sub: Serialize
     ' 
@@ -149,52 +143,4 @@ Namespace IndexedCache
         End Function
     End Class
 
-    ''' <summary>
-    ''' 适用于稀疏数据点
-    ''' </summary>
-    Public Class PointXIC : Inherits MatrixXIC
-
-        ''' <summary>
-        ''' 稀疏点的X坐标轴信息
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property x As Integer()
-        ''' <summary>
-        ''' 稀疏点的Y坐标轴信息
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property y As Integer()
-
-        Public ReadOnly Property pixels As Integer
-            Get
-                Return intensity.Length
-            End Get
-        End Property
-
-        Public Overrides Sub Serialize(buffer As Stream)
-            Dim bin As New BinaryDataWriter(buffer)
-
-            bin.ByteOrder = ByteOrder.BigEndian
-            ' 1 means type is point XIC
-            bin.Write(CByte(1))
-            bin.Write(mz)
-            bin.Write(intensity.Length)
-            bin.Write(intensity)
-            bin.Write(x)
-            bin.Write(y)
-            bin.Flush()
-        End Sub
-
-        Public Overrides Function GetLayer(dims As Size) As SingleIonLayer
-            Return New SingleIonLayer With {
-                .DimensionSize = dims,
-                .IonMz = mz.ToString("F4"),
-                .MSILayer = intensity _
-                    .Select(Function(into, i)
-                                Return New PixelData(_x(i), _y(i), into)
-                            End Function) _
-                    .ToArray
-            }
-        End Function
-    End Class
 End Namespace

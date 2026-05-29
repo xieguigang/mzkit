@@ -1,54 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::a6e603723b4db43a8dfd25c17dd11aac, mzkit\src\visualize\TissueMorphology\Scatter\CDF.vb"
+﻿#Region "Microsoft.VisualBasic::5d790f277402042fd0ae6627db21fbc1, visualize\TissueMorphology\Scatter\CDF.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 217
-'    Code Lines: 168
-' Comment Lines: 18
-'   Blank Lines: 31
-'     File Size: 8.92 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module CDF
-' 
-'     Function: (+2 Overloads) GetDimension, IsTissueMorphologyCDF, (+2 Overloads) ReadTissueMorphology, (+2 Overloads) ReadUMAP, WriteCDF
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 310
+    '    Code Lines: 221 (71.29%)
+    ' Comment Lines: 47 (15.16%)
+    '    - Xml Docs: 74.47%
+    ' 
+    '   Blank Lines: 42 (13.55%)
+    '     File Size: 12.66 KB
+
+
+    ' Module CDF
+    ' 
+    '     Function: encodeClusterLabels, (+2 Overloads) GetDimension, IsTissueMorphologyCDF, ReadClusterLabelv2, (+2 Overloads) ReadTissueMorphology
+    '               (+2 Overloads) ReadUMAP, WriteCDF
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -134,17 +137,17 @@ Public Module CDF
                 dimension = tissueMorphology.GetDimension
             End If
 
-            attrs.Add(New attribute With {.name = "scan_x", .type = CDFDataTypes.INT, .value = dimension.Width})
-            attrs.Add(New attribute With {.name = "scan_y", .type = CDFDataTypes.INT, .value = dimension.Height})
-            attrs.Add(New attribute With {.name = "regions", .type = CDFDataTypes.INT, .value = tissueMorphology.Length})
-            attrs.Add(New attribute With {.name = "umap_sample", .type = CDFDataTypes.INT, .value = umap.Length})
+            attrs.Add(New attribute With {.name = "scan_x", .type = CDFDataTypes.NC_INT, .value = dimension.Width})
+            attrs.Add(New attribute With {.name = "scan_y", .type = CDFDataTypes.NC_INT, .value = dimension.Height})
+            attrs.Add(New attribute With {.name = "regions", .type = CDFDataTypes.NC_INT, .value = tissueMorphology.Length})
+            attrs.Add(New attribute With {.name = "umap_sample", .type = CDFDataTypes.NC_INT, .value = umap.Length})
             cdf.GlobalAttributes(attrs.PopAll)
 
             ' write region data
             For Each region As TissueRegion In tissueMorphology
-                attrs.Add(New attribute With {.name = "label", .type = CDFDataTypes.CHAR, .value = region.label})
-                attrs.Add(New attribute With {.name = "color", .type = CDFDataTypes.CHAR, .value = region.color.ToHtmlColor})
-                attrs.Add(New attribute With {.name = "size", .type = CDFDataTypes.INT, .value = region.nsize})
+                attrs.Add(New attribute With {.name = "label", .type = CDFDataTypes.NC_CHAR, .value = region.label})
+                attrs.Add(New attribute With {.name = "color", .type = CDFDataTypes.NC_CHAR, .value = region.color.ToHtmlColor})
+                attrs.Add(New attribute With {.name = "size", .type = CDFDataTypes.NC_INT, .value = region.nsize})
 
                 For Each p As Point In region.points
                     Call pixels.Add(p.X)
@@ -272,7 +275,7 @@ Public Module CDF
         Dim clusters As String()
         Dim labels As String() = {}
 
-        If clusterVar.type = CDFDataTypes.INT Then
+        If clusterVar.type = CDFDataTypes.NC_INT Then
             ' version 1 and v2 format
             clusters = cdf.ReadClusterLabelv2
         Else
@@ -297,6 +300,11 @@ Public Module CDF
         Next
     End Function
 
+    ''' <summary>
+    ''' read umap data of the spectrum
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function ReadUMAP(file As Stream) As UMAPPoint()
         Using cdf As New netCDFReader(file)
@@ -304,6 +312,11 @@ Public Module CDF
         End Using
     End Function
 
+    ''' <summary>
+    ''' read cluster data
+    ''' </summary>
+    ''' <param name="cdf"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function ReadTissueMorphology(cdf As netCDFReader) As IEnumerable(Of TissueRegion)
         Dim regions As Integer = any.ToString(cdf.getAttribute("regions")).ParseInteger

@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>VB.NET api to R# function invoke result wrapper, with additional warning, debug, errors messages, etc</p><br /><p>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Value`1.html">Value`1</a> class.</p>
+        <p>VB.NET api to R# function invoke result wrapper, with additional warning, debug, errors messages, etc</p>
 
         <h3>Declare</h3>        
 
@@ -30,16 +30,26 @@
             <code id="clr_ts">
 # namespace SMRUCC.Rsharp.Runtime.Interop
 export class RReturn extends <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Value`1.html">Value`1</a> {
-   messages: <a href="/vignettes/clr/Microsoft/VisualBasic/Language/List`1.html">List`1</a>;
-   type: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a>;
+   HasValue: boolean;
    # Change the Print Mode to Invisible
    invisible: boolean;
    isError: boolean;
-   HasValue: boolean;
+   messages: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/Message.html">iterates(Message)</a>;
+   type: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a>;
    Value: <i>any</i> kind;
 }
 </code>
         </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Value`1.html">Value`1</a> class: <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Value`1.html">Value`1</a></li>
+<li>use by <i>property</i> member <code>messages</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/Message.html">iterates(Message)</a></li>
+<li>use by <i>property</i> member <code>type</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a></li>
+<li>use by <i>property</i> member <code>Value</code>: <i>any</i> kind</li>
+</ol>
+
 
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a

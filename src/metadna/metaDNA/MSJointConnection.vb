@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ca9da3c7ae15ed3d28327e251d93ffa, mzkit\src\metadna\metaDNA\MSJointConnection.vb"
+﻿#Region "Microsoft.VisualBasic::9bcda5d50e7ccb8b837df6083806bcb1, metadna\metaDNA\MSJointConnection.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 257
-    '    Code Lines: 206
-    ' Comment Lines: 26
-    '   Blank Lines: 25
-    '     File Size: 10.11 KB
+    '   Total Lines: 275
+    '    Code Lines: 214 (77.82%)
+    ' Comment Lines: 34 (12.36%)
+    '    - Xml Docs: 88.24%
+    ' 
+    '   Blank Lines: 27 (9.82%)
+    '     File Size: 11.10 KB
 
 
     ' Class MSJointConnection
@@ -70,7 +72,7 @@ Imports SMRUCC.genomics.Assembly.KEGG.WebServices.XML
 ''' </summary>
 Public Class MSJointConnection : Implements IMzQuery
 
-    ReadOnly kegg As KEGGHandler
+    ReadOnly kegg As CompoundSolver
 
     ''' <summary>
     ''' the GSEA background
@@ -83,7 +85,7 @@ Public Class MSJointConnection : Implements IMzQuery
         End Get
     End Property
 
-    Sub New(kegg As KEGGHandler, peakSet As Background)
+    Sub New(kegg As CompoundSolver, peakSet As Background)
         Me.kegg = kegg
         Me.jointSet = peakSet
     End Sub
@@ -94,7 +96,7 @@ Public Class MSJointConnection : Implements IMzQuery
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetCompound(kegg_id As String) As Compound
-        Return kegg.GetCompound(kegg_id).KEGG
+        Return DirectCast(kegg.GetCompound(kegg_id), KEGGCompound).KEGG
     End Function
 
     Public Function GetEnrichment(id As IEnumerable(Of String)) As EnrichmentResult()
@@ -120,21 +122,38 @@ Public Class MSJointConnection : Implements IMzQuery
         Return enrichment
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="topN"></param>
+    ''' <returns>
+    ''' annotation result set which is grouped by mz as key
+    ''' </returns>
     Private Function getEnrichedMzSet(mz As Double(), topN As Integer) As IGrouping(Of String, MzQuery)()
         Dim allId As Dictionary(Of String, MzQuery()) = Nothing
         Dim enrichment As EnrichmentResult() = GetEnrichment(mz, allId).Take(topN).ToArray
         Dim mzSet As IGrouping(Of String, MzQuery)() = enrichment _
             .Select(Function(list)
                         Dim score As Double = -Math.Log10(list.pvalue)
-                        Dim result = list.geneIDs _
+
+                        If score.IsNaNImaginary Then
+                            If Double.IsPositiveInfinity(score) Then
+                                score = 1000
+                            Else
+                                score = 0
+                            End If
+                        End If
+
+                        Dim result = list.IDs _
                             .Select(Function(id) allId(id)) _
                             .IteratesALL _
                             .ToArray
-                        Dim copy = result _
+                        Dim copy As MzQuery() = result _
                             .Select(Function(q)
                                         Return New MzQuery With {
-                                            .score = score,
-                                            .precursorType = q.precursorType,
+                                            .score = score / (q.ppm + 1),
+                                            .precursor_type = q.precursor_type,
                                             .unique_id = q.unique_id,
                                             .mz = q.mz,
                                             .ppm = q.ppm,
@@ -184,7 +203,7 @@ Public Class MSJointConnection : Implements IMzQuery
                                             .unique_id = m.Key,
                                             .mz = Double.Parse(mzi.Key),
                                             .ppm = m.First.ppm,
-                                            .precursorType = m.First.precursorType,
+                                            .precursor_type = m.First.precursor_type,
                                             .name = m.First.name,
                                             .mz_ref = m.First.mz_ref,
                                             .score = Aggregate hit As MzQuery
@@ -259,7 +278,7 @@ Public Class MSJointConnection : Implements IMzQuery
     End Function
 
     Private Shared Iterator Function toClusters(maps As IEnumerable(Of Map)) As IEnumerable(Of Cluster)
-        For Each map As Map In maps
+        For Each map As Map In From pwy In maps.SafeQuery Where Not pwy Is Nothing
             Yield New Cluster With {
                 .description = map.description,
                 .ID = map.EntryId,
@@ -300,7 +319,7 @@ Public Class MSJointConnection : Implements IMzQuery
     ''' <see cref="Compound"/>
     ''' </returns>
     Public Function GetMetadata(uniqueId As String) As Object Implements IMzQuery.GetMetadata
-        Return kegg.GetCompound(uniqueId).KEGG
+        Return DirectCast(kegg.GetCompound(uniqueId), KEGGCompound).KEGG
     End Function
 
     Public Function GetDbXref(uniqueId As String) As Dictionary(Of String, String) Implements IMzQuery.GetDbXref

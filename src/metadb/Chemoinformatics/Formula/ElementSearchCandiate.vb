@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f194cb3ea2bc1fc5165040974179394, mzkit\src\metadb\Chemoinformatics\Formula\ElementSearchCandiate.vb"
+﻿#Region "Microsoft.VisualBasic::7f194cb3ea2bc1fc5165040974179394, metadb\Chemoinformatics\Formula\ElementSearchCandiate.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 14
-    '    Code Lines: 10
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 10 (71.43%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (28.57%)
     '     File Size: 374 B
 
 
@@ -59,12 +61,28 @@ Namespace Formula
 
     Public Class ElementSearchCandiate
 
+        ''' <summary>
+        ''' element atom name, example as C for carbon
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Element As String
+        ''' <summary>
+        ''' element count lower bound
+        ''' </summary>
+        ''' <returns></returns>
         Public Property MinCount As Integer = 0
+        ''' <summary>
+        ''' element count upper bound
+        ''' </summary>
+        ''' <returns></returns>
         Public Property MaxCount As Integer = 100
 
         Public Overrides Function ToString() As String
             Return $"{Element} [{MinCount}, {MaxCount}]"
+        End Function
+
+        Public Function AsEnumerable() As IEnumerable(Of Integer)
+            Return Enumerable.Range(MinCount, MaxCount - MinCount + 1)
         End Function
 
     End Class

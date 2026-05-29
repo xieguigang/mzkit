@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0837d12e5c497a5c50e02fbf34369cba, mzkit\src\assembly\assembly\mzPack\Binary\BinaryStreamWriter.vb"
+﻿#Region "Microsoft.VisualBasic::1b9481c1b7fcd85aa6a991e9858003f5, assembly\assembly\mzPack\Binary\BinaryStreamWriter.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 217
-    '    Code Lines: 132
-    ' Comment Lines: 37
-    '   Blank Lines: 48
-    '     File Size: 7.20 KB
+    '   Total Lines: 259
+    '    Code Lines: 150 (57.92%)
+    ' Comment Lines: 56 (21.62%)
+    '    - Xml Docs: 42.86%
+    ' 
+    '   Blank Lines: 53 (20.46%)
+    '     File Size: 8.80 KB
 
 
     '     Class BinaryStreamWriter
     ' 
-    '         Properties: version
+    '         Properties: version, version2025
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Sub: (+2 Overloads) Dispose, (+2 Overloads) Write, WriteBuffer, writeIndex, writeMetaData
@@ -84,27 +86,53 @@ Namespace mzData.mzWebCache
 
         Public Const Magic As String = "BioNovoGene/mzWebStream"
 
+        ''' <summary>
+        ''' version 1, contains ms1/ms2 data,[before 2025]
+        ''' </summary>
+        ''' <returns></returns>
         Public Shared ReadOnly Property version As System.Version
             Get
                 Return New System.Version(5, 2, 389)
             End Get
         End Property
 
+        ''' <summary>
+        ''' version 1.2, contains multiple stage product tree data,[start from 2025]
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared ReadOnly Property version2025 As System.Version
+            Get
+                Return New System.Version(6, 3, 8888)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' level1 -> v1
+        ''' level2 -> v1.2
+        ''' </summary>
+        Dim level As Integer
+
+        Const metaheader_offset As Integer = 128 + 4 + 4 + 4 + 4 + 8 + 1024
+
         Sub New(file As String)
             Call Me.New(file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
         End Sub
 
-        Sub New(file As Stream)
-            Dim ver = version
+        Sub New(file As Stream, Optional level As Integer = 2)
+            Dim ver = If(level > 1, version2025, version)
 
+            Me.level = level
             Me.file = New BinaryDataWriter(file, encoding:=Encodings.ASCII)
             Me.file.Write(Magic, BinaryStringFormat.NoPrefixOrTermination)
+
+            ' 20250204
+            ' 128 + 4 + 4 + 4 + 4 + 8 + 1024
 
             ' placeholder for source name
             ' 128 bytes max length
             Me.file.Write(New Byte(127) {})
             ' write application tag data placeholder
-            Me.file.Write(CByte(0))
+            Me.file.Write(0)
 
             ' write version data
             Me.file.Write({ver.Major, ver.Minor, ver.Build})
@@ -178,6 +206,10 @@ Namespace mzData.mzWebCache
             Call file.Flush()
         End Sub
 
+        ''' <summary>
+        ''' write the product data scan mass spectrum data
+        ''' </summary>
+        ''' <param name="scan"></param>
         Private Sub Write(scan As ScanMS2)
             If mzmin > scan.parentMz Then
                 mzmin = scan.parentMz
@@ -187,6 +219,18 @@ Namespace mzData.mzWebCache
             End If
 
             Call scan.WriteBuffer(file)
+
+            If level > 1 Then
+                ' 20250204 write multiple stage product tree data
+                If scan.product Is Nothing Then
+                    Call file.Write(0)
+                Else
+                    Call file.Write(1)
+                    Call Write(scan.product)
+                End If
+            ElseIf Not scan.product Is Nothing Then
+                Call $"raw data contains multiple stage product tree scan data, but current version level1 not supported, you could try write data file in level2.".Warning
+            End If
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -201,7 +245,7 @@ Namespace mzData.mzWebCache
 
             indexPos = file.Position
 
-            file.Seek(Magic.Length, SeekOrigin.Begin)
+            file.Seek(Magic.Length + metaheader_offset, SeekOrigin.Begin)
             file.Write({mzmin, mzmax, rtmin, rtmax})
             file.Write(indexPos)
             file.Seek(indexPos, SeekOrigin.Begin)

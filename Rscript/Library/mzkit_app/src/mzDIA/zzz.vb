@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6ebc3b59ed7ad6c41625bfaa79aaaea, mzkit\Rscript\Library\mzkit.insilicons\zzz.vb"
+﻿#Region "Microsoft.VisualBasic::77ee97e66ddb40706515a9c0f30fc17c, Rscript\Library\mzkit_app\src\mzDIA\zzz.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 7
-    '    Code Lines: 4
-    ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 100 B
+    '   Total Lines: 11
+    '    Code Lines: 8 (72.73%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (27.27%)
+    '     File Size: 219 B
 
 
     ' Class zzz
     ' 
-    ' 
+    '     Sub: onLoad
     ' 
     ' /********************************************************************************/
 
@@ -58,4 +60,9 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 
 Public Class zzz
 
+    Public Shared Sub onLoad()
+        Call metaDNAInfer.Main()
+        Call MoleculeNetworking.Main()
+        Call DIASpectrumAnnotations.Main()
+    End Sub
 End Class

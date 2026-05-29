@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6a48cbf4e048fb57bdf4718b5c3a02f, mzkit\src\assembly\assembly\MarkupData\mzML\XML\Components.vb"
+﻿#Region "Microsoft.VisualBasic::f9dfd3ce2eca118181d3bbf7e2203be6, assembly\assembly\MarkupData\mzML\XML\Components.vb"
 
     ' Author:
     ' 
@@ -37,22 +37,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 56
-    '    Code Lines: 38
-    ' Comment Lines: 0
-    '   Blank Lines: 18
-    '     File Size: 1.70 KB
+    '   Total Lines: 81
+    '    Code Lines: 51 (62.96%)
+    ' Comment Lines: 10 (12.35%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 20 (24.69%)
+    '     File Size: 2.51 KB
 
 
     '     Class fileDescription
     ' 
     '         Properties: contact, fileContent, sourceFileList
     ' 
-    '         Function: ToString
+    '         Function: GetSourceFiles, ToString
     ' 
     '     Class SourceFileList
     ' 
     '         Properties: sourceFile
+    ' 
+    '         Function: GetFileList
     ' 
     '     Class SourceFile
     ' 
@@ -95,6 +99,14 @@ Namespace MarkupData.mzML
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return fileContent.cvParams.Select(Function(a) a.name).JoinBy("; ")
+        End Function
+
+        Public Function GetSourceFiles() As IEnumerable(Of String)
+            If sourceFileList Is Nothing Then
+                Return {}
+            Else
+                Return sourceFileList.GetFileList
+            End If
         End Function
 
     End Class

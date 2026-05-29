@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfc4822cbf1fa8148eb74eddf2de360b, mzkit\src\mzmath\MoleculeNetworking\Networking.vb"
+﻿#Region "Microsoft.VisualBasic::693b8d5f74b398d907f1aa4cb9cbdcd1, mzmath\MoleculeNetworking\Tree\Networking.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 91
-    '    Code Lines: 82
-    ' Comment Lines: 0
-    '   Blank Lines: 9
-    '     File Size: 3.50 KB
+    '   Total Lines: 132
+    '    Code Lines: 81 (61.36%)
+    ' Comment Lines: 42 (31.82%)
+    '    - Xml Docs: 95.24%
+    ' 
+    '   Blank Lines: 9 (6.82%)
+    '     File Size: 5.04 KB
 
 
     ' Module Networking
     ' 
-    '     Function: RepresentativeSpectrum, Tree
+    '     Function: normPeaki, RepresentativeSpectrum, Tree, unionMetadata
     ' 
     ' /********************************************************************************/
 
@@ -55,7 +57,6 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -89,25 +90,10 @@ Public Module Networking
     Public Function Tree(ions As IEnumerable(Of PeakMs2),
                          Optional mzdiff As Double = 0.3,
                          Optional intocutoff As Double = 0.05,
-                         Optional equals As Double = 0.85) As TreeCluster
+                         Optional equals As Double = 0.85,
+                         Optional diff As Double = 0.1) As TreeCluster
 
-        Dim cosine As New CosAlignment(
-            mzwidth:=Tolerance.DeltaMass(mzdiff),
-            intocutoff:=New RelativeIntensityCutoff(intocutoff)
-        )
-        Dim align As New MSScore(cosine, ions.ToArray, equals, equals)
-        Dim clustering As New ClusterTree
-        Dim ionsList As New List(Of PeakMs2)
-
-        For Each ion As PeakMs2 In align.Ions
-            Call ionsList.Add(ion)
-            Call ClusterTree.Add(clustering, ion.lib_guid, align, threshold:=equals)
-        Next
-
-        Return New TreeCluster With {
-            .tree = clustering,
-            .spectrum = ionsList.ToArray
-        }
+        Return New NetworkingTree(mzdiff, intocutoff, equals, interval:=diff).Tree(ions)
     End Function
 
     Private Iterator Function normPeaki(i As PeakMs2) As IEnumerable(Of ms2)

@@ -30,12 +30,15 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 export class IonTPA {
-   name: string;
-   rt: double;
-   peakROI: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>;
    area: double;
    baseline: double;
    maxPeakHeight: double;
+   name: string;
+   peakROI: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>;
+   refer_rt: double;
+   rt: double;
+   sn: double;
+   source: string;
 }
 </code>
         </pre>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19f36fd9813f6c3bf75e301d88858ae4, mzkit\src\visualize\MsImaging\Blender\Scaler\Scaler.vb"
+﻿#Region "Microsoft.VisualBasic::58f48d22b016436b8b25f5ee94416377, visualize\MsImaging\Blender\Scaler\Scaler.vb"
 
     ' Author:
     ' 
@@ -37,29 +37,44 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 46
-    '    Code Lines: 37
-    ' Comment Lines: 0
-    '   Blank Lines: 9
-    '     File Size: 1.73 KB
+    '   Total Lines: 134
+    '    Code Lines: 106 (79.10%)
+    ' Comment Lines: 3 (2.24%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 25 (18.66%)
+    '     File Size: 5.51 KB
 
 
     '     Class Scaler
     ' 
-    '         Function: [Then], (+2 Overloads) DoIntensityScale
+    '         Function: [Then], (+2 Overloads) DoIntensityScale, GetFilters, Parse, ParserInternal
+    '                   ToString
     '         Interface LayerScaler
     ' 
-    '             Function: DoIntensityScale
+    '             Function: DoIntensityScale, ToScript
     ' 
     ' 
+    ' 
+    '     Class ParameterSet
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: (+3 Overloads) [next], getValueParseString, ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
+
 Namespace Blender.Scaler
 
+    ''' <summary>
+    ''' the ms-imaging raster rendering filter
+    ''' </summary>
     Public MustInherit Class Scaler : Implements LayerScaler
 
         Public Interface LayerScaler
@@ -108,25 +123,80 @@ Namespace Blender.Scaler
             Return New RasterPipeline From {Me, [next]}
         End Function
 
-        Public Shared Function Parse(line As String) As Scaler
-            line = Strings.Trim(line).ToLower
+        Public Shared Iterator Function GetFilters() As IEnumerable(Of Type)
+            Yield GetType(DenoiseScaler)      ' $"denoise({q})"
+            Yield GetType(IntensityCutScaler) ' $"cut({cutoff}, {percentage})"
+            Yield GetType(KNNScaler)          ' $"knn_fill({k},{q})"
+            Yield GetType(LogScaler)          ' $"log({base.ToString("F4")})"
+            Yield GetType(PowerScaler)        ' $"power({pow})"
+            Yield GetType(QuantileScaler)     ' $"Q({q.ToString("F4")},percentail:={percentail.ToString.ToLower})"
+            Yield GetType(SoftenScaler)       ' $"soften()"
+            Yield GetType(TrIQClip)           ' $"TrIQ_clip({threshold},{N})"
+            Yield GetType(TrIQScaler)         ' $"TrIQ({threshold.ToString("F4")})"
+            Yield GetType(ZScoreScaler)       ' $"zscore_norm()"
+        End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Parse(line As String) As Scaler
+            Return ParserInternal(line:=Strings.Trim(line).ToLower)
+        End Function
+
+        Private Shared Function ParserInternal(line As String) As Scaler
             Dim config = line.GetTagValue("(", trim:=True)
-            Dim pars = config.Value _
-                .Trim(")"c) _
-                .Split(","c) _
-                .Select(AddressOf Val) _
-                .ToArray
+            Dim par_str As String = config.Value.Trim(")"c)
+            Dim pars As New ParameterSet(par_str.Split(","c))
 
             Select Case config.Name
                 Case "soften" : Return New SoftenScaler
-                Case "denoise" : Return New DenoiseScaler(pars.ElementAtOrDefault(0, 0.01))
-                Case "triq" : Return New TrIQScaler(pars.ElementAtOrDefault(0, 0.65))
-                Case "knn_fill" : Return New KNNScaler(pars.ElementAtOrDefault(0, 3), pars.ElementAtOrDefault(1, 0.65))
-                Case "log" : Return New LogScaler(pars.ElementAtOrDefault(0, System.Math.E))
+                Case "denoise" : Return New DenoiseScaler(pars.next(0.01))
+                Case "triq" : Return New TrIQScaler(pars.next(0.65))
+                Case "q" : Return New QuantileScaler(pars.next(0.5), pars.next(False))
+                Case "knn_fill" : Return New KNNScaler(pars.next(3), pars.next(0.65), pars.next(False))
+                Case "log" : Return New LogScaler(pars.next(System.Math.E))
+                Case "power" : Return New PowerScaler(pars.next(2.0))
+                Case "triq_clip" : Return New TrIQClip(pars.next(0.8), pars.next(100))
+                Case "cut" : Return New IntensityCutScaler(pars.next(0.05), pars.next(False))
+                Case "zscore_norm" : Return New ZScoreScaler
                 Case Else
-                    Throw New NotImplementedException(config.Name)
+                    Throw New NotImplementedException(line & ": " & config.Name)
             End Select
+        End Function
+    End Class
+
+    Friend Class ParameterSet
+
+        Dim pars As String()
+        Dim offset As i32 = 0
+
+        Sub New(pars As String())
+            Me.pars = pars
+        End Sub
+
+        Private Function getValueParseString([default] As String) As String
+            Dim val_str As String = pars.ElementAtOrDefault(++offset, [default])
+            Dim tokens = val_str.Split(":"c, "="c)
+
+            If tokens.Length = 1 Then
+                Return tokens.First
+            Else
+                Return tokens.Last
+            End If
+        End Function
+
+        Public Function [next](default#) As Double
+            Return Val(getValueParseString([default].ToString))
+        End Function
+
+        Public Function [next]([default] As Boolean) As Boolean
+            Return getValueParseString([default].ToString).ParseBoolean
+        End Function
+
+        Public Function [next](default%) As Integer
+            Return getValueParseString([default].ToString).ParseInteger
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return pars.GetJson
         End Function
 
     End Class

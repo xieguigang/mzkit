@@ -1,7 +1,9 @@
-# math
+﻿# math
 
 mass spectrometry data math toolkit
 
++ [summary_result](math/summary_result.1) convert a single spectrum alignment details as dataframe
++ [find_precursor](math/find_precursor.1) find precursor adducts type for a given mass and the corresponding precursor mz
 + [mz](math/mz.1) evaluate all m/z for all known precursor type.
 + [exact_mass](math/exact_mass.1) evaluate all exact mass for all known precursor type.
 + [ppm](math/ppm.1) calculate ppm value between two mass vector
@@ -10,7 +12,8 @@ mass spectrometry data math toolkit
 + [spectral_entropy](math/spectral_entropy.1) Search spectra with entropy similarity
 + [jaccardSet](math/jaccardSet.1) search spectrum via the jaccard index method
 + [cosine](math/cosine.1) Do evaluate the spectra cosine similarity score
-+ [cosine.pairwise](math/cosine.pairwise.1) 
++ [mrm_array](math/mrm_array.1) 
++ [cosine.pairwise](math/cosine.pairwise.1) pairwise alignment of the spectrum peak set
 + [spectrum_tree.cluster](math/spectrum_tree.cluster.1) create spectrum tree cluster based on the spectrum to spectrum similarity comparison.
 + [cluster.nodes](math/cluster.nodes.1) get all nodes from the spectrum tree cluster result
 + [ions.unique](math/ions.unique.1) data pre-processing helper, make the spectra ion data unique
@@ -19,6 +22,7 @@ mass spectrometry data math toolkit
 + [sequenceOrder](math/sequenceOrder.1) reorder scan points into a sequence for downstream data analysis
 + [precursor_types](math/precursor_types.1) create precursor type calculator
 + [defaultPrecursors](math/defaultPrecursors.1) returns all precursor types for a given libtype
++ [rank_adducts](math/rank_adducts.1) evaluate of the adduct annotation ranking score
 + [toMS](math/toMS.1) 
 + [xcms_id](math/xcms_id.1) makes xcms_id format liked ROI unique id
 + [mz_index](math/mz_index.1) Create a peak index

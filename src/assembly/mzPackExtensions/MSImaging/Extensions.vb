@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09873354fb3b4a342b2fc0f8238ae263, mzkit\src\assembly\mzPackExtensions\MSImaging\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::57fd9eaf450b99c5202a2aebace580c2, assembly\mzPackExtensions\MSImaging\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,26 +37,29 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 40
-    '    Code Lines: 33
-    ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 1.50 KB
+    '   Total Lines: 43
+    '    Code Lines: 35 (81.40%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 8 (18.60%)
+    '     File Size: 1.52 KB
 
 
     ' Module Extensions
     ' 
     '     Function: CheckMatrixBaseIon
     ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
 
-#If NET48 Then
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports Microsoft.VisualBasic.Math
+
+#If NET48 Then
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader
+#End If
 
 Public Module Extensions
 
@@ -65,6 +68,7 @@ Public Module Extensions
         Dim allscans As mzPack
 
         Select Case fileName.ExtensionSuffix.ToLower
+#If NET48 Then
             Case "raw"
                 Dim Xraw As New MSFileReader(fileName)
 
@@ -76,6 +80,11 @@ Public Module Extensions
 
                 allscans = wiffRaw.LoadFromWiffRaw(checkNoise:=False, println:=println)
                 n = allscans.size
+#End If
+            Case "mzml", "mzxml"
+                Dim raw As mzPack = Converter.LoadRawFileAuto(fileName)
+                n = raw.MS.Length
+                allscans = raw
             Case Else
                 Throw New NotImplementedException(fileName.ExtensionSuffix)
         End Select
@@ -92,4 +101,3 @@ Public Module Extensions
         Return (n, basePeak)
     End Function
 End Module
-#End If

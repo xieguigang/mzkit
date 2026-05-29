@@ -1,61 +1,73 @@
-﻿#Region "Microsoft.VisualBasic::cf19bddbd462d696147628928e11de80, mzkit\src\mzmath\ms2_math-core\Spectra\Models\PeakList.vb"
+﻿#Region "Microsoft.VisualBasic::568b1edca44e1f406ab395c8002f74a3, mzmath\ms2_math-core\Spectra\Models\PeakList.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 51
-'    Code Lines: 25
-' Comment Lines: 16
-'   Blank Lines: 10
-'     File Size: 1.34 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class PeakList
-' 
-'         Properties: into, mz, size
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'     Interface IMsScan
-' 
-'         Function: GetMs, GetMzIonIntensity
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 114
+    '    Code Lines: 50 (43.86%)
+    ' Comment Lines: 43 (37.72%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 21 (18.42%)
+    '     File Size: 3.44 KB
+
+
+    '     Class PeakList
+    ' 
+    '         Properties: into, metadata, MRM, mz, size
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: GetPeaks
+    ' 
+    '     Structure MRM
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Interface IMsScan
+    ' 
+    '         Function: GetMs, GetMzIonIntensity
+    ' 
+    '     Interface ISpectrumVector
+    ' 
+    '         Properties: Peaks, PeaksIntensity
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -71,20 +83,29 @@ Namespace Spectra
     ''' if the <see cref="MRM"/> data is not empty, then it means current spectrum
     ''' peaks data is the data for MRM targetted analysis
     ''' </remarks>
-    Public Class PeakList
+    Public Class PeakList : Implements ISpectrumVector
 
         ''' <summary>
         ''' the ion fragment mass list
         ''' </summary>
         ''' <returns></returns>
-        Public Property mz As Double()
+        Public Property mz As Double() Implements ISpectrumVector.Peaks
         ''' <summary>
         ''' the signal intensity strength 
         ''' value of the corresponding ion 
         ''' fragment mass data.
         ''' </summary>
         ''' <returns></returns>
-        Public Property into As Double()
+        Public Property into As Double() Implements ISpectrumVector.PeaksIntensity
+
+        ''' <summary>
+        ''' the peak annotation of the corresponding ion peak data
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this property should be on size equals to the spectrum peak set: <see cref="mz"/> or just leaves nothing.
+        ''' </remarks>
+        Public Property metadata As String()
 
         Public Property MRM As MRM()
 
@@ -117,6 +138,10 @@ Namespace Spectra
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' get spectrum data from current scan data object.
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function GetPeaks() As IEnumerable(Of ms2)
             For i As Integer = 0 To mz.Length - 1
                 Yield New ms2(_mz(i), _into(i))
@@ -150,6 +175,13 @@ Namespace Spectra
 
         Function GetMs() As IEnumerable(Of ms2)
         Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double
+
+    End Interface
+
+    Public Interface ISpectrumVector
+
+        ReadOnly Property Peaks As Double()
+        ReadOnly Property PeaksIntensity As Double()
 
     End Interface
 End Namespace

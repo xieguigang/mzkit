@@ -10,7 +10,7 @@
     <AssemblyName>ProteoWizard.d</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -134,6 +134,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -166,17 +167,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\httpd\httpd\httpd.vbproj">
-      <Project>{ce825e49-0386-4ab1-b452-b104ed3f7deb}</Project>
-      <Name>httpd</Name>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\httpd\Flute\Flute.NET5.vbproj">
+      <Project>{56f8673d-a930-473d-ae8e-7d41fc1a92ae}</Project>
+      <Name>Flute.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\httpd\WebCloud\SMRUCC.HTTPInternal\SMRUCC.WebCloud.HTTPInternal.vbproj">
-      <Project>{fbfc1455-b232-4f16-afc7-4054a8b864ab}</Project>
-      <Name>SMRUCC.WebCloud.HTTPInternal</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{100d201e-d874-43fa-8930-685e36fd51e4}</Project>
+      <Name>Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\ProteoWizard.Interop\ProteoWizard.Interop.vbproj">
       <Project>{ca3ec2d0-bf06-4005-95b7-b73fe39bf336}</Project>

@@ -79,7 +79,19 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="lipidmaps">
     <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/LipidMaps/MetaData.html">lipidmaps: MetaData</a>
   </td>
-  <td><p>物质的注释信息</p></td>
+  <td><p>lipidmaps annotation data model, which is original extract from the SDF data objects.</p></td>
+</tr>
+<tr>
+  <td id="metalib">
+    <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/MetaLib.html">metalib: MetaLib</a>
+  </td>
+  <td><p>对<code>chebi/kegg/pubchem/HMDB/metlin</code>的物质注释信息整合库，这个数据库只要为了生成编号，名称之类的注释信息而构建的</p></td>
+</tr>
+<tr>
+  <td id="refmet">
+    <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/RefMet.html">refmet: RefMet</a>
+  </td>
+  <td><p>RefMet: A Reference set of Metabolite names</p></td>
 </tr></tbody>
       </table>
       <br />
@@ -87,16 +99,88 @@ table caption {font-size:14px;font-weight:bolder;}
       <table class="table-three-line">
         <caption>.NET clr function exports</caption>
         <tbody><tr>
+  <td id="as.data.frame.metainfo">
+    <a href="./massbank/as.data.frame.metainfo.html">as.data.frame.metainfo</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/MetaInfo.html">MetaInfo</a>: <p>the very basic metabolite annotation data model</p></td>
+</tr>
+<tr>
+  <td id="as.data.frame.metalib">
+    <a href="./massbank/as.data.frame.metalib.html">as.data.frame.metalib</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Metabolite/MetaLib.html">MetaLib</a>: <p>对<code>chebi/kegg/pubchem/HMDB/metlin</code>的物质注释信息整合库，这个数据库只要为了生成编号，名称之类的注释信息而构建的</p></td>
+</tr>
+<tr>
+  <td id="as.data.frame.refmet">
+    <a href="./massbank/as.data.frame.refmet.html">as.data.frame.refmet</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/RefMet.html">RefMet</a>: <p>RefMet: A Reference set of Metabolite names</p></td>
+</tr>
+<tr>
+  <td id="as.data.frame.metadata">
+    <a href="./massbank/as.data.frame.metadata.html">as.data.frame.metadata</a>
+  </td>
+  <td><a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/LipidMaps/MetaData.html">MetaData</a>: <p>lipidmaps annotation data model, which is original extract from the SDF data objects.</p></td>
+</tr>
+<tr>
+  <td id="odors">
+    <a href="./massbank/odors.html">odors</a>
+  </td>
+  <td><p>Extract odors information from the metabolite data</p></td>
+</tr>
+<tr>
+  <td id="write.metalib">
+    <a href="./massbank/write.metalib.html">write.metalib</a>
+  </td>
+  <td><p>write the metabolite annotation data collection as messagepack</p></td>
+</tr>
+<tr>
   <td id="mona.msp_metadata">
     <a href="./massbank/mona.msp_metadata.html">mona.msp_metadata</a>
   </td>
   <td><p>Extract the annotation metadata from the MONA comment data</p></td>
 </tr>
 <tr>
+  <td id="read.RefMet">
+    <a href="./massbank/read.RefMet.html">read.RefMet</a>
+  </td>
+  <td><p>read the csv table of refmet</p></td>
+</tr>
+<tr>
+  <td id="read.lotus">
+    <a href="./massbank/read.lotus.html">read.lotus</a>
+  </td>
+  <td><p>load the lotus natural products metabolite library from a given file</p></td>
+</tr>
+<tr>
+  <td id="read.coconut">
+    <a href="./massbank/read.coconut.html">read.coconut</a>
+  </td>
+  <td></td>
+</tr>
+<tr>
   <td id="read.MoNA">
     <a href="./massbank/read.MoNA.html">read.MoNA</a>
   </td>
   <td><p>read MoNA database file.</p></td>
+</tr>
+<tr>
+  <td id="write_mona">
+    <a href="./massbank/write_mona.html">write_mona</a>
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="is_positive">
+    <a href="./massbank/is_positive.html">is_positive</a>
+  </td>
+  <td><p>check of the mona reference spectrum is positive or not?</p></td>
+</tr>
+<tr>
+  <td id="extract_mona_metabolites">
+    <a href="./massbank/extract_mona_metabolites.html">extract_mona_metabolites</a>
+  </td>
+  <td><p>Extract the unique metabolite information from the mona database</p></td>
 </tr>
 <tr>
   <td id="read.SDF">
@@ -147,6 +231,12 @@ table caption {font-size:14px;font-weight:bolder;}
   <td><p>gets the metabolite id collection from lipidmaps database</p></td>
 </tr>
 <tr>
+  <td id="lipid_metabolites">
+    <a href="./massbank/lipid_metabolites.html">lipid_metabolites</a>
+  </td>
+  <td><p>cast lipidmaps data to metabolites</p></td>
+</tr>
+<tr>
   <td id="as.lipidmaps">
     <a href="./massbank/as.lipidmaps.html">as.lipidmaps</a>
   </td>
@@ -157,6 +247,12 @@ table caption {font-size:14px;font-weight:bolder;}
     <a href="./massbank/lipid.nameMaps.html">lipid.nameMaps</a>
   </td>
   <td></td>
+</tr>
+<tr>
+  <td id="chebi_id">
+    <a href="./massbank/chebi_id.html">chebi_id</a>
+  </td>
+  <td><p>normalized the input id data as canonical chebi id</p></td>
 </tr>
 <tr>
   <td id="chebi.secondary2main.mapping">
@@ -186,7 +282,7 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="glycosyl.tokens">
     <a href="./massbank/glycosyl.tokens.html">glycosyl.tokens</a>
   </td>
-  <td></td>
+  <td><p>Parse the glycosyl compound name</p></td>
 </tr>
 <tr>
   <td id="glycosyl.solver">
@@ -210,7 +306,7 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="rankingNames">
     <a href="./massbank/rankingNames.html">rankingNames</a>
   </td>
-  <td></td>
+  <td><p>Ranking a set of the given synonym string collection for find common name.</p></td>
 </tr>
 <tr>
   <td id="metabo_anno">
@@ -219,10 +315,22 @@ table caption {font-size:14px;font-weight:bolder;}
   <td><p>construct a new metabolite annotation information data</p></td>
 </tr>
 <tr>
-  <td id="inchikey">
-    <a href="./massbank/inchikey.html">inchikey</a>
+  <td id="load_herbs">
+    <a href="./massbank/load_herbs.html">load_herbs</a>
   </td>
-  <td><p>generates the inchikey hashcode based on the given inchi data</p></td>
+  <td><p>load compounds from herbs database</p></td>
+</tr>
+<tr>
+  <td id="load_herbs_list">
+    <a href="./massbank/load_herbs_list.html">load_herbs_list</a>
+  </td>
+  <td><p>load herbs species information</p></td>
+</tr>
+<tr>
+  <td id="load_HERB_ingredient">
+    <a href="./massbank/load_HERB_ingredient.html">load_HERB_ingredient</a>
+  </td>
+  <td><p>load the herb compound information</p></td>
 </tr></tbody>
       </table>
     </div>

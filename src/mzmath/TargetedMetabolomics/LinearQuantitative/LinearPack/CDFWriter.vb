@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c09ca066253a0ad5ff640f8433c7d69, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\LinearPack\CDFWriter.vb"
+﻿#Region "Microsoft.VisualBasic::ce5c391ae4cafdb004a0a24f6226d5bc, mzmath\TargetedMetabolomics\LinearQuantitative\LinearPack\CDFWriter.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 180
-    '    Code Lines: 152
-    ' Comment Lines: 0
-    '   Blank Lines: 28
-    '     File Size: 8.69 KB
+    '   Total Lines: 197
+    '    Code Lines: 163 (82.74%)
+    ' Comment Lines: 4 (2.03%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 30 (15.23%)
+    '     File Size: 9.60 KB
 
 
     '     Module CDFWriter
@@ -150,7 +152,7 @@ Namespace LinearQuantitative.Data
             Dim data As chars = allSampleNames.GetJson
             Dim size As New Dimension With {.name = "sizeofSamples", .size = data.Length}
             Dim attrs As attribute() = {
-                New attribute With {.name = "size", .type = CDFDataTypes.INT, .value = allSampleNames.Length}
+                New attribute With {.name = "size", .type = CDFDataTypes.NC_INT, .value = allSampleNames.Length}
             }
 
             file.AddVariable("sampleNames", data, size, attrs)
@@ -172,21 +174,21 @@ Namespace LinearQuantitative.Data
             Dim data As doubles = time.JoinIterates(into).ToArray
             Dim size As New Dimension With {.name = $"sizeof_{peak.SampleName}\{peak.Name}", .size = data.Length}
             Dim attrs As attribute() = {
-                New attribute With {.name = "name", .type = CDFDataTypes.CHAR, .value = peak.Name},
-                New attribute With {.name = "sample_name", .type = CDFDataTypes.CHAR, .value = peak.SampleName},
+                New attribute With {.name = "name", .type = CDFDataTypes.NC_CHAR, .value = peak.Name},
+                New attribute With {.name = "sample_name", .type = CDFDataTypes.NC_CHAR, .value = peak.SampleName},
                 New attribute With {
                     .name = "summary",
-                    .type = CDFDataTypes.CHAR,
+                    .type = CDFDataTypes.NC_CHAR,
                     .value = peak.ChromatogramSummary _
                         .Select(Function(q)
                                     Return $"{q.Percentage}:{q.Quantile}"
                                 End Function) _
                         .JoinBy("|")
                 },
-                New attribute With {.name = "rtmin", .type = CDFDataTypes.CHAR, .value = peak.Peak.window.Min},
-                New attribute With {.name = "rtmax", .type = CDFDataTypes.CHAR, .value = peak.Peak.window.Max},
-                New attribute With {.name = "maxinto", .type = CDFDataTypes.CHAR, .value = peak.Peak.peakHeight},
-                New attribute With {.name = "base", .type = CDFDataTypes.CHAR, .value = peak.Peak.base}
+                New attribute With {.name = "rtmin", .type = CDFDataTypes.NC_CHAR, .value = peak.Peak.window.Min},
+                New attribute With {.name = "rtmax", .type = CDFDataTypes.NC_CHAR, .value = peak.Peak.window.Max},
+                New attribute With {.name = "maxinto", .type = CDFDataTypes.NC_CHAR, .value = peak.Peak.peakHeight},
+                New attribute With {.name = "base", .type = CDFDataTypes.NC_CHAR, .value = peak.Peak.base}
             }
 
             Call file.AddVariable($"{peak.SampleName}\{peak.Name}", data, size, attrs)
@@ -197,7 +199,7 @@ Namespace LinearQuantitative.Data
             Dim data As chars = pack.peakSamples.SafeQuery.Select(Function(p) $"{p.SampleName}\{p.Name}").GetJson
             Dim size As New Dimension With {.name = "sizeofPeaks", .size = If(pack.peakSamples.IsNullOrEmpty, 0, pack.peakSamples.Length)}
             Dim attrs As attribute() = {
-                New attribute With {.name = "peaks", .type = CDFDataTypes.INT, .value = If(pack.linears.IsNullOrEmpty, 0, pack.linears.Length)}
+                New attribute With {.name = "peaks", .type = CDFDataTypes.NC_INT, .value = If(pack.linears.IsNullOrEmpty, 0, pack.linears.Length)}
             }
 
             file.AddVariable("peaks", data, size, attrs)
@@ -210,7 +212,7 @@ Namespace LinearQuantitative.Data
             Dim attrs As attribute() = {
                 New attribute With {
                     .name = "linears",
-                    .type = CDFDataTypes.INT,
+                    .type = CDFDataTypes.NC_INT,
                     .value = If(pack.linears.IsNullOrEmpty, 0, pack.linears.Length)
                 }
             }
@@ -228,9 +230,9 @@ Namespace LinearQuantitative.Data
         <Extension>
         Private Sub writeLinear(linear As StandardCurve, file As netCDF.CDFWriter)
             Dim attrs As attribute() = {
-                New attribute With {.name = "name", .type = CDFDataTypes.CHAR, .value = linear.name},
-                New attribute With {.name = "points", .type = CDFDataTypes.INT, .value = linear.points.TryCount},
-                New attribute With {.name = "R2", .type = CDFDataTypes.DOUBLE, .value = If(linear.linear Is Nothing, 0.0, linear.linear.R2)}
+                New attribute With {.name = "name", .type = CDFDataTypes.NC_CHAR, .value = linear.name},
+                New attribute With {.name = "points", .type = CDFDataTypes.NC_INT, .value = linear.points.TryCount},
+                New attribute With {.name = "R2", .type = CDFDataTypes.NC_DOUBLE, .value = If(linear.linear Is Nothing, 0.0, linear.linear.R2)}
             }
 
             Using buffer As MemoryStream = StandardCurveCDF.WriteCDF(linear)
@@ -243,12 +245,12 @@ Namespace LinearQuantitative.Data
 
         <Extension>
         Private Sub writeGlobals(pack As LinearPack, file As netCDF.CDFWriter)
-            Dim title As New attribute With {.name = "title", .type = CDFDataTypes.CHAR, .value = pack.title}
-            Dim time As New attribute With {.name = "time", .type = CDFDataTypes.CHAR, .value = pack.time.ToString}
-            Dim github As New attribute With {.name = "github", .type = CDFDataTypes.CHAR, .value = "https://github.com/xieguigang/mzkit"}
-            Dim linears As New attribute With {.name = "linears", .type = CDFDataTypes.INT, .value = If(pack.linears.IsNullOrEmpty, 0, pack.linears.Length)}
-            Dim peaks As New attribute With {.name = "peaks", .type = CDFDataTypes.INT, .value = If(pack.peakSamples.IsNullOrEmpty, 0, pack.peakSamples.Length)}
-            Dim type As New attribute With {.name = "targetted", .type = CDFDataTypes.CHAR, .value = pack.targetted.ToString}
+            Dim title As New attribute With {.name = "title", .type = CDFDataTypes.NC_CHAR, .value = pack.title}
+            Dim time As New attribute With {.name = "time", .type = CDFDataTypes.NC_CHAR, .value = pack.time.ToString}
+            Dim github As New attribute With {.name = "github", .type = CDFDataTypes.NC_CHAR, .value = "https://github.com/xieguigang/mzkit"}
+            Dim linears As New attribute With {.name = "linears", .type = CDFDataTypes.NC_INT, .value = If(pack.linears.IsNullOrEmpty, 0, pack.linears.Length)}
+            Dim peaks As New attribute With {.name = "peaks", .type = CDFDataTypes.NC_INT, .value = If(pack.peakSamples.IsNullOrEmpty, 0, pack.peakSamples.Length)}
+            Dim type As New attribute With {.name = "targetted", .type = CDFDataTypes.NC_CHAR, .value = pack.targetted.ToString}
 
             Call file.GlobalAttributes(title, time, github, linears, peaks, type)
         End Sub

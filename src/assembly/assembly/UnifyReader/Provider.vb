@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b9488e10a66fb97a440ca8ffc861ee5, mzkit\src\assembly\assembly\UnifyReader\Provider.vb"
+﻿#Region "Microsoft.VisualBasic::104c5700dbee77a36845167dff13a0a3, assembly\assembly\UnifyReader\Provider.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 65
-    ' Comment Lines: 4
-    '   Blank Lines: 11
-    '     File Size: 3.39 KB
+    '   Total Lines: 74
+    '    Code Lines: 59 (79.73%)
+    ' Comment Lines: 4 (5.41%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 11 (14.86%)
+    '     File Size: 3.05 KB
 
 
     '     Module Provider
@@ -64,16 +66,10 @@ Namespace DataReader
     Public Module Provider
 
         Public Function GetMsMs(Of Scan)() As Func(Of Scan, ms2())
-            Dim reader = MsDataReader(Of Scan).ScanProvider
+            Dim reader As ISpectrumReader(Of Scan) = MsDataReader(Of Scan).ScanProvider
+            Dim decoder As Func(Of Scan, ms2()) = AddressOf reader.GetMsMs
 
-            Select Case GetType(Scan)
-                Case GetType(mzXML.scan)
-                    Return CObj(New Func(Of mzXML.scan, ms2())(AddressOf DirectCast(reader, mzXMLScan).GetMsMs))
-                Case GetType(spectrum)
-                    Return CObj(New Func(Of spectrum, ms2())(AddressOf DirectCast(reader, mzMLScan).GetMsMs))
-                Case Else
-                    Throw New NotImplementedException(GetType(Scan).FullName)
-            End Select
+            Return decoder
         End Function
 
         <Extension>

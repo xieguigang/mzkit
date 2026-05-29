@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62dc0fc4a780867f5a92bda5c69af3da, mzkit\src\visualize\TissueMorphology\Scatter\UMAPPoint.vb"
+﻿#Region "Microsoft.VisualBasic::3b153097ebba2d67eb73e9ec22db4069, visualize\TissueMorphology\Scatter\UMAPPoint.vb"
 
 ' Author:
 ' 
@@ -37,11 +37,13 @@
 
 ' Code Statistics:
 
-'   Total Lines: 33
-'    Code Lines: 9
-' Comment Lines: 21
-'   Blank Lines: 3
-'     File Size: 942 B
+'   Total Lines: 105
+'    Code Lines: 67 (63.81%)
+' Comment Lines: 23 (21.90%)
+'    - Xml Docs: 91.30%
+' 
+'   Blank Lines: 15 (14.29%)
+'     File Size: 3.63 KB
 
 
 ' Class UMAPPoint
@@ -49,20 +51,24 @@
 '     Properties: [class], label, Pixel, x, y
 '                 z
 ' 
+'     Constructor: (+2 Overloads) Sub New
+'     Function: GetClusterLabels, ParseCsvTable, ToString
+' 
 ' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports Erica.Analysis.SingleCell.Expression
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' 3d scatter data point, a spatial spot or a single cell data
 ''' </summary>
-Public Class UMAPPoint
+Public Class UMAPPoint : Implements IEmbeddingScatter
 
     ''' <summary>
     ''' the spatial point of current spot if it is the sptial data, value
@@ -79,17 +85,31 @@ Public Class UMAPPoint
     ''' label value should not be nothing if the data is single 
     ''' cell data.
     ''' </remarks>
-    Public Property label As String
-    Public Property x As Double
-    Public Property y As Double
-    Public Property z As Double
+    Public Property label As String Implements IEmbeddingScatter.label
+    Public Property x As Double Implements IEmbeddingScatter.x
+    Public Property y As Double Implements IEmbeddingScatter.y
+    Public Property z As Double Implements IEmbeddingScatter.z
     ''' <summary>
     ''' the cell cluster data
     ''' </summary>
     ''' <returns></returns>
-    Public Property [class] As String
+    Public Property [class] As String Implements IEmbeddingScatter.cluster
 
-    Private Shared Function GetClusterLabels(df As DataFrame) As String()
+    Sub New()
+    End Sub
+
+    Sub New(label As String, x As Double, y As Double, z As Double)
+        Me.label = label
+        Me.x = x
+        Me.y = y
+        Me.z = z
+    End Sub
+
+    Public Overrides Function ToString() As String
+        Return $"[{x}, {y}, {z}] {[class]}"
+    End Function
+
+    Private Shared Function GetClusterLabels(df As DataFrameResolver) As String()
         Dim [class] As String()
 
         Static fields As String() = {
@@ -110,8 +130,8 @@ Public Class UMAPPoint
     End Function
 
     Public Shared Iterator Function ParseCsvTable(file As String) As IEnumerable(Of UMAPPoint)
-        Dim df As DataFrame = DataFrame.Load(file)
-        Dim labels As String() = df.Column(0).ToArray
+        Dim df As DataFrameResolver = DataFrameResolver.Load(file)
+        Dim labels As String() = df.GetColumnVectors.First.ToArray
         Dim x As Double() = df.GetColumnValues("x").Select(AddressOf Val).ToArray
         Dim y As Double() = df.GetColumnValues("y").Select(AddressOf Val).ToArray
         Dim z As Double() = df.GetColumnValues("z").Select(AddressOf Val).ToArray

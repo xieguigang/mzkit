@@ -17,6 +17,14 @@
  * 
 */
 declare namespace MsImaging {
+   /**
+    * apply a single filter or a filter pipeline
+    * 
+    * 
+     * @param filter -
+     * @param layer -
+   */
+   function apply_raster_filter(filter: object, layer: object): object;
    module as {
       /**
        * extract the pixel [x,y] information for all of
@@ -90,6 +98,10 @@ declare namespace MsImaging {
    */
    function intensity(layer: any, summary?: object, env?: object): number;
    /**
+     * @param env default value Is ``null``.
+   */
+   function intensityFilter(x: any, filter: object, env?: object): any;
+   /**
     * trim the intensity data value in a pixels of a ion MS-Imaging layer
     * 
     * 
@@ -142,21 +154,25 @@ declare namespace MsImaging {
      * @param pixelSize -
      * 
      * + default value Is ``'5,5'``.
-     * @param tolerance -
+     * @param tolerance the mass tolerance error for get ion intensity value from spatial spots.
      * 
      * + default value Is ``'da:0.1'``.
-     * @param color 
+     * @param color the color palette name
+     * 
      * + default value Is ``'viridis:turbo'``.
-     * @param levels 
+     * @param levels -
+     * 
      * + default value Is ``30``.
      * @param cutoff 
      * + default value Is ``[0.1,0.75]``.
      * @param background 
      * + default value Is ``'Transparent'``.
+     * @param raster 
+     * + default value Is ``null``.
      * @param env 
      * + default value Is ``null``.
    */
-   function layer(viewer: object, mz: number, pixelSize?: any, tolerance?: any, color?: string, levels?: object, cutoff?: any, background?: any, env?: object): object;
+   function layer(viewer: object, mz: number, pixelSize?: any, tolerance?: any, color?: string, levels?: object, cutoff?: any, background?: any, raster?: object, env?: object): object;
    /**
     * 
     * 
@@ -213,14 +229,31 @@ declare namespace MsImaging {
    */
    function MS1(viewer: object, x: object, y: object, tolerance?: any, threshold?: number, composed?: boolean, env?: object): object;
    /**
-     * @param samplingRegion default value Is ``true``.
+    * 
+    * 
+     * @param layer -
+     * @param xy -
+     * @param samplingRegion -
+     * 
+     * + default value Is ``true``.
    */
    function MSI_coverage(layer: object, xy: object, samplingRegion?: boolean): number;
    module MSI_summary {
       /**
-        * @param qcut default value Is ``0.75``.
-        * @param TrIQ default value Is ``true``.
-        * @param env default value Is ``null``.
+       * Get the max intensity value via TrIQ or quantile cutoff
+       * 
+       * 
+        * @param data the MSI plot data
+        * @param intensity the intensity source which describ how to extract the intensity data from the given MSI plot data.
+        * @param qcut the threshold cutoff value for the cutoff algorithm
+        * 
+        * + default value Is ``0.75``.
+        * @param TrIQ used the TrIQ cutoff algorithm or quantile cutoff? default parameter value TRUE means use the TrIQ method by default.
+        * 
+        * + default value Is ``true``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
       */
       function scaleMax(data: object, intensity: object, qcut?: number, TrIQ?: boolean, env?: object): number;
    }
@@ -245,6 +278,17 @@ declare namespace MsImaging {
    */
    function MSIlayer(viewer: object, mz: number, tolerance?: any, split?: boolean, env?: object): object;
    /**
+    * Converts R raw vector input into a raster processing pipeline configuration
+    * 
+    * > This method handles R-to-CLR type conversion and is primarily used for:
+    * >  Interop with R# environmentsParsing pipeline configurations from script parameters
+    * >  
+    * >  The @``M:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.RasterPipeline.Parse(System.Collections.Generic.IEnumerable{System.String})`` method implements the actual
+    * >  filter syntax interpretation and validation.
+    * 
+     * @param filters R-side input vector containing filter definitions. Accepts:
+     *  Character vector of filter expressionsList of filter specification stringsOther R vector types convertible via CLRVector.asCharacter
+     * @return A parsed RasterPipeline object configured with the input filter sequence
    */
    function parseFilters(filters: any): object;
    /**
@@ -402,10 +446,13 @@ declare namespace MsImaging {
     * > this function will load entire MSI matrix raw data into memory.
     * 
      * @param file *.imzML;*.mzPack
+     * @param memoryIndex read mzpack in-memory rawdata via the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader.MemoryIndexReader`` instead of un-indexed reader @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader.ReadRawPack``.
+     * 
+     * + default value Is ``false``.
      * @param env 
      * + default value Is ``null``.
    */
-   function viewer(file: any, env?: object): object;
+   function viewer(file: any, memoryIndex?: boolean, env?: object): object;
    module write {
       /**
        * write mzImage data file

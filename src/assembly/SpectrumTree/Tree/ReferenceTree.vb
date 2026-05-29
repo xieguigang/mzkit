@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::068e2d3a9b5225e328264ba3498e159f, mzkit\src\assembly\SpectrumTree\ReferenceTree.vb"
+﻿#Region "Microsoft.VisualBasic::2668401c1e564f5de1eb122992699bc4, assembly\SpectrumTree\Tree\ReferenceTree.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 166
-    '    Code Lines: 119
-    ' Comment Lines: 18
-    '   Blank Lines: 29
-    '     File Size: 5.40 KB
+    '   Total Lines: 127
+    '    Code Lines: 79 (62.20%)
+    ' Comment Lines: 27 (21.26%)
+    '    - Xml Docs: 40.74%
+    ' 
+    '   Blank Lines: 21 (16.54%)
+    '     File Size: 4.74 KB
 
 
-    ' Class ReferenceTree
+    '     Class ReferenceTree
     ' 
-    '     Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
+    '         Sub: (+2 Overloads) Dispose, (+2 Overloads) Push, WriteTree
     ' 
-    '     Function: Append, getMz, WriteSpectrum
-    ' 
-    '     Sub: (+2 Overloads) Dispose, (+2 Overloads) Push, WriteTree
     ' 
     ' /********************************************************************************/
 
@@ -62,7 +62,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Text
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Tree
 
@@ -122,7 +122,7 @@ Namespace Tree
 
         Protected Overridable Sub Push(centroid As ms2(), node As BlockNode, raw As PeakMs2)
             Dim score = GlobalAlignment.TwoDirectionSSM(centroid, node.centroid, da)
-            Dim min As Double = stdNum.Min(score.forward, score.reverse)
+            Dim min As Double = std.Min(score.forward, score.reverse)
             Dim i As Integer = BlockNode.GetIndex(min)
 
             If i = -1 Then

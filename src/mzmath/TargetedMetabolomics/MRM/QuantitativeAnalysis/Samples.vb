@@ -1,55 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::00dec9aec0ddb9c7615ffa6116b5edcd, mzkit\src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\Samples.vb"
+﻿#Region "Microsoft.VisualBasic::bade5b0024586fac6cae093389230d28, mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\Samples.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 176
-'    Code Lines: 118
-' Comment Lines: 39
-'   Blank Lines: 19
-'     File Size: 8.47 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module MRMSamples
-' 
-'         Function: ExtractIonData, QuantitativeAnalysis, SampleQuantify
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 193
+    '    Code Lines: 132 (68.39%)
+    ' Comment Lines: 39 (20.21%)
+    '    - Xml Docs: 84.62%
+    ' 
+    '   Blank Lines: 22 (11.40%)
+    '     File Size: 9.19 KB
+
+
+    '     Module MRMSamples
+    ' 
+    '         Function: (+2 Overloads) ExtractIonData, QuantitativeAnalysis, SampleQuantify
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -64,7 +66,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.SignalReader
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
@@ -101,10 +103,26 @@ Namespace MRM
                                 .name = assignName(ion),
                                 .description = note,
                                 .chromatogram = ionData.chromatogram.Ticks,
-                                .ion = ionData.ion
+                                .ion = ionData.ion,
+                                .source = mzML.BaseName
                             }
                         End Function) _
                 .ToArray
+        End Function
+
+        Public Function ExtractIonData(mzML As String, ion As IonPair, tolerance As Tolerance) As IonChromatogram
+            Dim xicdata = LoadChromatogramList(mzML).MRMSelector(ion, tolerance)
+
+            If xicdata Is Nothing Then
+                Return Nothing
+            End If
+
+            Return New IonChromatogram With {
+                .name = ion.name,
+                .chromatogram = xicdata.Ticks,
+                .description = ion.name & $" [{ion.precursor}/{ion.product}]",
+                .ion = New IsomerismIonPairs(ion)
+            }
         End Function
 
         ''' <summary>
@@ -176,7 +194,7 @@ Namespace MRM
                            Return Not basename Like nameIndex AndAlso Not isBlank(basename)
                        End Function)
 
-                Call file.ToFileURL.__INFO_ECHO
+                Call file.ToFileURL.info
 
                 scan = model.SampleQuantify(
                     file:=file,

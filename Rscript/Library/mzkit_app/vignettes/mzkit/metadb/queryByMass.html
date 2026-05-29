@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>queryByMass</title>
+    <title>A general interface method for query the exact mass search index</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>queryByMass</h2>
+        <h2>A general interface method for query the exact mass search index</h2>
 
         <h3>Description</h3>
 
-        queryByMass
+        
 
         <h3>Usage</h3>
 
@@ -34,12 +34,19 @@
 
         <table>
             
+<dt>search</dt>
+<dd><p>the mass search index engine. [as <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/IMassSearch.html">IMassSearch</a>]</p></dd>
+
+
+<dt>mass</dt>
+<dd><p>the target exact mass value. [as double]</p></dd>
+
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>this function will return a list of the matched results, which it could be empty if no matched results.</p>
 
         <h3 style="display: block">Authors</h3>
 

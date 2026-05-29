@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e453a29f7cf604eacaa69f476e25a48, mzkit\src\metadb\Massbank\MetaLib\NaturalLanguageTerm.vb"
+﻿#Region "Microsoft.VisualBasic::7e88bc1f083ae3f66aa05abaa845ee87, metadb\Massbank\MetaLib\NaturalLanguageTerm.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 59
-    '    Code Lines: 40
-    ' Comment Lines: 8
-    '   Blank Lines: 11
-    '     File Size: 2.11 KB
+    '   Total Lines: 133
+    '    Code Lines: 95 (71.43%)
+    ' Comment Lines: 16 (12.03%)
+    '    - Xml Docs: 81.25%
+    ' 
+    '   Blank Lines: 22 (16.54%)
+    '     File Size: 5.58 KB
 
 
     '     Module NaturalLanguageTerm
     ' 
-    '         Function: IsOligopeptideName, ParseVendorName
+    '         Function: ConvertToAcidName, EnumerateOdorTerms, IsOligopeptideName, ParseVendorName, (+2 Overloads) ProcessingNaturalLanguageName
     ' 
     ' 
     ' /********************************************************************************/
@@ -55,6 +57,10 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
+Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.NLP
+Imports Microsoft.VisualBasic.Linq
 
 Namespace MetaLib
 
@@ -66,6 +72,7 @@ Namespace MetaLib
         Public Const OligopeptideName$ = "[A-Z][a-z]{2}"
 
         ReadOnly oligopeptidePattern As New Regex(OligopeptideName, RegexOptions.Singleline)
+        ReadOnly stopWords As New StopWords
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
@@ -110,6 +117,74 @@ Namespace MetaLib
             Else
                 Return Nothing
             End If
+        End Function
+
+        <Extension>
+        Public Iterator Function ProcessingNaturalLanguageName(synonym As IEnumerable(Of String)) As IEnumerable(Of String)
+            For Each name As String In synonym.Distinct
+                For Each processed As String In ProcessingNaturalLanguageName(name)
+                    Yield processed
+                Next
+            Next
+        End Function
+
+        Public Iterator Function ProcessingNaturalLanguageName(compoundName As String) As IEnumerable(Of String)
+            Yield compoundName
+
+            If compoundName.StartsWith("L-") OrElse compoundName.StartsWith("D-") Then
+                Dim short$ = compoundName.Substring(2)
+
+                Yield [short]
+
+                If [short].EndsWith("ate", StringComparison.OrdinalIgnoreCase) Then
+                    Yield [short].Substring(0, [short].Length - 3) & "ic acid"
+                End If
+            End If
+
+            If compoundName.EndsWith("ate", StringComparison.OrdinalIgnoreCase) Then
+                Yield compoundName.Substring(0, compoundName.Length - 3) & "ic acid"
+            End If
+        End Function
+
+        ''' <summary>
+        ''' ate to acid name conversion
+        ''' </summary>
+        ''' <param name="compoundName"></param>
+        ''' <returns></returns>
+        Public Function ConvertToAcidName(compoundName As String) As String
+            ' 检查输入的化合物名称是否以 "ate" 结尾
+            If compoundName.EndsWith("ate", StringComparison.OrdinalIgnoreCase) Then
+                ' 将 "ate" 替换为 "ic acid"
+                Return compoundName.Substring(0, compoundName.Length - 3) & "ic acid"
+            Else
+                ' 如果不是以 "ate" 结尾，返回原始名称
+                Return compoundName
+            End If
+        End Function
+
+        <Extension>
+        Public Iterator Function EnumerateOdorTerms(info As ChemicalDescriptor) As IEnumerable(Of NamedValue(Of String))
+            For Each odor As UnitValue In From oi As UnitValue In info.Odor.SafeQuery Where Not oi Is Nothing
+                Dim terms As String() = Strings.Trim(odor.condition.TrimNewLine).ToLower.Words
+
+                For Each term As String In stopWords.Removes(terms)
+                    Yield New NamedValue(Of String)("odor", term, odor.condition)
+                Next
+            Next
+            For Each odor As UnitValue In From oi As UnitValue In info.Taste.SafeQuery Where Not oi Is Nothing
+                Dim terms As String() = Strings.Trim(odor.condition.TrimNewLine).ToLower.Words
+
+                For Each term As String In stopWords.Removes(terms)
+                    Yield New NamedValue(Of String)("taste", term, odor.condition)
+                Next
+            Next
+            For Each odor As UnitValue In From oi As UnitValue In info.Color.SafeQuery Where Not oi Is Nothing
+                Dim terms As String() = Strings.Trim(odor.condition.TrimNewLine).ToLower.Words
+
+                For Each term As String In stopWords.Removes(terms)
+                    Yield New NamedValue(Of String)("color", term, odor.condition)
+                Next
+            Next
         End Function
     End Module
 End Namespace

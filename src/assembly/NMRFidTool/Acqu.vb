@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e46595f9b51faf4d80aeba2dd7a625c, mzkit\src\assembly\NMRFidTool\Acqu.vb"
+﻿#Region "Microsoft.VisualBasic::09baccea3e27fffd41fcd7ace5476559, assembly\NMRFidTool\Acqu.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 434
-    '    Code Lines: 327
-    ' Comment Lines: 27
-    '   Blank Lines: 80
-    '     File Size: 12.80 KB
+    '    Code Lines: 327 (75.35%)
+    ' Comment Lines: 27 (6.22%)
+    '    - Xml Docs: 25.93%
+    ' 
+    '   Blank Lines: 80 (18.43%)
+    '     File Size: 13.24 KB
 
 
     ' Class Acqu
@@ -161,7 +163,7 @@ Public Class Acqu
     Private fidTypeField As FidData 'fid_type      define in class data_par
     Private byteOrderField As ByteOrder 'bytorda       byte order (0 -> Little endian, 1 -> Big Endian)
 
-    Private spectrometerField As Spectrometer
+    Private m_spectrometer As Spectrometer
 
     Public Enum Spectrometer
         BRUKER
@@ -170,7 +172,7 @@ Public Class Acqu
     End Enum
 
     Public Sub New(spectrometer As Spectrometer)
-        spectrometerField = spectrometer
+        m_spectrometer = spectrometer
     End Sub
 
     Public Overridable Property TransmiterFreq As Double
@@ -535,6 +537,6 @@ Public Class Acqu
 
 
     Public Overridable Function getSpectrometer() As Spectrometer
-        Return spectrometerField
+        Return m_spectrometer
     End Function
 End Class

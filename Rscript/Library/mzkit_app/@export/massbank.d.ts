@@ -22,6 +22,7 @@ declare namespace massbank {
         * @param env -
         * 
         * + default value Is ``null``.
+        * @return cast the lipidmaps sdf data as lipidmaps data model
       */
       function lipidmaps(sdf: any, asList?: boolean, lazy?: boolean, env?: object): object;
    }
@@ -33,20 +34,50 @@ declare namespace massbank {
       }
    }
    /**
+    * normalized the input id data as canonical chebi id
+    * 
+    * 
+     * @param id -
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function chebi_id(id: any, env?: object): any;
+   /**
     * extract the chebi annotation data from the chebi ontology data
     * 
     * 
      * @param chebi the chebi ontology data, in clr type: @``T:SMRUCC.genomics.foundation.OBO_Foundry.IO.Models.OBOFile``
    */
    function extract_chebi_compounds(chebi: object): object;
+   /**
+    * Extract the unique metabolite information from the mona database
+    * 
+    * 
+     * @param mona -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+     * @return a tuple list of the @``T:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaInfo`` data. andalso an attribute with name ``mapping`` is tagged
+     *  with the result tuple list that contains mapping from the spectrum id to the metabolite unique 
+     *  reference id.
+   */
+   function extract_mona_metabolites(mona: any, env?: object): object;
    module glycosyl {
       /**
         * @param rules default value Is ``null``.
       */
       function solver(rules?: object): object;
       /**
-        * @param rules default value Is ``null``.
-        * @param env default value Is ``null``.
+       * Parse the glycosyl compound name
+       * 
+       * 
+        * @param glycosyl -
+        * @param rules -
+        * 
+        * + default value Is ``null``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
       */
       function tokens(glycosyl: string, rules?: object, env?: object): string;
    }
@@ -59,15 +90,14 @@ declare namespace massbank {
       }
    }
    /**
-    * generates the inchikey hashcode based on the given inchi data
+    * check of the mona reference spectrum is positive or not?
     * 
     * 
-     * @param inchi -
-     * @param env -
-     * 
-     * + default value Is ``null``.
+     * @param spec should be a mass spectrum object with ion polarity data tagged. 
+     *  the mass spectrum object could be the MONA @``T:BioNovoGene.BioDeep.Chemistry.SpectraSection``, @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType.IonModes`` enum value,
+     *  precursor type @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType.MzCalculator`` object, @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2`` mass spectrum object.
    */
-   function inchikey(inchi: any, env?: object): object;
+   function is_positive(spec: any): boolean;
    module lipid {
       /**
        * Create lipid class helper for annotation
@@ -99,6 +129,19 @@ declare namespace massbank {
    */
    function lipid_classprofiles(lipid_class: object): object;
    /**
+    * cast lipidmaps data to metabolites
+    * 
+    * 
+     * @param x should be a collection of the sdf data object that parsed from the lipidmaps sdf file, 
+     *  or a collection of the lipidmaps messagepack metadata object.
+     * @param lazy -
+     * 
+     * + default value Is ``false``.
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function lipid_metabolites(x: any, lazy?: boolean, env?: object): object;
+   /**
    */
    function lipid_profiles(categry: object, enrich: object): object;
    /**
@@ -112,6 +155,26 @@ declare namespace massbank {
    */
    function lipidmaps_id(lipidmaps: any, env?: object): any;
    /**
+    * load the herb compound information
+    * 
+    * 
+     * @param file -
+   */
+   function load_HERB_ingredient(file: string): object;
+   /**
+    * load compounds from herbs database
+    * 
+    * 
+   */
+   function load_herbs(repo: string): object;
+   /**
+    * load herbs species information
+    * 
+    * 
+     * @param file -
+   */
+   function load_herbs_list(file: string): object;
+   /**
     * construct a new metabolite annotation information data
     * 
     * 
@@ -124,8 +187,12 @@ declare namespace massbank {
      * + default value Is ``null``.
      * @param desc 
      * + default value Is ``null``.
+     * @param organism_source 
+     * + default value Is ``null``.
+     * @param zh_name 
+     * + default value Is ``null``.
    */
-   function metabo_anno(id: string, formula: string, name: string, iupac_name?: string, xref?: object, synonym?: any, desc?: any): object;
+   function metabo_anno(id: string, formula: string, name: string, iupac_name?: string, xref?: object, synonym?: any, desc?: any, organism_source?: any, zh_name?: string): object;
    module mona {
       /**
        * Extract the annotation metadata from the MONA comment data
@@ -135,22 +202,43 @@ declare namespace massbank {
       */
       function msp_metadata(msp: object): object;
    }
+   /**
+    * Extract odors information from the metabolite data
+    * 
+    * 
+     * @param meta -
+     * @param env -
+   */
+   function odors(meta: object, env: object): object;
    module parse {
       /**
       */
       function ChEBI_entity(xml: string): object;
    }
    /**
-     * @param max_len default value Is ``32``.
-     * @param min_len default value Is ``5``.
+    * Ranking a set of the given synonym string collection for find common name.
+    * 
+    * 
+     * @param x -
+     * @param max_len -
+     * 
+     * + default value Is ``32``.
+     * @param min_len -
+     * 
+     * + default value Is ``5``.
    */
    function rankingNames(x: any, max_len?: object, min_len?: object): object;
    module read {
       /**
+        * @param lazy default value Is ``true``.
+        * @param env default value Is ``null``.
+      */
+      function coconut(file: any, lazy?: boolean, env?: object): any;
+      /**
        * read lipidmaps messagepack repository file
        * 
        * 
-        * @param file -
+        * @param file the file path to the message pack file that contains the lipidmaps annotation data
         * @param gsea_background and also cast the lipidmaps metabolite metadata to the gsea background model?
         * 
         * + default value Is ``false``.
@@ -162,16 +250,32 @@ declare namespace massbank {
       */
       function lipidmaps(file: any, gsea_background?: boolean, category_model?: boolean, env?: object): object|object|object;
       /**
+       * load the lotus natural products metabolite library from a given file
+       * 
+       * 
+        * @param file -
+        * @param lazy 
+        * + default value Is ``true``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function lotus(file: any, lazy?: boolean, env?: object): object;
+      /**
        * read MoNA database file.
        * 
        * 
         * @param rawfile a vector of the mona database file, could be a set of multiple mona database file.
         *  the database reader is switched automatically based on this file path its 
-        *  extension name.
+        *  extension name. currently supported data file formats: ``sdf`` and ``msp``.
         * @param skipSpectraInfo 
         * + default value Is ``false``.
-        * @param is_gcms 
+        * @param is_gcms Load gcms reference dataset?
+        * 
         * + default value Is ``false``.
+        * @param lazy Create a lazy data populator or load all data in memory and returns a vector of the spectral data
+        * 
+        * + default value Is ``true``.
         * @param verbose 
         * + default value Is ``true``.
         * @param env -
@@ -180,7 +284,18 @@ declare namespace massbank {
         * @return a linq pipeline for populate the spectrum data 
         *  from the MoNA database.
       */
-      function MoNA(rawfile: string, skipSpectraInfo?: boolean, is_gcms?: boolean, verbose?: boolean, env?: object): object;
+      function MoNA(rawfile: string, skipSpectraInfo?: boolean, is_gcms?: boolean, lazy?: boolean, verbose?: boolean, env?: object): object;
+      /**
+       * read the csv table of refmet
+       * 
+       * > the sheet table could be download from page:
+       * >  
+       * >  > https://www.metabolomicsworkbench.org/databases/refmet/browse.php
+       * >  > Reference: RefMet: a reference nomenclature for metabolomics (Nature Methods, 2020)
+       * 
+        * @param file -
+      */
+      function RefMet(file: string): object;
       /**
        * read metabolite data in a given sdf data file.
        * 
@@ -233,6 +348,20 @@ declare namespace massbank {
         * 
         * + default value Is ``null``.
       */
-      function lipidmaps(lipidmaps: any, file: any, env?: object): any;
+      function lipidmaps(lipidmaps: any, file: any, env?: object): boolean;
+      /**
+       * write the metabolite annotation data collection as messagepack
+       * 
+       * 
+        * @param metadb should be a collection of the mzkit metabolite annotation model @``T:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib``.
+        * @param file the file to the target messagepack file
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function metalib(metadb: any, file: any, env?: object): boolean;
    }
+   /**
+   */
+   function write_mona(pack: object, spec: object): ;
 }
