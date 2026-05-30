@@ -1,4 +1,5 @@
-﻿Imports std = System.Math
+﻿Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports std = System.Math
 
 Namespace MaxLFQ
 
@@ -133,7 +134,8 @@ Namespace MaxLFQ
 
         ' 最小二乘求解器（伪代码，实际需调用数学库）
         Private Function SolveLeastSquares(A(,) As Double, b() As Double) As Double()
-            ' 实际实现应使用SVD或QR分解（如MathNet.Numerics）
+            ' 实际实现应使用SVD或QR分解
+            Return New QRDecomposition(New NumericMatrix(A)).Solve(New NumericMatrix(b)).ArrayPack.First
         End Function
     End Module
 
