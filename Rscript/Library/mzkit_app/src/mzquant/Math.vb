@@ -129,6 +129,8 @@ Module QuantifyMath
                              <RRawVectorArgument>
                              Optional sampleinfo As Object = Nothing,
                              Optional impute As MissingValueMethod = MissingValueMethod.HalfMin,
+                             Optional knn As Integer = 5,
+                             Optional max_missing_ratio As Double = 0.85,
                              Optional env As Environment = Nothing) As Object
 
         Dim pull_samples As pipeline = pipeline.TryCreatePipeline(Of SampleInfo)(sampleinfo, env:=env, nullPipe:=True)
@@ -137,7 +139,13 @@ Module QuantifyMath
             Return pull_samples.getError
         End If
 
-        Dim opts As New PreprocessingOptions With {.MissingValueMethod = impute, .EnableMissingValueFilter = True}
+        Dim opts As New PreprocessingOptions With {
+            .MissingValueMethod = impute,
+            .EnableMissingValueFilter = True,
+            .KNN_K = knn,
+            .QCLabel = "QC",
+            .MaxMissingRate = max_missing_ratio
+        }
         Dim pipe As New LCMSPreprocessor(opts)
         Dim sampleMeta As SampleInfo() = If(pull_samples Is Nothing, Nothing, pull_samples.populates(Of SampleInfo)(env).ToArray)
         Dim result As PreprocessingResult = pipe.Process(x.AsEnumerable.ToArray, sampleMeta)

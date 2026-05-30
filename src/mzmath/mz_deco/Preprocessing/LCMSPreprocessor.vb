@@ -66,11 +66,14 @@ Namespace LCMS.Preprocessing
         ''' 流程：缺失值标记 → 缺失值过滤 → 缺失值插补 → 归一化 → 批次矫正
         ''' </summary>
         ''' <param name="ions">xcms2离子数组</param>
-        ''' <param name="samples">样本信息数组</param>
+        ''' <param name="samples">样本信息数组，在某些算法配置情况下可以缺失</param>
         ''' <returns>预处理结果对象</returns>
-        Public Function Process(ions As xcms2(), samples As SampleInfo()) As PreprocessingResult
+        Public Function Process(ions As xcms2(), Optional samples As SampleInfo() = Nothing) As PreprocessingResult
             If ions Is Nothing Then Throw New ArgumentNullException(NameOf(ions))
-            If samples Is Nothing Then Throw New ArgumentNullException(NameOf(samples))
+            If samples Is Nothing Then
+                Call "sampleinfo metadata is missing, some of the algorithmwill not working as expected".warning
+                samples = ions.propertynames
+            End If
 
             Dim result As New PreprocessingResult()
             result.OriginalIons = ions
