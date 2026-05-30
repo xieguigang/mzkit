@@ -9,8 +9,11 @@ Namespace MaxLFQ
         Public Function RunMaxLFQ(peptides As List(Of PeptideQuant), sampleCount As Integer) As List(Of MaxLFQResult)
             ' 步骤1: 构建肽段-样本强度矩阵
             Dim peptideMatrix(sampleCount - 1)() As Double
+            Dim offset As Integer
+
             For i As Integer = 0 To sampleCount - 1
-                peptideMatrix(i) = peptides.Select(Function(p) p.Intensities(i)).ToArray()
+                offset = i
+                peptideMatrix(i) = peptides.Select(Function(p) p.Intensities(offset)).ToArray()
             Next
 
             ' 步骤2: 按蛋白质分组肽段

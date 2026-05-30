@@ -1,18 +1,17 @@
 Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
 
-
-''' <summary>
-''' LC-MS表达矩阵数据预处理模块 - 批次矫正
-''' 
-''' 本模块实现了多种批次效应矫正方法，用于消除LC-MS数据中
-''' 由于不同实验批次、仪器漂移等因素导致的系统性差异。
-''' </summary>
 Namespace LCMS.Preprocessing
 
     ''' <summary>
     ''' 批次矫正处理类
     ''' 提供多种批次效应矫正方法
     ''' </summary>
+    ''' <remarks>
+    ''' LC-MS表达矩阵数据预处理模块 - 批次矫正
+    ''' 
+    ''' 本模块实现了多种批次效应矫正方法，用于消除LC-MS数据中
+    ''' 由于不同实验批次、仪器漂移等因素导致的系统性差异。
+    ''' </remarks>
     Public Class BatchCorrection
 
         ''' <summary>
