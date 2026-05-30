@@ -1,3 +1,5 @@
+Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
+
 ''' <summary>
 ''' LC-MS表达矩阵数据预处理模块 - 主流程管线
 ''' 
@@ -136,8 +138,7 @@ Namespace LCMS.Preprocessing
             batchStats.QCsPerBatch = New Dictionary(Of Integer, Integer)
             For Each bid In batchIds
                 batchStats.SamplesPerBatch(bid) = BatchCorrection.GetBatchSampleIndices(samples, bid).Length
-                batchStats.QCsPerBatch(bid) = BatchCorrection.GetQCSampleIndices(samples, _options.QCLabel).
-                                                    Count(Function(idx) samples(idx).batch = bid)
+                batchStats.QCsPerBatch(bid) = BatchCorrection.GetQCSampleIndices(samples, _options.QCLabel).Count(Function(idx) samples(idx).batch = bid)
             Next
             result.BatchCorrectionStats = batchStats
 
@@ -229,8 +230,8 @@ Namespace LCMS.Preprocessing
             For i As Integer = 0 To nFeatures - 1
                 For j As Integer = 0 To nSamples - 1
                     Dim sampleId As String = samples(j).ID
-                    If ions(i).Samples.ContainsKey(sampleId) Then
-                        matrix(i, j) = ions(i).Samples(sampleId)
+                    If ions(i).HasProperty(sampleId) Then
+                        matrix(i, j) = ions(i)(sampleId)
                     Else
                         matrix(i, j) = Double.NaN
                     End If
@@ -269,9 +270,9 @@ Namespace LCMS.Preprocessing
                 ion.rtmax = originalIons(origIdx).rtmax
 
                 ' 更新样本丰度数据
-                ion.Samples = New Dictionary(Of String, Double)
+                ion.Properties = New Dictionary(Of String, Double)
                 For j As Integer = 0 To nSamples - 1
-                    ion.Samples(samples(j).ID) = matrix(i, j)
+                    ion(samples(j).ID) = matrix(i, j)
                 Next
 
                 result(i) = ion
@@ -304,7 +305,7 @@ Namespace LCMS.Preprocessing
         ''' 
         ''' 推荐规则：
         ''' - 缺失值处理：
-        '''   缺失率 < 30% → HalfMin（假设左截断）
+        '''   缺失率 &lt; 30% → HalfMin（假设左截断）
         '''   缺失率 30%-60% → KNN（随机缺失较多）
         '''   缺失率 > 60% → QRILC（左截断严重）
         ''' 
@@ -327,7 +328,7 @@ Namespace LCMS.Preprocessing
 
             For Each ion In ions
                 For Each s In samples
-                    If Not ion.Samples.ContainsKey(s.ID) OrElse ion.Samples(s.ID) = 0 Then
+                    If Not ion.HasProperty(s.ID) OrElse ion(s.ID) = 0 Then
                         missingCells += 1
                     End If
                 Next

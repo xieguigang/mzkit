@@ -1,4 +1,6 @@
-﻿Namespace LCMS.Preprocessing
+﻿Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
+
+Namespace LCMS.Preprocessing
 
     ''' <summary>
     ''' 预处理结果类

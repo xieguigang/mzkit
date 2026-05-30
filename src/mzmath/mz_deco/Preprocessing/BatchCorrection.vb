@@ -1,3 +1,5 @@
+Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
+
 ''' <summary>
 ''' LC-MS表达矩阵数据预处理模块 - 批次矫正
 ''' 
@@ -407,7 +409,7 @@ Namespace LCMS.Preprocessing
             End If
 
             ' 获取每个批次的样本索引
-            Dim batchIndices(nBatches - 1) As Integer()
+            Dim batchIndices As Integer()() = New Integer(nBatches - 1)() {}
             Dim batchSize(nBatches - 1) As Integer
             For b As Integer = 0 To nBatches - 1
                 batchIndices(b) = GetBatchSampleIndices(samples, batchIds(b))
@@ -518,14 +520,14 @@ Namespace LCMS.Preprocessing
 
             ' Step 4: 应用矫正
             ' 计算全局方差
-            Dim pooledVar(nFeatures - 1) As Double
+            Dim pooledVarVec(nFeatures - 1) As Double
             For i As Integer = 0 To nFeatures - 1
                 Dim sumSq As Double = 0
                 For j As Integer = 0 To nSamples - 1
                     sumSq += (matrix(i, j) - grandMean(i)) ^ 2
                 Next
-                pooledVar(i) = sumSq / (nSamples - nBatches)
-                If pooledVar(i) <= 0 Then pooledVar(i) = 1.0
+                pooledVarVec(i) = sumSq / (nSamples - nBatches)
+                If pooledVarVec(i) <= 0 Then pooledVarVec(i) = 1.0
             Next
 
             For b As Integer = 0 To nBatches - 1

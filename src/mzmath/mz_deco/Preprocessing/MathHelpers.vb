@@ -908,7 +908,7 @@ Namespace LCMS.Preprocessing
                     For k As Integer = 0 To nSamples - 1
                         residual(i, k) -= t(k) * loadings(i)
                     Next
-                End If
+                Next
             Next
 
             Return scores
