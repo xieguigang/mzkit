@@ -226,7 +226,7 @@ Module QuantifyMath
             .PCA_Components = pca,
             .PCA_MaxIterations = iteration,
             .PCA_Tolerance = pca_eps,
-            .PQN_ReferenceType = pqn,
+            .PQN_ReferenceType = CLRVector.asScalarCharacter(pqn),
             .SVR_C = svr_c,
             .SVR_Epsilon = svr_eps,
             .SVR_Gamma = svr_gamma,
