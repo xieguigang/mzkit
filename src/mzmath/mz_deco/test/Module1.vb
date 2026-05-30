@@ -61,12 +61,21 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Linq
+Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
 
 Module Module1
 
     Sub Main()
+        Call normTest()
         ' Call multipleTest()
-        Call align_test()
+        ' Call align_test()
+    End Sub
+
+    Sub normTest()
+        Dim data As PeakSet = PeakSet.ReadCsv("\\192.168.3.15\sda\2026\wzc\rawdata\lcms_output_test_20260528\tmp\workflow_tmp\rawdata\neg\peaktable.csv")
+        Dim sampleinfo As SampleInfo() = "\\192.168.3.15\sda\2026\wzc\rawdata\sampleinfo.csv".LoadCsv(Of SampleInfo)
+
+        Pause()
     End Sub
 
     Sub align_test()

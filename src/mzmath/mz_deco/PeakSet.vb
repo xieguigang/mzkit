@@ -291,6 +291,11 @@ Public Class PeakSet : Implements Enumeration(Of xcms2)
         Next
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function ReadCsv(file As String) As PeakSet
+        Return SaveXcms.ReadTextTable(file, tsv:=False, make_unique:=True)
+    End Function
+
     Private Iterator Function GenericEnumerator() As IEnumerator(Of xcms2) Implements Enumeration(Of xcms2).GenericEnumerator
         For Each peak As xcms2 In m_peaksdata.SafeQuery
             Yield peak
