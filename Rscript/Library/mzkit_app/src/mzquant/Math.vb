@@ -134,8 +134,7 @@ Module QuantifyMath
                              Optional knn As Integer = 5,
                              Optional max_missing_ratio As Double = 0.85,
                              Optional pca As Integer = 5,
-                             Optional iteration As Integer = 1000,
-                             Optional esp As Double = 0.00000001,
+                             Optional pca_eps As Double = 0.00000001,
                              <RRawVectorArgument(TypeCodes.string)>
                              Optional pqn As Object = "median|mean",
                              Optional loess_span As Double = 0.75,
@@ -145,6 +144,7 @@ Module QuantifyMath
                              Optional svr_eps As Double = 0.1,
                              Optional svr_gamma As Double = 0.1,
                              Optional svr_learn_rate As Double = 0.01,
+                             Optional iteration As Integer = 1000,
                              Optional env As Environment = Nothing) As Object
 
         Dim pull_samples As pipeline = pipeline.TryCreatePipeline(Of SampleInfo)(sampleinfo, env:=env, nullPipe:=True)
@@ -159,7 +159,20 @@ Module QuantifyMath
             .KNN_K = knn,
             .QCLabel = "QC",
             .MaxMissingRate = max_missing_ratio,
-            .NormalizationMethod = normalize
+            .NormalizationMethod = normalize,
+            .BatchCorrectionMethod = batch,
+            .ComBat_Parametric = combat_parametric,
+            .LOESS_Degree = loess_degree,
+            .LOESS_Span = loess_span,
+            .PCA_Components = pca,
+            .PCA_MaxIterations = iteration,
+            .PCA_Tolerance = pca_eps,
+            .PQN_ReferenceType = pqn,
+            .SVR_C = svr_c,
+            .SVR_Epsilon = svr_eps,
+            .SVR_Gamma = svr_gamma,
+            .SVR_LearningRate = svr_learn_rate,
+            .SVR_MaxIterations = iteration
         }
         Dim pipe As New LCMSPreprocessor(opts)
         Dim sampleMeta As SampleInfo() = If(pull_samples Is Nothing, Nothing, pull_samples.populates(Of SampleInfo)(env).ToArray)
