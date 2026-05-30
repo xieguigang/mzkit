@@ -1,3 +1,5 @@
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
 
 Namespace LCMS.Preprocessing
@@ -71,8 +73,32 @@ Namespace LCMS.Preprocessing
         Public Function Process(ions As xcms2(), Optional samples As SampleInfo() = Nothing) As PreprocessingResult
             If ions Is Nothing Then Throw New ArgumentNullException(NameOf(ions))
             If samples Is Nothing Then
-                Call "sampleinfo metadata is missing, some of the algorithmwill not working as expected".warning
-                samples = ions.propertynames
+                Call "sampleinfo metadata is missing, some of the algorithmwill not working as expected.".warning
+
+                samples = ions.PropertyNames _
+                    .GuessPossibleGroups(maxDepth:=False) _
+                    .Select(Iterator Function(group) As IEnumerable(Of SampleInfo)
+                                For Each id As String In group.value
+                                    Yield New SampleInfo(id, group.name)
+                                Next
+                            End Function) _
+                    .IteratesALL _
+                    .ToArray
+            End If
+
+            If samples.All(Function(s) s.injectionOrder = 0) Then
+                Call "missing injection order data!".warning
+
+                For i As Integer = 0 To samples.Length - 1
+                    samples(i).injectionOrder = i + 1
+                Next
+            End If
+            If samples.All(Function(s) s.batch = 0) Then
+                Call "missing batch group data, assuming that all samples in one sample batch.".warning
+
+                For Each sample As SampleInfo In samples
+                    sample.batch = 1
+                Next
             End If
 
             Dim result As New PreprocessingResult()
