@@ -129,6 +129,7 @@ Module QuantifyMath
                              <RRawVectorArgument>
                              Optional sampleinfo As Object = Nothing,
                              Optional impute As MissingValueMethod = MissingValueMethod.HalfMin,
+                             Optional normalize As NormalizationMethod = NormalizationMethod.TotalIonCount,
                              Optional knn As Integer = 5,
                              Optional max_missing_ratio As Double = 0.85,
                              Optional env As Environment = Nothing) As Object
@@ -144,7 +145,8 @@ Module QuantifyMath
             .EnableMissingValueFilter = True,
             .KNN_K = knn,
             .QCLabel = "QC",
-            .MaxMissingRate = max_missing_ratio
+            .MaxMissingRate = max_missing_ratio,
+            .NormalizationMethod = normalize
         }
         Dim pipe As New LCMSPreprocessor(opts)
         Dim sampleMeta As SampleInfo() = If(pull_samples Is Nothing, Nothing, pull_samples.populates(Of SampleInfo)(env).ToArray)
