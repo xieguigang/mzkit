@@ -312,59 +312,6 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         Return pool
     End Function
 
-    ''' <summary>
-    ''' impute missing data with half of the min positive value
-    ''' </summary>
-    ''' <returns></returns>
-    Public Function Impute(Optional method As Imputation = Imputation.Min) As xcms2
-        Dim is_zero As Boolean = Properties.Values.All(Function(xi) xi = 0.0)
-        Dim fill_missing As Dictionary(Of String, Double)
-
-        If Not is_zero Then
-            Dim pos_min As Double
-
-            If method = Imputation.Min Then
-                pos_min = (Aggregate xi As Double
-                           In Properties.Values
-                           Where xi > 0
-                           Into Min(xi)) / 2
-            Else
-                pos_min = Properties.Values _
-                    .Where(Function(xi) xi > 0) _
-                    .Median
-            End If
-
-            fill_missing = Properties _
-                .ToDictionary(Function(k) k.Key,
-                              Function(k)
-                                  Return If(k.Value.IsNaNImaginary OrElse k.Value <= 0, pos_min, k.Value)
-                              End Function)
-        Else
-            ' random fill for all zero
-            ' no differece in t-test
-            fill_missing = Properties _
-                .ToDictionary(Function(a) a.Key,
-                              Function(a)
-                                  Return randf.NextDouble(0.5, 1)
-                              End Function)
-        End If
-
-        Return New xcms2 With {
-            .ID = ID,
-            .mz = mz,
-            .mzmax = mzmax,
-            .mzmin = mzmin,
-            .rt = rt,
-            .rtmax = rtmax,
-            .rtmin = rtmin,
-            .RI = RI,
-            .Properties = fill_missing,
-            .groups = groups,
-            .RImax = RImax,
-            .RImin = RImin
-        }
-    End Function
-
     Public Sub AddSamples(samples As Dictionary(Of String, Double))
         For Each sample As KeyValuePair(Of String, Double) In samples
             If propertyTable.ContainsKey(sample.Key) Then
