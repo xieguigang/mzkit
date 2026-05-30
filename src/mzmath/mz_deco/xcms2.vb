@@ -84,12 +84,6 @@ Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
-Public Enum Imputation
-    None
-    Min
-    Median
-End Enum
-
 ''' <summary>
 ''' an ion peak ROI data object, the peak table format table file model of xcms version 2
 ''' </summary>

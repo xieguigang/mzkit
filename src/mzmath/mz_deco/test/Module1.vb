@@ -78,10 +78,10 @@ Module Module1
         Dim proc As New LCMSPreprocessor(New PreprocessingOptions With {
             .EnableMissingValueFilter = True,
             .TreatNaNAsMissing = True,
-            .NormalizationMethod = NormalizationMethod.ParetoScaling
+            .NormalizationMethod = NormalizationMethod.TotalIonCount
         })
 
-        Dim result = proc.Process(data.AsEnumerable.ToArray, sampleinfo)
+        Dim result As PreprocessingResult = proc.Process(data.AsEnumerable.ToArray, sampleinfo)
 
         Pause()
     End Sub

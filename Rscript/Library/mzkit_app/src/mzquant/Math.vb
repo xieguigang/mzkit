@@ -57,6 +57,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.LCMS.Preprocessing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -123,27 +124,32 @@ Module QuantifyMath
     ''' <param name="x"></param>
     ''' <returns></returns>
     <ExportAPI("preprocessing")>
+    <RApiReturn(GetType(PeakSet))>
     Public Function impute_f(x As PeakSet,
-                             Optional scale As Double = 10 ^ 8,
-                             Optional impute As Imputation = Imputation.Min) As PeakSet
+                             <RRawVectorArgument>
+                             Optional sampleinfo As Object = Nothing,
+                             Optional impute As MissingValueMethod = MissingValueMethod.HalfMin,
+                             Optional env As Environment = Nothing) As Object
 
-        Dim imputes As xcms2() = x.peaks _
-            .AsParallel _
-            .Select(Function(k)
-                        If impute = Imputation.None Then
-                            Return New xcms2(k)
-                        Else
-                            Return k.Impute(impute)
-                        End If
-                    End Function) _
-            .ToArray
-        Dim norm As xcms2() = xcms2.TotalPeakSum(imputes, scale).ToArray
-        Dim peaktable As New PeakSet With {
-            .peaks = norm,
-            .annotations = x.annotations
+        Dim pull_samples As pipeline = pipeline.TryCreatePipeline(Of SampleInfo)(sampleinfo, env:=env, nullPipe:=True)
+
+        If pull_samples IsNot Nothing AndAlso pull_samples.isError Then
+            Return pull_samples.getError
+        End If
+
+        Dim opts As New PreprocessingOptions With {.MissingValueMethod = impute, .EnableMissingValueFilter = True}
+        Dim pipe As New LCMSPreprocessor(opts)
+        Dim sampleMeta As SampleInfo() = If(pull_samples Is Nothing, Nothing, pull_samples.populates(Of SampleInfo)(env).ToArray)
+        Dim result As PreprocessingResult = pipe.Process(x.AsEnumerable.ToArray, sampleMeta)
+        Dim processed As New PeakSet With {
+            .peaks = result.ProcessedIons
         }
+        Dim obj As New vbObject(processed)
 
-        Return peaktable
+        Call obj.setAttribute("result", result)
+        Call obj.setAttribute("opts", opts)
+
+        Return obj
     End Function
 
     <ExportAPI("preprocessing.knn")>
