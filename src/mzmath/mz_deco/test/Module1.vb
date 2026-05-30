@@ -57,6 +57,7 @@
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.LCMS.Preprocessing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework
@@ -74,6 +75,9 @@ Module Module1
     Sub normTest()
         Dim data As PeakSet = PeakSet.ReadCsv("\\192.168.3.15\sda\2026\wzc\rawdata\lcms_output_test_20260528\tmp\workflow_tmp\rawdata\neg\peaktable.csv")
         Dim sampleinfo As SampleInfo() = "\\192.168.3.15\sda\2026\wzc\rawdata\sampleinfo.csv".LoadCsv(Of SampleInfo)
+        Dim proc As New LCMSPreprocessor
+
+        Dim result = proc.Process(data.AsEnumerable.ToArray, sampleinfo)
 
         Pause()
     End Sub
