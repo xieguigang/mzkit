@@ -1,28 +1,5 @@
 Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
 
-''' <summary>
-''' LC-MS表达矩阵数据预处理模块 - 主流程管线
-''' 
-''' 本模块是LC-MS数据预处理的入口点，将缺失值处理、归一化和批次矫正
-''' 三个步骤串联为完整的预处理流程。
-''' 
-''' 典型处理流程：
-''' 1. 数据输入：从xcms2离子数组构建表达矩阵
-''' 2. 缺失值过滤：移除缺失率过高的特征
-''' 3. 缺失值插补：用选定方法填充缺失值
-''' 4. 归一化：消除样本间系统性差异
-''' 5. 批次矫正：消除批次效应和信号漂移
-''' 6. 数据输出：将处理后的矩阵转回xcms2离子数组
-''' 
-''' 使用示例：
-''' Dim options As New PreprocessingOptions()
-''' options.MissingValueMethod = MissingValueMethod.HalfMin
-''' options.NormalizationMethod = NormalizationMethod.PQN
-''' options.BatchCorrectionMethod = BatchCorrectionMethod.QC_RLSC
-''' 
-''' Dim preprocessor As New LCMSPreprocessor(options)
-''' Dim result = preprocessor.Process(ions, samples)
-''' </summary>
 Namespace LCMS.Preprocessing
 
     ''' <summary>
@@ -31,6 +8,30 @@ Namespace LCMS.Preprocessing
     ''' 提供完整的预处理流程，支持灵活的方法组合。
     ''' 所有处理步骤均可独立调用，也可通过Process方法一次性执行。
     ''' </summary>
+    ''' 
+    ''' <remarks>
+    ''' LC-MS表达矩阵数据预处理模块 - 主流程管线
+    ''' 
+    ''' 本模块是LC-MS数据预处理的入口点，将缺失值处理、归一化和批次矫正
+    ''' 三个步骤串联为完整的预处理流程。
+    ''' 
+    ''' 典型处理流程：
+    ''' 1. 数据输入：从xcms2离子数组构建表达矩阵
+    ''' 2. 缺失值过滤：移除缺失率过高的特征
+    ''' 3. 缺失值插补：用选定方法填充缺失值
+    ''' 4. 归一化：消除样本间系统性差异
+    ''' 5. 批次矫正：消除批次效应和信号漂移
+    ''' 6. 数据输出：将处理后的矩阵转回xcms2离子数组
+    ''' 
+    ''' 使用示例：
+    ''' Dim options As New PreprocessingOptions()
+    ''' options.MissingValueMethod = MissingValueMethod.HalfMin
+    ''' options.NormalizationMethod = NormalizationMethod.PQN
+    ''' options.BatchCorrectionMethod = BatchCorrectionMethod.QC_RLSC
+    ''' 
+    ''' Dim preprocessor As New LCMSPreprocessor(options)
+    ''' Dim result = preprocessor.Process(ions, samples)
+    ''' </remarks>
     Public Class LCMSPreprocessor
 
         Private _options As PreprocessingOptions
