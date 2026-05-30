@@ -18,9 +18,9 @@ Namespace LCMS.Preprocessing
         Public Property Samples As SampleInfo()
 
         ''' <summary>预处理前的表达矩阵</summary>
-        Public Property MatrixBeforePreprocessing As Double(,)
+        Public Property MatrixBeforePreprocessing As Double()()
         ''' <summary>预处理后的表达矩阵</summary>
-        Public Property MatrixAfterPreprocessing As Double(,)
+        Public Property MatrixAfterPreprocessing As Double()()
 
         ''' <summary>缺失值处理统计信息</summary>
         Public Property MissingValueStats As MissingValueStatistics

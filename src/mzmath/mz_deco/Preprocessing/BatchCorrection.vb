@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
 
 Namespace LCMS.Preprocessing
@@ -22,19 +23,19 @@ Namespace LCMS.Preprocessing
         ''' <param name="method">批次矫正方法</param>
         ''' <param name="options">配置参数</param>
         ''' <returns>批次矫正后的矩阵</returns>
-        Public Shared Function Correct(matrix As Double(,), samples As SampleInfo(),
+        Public Shared Function Correct(matrix As Double()(), samples As SampleInfo(),
                                        method As BatchCorrectionMethod,
-                                       options As PreprocessingOptions) As Double(,)
+                                       options As PreprocessingOptions) As Double()()
             If matrix Is Nothing Then Return Nothing
 
             Dim nFeatures As Integer = matrix.GetLength(0)
             Dim nSamples As Integer = matrix.GetLength(1)
 
             ' 复制矩阵
-            Dim result(nFeatures - 1, nSamples - 1) As Double
+            Dim result As Double()() = RectangularArray.Matrix(Of Double)(nFeatures, nSamples)
             For i As Integer = 0 To nFeatures - 1
                 For j As Integer = 0 To nSamples - 1
-                    result(i, j) = matrix(i, j)
+                    result(i)(j) = matrix(i)(j)
                 Next
             Next
 
@@ -348,7 +349,7 @@ Namespace LCMS.Preprocessing
         ''' 优点：简单快速
         ''' 缺点：仅矫正乘性批次效应，不矫正信号漂移
         ''' </summary>
-        Private Shared Sub CorrectNormalizeQC(matrix As Double(,), samples As SampleInfo())
+        Private Shared Sub CorrectNormalizeQC(matrix As Double()(), samples As SampleInfo())
             Dim nFeatures As Integer = matrix.GetLength(0)
             Dim nSamples As Integer = matrix.GetLength(1)
 
@@ -361,13 +362,13 @@ Namespace LCMS.Preprocessing
             For i As Integer = 0 To nFeatures - 1
                 Dim qcMean As Double = 0
                 For Each idx In qcIndices
-                    qcMean += matrix(i, idx)
+                    qcMean += matrix(i)(idx)
                 Next
                 qcMean /= qcIndices.Length
 
                 If qcMean > 0 Then
                     For j As Integer = 0 To nSamples - 1
-                        matrix(i, j) /= qcMean
+                        matrix(i)(j) /= qcMean
                     Next
                 End If
             Next

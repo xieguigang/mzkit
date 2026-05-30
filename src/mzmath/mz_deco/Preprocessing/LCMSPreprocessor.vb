@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
 
 Namespace LCMS.Preprocessing
@@ -223,18 +224,18 @@ Namespace LCMS.Preprocessing
         ''' 矩阵维度：nFeatures × nSamples
         ''' 行对应离子特征，列对应样本
         ''' </summary>
-        Public Shared Function BuildMatrix(ions As xcms2(), samples As SampleInfo()) As Double(,)
+        Public Shared Function BuildMatrix(ions As xcms2(), samples As SampleInfo()) As Double()()
             Dim nFeatures As Integer = ions.Length
             Dim nSamples As Integer = samples.Length
-            Dim matrix(nFeatures - 1, nSamples - 1) As Double
+            Dim matrix As Double()() = RectangularArray.Matrix(Of Double)(nFeatures, nSamples)
 
             For i As Integer = 0 To nFeatures - 1
                 For j As Integer = 0 To nSamples - 1
                     Dim sampleId As String = samples(j).ID
                     If ions(i).HasProperty(sampleId) Then
-                        matrix(i, j) = ions(i)(sampleId)
+                        matrix(i)(j) = ions(i)(sampleId)
                     Else
-                        matrix(i, j) = Double.NaN
+                        matrix(i)(j) = Double.NaN
                     End If
                 Next
             Next
@@ -250,7 +251,7 @@ Namespace LCMS.Preprocessing
         ''' <param name="keptIndices">保留的特征索引</param>
         ''' <param name="samples">样本信息数组</param>
         ''' <returns>更新后的xcms2离子数组</returns>
-        Public Shared Function BuildIons(matrix As Double(,), originalIons As xcms2(),
+        Public Shared Function BuildIons(matrix As Double()(), originalIons As xcms2(),
                                           keptIndices As List(Of Integer),
                                           samples As SampleInfo()) As xcms2()
             Dim nFeatures As Integer = matrix.GetLength(0)
@@ -273,7 +274,7 @@ Namespace LCMS.Preprocessing
                 ' 更新样本丰度数据
                 ion.Properties = New Dictionary(Of String, Double)
                 For j As Integer = 0 To nSamples - 1
-                    ion(samples(j).ID) = matrix(i, j)
+                    ion(samples(j).ID) = matrix(i)(j)
                 Next
 
                 result(i) = ion
