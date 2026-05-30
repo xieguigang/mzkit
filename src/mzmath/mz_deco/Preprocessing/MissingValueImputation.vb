@@ -1,15 +1,15 @@
+''' <summary>
+''' LC-MS表达矩阵数据预处理模块 - 缺失值处理
+''' 
+''' 本模块实现了多种缺失值插补方法，适用于LC-MS代谢组学数据中
+''' 不同类型的缺失值模式。
+''' </summary>
 Namespace LCMS.Preprocessing
 
     ''' <summary>
     ''' 缺失值处理类
     ''' 提供多种缺失值插补方法，所有方法均基于VB.NET基础数学函数实现
     ''' </summary>
-    ''' <remarks>
-    ''' LC-MS表达矩阵数据预处理模块 - 缺失值处理
-    ''' 
-    ''' 本模块实现了多种缺失值插补方法，适用于LC-MS代谢组学数据中
-    ''' 不同类型的缺失值模式。
-    ''' </remarks>
     Public Class MissingValueImputation
 
         ''' <summary>

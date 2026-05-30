@@ -1,6 +1,29 @@
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
 
+
+''' <summary>
+''' LC-MS表达矩阵数据预处理模块 - 主流程管线
+''' 
+''' 本模块是LC-MS数据预处理的入口点，将缺失值处理、归一化和批次矫正
+''' 三个步骤串联为完整的预处理流程。
+''' 
+''' 典型处理流程：
+''' 1. 数据输入：从xcms2离子数组构建表达矩阵
+''' 2. 缺失值过滤：移除缺失率过高的特征
+''' 3. 缺失值插补：用选定方法填充缺失值
+''' 4. 归一化：消除样本间系统性差异
+''' 5. 批次矫正：消除批次效应和信号漂移
+''' 6. 数据输出：将处理后的矩阵转回xcms2离子数组
+''' 
+''' 使用示例：
+''' Dim options As New PreprocessingOptions()
+''' options.MissingValueMethod = MissingValueMethod.HalfMin
+''' options.NormalizationMethod = NormalizationMethod.PQN
+''' options.BatchCorrectionMethod = BatchCorrectionMethod.QC_RLSC
+''' 
+''' Dim preprocessor As New LCMSPreprocessor(options)
+''' Dim result = preprocessor.Process(ions, samples)
+''' </summary>
 Namespace LCMS.Preprocessing
 
     ''' <summary>
@@ -9,30 +32,6 @@ Namespace LCMS.Preprocessing
     ''' 提供完整的预处理流程，支持灵活的方法组合。
     ''' 所有处理步骤均可独立调用，也可通过Process方法一次性执行。
     ''' </summary>
-    ''' 
-    ''' <remarks>
-    ''' LC-MS表达矩阵数据预处理模块 - 主流程管线
-    ''' 
-    ''' 本模块是LC-MS数据预处理的入口点，将缺失值处理、归一化和批次矫正
-    ''' 三个步骤串联为完整的预处理流程。
-    ''' 
-    ''' 典型处理流程：
-    ''' 1. 数据输入：从xcms2离子数组构建表达矩阵
-    ''' 2. 缺失值过滤：移除缺失率过高的特征
-    ''' 3. 缺失值插补：用选定方法填充缺失值
-    ''' 4. 归一化：消除样本间系统性差异
-    ''' 5. 批次矫正：消除批次效应和信号漂移
-    ''' 6. 数据输出：将处理后的矩阵转回xcms2离子数组
-    ''' 
-    ''' 使用示例：
-    ''' Dim options As New PreprocessingOptions()
-    ''' options.MissingValueMethod = MissingValueMethod.HalfMin
-    ''' options.NormalizationMethod = NormalizationMethod.PQN
-    ''' options.BatchCorrectionMethod = BatchCorrectionMethod.QC_RLSC
-    ''' 
-    ''' Dim preprocessor As New LCMSPreprocessor(options)
-    ''' Dim result = preprocessor.Process(ions, samples)
-    ''' </remarks>
     Public Class LCMSPreprocessor
 
         Private _options As PreprocessingOptions
@@ -140,7 +139,8 @@ Namespace LCMS.Preprocessing
             batchStats.QCsPerBatch = New Dictionary(Of Integer, Integer)
             For Each bid In batchIds
                 batchStats.SamplesPerBatch(bid) = BatchCorrection.GetBatchSampleIndices(samples, bid).Length
-                batchStats.QCsPerBatch(bid) = BatchCorrection.GetQCSampleIndices(samples, _options.QCLabel).Count(Function(idx) samples(idx).batch = bid)
+                batchStats.QCsPerBatch(bid) = BatchCorrection.GetQCSampleIndices(samples, _options.QCLabel).
+                                                    Count(Function(idx) samples(idx).batch = bid)
             Next
             result.BatchCorrectionStats = batchStats
 
@@ -224,18 +224,18 @@ Namespace LCMS.Preprocessing
         ''' 矩阵维度：nFeatures × nSamples
         ''' 行对应离子特征，列对应样本
         ''' </summary>
-        Public Shared Function BuildMatrix(ions As xcms2(), samples As SampleInfo()) As Double()()
+        Public Shared Function BuildMatrix(ions As xcms2(), samples As SampleInfo()) As Double(,)
             Dim nFeatures As Integer = ions.Length
             Dim nSamples As Integer = samples.Length
-            Dim matrix As Double()() = RectangularArray.Matrix(Of Double)(nFeatures, nSamples)
+            Dim matrix(nFeatures - 1, nSamples - 1) As Double
 
             For i As Integer = 0 To nFeatures - 1
                 For j As Integer = 0 To nSamples - 1
                     Dim sampleId As String = samples(j).ID
                     If ions(i).HasProperty(sampleId) Then
-                        matrix(i)(j) = ions(i)(sampleId)
+                        matrix(i, j) = ions(i)(sampleId)
                     Else
-                        matrix(i)(j) = Double.NaN
+                        matrix(i, j) = Double.NaN
                     End If
                 Next
             Next
@@ -251,7 +251,7 @@ Namespace LCMS.Preprocessing
         ''' <param name="keptIndices">保留的特征索引</param>
         ''' <param name="samples">样本信息数组</param>
         ''' <returns>更新后的xcms2离子数组</returns>
-        Public Shared Function BuildIons(matrix As Double()(), originalIons As xcms2(),
+        Public Shared Function BuildIons(matrix As Double(,), originalIons As xcms2(),
                                           keptIndices As List(Of Integer),
                                           samples As SampleInfo()) As xcms2()
             Dim nFeatures As Integer = matrix.GetLength(0)
@@ -274,7 +274,7 @@ Namespace LCMS.Preprocessing
                 ' 更新样本丰度数据
                 ion.Properties = New Dictionary(Of String, Double)
                 For j As Integer = 0 To nSamples - 1
-                    ion(samples(j).ID) = matrix(i)(j)
+                    ion(samples(j).ID) = matrix(i, j)
                 Next
 
                 result(i) = ion
@@ -364,5 +364,4 @@ Namespace LCMS.Preprocessing
         End Function
 
     End Class
-
 End Namespace

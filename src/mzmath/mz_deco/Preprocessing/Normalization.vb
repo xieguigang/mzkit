@@ -1,15 +1,15 @@
+''' <summary>
+''' LC-MS表达矩阵数据预处理模块 - 归一化
+''' 
+''' 本模块实现了多种归一化和数据变换方法，用于消除LC-MS数据中的
+''' 系统性差异和改善数据分布特性。
+''' </summary>
 Namespace LCMS.Preprocessing
 
     ''' <summary>
     ''' 归一化处理类
     ''' 提供多种归一化和数据变换方法
     ''' </summary>
-    ''' <remarks>
-    ''' LC-MS表达矩阵数据预处理模块 - 归一化
-    ''' 
-    ''' 本模块实现了多种归一化和数据变换方法，用于消除LC-MS数据中的
-    ''' 系统性差异和改善数据分布特性。
-    ''' </remarks>
     Public Class Normalization
 
         ''' <summary>

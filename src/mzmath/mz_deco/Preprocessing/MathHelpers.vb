@@ -1,31 +1,31 @@
+''' <summary>
+''' LC-MS表达矩阵数据预处理模块 - 数学工具函数库
+''' 
+''' 提供预处理流程所需的基础数学运算函数，包括：
+''' - 描述统计函数（均值、中位数、标准差、分位数等）
+''' - 线性代数运算（矩阵乘法、转置、求解线性方程组等）
+''' - 特殊函数（Beta函数、Gamma函数、逆正态分布等）
+''' - 数据处理辅助函数（排序、索引、插值、LOESS、PCA等）
+''' 
+''' 所有函数仅使用VB.NET基础数学函数（System.Math）实现，
+''' 不依赖任何第三方数学库。
+''' </summary>
 Namespace LCMS.Preprocessing
 
     ''' <summary>
     ''' 数学工具函数模块
     ''' 提供静态方法供其他模块调用
     ''' </summary>
-    ''' <remarks>
-    ''' LC-MS表达矩阵数据预处理模块 - 数学工具函数库
-    ''' 
-    ''' 提供预处理流程所需的基础数学运算函数，包括：
-    ''' - 描述统计函数（均值、中位数、标准差、分位数等）
-    ''' - 线性代数运算（矩阵乘法、转置、求解线性方程组等）
-    ''' - 特殊函数（Beta函数、Gamma函数、逆正态分布等）
-    ''' - 数据处理辅助函数（排序、索引、插值、LOESS、PCA等）
-    ''' 
-    ''' 所有函数仅使用VB.NET基础数学函数（System.Math）实现，
-    ''' 不依赖任何第三方数学库。
-    ''' </remarks>
     Public Module MathHelpers
 
         ' ================================================================
         '  常量定义
         ' ================================================================
 
-        Public Const E As Double = 2.7182818284590451
-        Public Const LOG2 As Double = 0.69314718055994529
-        Public Const PI As Double = 3.1415926535897931
-        Public Const EPSILON As Double = 0.000000000000001
+        Public Const E As Double = 2.71828182845904523536
+        Public Const LOG2 As Double = 0.69314718055994530942
+        Public Const PI As Double = 3.14159265358979323846
+        Public Const EPSILON As Double = 1.0E-15
 
         ' ================================================================
         '  描述统计函数
@@ -422,7 +422,7 @@ Namespace LCMS.Preprocessing
             Dim c() As Double = {
                 0.99999999999980993, 676.5203681218851, -1259.1392167224028,
                 771.32342877765313, -176.61502916214059, 12.507343278686905,
-                -0.13857109526572012, 0.0000099843695780195716, 0.00000015056327351493116
+                -0.13857109526572012, 9.9843695780195716E-06, 1.5056327351493116E-07
             }
             Dim x As Double = c(0)
             For i As Integer = 1 To CInt(g) + 1
@@ -438,8 +438,8 @@ Namespace LCMS.Preprocessing
             If z < 7 Then Return LogGamma(z + 1) - System.Math.Log(z)
             Dim x As Double = 1.0 / (z * z)
             x = (z - 0.5) * System.Math.Log(z) - z + 0.5 * System.Math.Log(2 * PI) +
-                ((((-0.00059523809523809529 * x + 0.00079365079365079365) * x -
-                0.0027777777777777779) * x + 0.083333333333333329) * x) / z
+                ((((-5.9523809523809524E-04 * x + 7.9365079365079365E-04) * x -
+                2.7777777777777778E-03) * x + 8.3333333333333333E-02) * x) / z
             Return x
         End Function
 
@@ -455,7 +455,7 @@ Namespace LCMS.Preprocessing
             Dim t As Double = 1.0 / (1.0 + 0.2316419 * System.Math.Abs(z))
             Dim d As Double = 0.3989422804014327
             Dim prob As Double = d * System.Math.Exp(-z * z / 2.0) *
-                (t * (0.31938153 + t * (-0.356563782 + t *
+                (t * (0.319381530 + t * (-0.356563782 + t *
                 (1.781477937 + t * (-1.821255978 + t * 1.330274429)))))
             If z > 0 Then prob = 1.0 - prob
             Return prob
@@ -473,27 +473,27 @@ Namespace LCMS.Preprocessing
             If p >= 1 Then Return Double.PositiveInfinity
             If p = 0.5 Then Return 0.0
 
-            Const a1 As Double = -39.696830286653757
-            Const a2 As Double = 220.9460984245205
-            Const a3 As Double = -275.92851044696869
-            Const a4 As Double = 138.357751867269
-            Const a5 As Double = -30.66479806614716
-            Const a6 As Double = 2.5066282774592392
-            Const b1 As Double = -54.476098798224058
-            Const b2 As Double = 161.58583685804089
-            Const b3 As Double = -155.69897985988661
-            Const b4 As Double = 66.80131188771972
-            Const b5 As Double = -13.280681552885721
-            Const c1 As Double = -0.0077848940024302926
-            Const c2 As Double = -0.32239645804113648
-            Const c3 As Double = -2.4007582771618381
-            Const c4 As Double = -2.5497325393437338
-            Const c5 As Double = 4.3746641414649678
-            Const c6 As Double = 2.9381639826987831
-            Const d1 As Double = 0.0077846957090414622
-            Const d2 As Double = 0.32246712907003983
-            Const d3 As Double = 2.445134137142996
-            Const d4 As Double = 3.7544086619074162
+            Const a1 As Double = -3.969683028665376E+01
+            Const a2 As Double = 2.209460984245205E+02
+            Const a3 As Double = -2.759285104469687E+02
+            Const a4 As Double = 1.383577518672690E+02
+            Const a5 As Double = -3.066479806614716E+01
+            Const a6 As Double = 2.506628277459239E+00
+            Const b1 As Double = -5.447609879822406E+01
+            Const b2 As Double = 1.615858368580409E+02
+            Const b3 As Double = -1.556989798598866E+02
+            Const b4 As Double = 6.680131188771972E+01
+            Const b5 As Double = -1.328068155288572E+01
+            Const c1 As Double = -7.784894002430293E-03
+            Const c2 As Double = -3.223964580411365E-01
+            Const c3 As Double = -2.400758277161838E+00
+            Const c4 As Double = -2.549732539343734E+00
+            Const c5 As Double = 4.374664141464968E+00
+            Const c6 As Double = 2.938163982698783E+00
+            Const d1 As Double = 7.784695709041462E-03
+            Const d2 As Double = 3.224671290700398E-01
+            Const d3 As Double = 2.445134137142996E+00
+            Const d4 As Double = 3.754408661907416E+00
 
             Dim pLow As Double = 0.02425
             Dim pHigh As Double = 1 - pLow
@@ -856,7 +856,7 @@ Namespace LCMS.Preprocessing
                     Next
                     t = tNew
 
-                    If diff < 0.0000000001 Then
+                    If diff < 1.0E-10 Then
                         converged = True
                         Exit For
                     End If
