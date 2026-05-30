@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Math.LCMS.Preprocessing.PreprocessingOptions</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>PreprocessingOptions {BioNovoGene.Analytical.MassSpectrometry.Math.LCMS.Preprocessing}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>PreprocessingOptions</h2>
+
+        <h3>Description</h3>
+
+        <p>LC-MS数据预处理流程的配置参数类</p>
+
+<p>LC-MS expression matrix data preprocessing module - Enumerations and configuration classes.
+ This module defines method enumerations for missing value imputation, normalization, and batch correction,
+ as well as the configuration parameter class for the preprocessing workflow.
+ 
+ LC-MS表达矩阵数据预处理模块 - 枚举定义与配置类
+ 本模块定义了缺失值处理、归一化和批次矫正的所有方法枚举，
+ 以及预处理流程的配置参数类。</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.Analytical.MassSpectrometry.Math.LCMS.Preprocessing
+export class PreprocessingOptions {
+   # The batch correction method. Defaults to None.
+   BatchCorrectionMethod: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/BatchCorrectionMethod.html">BatchCorrectionMethod</a>;
+   # Whether ComBat uses parametric empirical Bayes. Defaults to True.
+   ComBat_Parametric: boolean;
+   # Whether to filter features based on missing values before preprocessing.
+   EnableMissingValueFilter: boolean;
+   # The number of nearest neighbors (K) for KNN imputation. Defaults to 5.
+   KNN_K: integer;
+   # The polynomial degree for LOESS regression. Defaults to 2.
+   LOESS_Degree: integer;
+   # The smoothing parameter (span) for LOESS regression. Defaults to 0.75.
+   LOESS_Span: double;
+   # The offset for log transformation to avoid taking the logarithm of zero.
+   LogOffset: double;
+   # The missing value filter threshold; features with a missing rate exceeding this value will be removed.
+   MaxMissingRate: double;
+   # The marker value for missing values; 0 means values with an abundance of 0 are treated as missing.
+   MissingValueMarker: double;
+   # The missing value imputation method. Defaults to HalfMin.
+   MissingValueMethod: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a>;
+   # The normalization method. Defaults to TotalIonCount.
+   NormalizationMethod: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/NormalizationMethod.html">NormalizationMethod</a>;
+   # The number of principal components for PCA imputation. Defaults to 5.
+   PCA_Components: integer;
+   # The maximum number of iterations for the NIPALS algorithm in PCA imputation.
+   PCA_MaxIterations: integer;
+   # The convergence tolerance for the NIPALS algorithm in PCA imputation.
+   PCA_Tolerance: double;
+   # The reference sample selection method for PQN normalization: "median" or "mean".
+   PQN_ReferenceType: string;
+   # The group label for QC (Quality Control) samples.
+   QCLabel: string;
+   # The regularization parameter C for SVR. Defaults to 1.0.
+   SVR_C: double;
+   # The epsilon parameter for the SVR insensitive loss function.
+   SVR_Epsilon: double;
+   # The RBF kernel parameter gamma for SVR.
+   SVR_Gamma: double;
+   # The learning rate for SVR.
+   SVR_LearningRate: double;
+   # The maximum number of iterations for SVR.
+   SVR_MaxIterations: integer;
+   # Whether to treat NaN as a missing value.
+   TreatNaNAsMissing: boolean;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>BatchCorrectionMethod</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/BatchCorrectionMethod.html">BatchCorrectionMethod</a></li>
+<li>use by <i>property</i> member <code>MissingValueMethod</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a></li>
+<li>use by <i>property</i> member <code>NormalizationMethod</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/NormalizationMethod.html">NormalizationMethod</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

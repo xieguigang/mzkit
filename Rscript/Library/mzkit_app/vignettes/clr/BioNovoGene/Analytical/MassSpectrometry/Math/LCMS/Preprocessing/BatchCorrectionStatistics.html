@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects.FTLabelInfoType</title>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Math.LCMS.Preprocessing.BatchCorrectionStatistics</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,25 +13,27 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>FTLabelInfoType {BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects}</td>
+                <td>BatchCorrectionStatistics {BioNovoGene.Analytical.MassSpectrometry.Math.LCMS.Preprocessing}</td>
                 <td style="text-align: right;">.NET clr documentation</td>
             </tr>
         </table>
 
-        <h2>FTLabelInfoType</h2>
+        <h2>BatchCorrectionStatistics</h2>
 
         <h3>Description</h3>
 
-        <p>Type for storing FT Label Information</p>
+        <p>批次矫正统计信息</p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
-# namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
-export class FTLabelInfoType extends <a href="/vignettes/clr/System/ValueType.html">ValueType</a> {
-   # Signal to noise ratio
-   SignalToNoise: double;
+# namespace BioNovoGene.Analytical.MassSpectrometry.Math.LCMS.Preprocessing
+export class BatchCorrectionStatistics {
+   MethodUsed: string;
+   NumberOfBatches: integer;
+   QCsPerBatch: list;
+   SamplesPerBatch: list;
 }
 </code>
         </pre>
@@ -39,7 +41,8 @@ export class FTLabelInfoType extends <a href="/vignettes/clr/System/ValueType.ht
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>this class extends from <a href="/vignettes/clr/System/ValueType.html">ValueType</a> class: <a href="/vignettes/clr/System/ValueType.html">ValueType</a></li>
+<li>use by <i>property</i> member <code>QCsPerBatch</code>: list</li>
+<li>use by <i>property</i> member <code>SamplesPerBatch</code>: list</li>
 </ol>
 
 

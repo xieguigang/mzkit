@@ -4,15 +4,128 @@
 preprocessing \- data matrix pre-processing before run data analysis
 .SH SYNOPSIS
 \fIpreprocessing(\fBx\fR as <generic> PeakSet, 
-\fBscale\fR as double = 100000000, 
-\fBimpute\fR as <integer> Imputation = [Min]);\fR
+\fBsampleinfo\fR as any = \fB<NULL>\fR, 
+\fBimpute\fR as <integer> MissingValueMethod = [HalfMin], 
+\fBnormalize\fR as <integer> NormalizationMethod = [TotalIonCount], 
+\fBbatch\fR as <integer> BatchCorrectionMethod = [None], 
+\fBknn\fR as integer = 5, 
+\fBmax_missing_ratio\fR as double = 0.85, 
+\fBpca\fR as integer = 5, 
+\fBpca_eps\fR as double = 1E-08, 
+\fBpqn\fR as any = ["median","mean"], 
+\fBloess_span\fR as double = 0.75, 
+\fBloess_degree\fR as integer = 2, 
+\fBcombat_parametric\fR as boolean = TRUE, 
+\fBsvr_c\fR as double = 1, 
+\fBsvr_eps\fR as double = 0.1, 
+\fBsvr_gamma\fR as double = 0.1, 
+\fBsvr_learn_rate\fR as double = 0.01, 
+\fBiteration\fR as integer = 1000, 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
 data matrix pre-processing before run data analysis
 .PP
 .SH OPTIONS
 .PP
-\fBx\fB \fR\- -. 
+\fBx\fB \fR\- the lcms expression data matrix. 
+.PP
+.PP
+\fBsampleinfo\fB \fR\- sample metadata for run batch correction and normalization. 
+.PP
+.PP
+\fBimpute\fB \fR\- Determines the algorithm used to fill in missing values in the expression matrix. 
+ Common methods include HalfMin (replacing with half of the minimum positive value of the feature), 
+ KNN, PCA, etc. The choice of method impacts downstream statistical sensitivity and variance.. 
+.PP
+.PP
+\fBnormalize\fB \fR\- Specifies the algorithm used to adjust for systematic variations in total signal intensity 
+ across samples, making them comparable. Options typically include TotalIonCount (TIC), PQN, 
+ or internal standard normalization.. 
+.PP
+.PP
+\fBbatch\fB \fR\- Specifies the algorithm used to remove non-biological systematic variation (batch effects) 
+ between different analytical runs, ensuring that observed differences are biological rather than technical.. 
+.PP
+.PP
+\fBknn\fB \fR\- In K-Nearest Neighbors (KNN) imputation, missing values are estimated by averaging the 
+ values of the K most similar samples (based on Euclidean distance or other metrics). A smaller K 
+ may introduce noise, while a larger K may oversmooth local variations.. 
+.PP
+.PP
+\fBmax_missing_ratio\fB \fR\- Features (metabolites) with extremely high missing rates provide little reliable information 
+ and can severely distort imputation. This sets the threshold (0.0 to 1.0) for removing such features 
+ before downstream analysis to ensure statistical robustness.. 
+.PP
+.PP
+\fBpca\fB \fR\- Probabilistic PCA or NIPALS-based PCA imputation reconstructs missing values using the 
+ specified number of principal components. This determines the dimensionality of the subspace 
+ used to capture the variance in the data for accurate estimation.. 
+.PP
+.PP
+\fBpca_eps\fB \fR\- Defines the threshold for the change in estimated values between iterations. The algorithm 
+ stops when the change falls below this tolerance, indicating that the principal components have 
+ successfully converged.. 
+.PP
+.PP
+\fBpqn\fB \fR\- Probabilistic Quotient Normalization (PQN) requires a reference spectrum to calculate 
+ normalization quotients. This parameter determines whether the median or mean spectrum across 
+ all samples (or QC samples) is used as that reference. The reference sample selection method for PQN normalization: "median" or "mean".. 
+.PP
+.PP
+\fBloess_span\fB \fR\- Local Polynomial Regression (LOESS/LOWESS) span controls the proportion of data points 
+ used for each local fit. A larger span produces smoother curves (higher bias, lower variance), 
+ while a smaller span captures more local signal drift (lower bias, higher variance).. 
+.PP
+.PP
+\fBloess_degree\fB \fR\- Defines the degree of the polynomial fitted locally by LOESS. Typically set to 1 (linear) 
+ or 2 (quadratic). A degree of 2 is common as it captures curvilinear trends in instrumental 
+ signal drift across injection order.. 
+.PP
+.PP
+\fBcombat_parametric\fB \fR\- In the ComBat algorithm, parametric empirical Bayes assumes batch effect parameters follow 
+ a normal distribution, providing more robust shrinkage estimates, especially for small sample sizes. 
+ Non-parametric (False) uses a non-parametric prior, which can be better if the normality assumption 
+ is severely violated.. 
+.PP
+.PP
+\fBsvr_c\fB \fR\- In Support Vector Regression (SVR), C determines the trade-off between model flatness and 
+ tolerance for deviations larger than epsilon. A larger C penalizes errors more heavily, leading to 
+ a more complex model that fits the training data closely.. 
+.PP
+.PP
+\fBsvr_eps\fB \fR\- Defines the epsilon-tube within which no penalty is associated with predicted errors. 
+ Errors within this margin are ignored, which helps in creating a sparse model and smoothing 
+ out minor noise when modeling signal drift.. 
+.PP
+.PP
+\fBsvr_gamma\fB \fR\- Controls the influence of a single training example in the Radial Basis Function (RBF) kernel. 
+ A larger gamma means a narrower Gaussian function, leading to a more complex, tighter fit to the 
+ training data (potential overfitting), while a smaller gamma yields a broader, smoother fit.. 
+.PP
+.PP
+\fBsvr_learn_rate\fB \fR\- Determines the step size at each iteration while moving toward a minimum of the loss function 
+ in gradient-based SVR optimization. A learning rate that is too large may overshoot the minimum, 
+ while one that is too small may lead to extremely slow convergence.. 
+.PP
+.PP
+\fBiteration\fB \fR\- 
+ Caps the number of iterations for the SVR optimization solver (e.g., Sequential Minimal Optimization). 
+ Prevents the algorithm from running indefinitely on non-converging datasets.
+ or The Nonlinear Iterative Partial Least Squares (NIPALS) algorithm iteratively computes 
+ principal components. This parameter sets an upper bound on iterations to prevent infinite loops 
+ if the algorithm fails to converge.
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+the normalized expression data matrix. also with two attribute tagged:
+ 
+ 1. \fBresult\fR is the raw clr object of the pre-processing @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.LCMS.Preprocessing.PreprocessingResult\fR inside mzkit
+ 2. \fBopts\fR is the parameter @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.LCMS.Preprocessing.PreprocessingOptions\fR that input this function
 .PP
 .SH SEE ALSO
 math

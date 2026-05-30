@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Math.LCMS.Preprocessing.MissingValueMethod</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>MissingValueMethod {BioNovoGene.Analytical.MassSpectrometry.Math.LCMS.Preprocessing}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>MissingValueMethod</h2>
+
+        <h3>Description</h3>
+
+        <p>缺失值处理方法枚举
+ 
+ 在LC-MS代谢组学数据中，缺失值通常来源于以下几种情况：
+ 1. 信号低于检测限（左截断数据）- 推荐使用HalfMin、QRILC
+ 2. 随机缺失（如仪器波动）- 推荐使用KNN、PCA、Mean、Median
+ 3. 稀疏缺失（某些代谢物在部分样本中确实不存在）- 推荐使用Zero</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.Analytical.MassSpectrometry.Math.LCMS.Preprocessing
+export class MissingValueMethod extends <a href="/vignettes/clr/System/Enum.html">Enum</a> {
+   None: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a> = 0;
+
+   HalfMin: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a> = 1;
+
+   MinValue: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a> = 2;
+
+   Zero: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a> = 3;
+
+   Mean: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a> = 4;
+
+   Median: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a> = 5;
+
+   KNN: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a> = 6;
+
+   PCA: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a> = 7;
+
+   QRILC: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a> = 8;
+
+   RandomMin: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a> = 9;
+
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/System/Enum.html">Enum</a> class: <a href="/vignettes/clr/System/Enum.html">Enum</a></li>
+<li>use by <i>field</i> member <code>None</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a></li>
+<li>use by <i>field</i> member <code>HalfMin</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a></li>
+<li>use by <i>field</i> member <code>MinValue</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a></li>
+<li>use by <i>field</i> member <code>Zero</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a></li>
+<li>use by <i>field</i> member <code>Mean</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a></li>
+<li>use by <i>field</i> member <code>Median</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a></li>
+<li>use by <i>field</i> member <code>KNN</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a></li>
+<li>use by <i>field</i> member <code>PCA</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a></li>
+<li>use by <i>field</i> member <code>QRILC</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a></li>
+<li>use by <i>field</i> member <code>RandomMin</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

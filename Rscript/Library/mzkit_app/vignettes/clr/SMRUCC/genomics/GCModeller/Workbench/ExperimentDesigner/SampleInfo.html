@@ -32,12 +32,12 @@
             <code id="clr_ts">
 # namespace SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
 export class SampleInfo extends <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/ExperimentDesigner/SampleGroup.html">SampleGroup</a> {
-   # the experiment batch id
+   # the experiment batch id, example as 1,2,3,4,5
    batch: integer;
    color: string;
    # 样品的标记符号，符合VisualBasic标识符语法的目标样品标识符
    ID: string;
-   # index编号
+   # sample injection order in current batch, example as 1,2,3,4,5
    injectionOrder: integer;
    sample_info: string;
    sample_name: string;

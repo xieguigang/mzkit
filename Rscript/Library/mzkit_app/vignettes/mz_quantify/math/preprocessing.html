@@ -28,8 +28,23 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>preprocessing</strong>(<i>x</i>,
-    <i>scale</i> = <span style='color: green;'>100000000</span>,
-    <i>impute</i> = Min);</code></pre>
+    <i>sampleinfo</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>impute</i> = HalfMin,
+    <i>normalize</i> = TotalIonCount,
+    <i>batch</i> = None,
+    <i>knn</i> = <span style='color: green;'>5</span>,
+    <i>max.missing.ratio</i> = <span style='color: green;'>0.85</span>,
+    <i>pca</i> = <span style='color: green;'>5</span>,
+    <i>pca.eps</i> = <span style='color: green;'>1E-08</span>,
+    <i>pqn</i> = [<span style='color: brown;'><strong>'mean'</strong></span>],
+    <i>loess.span</i> = <span style='color: green;'>0.75</span>,
+    <i>loess.degree</i> = <span style='color: green;'>2</span>,
+    <i>combat.parametric</i> = <span style='color: blue !important;'>TRUE</span>,
+    <i>svr.c</i> = <span style='color: green;'>1</span>,
+    <i>svr.eps</i> = <span style='color: green;'>0.1</span>,
+    <i>svr.gamma</i> = <span style='color: green;'>0.1</span>,
+    <i>svr.learn.rate</i> = <span style='color: green;'>0.01</span>,
+    <i>iteration</i> = <span style='color: green;'>1000</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -37,7 +52,113 @@
         <table>
             
 <dt>x</dt>
-<dd><p>[as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a>]</p></dd>
+<dd><p>the lcms expression data matrix. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a>]</p></dd>
+
+
+<dt>sampleinfo</dt>
+<dd><p>sample metadata for run batch correction and normalization</p></dd>
+
+
+<dt>impute</dt>
+<dd><p>Determines the algorithm used to fill in missing values in the expression matrix. 
+ Common methods include HalfMin (replacing with half of the minimum positive value of the feature), 
+ KNN, PCA, etc. The choice of method impacts downstream statistical sensitivity and variance. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueMethod.html">MissingValueMethod</a>]</p></dd>
+
+
+<dt>normalize</dt>
+<dd><p>Specifies the algorithm used to adjust for systematic variations in total signal intensity 
+ across samples, making them comparable. Options typically include TotalIonCount (TIC), PQN, 
+ or internal standard normalization. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/NormalizationMethod.html">NormalizationMethod</a>]</p></dd>
+
+
+<dt>batch</dt>
+<dd><p>Specifies the algorithm used to remove non-biological systematic variation (batch effects) 
+ between different analytical runs, ensuring that observed differences are biological rather than technical. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/BatchCorrectionMethod.html">BatchCorrectionMethod</a>]</p></dd>
+
+
+<dt>knn</dt>
+<dd><p>In K-Nearest Neighbors (KNN) imputation, missing values are estimated by averaging the 
+ values of the K most similar samples (based on Euclidean distance or other metrics). A smaller K 
+ may introduce noise, while a larger K may oversmooth local variations. [as integer]</p></dd>
+
+
+<dt>max.missing.ratio</dt>
+<dd><p>Features (metabolites) with extremely high missing rates provide little reliable information 
+ and can severely distort imputation. This sets the threshold (0.0 to 1.0) for removing such features 
+ before downstream analysis to ensure statistical robustness. [as double]</p></dd>
+
+
+<dt>pca</dt>
+<dd><p>Probabilistic PCA or NIPALS-based PCA imputation reconstructs missing values using the 
+ specified number of principal components. This determines the dimensionality of the subspace 
+ used to capture the variance in the data for accurate estimation. [as integer]</p></dd>
+
+
+<dt>pca.eps</dt>
+<dd><p>Defines the threshold for the change in estimated values between iterations. The algorithm 
+ stops when the change falls below this tolerance, indicating that the principal components have 
+ successfully converged. [as double]</p></dd>
+
+
+<dt>pqn</dt>
+<dd><p>Probabilistic Quotient Normalization (PQN) requires a reference spectrum to calculate 
+ normalization quotients. This parameter determines whether the median or mean spectrum across 
+ all samples (or QC samples) is used as that reference. The reference sample selection method for PQN normalization: "median" or "mean".</p></dd>
+
+
+<dt>loess.span</dt>
+<dd><p>Local Polynomial Regression (LOESS/LOWESS) span controls the proportion of data points 
+ used for each local fit. A larger span produces smoother curves (higher bias, lower variance), 
+ while a smaller span captures more local signal drift (lower bias, higher variance). [as double]</p></dd>
+
+
+<dt>loess.degree</dt>
+<dd><p>Defines the degree of the polynomial fitted locally by LOESS. Typically set to 1 (linear) 
+ or 2 (quadratic). A degree of 2 is common as it captures curvilinear trends in instrumental 
+ signal drift across injection order. [as integer]</p></dd>
+
+
+<dt>combat.parametric</dt>
+<dd><p>In the ComBat algorithm, parametric empirical Bayes assumes batch effect parameters follow 
+ a normal distribution, providing more robust shrinkage estimates, especially for small sample sizes. 
+ Non-parametric (False) uses a non-parametric prior, which can be better if the normality assumption 
+ is severely violated. [as boolean]</p></dd>
+
+
+<dt>svr.c</dt>
+<dd><p>In Support Vector Regression (SVR), C determines the trade-off between model flatness and 
+ tolerance for deviations larger than epsilon. A larger C penalizes errors more heavily, leading to 
+ a more complex model that fits the training data closely. [as double]</p></dd>
+
+
+<dt>svr.eps</dt>
+<dd><p>Defines the epsilon-tube within which no penalty is associated with predicted errors. 
+ Errors within this margin are ignored, which helps in creating a sparse model and smoothing 
+ out minor noise when modeling signal drift. [as double]</p></dd>
+
+
+<dt>svr.gamma</dt>
+<dd><p>Controls the influence of a single training example in the Radial Basis Function (RBF) kernel. 
+ A larger gamma means a narrower Gaussian function, leading to a more complex, tighter fit to the 
+ training data (potential overfitting), while a smaller gamma yields a broader, smoother fit. [as double]</p></dd>
+
+
+<dt>svr.learn.rate</dt>
+<dd><p>Determines the step size at each iteration while moving toward a minimum of the loss function 
+ in gradient-based SVR optimization. A learning rate that is too large may overshoot the minimum, 
+ while one that is too small may lead to extremely slow convergence. [as double]</p></dd>
+
+
+<dt>iteration</dt>
+<dd><p>Caps the number of iterations for the SVR optimization solver (e.g., Sequential Minimal Optimization). 
+ Prevents the algorithm from running indefinitely on non-converging datasets.
+ or The Nonlinear Iterative Partial Least Squares (NIPALS) algorithm iteratively computes 
+ principal components. This parameter sets an upper bound on iterations to prevent infinite loops 
+ if the algorithm fails to converge. [as integer]</p></dd>
+
+
+<dt>env</dt>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
 
         </table>
 
@@ -52,7 +173,10 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a></li></ul>
+        <p>the normalized expression data matrix. also with two attribute tagged:
+ 
+ 1. <code>result</code> is the raw clr object of the pre-processing <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/PreprocessingResult.html">PreprocessingResult</a> inside mzkit
+ 2. <code>opts</code> is the parameter <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/PreprocessingOptions.html">PreprocessingOptions</a> that input this function</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

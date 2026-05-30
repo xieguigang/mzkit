@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Math.LCMS.Preprocessing.PreprocessingResult</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>PreprocessingResult {BioNovoGene.Analytical.MassSpectrometry.Math.LCMS.Preprocessing}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>PreprocessingResult</h2>
+
+        <h3>Description</h3>
+
+        <p>预处理结果类
+ 包含预处理前后的数据和统计信息</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.Analytical.MassSpectrometry.Math.LCMS.Preprocessing
+export class PreprocessingResult {
+   # 批次矫正统计信息
+   BatchCorrectionStats: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/BatchCorrectionStatistics.html">BatchCorrectionStatistics</a>;
+   # 被过滤掉的离子数据
+   FilteredIons: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2[]</a>;
+   # 预处理后的表达矩阵
+   MatrixAfterPreprocessing: <a href="/vignettes/clr/System/Double.html">Double[,]</a>;
+   # 预处理前的表达矩阵
+   MatrixBeforePreprocessing: <a href="/vignettes/clr/System/Double.html">Double[,]</a>;
+   # 缺失值处理统计信息
+   MissingValueStats: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueStatistics.html">MissingValueStatistics</a>;
+   # 归一化统计信息
+   NormalizationStats: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/NormalizationStatistics.html">NormalizationStatistics</a>;
+   # 原始离子数据
+   OriginalIons: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2[]</a>;
+   # 预处理后的离子数据
+   ProcessedIons: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2[]</a>;
+   # 样本信息
+   Samples: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/ExperimentDesigner/SampleInfo.html">SampleInfo[]</a>;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>BatchCorrectionStats</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/BatchCorrectionStatistics.html">BatchCorrectionStatistics</a></li>
+<li>use by <i>property</i> member <code>FilteredIons</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a></li>
+<li>use by <i>property</i> member <code>MatrixAfterPreprocessing</code>: <a href="/vignettes/clr/System/Double.html">Double</a></li>
+<li>use by <i>property</i> member <code>MatrixBeforePreprocessing</code>: <a href="/vignettes/clr/System/Double.html">Double</a></li>
+<li>use by <i>property</i> member <code>MissingValueStats</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/MissingValueStatistics.html">MissingValueStatistics</a></li>
+<li>use by <i>property</i> member <code>NormalizationStats</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LCMS/Preprocessing/NormalizationStatistics.html">NormalizationStatistics</a></li>
+<li>use by <i>property</i> member <code>OriginalIons</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a></li>
+<li>use by <i>property</i> member <code>ProcessedIons</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a></li>
+<li>use by <i>property</i> member <code>Samples</code>: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/ExperimentDesigner/SampleInfo.html">SampleInfo</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>
