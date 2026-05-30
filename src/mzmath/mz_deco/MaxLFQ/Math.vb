@@ -2,18 +2,6 @@
 
 Namespace MaxLFQ
 
-    ' 定义数据结构
-    Public Class PeptideQuant
-        Public Property PeptideID As String       ' 多肽唯一标识
-        Public Property ProteinID As String       ' 所属蛋白质ID
-        Public Property Intensities As Double()  ' 各样本中该多肽的强度值（数组索引=样本ID）
-    End Class
-
-    Public Class MaxLFQResult
-        Public Property ProteinID As String
-        Public Property LFQIntensity As Double()  ' 优化后的蛋白质丰度（每个样本一个值）
-    End Class
-
     Public Module Math
 
         ' MaxLFQ核心计算函数
@@ -149,9 +137,4 @@ Namespace MaxLFQ
         End Function
     End Module
 
-    Public Class Equation
-        Public Property SampleA As Integer
-        Public Property SampleB As Integer
-        Public Property Value As Double
-    End Class
 End Namespace
