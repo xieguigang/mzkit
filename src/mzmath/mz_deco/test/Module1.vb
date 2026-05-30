@@ -75,7 +75,11 @@ Module Module1
     Sub normTest()
         Dim data As PeakSet = PeakSet.ReadCsv("\\192.168.3.15\sda\2026\wzc\rawdata\lcms_output_test_20260528\tmp\workflow_tmp\rawdata\neg\peaktable.csv")
         Dim sampleinfo As SampleInfo() = "\\192.168.3.15\sda\2026\wzc\rawdata\sampleinfo.csv".LoadCsv(Of SampleInfo)
-        Dim proc As New LCMSPreprocessor
+        Dim proc As New LCMSPreprocessor(New PreprocessingOptions With {
+            .EnableMissingValueFilter = True,
+            .TreatNaNAsMissing = True,
+            .NormalizationMethod = NormalizationMethod.ParetoScaling
+        })
 
         Dim result = proc.Process(data.AsEnumerable.ToArray, sampleinfo)
 
