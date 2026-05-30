@@ -126,12 +126,25 @@ Module QuantifyMath
     <ExportAPI("preprocessing")>
     <RApiReturn(GetType(PeakSet))>
     Public Function impute_f(x As PeakSet,
-                             <RRawVectorArgument>
+                             <RRawVectorArgument(GetType(SampleInfo))>
                              Optional sampleinfo As Object = Nothing,
                              Optional impute As MissingValueMethod = MissingValueMethod.HalfMin,
                              Optional normalize As NormalizationMethod = NormalizationMethod.TotalIonCount,
+                             Optional batch As BatchCorrectionMethod = BatchCorrectionMethod.None,
                              Optional knn As Integer = 5,
                              Optional max_missing_ratio As Double = 0.85,
+                             Optional pca As Integer = 5,
+                             Optional iteration As Integer = 1000,
+                             Optional esp As Double = 0.00000001,
+                             <RRawVectorArgument(TypeCodes.string)>
+                             Optional pqn As Object = "median|mean",
+                             Optional loess_span As Double = 0.75,
+                             Optional loess_degree As Integer = 2,
+                             Optional combat_parametric As Boolean = True,
+                             Optional svr_c As Double = 1,
+                             Optional svr_eps As Double = 0.1,
+                             Optional svr_gamma As Double = 0.1,
+                             Optional svr_learn_rate As Double = 0.01,
                              Optional env As Environment = Nothing) As Object
 
         Dim pull_samples As pipeline = pipeline.TryCreatePipeline(Of SampleInfo)(sampleinfo, env:=env, nullPipe:=True)
