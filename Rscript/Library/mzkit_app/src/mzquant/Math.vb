@@ -121,8 +121,67 @@ Module QuantifyMath
     ''' <summary>
     ''' data matrix pre-processing before run data analysis
     ''' </summary>
-    ''' <param name="x"></param>
-    ''' <returns></returns>
+    ''' <param name="x">the lcms expression data matrix</param>
+    ''' <param name="sampleinfo">sample metadata for run batch correction and normalization</param>
+    ''' <param name="impute">Determines the algorithm used to fill in missing values in the expression matrix. 
+    ''' Common methods include HalfMin (replacing with half of the minimum positive value of the feature), 
+    ''' KNN, PCA, etc. The choice of method impacts downstream statistical sensitivity and variance.</param>
+    ''' <param name="normalize">Specifies the algorithm used to adjust for systematic variations in total signal intensity 
+    ''' across samples, making them comparable. Options typically include TotalIonCount (TIC), PQN, 
+    ''' or internal standard normalization.</param>
+    ''' <param name="batch">Specifies the algorithm used to remove non-biological systematic variation (batch effects) 
+    ''' between different analytical runs, ensuring that observed differences are biological rather than technical.</param>
+    ''' <param name="knn">In K-Nearest Neighbors (KNN) imputation, missing values are estimated by averaging the 
+    ''' values of the K most similar samples (based on Euclidean distance or other metrics). A smaller K 
+    ''' may introduce noise, while a larger K may oversmooth local variations.</param>
+    ''' <param name="max_missing_ratio">Features (metabolites) with extremely high missing rates provide little reliable information 
+    ''' and can severely distort imputation. This sets the threshold (0.0 to 1.0) for removing such features 
+    ''' before downstream analysis to ensure statistical robustness.</param>
+    ''' <param name="pca">Probabilistic PCA or NIPALS-based PCA imputation reconstructs missing values using the 
+    ''' specified number of principal components. This determines the dimensionality of the subspace 
+    ''' used to capture the variance in the data for accurate estimation.</param>
+    ''' <param name="pca_eps">Defines the threshold for the change in estimated values between iterations. The algorithm 
+    ''' stops when the change falls below this tolerance, indicating that the principal components have 
+    ''' successfully converged.</param>
+    ''' <param name="pqn">Probabilistic Quotient Normalization (PQN) requires a reference spectrum to calculate 
+    ''' normalization quotients. This parameter determines whether the median or mean spectrum across 
+    ''' all samples (or QC samples) is used as that reference. The reference sample selection method for PQN normalization: "median" or "mean".</param>
+    ''' <param name="loess_span">Local Polynomial Regression (LOESS/LOWESS) span controls the proportion of data points 
+    ''' used for each local fit. A larger span produces smoother curves (higher bias, lower variance), 
+    ''' while a smaller span captures more local signal drift (lower bias, higher variance).</param>
+    ''' <param name="loess_degree">Defines the degree of the polynomial fitted locally by LOESS. Typically set to 1 (linear) 
+    ''' or 2 (quadratic). A degree of 2 is common as it captures curvilinear trends in instrumental 
+    ''' signal drift across injection order.</param>
+    ''' <param name="combat_parametric">In the ComBat algorithm, parametric empirical Bayes assumes batch effect parameters follow 
+    ''' a normal distribution, providing more robust shrinkage estimates, especially for small sample sizes. 
+    ''' Non-parametric (False) uses a non-parametric prior, which can be better if the normality assumption 
+    ''' is severely violated.</param>
+    ''' <param name="svr_c">In Support Vector Regression (SVR), C determines the trade-off between model flatness and 
+    ''' tolerance for deviations larger than epsilon. A larger C penalizes errors more heavily, leading to 
+    ''' a more complex model that fits the training data closely.</param>
+    ''' <param name="svr_eps">Defines the epsilon-tube within which no penalty is associated with predicted errors. 
+    ''' Errors within this margin are ignored, which helps in creating a sparse model and smoothing 
+    ''' out minor noise when modeling signal drift.</param>
+    ''' <param name="svr_gamma">Controls the influence of a single training example in the Radial Basis Function (RBF) kernel. 
+    ''' A larger gamma means a narrower Gaussian function, leading to a more complex, tighter fit to the 
+    ''' training data (potential overfitting), while a smaller gamma yields a broader, smoother fit.</param>
+    ''' <param name="svr_learn_rate">Determines the step size at each iteration while moving toward a minimum of the loss function 
+    ''' in gradient-based SVR optimization. A learning rate that is too large may overshoot the minimum, 
+    ''' while one that is too small may lead to extremely slow convergence.</param>
+    ''' <param name="iteration">
+    ''' Caps the number of iterations for the SVR optimization solver (e.g., Sequential Minimal Optimization). 
+    ''' Prevents the algorithm from running indefinitely on non-converging datasets.
+    ''' or The Nonlinear Iterative Partial Least Squares (NIPALS) algorithm iteratively computes 
+    ''' principal components. This parameter sets an upper bound on iterations to prevent infinite loops 
+    ''' if the algorithm fails to converge.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' the normalized expression data matrix. also with two attribute tagged:
+    ''' 
+    ''' 1. ``result`` is the raw clr object of the pre-processing <see cref="PreprocessingResult"/> inside mzkit
+    ''' 2. ``opts`` is the parameter <see cref="PreprocessingOptions"/> that input this function
+    ''' </returns>
     <ExportAPI("preprocessing")>
     <RApiReturn(GetType(PeakSet))>
     Public Function impute_f(x As PeakSet,
