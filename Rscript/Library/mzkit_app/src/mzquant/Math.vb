@@ -236,8 +236,19 @@ Module QuantifyMath
         Dim pipe As New LCMSPreprocessor(opts)
         Dim sampleMeta As SampleInfo() = If(pull_samples Is Nothing, Nothing, pull_samples.populates(Of SampleInfo)(env).ToArray)
         Dim result As PreprocessingResult = pipe.Process(x.AsEnumerable.ToArray, sampleMeta)
+        Dim result_ions As xcms2() = result.ProcessedIons
+
+        ' 20260531 z-score normalized and pareto scaling
+        ' always produce negative or zero value
+        ' skip of these methods
+        If normalize <> NormalizationMethod.ParetoScaling Then
+            For i As Integer = 0 To result_ions.Length - 1
+                result_ions(i) = result_ions(i).FillMissing
+            Next
+        End If
+
         Dim processed As New PeakSet With {
-            .peaks = result.ProcessedIons
+            .peaks = result_ions
         }
         Dim obj As New vbObject(processed)
 

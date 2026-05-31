@@ -346,4 +346,89 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
 
         Return mergePeak
     End Function
+
+    Private Function ImputeMissing() As Dictionary(Of String, Double)
+        Dim fill_missing As Dictionary(Of String, Double)
+
+        If Not CheckZero() Then
+            Dim pos_min As Double = (
+                Aggregate xi As Double
+                In Properties.Values
+                Where xi > 0
+                Into Min(xi)) / 2
+
+            fill_missing = Properties _
+                .ToDictionary(Function(k) k.Key,
+                              Function(k)
+                                  Return If(k.Value.IsNaNImaginary OrElse k.Value <= 0, pos_min, k.Value)
+                              End Function)
+        Else
+            fill_missing = Runif()
+        End If
+
+        Return fill_missing
+    End Function
+
+    Private Function MedianScaleData() As Dictionary(Of String, Double)
+        If Not CheckZero() Then
+            Dim median As Double = (From xi As Double
+                                    In Properties.Values
+                                    Where Not xi.IsNaNImaginary).Median
+            Dim scale As Dictionary(Of String, Double) = Properties _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return a.Value / median
+                              End Function)
+
+            Return scale
+        Else
+            Return Runif(0.95, 1.05)
+        End If
+    End Function
+
+    Private Function Runif(Optional min As Double = 0.5, Optional max As Double = 1) As Dictionary(Of String, Double)
+        ' random fill for all zero
+        ' no differece in t-test
+        Return Properties _
+            .ToDictionary(Function(a) a.Key,
+                          Function(a)
+                              Return randf.NextDouble(min, max)
+                          End Function)
+    End Function
+
+    Private Function CheckZero() As Boolean
+        Return Properties.Values.All(Function(xi) xi = 0.0)
+    End Function
+
+    Private Function Apply(transform As Func(Of Dictionary(Of String, Double))) As xcms2
+        Return New xcms2 With {
+            .ID = ID,
+            .mz = mz,
+            .mzmax = mzmax,
+            .mzmin = mzmin,
+            .rt = rt,
+            .rtmax = rtmax,
+            .rtmin = rtmin,
+            .RI = RI,
+            .Properties = transform(),
+            .groups = groups,
+            .RImax = RImax,
+            .RImin = RImin
+        }
+    End Function
+
+    ''' <summary>
+    ''' impute missing data with half of the min positive value
+    ''' </summary>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function FillMissing() As xcms2
+        Return Apply(transform:=AddressOf ImputeMissing)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function MedianScale() As xcms2
+        Return Apply(transform:=Function() MedianScaleData())
+    End Function
 End Class
