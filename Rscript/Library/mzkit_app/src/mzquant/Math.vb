@@ -214,7 +214,7 @@ Module QuantifyMath
 
         Dim opts As New PreprocessingOptions With {
             .MissingValueMethod = impute,
-            .EnableMissingValueFilter = True,
+            .EnableMissingValueFilter = False,
             .KNN_K = knn,
             .QCLabel = "QC",
             .MaxMissingRate = max_missing_ratio,
