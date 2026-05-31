@@ -194,6 +194,16 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         End Set
     End Property
 
+    ''' <summary>
+    ''' get the sample expression value vector of current feature ion
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property expression As Double()
+        Get
+            Return Properties.Values.ToArray
+        End Get
+    End Property
+
     Sub New()
     End Sub
 
