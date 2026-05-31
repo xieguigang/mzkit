@@ -243,7 +243,7 @@ Module QuantifyMath
         ' skip of these methods
         If normalize <> NormalizationMethod.ParetoScaling Then
             For i As Integer = 0 To result_ions.Length - 1
-                result_ions(i) = result_ions(i).FillMissing
+                result_ions(i) = result_ions(i).FillMissing.MedianScale
             Next
         End If
 
