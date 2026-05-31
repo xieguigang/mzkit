@@ -99,8 +99,7 @@ Namespace LCMS.Preprocessing
         ''' <param name="maxMissingRate">最大允许缺失率，超过此值的特征被过滤</param>
         ''' <param name="keptIndices">保留的特征索引列表</param>
         ''' <returns>过滤后的矩阵</returns>
-        Public Shared Function FilterByMissingRate(matrix As Double(,), maxMissingRate As Double,
-                                                    ByRef keptIndices As List(Of Integer)) As Double(,)
+        Public Shared Function FilterByMissingRate(matrix As Double(,), maxMissingRate As Double, ByRef keptIndices As List(Of Integer)) As Double(,)
             Dim nFeatures As Integer = matrix.GetLength(0)
             Dim nSamples As Integer = matrix.GetLength(1)
             keptIndices = New List(Of Integer)()
