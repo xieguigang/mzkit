@@ -360,7 +360,7 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
             fill_missing = Properties _
                 .ToDictionary(Function(k) k.Key,
                               Function(k)
-                                  Return If(k.Value.IsNaNImaginary OrElse k.Value <= 0, pos_min, k.Value)
+                                  Return If(k.Value.IsNaNImaginary OrElse k.Value <= 0.0, pos_min, k.Value)
                               End Function)
         Else
             fill_missing = Runif()

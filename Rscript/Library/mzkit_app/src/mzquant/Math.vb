@@ -242,6 +242,8 @@ Module QuantifyMath
         ' always produce negative or zero value
         ' skip of these methods
         If normalize <> NormalizationMethod.ParetoScaling Then
+            Call $"run peak expression table post processing on {result_ions.Length} processed ions...".debug
+
             For i As Integer = 0 To result_ions.Length - 1
                 result_ions(i) = result_ions(i).FillMissing.MedianScale
             Next
