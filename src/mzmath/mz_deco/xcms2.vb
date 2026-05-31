@@ -1,82 +1,84 @@
 ﻿#Region "Microsoft.VisualBasic::73f5668dfc08659063d4dec0f8f45d9c, mzmath\mz_deco\xcms2.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 336
-    '    Code Lines: 234 (69.64%)
-    ' Comment Lines: 59 (17.56%)
-    '    - Xml Docs: 91.53%
-    ' 
-    '   Blank Lines: 43 (12.80%)
-    '     File Size: 11.00 KB
+' Summaries:
 
 
-    ' Enum Imputation
-    ' 
-    '     Median, Min, None
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' Class xcms2
-    ' 
-    '     Properties: groups, ID, into, mz, mzmax
-    '                 mzmin, npeaks, Properties, RI, RImax
-    '                 RImin, rt, rtmax, rtmin
-    ' 
-    '     Constructor: (+6 Overloads) Sub New
-    ' 
-    '     Function: Impute, MakeUniqueId, Merge, ToString, TotalPeakSum
-    ' 
-    '     Sub: AddSamples, SetPeaks
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 336
+'    Code Lines: 234 (69.64%)
+' Comment Lines: 59 (17.56%)
+'    - Xml Docs: 91.53%
+' 
+'   Blank Lines: 43 (12.80%)
+'     File Size: 11.00 KB
+
+
+' Enum Imputation
+' 
+'     Median, Min, None
+' 
+'  
+' 
+' 
+' 
+' Class xcms2
+' 
+'     Properties: groups, ID, into, mz, mzmax
+'                 mzmin, npeaks, Properties, RI, RImax
+'                 RImin, rt, rtmax, rtmin
+' 
+'     Constructor: (+6 Overloads) Sub New
+' 
+'     Function: Impute, MakeUniqueId, Merge, ToString, TotalPeakSum
+' 
+'     Sub: AddSamples, SetPeaks
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
@@ -198,6 +200,10 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     ''' get the sample expression value vector of current feature ion
     ''' </summary>
     ''' <returns></returns>
+    <ScriptIgnore>
+    <IgnoreDataMember>
+    <DataIgnored>
+    <Ignored>
     Public ReadOnly Property expression As Double()
         Get
             Return Properties.Values.ToArray
