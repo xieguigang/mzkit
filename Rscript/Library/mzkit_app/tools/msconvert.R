@@ -15,7 +15,7 @@ for(let file in tqdm(rawfiles)) {
     let outxml = file.path(output_dir,"XML", `${basename(file)}.mzXML`);
 
     rawdata |> write.mzPack(file = outfile);
-    rawdata |> convertTo_mzXML(file = outxml);
+    # rawdata |> convertTo_mzXML(file = outxml);
 
     invisible(NULL);
 }
