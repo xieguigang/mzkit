@@ -102,7 +102,7 @@ Namespace MarkupData.mzXML
         ''' </returns>
         Public Shared Iterator Function LoadScans(ParamArray mzXML As String()) As IEnumerable(Of scan)
             For Each file As String In mzXML
-                For Each scan As scan In file.LoadXmlDataSet(Of scan)(, xmlns:=mzXMLSchema)
+                For Each scan As scan In file.LoadXmlDataSet(Of scan)(, xmlns:=mzXMLSchema, ignoreError:=True)
                     Yield scan
                 Next
             Next
