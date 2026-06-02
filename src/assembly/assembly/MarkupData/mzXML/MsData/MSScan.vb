@@ -87,6 +87,8 @@ Namespace MarkupData.mzXML
     ''' </summary>
     Public Class scan : Implements IMsScanData
 
+        <XmlAttribute("nil", [Namespace]:="xsi")> Public Property nil As Boolean = False
+
         ''' <summary>
         ''' The scan number
         ''' </summary>

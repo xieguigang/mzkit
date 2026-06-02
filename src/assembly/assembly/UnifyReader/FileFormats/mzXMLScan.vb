@@ -175,10 +175,13 @@ Namespace DataReader
             If precursor.IsNullOrEmpty Then
                 Return ""
             Else
-                Return precursor _
-                    .Where(Function(a) Not a.precursorScanNum.StringEmpty(, True)) _
-                    .FirstOrDefault _
-                    .precursorScanNum
+                Dim ion As precursorMz = precursor _
+                    .Where(Function(a)
+                               Return Not a.precursorScanNum.StringEmpty(, True)
+                           End Function) _
+                    .FirstOrDefault
+
+                Return ion.precursorScanNum
             End If
         End Function
     End Class

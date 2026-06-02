@@ -65,6 +65,9 @@ Namespace MarkupData.mzXML
 
     Public Class peaks : Implements IBase64Container
 
+        <XmlAttribute("nil", [Namespace]:="xsi")>
+        Public Property nil As Boolean = False
+
         ''' <summary>
         ''' 1. zlib
         ''' 2. gzip
