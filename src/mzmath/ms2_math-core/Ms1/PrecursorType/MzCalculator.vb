@@ -148,6 +148,10 @@ Namespace Ms1.PrecursorType
             Return AdductMZ(mass, adducts, charge, IonMode:=If(mode = "+"c, IonModes.Positive, IonModes.Negative), M:=M)
         End Function
 
+        ''' <summary>
+        ''' Parse ion <see cref="mode"/> character as <see cref="IonModes"/> enumeration value
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetIonMode() As IonModes
             Return Provider.ParseIonMode(mode)
         End Function
