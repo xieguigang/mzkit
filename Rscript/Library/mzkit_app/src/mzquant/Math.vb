@@ -241,9 +241,11 @@ Module QuantifyMath
         ' 20260531 z-score normalized and pareto scaling
         ' always produce negative or zero value
         ' skip of these methods
-        If normalize <> NormalizationMethod.ParetoScaling Then
+        If normalize <> NormalizationMethod.ParetoScaling AndAlso x.sampleNames.TryCount > 1 Then
             Call $"run peak expression table post processing on {result_ions.Length} processed ions...".debug
 
+            ' 20260604 median scaling is used for post processing of the peak expression table, which can make the data more comparable across samples and reduce the influence of extreme values.
+            ' we needs to skip of median scale processing for that expression matrix data that contains only one sample, otherwise the median scale will make all values to 1, which is not expected.
             For i As Integer = 0 To result_ions.Length - 1
                 result_ions(i) = result_ions(i).FillMissing.MedianScale
             Next
