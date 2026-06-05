@@ -1565,7 +1565,11 @@ Namespace RamanProcessing
         ''' <param name="fitRangeLeft">拟合范围左边界波数</param>
         ''' <param name="fitRangeRight">拟合范围右边界波数</param>
         ''' <param name="maxIter">最大迭代次数</param>
-        Public Shared Function MultiPeakFit(spectrum As RamanSpectrum, initialParams As List(Of PeakParams), Optional fitRangeLeft As Double = Double.MinValue, Optional fitRangeRight As Double = Double.MaxValue, Optional maxIter As Integer = 500) As List(Of PeakInfo)
+        Public Shared Function MultiPeakFit(spectrum As RamanSpectrum, initialParams As List(Of PeakParams),
+                                            Optional fitRangeLeft As Double = Double.MinValue,
+                                            Optional fitRangeRight As Double = Double.MaxValue,
+                                            Optional maxIter As Integer = 500) As List(Of PeakInfo)
+
             If spectrum Is Nothing OrElse spectrum.PointCount < 5 Then
                 Throw New ArgumentException("输入光谱数据点不足")
             End If
