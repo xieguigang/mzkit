@@ -8,6 +8,7 @@
 
 Imports System.IO
 Imports System.Math
+Imports Microsoft.VisualBasic.Data.Bootstrapping
 
 Namespace RamanProcessing
 
@@ -467,11 +468,11 @@ Namespace RamanProcessing
 
             For iter As Integer = 0 To iterations - 1
                 ' 加权多项式拟合
-                Dim coeffs As Double() = WeightedPolynomialFit(normWn, spectrum.Intensities, weights, polyOrder)
+                Dim coeffs As WeightedFit = WeightedLinearRegression.Regress(normWn, spectrum.Intensities, weights, polyOrder)
 
                 ' 计算基线
                 For i As Integer = 0 To n - 1
-                    baseline(i) = EvaluatePolynomial(coeffs, normWn(i))
+                    baseline(i) = coeffs(x:=normWn(i))
                 Next
 
                 ' 更新权重：低于基线的点权重增大，高于基线的点权重减小
