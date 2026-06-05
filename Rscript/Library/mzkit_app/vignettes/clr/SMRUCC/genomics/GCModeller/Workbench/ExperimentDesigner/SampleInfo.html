@@ -39,6 +39,8 @@ export class SampleInfo extends <a href="/vignettes/clr/SMRUCC/genomics/GCModell
    ID: string;
    # sample injection order in current batch, example as 1,2,3,4,5
    injectionOrder: integer;
+   # additional sample metadata, for example as "treatment", "control", "time point 1h", "time point 2h" etc.
+   metadata: list;
    sample_info: string;
    sample_name: string;
    shape: string;
@@ -50,6 +52,7 @@ export class SampleInfo extends <a href="/vignettes/clr/SMRUCC/genomics/GCModell
 
         <ol>
 <li>this class extends from <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/ExperimentDesigner/SampleGroup.html">SampleGroup</a> class: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/ExperimentDesigner/SampleGroup.html">SampleGroup</a></li>
+<li>use by <i>property</i> member <code>metadata</code>: list</li>
 </ol>
 
 
