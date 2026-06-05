@@ -941,11 +941,11 @@ Namespace RamanProcessing
         ''' <param name="wnStart">起始波数</param>
         ''' <param name="wnEnd">结束波数</param>
         ''' <param name="step">波数步长</param>
-        Public Shared Function ResampleUniform(spectrum As RamanSpectrum, wnStart As Double, wnEnd As Double, step As Double) As RamanSpectrum
-            Dim numPoints As Integer = CInt(Math.Floor((wnEnd - wnStart) / step)) + 1
+        Public Shared Function ResampleUniform(spectrum As RamanSpectrum, wnStart As Double, wnEnd As Double, [step] As Double) As RamanSpectrum
+            Dim numPoints As Integer = CInt(Math.Floor((wnEnd - wnStart) / [step])) + 1
             Dim newWn As Double() = New Double(numPoints - 1) {}
             For i As Integer = 0 To numPoints - 1
-                newWn(i) = wnStart + i * step
+                newWn(i) = wnStart + i * [step]
             Next
             Return ResampleSpectrum(spectrum, newWn)
         End Function
@@ -1032,7 +1032,7 @@ Namespace RamanProcessing
             End If
 
             Dim n As Integer = spectrum.PointCount
-            Dim result As spectrum.Clone()
+            Dim result = spectrum.Clone()
             result.Name = spectrum.Name & "_Despike"
 
             ' 计算一阶差分
@@ -1463,10 +1463,10 @@ Namespace RamanProcessing
                 Dim J As Double(,) = New Double(m - 1, numParams - 1) {}
                 Dim residuals As Double() = New Double(m - 1) {}
 
-                For j As Integer = 0 To m - 1
-                    residuals(j) = yData(j) - EvaluatePeakFunction(xData(j), bestParams, peakType)
+                For ji As Integer = 0 To m - 1
+                    residuals(ji) = yData(ji) - EvaluatePeakFunction(xData(ji), bestParams, peakType)
                     For k As Integer = 0 To numParams - 1
-                        j(j, k) = ComputePeakDerivative(xData(j), bestParams, peakType, k)
+                        J(ji, k) = ComputePeakDerivative(xData(ji), bestParams, peakType, k)
                     Next
                 Next
 
@@ -1639,10 +1639,10 @@ Namespace RamanProcessing
                 Dim J As Double(,) = New Double(m - 1, totalParams - 1) {}
                 Dim residuals As Double() = New Double(m - 1) {}
 
-                For j As Integer = 0 To m - 1
-                    residuals(j) = yData(j) - EvaluateMultiPeakFunction(xData(j), bestParams, peakTypes)
+                For ji As Integer = 0 To m - 1
+                    residuals(ji) = yData(ji) - EvaluateMultiPeakFunction(xData(ji), bestParams, peakTypes)
                     For k As Integer = 0 To totalParams - 1
-                        j(j, k) = ComputeMultiPeakDerivative(xData(j), bestParams, peakTypes, k)
+                        J(ji, k) = ComputeMultiPeakDerivative(xData(ji), bestParams, peakTypes, k)
                     Next
                 Next
 
