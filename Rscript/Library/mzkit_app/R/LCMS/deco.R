@@ -73,10 +73,15 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xi
     # 1. mz
     # 2. into
     #
-    const peaktable = ms1_peaktable(xic_files, bins, 
+    let peaktable = ms1_peaktable(xic_files, bins, 
         mzdiff = mzdiff, 
         peak.width = peak.width);
-    const rt_shifts = attr(peaktable, "rt.shift");
+    let rt_shifts = attr(peaktable, "rt.shift");
+
+    # group by rt
+    peaktable <- rt_groups(peaktable,
+        dt = 3,
+        ppm = 20);
 
     write.csv(peaktable, file = `${outputdir}/${filename}`, 
         row.names = TRUE);
