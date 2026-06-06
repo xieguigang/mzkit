@@ -75,8 +75,7 @@ Public Class BinaryClustering
 
     Sub New(Optional mzdiff As Double = 0.3,
             Optional intocutoff As Double = 0.05,
-            Optional equals As Double = 0.85,
-            Optional interval As Double = 0.1)
+            Optional equals As Double = 0.85)
 
         align = NetworkingTree.CreateAlignment(mzdiff, intocutoff, equals)
         equals_cutoff = equals
