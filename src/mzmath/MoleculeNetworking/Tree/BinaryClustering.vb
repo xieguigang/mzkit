@@ -103,6 +103,9 @@ Public Class BinaryClustering
     ''' </summary>
     ''' <param name="ions"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' <see cref="PeakMs2.lib_guid"/> should be unique
+    ''' </remarks>
     Public Function Tree(ions As IEnumerable(Of PeakMs2)) As BinaryClustering
         Dim uniqueIds As New List(Of String)
 
