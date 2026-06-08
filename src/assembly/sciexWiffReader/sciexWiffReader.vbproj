@@ -1,134 +1,84 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0D82246C-02C5-4F9E-A571-EA4FA2077059}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release;MEMI-Desktop</Configurations>
     <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader</RootNamespace>
     <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader</AssemblyName>
-    <FileAlignment>512</FileAlignment>
-    <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <Deterministic>true</Deterministic>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionExplicit>On</OptionExplicit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionCompare>Binary</OptionCompare>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionStrict>Off</OptionStrict>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionInfer>On</OptionInfer>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|AnyCPU'">
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\mzkit\</OutputPath>
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x64'">
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\mzkit\</OutputPath>
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader.xml</DocumentationFile>
-    <Optimize>false</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|AnyCPU'">
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Rsharp_app_release\</OutputPath>
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x64'">
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Rsharp_app_release\</OutputPath>
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader.xml</DocumentationFile>
-    <Optimize>false</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MEMI-Desktop|AnyCPU'">
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\MEMI-Desktop\</OutputPath>
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MEMI-Desktop|x64'">
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\MEMI-Desktop\</OutputPath>
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+</PropertyGroup>
+
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
+    <ProjectReference Include="..\assembly\assembly-netcore5.vbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Clearcore.Licensing">
+      <HintPath>..\..\..\Sciex\Clearcore.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Compression">
+      <HintPath>..\..\..\Sciex\Clearcore2.Compression.dll</HintPath>
+    </Reference>
     <Reference Include="Clearcore2.Data">
       <HintPath>..\..\..\Sciex\Clearcore2.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Data.Acquisition.Client">
+      <HintPath>..\..\..\Sciex\Clearcore2.Data.Acquisition.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Data.Acquisition.Contracts">
+      <HintPath>..\..\..\Sciex\Clearcore2.Data.Acquisition.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Clearcore2.Data.AnalystDataProvider">
       <HintPath>..\..\..\Sciex\Clearcore2.Data.AnalystDataProvider.dll</HintPath>
     </Reference>
+    <Reference Include="Clearcore2.Data.Client">
+      <HintPath>..\..\..\Sciex\Clearcore2.Data.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Data.Common">
+      <HintPath>..\..\..\Sciex\Clearcore2.Data.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Data.CommonInterfaces">
+      <HintPath>..\..\..\Sciex\Clearcore2.Data.CommonInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Data.Contracts">
+      <HintPath>..\..\..\Sciex\Clearcore2.Data.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Data.Core">
+      <HintPath>..\..\..\Sciex\Clearcore2.Data.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Data.Wiff2">
+      <HintPath>..\..\..\Sciex\Clearcore2.Data.Wiff2.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Data.WiffReader">
+      <HintPath>..\..\..\Sciex\Clearcore2.Data.WiffReader.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.DataService">
+      <HintPath>..\..\..\Sciex\Clearcore2.DataService.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Devices.Types">
+      <HintPath>..\..\..\Sciex\Clearcore2.Devices.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Domain.Acquisition">
+      <HintPath>..\..\..\Sciex\Clearcore2.Domain.Acquisition.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Domain.Acquisition.Methods.MassSpec">
+      <HintPath>..\..\..\Sciex\Clearcore2.Domain.Acquisition.Methods.MassSpec.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Infrastructure">
+      <HintPath>..\..\..\Sciex\Clearcore2.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.InternalRawXYProcessing">
+      <HintPath>..\..\..\Sciex\Clearcore2.InternalRawXYProcessing.dll</HintPath>
+    </Reference>
     <Reference Include="Clearcore2.Muni">
       <HintPath>..\..\..\Sciex\Clearcore2.Muni.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Processing">
+      <HintPath>..\..\..\Sciex\Clearcore2.Processing.dll</HintPath>
     </Reference>
     <Reference Include="Clearcore2.ProjectUtilities">
       <HintPath>..\..\..\Sciex\Clearcore2.ProjectUtilities.dll</HintPath>
@@ -136,94 +86,41 @@
     <Reference Include="Clearcore2.RawXYProcessing">
       <HintPath>..\..\..\Sciex\Clearcore2.RawXYProcessing.dll</HintPath>
     </Reference>
+    <Reference Include="Clearcore2.StructuredStorage">
+      <HintPath>..\..\..\Sciex\Clearcore2.StructuredStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.UserLog.Types">
+      <HintPath>..\..\..\Sciex\Clearcore2.UserLog.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Utility">
+      <HintPath>..\..\..\Sciex\Clearcore2.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.XmlHelpers">
+      <HintPath>..\..\..\Sciex\Clearcore2.XmlHelpers.dll</HintPath>
+    </Reference>
+    <Reference Include="SCIEX.Apis.Data.v1">
+      <HintPath>..\..\..\Sciex\SCIEX.Apis.Data.v1.dll</HintPath>
+    </Reference>
+    <Reference Include="Sciex.Clearcore.FMan">
+      <HintPath>..\..\..\Sciex\Sciex.Clearcore.FMan.dll</HintPath>
+    </Reference>
+    <Reference Include="Sciex.Data.Processing">
+      <HintPath>..\..\..\Sciex\Sciex.Data.Processing.dll</HintPath>
+    </Reference>
+    <Reference Include="Sciex.Data.SimpleTypes">
+      <HintPath>..\..\..\Sciex\Sciex.Data.SimpleTypes.dll</HintPath>
+    </Reference>
     <Reference Include="Sciex.Data.XYData">
       <HintPath>..\..\..\Sciex\Sciex.Data.XYData.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\mzkit\packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
+    <Reference Include="Sciex.FMan">
+      <HintPath>..\..\..\Sciex\Sciex.FMan.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
+    <Reference Include="Sciex.Wiff">
+      <HintPath>..\..\..\Sciex\Sciex.Wiff.dll</HintPath>
+    </Reference>
+    <Reference Include="SciexToolKit">
+      <HintPath>..\..\..\Sciex\SciexToolKit.dll</HintPath>
+    </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Import Include="Microsoft.VisualBasic" />
-    <Import Include="System" />
-    <Import Include="System.Collections" />
-    <Import Include="System.Collections.Generic" />
-    <Import Include="System.Data" />
-    <Import Include="System.Diagnostics" />
-    <Import Include="System.Linq" />
-    <Import Include="System.Xml.Linq" />
-    <Import Include="System.Threading.Tasks" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="WiffFileReader\Flags.vb" />
-    <Compile Include="Extensions.vb" />
-    <Compile Include="WiffFileReader\ScanInfo.vb" />
-    <Compile Include="WiffFileReader\WiffScanFileReader.vb" />
-    <Compile Include="MRMReader.vb" />
-    <Compile Include="FullScanReader.vb" />
-    <Compile Include="LicenseFile.vb" />
-    <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Application.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Application.myapp</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Settings.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="My Project\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <CustomToolNamespace>My</CustomToolNamespace>
-      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj">
-      <Project>{e4e859d3-f581-401d-bb6d-37aff663b88d}</Project>
-      <Name>Math.NET5</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
-      <Project>{5e161d08-84ec-4d88-a5ca-cea92d8999b0}</Project>
-      <Name>Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj">
-      <Project>{1ba7ffb2-f4d0-4df0-a5af-4190d849fe9d}</Project>
-      <Name>mzmath-netcore5</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\assembly\assembly-netcore5.vbproj">
-      <Project>{bdaece54-bf9e-42a5-801d-5df08b40f9a0}</Project>
-      <Name>assembly-netcore5</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -66,7 +66,7 @@ Imports Clearcore2.Data.AnalystDataProvider
 Imports Clearcore2.Data.DataAccess.SampleData
 Imports Clearcore2.Data.DataAccess.SampleData.MSExperimentInfo
 Imports Clearcore2.RawXYProcessing
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Class WiffScanFileReader : Implements IDisposable
 
@@ -150,14 +150,14 @@ Public Class WiffScanFileReader : Implements IDisposable
         End While
 
         Dim index As Integer = num2
-        Dim num3 As Double = stdNum.Abs(CDbl(Me.scanList(index).RetentionTime) - RT)
+        Dim num3 As Double = std.Abs(CDbl(Me.scanList(index).RetentionTime) - RT)
 
-        If num2 > 0 AndAlso stdNum.Abs(CDbl(Me.scanList(num2 - 1).RetentionTime) - RT) < num3 Then
+        If num2 > 0 AndAlso std.Abs(CDbl(Me.scanList(num2 - 1).RetentionTime) - RT) < num3 Then
             index = num2 - 1
-            num3 = stdNum.Abs(CDbl(Me.scanList(index).RetentionTime) - RT)
+            num3 = std.Abs(CDbl(Me.scanList(index).RetentionTime) - RT)
         End If
 
-        If num2 < Me.GetLastSpectrumNumber() - 1 AndAlso stdNum.Abs(CDbl(Me.scanList(num2 + 1).RetentionTime) - RT) < num3 Then
+        If num2 < Me.GetLastSpectrumNumber() - 1 AndAlso std.Abs(CDbl(Me.scanList(num2 + 1).RetentionTime) - RT) < num3 Then
             index = num2 + 1
         End If
 

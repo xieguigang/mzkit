@@ -61,7 +61,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Clearcore2.Data.DataAccess.SampleData
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Class ScanInfo : Implements IRetentionTime, IMsScanData
 
@@ -112,16 +112,16 @@ Public Class ScanInfo : Implements IRetentionTime, IMsScanData
 
     Public Overrides Function ToString() As String
         Dim xcms_id As String
-        Dim nT As Integer = stdNum.Round(RetentionTime * 60)
+        Dim nT As Integer = std.Round(RetentionTime * 60)
         Dim datatitle As String = $"{Me.DataTitle}; {Polarity} {ScanMode} npeaks={PeaksCount}, m/z scan=[{LowMz}, {HighMz}], basepeak={BasePeakMz}({BasePeakIntensity})"
 
         If MSLevel = 1 Then
             xcms_id = $"RT={(RetentionTime / 60).ToString("F2")}min"
         Else
             If nT = 0 Then
-                xcms_id = $" M{stdNum.Round(PrecursorMz)}"
+                xcms_id = $" M{std.Round(PrecursorMz)}"
             Else
-                xcms_id = $" M{stdNum.Round(PrecursorMz)}T{nT}"
+                xcms_id = $" M{std.Round(PrecursorMz)}T{nT}"
             End If
         End If
 
