@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology</RootNamespace>
-    <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
+    <TargetFrameworks>net10.0</TargetFrameworks>
 	  <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology</AssemblyName>
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 	  <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
