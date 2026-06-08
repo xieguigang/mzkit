@@ -62,7 +62,6 @@ Imports Microsoft.VisualBasic.Language
 
 Public Module RawStream
 
-#If NET48 Then
     <Extension>
     Public Function LoadFromWiffRaw(raw As sciexWiffReader.WiffScanFileReader,
                                     Optional checkNoise As Boolean = True,
@@ -94,7 +93,6 @@ Public Module RawStream
 
         Return data
     End Function
-#End If
 
     <Extension>
     Public Function GetChromatogram(mzpack As mzPack) As Chromatogram

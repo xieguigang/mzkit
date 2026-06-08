@@ -1,69 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::edde5d79cfc70f1629b30fd587559e2d, assembly\mzPackExtensions\VendorStream\WiffRawStream.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 162
-    '    Code Lines: 129 (79.63%)
-    ' Comment Lines: 7 (4.32%)
-    '    - Xml Docs: 42.86%
-    ' 
-    '   Blank Lines: 26 (16.05%)
-    '     File Size: 5.80 KB
+' Summaries:
 
 
-    ' Class WiffRawStream
-    ' 
-    '     Properties: getExperimentType, rawFileName
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: defaultScanId, pullAllScans
-    ' 
-    '     Sub: RemoveAbNoise, walkScan
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 162
+'    Code Lines: 129 (79.63%)
+' Comment Lines: 7 (4.32%)
+'    - Xml Docs: 42.86%
+' 
+'   Blank Lines: 26 (16.05%)
+'     File Size: 5.80 KB
+
+
+' Class WiffRawStream
+' 
+'     Properties: getExperimentType, rawFileName
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: defaultScanId, pullAllScans
+' 
+'     Sub: RemoveAbNoise, walkScan
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-#If NET48 Then
-
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
@@ -222,4 +219,4 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
     End Function
 End Class
 
-#End If
+
