@@ -138,9 +138,11 @@
 		<ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
 		<ProjectReference Include="..\..\mzmath\MSEngine\MSEngine.vbproj" />
 		<ProjectReference Include="..\assembly\assembly-netcore5.vbproj" />
+		<ProjectReference Include="..\BrukerDataReader\BrukerDataReader.NET5.vbproj" />
 		<ProjectReference Include="..\Comprehensive\Comprehensive.NET5.vbproj" />
 		<ProjectReference Include="..\mzPack\mzpack.NET5.vbproj" />
 		<ProjectReference Include="..\SignalReader\SignalReader.vbproj" />
+		<ProjectReference Include="..\ThermoRawFileReader\MSFileReader.NET5.vbproj" />
 
 	</ItemGroup>
 
@@ -180,6 +182,23 @@
 	<ItemGroup>
 	  <PackageReference Include="System.Buffers" Version="4.6.1" />
 	  <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" />
+	</ItemGroup>
+
+  
+  
+	<ItemGroup>
+	  <Reference Include="ThermoFisher.CommonCore.BackgroundSubtraction">
+	    <HintPath>..\..\..\ThermoFisher\Libs\netstandard2.0\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
+	  </Reference>
+	  <Reference Include="ThermoFisher.CommonCore.Data">
+	    <HintPath>..\..\..\ThermoFisher\Libs\netstandard2.0\ThermoFisher.CommonCore.Data.dll</HintPath>
+	  </Reference>
+	  <Reference Include="ThermoFisher.CommonCore.MassPrecisionEstimator">
+	    <HintPath>..\..\..\ThermoFisher\Libs\netstandard2.0\ThermoFisher.CommonCore.MassPrecisionEstimator.dll</HintPath>
+	  </Reference>
+	  <Reference Include="ThermoFisher.CommonCore.RawFileReader">
+	    <HintPath>..\..\..\ThermoFisher\Libs\netstandard2.0\ThermoFisher.CommonCore.RawFileReader.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 
 </Project>

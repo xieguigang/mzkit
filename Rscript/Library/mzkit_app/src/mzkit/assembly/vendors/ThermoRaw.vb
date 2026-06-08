@@ -55,8 +55,6 @@
 
 #End Region
 
-#If NET8_0 Then
-
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
@@ -132,4 +130,3 @@ Module ThermoRaw
         Return mzpack.ExactPixelTable
     End Function
 End Module
-#End If
