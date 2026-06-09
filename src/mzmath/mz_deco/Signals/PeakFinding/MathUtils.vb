@@ -1,4 +1,5 @@
-﻿
+﻿Imports std = System.Math
+
 Namespace Chromatogram.PeakFinding
 
     ''' <summary>
@@ -17,7 +18,7 @@ Namespace Chromatogram.PeakFinding
         Public Shared Function Gaussian(x As Double, center As Double,
                                         sigma As Double, height As Double) As Double
             Dim z As Double = (x - center) / sigma
-            Return height * Math.Exp(-0.5 * z * z)
+            Return height * std.Exp(-0.5 * z * z)
         End Function
 
         ''' <summary>
@@ -34,7 +35,7 @@ Namespace Chromatogram.PeakFinding
             Dim z2 As Double = z * z
             ' ψ(x) = (1 - x²) * exp(-x²/2) * 2/(√3 * σ * π^(1/4))
             ' 归一化系数可以省略，因为我们只关心相对值
-            Return (1.0 - z2) * Math.Exp(-0.5 * z2)
+            Return (1.0 - z2) * std.Exp(-0.5 * z2)
         End Function
 
         ''' <summary>
@@ -54,7 +55,7 @@ Namespace Chromatogram.PeakFinding
             For i As Integer = 0 To data.Length - 1
                 Dim sum As Double = 0.0
                 Dim count As Integer = 0
-                For j As Integer = Math.Max(0, i - halfW) To Math.Min(data.Length - 1, i + halfW)
+                For j As Integer = std.Max(0, i - halfW) To std.Min(data.Length - 1, i + halfW)
                     sum += data(j)
                     count += 1
                 Next
@@ -83,7 +84,7 @@ Namespace Chromatogram.PeakFinding
             For i As Integer = 0 To data.Length - 1
                 Dim sum As Double = 0.0
                 For k As Integer = -2 To 2
-                    Dim idx As Integer = Math.Max(0, Math.Min(data.Length - 1, i + k))
+                    Dim idx As Integer = std.Max(0, std.Min(data.Length - 1, i + k))
                     sum += kernel(k + 2) * data(idx)
                 Next
                 result(i) = sum
@@ -171,7 +172,7 @@ Namespace Chromatogram.PeakFinding
         Public Shared Function LinearInterpolation(x0 As Double, y0 As Double,
                                                     x1 As Double, y1 As Double,
                                                     x As Double) As Double
-            If Math.Abs(x1 - x0) < Double.Epsilon Then Return (y0 + y1) / 2.0
+            If std.Abs(x1 - x0) < Double.Epsilon Then Return (y0 + y1) / 2.0
             Return y0 + (y1 - y0) * (x - x0) / (x1 - x0)
         End Function
 

@@ -1,5 +1,6 @@
-﻿Namespace Chromatogram.PeakFinding
+﻿Imports std = System.Math
 
+Namespace Chromatogram.PeakFinding
 
     ''' <summary>
     ''' 基线估计器，提供多种基线估计方法
@@ -41,8 +42,8 @@
             If ticks.Length = 1 Then Return ticks(0).Intensity
 
             ' 取起始和结束处若干点的平均值作为端点
-            Dim nEndpoint As Integer = Math.Max(1, CInt(Math.Floor(ticks.Length * 0.1)))
-            nEndpoint = Math.Min(nEndpoint, ticks.Length \ 2)
+            Dim nEndpoint As Integer = std.Max(1, CInt(std.Floor(ticks.Length * 0.1)))
+            nEndpoint = std.Min(nEndpoint, ticks.Length \ 2)
 
             Dim startAvg As Double = 0.0
             For i As Integer = 0 To nEndpoint - 1
@@ -90,10 +91,10 @@
 
             ' 计算百分位数对应的索引
             Dim rank As Double = (percentile / 100.0) * (intensities.Length - 1)
-            Dim lowerIndex As Integer = CInt(Math.Floor(rank))
-            Dim upperIndex As Integer = CInt(Math.Ceiling(rank))
-            lowerIndex = Math.Max(0, Math.Min(lowerIndex, intensities.Length - 1))
-            upperIndex = Math.Max(0, Math.Min(upperIndex, intensities.Length - 1))
+            Dim lowerIndex As Integer = CInt(std.Floor(rank))
+            Dim upperIndex As Integer = CInt(std.Ceiling(rank))
+            lowerIndex = std.Max(0, std.Min(lowerIndex, intensities.Length - 1))
+            upperIndex = std.Max(0, std.Min(upperIndex, intensities.Length - 1))
 
             If lowerIndex = upperIndex Then
                 Return intensities(lowerIndex)
@@ -114,7 +115,7 @@
                 Return EstimateMinimumBaseline(ticks)
             End If
 
-            boundaryPoints = Math.Min(boundaryPoints, ticks.Length \ 4)
+            boundaryPoints = std.Min(boundaryPoints, ticks.Length \ 4)
 
             ' 起始端局部最小值
             Dim startMin As Double = Double.MaxValue

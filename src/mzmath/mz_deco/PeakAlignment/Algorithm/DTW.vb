@@ -121,7 +121,7 @@ Namespace PeakAlignment
         ''' 将离散的对齐路径转换为连续的RT校正映射。
         ''' 对于任意给定的样本RT值，通过线性插值计算对应的参考RT值。
         ''' </summary>
-        Private Function BuildRTCorrectionFromWarpPath(path As List(Of Tuple(Of Integer, Integer)),
+        Public Function BuildRTCorrectionFromWarpPath(path As List(Of Tuple(Of Integer, Integer)),
                                                         rtBins As Double(),
                                                         rtMin As Double,
                                                         binSize As Double) As Func(Of Double, Double)

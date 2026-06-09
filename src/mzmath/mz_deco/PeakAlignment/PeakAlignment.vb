@@ -228,7 +228,7 @@ Namespace PeakAlignment
         ''' <param name="tolerance">容差参数</param>
         ''' <param name="mode">容差模式</param>
         ''' <returns>绝对容差值（Da）</returns>
-        Private Function GetMzTolerance(mz As Double, tolerance As Double, mode As ToleranceMode) As Double
+        Friend Function GetMzTolerance(mz As Double, tolerance As Double, mode As ToleranceMode) As Double
             Select Case mode
                 Case ToleranceMode.Absolute
                     Return tolerance
@@ -245,7 +245,7 @@ Namespace PeakAlignment
         ''' 策略：选择峰数量最多的样本作为参考样本。
         ''' 如果指定了参考样本名称且存在，则使用指定的样本。
         ''' </summary>
-        Private Function SelectReferenceSample(peaks As Dictionary(Of String, PeakFeature()),
+        Public Function SelectReferenceSample(peaks As Dictionary(Of String, PeakFeature()),
                                                 preferredRef As String) As String
             ' 如果指定了参考样本且存在，直接使用
             If Not String.IsNullOrEmpty(preferredRef) AndAlso peaks.ContainsKey(preferredRef) Then

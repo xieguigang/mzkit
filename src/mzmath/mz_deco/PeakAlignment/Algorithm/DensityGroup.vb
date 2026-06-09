@@ -1,4 +1,6 @@
-﻿Namespace PeakAlignment
+﻿Imports std = System.Math
+
+Namespace PeakAlignment
 
     ' ========================================================================
     '   算法4：密度分组对齐（XCMS风格）
@@ -82,7 +84,7 @@
                     ' 使用Silverman法则自动估计带宽
                     bw = SilvermanBandwidth(rtValues)
                     ' 确保带宽不小于RT容差的一半
-                    bw = Math.Max(bw, params.rtTolerance * 0.5)
+                    bw = std.Max(bw, params.rtTolerance * 0.5)
                 End If
 
                 ' 在RT范围内构建密度估计网格
@@ -93,7 +95,7 @@
                 rtMinGroup -= bw * 3
                 rtMaxGroup += bw * 3
 
-                Dim nGrid As Integer = CInt(Math.Max(512, (rtMaxGroup - rtMinGroup) / (bw * 0.1)))
+                Dim nGrid As Integer = CInt(std.Max(512, (rtMaxGroup - rtMinGroup) / (bw * 0.1)))
                 Dim gridStep As Double = (rtMaxGroup - rtMinGroup) / nGrid
                 Dim densityGrid As Double() = New Double(nGrid) {}
                 Dim gridRts As Double() = New Double(nGrid) {}
@@ -107,7 +109,7 @@
                     For Each rt In rtValues
                         Dim u As Double = (gridRt - rt) / bw
                         ' 高斯核函数
-                        density += Math.Exp(-0.5 * u * u) / (bw * Math.Sqrt(2.0 * Math.PI))
+                        density += std.Exp(-0.5 * u * u) / (bw * std.Sqrt(2.0 * std.PI))
                     Next
 
                     densityGrid(gi) = density / rtValues.Length
@@ -155,7 +157,7 @@
                     Dim bestDist As Double = Double.MaxValue
 
                     For di As Integer = 0 To densityPeaks.Count - 1
-                        Dim dist As Double = Math.Abs(peakRt - gridRts(densityPeaks(di)))
+                        Dim dist As Double = std.Abs(peakRt - gridRts(densityPeaks(di)))
                         If dist < bestDist Then
                             bestDist = dist
                             bestPeakIdx = di
@@ -199,10 +201,10 @@
                     For Each kv In sampleBest
                         mzSum += kv.Value.mz
                         rtSum += kv.Value.rt
-                        g.minMz = Math.Min(g.minMz, kv.Value.mz)
-                        g.maxMz = Math.Max(g.maxMz, kv.Value.mz)
-                        g.minRt = Math.Min(g.minRt, kv.Value.rtmin)
-                        g.maxRt = Math.Max(g.maxRt, kv.Value.rtmax)
+                        g.minMz = std.Min(g.minMz, kv.Value.mz)
+                        g.maxMz = std.Max(g.maxMz, kv.Value.mz)
+                        g.minRt = std.Min(g.minRt, kv.Value.rtmin)
+                        g.maxRt = std.Max(g.maxRt, kv.Value.rtmax)
                         g.sampleAreas(kv.Key) = kv.Value.area
                         g.samplePeaks(kv.Key) = kv.Value
                     Next

@@ -1,4 +1,6 @@
-﻿Namespace Chromatogram.PeakFinding
+﻿Imports std = System.Math
+
+Namespace Chromatogram.PeakFinding
 
     ''' <summary>
     ''' 噪声水平估计器，提供多种噪声估计方法
@@ -18,12 +20,12 @@
             If ticks Is Nothing OrElse ticks.Length = 0 Then Return 0.0
             If ticks.Length < segmentCount Then segmentCount = ticks.Length
 
-            Dim segmentSize As Integer = CInt(Math.Ceiling(ticks.Length / CDbl(segmentCount)))
+            Dim segmentSize As Integer = CInt(std.Ceiling(ticks.Length / CDbl(segmentCount)))
             Dim minValues As New List(Of Double)()
 
             For seg As Integer = 0 To segmentCount - 1
                 Dim startIdx As Integer = seg * segmentSize
-                Dim endIdx As Integer = Math.Min(startIdx + segmentSize - 1, ticks.Length - 1)
+                Dim endIdx As Integer = std.Min(startIdx + segmentSize - 1, ticks.Length - 1)
                 If startIdx >= ticks.Length Then Exit For
 
                 Dim segMin As Double = Double.MaxValue
@@ -70,7 +72,7 @@
             ' 计算绝对偏差的中位数
             Dim absDeviations(sortedDiffs.Length - 1) As Double
             For i As Integer = 0 To sortedDiffs.Length - 1
-                absDeviations(i) = Math.Abs(sortedDiffs(i) - median)
+                absDeviations(i) = std.Abs(sortedDiffs(i) - median)
             Next
             Array.Sort(absDeviations)
 
@@ -103,7 +105,7 @@
                 If ticks(i).Intensity > ticks(i - 1).Intensity AndAlso
                    ticks(i).Intensity > ticks(i + 1).Intensity Then
                     ' 寻找下一个局部极小值
-                    For j As Integer = i + 1 To Math.Min(i + 10, ticks.Length - 2)
+                    For j As Integer = i + 1 To std.Min(i + 10, ticks.Length - 2)
                         If ticks(j).Intensity < ticks(j - 1).Intensity AndAlso
                            ticks(j).Intensity < ticks(j + 1).Intensity Then
                             peakValleyDiffs.Add(ticks(i).Intensity - ticks(j).Intensity)

@@ -1,4 +1,5 @@
-﻿
+﻿Imports std = System.Math
+
 Namespace Chromatogram.PeakFinding
 
     ''' <summary>
@@ -194,8 +195,7 @@ Namespace Chromatogram.PeakFinding
                 Dim current As ROI = allPeaks(i)
                 Dim j As Integer = i + 1
 
-                While j < allPeaks.Count AndAlso
-                      Math.Abs(allPeaks(j).rt - current.rt) < mergeDistance
+                While j < allPeaks.Count AndAlso std.Abs(allPeaks(j).rt - current.rt) < mergeDistance
                     ' 保留信噪比更高的峰
                     If allPeaks(j).snRatio > current.snRatio Then
                         current = allPeaks(j)
