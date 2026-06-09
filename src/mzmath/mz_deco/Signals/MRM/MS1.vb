@@ -71,7 +71,7 @@ Namespace MarkupData
     <HideModuleName>
     Public Module MS1Extensions
 
-        ReadOnly ppm50 As [Default](Of Tolerance) = New PPMmethod(50).Interface
+        ReadOnly da0_1 As [Default](Of Tolerance) = New DAmethod(0.1).Interface
 
         ''' <summary>
         ''' 将质谱之中的ms1的结果，按照mz进行分组，之后再按照时间排序即可得到随时间变化的信号曲线
@@ -80,7 +80,7 @@ Namespace MarkupData
         ''' 
         <Extension>
         Public Iterator Function Ms1Chromatogram(data As IEnumerable(Of (scan_time#, mz#, intensity#)), Optional tolerance As Tolerance = Nothing) As IEnumerable(Of (mz#, chromatogram As ChromatogramTick()))
-            Dim mzGroup = data.GroupBy(Function(d) d.mz, equals:=tolerance Or ppm50)
+            Dim mzGroup = data.GroupBy(Function(d) d.mz, equals:=tolerance Or da0_1)
 
             For Each mz As IGrouping(Of String, (scan_time#, mz#, intensity#)) In mzGroup
                 Dim mzValue# = Val(mz.Key)
