@@ -73,7 +73,7 @@ Imports std = System.Math
 ''' 在峰对齐操作之中所处理的对象就是不同的样本原始数据文件之间的在给定误差下相同``m/z``的峰之间的保留时间矫正的操作
 ''' 峰对齐的一个基础的操作为比较峰的相似度
 ''' </summary>
-Public Module PeakAlignment
+Public Module PeakAlignments
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function CreatePeak(id As String, mz As Double, rt As Double, intensity As Double) As PeakFeature
