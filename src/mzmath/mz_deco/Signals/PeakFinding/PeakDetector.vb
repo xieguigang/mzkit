@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports std = System.Math
 
 Namespace Chromatogram.PeakFinding
 
@@ -227,7 +228,7 @@ Namespace Chromatogram.PeakFinding
                 Dim kernel(kernelSize - 1) As Double
                 For k As Integer = 0 To kernelSize - 1
                     Dim x As Double = (k - halfK) / scale
-                    kernel(k) = MathUtils.MexicanHatWavelet(x, 0, 1.0) / Math.Sqrt(scale)
+                    kernel(k) = MathUtils.MexicanHatWavelet(x, 0, 1.0) / std.Sqrt(scale)
                 Next
 
                 ' 卷积计算CWT系数
@@ -253,8 +254,8 @@ Namespace Chromatogram.PeakFinding
                 For i As Integer = scale To ticks.Length - scale - 1
                     ' 检查是否为局部极大值
                     Dim isMax As Boolean = True
-                    Dim winHalf As Integer = Math.Max(1, scale \ 2)
-                    For j As Integer = Math.Max(0, i - winHalf) To Math.Min(ticks.Length - 1, i + winHalf)
+                    Dim winHalf As Integer = std.Max(1, scale \ 2)
+                    For j As Integer = std.Max(0, i - winHalf) To std.Min(ticks.Length - 1, i + winHalf)
                         If j <> i AndAlso cwtCoeffs(si, j) >= cwtCoeffs(si, i) Then
                             isMax = False
                             Exit For
@@ -267,7 +268,7 @@ Namespace Chromatogram.PeakFinding
                     ' 检查是否已有脊线经过此位置
                     Dim belongsToExisting As Boolean = False
                     For Each ridge In ridgeLines
-                        If ridge.Count > 0 AndAlso Math.Abs(ridge(ridge.Count - 1) - i) <= params.CentWaveMaxGap Then
+                        If ridge.Count > 0 AndAlso std.Abs(ridge(ridge.Count - 1) - i) <= params.CentWaveMaxGap Then
                             belongsToExisting = True
                             Exit For
                         End If
@@ -284,7 +285,7 @@ Namespace Chromatogram.PeakFinding
                     For ssi As Integer = si - 1 To 0 Step -1
                         Dim bestPos As Integer = currentPos
                         Dim bestVal As Double = cwtCoeffs(ssi, currentPos)
-                        Dim searchRange As Integer = Math.Max(1, scales(ssi) \ 2)
+                        Dim searchRange As Integer = std.Max(1, scales(ssi) \ 2)
 
                         For offset As Integer = -searchRange To searchRange
                             Dim testPos As Integer = currentPos + offset
@@ -305,7 +306,7 @@ Namespace Chromatogram.PeakFinding
                     Next
 
                     ' 脊线必须跨越足够的尺度才被认为是有效的
-                    If ridge.Count >= Math.Max(2, scales.Count * 0.3) Then
+                    If ridge.Count >= std.Max(2, scales.Count * 0.3) Then
                         ridgeLines.Add(ridge)
                     End If
                 Next
@@ -328,15 +329,15 @@ Namespace Chromatogram.PeakFinding
 
                 ' 确定峰边界：从峰中心向两侧扩展，直到信号降至基线附近
                 ' 使用脊线的最大尺度作为峰宽的初始估计
-                Dim estimatedWidth As Integer = scales(Math.Min(ridge.Count - 1, scales.Count - 1)) * 3
+                Dim estimatedWidth As Integer = scales(std.Min(ridge.Count - 1, scales.Count - 1)) * 3
 
-                Dim leftBound As Integer = Math.Max(0, peakIdx - estimatedWidth)
-                Dim rightBound As Integer = Math.Min(ticks.Length - 1, peakIdx + estimatedWidth)
+                Dim leftBound As Integer = std.Max(0, peakIdx - estimatedWidth)
+                Dim rightBound As Integer = std.Min(ticks.Length - 1, peakIdx + estimatedWidth)
 
                 ' 精确化边界：寻找信号降至基线+2σ的位置
                 Dim threshold As Double = noiseLevel + 2.0 * noiseStd
 
-                For i As Integer = peakIdx - 1 To Math.Max(0, peakIdx - estimatedWidth * 2) Step -1
+                For i As Integer = peakIdx - 1 To std.Max(0, peakIdx - estimatedWidth * 2) Step -1
                     If ticks(i).Intensity <= threshold Then
                         leftBound = i
                         Exit For
@@ -344,7 +345,7 @@ Namespace Chromatogram.PeakFinding
                     leftBound = i
                 Next
 
-                For i As Integer = peakIdx + 1 To Math.Min(ticks.Length - 1, peakIdx + estimatedWidth * 2)
+                For i As Integer = peakIdx + 1 To std.Min(ticks.Length - 1, peakIdx + estimatedWidth * 2)
                     If ticks(i).Intensity <= threshold Then
                         rightBound = i
                         Exit For
@@ -385,7 +386,7 @@ Namespace Chromatogram.PeakFinding
                 roi.additional("peak_fwhm") = EstimateFWHM(roi.ticks, peakIntensity, noiseLevel)
                 roi.additional("asymmetry_factor") = EstimateAsymmetryFactor(roi.ticks, peakIdx - leftBound, peakIntensity, noiseLevel)
                 roi.additional("cwt_ridge_length") = CDbl(ridge.Count)
-                roi.additional("cwt_max_scale") = CDbl(scales(Math.Min(ridge.Count - 1, scales.Count - 1)))
+                roi.additional("cwt_max_scale") = CDbl(scales(std.Min(ridge.Count - 1, scales.Count - 1)))
                 roi.additional("detection_method") = CDbl(PeakDetectionMethod.CentWave)
 
                 results.Add(roi)
@@ -424,14 +425,14 @@ Namespace Chromatogram.PeakFinding
             ' 步骤1：构建高斯卷积核
             Dim sigma As Double = params.MatchedFilterSigma
             Dim truncate As Double = params.MatchedFilterTruncateWidth
-            Dim kernelRadius As Integer = CInt(Math.Ceiling(sigma * truncate))
+            Dim kernelRadius As Integer = CInt(std.Ceiling(sigma * truncate))
             Dim kernelSize As Integer = 2 * kernelRadius + 1
             Dim kernel(kernelSize - 1) As Double
             Dim kernelSum As Double = 0.0
 
             For k As Integer = 0 To kernelSize - 1
                 Dim x As Double = (k - kernelRadius)
-                kernel(k) = Math.Exp(-0.5 * (x / sigma) ^ 2)
+                kernel(k) = std.Exp(-0.5 * (x / sigma) ^ 2)
                 kernelSum += kernel(k)
             Next
 
@@ -447,7 +448,7 @@ Namespace Chromatogram.PeakFinding
             End If
 
             ' 将sigma转换为数据点数
-            Dim sigmaPoints As Integer = CInt(Math.Round(sigma / dt))
+            Dim sigmaPoints As Integer = CInt(std.Round(sigma / dt))
             If sigmaPoints < 1 Then sigmaPoints = 1
 
             ' 步骤3：对信号进行高斯滤波
@@ -459,7 +460,7 @@ Namespace Chromatogram.PeakFinding
             Dim filtered As Double() = MathUtils.Convolve(intensities, kernel)
 
             ' 步骤4：在滤波后的信号上寻找局部极大值
-            Dim halfW As Integer = Math.Max(3, sigmaPoints)
+            Dim halfW As Integer = std.Max(3, sigmaPoints)
             Dim peakIndices As New List(Of Integer)()
 
             For i As Integer = halfW To filtered.Length - halfW - 1
@@ -485,7 +486,7 @@ Namespace Chromatogram.PeakFinding
                 For i As Integer = 0 To filtered.Length - 1
                     sumSqDiff += (filtered(i) - filteredMean) ^ 2
                 Next
-                filteredNoiseStd = Math.Sqrt(sumSqDiff / filtered.Length)
+                filteredNoiseStd = std.Sqrt(sumSqDiff / filtered.Length)
             End If
             If filteredNoiseStd <= 0 Then filteredNoiseStd = 1.0
 
@@ -503,7 +504,7 @@ Namespace Chromatogram.PeakFinding
                 Dim rightBound As Integer = peakIdx
                 Dim threshold As Double = noiseLevel + 2.0 * noiseStd
 
-                For i As Integer = peakIdx - 1 To Math.Max(0, peakIdx - sigmaPoints * 4) Step -1
+                For i As Integer = peakIdx - 1 To std.Max(0, peakIdx - sigmaPoints * 4) Step -1
                     If ticks(i).Intensity <= threshold Then
                         leftBound = i
                         Exit For
@@ -511,7 +512,7 @@ Namespace Chromatogram.PeakFinding
                     leftBound = i
                 Next
 
-                For i As Integer = peakIdx + 1 To Math.Min(ticks.Length - 1, peakIdx + sigmaPoints * 4)
+                For i As Integer = peakIdx + 1 To std.Min(ticks.Length - 1, peakIdx + sigmaPoints * 4)
                     If ticks(i).Intensity <= threshold Then
                         rightBound = i
                         Exit For
@@ -593,7 +594,7 @@ Namespace Chromatogram.PeakFinding
 
             ' 多次平滑以减少噪声
             Dim smoothed As Double() = CType(intensities.Clone(), Double())
-            For pass As Integer = 0 To Math.Max(0, params.DerivativeSmoothWindow \ 2)
+            For pass As Integer = 0 To std.Max(0, params.DerivativeSmoothWindow \ 2)
                 smoothed = MathUtils.SavitzkyGolaySmooth(smoothed)
             Next
 
@@ -607,7 +608,7 @@ Namespace Chromatogram.PeakFinding
             ' 导数阈值：低于此阈值的导数被视为零（平坦区域）
             Dim maxDeriv As Double = 0.0
             For Each d In derivative
-                If Math.Abs(d) > maxDeriv Then maxDeriv = Math.Abs(d)
+                If std.Abs(d) > maxDeriv Then maxDeriv = std.Abs(d)
             Next
             Dim derivThreshold As Double = maxDeriv * params.DerivativeThresholdFactor
 
@@ -619,8 +620,8 @@ Namespace Chromatogram.PeakFinding
 
             For i As Integer = 0 To derivative.Length - 2
                 ' 忽略接近零的导数
-                If Math.Abs(derivative(i)) < derivThreshold AndAlso
-                   Math.Abs(derivative(i + 1)) < derivThreshold Then
+                If std.Abs(derivative(i)) < derivThreshold AndAlso
+                    std.Abs(derivative(i + 1)) < derivThreshold Then
                     Continue For
                 End If
 
@@ -629,7 +630,7 @@ Namespace Chromatogram.PeakFinding
                     ' 精确化峰顶位置：在i和i+1之间找原始信号的最大值
                     Dim maxIdx As Integer = i
                     Dim maxVal As Double = smoothed(i)
-                    For j As Integer = i To Math.Min(i + 3, smoothed.Length - 1)
+                    For j As Integer = i To std.Min(i + 3, smoothed.Length - 1)
                         If smoothed(j) > maxVal Then
                             maxVal = smoothed(j)
                             maxIdx = j
@@ -677,8 +678,8 @@ Namespace Chromatogram.PeakFinding
                 Next
 
                 ' 确保边界合理
-                If leftBound >= peakIdx Then leftBound = Math.Max(0, peakIdx - CInt(params.MaxPeakWidth / dt / 2))
-                If rightBound <= peakIdx Then rightBound = Math.Min(ticks.Length - 1, peakIdx + CInt(params.MaxPeakWidth / dt / 2))
+                If leftBound >= peakIdx Then leftBound = std.Max(0, peakIdx - CInt(params.MaxPeakWidth / dt / 2))
+                If rightBound <= peakIdx Then rightBound = std.Min(ticks.Length - 1, peakIdx + CInt(params.MaxPeakWidth / dt / 2))
 
                 Dim peakWidth As Double = ticks(rightBound).Time - ticks(leftBound).Time
                 If peakWidth < params.MinPeakWidth OrElse peakWidth > params.MaxPeakWidth Then
@@ -763,7 +764,7 @@ Namespace Chromatogram.PeakFinding
         ''' 估计峰的不对称因子(Asymmetry Factor, As)
         ''' As = b/a，其中a为峰顶到10%峰高处的左侧时间距离，
         ''' b为峰顶到10%峰高处的右侧时间距离
-        ''' As = 1 表示对称峰，As > 1 表示拖尾峰，As < 1 表示前伸峰
+        ''' As = 1 表示对称峰，As > 1 表示拖尾峰，As &lt; 1 表示前伸峰
         ''' </summary>
         Private Shared Function EstimateAsymmetryFactor(ticks As ChromatogramTick(),
                                                          peakOffset As Integer,
@@ -829,8 +830,7 @@ Namespace Chromatogram.PeakFinding
                 Dim j As Integer = i + 1
 
                 ' 查找需要合并的峰
-                While j < sorted.Count AndAlso
-                      Math.Abs(sorted(j).rt - current.rt) < mergeDistance
+                While j < sorted.Count AndAlso std.Abs(sorted(j).rt - current.rt) < mergeDistance
                     ' 保留强度较高的峰
                     If sorted(j).maxInto > current.maxInto Then
                         current = sorted(j)

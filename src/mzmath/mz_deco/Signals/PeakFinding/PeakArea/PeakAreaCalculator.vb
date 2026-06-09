@@ -283,7 +283,7 @@ Namespace Chromatogram.PeakFinding
 
             For Each tick In ticks
                 Dim z As Double = (tick.Time - center) / sigma
-                Dim predicted As Double = baseline + height * Math.Exp(-0.5 * z * z)
+                Dim predicted As Double = baseline + height * std.Exp(-0.5 * z * z)
                 ssRes += (tick.Intensity - predicted) ^ 2
                 ssTot += (tick.Intensity - meanY) ^ 2
             Next
@@ -310,8 +310,8 @@ Namespace Chromatogram.PeakFinding
             Dim area As Double = 0.0
             For i As Integer = 0 To ticks.Length - 2
                 Dim dx As Double = ticks(i + 1).Time - ticks(i).Time
-                Dim y0 As Double = Math.Max(0, ticks(i).Intensity - baseline)
-                Dim y1 As Double = Math.Max(0, ticks(i + 1).Intensity - baseline)
+                Dim y0 As Double = std.Max(0, ticks(i).Intensity - baseline)
+                Dim y1 As Double = std.Max(0, ticks(i + 1).Intensity - baseline)
                 area += dx * (y0 + y1) / 2.0
             Next
 
