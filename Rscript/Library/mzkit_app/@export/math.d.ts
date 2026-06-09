@@ -515,8 +515,10 @@ declare namespace math {
      * @param n -
      * 
      * + default value Is ``20000``.
+     * @param env 
+     * + default value Is ``null``.
    */
-   function top(x: object, n?: object): object;
+   function top_peaks(x: any, n?: object, env?: object): object|object;
    /**
     * makes xcms_id format liked ROI unique id
     * 

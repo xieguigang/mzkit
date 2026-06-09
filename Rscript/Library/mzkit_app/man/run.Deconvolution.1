@@ -6,6 +6,7 @@ run.Deconvolution \- run.Deconvolution(rawdata,
     <i>xic.mzdiff</i> = <span style='color: green;'>0.005</span>,
     <i>peak.width</i> = [<span style='color: green;'>30</span>],
     <i>n.threads</i> = <span style='color: green;'>16</span>,
+    <i>top.n</i> = <span style='color: green;'>20000</span>,
     <i>filename</i> = <span style='color: brown;'><strong>'peaktable.csv'</strong></span>)
 .SH SYNOPSIS
 \fIrun.Deconvolution(rawdata,
@@ -14,6 +15,7 @@ run.Deconvolution \- run.Deconvolution(rawdata,
     <i>xic.mzdiff</i> = <span style='color: green;'>0.005</span>,
     <i>peak.width</i> = [<span style='color: green;'>30</span>],
     <i>n.threads</i> = <span style='color: green;'>16</span>,
+    <i>top.n</i> = <span style='color: green;'>20000</span>,
     <i>filename</i> = <span style='color: brown;'><strong>'peaktable.csv'</strong></span>)\fR
 .SH OPTIONS
 .PP
@@ -35,6 +37,9 @@ rawdata, the XIC data is generated based on this parameter value
 .PP
 .PP
 \fBn.threads\fB \fR\- 16. 
+.PP
+.PP
+\fBtop.n\fB \fR\- 20000. 
 .PP
 .PP
 \fBfilename\fB \fR\- 'peaktable.csv'. the save file name of the exports generated peaktable file.
