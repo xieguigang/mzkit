@@ -368,8 +368,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="C7AY00268H-WarpingTB\**" />
     <Compile Remove="test\**" />
+    <EmbeddedResource Remove="C7AY00268H-WarpingTB\**" />
     <EmbeddedResource Remove="test\**" />
+    <None Remove="C7AY00268H-WarpingTB\**" />
     <None Remove="test\**" />
     <None Include="..\..\..\LICENSE">
       <Pack>True</Pack>

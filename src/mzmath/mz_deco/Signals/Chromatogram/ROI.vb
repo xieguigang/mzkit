@@ -108,6 +108,12 @@ Namespace Chromatogram
         Public Property integration As Double
 
         ''' <summary>
+        ''' 拟合出来的峰面积
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property peakarea As Double
+
+        ''' <summary>
         ''' 噪声的面积积分百分比
         ''' </summary>
         ''' <returns></returns>
