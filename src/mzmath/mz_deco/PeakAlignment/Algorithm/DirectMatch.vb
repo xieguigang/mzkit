@@ -1,4 +1,6 @@
-﻿Namespace PeakAlignment
+﻿Imports std = System.Math
+
+Namespace PeakAlignment
 
     ' ========================================================================
     '   算法1：直接匹配对齐（DirectMatch）
@@ -114,10 +116,10 @@
                     For Each kv In sampleBest
                         mzSum += kv.Value.mz
                         rtSum += kv.Value.rt
-                        g.minMz = Math.Min(g.minMz, kv.Value.mz)
-                        g.maxMz = Math.Max(g.maxMz, kv.Value.mz)
-                        g.minRt = Math.Min(g.minRt, kv.Value.rtmin)
-                        g.maxRt = Math.Max(g.maxRt, kv.Value.rtmax)
+                        g.minMz = std.Min(g.minMz, kv.Value.mz)
+                        g.maxMz = std.Max(g.maxMz, kv.Value.mz)
+                        g.minRt = std.Min(g.minRt, kv.Value.rtmin)
+                        g.maxRt = std.Max(g.maxRt, kv.Value.rtmax)
                         g.sampleAreas(kv.Key) = kv.Value.area
                         g.samplePeaks(kv.Key) = kv.Value
                     Next

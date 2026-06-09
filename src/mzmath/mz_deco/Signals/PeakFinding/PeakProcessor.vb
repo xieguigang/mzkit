@@ -189,11 +189,11 @@ Namespace Chromatogram.PeakFinding
 
             ' 合并重叠或距离过近的峰，保留SNR最高的
             Dim merged As New List(Of ROI)()
-            Dim i As Integer = 0
+            Dim idx As Integer = 0
 
-            While i < allPeaks.Count
-                Dim current As ROI = allPeaks(i)
-                Dim j As Integer = i + 1
+            While idx < allPeaks.Count
+                Dim current As ROI = allPeaks(idx)
+                Dim j As Integer = idx + 1
 
                 While j < allPeaks.Count AndAlso std.Abs(allPeaks(j).rt - current.rt) < mergeDistance
                     ' 保留信噪比更高的峰
@@ -208,7 +208,7 @@ Namespace Chromatogram.PeakFinding
                     merged.Add(current)
                 End If
 
-                i = j
+                idx = j
             End While
 
             Return merged.ToArray()

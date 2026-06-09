@@ -267,8 +267,8 @@ Namespace Chromatogram.PeakFinding
 
                     ' 检查是否已有脊线经过此位置
                     Dim belongsToExisting As Boolean = False
-                    For Each ridge In ridgeLines
-                        If ridge.Count > 0 AndAlso std.Abs(ridge(ridge.Count - 1) - i) <= params.CentWaveMaxGap Then
+                    For Each ridge_line In ridgeLines
+                        If ridge_line.Count > 0 AndAlso std.Abs(ridge_line(ridge_line.Count - 1) - i) <= params.CentWaveMaxGap Then
                             belongsToExisting = True
                             Exit For
                         End If

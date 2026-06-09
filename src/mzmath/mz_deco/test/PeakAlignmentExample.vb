@@ -1,3 +1,7 @@
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.PeakAlignment
+
+
 ''' <summary>
 ''' PeakAlignment模块使用示例
 ''' 
@@ -20,13 +24,13 @@ Public Class PeakAlignmentExample
         peaks("QC_01.raw") = LoadPeaksFromFile("QC_01.raw")
 
         ' 使用默认参数执行峰对齐（密度分组算法，m/z容差0.025Da，RT容差30秒）
-        Dim expressionMatrix As IonExpression() = PeakAlignment.AlignPeaks(peaks)
+        Dim expressionMatrix As xcms2() = PeakAlignment.AlignPeaks(peaks)
 
         ' 输出结果
         Console.WriteLine("峰对齐完成，共得到 {0} 个离子特征", expressionMatrix.Length)
         For Each feature In expressionMatrix
             Console.WriteLine("特征 {0}: m/z={1:F4}, RT={2:F1}s", feature.ID, feature.mz, feature.rt)
-            For Each kv In feature.SampleAreas
+            For Each kv In feature.Properties
                 Console.WriteLine("  样本 {0}: 峰面积={1:F2}", kv.Key, kv.Value)
             Next
         Next
@@ -49,7 +53,7 @@ Public Class PeakAlignmentExample
         params.minFraction = 0.5         ' 特征至少在50%的样本中出现
         params.fillGaps = True           ' 启用缺失值填充
 
-        Dim result As IonExpression() = PeakAlignment.AlignPeaks(peaks, params)
+        Dim result As xcms2() = PeakAlignment.AlignPeaks(peaks, params)
         Console.WriteLine("直接匹配对齐完成，共 {0} 个特征", result.Length)
     End Sub
 
@@ -74,7 +78,7 @@ Public Class PeakAlignmentExample
         params.minFraction = 0.5
         params.fillGaps = True
 
-        Dim result As IonExpression() = PeakAlignment.AlignPeaks(peaks, params)
+        Dim result As xcms2() = PeakAlignment.AlignPeaks(peaks, params)
         Console.WriteLine("LOESS对齐完成，共 {0} 个特征", result.Length)
     End Sub
 
@@ -97,7 +101,7 @@ Public Class PeakAlignmentExample
         params.minFraction = 0.5
         params.fillGaps = True
 
-        Dim result As IonExpression() = PeakAlignment.AlignPeaks(peaks, params)
+        Dim result As xcms2() = PeakAlignment.AlignPeaks(peaks, params)
         Console.WriteLine("Obiwarp对齐完成，共 {0} 个特征", result.Length)
     End Sub
 
@@ -120,18 +124,18 @@ Public Class PeakAlignmentExample
         params.minFraction = 0.5
         params.fillGaps = True
 
-        Dim result As IonExpression() = PeakAlignment.AlignPeaks(peaks, params)
+        Dim result As xcms2() = PeakAlignment.AlignPeaks(peaks, params)
         Console.WriteLine("密度分组对齐完成，共 {0} 个特征", result.Length)
     End Sub
 
     ''' <summary>
     ''' 示例6：将峰面积表达矩阵导出为CSV格式
     ''' </summary>
-    Public Sub Example6_ExportToCSV(expressionMatrix As IonExpression(), outputPath As String)
+    Public Sub Example6_ExportToCSV(expressionMatrix As xcms2(), outputPath As String)
         ' 收集所有样本名称
         Dim sampleNames As New List(Of String)
         If expressionMatrix.Length > 0 Then
-            sampleNames = expressionMatrix(0).SampleAreas.Keys.ToList()
+            sampleNames = expressionMatrix(0).Properties.Keys.ToList()
         End If
 
         Using writer As New System.IO.StreamWriter(outputPath, False, System.Text.Encoding.UTF8)
@@ -150,8 +154,8 @@ Public Class PeakAlignmentExample
 
                 For Each name In sampleNames
                     Dim area As Double = 0.0
-                    If feature.SampleAreas.ContainsKey(name) Then
-                        area = feature.SampleAreas(name)
+                    If feature.Properties.ContainsKey(name) Then
+                        area = feature.Properties(name)
                     End If
                     line &= String.Format(",{0:F4}", area)
                 Next
@@ -194,13 +198,13 @@ Public Class PeakAlignmentExample
             params.minFraction = 0.5
             params.fillGaps = True
 
-            Dim result As IonExpression() = PeakAlignment.AlignPeaks(peaks, params)
+            Dim result As xcms2() = PeakAlignment.AlignPeaks(peaks, params)
 
             ' 统计缺失值比例
             Dim totalCells As Integer = result.Length * peaks.Count
             Dim missingCells As Integer = 0
             For Each feature In result
-                For Each kv In feature.SampleAreas
+                For Each kv In feature.Properties
                     If kv.Value = 0.0 Then missingCells += 1
                 Next
             Next

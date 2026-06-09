@@ -1,3 +1,5 @@
+Imports std = System.Math
+
 ' ============================================================================
 ' PeakProcessing.vb - 代谢组学XIC色谱图峰提取与峰面积计算算法模块
 ' ============================================================================
@@ -120,7 +122,7 @@ Namespace Chromatogram.PeakFinding
             Dim sharpness As Double = roi.peakarea / rectangleArea
 
             ' 归一化到0-1范围
-            Return Math.Min(1.0, sharpness / 0.6)
+            Return std.Min(1.0, sharpness / 0.6)
         End Function
 
         ''' <summary>

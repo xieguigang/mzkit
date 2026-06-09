@@ -79,7 +79,7 @@ Namespace PeakAlignment
                     ' 去除重复的sample RT（取平均ref RT）
                     Dim uniqueSampleRts As New List(Of Double)
                     Dim uniqueRefRts As New List(Of Double)
-                    Dim sortedIndices As Integer() = Enumerable.Range(0, sampleRts.Length).OrderBy(Function(i) sampleRts(i)).ToArray()
+                    Dim sortedIndices As Integer() = Enumerable.Range(0, sampleRts.Length).OrderBy(Function(idx) sampleRts(idx)).ToArray()
 
                     Dim i As Integer = 0
                     While i < sortedIndices.Length
