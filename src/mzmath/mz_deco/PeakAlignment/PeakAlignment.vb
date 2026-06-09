@@ -23,9 +23,9 @@ Namespace PeakAlignment
         ''' <param name="params">对齐参数配置</param>
         ''' <returns>对齐后的峰面积表达矩阵</returns>
         Public Function AlignPeaks(peaks As Dictionary(Of String, PeakFeature()),
-                                params As AlignmentParameters) As IonExpression()
+                                params As AlignmentParameters) As xcms2()
             If peaks Is Nothing OrElse peaks.Count = 0 Then
-                Return New IonExpression() {}
+                Return New xcms2() {}
             End If
 
             ' 过滤空样本
@@ -37,7 +37,7 @@ Namespace PeakAlignment
             Next
 
             If validPeaks.Count = 0 Then
-                Return New IonExpression() {}
+                Return New xcms2() {}
             End If
 
             ' 如果只有一个样本，直接转换
@@ -76,7 +76,7 @@ Namespace PeakAlignment
         ''' <summary>
         ''' 便捷方法：使用默认参数执行密度分组对齐
         ''' </summary>
-        Public Function AlignPeaks(peaks As Dictionary(Of String, PeakFeature())) As IonExpression()
+        Public Function AlignPeaks(peaks As Dictionary(Of String, PeakFeature())) As xcms2()
             Return AlignPeaks(peaks, New AlignmentParameters())
         End Function
 
@@ -104,8 +104,8 @@ Namespace PeakAlignment
 
                     For Each p In peaks(sampleName)
                         Dim mzTol As Double = GetMzTolerance(g.avgMz, params.mzTolerance, params.mzToleranceMode)
-                        Dim mzDiff As Double = Math.Abs(p.mz - g.avgMz)
-                        Dim rtDiff As Double = Math.Abs(p.rt - g.avgRt)
+                        Dim mzDiff As Double = std.Abs(p.mz - g.avgMz)
+                        Dim rtDiff As Double = std.Abs(p.rt - g.avgRt)
 
                         If mzDiff <= mzTol AndAlso rtDiff <= params.rtTolerance Then
                             ' 使用m/z和RT的加权距离作为评分
@@ -138,22 +138,22 @@ Namespace PeakAlignment
         Private Function FilterByMinFraction(groups As List(Of AlignedPeakGroup),
                                               sampleNames As List(Of String),
                                               minFraction As Double) As List(Of AlignedPeakGroup)
-            Dim minSamples As Integer = CInt(Math.Ceiling(minFraction * sampleNames.Count))
-            minSamples = Math.Max(minSamples, 1)
+            Dim minSamples As Integer = CInt(std.Ceiling(minFraction * sampleNames.Count))
+            minSamples = std.Max(minSamples, 1)
 
-            Return groups.Where(Function(g) g.sampleAreas.Count(Function(kv) kv.Value > 0) >= minSamples).ToList()
+            Return groups.Where(Function(g) g.sampleAreas.Where(Function(kv) kv.Value > 0).Count >= minSamples).ToList()
         End Function
 
         ''' <summary>
         ''' 将对齐峰组列表转换为IonExpression数组
         ''' </summary>
         Private Function ConvertToIonExpression(groups As List(Of AlignedPeakGroup),
-                                                 sampleNames As List(Of String)) As IonExpression()
-            Dim result As IonExpression() = New IonExpression(groups.Count - 1) {}
+                                                 sampleNames As List(Of String)) As xcms2()
+            Dim result As xcms2() = New xcms2(groups.Count - 1) {}
 
             For i As Integer = 0 To groups.Count - 1
                 Dim g As AlignedPeakGroup = groups(i)
-                Dim expr As New IonExpression()
+                Dim expr As New xcms2()
 
                 ' 生成特征ID：M{m/z}T{rt}
                 expr.ID = String.Format("M{0:F4}T{1:F1}", g.avgMz, g.avgRt)
@@ -165,12 +165,12 @@ Namespace PeakAlignment
                 expr.rtmax = g.maxRt
 
                 ' 填充各样本的峰面积
-                expr.SampleAreas = New Dictionary(Of String, Double)()
+                expr.Properties = New Dictionary(Of String, Double)()
                 For Each sampleName In sampleNames
                     If g.sampleAreas.ContainsKey(sampleName) Then
-                        expr.SampleAreas(sampleName) = g.sampleAreas(sampleName)
+                        expr.Properties(sampleName) = g.sampleAreas(sampleName)
                     Else
-                        expr.SampleAreas(sampleName) = 0.0
+                        expr.Properties(sampleName) = 0.0
                     End If
                 Next
 
@@ -191,12 +191,12 @@ Namespace PeakAlignment
         ''' <summary>
         ''' 单样本直接转换为IonExpression数组
         ''' </summary>
-        Private Function SingleSampleToExpression(kv As KeyValuePair(Of String, PeakFeature())) As IonExpression()
-            Dim result As IonExpression() = New IonExpression(kv.Value.Length - 1) {}
+        Private Function SingleSampleToExpression(kv As KeyValuePair(Of String, PeakFeature())) As xcms2()
+            Dim result As xcms2() = New xcms2(kv.Value.Length - 1) {}
 
             For i As Integer = 0 To kv.Value.Length - 1
                 Dim p As PeakFeature = kv.Value(i)
-                Dim expr As New IonExpression()
+                Dim expr As New xcms2()
 
                 expr.ID = String.Format("F{0:D5}", i + 1)
                 expr.mz = p.mz
@@ -206,8 +206,8 @@ Namespace PeakAlignment
                 expr.rtmin = p.rtmin
                 expr.rtmax = p.rtmax
 
-                expr.SampleAreas = New Dictionary(Of String, Double)()
-                expr.SampleAreas(kv.Key) = p.area
+                expr.Properties = New Dictionary(Of String, Double)()
+                expr.Properties(kv.Key) = p.area
 
                 result(i) = expr
             Next
@@ -275,8 +275,8 @@ Namespace PeakAlignment
 
             For Each kv In peaks
                 For Each p In kv.Value
-                    rtMin = Math.Min(rtMin, p.rtmin)
-                    rtMax = Math.Max(rtMax, p.rtmax)
+                    rtMin = std.Min(rtMin, p.rtmin)
+                    rtMax = std.Max(rtMax, p.rtmax)
                 Next
             Next
 
@@ -321,22 +321,22 @@ Namespace PeakAlignment
                 variance += (v - mean) * (v - mean)
             Next
             variance /= n
-            Dim stdDev As Double = Math.Sqrt(variance)
+            Dim stdDev As Double = std.Sqrt(variance)
 
             ' 计算四分位距（IQR）
-            Dim q1Idx As Integer = CInt(Math.Floor(n * 0.25))
-            Dim q3Idx As Integer = CInt(Math.Floor(n * 0.75))
-            q1Idx = Math.Max(0, Math.Min(q1Idx, n - 1))
-            q3Idx = Math.Max(0, Math.Min(q3Idx, n - 1))
+            Dim q1Idx As Integer = CInt(std.Floor(n * 0.25))
+            Dim q3Idx As Integer = CInt(std.Floor(n * 0.75))
+            q1Idx = std.Max(0, std.Min(q1Idx, n - 1))
+            q3Idx = std.Max(0, std.Min(q3Idx, n - 1))
             Dim iqr As Double = sorted(q3Idx) - sorted(q1Idx)
 
             ' Silverman法则
-            Dim spread As Double = Math.Min(stdDev, iqr / 1.34)
+            Dim spread As Double = std.Min(stdDev, iqr / 1.34)
             If spread < Double.Epsilon Then spread = stdDev
             If spread < Double.Epsilon Then spread = 1.0
 
-            Dim h As Double = 0.9 * spread * Math.Pow(n, -0.2)
-            Return Math.Max(h, Double.Epsilon)
+            Dim h As Double = 0.9 * spread * std.Pow(n, -0.2)
+            Return std.Max(h, Double.Epsilon)
         End Function
 
     End Module

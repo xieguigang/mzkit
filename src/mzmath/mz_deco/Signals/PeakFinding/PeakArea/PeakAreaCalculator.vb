@@ -1,4 +1,6 @@
-﻿Namespace Chromatogram.PeakFinding
+﻿Imports std = System.Math
+
+Namespace Chromatogram.PeakFinding
 
     ''' <summary>
     ''' 峰面积计算器，提供多种峰面积计算方法
@@ -153,7 +155,7 @@
 
                 For i As Integer = 0 To ticks.Length - 1
                     Dim z As Double = (ticks(i).Time - center) / sigma
-                    Dim expVal As Double = Math.Exp(-0.5 * z * z)
+                    Dim expVal As Double = std.Exp(-0.5 * z * z)
                     Dim modelVal As Double = baseline + height * expVal
 
                     residuals(i) = ticks(i).Intensity - modelVal
@@ -199,7 +201,7 @@
                                      A(0, 1) * (A(1, 0) * A(2, 2) - A(1, 2) * A(2, 0)) +
                                      A(0, 2) * (A(1, 0) * A(2, 1) - A(1, 1) * A(2, 0))
 
-                If Math.Abs(detA) < 1.0E-20 Then Exit For ' 矩阵奇异，退出
+                If std.Abs(detA) < 1.0E-20 Then Exit For ' 矩阵奇异，退出
 
                 Dim delta(2) As Double
                 For col As Integer = 0 To 2
@@ -215,11 +217,11 @@
 
                 ' 更新参数
                 Dim newCenter As Double = center + delta(0)
-                Dim newSigma As Double = Math.Abs(sigma + delta(1)) ' sigma必须为正
+                Dim newSigma As Double = std.Abs(sigma + delta(1)) ' sigma必须为正
                 Dim newHeight As Double = height + delta(2)
 
                 ' 检查收敛
-                Dim paramChange As Double = Math.Abs(delta(0)) + Math.Abs(delta(1)) + Math.Abs(delta(2))
+                Dim paramChange As Double = std.Abs(delta(0)) + std.Abs(delta(1)) + std.Abs(delta(2))
                 If paramChange < params.GaussianConvergence Then
                     center = newCenter
                     sigma = newSigma
@@ -231,7 +233,7 @@
                 Dim newError As Double = 0.0
                 For i As Integer = 0 To ticks.Length - 1
                     Dim z As Double = (ticks(i).Time - newCenter) / newSigma
-                    Dim modelVal As Double = baseline + newHeight * Math.Exp(-0.5 * z * z)
+                    Dim modelVal As Double = baseline + newHeight * std.Exp(-0.5 * z * z)
                     Dim r As Double = ticks(i).Intensity - modelVal
                     newError += r * r
                 Next
@@ -252,7 +254,7 @@
             Next
 
             ' 解析积分：A = height * sigma * sqrt(2*pi)
-            Dim peakArea As Double = height * sigma * Math.Sqrt(2.0 * Math.PI)
+            Dim peakArea As Double = height * sigma * std.Sqrt(2.0 * std.PI)
 
             ' 将拟合参数存入additional字典
             roi.additional("gaussian_center") = center
