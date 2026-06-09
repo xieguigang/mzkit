@@ -507,6 +507,17 @@ declare namespace math {
    */
    function toMS(isotope: object): object;
    /**
+    * Take the top peaks
+    * 
+    * > sort the peaks via samples in desc order and then take the top n peaks data
+    * 
+     * @param x -
+     * @param n -
+     * 
+     * + default value Is ``20000``.
+   */
+   function top(x: object, n?: object): object;
+   /**
     * makes xcms_id format liked ROI unique id
     * 
     * > the dimension size of the ion m/z vector and the corresponding scan time vector should be equals.
