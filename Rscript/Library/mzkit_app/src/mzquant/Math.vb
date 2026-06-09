@@ -387,13 +387,27 @@ Module QuantifyMath
     ''' <remarks>
     ''' sort the peaks via samples in desc order and then take the top n peaks data
     ''' </remarks>
-    <ExportAPI("top")>
-    Public Function top(x As PeakSet, Optional n As Integer = 20000) As PeakSet
-        Dim topTable As New PeakSet(From ion As xcms2
-                                    In x.peaks
-                                    Order By ion.npeaks Descending
-                                    Take n)
-        Return topTable
+    <ExportAPI("top_peaks")>
+    <RApiReturn(GetType(xcms2), GetType(PeakSet))>
+    Public Function top(<RRawVectorArgument> x As Object, Optional n As Integer = 20000, Optional env As Environment = Nothing) As Object
+        If TypeOf x Is PeakSet Then
+            Dim topTable As New PeakSet(From ion As xcms2
+                                        In DirectCast(x, PeakSet).peaks
+                                        Order By ion.npeaks Descending
+                                        Take n)
+            Return topTable
+        Else
+            Dim ions As pipeline = pipeline.TryCreatePipeline(Of xcms2)(x, env)
+
+            If ions.isError Then
+                Return ions.getError
+            End If
+
+            Return (From ion As xcms2
+                    In ions.populates(Of xcms2)(env)
+                    Order By ion.npeaks Descending
+                    Take n).ToArray
+        End If
     End Function
 
     ''' <summary>

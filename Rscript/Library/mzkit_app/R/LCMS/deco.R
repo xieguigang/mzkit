@@ -22,6 +22,7 @@ imports "visual" from "mzplot";
 #' 
 const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xic_mzdiff = 0.005,
                                    peak.width = [2, 30], n_threads = 16, 
+                                   top_n = 20000,
                                    filename = "peaktable.csv") {
                                     
     const xic_cache = `${outputdir}/XIC_data`;
@@ -81,7 +82,8 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xi
     # group by rt
     peaktable <- rt_groups(peaktable,
         dt = 3,
-        ppm = 20);
+        ppm = 20) |> top_peaks(n = top_n )
+    ;
 
     write.csv(peaktable, file = `${outputdir}/${filename}`, 
         row.names = TRUE);
