@@ -379,6 +379,24 @@ Module QuantifyMath
     End Function
 
     ''' <summary>
+    ''' Take the top peaks
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="n"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' sort the peaks via samples in desc order and then take the top n peaks data
+    ''' </remarks>
+    <ExportAPI("top")>
+    Public Function top(x As PeakSet, Optional n As Integer = 20000) As PeakSet
+        Dim topTable As New PeakSet(From ion As xcms2
+                                    In x.peaks
+                                    Order By ion.npeaks Descending
+                                    Take n)
+        Return topTable
+    End Function
+
+    ''' <summary>
     ''' Create a chromatogram data from a dataframe object
     ''' </summary>
     ''' <param name="x">Should be a dataframe object that contains 
