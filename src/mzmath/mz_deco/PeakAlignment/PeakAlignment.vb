@@ -1,3 +1,4 @@
+Imports std = System.Math
 
 Namespace PeakAlignment
 
@@ -268,7 +269,7 @@ Namespace PeakAlignment
         ''' <summary>
         ''' 获取所有样本的全局RT范围
         ''' </summary>
-        Private Function GetGlobalRTRange(peaks As Dictionary(Of String, PeakFeature())) As Tuple(Of Double, Double)
+        Public Function GetGlobalRTRange(peaks As Dictionary(Of String, PeakFeature())) As Tuple(Of Double, Double)
             Dim rtMin As Double = Double.MaxValue
             Dim rtMax As Double = Double.MinValue
 
@@ -290,7 +291,7 @@ Namespace PeakAlignment
         ''' <summary>
         ''' 计算中位数
         ''' </summary>
-        Private Function ComputeMedian(values As List(Of Double)) As Double
+        Public Function ComputeMedian(values As List(Of Double)) As Double
             If values.Count = 0 Then Return 0.0
 
             Dim sorted As List(Of Double) = values.OrderBy(Function(v) v).ToList()
@@ -307,7 +308,7 @@ Namespace PeakAlignment
         ''' Silverman法则估计核密度带宽
         ''' h = 0.9 * min(σ, IQR/1.34) * n^(-1/5)
         ''' </summary>
-        Private Function SilvermanBandwidth(values As Double()) As Double
+        Public Function SilvermanBandwidth(values As Double()) As Double
             If values.Length < 2 Then Return 1.0
 
             Dim n As Integer = values.Length

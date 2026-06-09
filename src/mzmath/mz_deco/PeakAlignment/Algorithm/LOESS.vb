@@ -1,4 +1,6 @@
-﻿Namespace PeakAlignment
+﻿Imports std = System.Math
+
+Namespace PeakAlignment
 
     ' ========================================================================
     '   算法2：LOESS保留时间校正对齐
@@ -40,8 +42,8 @@
                 For Each refP In refPeaks
                     For Each sampleP In kv.Value
                         Dim mzTol As Double = GetMzTolerance(refP.mz, params.mzTolerance, params.mzToleranceMode)
-                        If Math.Abs(refP.mz - sampleP.mz) <= mzTol AndAlso
-                           Math.Abs(refP.rt - sampleP.rt) <= initialRtTol Then
+                        If std.Abs(refP.mz - sampleP.mz) <= mzTol AndAlso
+                            std.Abs(refP.rt - sampleP.rt) <= initialRtTol Then
                             matchedPairs.Add(Tuple.Create(sampleP.rt, refP.rt))
                         End If
                     Next
@@ -56,8 +58,8 @@
                     For Each refP In refPeaks
                         For Each sampleP In kv.Value
                             Dim mzTol As Double = GetMzTolerance(refP.mz, params.mzTolerance, params.mzToleranceMode)
-                            If Math.Abs(refP.mz - sampleP.mz) <= mzTol AndAlso
-                               Math.Abs(refP.rt - sampleP.rt) <= expandedRtTol Then
+                            If std.Abs(refP.mz - sampleP.mz) <= mzTol AndAlso
+                               std.Abs(refP.rt - sampleP.rt) <= expandedRtTol Then
                                 matchedPairs.Add(Tuple.Create(sampleP.rt, refP.rt))
                             End If
                         Next
@@ -85,7 +87,7 @@
                         Dim refSum As Double = refRts(sortedIndices(i))
                         Dim count As Integer = 1
                         i += 1
-                        While i < sortedIndices.Length AndAlso Math.Abs(sampleRts(sortedIndices(i)) - currentSampleRt) < 0.001
+                        While i < sortedIndices.Length AndAlso std.Abs(sampleRts(sortedIndices(i)) - currentSampleRt) < 0.001
                             refSum += refRts(sortedIndices(i))
                             count += 1
                             i += 1
@@ -166,7 +168,7 @@
             Dim model As New LOESSModel()
             model.X = sortedX
             model.Y = sortedY
-            model.Span = Math.Max(0.1, Math.Min(1.0, span))
+            model.Span = std.Max(0.1, std.Min(1.0, span))
             model.Degree = degree
 
             Return model
@@ -180,14 +182,14 @@
         ''' <returns>预测值</returns>
         Private Function PredictLOESS(model As LOESSModel, x0 As Double) As Double
             Dim n As Integer = model.X.Length
-            Dim k As Integer = CInt(Math.Ceiling(model.Span * n))
-            k = Math.Max(k, model.Degree + 1) ' 确保有足够的点拟合多项式
-            k = Math.Min(k, n)
+            Dim k As Integer = CInt(std.Ceiling(model.Span * n))
+            k = std.Max(k, model.Degree + 1) ' 确保有足够的点拟合多项式
+            k = std.Min(k, n)
 
             ' 找到距离x0最近的k个点
             Dim distances As Double() = New Double(n - 1) {}
             For i As Integer = 0 To n - 1
-                distances(i) = Math.Abs(model.X(i) - x0)
+                distances(i) = std.Abs(model.X(i) - x0)
             Next
 
             Dim sortedIndices As Integer() = Enumerable.Range(0, n).OrderBy(Function(i) distances(i)).Take(k).ToArray()
@@ -209,7 +211,7 @@
             For i As Integer = 0 To k - 1
                 Dim u As Double = distances(sortedIndices(i)) / maxDist
                 ' 三立方核函数: w(u) = (1 - u^3)^3
-                weights(i) = Math.Pow(1.0 - Math.Pow(u, 3), 3)
+                weights(i) = std.Pow(1.0 - std.Pow(u, 3), 3)
             Next
 
             ' 加权最小二乘法拟合多项式
@@ -226,7 +228,7 @@
             ' 在x0处预测
             Dim y0 As Double = 0.0
             For j As Integer = 0 To coeffs.Length - 1
-                y0 += coeffs(j) * Math.Pow(x0, j)
+                y0 += coeffs(j) * std.Pow(x0, j)
             Next
 
             Return y0
@@ -247,7 +249,7 @@
             For i As Integer = 0 To n - 1
                 Dim xi As Double() = New Double(m - 1) {}
                 For j As Integer = 0 To m - 1
-                    xi(j) = Math.Pow(x(i), j)
+                    xi(j) = std.Pow(x(i), j)
                 Next
 
                 For j As Integer = 0 To m - 1
@@ -281,10 +283,10 @@
             For col As Integer = 0 To n - 1
                 ' 找到主元
                 Dim maxRow As Integer = col
-                Dim maxVal As Double = Math.Abs(aug(col, col))
+                Dim maxVal As Double = std.Abs(aug(col, col))
                 For row As Integer = col + 1 To n - 1
-                    If Math.Abs(aug(row, col)) > maxVal Then
-                        maxVal = Math.Abs(aug(row, col))
+                    If std.Abs(aug(row, col)) > maxVal Then
+                        maxVal = std.Abs(aug(row, col))
                         maxRow = row
                     End If
                 Next
@@ -300,7 +302,7 @@
 
                 ' 消元
                 Dim pivot As Double = aug(col, col)
-                If Math.Abs(pivot) < Double.Epsilon Then
+                If std.Abs(pivot) < Double.Epsilon Then
                     ' 奇异矩阵，返回零向量
                     Dim result As Double() = New Double(n - 1) {}
                     Return result

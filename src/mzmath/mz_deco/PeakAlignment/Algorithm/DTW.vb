@@ -1,4 +1,6 @@
-﻿Namespace PeakAlignment
+﻿Imports std = System.Math
+
+Namespace PeakAlignment
 
     Public Module DTW
 
@@ -40,7 +42,7 @@
             ' 计算局部代价（使用欧氏距离）
             For i As Integer = 0 To nRef - 1
                 For j As Integer = 0 To nSample - 1
-                    cost(i, j) = Math.Abs(normRef(i) - normSample(j))
+                    cost(i, j) = std.Abs(normRef(i) - normSample(j))
                 Next
             Next
 
@@ -63,9 +65,9 @@
             ' 填充其余部分
             For i As Integer = 1 To nRef - 1
                 ' Sakoe-Chiba带约束，限制搜索宽度为对角线附近
-                Dim bandWidth As Integer = CInt(Math.Max(10, Math.Ceiling(nSample * 0.1)))
-                Dim jStart As Integer = Math.Max(1, i - bandWidth)
-                Dim jEnd As Integer = Math.Min(nSample - 1, i + bandWidth)
+                Dim bandWidth As Integer = CInt(std.Max(10, std.Ceiling(nSample * 0.1)))
+                Dim jStart As Integer = std.Max(1, i - bandWidth)
+                Dim jEnd As Integer = std.Min(nSample - 1, i + bandWidth)
 
                 For j As Integer = jStart To jEnd
                     Dim diag As Double = dtw(i - 1, j - 1) + cost(i, j)
@@ -137,7 +139,7 @@
             Dim lastSampleRt As Double = Double.NaN
 
             For i As Integer = mappingPoints.Count - 1 To 0 Step -1
-                If Double.IsNaN(lastSampleRt) OrElse Math.Abs(mappingPoints(i).Item1 - lastSampleRt) > Double.Epsilon Then
+                If Double.IsNaN(lastSampleRt) OrElse std.Abs(mappingPoints(i).Item1 - lastSampleRt) > Double.Epsilon Then
                     uniqueMapping.Add(mappingPoints(i))
                     lastSampleRt = mappingPoints(i).Item1
                 End If
@@ -175,7 +177,9 @@
                        Dim y0 As Double = uniqueMapping(lo).Item2
                        Dim y1 As Double = uniqueMapping(hi).Item2
 
-                       If Math.Abs(x1 - x0) < Double.Epsilon Then Return y0
+                       If std.Abs(x1 - x0) < Double.Epsilon Then
+                           Return y0
+                       End If
 
                        Dim t As Double = (sampleRt - x0) / (x1 - x0)
                        Return y0 + t * (y1 - y0)
