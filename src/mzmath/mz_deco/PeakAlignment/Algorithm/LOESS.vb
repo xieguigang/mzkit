@@ -1,4 +1,5 @@
-﻿Imports std = System.Math
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports std = System.Math
 
 Namespace PeakAlignment
 
@@ -20,8 +21,7 @@ Namespace PeakAlignment
         ''' 优点：能够处理非线性的保留时间漂移，校正效果较好
         ''' 缺点：依赖参考样本的选择，匹配峰对数量不足时LOESS拟合不稳定
         ''' </summary>
-        Public Function LOESSAlignment(peaks As Dictionary(Of String, PeakFeature()),
-                                         params As AlignmentParameters) As List(Of AlignedPeakGroup)
+        Public Function LOESSAlignment(peaks As Dictionary(Of String, PeakFeature()), params As AlignmentParameters) As List(Of AlignedPeakGroup)
             ' 第一步：选择参考样本
             Dim refName As String = SelectReferenceSample(peaks, params.referenceSample)
             Dim refPeaks As PeakFeature() = peaks(refName)
@@ -41,7 +41,7 @@ Namespace PeakAlignment
 
                 For Each refP In refPeaks
                     For Each sampleP In kv.Value
-                        Dim mzTol As Double = GetMzTolerance(refP.mz, params.mzTolerance, params.mzToleranceMode)
+                        Dim mzTol As Double = MassWindow.GetMzTolerance(refP.mz, params.mzTolerance, params.mzToleranceMode)
                         If std.Abs(refP.mz - sampleP.mz) <= mzTol AndAlso
                             std.Abs(refP.rt - sampleP.rt) <= initialRtTol Then
                             matchedPairs.Add(Tuple.Create(sampleP.rt, refP.rt))
@@ -57,7 +57,7 @@ Namespace PeakAlignment
 
                     For Each refP In refPeaks
                         For Each sampleP In kv.Value
-                            Dim mzTol As Double = GetMzTolerance(refP.mz, params.mzTolerance, params.mzToleranceMode)
+                            Dim mzTol As Double = MassWindow.GetMzTolerance(refP.mz, params.mzTolerance, params.mzToleranceMode)
                             If std.Abs(refP.mz - sampleP.mz) <= mzTol AndAlso
                                std.Abs(refP.rt - sampleP.rt) <= expandedRtTol Then
                                 matchedPairs.Add(Tuple.Create(sampleP.rt, refP.rt))

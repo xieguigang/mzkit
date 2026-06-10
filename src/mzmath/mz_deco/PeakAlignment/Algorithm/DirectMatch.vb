@@ -1,4 +1,5 @@
-﻿Imports std = System.Math
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports std = System.Math
 
 Namespace PeakAlignment
 
@@ -40,7 +41,7 @@ Namespace PeakAlignment
 
             For i As Integer = 1 To allPeaks.Count - 1
                 Dim mzDiff As Double = allPeaks(i).Item2.mz - currentGroup(0).Item2.mz
-                Dim tol As Double = GetMzTolerance(currentGroup(0).Item2.mz, params.mzTolerance, params.mzToleranceMode)
+                Dim tol As Double = MassWindow.GetMzTolerance(currentGroup(0).Item2.mz, params.mzTolerance, params.mzToleranceMode)
 
                 If mzDiff <= tol Then
                     currentGroup.Add(allPeaks(i))

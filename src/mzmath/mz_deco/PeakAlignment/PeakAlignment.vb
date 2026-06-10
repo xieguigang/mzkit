@@ -1,3 +1,4 @@
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports std = System.Math
 
 Namespace PeakAlignment
@@ -102,7 +103,7 @@ Namespace PeakAlignment
                     Dim bestScore As Double = Double.MaxValue
 
                     For Each p In peaks(sampleName)
-                        Dim mzTol As Double = GetMzTolerance(g.avgMz, params.mzTolerance, params.mzToleranceMode)
+                        Dim mzTol As Double = MassWindow.GetMzTolerance(g.avgMz, params.mzTolerance, params.mzToleranceMode)
                         Dim mzDiff As Double = std.Abs(p.mz - g.avgMz)
                         Dim rtDiff As Double = std.Abs(p.rt - g.avgRt)
 

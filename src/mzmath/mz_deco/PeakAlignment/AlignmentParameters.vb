@@ -1,4 +1,6 @@
-﻿Namespace PeakAlignment
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+
+Namespace PeakAlignment
 
     ''' <summary>
     ''' 峰对齐参数配置
@@ -7,7 +9,7 @@
         ''' <summary>m/z容差值</summary>
         Public Property mzTolerance As Double = 0.025
         ''' <summary>m/z容差模式</summary>
-        Public Property mzToleranceMode As ToleranceMode = ToleranceMode.Absolute
+        Public Property mzToleranceMode As MassToleranceType = MassToleranceType.Da
         ''' <summary>保留时间容差（秒）</summary>
         Public Property rtTolerance As Double = 30.0
         ''' <summary>对齐算法类型</summary>

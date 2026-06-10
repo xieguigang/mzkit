@@ -5,7 +5,7 @@
     ''' </summary>
     Public Enum MassToleranceType
         ''' <summary>
-        ''' <see cref="DAmethod"/>
+        ''' <see cref="DAmethod"/> 绝对误差
         ''' </summary>
         Da
         ''' <summary>

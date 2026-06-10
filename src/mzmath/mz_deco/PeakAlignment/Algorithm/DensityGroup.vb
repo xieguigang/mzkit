@@ -1,4 +1,5 @@
-﻿Imports std = System.Math
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports std = System.Math
 
 Namespace PeakAlignment
 
@@ -43,7 +44,7 @@ Namespace PeakAlignment
             For i As Integer = 1 To allPeaks.Count - 1
                 ' 使用组内中位数m/z作为参考
                 Dim medianMz As Double = ComputeMedian(currentMzGroup.Select(Function(t) t.Item2.mz).ToList())
-                Dim tol As Double = GetMzTolerance(medianMz, params.mzTolerance, params.mzToleranceMode)
+                Dim tol As Double = MassWindow.GetMzTolerance(medianMz, params.mzTolerance, params.mzToleranceMode)
 
                 If allPeaks(i).Item2.mz - medianMz <= tol Then
                     currentMzGroup.Add(allPeaks(i))
