@@ -151,6 +151,8 @@ Public Class PeakFeature
         End Get
     End Property
 
+    Public Property additionals As Dictionary(Of String, Double)
+
     Sub New()
     End Sub
 

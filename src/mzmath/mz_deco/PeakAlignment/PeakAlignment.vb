@@ -13,7 +13,7 @@ Namespace PeakAlignment
     '''   4. 密度分组对齐（DensityGroup）—— 类似XCMS的核密度估计分组方法
     ''' 
     ''' 输入：Dictionary(Of String, PeakFeature())，键名为原始数据文件名，键值为对应文件中提取的所有离子峰
-    ''' 输出：IonExpression()，对齐后的峰面积表达矩阵
+    ''' 输出：xcms2()，对齐后的峰面积表达矩阵
     ''' </summary>
     Public Module Algorithm
 

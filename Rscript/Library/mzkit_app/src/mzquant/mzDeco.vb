@@ -1096,7 +1096,7 @@ extract_ms1:
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("find_peaks")>
-    <RApiReturn(GetType(ROI))>
+    <RApiReturn(GetType(ROI), GetType(PeakFeature))>
     Public Function find_peaks(<RRawVectorArgument> x As Object,
                                Optional peak_method As PeakDetectionMethod = PeakDetectionMethod.CentWave,
                                Optional snr_threshold As Double = 3.0,
@@ -1121,6 +1121,8 @@ extract_ms1:
                                Optional gaussian_max_iterations As Integer = 100,
                                Optional gaussian_convergence As Double = 0.000001,
                                Optional recalculate_snr As Boolean = True,
+                               Optional as_peaks As Boolean = False,
+                               Optional mz_peak As Double? = Nothing,
                                Optional env As Environment = Nothing) As Object
 
         Dim ticks As ChromatogramTick()
@@ -1175,6 +1177,16 @@ extract_ms1:
                     roi.additionals("m/z") = .mz
                 Next
             End With
+
+            If as_peaks Then
+
+            End If
+        ElseIf as_peaks Then
+            If mz_peak Is Nothing OrElse CDbl(mz_peak) <= 0.0 Then
+                Return RInternal.debug.stop("the required XIC peak ion m/z value is missing!", env)
+            Else
+
+            End If
         End If
 
         Return result
