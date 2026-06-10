@@ -20,8 +20,7 @@ Namespace PeakAlignment
         ''' 优点：统计方法稳健，能够自动识别对齐特征，是XCMS等主流软件的默认方法
         ''' 缺点：带宽参数选择影响结果，计算量中等
         ''' </summary>
-        Public Function DensityGroupAlignment(peaks As Dictionary(Of String, PeakFeature()),
-                                                params As AlignmentParameters) As List(Of AlignedPeakGroup)
+        Public Function DensityGroupAlignment(peaks As Dictionary(Of String, PeakFeature()), params As AlignmentParameters) As List(Of AlignedPeakGroup)
             ' 第一步：收集所有峰并按m/z排序
             Dim allPeaks As New List(Of Tuple(Of String, PeakFeature))
             For Each kv In peaks

@@ -22,8 +22,7 @@ Namespace PeakAlignment
         ''' <param name="peaks">各样本的离子峰字典，键名为原始数据文件名</param>
         ''' <param name="params">对齐参数配置</param>
         ''' <returns>对齐后的峰面积表达矩阵</returns>
-        Public Function AlignPeaks(peaks As Dictionary(Of String, PeakFeature()),
-                                params As AlignmentParameters) As xcms2()
+        Public Function AlignPeaks(peaks As Dictionary(Of String, PeakFeature()), params As AlignmentParameters) As xcms2()
             If peaks Is Nothing OrElse peaks.Count = 0 Then
                 Return New xcms2() {}
             End If
@@ -220,24 +219,6 @@ Namespace PeakAlignment
         ' ========================================================================
         '   通用辅助函数
         ' ========================================================================
-
-        ''' <summary>
-        ''' 计算m/z容差值
-        ''' </summary>
-        ''' <param name="mz">当前m/z值</param>
-        ''' <param name="tolerance">容差参数</param>
-        ''' <param name="mode">容差模式</param>
-        ''' <returns>绝对容差值（Da）</returns>
-        Friend Function GetMzTolerance(mz As Double, tolerance As Double, mode As ToleranceMode) As Double
-            Select Case mode
-                Case ToleranceMode.Absolute
-                    Return tolerance
-                Case ToleranceMode.PPM
-                    Return mz * tolerance / 1000000.0
-                Case Else
-                    Return tolerance
-            End Select
-        End Function
 
         ''' <summary>
         ''' 选择参考样本

@@ -79,20 +79,6 @@ Imports std = System.Math
 Namespace Ms1
 
     ''' <summary>
-    ''' Type of the mass <see cref="Tolerance"/>
-    ''' </summary>
-    Public Enum MassToleranceType
-        ''' <summary>
-        ''' <see cref="DAmethod"/>
-        ''' </summary>
-        Da
-        ''' <summary>
-        ''' <see cref="PPMmethod"/>
-        ''' </summary>
-        Ppm
-    End Enum
-
-    ''' <summary>
     ''' The m/z tolerance methods, spectrum equality comparer.
     ''' </summary>
     ''' <remarks>

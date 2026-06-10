@@ -74,70 +74,8 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports std = System.Math
 
 Namespace Ms1
-
-    ''' <summary>
-    ''' an abstract mass window model
-    ''' </summary>
-    Public Interface IMassBin
-
-        Property mass As Double
-        Property min As Double
-        Property max As Double
-
-    End Interface
-
-    ''' <summary>
-    ''' an abstract model of the mass collection
-    ''' </summary>
-    Public Interface IMassSet
-
-        Property mass As Double()
-        Property min As Double()
-        Property max As Double()
-
-    End Interface
-
-    <HideModuleName>
-    Public Module MassExtensions
-
-        ''' <summary>
-        ''' get all mass value from the mass window data
-        ''' </summary>
-        ''' <param name="masslist"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function Mass(masslist As IEnumerable(Of MassWindow)) As Double()
-            Return masslist.Select(Function(mzi) mzi.mass).ToArray
-        End Function
-
-        <Extension>
-        Public Function AverageMzDiff(masslist As IEnumerable(Of MassWindow)) As Double
-            Return masslist.Select(Function(mzi) mzi.GetMzDiff).IteratesALL.Average
-        End Function
-
-        <Extension>
-        Public Iterator Function MassList(massSet As IMassSet) As IEnumerable(Of MassWindow)
-            For i As Integer = 0 To massSet.mass.Length - 1
-                Yield New MassWindow With {
-                    .mass = massSet.mass(i),
-                    .mzmin = massSet.min(i),
-                    .mzmax = massSet.max(i)
-                }
-            Next
-        End Function
-
-        Public Function MzWindowDescription(mzmax As Double, mzmin As Double, Optional ppm As Double = 30) As String
-            If PPMmethod.PPM(mzmin, mzmax) > 30 Then
-                Return $"da:{(mzmax - mzmin).ToString("F3")}"
-            Else
-                Return $"ppm:{PPMmethod.PPM(mzmin, mzmax).ToString("F1")}"
-            End If
-        End Function
-
-    End Module
 
     ''' <summary>
     ''' the m/z bin data
@@ -232,5 +170,19 @@ Namespace Ms1
             Return MzWindowDescription(mzmax, mzmin, ppm)
         End Function
 
+        ''' <summary>
+        ''' 计算m/z容差值
+        ''' </summary>
+        ''' <param name="mz">当前m/z值</param>
+        ''' <param name="tolerance">容差参数</param>
+        ''' <param name="mode">容差模式</param>
+        ''' <returns>绝对容差值（Da）</returns>
+        Public Shared Function GetMzTolerance(mz As Double, tolerance As Double, mode As MassToleranceType) As Double
+            If mode = MassToleranceType.Ppm Then
+                Return mz * tolerance / 1000000.0
+            Else
+                Return tolerance
+            End If
+        End Function
     End Class
 End Namespace
