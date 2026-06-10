@@ -1,4 +1,5 @@
-﻿Imports std = System.Math
+﻿Imports Microsoft.VisualBasic.Math.SignalProcessing
+Imports std = System.Math
 
 Namespace Chromatogram.PeakFinding
 

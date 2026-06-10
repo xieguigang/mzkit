@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports std = System.Math
 
 Namespace Chromatogram.PeakFinding
