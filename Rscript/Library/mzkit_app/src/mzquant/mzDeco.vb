@@ -1004,6 +1004,8 @@ Module mzDeco
 
         ' 1. processing for XIC pool
         If TypeOf ms1 Is XICPool Then
+            ' mzkit::ms1_peaktable
+            ' let pool = xic_pool(files);  
             Dim pool As XICPool = DirectCast(ms1, XICPool)
             Dim features_mz As Double() = CLRVector.asNumeric(feature)
 

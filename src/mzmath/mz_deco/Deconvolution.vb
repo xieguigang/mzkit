@@ -57,6 +57,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.PeakFinding
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
@@ -91,7 +92,8 @@ Public Module Deconvolution
                                               Optional quantile# = 0.65,
                                               Optional sn_threshold As Double = 3,
                                               Optional joint As Boolean = True,
-                                              Optional xic_mz As Double = 0) As IEnumerable(Of PeakFeature)
+                                              Optional xic_mz As Double = 0,
+                                              Optional method As PeakDetectionMethod = PeakDetectionMethod.CentWave) As IEnumerable(Of PeakFeature)
 
         Dim data As ChromatogramTick() = TIC.SafeQuery.ToArray
         Dim peakdata As PeakFeature

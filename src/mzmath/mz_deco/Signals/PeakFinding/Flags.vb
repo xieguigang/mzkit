@@ -4,6 +4,7 @@
     ''' 峰检测算法类型枚举
     ''' </summary>
     Public Enum PeakDetectionMethod
+        NA
         ''' <summary>
         ''' 局部极大值检测法：基于滑动窗口寻找局部强度最大值，
         ''' 配合信噪比阈值过滤，是最基础且广泛使用的峰检测方法。
