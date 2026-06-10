@@ -59,7 +59,7 @@ const ms1_peaktable = function(files, mzbins, mzdiff = 0.005, peak.width = [3,90
             ));
         }
 
-        
+        write.csv(as.data.frame(peaks), file = peakfile);
     };
 
     return(mz_deco(
