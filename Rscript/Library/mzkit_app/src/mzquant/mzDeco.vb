@@ -985,7 +985,7 @@ Module mzDeco
     End Function
 
     ''' <summary>
-    ''' Chromatogram data deconvolution
+    ''' Chromatogram data deconvolution to peaktable
     ''' </summary>
     ''' <param name="ms1">
     ''' a collection of the ms1 data or the mzpack raw data object, this parameter could also be
@@ -1125,6 +1125,19 @@ extract_ms1:
                 ) _
                 .ToArray
         End If
+    End Function
+
+    <ExportAPI("find_peaks.simple")>
+    <RApiReturn(GetType(PeakFeature))>
+    Public Function find_peaks_simple(x As MzGroup,
+                                      <RRawVectorArgument(TypeCodes.double)>
+                                      Optional peak_width As Object = "3,30",
+                                      Optional filename As String = Nothing,
+                                      Optional env As Environment = Nothing) As Object
+        Return {x}.DecoMzGroups(
+                peakwidth:=SMRUCC.Rsharp.GetDoubleRange(peak_width, env),
+                source:=filename
+            ).ToArray
     End Function
 
     ''' <summary>
