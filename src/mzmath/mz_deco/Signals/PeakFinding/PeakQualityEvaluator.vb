@@ -42,11 +42,7 @@ Namespace Chromatogram.PeakFinding
 
             ' 2. 峰形对称性得分（权重25%）
             ' 对称因子在0.8-1.5之间得满分
-            Dim asymFactor As Double = 1.0
-            If roi.additional.ContainsKey("asymmetry_factor") Then
-                asymFactor = roi.additional("asymmetry_factor")
-            End If
-
+            Dim asymFactor As Double = roi.asymmetry_factor
             Dim asymScore As Double
             If asymFactor >= 0.8 AndAlso asymFactor <= 1.5 Then
                 asymScore = 25.0
@@ -64,8 +60,8 @@ Namespace Chromatogram.PeakFinding
 
             ' 3. 高斯拟合优度得分（权重25%）
             Dim r2Score As Double = 0.0
-            If roi.additional.ContainsKey("gaussian_r2") Then
-                Dim r2 As Double = roi.additional("gaussian_r2")
+            If roi.additionals.ContainsKey("gaussian_r2") Then
+                Dim r2 As Double = roi.additionals("gaussian_r2")
                 If r2 >= 0.95 Then
                     r2Score = 25.0
                 ElseIf r2 < 0.5 Then
@@ -99,7 +95,7 @@ Namespace Chromatogram.PeakFinding
             score += noiseScore
 
             ' 保存质量得分
-            roi.additional("quality_score") = score
+            roi.additionals("quality_score") = score
 
             Return score
         End Function
@@ -144,7 +140,7 @@ Namespace Chromatogram.PeakFinding
             Next
 
             ' 按质量得分降序排序
-            Return evaluated.OrderByDescending(Function(p) p.additional("quality_score")).ToArray()
+            Return evaluated.OrderByDescending(Function(p) p.additionals("quality_score")).ToArray()
         End Function
 
     End Class

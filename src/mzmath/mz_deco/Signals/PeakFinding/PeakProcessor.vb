@@ -116,11 +116,8 @@ Namespace Chromatogram.PeakFinding
                 End If
 
                 ' 添加通用附加信息
-                peak.additional("baseline_method") = CDbl(BaselineMethod)
-                peak.additional("area_method") = CDbl(areaMethod)
-                peak.additional("detection_method_name") = CDbl(detectionMethod)
-                peak.additional("tick_count") = CDbl(peak.ticks.Length)
-                peak.additional("time_range") = peak.time.Length
+                peak.additionals("tick_count") = CDbl(peak.ticks.Length)
+                peak.additionals("time_range") = peak.time.Length
             Next
 
             ' 步骤4：过滤信噪比不达标的峰（面积计算后SNR可能变化）
@@ -181,7 +178,7 @@ Namespace Chromatogram.PeakFinding
                 If peak.peakarea > 0 Then
                     peak.noise = peakBaselineArea / (peak.peakarea + peakBaselineArea) * 100.0
                 End If
-                peak.additional("tick_count") = CDbl(peak.ticks.Length)
+                peak.additionals("tick_count") = CDbl(peak.ticks.Length)
             Next
 
             ' 按保留时间排序
@@ -253,8 +250,6 @@ Namespace Chromatogram.PeakFinding
                 If peak.peakarea > 0 Then
                     peak.noise = peakBaselineArea / (peak.peakarea + peakBaselineArea) * 100.0
                 End If
-
-                peak.additional("area_method") = CDbl(areaMethod)
             Next
 
             Return peaks

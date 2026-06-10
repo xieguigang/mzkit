@@ -162,10 +162,9 @@ Namespace Chromatogram.PeakFinding
                 roi.noise = If(totalArea > 0, baselineArea / totalArea * 100.0, 0.0)
 
                 ' 附加信息
-                roi.additional("peak_width") = peakWidth
-                roi.additional("peak_fwhm") = EstimateFWHM(roi.ticks, peakIntensity, noiseLevel)
-                roi.additional("asymmetry_factor") = EstimateAsymmetryFactor(roi.ticks, peakIdx - leftBound, peakIntensity, noiseLevel)
-                roi.additional("detection_method") = CDbl(PeakDetectionMethod.LocalMaximum)
+                roi.peak_width = peakWidth
+                roi.peak_fwhm = EstimateFWHM(roi.ticks, peakIntensity, noiseLevel)
+                roi.asymmetry_factor = EstimateAsymmetryFactor(roi.ticks, peakIdx - leftBound, peakIntensity, noiseLevel)
 
                 results.Add(roi)
             Next
@@ -382,12 +381,11 @@ Namespace Chromatogram.PeakFinding
                 roi.noise = If(totalArea > 0, baselineArea / totalArea * 100.0, 0.0)
 
                 ' 附加信息
-                roi.additional("peak_width") = peakWidth
-                roi.additional("peak_fwhm") = EstimateFWHM(roi.ticks, peakIntensity, noiseLevel)
-                roi.additional("asymmetry_factor") = EstimateAsymmetryFactor(roi.ticks, peakIdx - leftBound, peakIntensity, noiseLevel)
-                roi.additional("cwt_ridge_length") = CDbl(ridge.Count)
-                roi.additional("cwt_max_scale") = CDbl(scales(std.Min(ridge.Count - 1, scales.Count - 1)))
-                roi.additional("detection_method") = CDbl(PeakDetectionMethod.CentWave)
+                roi.peak_width = peakWidth
+                roi.peak_fwhm = EstimateFWHM(roi.ticks, peakIntensity, noiseLevel)
+                roi.asymmetry_factor = EstimateAsymmetryFactor(roi.ticks, peakIdx - leftBound, peakIntensity, noiseLevel)
+                roi.additionals("cwt_ridge_length") = CDbl(ridge.Count)
+                roi.additionals("cwt_max_scale") = CDbl(scales(std.Min(ridge.Count - 1, scales.Count - 1)))
 
                 results.Add(roi)
             Next
@@ -547,11 +545,10 @@ Namespace Chromatogram.PeakFinding
                 Next
                 roi.noise = If(totalArea > 0, baselineArea / totalArea * 100.0, 0.0)
 
-                roi.additional("peak_width") = peakWidth
-                roi.additional("peak_fwhm") = EstimateFWHM(roi.ticks, peakIntensity, noiseLevel)
-                roi.additional("asymmetry_factor") = EstimateAsymmetryFactor(roi.ticks, peakIdx - leftBound, peakIntensity, noiseLevel)
-                roi.additional("filtered_snr") = (filtered(peakIdx) - filtered.Average()) / filteredNoiseStd
-                roi.additional("detection_method") = CDbl(PeakDetectionMethod.MatchedFilter)
+                roi.peak_width = peakWidth
+                roi.peak_fwhm = EstimateFWHM(roi.ticks, peakIntensity, noiseLevel)
+                roi.asymmetry_factor = EstimateAsymmetryFactor(roi.ticks, peakIdx - leftBound, peakIntensity, noiseLevel)
+                roi.additionals("filtered_snr") = (filtered(peakIdx) - filtered.Average()) / filteredNoiseStd
 
                 results.Add(roi)
             Next
@@ -708,11 +705,10 @@ Namespace Chromatogram.PeakFinding
                 Next
                 roi.noise = If(totalArea > 0, baselineArea / totalArea * 100.0, 0.0)
 
-                roi.additional("peak_width") = peakWidth
-                roi.additional("peak_fwhm") = EstimateFWHM(roi.ticks, peakIntensity, noiseLevel)
-                roi.additional("asymmetry_factor") = EstimateAsymmetryFactor(roi.ticks, peakIdx - leftBound, peakIntensity, noiseLevel)
-                roi.additional("derivative_max") = maxDeriv
-                roi.additional("detection_method") = CDbl(PeakDetectionMethod.FirstDerivative)
+                roi.peak_width = peakWidth
+                roi.peak_fwhm = EstimateFWHM(roi.ticks, peakIntensity, noiseLevel)
+                roi.asymmetry_factor = EstimateAsymmetryFactor(roi.ticks, peakIdx - leftBound, peakIntensity, noiseLevel)
+                roi.additionals("derivative_max") = maxDeriv
 
                 results.Add(roi)
             Next

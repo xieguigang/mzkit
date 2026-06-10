@@ -62,7 +62,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Math
 
 Namespace Chromatogram
 
@@ -123,27 +122,27 @@ Namespace Chromatogram
         ''' 信噪比
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property snRatio As Double
-            Get
-                Dim signal As Double = Aggregate tick As ChromatogramTick
-                                       In ticks
-                                       Into Sum(tick.Intensity - baseline)
-                Dim sn As Double = SignalProcessing.SNRatio(signal, noise)
-
-                Return sn
-            End Get
-        End Property
+        Public Property snRatio As Double
 
         ''' <summary>
         ''' the window length of retention <see cref="time"/>.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property peakWidth As Single
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return time.Length
-            End Get
-        End Property
+        Public Property peak_width As Single
+
+        ''' <summary>
+        ''' 半峰宽
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property peak_fwhm As Single
+
+        ''' <summary>
+        ''' 峰的不对称因子
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property asymmetry_factor As Single
+
+        Public Property additionals As Dictionary(Of String, Double)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetChromatogramData(Optional getTitle As Func(Of ROI, String) = Nothing) As NamedCollection(Of ChromatogramTick)

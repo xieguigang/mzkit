@@ -98,7 +98,7 @@ Module Module1
             samples.Add(New NamedCollection(Of PeakFeature)(file.BaseName, SaveSample.ReadSample(file.Open(FileMode.Open, doClear:=False, [readOnly]:=True))))
         Next
 
-        Dim xcms_peaks = PeakAlignment.CowAlignment(samples).ToArray
+        Dim xcms_peaks = PeakAlignments.CowAlignment(samples).ToArray
 
         Call xcms_peaks.SaveTo("G:\tmp\pos.csv")
     End Sub

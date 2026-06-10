@@ -257,11 +257,11 @@ Namespace Chromatogram.PeakFinding
             Dim peakArea As Double = height * sigma * std.Sqrt(2.0 * std.PI)
 
             ' 将拟合参数存入additional字典
-            roi.additional("gaussian_center") = center
-            roi.additional("gaussian_sigma") = sigma
-            roi.additional("gaussian_height") = height
-            roi.additional("gaussian_fwhm") = 2.355 * sigma
-            roi.additional("gaussian_r2") = CalculateR2(ticks, center, sigma, height, baseline)
+            roi.additionals("gaussian_center") = center
+            roi.additionals("gaussian_sigma") = sigma
+            roi.additionals("gaussian_height") = height
+            roi.additionals("gaussian_fwhm") = 2.355 * sigma
+            roi.additionals("gaussian_r2") = CalculateR2(ticks, center, sigma, height, baseline)
 
             Return peakArea
         End Function
