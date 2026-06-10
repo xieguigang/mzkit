@@ -273,6 +273,21 @@ Module mzDeco
         table.add(NameOf(PeakFeature.snRatio), x.Select(Function(a) a.snRatio))
         table.add(NameOf(PeakFeature.rawfile), x.Select(Function(a) a.rawfile))
 
+        Dim metadata As String() = x _
+            .Select(Function(xi)
+                        If xi.additionals Is Nothing Then
+                            Return Nothing
+                        End If
+                        Return xi.additionals.Keys
+                    End Function) _
+            .IteratesALL _
+            .Distinct _
+            .ToArray
+
+        For Each name As String In metadata
+            Call table.add(name, From xi As PeakFeature In x Select xi.additionals.TryGetValue(name))
+        Next
+
         table.rownames = x.Select(Function(a) a.xcms_id).ToArray
 
         Return table
