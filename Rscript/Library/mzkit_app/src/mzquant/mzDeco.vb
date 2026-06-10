@@ -72,6 +72,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.PeakFinding
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.PeakAlignment
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Tasks
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
@@ -1365,16 +1366,27 @@ extract_ms1:
     ''' </example>
     <ExportAPI("peak_alignment")>
     <RApiReturn(GetType(xcms2))>
-    Public Function peakAlignment(<RRawVectorArgument>
-                                  samples As Object,
-                                  Optional mzdiff As Double = 0.01,
-                                  Optional ri_win As Double = 10,
-                                  Optional norm As Boolean = False,
-                                  Optional ri_alignment As Boolean = False,
-                                  Optional max_intensity_ion As Boolean = False,
-                                  Optional cow_alignment As Boolean = False,
-                                  Optional aggregate As Aggregates = Aggregates.Sum,
-                                  Optional env As Environment = Nothing) As Object
+    Public Function peakAlignment_func(<RRawVectorArgument> samples As Object,
+                                       Optional mzdiff As Double = 0.025,
+                                       Optional rt_win As Double = 30,
+                                       Optional ri_win As Double = 10,
+                                       Optional norm As Boolean = False,
+                                       Optional ri_alignment As Boolean = False,
+                                       Optional max_intensity_ion As Boolean = False,
+                                       Optional native_alignment As Boolean = False,
+                                       Optional aggregate As Aggregates = Aggregates.Sum,
+                                       Optional tolerance_mode As MassToleranceType = MassToleranceType.Da,
+                                       Optional method As AlignmentMethod = AlignmentMethod.DensityGroup,
+                                       Optional loess_span As Double = 0.75,
+                                       Optional loess_degree As Integer = 2,
+                                       Optional reference_sample As String = "",
+                                       Optional density_bandwidth As Double = 0.0,
+                                       Optional min_fraction As Double = 0.5,
+                                       Optional obiwarp_bin_size As Double = 1.0,
+                                       Optional obiwarp_gap_penalty As Double = 0.6,
+                                       Optional obiwarp_response As Integer = 100,
+                                       Optional fill_gaps As Boolean = True,
+                                       Optional env As Environment = Nothing) As Object
 
         Dim sampleData As NamedCollection(Of PeakFeature)()
         Dim loadSamples = getSamplePeaksInternal(samples, env)
@@ -1395,10 +1407,26 @@ extract_ms1:
                              top_ion:=max_intensity_ion,
                              aggregate:=aggregate) _
                 .ToArray
-        ElseIf cow_alignment Then
-            peaktable = sampleData _
-                .CowAlignment() _
-                .ToArray
+        ElseIf Not native_alignment Then
+            ' 20260610 apply the new peak alignment api
+            Dim peakList = sampleData.ToDictionary(Function(a) a.name, Function(a) a.value)
+            Dim args As New AlignmentParameters With {
+                .densityBandwidth = density_bandwidth,
+                .fillGaps = fill_gaps,
+                .loessDegree = loess_degree,
+                .loessSpan = loess_span,
+                .method = method,
+                .minFraction = min_fraction,
+                .mzTolerance = mzdiff,
+                .mzToleranceMode = tolerance_mode,
+                .obiwarpBinSize = obiwarp_bin_size,
+                .obiwarpGapPenalty = obiwarp_gap_penalty,
+                .obiwarpResponse = obiwarp_response,
+                .referenceSample = reference_sample,
+                .rtTolerance = rt_win
+            }
+
+            peaktable = PeakAlignment.Algorithm.AlignPeaks(peakList, args)
         Else
             Dim ions = peak_align_task.MakeIonGroups(sampleData, mzdiff).ToArray
             Dim task As peak_align_task = New peak_align_task(ions, ri_win).Solve()
