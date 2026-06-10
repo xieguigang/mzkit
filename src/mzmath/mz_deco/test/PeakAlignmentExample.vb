@@ -1,4 +1,5 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.PeakAlignment
 
 
@@ -48,7 +49,7 @@ Public Class PeakAlignmentExample
         Dim params As New AlignmentParameters()
         params.method = AlignmentMethod.DirectMatch
         params.mzTolerance = 0.025       ' m/z绝对容差 0.025 Da
-        params.mzToleranceMode = ToleranceMode.Absolute
+        params.mzToleranceMode = Ms1.MassToleranceType.Da
         params.rtTolerance = 30.0        ' RT容差 30秒
         params.minFraction = 0.5         ' 特征至少在50%的样本中出现
         params.fillGaps = True           ' 启用缺失值填充
@@ -70,7 +71,7 @@ Public Class PeakAlignmentExample
         Dim params As New AlignmentParameters()
         params.method = AlignmentMethod.LOESS
         params.mzTolerance = 0.025
-        params.mzToleranceMode = ToleranceMode.Absolute
+        params.mzToleranceMode = Ms1.MassToleranceType.Da
         params.rtTolerance = 15.0        ' 校正后使用较小的RT容差
         params.loessSpan = 0.75          ' LOESS带宽参数
         params.loessDegree = 2           ' 二次多项式
@@ -94,7 +95,7 @@ Public Class PeakAlignmentExample
         Dim params As New AlignmentParameters()
         params.method = AlignmentMethod.Obiwarp
         params.mzTolerance = 0.025
-        params.mzToleranceMode = ToleranceMode.Absolute
+        params.mzToleranceMode = Ms1.MassToleranceType.Da
         params.rtTolerance = 15.0
         params.obiwarpBinSize = 1.0      ' TIC分段宽度1秒
         params.obiwarpGapPenalty = 0.6   ' DTW间隙惩罚
@@ -118,7 +119,7 @@ Public Class PeakAlignmentExample
         Dim params As New AlignmentParameters()
         params.method = AlignmentMethod.DensityGroup
         params.mzTolerance = 10.0        ' 10 ppm容差
-        params.mzToleranceMode = ToleranceMode.PPM  ' 使用ppm模式
+        params.mzToleranceMode = MassToleranceType.Ppm  ' 使用ppm模式
         params.rtTolerance = 30.0
         params.densityBandwidth = 0.0    ' 自动估计核密度带宽
         params.minFraction = 0.5
