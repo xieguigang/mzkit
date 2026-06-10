@@ -20,9 +20,34 @@ imports "visual" from "mzplot";
 #' 
 #' @return this function returns nothing 
 #' 
-const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xic_mzdiff = 0.005,
+const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.01, xic_mzdiff = 0.005,
                                    peak.width = [2, 30], n_threads = 16, 
                                    top_n = 20000,
+                                   args = list(
+                                        peak_method = "CentWave",
+                                        snr_threshold = 3.0,
+                                        window_half_width = 5,
+                                        min_peak_width = 3.0,
+                                        max_peak_width = 30.0,
+                                        min_peak_height = 0.0,
+                                        centWave_min_scale = 1,
+                                        centWave_max_scale = 20,
+                                        centWave_scale_step = 1,
+                                        centWave_max_gap = 2,
+                                        matched_filter_sigma = 3.0,
+                                        matched_filter_truncate_width = 4.0,
+                                        derivative_smooth_window = 3,
+                                        derivative_threshold_factor = 0.01,
+                                        noise_segment_count = 20,
+                                        peak_merge_distance = 1.0,
+                                        area_method = "BaselineCorrected",
+                                        baseline_method = "Linear",
+                                        baseline_percentile = 10.0,
+                                        local_minimum_boundary_points = 5,
+                                        gaussian_max_iterations = 100,
+                                        gaussian_convergence = 0.000001,
+                                        recalculate_snr = TRUE
+                                   ),
                                    filename = "peaktable.csv") {
                                     
     const xic_cache = `${outputdir}/XIC_data`;
@@ -75,7 +100,8 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xi
     # 2. into
     #
     let peaktable = ms1_peaktable(xic_files, bins, 
-        mzdiff = mzdiff, 
+        args = args, 
+        mzdiff = mzdiff,
         peak.width = peak.width, 
         tmp_out = file.path(outputdir, "peaksdata")
     );

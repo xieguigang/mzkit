@@ -11,7 +11,36 @@ imports "mzDeco" from "mz_quantify";
 #' @return this function generates a xcms format liked peaktable dataframe object
 #'    for the input rawdata files.
 #' 
-const ms1_peaktable = function(files, mzbins, mzdiff = 0.025, peak.width = [3,90], n_threads = 8, tmp_out = "./tmp") {
+const ms1_peaktable = function(files, mzbins, mzdiff = 0.01,
+        args = list(
+            # peak finding and calculate peak area
+            peak_method = "CentWave",
+            snr_threshold = 3.0,
+            window_half_width = 5,
+            min_peak_width = 3.0,
+            max_peak_width = 30.0,
+            min_peak_height = 0.0,
+            centWave_min_scale = 1,
+            centWave_max_scale = 20,
+            centWave_scale_step = 1,
+            centWave_max_gap = 2,
+            matched_filter_sigma = 3.0,
+            matched_filter_truncate_width = 4.0,
+            derivative_smooth_window = 3,
+            derivative_threshold_factor = 0.01,
+            noise_segment_count = 20,
+            peak_merge_distance = 1.0,
+            area_method = "BaselineCorrected",
+            baseline_method = "Linear",
+            baseline_percentile = 10.0,
+            local_minimum_boundary_points = 5,
+            gaussian_max_iterations = 100,
+            gaussian_convergence = 0.000001,
+            recalculate_snr = TRUE
+        ), 
+        n_threads = 8, 
+        tmp_out = "./tmp") {
+
     mzbins = mzkit::mz_bin_features(mzbins);
     
     Parallel::parallel(raw_path = files, n_threads = n_threads, 
@@ -25,7 +54,7 @@ const ms1_peaktable = function(files, mzbins, mzdiff = 0.025, peak.width = [3,90
         mzkit::deconv_xicfile(
             path = unlist(raw_path), 
             mzbins = mzbins, 
-            mzdiff = mzdiff, 
+            args = args, 
             tmp_out = tmp_out
         );
     };
@@ -52,7 +81,7 @@ const ms1_peaktable = function(files, mzbins, mzdiff = 0.025, peak.width = [3,90
         norm = FALSE,
         ri_alignment = FALSE,
         max_intensity_ion = FALSE,
-        native_alignment = FALSE,
+        native_alignment = TRUE,
         aggregate = "Sum",
         tolerance_mode = "Da",
         method = "DensityGroup",
@@ -68,9 +97,34 @@ const ms1_peaktable = function(files, mzbins, mzdiff = 0.025, peak.width = [3,90
     );
 }
 
-const deconv_xicfile = function(path, mzbins, mzdiff, tmp_out = "./") {
+const deconv_xicfile = function(path, mzbins = NULL, args = list(
+        peak_method = "CentWave",
+        snr_threshold = 3.0,
+        window_half_width = 5,
+        min_peak_width = 3.0,
+        max_peak_width = 30.0,
+        min_peak_height = 0.0,
+        centWave_min_scale = 1,
+        centWave_max_scale = 20,
+        centWave_scale_step = 1,
+        centWave_max_gap = 2,
+        matched_filter_sigma = 3.0,
+        matched_filter_truncate_width = 4.0,
+        derivative_smooth_window = 3,
+        derivative_threshold_factor = 0.01,
+        noise_segment_count = 20,
+        peak_merge_distance = 1.0,
+        area_method = "BaselineCorrected",
+        baseline_method = "Linear",
+        baseline_percentile = 10.0,
+        local_minimum_boundary_points = 5,
+        gaussian_max_iterations = 100,
+        gaussian_convergence = 0.000001,
+        recalculate_snr = TRUE
+    ), tmp_out = "./") {
+
     let rawfile = basename(path);
-    let xicdata = readBin(path, what = "mz_group", mz = mzbins, da = mzdiff);
+    let xicdata = readBin(path, what = "mz_group", mz = mzbins, da = 0.025);
     let peaks = NULL;
     let peakfile = file.path(unlist(tmp_out), "peaks", `${rawfile}.csv`);
     let peakdata = file.path(unlist(tmp_out), "peaks", `${rawfile}.dat`);
@@ -78,31 +132,31 @@ const deconv_xicfile = function(path, mzbins, mzdiff, tmp_out = "./") {
     for(let mz_xic in xicdata) {
         peaks = c(peaks, find_peaks(
             x = mz_xic,
-            peak_method = "CentWave",
-                        snr_threshold = 3.0,
-                        window_half_width = 5,
-                        min_peak_width = 3.0,
-                        max_peak_width = 30.0,
-                        min_peak_height = 0.0,
-                        centWave_min_scale = 1,
-                        centWave_max_scale = 20,
-                        centWave_scale_step = 1,
-                        centWave_max_gap = 2,
-                        matched_filter_sigma = 3.0,
-                        matched_filter_truncate_width = 4.0,
-                        derivative_smooth_window = 3,
-                        derivative_threshold_factor = 0.01,
-                        noise_segment_count = 20,
-                        peak_merge_distance = 1.0,
-                        area_method = "BaselineCorrected",
-                        baseline_method = "Linear",
-                        baseline_percentile = 10.0,
-                        local_minimum_boundary_points = 5,
-                        gaussian_max_iterations = 100,
-                        gaussian_convergence = 0.000001,
-                        recalculate_snr = TRUE,
-                        as_peaks = TRUE,                               
-                        filename = rawfile
+            peak_method = args$peak_method,
+            snr_threshold = args$snr_threshold,
+            window_half_width = args$window_half_width,
+            min_peak_width = args$min_peak_width,
+            max_peak_width = args$max_peak_width,
+            min_peak_height = args$min_peak_height,
+            centWave_min_scale = args$centWave_min_scale,
+            centWave_max_scale = args$centWave_max_scale,
+            centWave_scale_step = args$centWave_scale_step,
+            centWave_max_gap = args$centWave_max_gap,
+            matched_filter_sigma = args$matched_filter_sigma,
+            matched_filter_truncate_width = args$matched_filter_truncate_width,
+            derivative_smooth_window = args$derivative_smooth_window,
+            derivative_threshold_factor = args$derivative_threshold_factor,
+            noise_segment_count = args$noise_segment_count,
+            peak_merge_distance = args$peak_merge_distance,
+            area_method = args$area_method,
+            baseline_method = args$baseline_method,
+            baseline_percentile = args$baseline_percentile,
+            local_minimum_boundary_points = args$local_minimum_boundary_points,
+            gaussian_max_iterations = args$gaussian_max_iterations,
+            gaussian_convergence = args$gaussian_convergence,
+            recalculate_snr = args$recalculate_snr,
+            as_peaks = TRUE,                               
+            filename = rawfile
         ));
     }
 
