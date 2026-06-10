@@ -1,0 +1,52 @@
+.\" man page create by R# package system.
+.TH MZDECO 1 2000-1月 "find_peaks" "find_peaks"
+.SH NAME
+find_peaks \- 
+.SH SYNOPSIS
+\fIfind_peaks(\fBx\fR as any, 
+\fBpeak_method\fR as <integer> PeakDetectionMethod = [CentWave], 
+\fBsnr_threshold\fR as double = 3, 
+\fBwindow_half_width\fR as integer = 5, 
+\fBmin_peak_width\fR as double = 3, 
+\fBmax_peak_width\fR as double = 30, 
+\fBmin_peak_height\fR as double = 0, 
+\fBcentWave_min_scale\fR as integer = 1, 
+\fBcentWave_max_scale\fR as integer = 20, 
+\fBcentWave_scale_step\fR as integer = 1, 
+\fBcentWave_max_gap\fR as integer = 2, 
+\fBmatched_filter_sigma\fR as double = 3, 
+\fBmatched_filter_truncate_width\fR as double = 4, 
+\fBderivative_smooth_window\fR as integer = 3, 
+\fBderivative_threshold_factor\fR as double = 0.01, 
+\fBnoise_segment_count\fR as integer = 20, 
+\fBpeak_merge_distance\fR as double = 1, 
+\fBarea_method\fR as <integer> PeakAreaMethod = [BaselineCorrected], 
+\fBbaseline_method\fR as <integer> BaselineMethod = [Linear], 
+\fBbaseline_percentile\fR as double = 10, 
+\fBlocal_minimum_boundary_points\fR as integer = 5, 
+\fBgaussian_max_iterations\fR as integer = 100, 
+\fBgaussian_convergence\fR as double = 1E-06, 
+\fBrecalculate_snr\fR as boolean = TRUE, 
+\fBas_peaks\fR as boolean = FALSE, 
+\fBmz_peak\fR as <generic> Double = \fB<NULL>\fR, 
+\fBfilename\fR as string = \fB<NULL>\fR, 
+[\fB<Environment>\fR]);\fR
+.SH OPTIONS
+.PP
+\fBx\fB \fR\- should be XIC data. 
+.PP
+.PP
+\fBpeak_method\fB \fR\- -. 
+.PP
+.PP
+\fBrecalculate_snr\fB \fR\- -. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH SEE ALSO
+mzDeco
+.SH FILES
+.PP
+mz_quantify.dll
+.PP

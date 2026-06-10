@@ -4,13 +4,25 @@
 peak_alignment \- Do COW peak alignment and export peaktable
 .SH SYNOPSIS
 \fIpeak_alignment(\fBsamples\fR as any, 
-\fBmzdiff\fR as double = 0.01, 
+\fBmzdiff\fR as double = 0.025, 
+\fBrt_win\fR as double = 30, 
 \fBri_win\fR as double = 10, 
 \fBnorm\fR as boolean = FALSE, 
 \fBri_alignment\fR as boolean = FALSE, 
 \fBmax_intensity_ion\fR as boolean = FALSE, 
-\fBcow_alignment\fR as boolean = FALSE, 
+\fBnative_alignment\fR as boolean = FALSE, 
 \fBaggregate\fR as <integer> Aggregates = [Sum], 
+\fBtolerance_mode\fR as <integer> MassToleranceType = [Da], 
+\fBmethod\fR as <integer> AlignmentMethod = [DensityGroup], 
+\fBloess_span\fR as double = 0.75, 
+\fBloess_degree\fR as integer = 2, 
+\fBreference_sample\fR as string = "", 
+\fBdensity_bandwidth\fR as double = 0, 
+\fBmin_fraction\fR as double = 0.5, 
+\fBobiwarp_bin_size\fR as double = 1, 
+\fBobiwarp_gap_penalty\fR as double = 0.6, 
+\fBobiwarp_response\fR as integer = 100, 
+\fBfill_gaps\fR as boolean = TRUE, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -23,7 +35,18 @@ Do COW peak alignment and export peaktable
 .PP
 .SH OPTIONS
 .PP
-\fBsamples\fB \fR\- should be a set of sample file data, which could be extract from the \fBmz_deco\fR function.. 
+\fBsamples\fB \fR\- 
+ should be a set of samples file data, which could be extract from the \fBmz_deco\fR function.
+ usaully be a list of the mzkit @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.PeakFeature\fR set list data, example as:
+ 
+ \fBr
+ list(
+     sample1 = c(peak1, peak2, peak3, ...),
+     sample2 = c(peak1, peak2, peak3, ...),
+     ...
+ );
+ \fR`
+. 
 .PP
 .PP
 \fBmzdiff\fB \fR\- -. 

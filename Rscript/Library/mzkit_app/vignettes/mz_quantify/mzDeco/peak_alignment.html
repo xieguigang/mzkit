@@ -28,13 +28,25 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>peak_alignment</strong>(<i>samples</i>,
-    <i>mzdiff</i> = <span style='color: green;'>0.01</span>,
+    <i>mzdiff</i> = <span style='color: green;'>0.025</span>,
+    <i>rt.win</i> = <span style='color: green;'>30</span>,
     <i>ri.win</i> = <span style='color: green;'>10</span>,
     <i>norm</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>ri.alignment</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>max.intensity.ion</i> = <span style='color: blue !important;'>FALSE</span>,
-    <i>cow.alignment</i> = <span style='color: blue !important;'>FALSE</span>,
-    <i>aggregate</i> = Sum);</code></pre>
+    <i>native.alignment</i> = <span style='color: blue !important;'>FALSE</span>,
+    <i>aggregate</i> = Sum,
+    <i>tolerance.mode</i> = Da,
+    <i>method</i> = DensityGroup,
+    <i>loess.span</i> = <span style='color: green;'>0.75</span>,
+    <i>loess.degree</i> = <span style='color: green;'>2</span>,
+    <i>reference.sample</i> = <span style='color: brown;'><strong>""</strong></span>,
+    <i>density.bandwidth</i> = <span style='color: green;'>0</span>,
+    <i>min.fraction</i> = <span style='color: green;'>0.5</span>,
+    <i>obiwarp.bin.size</i> = <span style='color: green;'>1</span>,
+    <i>obiwarp.gap.penalty</i> = <span style='color: green;'>0.6</span>,
+    <i>obiwarp.response</i> = <span style='color: green;'>100</span>,
+    <i>fill.gaps</i> = <span style='color: blue !important;'>TRUE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -42,7 +54,18 @@
         <table>
             
 <dt>samples</dt>
-<dd><p>should be a set of sample file data, which could be extract from the <code>mz_deco</code> function.</p></dd>
+<dd><p>should be a set of samples file data, which could be extract from the <code>mz_deco</code> function.
+ usaully be a list of the mzkit <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakFeature.html">PeakFeature</a> set list data, example as:
+
+
+<pre><code class="r"> list(
+     sample1 = c(peak1, peak2, peak3, ...),
+     sample2 = c(peak1, peak2, peak3, ...),
+     ...
+ );
+</code></pre>
+
+</p></dd>
 
 
 <dt>mzdiff</dt>

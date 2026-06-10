@@ -30,6 +30,9 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 export class ROI {
+   additionals: list;
+   # 峰的不对称因子
+   asymmetry_factor: double;
    # 所计算出来的基线的响应强度
    baseline: double;
    # 当前的这个ROI的峰面积积分值
@@ -38,8 +41,12 @@ export class ROI {
    maxInto: double;
    # 噪声的面积积分百分比
    noise: double;
+   # 半峰宽
+   peak_fwhm: double;
    # the window length of retention <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ROI.html">ROI</a>.<a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">time</a>.
-   peakWidth: double;
+   peak_width: double;
+   # 拟合出来的峰面积
+   peakarea: double;
    # 出峰达到峰高最大值<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ROI.html">ROI</a>.<a href="#">maxInto</a>的时间点
    rt: double;
    # 信噪比
@@ -55,6 +62,7 @@ export class ROI {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
+<li>use by <i>property</i> member <code>additionals</code>: list</li>
 <li>use by <i>property</i> member <code>ticks</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ChromatogramTick.html">ChromatogramTick</a></li>
 <li>use by <i>property</i> member <code>time</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a></li>
 </ol>

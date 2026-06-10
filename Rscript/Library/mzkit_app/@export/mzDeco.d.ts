@@ -77,6 +77,69 @@ declare namespace mzDeco {
    */
    function filter_noise_spectrum(ions: any, peaktable: object, mzdiff?: number, rt_win?: number, env?: object): object;
    /**
+    * 
+    * 
+     * @param x should be XIC data
+     * @param peak_method -
+     * 
+     * + default value Is ``null``.
+     * @param snr_threshold 
+     * + default value Is ``3``.
+     * @param window_half_width 
+     * + default value Is ``5``.
+     * @param min_peak_width 
+     * + default value Is ``3``.
+     * @param max_peak_width 
+     * + default value Is ``30``.
+     * @param min_peak_height 
+     * + default value Is ``0``.
+     * @param centWave_min_scale 
+     * + default value Is ``1``.
+     * @param centWave_max_scale 
+     * + default value Is ``20``.
+     * @param centWave_scale_step 
+     * + default value Is ``1``.
+     * @param centWave_max_gap 
+     * + default value Is ``2``.
+     * @param matched_filter_sigma 
+     * + default value Is ``3``.
+     * @param matched_filter_truncate_width 
+     * + default value Is ``4``.
+     * @param derivative_smooth_window 
+     * + default value Is ``3``.
+     * @param derivative_threshold_factor 
+     * + default value Is ``0.01``.
+     * @param noise_segment_count 
+     * + default value Is ``20``.
+     * @param peak_merge_distance 
+     * + default value Is ``1``.
+     * @param area_method 
+     * + default value Is ``null``.
+     * @param baseline_method 
+     * + default value Is ``null``.
+     * @param baseline_percentile 
+     * + default value Is ``10``.
+     * @param local_minimum_boundary_points 
+     * + default value Is ``5``.
+     * @param gaussian_max_iterations 
+     * + default value Is ``100``.
+     * @param gaussian_convergence 
+     * + default value Is ``1E-06``.
+     * @param recalculate_snr -
+     * 
+     * + default value Is ``true``.
+     * @param as_peaks 
+     * + default value Is ``false``.
+     * @param mz_peak 
+     * + default value Is ``null``.
+     * @param filename 
+     * + default value Is ``null``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function find_peaks(x: any, peak_method?: object, snr_threshold?: number, window_half_width?: object, min_peak_width?: number, max_peak_width?: number, min_peak_height?: number, centWave_min_scale?: object, centWave_max_scale?: object, centWave_scale_step?: object, centWave_max_gap?: object, matched_filter_sigma?: number, matched_filter_truncate_width?: number, derivative_smooth_window?: object, derivative_threshold_factor?: number, noise_segment_count?: object, peak_merge_distance?: number, area_method?: object, baseline_method?: object, baseline_percentile?: number, local_minimum_boundary_points?: object, gaussian_max_iterations?: object, gaussian_convergence?: number, recalculate_snr?: boolean, as_peaks?: boolean, mz_peak?: object, filename?: string, env?: object): object|object;
+   /**
     * helper function for find ms1 peaks based on the given mz/rt tuple data
     * 
     * 
@@ -200,10 +263,21 @@ declare namespace mzDeco {
     *  containing few compounds and having a well-defined TIC.
     * 
     * 
-     * @param samples should be a set of sample file data, which could be extract from the ``mz_deco`` function.
+     * @param samples should be a set of samples file data, which could be extract from the ``mz_deco`` function.
+     *  usaully be a list of the mzkit @``T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakFeature`` set list data, example as:
+     *  
+     *  ```r
+     *  list(
+     *      sample1 = c(peak1, peak2, peak3, ...),
+     *      sample2 = c(peak1, peak2, peak3, ...),
+     *      ...
+     *  );
+     *  ```
      * @param mzdiff -
      * 
-     * + default value Is ``0.01``.
+     * + default value Is ``0.025``.
+     * @param rt_win 
+     * + default value Is ``30``.
      * @param ri_win 
      * + default value Is ``10``.
      * @param norm do total ion sum normalization after peak alignment and the peaktable object has been exported?
@@ -213,15 +287,37 @@ declare namespace mzDeco {
      * + default value Is ``false``.
      * @param max_intensity_ion 
      * + default value Is ``false``.
-     * @param cow_alignment 
+     * @param native_alignment 
      * + default value Is ``false``.
      * @param aggregate 
      * + default value Is ``null``.
+     * @param tolerance_mode 
+     * + default value Is ``null``.
+     * @param method 
+     * + default value Is ``null``.
+     * @param loess_span 
+     * + default value Is ``0.75``.
+     * @param loess_degree 
+     * + default value Is ``2``.
+     * @param reference_sample 
+     * + default value Is ``''``.
+     * @param density_bandwidth 
+     * + default value Is ``0``.
+     * @param min_fraction 
+     * + default value Is ``0.5``.
+     * @param obiwarp_bin_size 
+     * + default value Is ``1``.
+     * @param obiwarp_gap_penalty 
+     * + default value Is ``0.6``.
+     * @param obiwarp_response 
+     * + default value Is ``100``.
+     * @param fill_gaps 
+     * + default value Is ``true``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function peak_alignment(samples: any, mzdiff?: number, ri_win?: number, norm?: boolean, ri_alignment?: boolean, max_intensity_ion?: boolean, cow_alignment?: boolean, aggregate?: object, env?: object): object;
+   function peak_alignment(samples: any, mzdiff?: number, rt_win?: number, ri_win?: number, norm?: boolean, ri_alignment?: boolean, max_intensity_ion?: boolean, native_alignment?: boolean, aggregate?: object, tolerance_mode?: object, method?: object, loess_span?: number, loess_degree?: object, reference_sample?: string, density_bandwidth?: number, min_fraction?: number, obiwarp_bin_size?: number, obiwarp_gap_penalty?: number, obiwarp_response?: object, fill_gaps?: boolean, env?: object): object;
    /**
     * make sample column projection
     * 
