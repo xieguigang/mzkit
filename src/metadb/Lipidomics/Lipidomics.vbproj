@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Lipidomics</RootNamespace>
-    <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
+    <TargetFrameworks>net10.0</TargetFrameworks>
     <UseApplicationFramework>True</UseApplicationFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Lipidomics Annotation Workflow</Title>

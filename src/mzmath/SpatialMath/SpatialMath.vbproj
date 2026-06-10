@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.MsImaging</RootNamespace>
-    <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
+    <TargetFrameworks>net10.0</TargetFrameworks>
     <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.SpatialMath</AssemblyName>
     <UseApplicationFramework>True</UseApplicationFramework>
     <Platforms>AnyCPU;x64</Platforms>
