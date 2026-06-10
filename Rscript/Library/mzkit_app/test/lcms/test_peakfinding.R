@@ -1,3 +1,7 @@
+imports "signalProcessing" from "signalKit";
+
+print(mexican_hat.wavelet(x =1, center =1, sigma =0.1));
+
 require(mzkit);
 
 deconv_xicfile(path = "\\192.168.3.15\sda\2026\wzc\C2026051977612\lcms_out-20260610-3\tmp\workflow_tmp\rawdata\pos\XIC_data\N2026051977612_01_001.xic", 

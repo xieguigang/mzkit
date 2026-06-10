@@ -142,7 +142,7 @@ Namespace Chromatogram
         ''' <returns></returns>
         Public Property asymmetry_factor As Single
 
-        Public Property additionals As Dictionary(Of String, Double)
+        Public Property additionals As New Dictionary(Of String, Double)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetChromatogramData(Optional getTitle As Func(Of ROI, String) = Nothing) As NamedCollection(Of ChromatogramTick)
