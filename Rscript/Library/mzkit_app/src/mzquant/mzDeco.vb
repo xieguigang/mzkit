@@ -1293,6 +1293,41 @@ extract_ms1:
         End If
     End Function
 
+    Private Function getSamplePeaksInternal(samples As Object, env As Environment) As [Variant](Of Message, NamedCollection(Of PeakFeature)())
+        Dim sampleData As NamedCollection(Of PeakFeature)() = Nothing
+
+        If TypeOf samples Is list Then
+            Dim ls = DirectCast(samples, list).AsGeneric(Of PeakFeature())(env)
+
+            If ls.All(Function(a) a.Value Is Nothing) Then
+            Else
+                sampleData = ls _
+                    .Select(Function(a) New NamedCollection(Of PeakFeature)(a.Key, a.Value)) _
+                    .ToArray
+            End If
+        ElseIf TypeOf samples Is NamedCollection(Of PeakFeature)() Then
+            sampleData = samples
+        End If
+
+        If sampleData.IsNullOrEmpty Then
+            Dim samplePeaks = pipeline.TryCreatePipeline(Of PeakFeature)(samples, env)
+
+            If samplePeaks.isError Then
+                Return samplePeaks.getError
+            End If
+
+            sampleData = samplePeaks _
+                .populates(Of PeakFeature)(env) _
+                .GroupBy(Function(a) a.rawfile) _
+                .Select(Function(i)
+                            Return New NamedCollection(Of PeakFeature)(i.Key, i.ToArray)
+                        End Function) _
+                .ToArray
+        End If
+
+        Return sampleData
+    End Function
+
     ''' <summary>
     ''' Do COW peak alignment and export peaktable
     ''' 
@@ -1341,39 +1376,16 @@ extract_ms1:
                                   Optional aggregate As Aggregates = Aggregates.Sum,
                                   Optional env As Environment = Nothing) As Object
 
-        Dim sampleData As NamedCollection(Of PeakFeature)() = Nothing
-
-        If TypeOf samples Is list Then
-            Dim ls = DirectCast(samples, list).AsGeneric(Of PeakFeature())(env)
-
-            If ls.All(Function(a) a.Value Is Nothing) Then
-            Else
-                sampleData = ls _
-                    .Select(Function(a) New NamedCollection(Of PeakFeature)(a.Key, a.Value)) _
-                    .ToArray
-            End If
-        ElseIf TypeOf samples Is NamedCollection(Of PeakFeature)() Then
-            sampleData = samples
-        End If
-
-        If sampleData.IsNullOrEmpty Then
-            Dim samplePeaks = pipeline.TryCreatePipeline(Of PeakFeature)(samples, env)
-
-            If samplePeaks.isError Then
-                Return samplePeaks.getError
-            End If
-
-            sampleData = samplePeaks _
-                .populates(Of PeakFeature)(env) _
-                .GroupBy(Function(a) a.rawfile) _
-                .Select(Function(i)
-                            Return New NamedCollection(Of PeakFeature)(i.Key, i.ToArray)
-                        End Function) _
-                .ToArray
-        End If
-
+        Dim sampleData As NamedCollection(Of PeakFeature)()
+        Dim loadSamples = getSamplePeaksInternal(samples, env)
         Dim peaktable As xcms2()
         Dim rt_shifts As New List(Of RtShift)
+
+        If loadSamples Like GetType(Message) Then
+            Return loadSamples.TryCast(Of Message)
+        Else
+            sampleData = loadSamples
+        End If
 
         If ri_alignment Then
             peaktable = sampleData _
