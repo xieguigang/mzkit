@@ -113,16 +113,18 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xi
         write.csv(peakmeta, file = `${outputdir}/peakmeta.csv`, 
             row.names = TRUE);
 
-        bitmap(file = file.path(outputdir, "rt_shifts.png"), size = [4000, 2700], padding = [50 650 200 200]) {
-            plot(rt_shifts, res = 1000, grid.fill = "white");
+        if (length(rt_shifts) > 1) {
+            bitmap(file = file.path(outputdir, "rt_shifts.png"), size = [4000, 2700], padding = [50 650 200 200]) {
+                plot(rt_shifts, res = 1000, grid.fill = "white");
+            }
+            pdf(file = file.path(outputdir, "rt_shifts.pdf"), size = [4000, 2700], padding = [50 650 200 200]) {
+                plot(rt_shifts, res = 1000, grid.fill = "white");
+            }
         }
+
         bitmap(file = file.path(outputdir, "peakset.png")) {
             plot(as.peak_set(peakmeta), scatter = TRUE, 
                 dimension = "npeaks");
-        }
-
-        pdf(file = file.path(outputdir, "rt_shifts.pdf"), size = [4000, 2700], padding = [50 650 200 200]) {
-            plot(rt_shifts, res = 1000, grid.fill = "white");
         }
         pdf(file = file.path(outputdir, "peakset.pdf")) {
             plot(as.peak_set(peakmeta), scatter = TRUE, 
