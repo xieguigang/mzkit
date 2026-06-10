@@ -43,9 +43,33 @@ declare namespace mzkit {
    */
    function deconv_gcms(rawdata: any, export_dir?: any, peak.width?: any, n_threads?: any): object;
    /**
+     * @param mzbins default value Is ``null``.
+     * @param args default value Is ``Call "list"("peak_method" <- "CentWave",
+     *       "snr_threshold" <- 3,
+     *       "window_half_width" <- 5,
+     *       "min_peak_width" <- 3,
+     *       "max_peak_width" <- 30,
+     *       "min_peak_height" <- 0,
+     *       "centWave_min_scale" <- 1,
+     *       "centWave_max_scale" <- 20,
+     *       "centWave_scale_step" <- 1,
+     *       "centWave_max_gap" <- 2,
+     *       "matched_filter_sigma" <- 3,
+     *       "matched_filter_truncate_width" <- 4,
+     *       "derivative_smooth_window" <- 3,
+     *       "derivative_threshold_factor" <- 0.01,
+     *       "noise_segment_count" <- 20,
+     *       "peak_merge_distance" <- 1,
+     *       "area_method" <- "BaselineCorrected",
+     *       "baseline_method" <- "Linear",
+     *       "baseline_percentile" <- 10,
+     *       "local_minimum_boundary_points" <- 5,
+     *       "gaussian_max_iterations" <- 100,
+     *       "gaussian_convergence" <- 1E-06,
+     *       "recalculate_snr" <- TRUE)``.
      * @param tmp_out default value Is ``./``.
    */
-   function deconv_xicfile(path: any, mzbins: any, mzdiff: any, tmp_out?: any): object;
+   function deconv_xicfile(path: any, mzbins?: any, args?: any, tmp_out?: any): object;
    /**
    */
    function GCMS_contentTable(mslIons: any, calfiles: string): object;
@@ -127,12 +151,34 @@ declare namespace mzkit {
    */
    function ms1_mz_bins(files: any, mzdiff?: any): object;
    /**
-     * @param mzdiff default value Is ``0.025``.
-     * @param peak.width default value Is ``[3, 90]``.
+     * @param mzdiff default value Is ``0.01``.
+     * @param args default value Is ``Call "list"("peak_method" <- "CentWave",
+     *       "snr_threshold" <- 3,
+     *       "window_half_width" <- 5,
+     *       "min_peak_width" <- 3,
+     *       "max_peak_width" <- 30,
+     *       "min_peak_height" <- 0,
+     *       "centWave_min_scale" <- 1,
+     *       "centWave_max_scale" <- 20,
+     *       "centWave_scale_step" <- 1,
+     *       "centWave_max_gap" <- 2,
+     *       "matched_filter_sigma" <- 3,
+     *       "matched_filter_truncate_width" <- 4,
+     *       "derivative_smooth_window" <- 3,
+     *       "derivative_threshold_factor" <- 0.01,
+     *       "noise_segment_count" <- 20,
+     *       "peak_merge_distance" <- 1,
+     *       "area_method" <- "BaselineCorrected",
+     *       "baseline_method" <- "Linear",
+     *       "baseline_percentile" <- 10,
+     *       "local_minimum_boundary_points" <- 5,
+     *       "gaussian_max_iterations" <- 100,
+     *       "gaussian_convergence" <- 1E-06,
+     *       "recalculate_snr" <- TRUE)``.
      * @param n_threads default value Is ``8``.
      * @param tmp_out default value Is ``./tmp``.
    */
-   function ms1_peaktable(files: any, mzbins: any, mzdiff?: any, peak.width?: any, n_threads?: any, tmp_out?: any): object;
+   function ms1_peaktable(files: any, mzbins: any, mzdiff?: any, args?: any, n_threads?: any, tmp_out?: any): object;
    /**
      * @param mzdiff default value Is ``0.005``.
      * @param outputdir default value Is ``./XIC/``.
@@ -192,14 +238,37 @@ declare namespace mzkit {
    module run {
       /**
         * @param outputdir default value Is ``./``.
-        * @param mzdiff default value Is ``0.001``.
+        * @param mzdiff default value Is ``0.01``.
         * @param xic_mzdiff default value Is ``0.005``.
         * @param peak.width default value Is ``[2, 30]``.
         * @param n_threads default value Is ``16``.
         * @param top_n default value Is ``20000``.
+        * @param args default value Is ``Call "list"("peak_method" <- "CentWave",
+        *       "snr_threshold" <- 3,
+        *       "window_half_width" <- 5,
+        *       "min_peak_width" <- 3,
+        *       "max_peak_width" <- 30,
+        *       "min_peak_height" <- 0,
+        *       "centWave_min_scale" <- 1,
+        *       "centWave_max_scale" <- 20,
+        *       "centWave_scale_step" <- 1,
+        *       "centWave_max_gap" <- 2,
+        *       "matched_filter_sigma" <- 3,
+        *       "matched_filter_truncate_width" <- 4,
+        *       "derivative_smooth_window" <- 3,
+        *       "derivative_threshold_factor" <- 0.01,
+        *       "noise_segment_count" <- 20,
+        *       "peak_merge_distance" <- 1,
+        *       "area_method" <- "BaselineCorrected",
+        *       "baseline_method" <- "Linear",
+        *       "baseline_percentile" <- 10,
+        *       "local_minimum_boundary_points" <- 5,
+        *       "gaussian_max_iterations" <- 100,
+        *       "gaussian_convergence" <- 1E-06,
+        *       "recalculate_snr" <- TRUE)``.
         * @param filename default value Is ``peaktable.csv``.
       */
-      function Deconvolution(rawdata: any, outputdir?: any, mzdiff?: any, xic_mzdiff?: any, peak.width?: any, n_threads?: any, top_n?: any, filename?: any): object;
+      function Deconvolution(rawdata: any, outputdir?: any, mzdiff?: any, xic_mzdiff?: any, peak.width?: any, n_threads?: any, top_n?: any, args?: any, filename?: any): object;
    }
    /**
      * @param kind default value Is ``ppm``.

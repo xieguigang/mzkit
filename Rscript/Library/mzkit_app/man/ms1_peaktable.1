@@ -1,14 +1,14 @@
 ﻿.TH MS1_PEAKTABLE 1 2026-6月 "" "Export peakstable data from the XIC rawdata files"
 .SH NAME
 ms1_peaktable \- ms1_peaktable(files, mzbins,
-    <i>mzdiff</i> = <span style='color: green;'>0.025</span>,
-    <i>peak.width</i> = [<span style='color: green;'>90</span>],
+    <i>mzdiff</i> = <span style='color: green;'>0.01</span>,
+    <i>args</i> = 'list'('peak_method' = 'CentWave', 'snr_threshold' = 3, 'window_half_width' = 5, 'min_peak_width' = 3, 'max_peak_width' = 30, 'min_peak_height' = 0, 'centWave_min_scale' = 1, 'centWave_max_scale' = 20, 'centWave_scale_step' = 1, 'centWave_max_gap' = 2, 'matched_filter_sigma' = 3, 'matched_filter_truncate_width' = 4, 'derivative_smooth_window' = 3, 'derivative_threshold_factor' = 0.01, 'noise_segment_count' = 20, 'peak_merge_distance' = 1, 'area_method' = 'BaselineCorrected', 'baseline_method' = 'Linear', 'baseline_percentile' = 10, 'local_minimum_boundary_points' = 5, 'gaussian_max_iterations' = 100, 'gaussian_convergence' = 1E-06, 'recalculate_snr' = TRUE),
     <i>n.threads</i> = <span style='color: green;'>8</span>,
     <i>tmp.out</i> = <span style='color: brown;'><strong>'./tmp'</strong></span>)
 .SH SYNOPSIS
 \fIms1_peaktable(files, mzbins,
-    <i>mzdiff</i> = <span style='color: green;'>0.025</span>,
-    <i>peak.width</i> = [<span style='color: green;'>90</span>],
+    <i>mzdiff</i> = <span style='color: green;'>0.01</span>,
+    <i>args</i> = 'list'('peak_method' = 'CentWave', 'snr_threshold' = 3, 'window_half_width' = 5, 'min_peak_width' = 3, 'max_peak_width' = 30, 'min_peak_height' = 0, 'centWave_min_scale' = 1, 'centWave_max_scale' = 20, 'centWave_scale_step' = 1, 'centWave_max_gap' = 2, 'matched_filter_sigma' = 3, 'matched_filter_truncate_width' = 4, 'derivative_smooth_window' = 3, 'derivative_threshold_factor' = 0.01, 'noise_segment_count' = 20, 'peak_merge_distance' = 1, 'area_method' = 'BaselineCorrected', 'baseline_method' = 'Linear', 'baseline_percentile' = 10, 'local_minimum_boundary_points' = 5, 'gaussian_max_iterations' = 100, 'gaussian_convergence' = 1E-06, 'recalculate_snr' = TRUE),
     <i>n.threads</i> = <span style='color: green;'>8</span>,
     <i>tmp.out</i> = <span style='color: brown;'><strong>'./tmp'</strong></span>)\fR
 .SH OPTIONS
@@ -21,10 +21,10 @@ set for do extract of the result peaktable data, a data field which is
 named ``mz`` must be included inside this dataframe object.
 .PP
 .PP
-\fBmzdiff\fB \fR\- 0.025. 
+\fBmzdiff\fB \fR\- 0.01. 
 .PP
 .PP
-\fBpeak.width\fB \fR\- [3, 90]. the peak time range of the peaks that could be accepted
+\fBargs\fB \fR\- 'list'('peak_method' = 'CentWave', 'snr_threshold' = 3, 'window_half_width' = 5, 'min_peak_width' = 3, 'max_peak_width' = 30, 'min_peak_height' = 0, 'centWave_min_scale' = 1, 'centWave_max_scale' = 20, 'centWave_scale_step' = 1, 'centWave_max_gap' = 2, 'matched_filter_sigma' = 3, 'matched_filter_truncate_width' = 4, 'derivative_smooth_window' = 3, 'derivative_threshold_factor' = 0.01, 'noise_segment_count' = 20, 'peak_merge_distance' = 1, 'area_method' = 'BaselineCorrected', 'baseline_method' = 'Linear', 'baseline_percentile' = 10, 'local_minimum_boundary_points' = 5, 'gaussian_max_iterations' = 100, 'gaussian_convergence' = 1E-06, 'recalculate_snr' = TRUE). 
 .PP
 .PP
 \fBn.threads\fB \fR\- 8. 
