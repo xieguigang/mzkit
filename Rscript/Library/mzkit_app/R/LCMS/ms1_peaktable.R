@@ -14,7 +14,20 @@ imports "mzDeco" from "mz_quantify";
 const ms1_peaktable = function(files, mzbins, mzdiff = 0.005, peak.width = [3,90]) {
     # load mzkit XICPool object from a set of the xic data files
     let pool = xic_pool(files);  
+    mzbins = mzkit::mz_bin_features(mzbins);
     
+
+    return(mz_deco(
+        pool,                       # the XICPool raw data object 
+        tolerance = `da:${mzdiff}`, # mass tolerance value for matches XIC with the given mzbins features
+        joint = TRUE,               # merge the closed peaks?
+        peak.width = peak.width,    # [min,max] peak width range
+        feature = mzbins,           # a numeric vector of the target m/z values for extract peaks features from the XIC data
+        parallel = TRUE)
+    );
+}
+
+const mz_bin_features = function(mzbins) {
     print("get m/z bins input:");
     str(mzbins);
 
@@ -34,12 +47,5 @@ const ms1_peaktable = function(files, mzbins, mzdiff = 0.005, peak.width = [3,90
 
     print(`run extract peaktable set from ${length(mzbins)} ion m/z features...`);
 
-    return(mz_deco(
-        pool,                       # the XICPool raw data object 
-        tolerance = `da:${mzdiff}`, # mass tolerance value for matches XIC with the given mzbins features
-        joint = TRUE,               # merge the closed peaks?
-        peak.width = peak.width,    # [min,max] peak width range
-        feature = mzbins,           # a numeric vector of the target m/z values for extract peaks features from the XIC data
-        parallel = TRUE)
-    );
+    return(mzbins);
 }

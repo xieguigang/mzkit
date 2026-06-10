@@ -187,9 +187,33 @@ Module mzDeco
         Return SaveSample.ReadSample(file).ToArray
     End Function
 
+    ''' <summary>
+    ''' read XIC data
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <RGenericOverloads("readBin")>
     Private Function readXIC(file As Stream, args As list, env As Environment) As Object
-        Return SaveXIC.ReadSample(file).ToArray
+        Dim xicList As MzGroup() = SaveXIC.ReadSample(file).ToArray
+        Dim mzbins As Double() = CLRVector.asNumeric(args.getBySynonyms("mzbins", "mz"))
+        Dim mzdiff As Double = CLRVector.asScalarNumber(args.getBySynonyms("mzdiff", "da"))
+
+        If Not mzbins.IsNullOrEmpty Then
+            Dim mzset As New MzPool(mzbins, verbose:=False)
+            Dim filterList As New List(Of MzGroup)
+
+            For Each xic As MzGroup In xicList
+                If mzset.Search(xic.mz, mzdiff).Any Then
+                    Call filterList.Add(xic)
+                End If
+            Next
+
+            Return filterList.ToArray
+        End If
+
+        Return xicList
     End Function
 
     <RGenericOverloads("as.data.frame")>
