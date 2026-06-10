@@ -43,6 +43,10 @@ declare namespace mzkit {
    */
    function deconv_gcms(rawdata: any, export_dir?: any, peak.width?: any, n_threads?: any): object;
    /**
+     * @param tmp_out default value Is ``./``.
+   */
+   function deconv_xicfile(path: any, mzbins: any, mzdiff: any, tmp_out?: any): object;
+   /**
    */
    function GCMS_contentTable(mslIons: any, calfiles: string): object;
    /**
