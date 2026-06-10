@@ -1123,6 +1123,7 @@ extract_ms1:
                                Optional recalculate_snr As Boolean = True,
                                Optional as_peaks As Boolean = False,
                                Optional mz_peak As Double? = Nothing,
+                               Optional filename As String = Nothing,
                                Optional env As Environment = Nothing) As Object
 
         Dim ticks As ChromatogramTick()
@@ -1173,19 +1174,30 @@ extract_ms1:
 
         If TypeOf x Is MzGroup Then
             With DirectCast(x, MzGroup)
-                For Each roi As ROI In result
-                    roi.additionals("m/z") = .mz
-                Next
+                If as_peaks Then
+                    Dim mz_val As Double = .mz
+                    Dim rawfile As String = If(filename, .tag)
+                    Dim peaks As PeakFeature() = result _
+                       .Select(Function(roi) New PeakFeature(roi, mz_val, rawfile)) _
+                       .ToArray
+
+                    Return peaks
+                Else
+                    For Each roi As ROI In result
+                        roi.additionals("m/z") = .mz
+                    Next
+                End If
             End With
-
-            If as_peaks Then
-
-            End If
         ElseIf as_peaks Then
             If mz_peak Is Nothing OrElse CDbl(mz_peak) <= 0.0 Then
                 Return RInternal.debug.stop("the required XIC peak ion m/z value is missing!", env)
             Else
+                Dim mz_val As Double = CDbl(mz_peak)
+                Dim peaks As PeakFeature() = result _
+                    .Select(Function(roi) New PeakFeature(roi, mz_val, filename)) _
+                    .ToArray
 
+                Return peaks
             End If
         End If
 

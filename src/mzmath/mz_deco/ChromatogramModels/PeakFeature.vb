@@ -156,6 +156,26 @@ Public Class PeakFeature
     Sub New()
     End Sub
 
+    Sub New(roi As ROI, Optional mz As Double = 0, Optional filename As String = Nothing)
+        Me.mz = mz
+        Me.rt = roi.rt
+        Me.rtmin = roi.time.Min
+        Me.rtmax = roi.time.Max
+        Me.maxInto = roi.maxInto
+        Me.baseline = roi.baseline
+        Me.integration = roi.integration
+        Me.area = roi.peakarea
+        Me.noise = roi.noise
+        Me.nticks = roi.ticks.TryCount
+        Me.rawfile = filename
+
+        If roi.additionals Is Nothing Then
+            Me.additionals = New Dictionary(Of String, Double)
+        Else
+            Me.additionals = New Dictionary(Of String, Double)(roi.additionals)
+        End If
+    End Sub
+
     ''' <summary>
     ''' make data copy
     ''' </summary>
