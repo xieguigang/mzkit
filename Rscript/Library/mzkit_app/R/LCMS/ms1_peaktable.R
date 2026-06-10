@@ -11,7 +11,7 @@ imports "mzDeco" from "mz_quantify";
 #' @return this function generates a xcms format liked peaktable dataframe object
 #'    for the input rawdata files.
 #' 
-const ms1_peaktable = function(files, mzbins, mzdiff = 0.005, peak.width = [3,90], n_threads = 8, tmp_out = "./tmp") {
+const ms1_peaktable = function(files, mzbins, mzdiff = 0.025, peak.width = [3,90], n_threads = 8, tmp_out = "./tmp") {
     mzbins = mzkit::mz_bin_features(mzbins);
     
     Parallel::parallel(raw_path = files, n_threads = n_threads, 
@@ -27,6 +27,7 @@ const ms1_peaktable = function(files, mzbins, mzdiff = 0.005, peak.width = [3,90
         let xicdata = readBin(path, what = "mz_group", mz = mzbins, da = mzdiff);
         let peaks = NULL;
         let peakfile = file.path(unlist(tmp_out), "peaks", `${rawfile}.csv`);
+        let peakdata = file.path(unlist(tmp_out), "peaks", `${rawfile}.dat`);
 
         for(let mz_xic in xicdata) {
             peaks = c(peaks, find_peaks(
@@ -59,16 +60,45 @@ const ms1_peaktable = function(files, mzbins, mzdiff = 0.005, peak.width = [3,90
             ));
         }
 
+        writeBin(peaks, con = peakdata);
         write.csv(as.data.frame(peaks), file = peakfile);
     };
 
-    return(mz_deco(
-        pool,                       # the XICPool raw data object 
-        tolerance = `da:${mzdiff}`, # mass tolerance value for matches XIC with the given mzbins features
-        joint = TRUE,               # merge the closed peaks?
-        peak.width = peak.width,    # [min,max] peak width range
-        feature = mzbins,           # a numeric vector of the target m/z values for extract peaks features from the XIC data
-        parallel = TRUE)
+    let peaksdata = list.files(file.path(tmp_out, "peaks"), pattern = "*.dat");
+
+    peaksdata = as.list(peaksdata, names = basename(peaksdata));
+    peaksdata = lapply(peaksdata, filepath => readBin(filepath, what = "peak_feature"));
+
+    # let pool = xic_pool(files);  
+    # return(mz_deco(
+    #     pool,                       # the XICPool raw data object 
+    #     tolerance = `da:${mzdiff}`, # mass tolerance value for matches XIC with the given mzbins features
+    #     joint = TRUE,               # merge the closed peaks?
+    #     peak.width = peak.width,    # [min,max] peak width range
+    #     feature = mzbins,           # a numeric vector of the target m/z values for extract peaks features from the XIC data
+    #     parallel = TRUE)
+    # );
+    
+    peaksdata |> peak_alignment(
+        mzdiff = mzdiff,
+        rt_win = 30,
+        ri_win = 10,
+        norm = FALSE,
+        ri_alignment = FALSE,
+        max_intensity_ion = FALSE,
+        native_alignment = FALSE,
+        aggregate = "Sum",
+        tolerance_mode = "Da",
+        method = "DensityGroup",
+        loess_span = 0.75,
+        loess_degree = 2,
+        reference_sample = "",
+        density_bandwidth = 0.0,
+        min_fraction = 0.5,
+        obiwarp_bin_size = 1.0,
+        obiwarp_gap_penalty = 0.6,
+        obiwarp_response = 100,
+        fill_gaps = TRUE
     );
 }
 
