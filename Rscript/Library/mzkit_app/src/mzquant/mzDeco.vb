@@ -1004,6 +1004,7 @@ Module mzDeco
 
         ' 1. processing for XIC pool
         If TypeOf ms1 Is XICPool Then
+
             ' mzkit::ms1_peaktable
             ' let pool = xic_pool(files);  
             Dim pool As XICPool = DirectCast(ms1, XICPool)
@@ -1017,6 +1018,7 @@ Module mzDeco
                                      rtRange.TryCast(Of DoubleRange),
                                      baseline, joint, dtw, parallel)
             End If
+
         ElseIf TypeOf ms1 Is list Then
             ' 2. processing for a set of the xic data
             Dim ls_xic = DirectCast(ms1, list) _

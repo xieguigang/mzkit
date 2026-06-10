@@ -74,6 +74,9 @@ Namespace Tasks
     ''' </summary>
     Public Class xic_deco_task : Inherits peaktable_task
 
+        ''' <summary>
+        ''' [mz => {sample1,sample2,sample3,...}]
+        ''' </summary>
         Dim pool As (mz As Double, samples As NamedValue(Of MzGroup)())()
         Dim rtRange As DoubleRange
         Dim baseline As Double
@@ -104,7 +107,8 @@ Namespace Tasks
             Dim rt_shifts As New List(Of RtShift)
 
             For i As Integer = start To ends
-                Dim samples_xic = pool(i).samples
+                ' get multiple samples data for current ion
+                Dim samples_xic As NamedValue(Of MzGroup)() = pool(i).samples
                 Dim shifts As New List(Of RtShift)
 
                 If dtw Then
