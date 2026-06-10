@@ -76,7 +76,9 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xi
     #
     let peaktable = ms1_peaktable(xic_files, bins, 
         mzdiff = mzdiff, 
-        peak.width = peak.width);
+        peak.width = peak.width, 
+        tmp_out = file.path(outputdir, "peaksdata")
+    );
     let rt_shifts = attr(peaktable, "rt.shift");
 
     # group by rt
