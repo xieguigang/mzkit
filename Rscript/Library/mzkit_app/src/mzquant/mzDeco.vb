@@ -1168,6 +1168,15 @@ extract_ms1:
                                                          areaParams,
                                                          baseline_method,
                                                          recalculate_snr)
+
+        If TypeOf x Is MzGroup Then
+            With DirectCast(x, MzGroup)
+                For Each roi As ROI In result
+                    roi.additionals("m/z") = .mz
+                Next
+            End With
+        End If
+
         Return result
     End Function
 
