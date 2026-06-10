@@ -70,6 +70,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.PeakFinding
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Tasks
@@ -895,7 +896,7 @@ Module mzDeco
                         target = peak1Index(refer.xcms_id)
                     ElseIf safe_wrap_missing Then
                         ' create a fake peak feature at here
-                        Call $"Missing the required RI reference peak feature: {refer.xcms_id}, a fake peak feature is generated as placeholder at here".Warning
+                        Call $"Missing the required RI reference peak feature: {refer.xcms_id}, a fake peak feature is generated as placeholder at here".warning
 
                         target = New PeakFeature With {
                             .xcms_id = refer.xcms_id,
@@ -1084,6 +1085,90 @@ extract_ms1:
                 ) _
                 .ToArray
         End If
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="x">should be XIC data</param>
+    ''' <param name="peak_method"></param>
+    ''' <param name="recalculate_snr"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("find_peaks")>
+    <RApiReturn(GetType(ROI))>
+    Public Function find_peaks(<RRawVectorArgument> x As Object,
+                               Optional peak_method As PeakDetectionMethod = PeakDetectionMethod.CentWave,
+                               Optional snr_threshold As Double = 3.0,
+                               Optional window_half_width As Integer = 5,
+                               Optional min_peak_width As Double = 3.0,
+                               Optional max_peak_width As Double = 30.0,
+                               Optional min_peak_height As Double = 0.0,
+                               Optional centWave_min_scale As Integer = 1,
+                               Optional centWave_max_scale As Integer = 20,
+                               Optional centWave_scale_step As Integer = 1,
+                               Optional centWave_max_gap As Integer = 2,
+                               Optional matched_filter_sigma As Double = 3.0,
+                               Optional matched_filter_truncate_width As Double = 4.0,
+                               Optional derivative_smooth_window As Integer = 3,
+                               Optional derivative_threshold_factor As Double = 0.01,
+                               Optional noise_segment_count As Integer = 20,
+                               Optional peak_merge_distance As Double = 1.0,
+                               Optional area_method As PeakAreaMethod = PeakAreaMethod.BaselineCorrected,
+                               Optional baseline_method As BaselineMethod = BaselineMethod.Linear,
+                               Optional baseline_percentile As Double = 10.0,
+                               Optional local_minimum_boundary_points As Integer = 5,
+                               Optional gaussian_max_iterations As Integer = 100,
+                               Optional gaussian_convergence As Double = 0.000001,
+                               Optional recalculate_snr As Boolean = True,
+                               Optional env As Environment = Nothing) As Object
+
+        Dim ticks As ChromatogramTick()
+
+        If TypeOf x Is MzGroup Then
+            ticks = DirectCast(x, MzGroup).XIC
+        Else
+            Dim pull As pipeline = pipeline.TryCreatePipeline(Of ChromatogramTick)(x, env)
+
+            If pull.isError Then
+                Return pull.getError
+            End If
+
+            ticks = pull.populates(Of ChromatogramTick)(env).ToArray
+        End If
+
+        Dim detectionParams As New PeakDetectionParameters With {
+            .CentWaveMaxGap = centWave_max_gap,
+            .CentWaveMaxScale = centWave_max_scale,
+            .CentWaveMinScale = centWave_min_scale,
+            .CentWaveScaleStep = centWave_scale_step,
+            .DerivativeSmoothWindow = derivative_smooth_window,
+            .DerivativeThresholdFactor = derivative_threshold_factor,
+            .MatchedFilterSigma = matched_filter_sigma,
+            .MatchedFilterTruncateWidth = matched_filter_truncate_width,
+            .MaxPeakWidth = max_peak_width,
+            .MinPeakHeight = min_peak_height,
+            .MinPeakWidth = min_peak_width,
+            .NoiseSegmentCount = noise_segment_count,
+            .PeakMergeDistance = peak_merge_distance,
+            .SNRThreshold = snr_threshold,
+            .WindowHalfWidth = window_half_width
+        }
+        Dim areaParams As New PeakAreaParameters With {
+            .BaselineMethod = baseline_method,
+            .BaselinePercentile = baseline_percentile,
+            .GaussianConvergence = gaussian_convergence,
+            .GaussianMaxIterations = gaussian_max_iterations,
+            .LocalMinimumBoundaryPoints = local_minimum_boundary_points
+        }
+        Dim result As ROI() = PeakProcessor.ProcessPeaks(ticks,
+                                                         peak_method,
+                                                         area_method,
+                                                         detectionParams,
+                                                         areaParams,
+                                                         baseline_method,
+                                                         recalculate_snr)
+        Return result
     End Function
 
     ''' <summary>
@@ -1452,6 +1537,7 @@ extract_ms1:
         Dim pool As New XICPool
         Dim group As MzGroup()
 
+        ' loop throught all cached sample data files
         For Each file As String In files
             Using s As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                 group = SaveXIC.ReadSample(s).ToArray

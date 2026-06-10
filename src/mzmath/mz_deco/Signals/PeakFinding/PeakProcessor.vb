@@ -1,4 +1,5 @@
-﻿Imports std = System.Math
+﻿Imports System.Runtime.CompilerServices
+Imports std = System.Math
 
 Namespace Chromatogram.PeakFinding
 
@@ -53,8 +54,16 @@ Namespace Chromatogram.PeakFinding
         ''' </summary>
         ''' <param name="ticks">XIC色谱图数据（ChromatogramTick数组）</param>
         ''' <returns>检测到的峰列表（ROI数组）</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ProcessPeaks(ticks As ChromatogramTick()) As ROI()
-            Return ProcessPeaks(ticks, DetectionMethod, AreaMethod, DetectionParams, AreaParams)
+            Return ProcessPeaks(ticks,
+                                DetectionMethod,
+                                AreaMethod,
+                                DetectionParams,
+                                AreaParams,
+                                BaselineMethod,
+                                RecalculateSNR)
         End Function
 
         ''' <summary>
@@ -66,11 +75,14 @@ Namespace Chromatogram.PeakFinding
         ''' <param name="detectionParams">峰检测参数</param>
         ''' <param name="areaParams">峰面积计算参数</param>
         ''' <returns>检测到的峰列表</returns>
-        Public Function ProcessPeaks(ticks As ChromatogramTick(),
-                                     detectionMethod As PeakDetectionMethod,
-                                     areaMethod As PeakAreaMethod,
-                                     detectionParams As PeakDetectionParameters,
-                                     areaParams As PeakAreaParameters) As ROI()
+        Public Shared Function ProcessPeaks(ticks As ChromatogramTick(),
+                                            detectionMethod As PeakDetectionMethod,
+                                            areaMethod As PeakAreaMethod,
+                                            detectionParams As PeakDetectionParameters,
+                                            areaParams As PeakAreaParameters,
+                                            baselineMethod As BaselineMethod,
+                                            recalculateSNR As Boolean) As ROI()
+
             If ticks Is Nothing OrElse ticks.Length < 3 Then
                 Return New ROI() {}
             End If
@@ -90,7 +102,7 @@ Namespace Chromatogram.PeakFinding
             ' 步骤3：对每个峰计算基线和峰面积
             For Each peak In peaks
                 ' 估计基线
-                peak.baseline = BaselineEstimator.EstimateBaseline(peak.ticks, BaselineMethod, areaParams)
+                peak.baseline = BaselineEstimator.EstimateBaseline(peak.ticks, baselineMethod, areaParams)
 
                 ' 计算峰面积
                 peak.peakarea = PeakAreaCalculator.CalculatePeakArea(peak, areaMethod, areaParams)
@@ -101,7 +113,7 @@ Namespace Chromatogram.PeakFinding
                 End If
 
                 ' 重新计算信噪比（基于基线校正后的峰高）
-                If RecalculateSNR Then
+                If recalculateSNR Then
                     Dim correctedHeight As Double = peak.maxInto - peak.baseline
                     Dim noiseStd As Double = NoiseEstimator.EstimateByMAD(peak.ticks)
                     If noiseStd > 0 Then
@@ -219,9 +231,7 @@ Namespace Chromatogram.PeakFinding
         ''' <param name="ticks">完整的XIC色谱图数据（用于计算TIC总面积）</param>
         ''' <param name="areaMethod">新的峰面积计算方法</param>
         ''' <returns>更新了峰面积的峰列表</returns>
-        Public Function RecalculatePeakAreas(peaks As ROI(),
-                                              ticks As ChromatogramTick(),
-                                              areaMethod As PeakAreaMethod) As ROI()
+        Public Function RecalculatePeakAreas(peaks As ROI(), ticks As ChromatogramTick(), areaMethod As PeakAreaMethod) As ROI()
             If peaks Is Nothing OrElse peaks.Length = 0 Then Return peaks
 
             ' 计算总TIC面积
