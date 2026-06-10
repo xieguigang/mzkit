@@ -90,7 +90,8 @@ Public Module Deconvolution
     Public Iterator Function DeconvPeakGroups(TIC As IEnumerable(Of ChromatogramTick), peakwidth As DoubleRange,
                                               Optional quantile# = 0.65,
                                               Optional sn_threshold As Double = 3,
-                                              Optional joint As Boolean = True) As IEnumerable(Of PeakFeature)
+                                              Optional joint As Boolean = True,
+                                              Optional xic_mz As Double = 0) As IEnumerable(Of PeakFeature)
 
         Dim data As ChromatogramTick() = TIC.SafeQuery.ToArray
         Dim peakdata As PeakFeature
@@ -102,7 +103,7 @@ Public Module Deconvolution
             snThreshold:=sn_threshold
         )
             peakdata = New PeakFeature With {
-                .mz = 0,
+                .mz = xic_mz,
                 .baseline = ROI.baseline,
                 .integration = ROI.integration,
                 .maxInto = ROI.maxInto,
@@ -203,36 +204,18 @@ Public Module Deconvolution
     ''' <returns></returns>
     ''' <remarks>实际的解卷积操作步骤：应用于处理复杂的样本数据</remarks>
     <Extension>
-    Public Iterator Function GetPeakGroups(mzpoints As MzGroup, peakwidth As DoubleRange,
-                                           Optional quantile# = 0.65,
-                                           Optional sn_threshold As Double = 3,
-                                           Optional joint As Boolean = True) As IEnumerable(Of PeakFeature)
+    Public Function GetPeakGroups(mzpoints As MzGroup, peakwidth As DoubleRange,
+                                  Optional quantile# = 0.65,
+                                  Optional sn_threshold As Double = 3,
+                                  Optional joint As Boolean = True) As IEnumerable(Of PeakFeature)
 
         ' removes the possible zero or negative points
-        Dim valids = mzpoints.XIC _
+        Dim valids As ChromatogramTick() = mzpoints.XIC _
             .Where(Function(ti) ti.Intensity > 0) _
             .OrderBy(Function(ti) ti.Time) _
             .ToArray
 
-        For Each ROI As ROI In valids.Shadows.PopulateROI(
-            peakwidth:=peakwidth,
-            baselineQuantile:=quantile,
-            joint:=joint,
-            snThreshold:=sn_threshold
-        )
-            Yield New PeakFeature With {
-                .mz = std.Round(mzpoints.mz, 4),
-                .baseline = ROI.baseline,
-                .integration = ROI.integration,
-                .maxInto = ROI.maxInto,
-                .noise = ROI.noise,
-                .rt = ROI.rt,
-                .rtmax = ROI.time.Max,
-                .rtmin = ROI.time.Min,
-                .nticks = ROI.ticks.Length,
-                .area = ROI.ticks.Select(Function(t) t.Intensity).Sum
-            }
-        Next
+        Return valids.DeconvPeakGroups(peakwidth, quantile, sn_threshold, joint, xic_mz:=mzpoints.mz)
     End Function
 
     <Extension>
