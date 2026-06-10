@@ -262,7 +262,7 @@ Module xcms
                         Return New NamedCollection(Of PeakFeature)(file)
                     End Function) _
             .ToArray
-        Dim vec = mzDeco.peakAlignment(peak_samples, mzdiff, ri_win:=ri_win, env:=env)
+        Dim vec = mzDeco.peakAlignment_func(peak_samples, mzdiff, ri_win:=ri_win, env:=env)
         Dim peaksdata As xcms2() = CLRIterator.Enumerates(Of xcms2)(vec, env).ToArray
 
         For i As Integer = 0 To peaksdata.Length - 1
