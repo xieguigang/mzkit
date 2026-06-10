@@ -1409,7 +1409,11 @@ extract_ms1:
                 .ToArray
         ElseIf Not native_alignment Then
             ' 20260610 apply the new peak alignment api
-            Dim peakList = sampleData.ToDictionary(Function(a) a.name, Function(a) a.value)
+            Dim peakList As Dictionary(Of String, PeakFeature()) = sampleData _
+                .ToDictionary(Function(a) a.name,
+                              Function(a)
+                                  Return a.value
+                              End Function)
             Dim args As New AlignmentParameters With {
                 .densityBandwidth = density_bandwidth,
                 .fillGaps = fill_gaps,
