@@ -123,16 +123,21 @@ declare namespace mzkit {
    */
    function ms1_mz_bins(files: any, mzdiff?: any): object;
    /**
-     * @param mzdiff default value Is ``0.005``.
+     * @param mzdiff default value Is ``0.025``.
      * @param peak.width default value Is ``[3, 90]``.
+     * @param n_threads default value Is ``8``.
+     * @param tmp_out default value Is ``./tmp``.
    */
-   function ms1_peaktable(files: any, mzbins: any, mzdiff?: any, peak.width?: any): object;
+   function ms1_peaktable(files: any, mzbins: any, mzdiff?: any, peak.width?: any, n_threads?: any, tmp_out?: any): object;
    /**
      * @param mzdiff default value Is ``0.005``.
      * @param outputdir default value Is ``./XIC/``.
      * @param n_threads default value Is ``32``.
    */
    function ms1_xic_bins(files: any, mzdiff?: any, outputdir?: any, n_threads?: any): object;
+   /**
+   */
+   function mz_bin_features(mzbins: any): object;
    /**
      * @param output_dir default value Is ``./``.
    */

@@ -1,12 +1,16 @@
 ﻿.TH MS1_PEAKTABLE 1 2026-6月 "" "Export peakstable data from the XIC rawdata files"
 .SH NAME
 ms1_peaktable \- ms1_peaktable(files, mzbins,
-    <i>mzdiff</i> = <span style='color: green;'>0.005</span>,
-    <i>peak.width</i> = [<span style='color: green;'>90</span>])
+    <i>mzdiff</i> = <span style='color: green;'>0.025</span>,
+    <i>peak.width</i> = [<span style='color: green;'>90</span>],
+    <i>n.threads</i> = <span style='color: green;'>8</span>,
+    <i>tmp.out</i> = <span style='color: brown;'><strong>'./tmp'</strong></span>)
 .SH SYNOPSIS
 \fIms1_peaktable(files, mzbins,
-    <i>mzdiff</i> = <span style='color: green;'>0.005</span>,
-    <i>peak.width</i> = [<span style='color: green;'>90</span>])\fR
+    <i>mzdiff</i> = <span style='color: green;'>0.025</span>,
+    <i>peak.width</i> = [<span style='color: green;'>90</span>],
+    <i>n.threads</i> = <span style='color: green;'>8</span>,
+    <i>tmp.out</i> = <span style='color: brown;'><strong>'./tmp'</strong></span>)\fR
 .SH OPTIONS
 .PP
 \fBfiles\fB \fR\- . a character vector of the file path of the XIC rawdata files
@@ -17,10 +21,16 @@ set for do extract of the result peaktable data, a data field which is
 named ``mz`` must be included inside this dataframe object.
 .PP
 .PP
-\fBmzdiff\fB \fR\- 0.005. 
+\fBmzdiff\fB \fR\- 0.025. 
 .PP
 .PP
 \fBpeak.width\fB \fR\- [3, 90]. the peak time range of the peaks that could be accepted
+.PP
+.PP
+\fBn.threads\fB \fR\- 8. 
+.PP
+.PP
+\fBtmp.out\fB \fR\- './tmp'. 
 .PP
 .SH VALUE
 .PP

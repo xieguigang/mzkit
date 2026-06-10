@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Export peakstable data from the XIC rawdata files</title>
+    <title>mz_bin_features</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>ms1_peaktable {mzkit}</td>
+                <td>mz_bin_features {mzkit}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Export peakstable data from the XIC rawdata files</h2>
+        <h2>mz_bin_features</h2>
 
         <h3>Description</h3>
 
@@ -27,30 +27,13 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>ms1_peaktable</strong>(<i>files</i>, <i>mzbins</i>,
-    <i>mzdiff</i> = <span style='color: green;'>0.025</span>,
-    <i>peak.width</i> = [<span style='color: green;'>90</span>],
-    <i>n.threads</i> = <span style='color: green;'>8</span>,
-    <i>tmp.out</i> = <span style='color: brown;'><strong>'./tmp'</strong></span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>mz_bin_features</strong>(<i>mzbins</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>files</dt>
-<dd><p><p>a character vector of the file path of the XIC rawdata files</p></p></dd>
-
-
-<dt>mzbins</dt>
-<dd><p><p>A dataframe object that contains the target ion m/z feature
-set for do extract of the result peaktable data, a data field which is
-named <code>mz</code> must be included inside this dataframe object.</p></p></dd>
-
-
-<dt>peak.width</dt>
-<dd><p><p>the peak time range of the peaks that could be accepted</p></p></dd>
-
         </table>
 
 
@@ -64,8 +47,7 @@ named <code>mz</code> must be included inside this dataframe object.</p></p></dd
 
         <h3>Value</h3>
 
-        <p>this function generates a xcms format liked peaktable dataframe object
-for the input rawdata files.</p>
+        This function has no value returns.
 
         <h3 style="display: none;">Examples</h3>
 
