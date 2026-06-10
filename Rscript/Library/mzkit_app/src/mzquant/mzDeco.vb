@@ -1301,7 +1301,18 @@ extract_ms1:
     ''' (COW-TIC). This approach works successfully on chromatograms 
     ''' containing few compounds and having a well-defined TIC.
     ''' </summary>
-    ''' <param name="samples">should be a set of sample file data, which could be extract from the ``mz_deco`` function.</param>
+    ''' <param name="samples">
+    ''' should be a set of samples file data, which could be extract from the ``mz_deco`` function.
+    ''' usaully be a list of the mzkit <see cref="PeakFeature"/> set list data, example as:
+    ''' 
+    ''' ```r
+    ''' list(
+    '''     sample1 = c(peak1, peak2, peak3, ...),
+    '''     sample2 = c(peak1, peak2, peak3, ...),
+    '''     ...
+    ''' );
+    ''' ```
+    ''' </param>
     ''' <param name="mzdiff"></param>
     ''' <param name="norm">do total ion sum normalization after peak alignment and the peaktable object has been exported?</param>
     ''' <param name="env"></param>
