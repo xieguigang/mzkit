@@ -135,6 +135,10 @@ Namespace Chromatogram.PeakFinding
             ' 步骤4：过滤信噪比不达标的峰（面积计算后SNR可能变化）
             Dim filteredPeaks = peaks.Where(Function(p) p.snRatio >= detectionParams.SNRThreshold).ToList()
 
+            For Each roi As ROI In filteredPeaks
+                roi.additionals("quality_score") = PeakQualityEvaluator.EvaluatePeakQuality(roi)
+            Next
+
             Return filteredPeaks.ToArray()
         End Function
 
