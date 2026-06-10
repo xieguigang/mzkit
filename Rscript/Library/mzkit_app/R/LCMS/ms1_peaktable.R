@@ -41,6 +41,11 @@ const ms1_peaktable = function(files, mzbins, mzdiff = 0.01,
         n_threads = 8, 
         tmp_out = "./tmp") {
 
+    let xic_args = as.list(args);
+
+    message("inspect of the parameter:");
+    str(args);
+
     mzbins = mzkit::mz_bin_features(mzbins);
     
     Parallel::parallel(raw_path = files, n_threads = n_threads, 
@@ -54,7 +59,7 @@ const ms1_peaktable = function(files, mzbins, mzdiff = 0.01,
         mzkit::deconv_xicfile(
             path = unlist(raw_path), 
             mzbins = mzbins, 
-            args = args, 
+            args = xic_args, 
             tmp_out = tmp_out
         );
     };
