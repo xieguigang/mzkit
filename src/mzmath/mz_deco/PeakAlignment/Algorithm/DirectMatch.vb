@@ -58,7 +58,7 @@ Namespace PeakAlignment
             Dim result As New List(Of AlignedPeakGroup)
             Dim bar As ProgressBar = Nothing
 
-            For Each mzGroup In TqdmWrapper.Wrap(mzGroups)
+            For Each mzGroup In TqdmWrapper.Wrap(mzGroups, bar:=bar)
                 If mzGroup.Any Then
                     Call bar.SetLabel($"Process m/z: {mzGroup.Average(Function(a) a.Item2.mz)}")
                 End If
