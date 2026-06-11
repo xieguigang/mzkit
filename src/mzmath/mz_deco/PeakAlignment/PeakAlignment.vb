@@ -160,7 +160,7 @@ Namespace PeakAlignment
             Next
 
             ' 按m/z排序输出
-            Array.Sort(result, Function(a, b) a.mz.CompareTo(b.mz))
+            Array.Sort(result, Function(a, b) b.npeaks.CompareTo(a.npeaks))
 
             ' 重新编号ID
             For i As Integer = 0 To result.Length - 1
