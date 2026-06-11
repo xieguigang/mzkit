@@ -67,10 +67,23 @@ Namespace PeakAlignment
             End If
 
             ' 按最小样本比例过滤
-            ' alignedGroups = FilterByMinFraction(alignedGroups, validPeaks.Keys.ToList, params.minFraction)
+            alignedGroups = FilterByMinFraction(alignedGroups, validPeaks.Keys.ToList, params.minFraction)
 
             ' 转换为IonExpression数组
             Return ConvertToTable(alignedGroups, validPeaks.Keys.ToList)
+        End Function
+
+        ''' <summary>
+        ''' 按最小样本比例过滤对齐特征
+        ''' 只有在至少minFraction比例的样本中出现的特征才会被保留
+        ''' </summary>
+        Private Function FilterByMinFraction(groups As List(Of AlignedPeakGroup),
+                                              sampleNames As List(Of String),
+                                              minFraction As Double) As List(Of AlignedPeakGroup)
+            Dim minSamples As Integer = CInt(std.Ceiling(minFraction * sampleNames.Count))
+            minSamples = std.Max(minSamples, 1)
+
+            Return groups.Where(Function(g) g.sampleAreas.Where(Function(kv) kv.Value > 0).Count >= minSamples).ToList()
         End Function
 
         ''' <summary>
