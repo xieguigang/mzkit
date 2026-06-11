@@ -21,7 +21,7 @@ imports "visual" from "mzplot";
 #' @return this function returns nothing 
 #' 
 const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.01, xic_mzdiff = 0.005,
-                                   peak.width = [2, 30], n_threads = 16, 
+                                   peak.width = [3, 30], n_threads = 16, 
                                    top_n = 20000,
                                    args = list(
                                         peak_method = "CentWave",
