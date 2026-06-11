@@ -145,6 +145,7 @@ const deconv_xicfile = function(path, mzbins = NULL, args = list(
                 find_peaks.simple(
                     x = mz_xic,
                     peak_width = c(args$min_peak_width, args$max_peak_width),
+                    snr_threshold = args$snr_threshold,
                     filename = rawfile
                 );
             } else {

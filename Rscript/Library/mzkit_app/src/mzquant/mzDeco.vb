@@ -1132,6 +1132,7 @@ extract_ms1:
     Public Function find_peaks_simple(x As MzGroup,
                                       <RRawVectorArgument(TypeCodes.double)>
                                       Optional peak_width As Object = "3,30",
+                                      Optional snr_threshold As Double = 3.0,
                                       Optional filename As String = Nothing,
                                       Optional env As Environment = Nothing) As Object
         Dim rtwin = SMRUCC.Rsharp.GetDoubleRange(peak_width, env)
@@ -1140,7 +1141,7 @@ extract_ms1:
             Return rtwin.TryCast(Of Message)
         End If
 
-        Return {x}.DecoMzGroups(peakwidth:=rtwin, sn:=0, source:=filename).ToArray
+        Return {x}.DecoMzGroups(peakwidth:=rtwin, sn:=snr_threshold, source:=filename).ToArray
     End Function
 
     ''' <summary>

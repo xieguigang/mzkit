@@ -79,10 +79,11 @@ declare namespace mzDeco {
    module find_peaks {
       /**
         * @param peak_width default value Is ``[3,30]``.
+        * @param snr_threshold default value Is ``3``.
         * @param filename default value Is ``null``.
         * @param env default value Is ``null``.
       */
-      function simple(x: object, peak_width?: any, filename?: string, env?: object): object;
+      function simple(x: object, peak_width?: any, snr_threshold?: number, filename?: string, env?: object): object;
    }
    /**
     * helper function for find ms1 peaks based on the given mz/rt tuple data
