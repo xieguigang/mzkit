@@ -181,7 +181,7 @@ const deconv_xicfile = function(path, mzbins = NULL, args = list(
         });
     }
 
-    peaks = as.vector(peaks);
+    # peaks = as.vector(peaks);
 
     message(`get ${length(peaks)} feature peaks!`);
 
