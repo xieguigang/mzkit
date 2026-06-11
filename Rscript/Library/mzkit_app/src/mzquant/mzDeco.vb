@@ -1512,6 +1512,8 @@ extract_ms1:
                 .rtTolerance = rt_win
             }
 
+            Call VBDebugger.EchoLine($"run peak alignment with algorithm method: {method.Description}!")
+
             peaktable = PeakAlignment.Algorithm.AlignPeaks(peakList, args)
         Else
             Dim ions = peak_align_task.MakeIonGroups(sampleData, mzdiff).ToArray

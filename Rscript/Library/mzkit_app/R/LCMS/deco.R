@@ -108,10 +108,10 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.01, xic
     let rt_shifts = attr(peaktable, "rt.shift");
 
     # group by rt
-    peaktable <- rt_groups(peaktable,
-        dt = 3,
-        ppm = 20) |> top_peaks(n = top_n )
-    ;
+    # peaktable <- rt_groups(peaktable,
+    #     dt = 3,
+    #     ppm = 20) |> top_peaks(n = top_n )
+    # ;
 
     write.csv(peaktable, file = `${outputdir}/${filename}`, 
         row.names = TRUE);
