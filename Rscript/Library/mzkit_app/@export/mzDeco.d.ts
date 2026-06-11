@@ -450,6 +450,9 @@ declare namespace mzDeco {
       function xcms_peaks(x: object, file: any, env?: object): boolean;
    }
    /**
+   */
+   function write_peaks(samples: any, file: any, env: object): any;
+   /**
     * Create a xcms peak data object
     * 
     * 

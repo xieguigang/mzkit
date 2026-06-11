@@ -185,7 +185,7 @@ const deconv_xicfile = function(path, mzbins = NULL, args = list(
 
     message(`get ${length(peaks)} feature peaks!`);
 
-    writeBin(peaks, con = peakdata);
+    write_peaks(peaks, file = peakdata);
     write.csv(as.data.frame(peaks), file = peakfile);
 }
 
