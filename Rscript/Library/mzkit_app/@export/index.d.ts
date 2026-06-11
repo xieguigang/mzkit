@@ -31,6 +31,11 @@ declare namespace mzkit {
    */
    function __ms1_xic_bins_single(path: any, mzdiff?: any, outputdir?: any): object;
    /**
+     * @param peaks_dir default value Is ``./peaks``.
+     * @param mzdiff default value Is ``0.01``.
+   */
+   function align_peaktable(peaks_dir?: any, mzdiff?: any): object;
+   /**
    */
    function ANOVAGroup(data: any, sampleinfo: any): object;
    /**
