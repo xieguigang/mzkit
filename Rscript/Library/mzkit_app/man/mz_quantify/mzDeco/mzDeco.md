@@ -25,7 +25,8 @@ Extract peak and signal data from rawdata
 + [adjust_to_seconds](mzDeco/adjust_to_seconds.1) adjust the reteintion time data to unit seconds
 + [RI_reference](mzDeco/RI_reference.1) Create RI reference dataset.
 + [RI_cal](mzDeco/RI_cal.1) RI calculation of a speicifc sample data
-+ [mz_deco](mzDeco/mz_deco.1) Chromatogram data deconvolution
++ [mz_deco](mzDeco/mz_deco.1) Chromatogram data deconvolution to peaktable
++ [find_peaks.simple](mzDeco/find_peaks.simple.1) 
 + [find_peaks](mzDeco/find_peaks.1) 
 + [MS1deconv](mzDeco/MS1deconv.1) A debug function for test peak finding method
 + [read.rt_shifts](mzDeco/read.rt_shifts.1) 

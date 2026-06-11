@@ -76,69 +76,14 @@ declare namespace mzDeco {
      *  spectrum data is set to the attribute named "noise" of the return value.
    */
    function filter_noise_spectrum(ions: any, peaktable: object, mzdiff?: number, rt_win?: number, env?: object): object;
-   /**
-    * 
-    * 
-     * @param x should be XIC data
-     * @param peak_method -
-     * 
-     * + default value Is ``null``.
-     * @param snr_threshold 
-     * + default value Is ``3``.
-     * @param window_half_width 
-     * + default value Is ``5``.
-     * @param min_peak_width 
-     * + default value Is ``3``.
-     * @param max_peak_width 
-     * + default value Is ``30``.
-     * @param min_peak_height 
-     * + default value Is ``0``.
-     * @param centWave_min_scale 
-     * + default value Is ``1``.
-     * @param centWave_max_scale 
-     * + default value Is ``20``.
-     * @param centWave_scale_step 
-     * + default value Is ``1``.
-     * @param centWave_max_gap 
-     * + default value Is ``2``.
-     * @param matched_filter_sigma 
-     * + default value Is ``3``.
-     * @param matched_filter_truncate_width 
-     * + default value Is ``4``.
-     * @param derivative_smooth_window 
-     * + default value Is ``3``.
-     * @param derivative_threshold_factor 
-     * + default value Is ``0.01``.
-     * @param noise_segment_count 
-     * + default value Is ``20``.
-     * @param peak_merge_distance 
-     * + default value Is ``1``.
-     * @param area_method 
-     * + default value Is ``null``.
-     * @param baseline_method 
-     * + default value Is ``null``.
-     * @param baseline_percentile 
-     * + default value Is ``10``.
-     * @param local_minimum_boundary_points 
-     * + default value Is ``5``.
-     * @param gaussian_max_iterations 
-     * + default value Is ``100``.
-     * @param gaussian_convergence 
-     * + default value Is ``1E-06``.
-     * @param recalculate_snr -
-     * 
-     * + default value Is ``true``.
-     * @param as_peaks 
-     * + default value Is ``false``.
-     * @param mz_peak 
-     * + default value Is ``null``.
-     * @param filename 
-     * + default value Is ``null``.
-     * @param env -
-     * 
-     * + default value Is ``null``.
-   */
-   function find_peaks(x: any, peak_method?: object, snr_threshold?: number, window_half_width?: object, min_peak_width?: number, max_peak_width?: number, min_peak_height?: number, centWave_min_scale?: object, centWave_max_scale?: object, centWave_scale_step?: object, centWave_max_gap?: object, matched_filter_sigma?: number, matched_filter_truncate_width?: number, derivative_smooth_window?: object, derivative_threshold_factor?: number, noise_segment_count?: object, peak_merge_distance?: number, area_method?: object, baseline_method?: object, baseline_percentile?: number, local_minimum_boundary_points?: object, gaussian_max_iterations?: object, gaussian_convergence?: number, recalculate_snr?: boolean, as_peaks?: boolean, mz_peak?: object, filename?: string, env?: object): object|object;
+   module find_peaks {
+      /**
+        * @param peak_width default value Is ``[3,30]``.
+        * @param filename default value Is ``null``.
+        * @param env default value Is ``null``.
+      */
+      function simple(x: object, peak_width?: any, filename?: string, env?: object): object;
+   }
    /**
     * helper function for find ms1 peaks based on the given mz/rt tuple data
     * 
@@ -218,7 +163,7 @@ declare namespace mzDeco {
       function groups(ms1: any, mzdiff?: any, rtwin?: number, env?: object): object;
    }
    /**
-    * Chromatogram data deconvolution
+    * Chromatogram data deconvolution to peaktable
     * 
     * 
      * @param ms1 a collection of the ms1 data or the mzpack raw data object, this parameter could also be
