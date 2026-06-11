@@ -24,5 +24,7 @@ const make_peak_alignment = function(peakfiles, max_rtwin = 15,mzdiff = 0.01) {
 
     peaksdata |> mzDeco::peak_alignment( 
         mzdiff = mzdiff,
-        ri_win = max_rtwin);
+        ri_win = max_rtwin, 
+        native_alignment = TRUE
+    );
 }
