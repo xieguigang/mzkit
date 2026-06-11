@@ -39,7 +39,7 @@ const ms1_peaktable = function(files, mzbins, mzdiff = 0.01,
             recalculate_snr = TRUE
         ), 
         simple = TRUE,
-        n_threads = 8, 
+        n_threads = 32, 
         tmp_out = "./tmp") {
 
     let xic_args = as.list(args);

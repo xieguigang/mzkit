@@ -21,7 +21,7 @@ imports "visual" from "mzplot";
 #' @return this function returns nothing 
 #' 
 const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.01, xic_mzdiff = 0.005,
-                                   peak.width = [3, 30], n_threads = 16, 
+                                   peak.width = [3, 30], n_threads = 32, 
                                    top_n = 20000,
                                    args = list(
                                         peak_method = "CentWave",
@@ -103,6 +103,7 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.01, xic
         args = args, 
         mzdiff = mzdiff,
         peak.width = peak.width, 
+        n_threads = n_threads,
         tmp_out = file.path(outputdir, "peaksdata")
     );
     let rt_shifts = attr(peaktable, "rt.shift");
