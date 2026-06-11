@@ -1,4 +1,5 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports std = System.Math
 
 Namespace PeakAlignment
@@ -55,8 +56,13 @@ Namespace PeakAlignment
 
             ' 第四步：在每个m/z组内按RT进行层次聚类
             Dim result As New List(Of AlignedPeakGroup)
+            Dim bar As ProgressBar = Nothing
 
-            For Each mzGroup In mzGroups
+            For Each mzGroup In TqdmWrapper.Wrap(mzGroups)
+                If mzGroup.Any Then
+                    Call bar.SetLabel($"Process m/z: {mzGroup.Average(Function(a) a.Item2.mz)}")
+                End If
+
                 ' 检查是否包含多个样本的峰（避免同一样本多个峰归为一组）
                 If mzGroup.Count = 1 Then
                     Dim g As New AlignedPeakGroup()

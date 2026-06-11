@@ -1,4 +1,6 @@
-﻿Namespace PeakAlignment
+﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+
+Namespace PeakAlignment
 
     ' ========================================================================
     '   算法3：Obiwarp动态时间规整对齐
@@ -19,10 +21,11 @@
         ''' 优点：不依赖峰匹配，直接利用色谱轮廓信息，对峰缺失较鲁棒
         ''' 缺点：计算量较大，TIC轮廓质量影响对齐效果
         ''' </summary>
-        Public Function ObiwarpAlignment(peaks As Dictionary(Of String, PeakFeature()),
-                                           params As AlignmentParameters) As List(Of AlignedPeakGroup)
+        Public Function ObiwarpAlignment(peaks As Dictionary(Of String, PeakFeature()), params As AlignmentParameters) As List(Of AlignedPeakGroup)
             ' 第一步：选择参考样本
             Dim refName As String = SelectReferenceSample(peaks, params.referenceSample)
+
+            Call $"sample file {refName} will be used as the reference sample.".debug
 
             ' 第二步：为每个样本构建TIC色谱轮廓
             Dim allSampleNames As List(Of String) = peaks.Keys.ToList()
@@ -32,7 +35,7 @@
 
             ' 构建分段TIC轮廓
             Dim profiles As New Dictionary(Of String, Double())
-            Dim rtBins As Double()
+            Dim rtBins As Double() = Nothing
 
             For Each kv In peaks
                 Dim profile As Tuple(Of Double(), Double()) = BuildTICProfile(kv.Value, rtMin, rtMax, params.obiwarpBinSize)
@@ -45,9 +48,14 @@
             correctedPeaks(refName) = peaks(refName)
 
             Dim refProfile As Double() = profiles(refName)
+            Dim bar As ProgressBar = Nothing
 
-            For Each kv In peaks
-                If kv.Key = refName Then Continue For
+            For Each kv In TqdmWrapper.Wrap(peaks, bar:=bar)
+                If kv.Key = refName Then
+                    Continue For
+                Else
+                    Call bar.SetLabel(kv.Key)
+                End If
 
                 Dim sampleProfile As Double() = profiles(kv.Key)
 
