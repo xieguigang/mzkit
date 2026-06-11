@@ -63,8 +63,11 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.ComponentModel.TagData
+Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports scan = BioNovoGene.Analytical.MassSpectrometry.Math.IMs1Scan
 Imports std = System.Math
 
@@ -209,13 +212,19 @@ Public Module Deconvolution
     Public Function GetPeakGroups(mzpoints As MzGroup, peakwidth As DoubleRange,
                                   Optional quantile# = 0.65,
                                   Optional sn_threshold As Double = 3,
-                                  Optional joint As Boolean = True) As IEnumerable(Of PeakFeature)
+                                  Optional joint As Boolean = True,
+                                  Optional interpolate As Boolean = False) As IEnumerable(Of PeakFeature)
 
         ' removes the possible zero or negative points
         Dim valids As ChromatogramTick() = mzpoints.XIC _
-            .Where(Function(ti) ti.Intensity > 0) _
             .OrderBy(Function(ti) ti.Time) _
             .ToArray
+
+        If interpolate Then
+            valids = valids _
+                .BSpline(activator:=Function(t, i) New ChromatogramTick(t, i), degree:=2, res:=5) _
+                .ToArray
+        End If
 
         Return valids.DeconvPeakGroups(peakwidth, quantile, sn_threshold, joint, xic_mz:=mzpoints.mz)
     End Function
@@ -306,13 +315,16 @@ Public Module Deconvolution
                                  Optional nticks As Integer = 6,
                                  Optional joint As Boolean = True,
                                  Optional parallel As Boolean = False,
-                                 Optional source As String = Nothing) As IEnumerable(Of PeakFeature)
+                                 Optional source As String = Nothing,
+                                 Optional interpolate As Boolean = False) As IEnumerable(Of PeakFeature)
 
         Dim groupData As MzGroup() = mzgroups.Where(Function(xic) xic.size >= nticks).ToArray
         Dim features As PeakFeature() = groupData _
             .Populate(parallel) _
             .Select(Function(mz)
-                        Return mz.GetPeakGroups(peakwidth, quantile, sn, joint:=joint)
+                        Return mz.GetPeakGroups(peakwidth, quantile, sn,
+                                                joint:=joint,
+                                                interpolate:=interpolate)
                     End Function) _
             .IteratesALL _
             .Where(Function(peak) peak.nticks >= nticks) _

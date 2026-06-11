@@ -1160,14 +1160,21 @@ extract_ms1:
                                       Optional peak_width As Object = "3,30",
                                       Optional snr_threshold As Double = 3.0,
                                       Optional filename As String = Nothing,
+                                      Optional joint As Boolean = False,
+                                      Optional interpolate As Boolean = False,
                                       Optional env As Environment = Nothing) As Object
+
         Dim rtwin = SMRUCC.Rsharp.GetDoubleRange(peak_width, env)
 
         If rtwin Like GetType(Message) Then
             Return rtwin.TryCast(Of Message)
         End If
 
-        Return {x}.DecoMzGroups(peakwidth:=rtwin, sn:=snr_threshold, source:=filename).ToArray
+        Return {x}.DecoMzGroups(peakwidth:=rtwin,
+                                sn:=snr_threshold,
+                                source:=filename,
+                                interpolate:=interpolate,
+                                joint:=joint).ToArray
     End Function
 
     ''' <summary>
