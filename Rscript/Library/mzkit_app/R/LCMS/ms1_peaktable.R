@@ -68,7 +68,11 @@ const ms1_peaktable = function(files, mzbins, mzdiff = 0.01,
     };
     # ------------------------ END Parallel --------------------------------
 
-    let peaksdata = list.files(file.path(tmp_out, "peaks"), pattern = "*.dat");
+    align_peaktable(peaks_dir = file.path(tmp_out, "peaks"), mzdiff =  mzdiff); 
+}
+
+const align_peaktable = function(peaks_dir = "./peaks", mzdiff = 0.01) {
+    let peaksdata = list.files(peaks_dir, pattern = "*.dat");
 
     peaksdata = as.list(peaksdata, names = basename(peaksdata));
     peaksdata = lapply(peaksdata, filepath => readBin(filepath, what = "peak_feature"));
