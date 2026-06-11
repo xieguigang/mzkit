@@ -182,7 +182,7 @@ declare namespace mzkit {
      *       "gaussian_convergence" <- 1E-06,
      *       "recalculate_snr" <- TRUE)``.
      * @param simple default value Is ``true``.
-     * @param n_threads default value Is ``8``.
+     * @param n_threads default value Is ``32``.
      * @param tmp_out default value Is ``./tmp``.
    */
    function ms1_peaktable(files: any, mzbins: any, mzdiff?: any, args?: any, simple?: any, n_threads?: any, tmp_out?: any): object;
@@ -248,7 +248,7 @@ declare namespace mzkit {
         * @param mzdiff default value Is ``0.01``.
         * @param xic_mzdiff default value Is ``0.005``.
         * @param peak.width default value Is ``[3, 30]``.
-        * @param n_threads default value Is ``16``.
+        * @param n_threads default value Is ``32``.
         * @param top_n default value Is ``20000``.
         * @param args default value Is ``Call "list"("peak_method" <- "CentWave",
         *       "snr_threshold" <- 3,
