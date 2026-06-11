@@ -169,6 +169,32 @@ Module mzDeco
         Return True
     End Function
 
+    <ExportAPI("write_peaks")>
+    Public Function writeSamples(<RRawVectorArgument> samples As Object, file As Object, env As Environment) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of PeakFeature)(samples, env)
+        Dim is_file As Boolean = False
+        Dim s = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env, is_filepath:=is_file)
+
+        If pull.isError Then
+            Return pull.getError
+        ElseIf s Like GetType(Message) Then
+            Return s.TryCast(Of Message)
+        End If
+
+        Call SaveSample.DumpSample(pull.populates(Of PeakFeature)(env), s.TryCast(Of Stream))
+        Call s.TryCast(Of Stream).Flush()
+
+        Try
+            If is_file Then
+                Call s.TryCast(Of Stream).Dispose()
+            End If
+        Catch ex As Exception
+
+        End Try
+
+        Return True
+    End Function
+
     <RGenericOverloads("writeBin")>
     Private Function writeXIC1(xic As MzGroup, args As list, env As Environment) As Object
         Return writeXIC({xic}, args, env)
