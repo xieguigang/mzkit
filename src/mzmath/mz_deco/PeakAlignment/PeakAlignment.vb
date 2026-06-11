@@ -42,7 +42,7 @@ Namespace PeakAlignment
 
             ' 如果只有一个样本，直接转换
             If validPeaks.Count = 1 Then
-                Return SingleSampleToExpression(validPeaks.First)
+                Return SingleSampleToTable(validPeaks.First)
             End If
 
             ' 根据算法类型选择对齐方法
@@ -63,14 +63,14 @@ Namespace PeakAlignment
 
             ' 缺失值填充
             If params.fillGaps Then
-                FillGaps(alignedGroups, validPeaks, params)
+                Call FillGaps(alignedGroups, validPeaks, params)
             End If
 
             ' 按最小样本比例过滤
-            alignedGroups = FilterByMinFraction(alignedGroups, validPeaks.Keys.ToList, params.minFraction)
+            ' alignedGroups = FilterByMinFraction(alignedGroups, validPeaks.Keys.ToList, params.minFraction)
 
             ' 转换为IonExpression数组
-            Return ConvertToIonExpression(alignedGroups, validPeaks.Keys.ToList)
+            Return ConvertToTable(alignedGroups, validPeaks.Keys.ToList)
         End Function
 
         ''' <summary>
@@ -127,28 +127,10 @@ Namespace PeakAlignment
             Next
         End Sub
 
-        ' ========================================================================
-        '   过滤与转换
-        ' ========================================================================
-
-        ''' <summary>
-        ''' 按最小样本比例过滤对齐特征
-        ''' 只有在至少minFraction比例的样本中出现的特征才会被保留
-        ''' </summary>
-        Private Function FilterByMinFraction(groups As List(Of AlignedPeakGroup),
-                                              sampleNames As List(Of String),
-                                              minFraction As Double) As List(Of AlignedPeakGroup)
-            Dim minSamples As Integer = CInt(std.Ceiling(minFraction * sampleNames.Count))
-            minSamples = std.Max(minSamples, 1)
-
-            Return groups.Where(Function(g) g.sampleAreas.Where(Function(kv) kv.Value > 0).Count >= minSamples).ToList()
-        End Function
-
         ''' <summary>
         ''' 将对齐峰组列表转换为IonExpression数组
         ''' </summary>
-        Private Function ConvertToIonExpression(groups As List(Of AlignedPeakGroup),
-                                                 sampleNames As List(Of String)) As xcms2()
+        Private Function ConvertToTable(groups As List(Of AlignedPeakGroup), sampleNames As List(Of String)) As xcms2()
             Dim result As xcms2() = New xcms2(groups.Count - 1) {}
 
             For i As Integer = 0 To groups.Count - 1
@@ -191,7 +173,7 @@ Namespace PeakAlignment
         ''' <summary>
         ''' 单样本直接转换为IonExpression数组
         ''' </summary>
-        Private Function SingleSampleToExpression(kv As KeyValuePair(Of String, PeakFeature())) As xcms2()
+        Private Function SingleSampleToTable(kv As KeyValuePair(Of String, PeakFeature())) As xcms2()
             Dim result As xcms2() = New xcms2(kv.Value.Length - 1) {}
 
             For i As Integer = 0 To kv.Value.Length - 1

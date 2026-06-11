@@ -60,7 +60,7 @@ const ms1_peaktable = function(files, mzbins, mzdiff = 0.01,
 
         mzkit::deconv_xicfile(
             path = unlist(raw_path), 
-            mzbins = mzbins, 
+            mzbins = NULL, 
             args = xic_args, 
             tmp_out = tmp_out,
             simple = simple
@@ -97,7 +97,7 @@ const align_peaktable = function(peaks_dir = "./peaks", mzdiff = 0.01) {
         native_alignment = FALSE,
         aggregate = "Sum",
         tolerance_mode = "Da",
-        method = "DensityGroup",
+        method = "Obiwarp",
         loess_span = 0.75,
         loess_degree = 2,
         reference_sample = "",
