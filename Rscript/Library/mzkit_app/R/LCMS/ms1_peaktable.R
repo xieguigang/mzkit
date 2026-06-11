@@ -102,7 +102,7 @@ const align_peaktable = function(peaks_dir = "./peaks", mzdiff = 0.01) {
         loess_degree = 2,
         reference_sample = "",
         density_bandwidth = 0.0,
-        min_fraction = 0.5,
+        min_fraction = 0.25,
         obiwarp_bin_size = 1.0,
         obiwarp_gap_penalty = 0.6,
         obiwarp_response = 100,

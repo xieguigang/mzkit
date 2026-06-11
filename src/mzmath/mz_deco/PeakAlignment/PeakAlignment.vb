@@ -83,7 +83,11 @@ Namespace PeakAlignment
             Dim minSamples As Integer = CInt(std.Ceiling(minFraction * sampleNames.Count))
             minSamples = std.Max(minSamples, 1)
 
-            Return groups.Where(Function(g) g.sampleAreas.Where(Function(kv) kv.Value > 0).Count >= minSamples).ToList()
+            Return groups _
+                .Where(Function(g)
+                           Return g.sampleAreas.Where(Function(kv) kv.Value > 0).Count >= minSamples
+                       End Function) _
+                .ToList()
         End Function
 
         ''' <summary>
@@ -107,9 +111,12 @@ Namespace PeakAlignment
         Private Sub FillGaps(groups As List(Of AlignedPeakGroup),
                               peaks As Dictionary(Of String, PeakFeature()),
                               params As AlignmentParameters)
+
             For Each g In groups
                 For Each sampleName In peaks.Keys
-                    If g.sampleAreas.ContainsKey(sampleName) Then Continue For
+                    If g.sampleAreas.ContainsKey(sampleName) Then
+                        Continue For
+                    End If
 
                     ' 在该样本中搜索匹配的峰
                     Dim bestPeak As PeakFeature = Nothing
