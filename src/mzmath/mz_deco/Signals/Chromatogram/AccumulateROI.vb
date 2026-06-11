@@ -125,8 +125,7 @@ Namespace Chromatogram
                                              Optional snThreshold As Double = 3,
                                              Optional joint As Boolean = False,
                                              Optional nticks As Integer = 6) As IEnumerable(Of ROI)
-            ' 先计算出基线和累加线
-            Dim baseline# = chromatogram.SignalBaseline(baselineQuantile)
+
             Dim time As Vector = chromatogram!time
             Dim peaks As SignalPeak() = New ElevationAlgorithm(angleThreshold, baselineQuantile) _
                 .FindAllSignalPeaks(chromatogram.As(Of ITimeSignal)) _
@@ -150,13 +149,13 @@ Namespace Chromatogram
                 Dim rt# = window(which.Max(window.region.Select(Function(a) a.intensity))).time
                 Dim signal As Double = Aggregate tick As ChromatogramTick
                                        In peak
-                                       Into Sum(tick.Intensity - baseline)
-                Dim noise As Double = peak.Length * baseline
+                                       Into Sum(tick.Intensity - window.baseline)
+                Dim noise As Double = peak.Length * window.baseline
                 Dim sn As Double = SignalProcessing.SNRatio(signal, noise)
                 Dim ROI As New ROI With {
                     .ticks = peak,
                     .maxInto = max,
-                    .baseline = baseline,
+                    .baseline = window.baseline,
                     .time = {rtmin, rtmax},
                     .integration = window.integration,
                     .rt = rt,
