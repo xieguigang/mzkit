@@ -1134,10 +1134,13 @@ extract_ms1:
                                       Optional peak_width As Object = "3,30",
                                       Optional filename As String = Nothing,
                                       Optional env As Environment = Nothing) As Object
-        Return {x}.DecoMzGroups(
-                peakwidth:=SMRUCC.Rsharp.GetDoubleRange(peak_width, env),
-                source:=filename
-            ).ToArray
+        Dim rtwin = SMRUCC.Rsharp.GetDoubleRange(peak_width, env)
+
+        If rtwin Like GetType(Message) Then
+            Return rtwin.TryCast(Of Message)
+        End If
+
+        Return {x}.DecoMzGroups(peakwidth:=rtwin, sn:=0, source:=filename).ToArray
     End Function
 
     ''' <summary>

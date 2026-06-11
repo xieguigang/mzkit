@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Math.Scripting
@@ -147,6 +148,11 @@ Namespace Chromatogram
 
                 Dim max# = peak.Max(Function(a) a.Intensity) - window.baseline
                 Dim rt# = window(which.Max(window.region.Select(Function(a) a.intensity))).time
+                Dim signal As Double = Aggregate tick As ChromatogramTick
+                                       In peak
+                                       Into Sum(tick.Intensity - baseline)
+                Dim noise As Double = peak.Length * baseline
+                Dim sn As Double = SignalProcessing.SNRatio(signal, noise)
                 Dim ROI As New ROI With {
                     .ticks = peak,
                     .maxInto = max,
@@ -154,7 +160,8 @@ Namespace Chromatogram
                     .time = {rtmin, rtmax},
                     .integration = window.integration,
                     .rt = rt,
-                    .noise = peak.Length * baseline
+                    .noise = noise,
+                    .snRatio = sn
                 }
 
                 If snThreshold <= 0 OrElse ROI.snRatio >= snThreshold Then

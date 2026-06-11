@@ -67,9 +67,10 @@ declare namespace mzkit {
      *       "gaussian_max_iterations" <- 100,
      *       "gaussian_convergence" <- 1E-06,
      *       "recalculate_snr" <- TRUE)``.
+     * @param simple default value Is ``true``.
      * @param tmp_out default value Is ``./``.
    */
-   function deconv_xicfile(path: any, mzbins?: any, args?: any, tmp_out?: any): object;
+   function deconv_xicfile(path: any, mzbins?: any, args?: any, simple?: any, tmp_out?: any): object;
    /**
    */
    function GCMS_contentTable(mslIons: any, calfiles: string): object;
@@ -175,10 +176,11 @@ declare namespace mzkit {
      *       "gaussian_max_iterations" <- 100,
      *       "gaussian_convergence" <- 1E-06,
      *       "recalculate_snr" <- TRUE)``.
+     * @param simple default value Is ``true``.
      * @param n_threads default value Is ``8``.
      * @param tmp_out default value Is ``./tmp``.
    */
-   function ms1_peaktable(files: any, mzbins: any, mzdiff?: any, args?: any, n_threads?: any, tmp_out?: any): object;
+   function ms1_peaktable(files: any, mzbins: any, mzdiff?: any, args?: any, simple?: any, n_threads?: any, tmp_out?: any): object;
    /**
      * @param mzdiff default value Is ``0.005``.
      * @param outputdir default value Is ``./XIC/``.
@@ -240,7 +242,7 @@ declare namespace mzkit {
         * @param outputdir default value Is ``./``.
         * @param mzdiff default value Is ``0.01``.
         * @param xic_mzdiff default value Is ``0.005``.
-        * @param peak.width default value Is ``[2, 30]``.
+        * @param peak.width default value Is ``[3, 30]``.
         * @param n_threads default value Is ``16``.
         * @param top_n default value Is ``20000``.
         * @param args default value Is ``Call "list"("peak_method" <- "CentWave",

@@ -3,11 +3,13 @@
 deconv_xicfile \- deconv_xicfile(path,
     <i>mzbins</i> = <span style='color: blue !important;'>NULL</span>,
     <i>args</i> = 'list'('peak_method' = 'CentWave', 'snr_threshold' = 3, 'window_half_width' = 5, 'min_peak_width' = 3, 'max_peak_width' = 30, 'min_peak_height' = 0, 'centWave_min_scale' = 1, 'centWave_max_scale' = 20, 'centWave_scale_step' = 1, 'centWave_max_gap' = 2, 'matched_filter_sigma' = 3, 'matched_filter_truncate_width' = 4, 'derivative_smooth_window' = 3, 'derivative_threshold_factor' = 0.01, 'noise_segment_count' = 20, 'peak_merge_distance' = 1, 'area_method' = 'BaselineCorrected', 'baseline_method' = 'Linear', 'baseline_percentile' = 10, 'local_minimum_boundary_points' = 5, 'gaussian_max_iterations' = 100, 'gaussian_convergence' = 1E-06, 'recalculate_snr' = TRUE),
+    <i>simple</i> = <span style='color: blue !important;'>TRUE</span>,
     <i>tmp.out</i> = <span style='color: brown;'><strong>'./'</strong></span>)
 .SH SYNOPSIS
 \fIdeconv_xicfile(path,
     <i>mzbins</i> = <span style='color: blue !important;'>NULL</span>,
     <i>args</i> = 'list'('peak_method' = 'CentWave', 'snr_threshold' = 3, 'window_half_width' = 5, 'min_peak_width' = 3, 'max_peak_width' = 30, 'min_peak_height' = 0, 'centWave_min_scale' = 1, 'centWave_max_scale' = 20, 'centWave_scale_step' = 1, 'centWave_max_gap' = 2, 'matched_filter_sigma' = 3, 'matched_filter_truncate_width' = 4, 'derivative_smooth_window' = 3, 'derivative_threshold_factor' = 0.01, 'noise_segment_count' = 20, 'peak_merge_distance' = 1, 'area_method' = 'BaselineCorrected', 'baseline_method' = 'Linear', 'baseline_percentile' = 10, 'local_minimum_boundary_points' = 5, 'gaussian_max_iterations' = 100, 'gaussian_convergence' = 1E-06, 'recalculate_snr' = TRUE),
+    <i>simple</i> = <span style='color: blue !important;'>TRUE</span>,
     <i>tmp.out</i> = <span style='color: brown;'><strong>'./'</strong></span>)\fR
 .SH OPTIONS
 .PP
@@ -20,11 +22,14 @@ deconv_xicfile \- deconv_xicfile(path,
 \fBargs\fB \fR\- 'list'('peak_method' = 'CentWave', 'snr_threshold' = 3, 'window_half_width' = 5, 'min_peak_width' = 3, 'max_peak_width' = 30, 'min_peak_height' = 0, 'centWave_min_scale' = 1, 'centWave_max_scale' = 20, 'centWave_scale_step' = 1, 'centWave_max_gap' = 2, 'matched_filter_sigma' = 3, 'matched_filter_truncate_width' = 4, 'derivative_smooth_window' = 3, 'derivative_threshold_factor' = 0.01, 'noise_segment_count' = 20, 'peak_merge_distance' = 1, 'area_method' = 'BaselineCorrected', 'baseline_method' = 'Linear', 'baseline_percentile' = 10, 'local_minimum_boundary_points' = 5, 'gaussian_max_iterations' = 100, 'gaussian_convergence' = 1E-06, 'recalculate_snr' = TRUE). 
 .PP
 .PP
+\fBsimple\fB \fR\- TRUE. 
+.PP
+.PP
 \fBtmp.out\fB \fR\- './'. 
 .PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.deconv_xicfile at ms1_peaktable.R:line 105
+SMRUCC/R#.declare_function.deconv_xicfile at ms1_peaktable.R:line 107
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang, MIT Licensed 2026
