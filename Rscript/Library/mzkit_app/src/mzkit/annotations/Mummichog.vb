@@ -1,65 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::0874c8f39e33a68431f137f21a535eec, Rscript\Library\mzkit_app\src\mzkit\annotations\Mummichog.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 415
-    '    Code Lines: 298 (71.81%)
-    ' Comment Lines: 65 (15.66%)
-    '    - Xml Docs: 96.92%
-    ' 
-    '   Blank Lines: 52 (12.53%)
-    '     File Size: 17.46 KB
+' Summaries:
 
 
-    ' Module Mummichog
-    ' 
-    '     Function: CreateKEGGBackground, createMzSet, extractCandidateUniqueId, fromGseaBackground, getResultTable
-    '               GroupPeaks, mzScore, PeakListAnnotation, queryCandidateSet
-    ' 
-    '     Sub: Main
-    '     Class MetabolicNetworkGraph
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: CreateGraphModel
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 415
+'    Code Lines: 298 (71.81%)
+' Comment Lines: 65 (15.66%)
+'    - Xml Docs: 96.92%
+' 
+'   Blank Lines: 52 (12.53%)
+'     File Size: 17.46 KB
+
+
+' Module Mummichog
+' 
+'     Function: CreateKEGGBackground, createMzSet, extractCandidateUniqueId, fromGseaBackground, getResultTable
+'               GroupPeaks, mzScore, PeakListAnnotation, queryCandidateSet
+' 
+'     Sub: Main
+'     Class MetabolicNetworkGraph
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: CreateGraphModel
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -198,9 +198,6 @@ Module Mummichog
                                        Optional modelSize As Integer = -1,
                                        Optional pinned As String() = Nothing,
                                        Optional ignore_topology As Boolean = False,
-                                       Optional ga As Boolean = False,
-                                       Optional pop_size As Integer = 100,
-                                       Optional mutation_rate As Double = 0.3,
                                        Optional env As Environment = Nothing) As Object
 
         Dim models As New List(Of NamedValue(Of NetworkGraph))
@@ -228,30 +225,18 @@ Module Mummichog
 
         Dim result As ActivityEnrichment()
 
-        If ga Then
-            result = GAPeakListAnnotation.PeakListAnnotation(
-                candidates:=candidates, background:=models,
-                minhit:=minhit, permutation:=permutation,
-                modelSize:=modelSize, pinned:=pinned,
-                popsize:=pop_size,
-                ignoreTopology:=ignore_topology,
-                mutation_rate:=mutation_rate
-            )
-        Else
-            Call println($"Run mummichog algorithm with Monte-Carlo permutation in parallel with {VectorTask.n_threads} CPU threads!")
-            Call println($"evaluate for {candidates.Length} ion features,")
-            Call println($"based on {models.Count} biological context background model!")
+        Call println($"Run mummichog algorithm with Monte-Carlo permutation in parallel with {VectorTask.n_threads} CPU threads!")
+        Call println($"evaluate for {candidates.Length} ion features,")
+        Call println($"based on {models.Count} biological context background model!")
 
-            result = candidates.PeakListAnnotation(
-                background:=models,
-                minhit:=minhit,
-                permutation:=permutation,
-                modelSize:=modelSize,
-                pinned:=pinned,
-                ignoreTopology:=ignore_topology,
-                mutation_rate:=mutation_rate
-            )
-        End If
+        'result = candidates.PeakListAnnotation(
+        '        background:=models,
+        '        minhit:=minhit,
+        '        permutation:=permutation,
+        '        modelSize:=modelSize,
+        '        pinned:=pinned,
+        '        ignoreTopology:=ignore_topology
+        '    )
 
         Return result
     End Function
