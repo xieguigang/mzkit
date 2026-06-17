@@ -21,7 +21,9 @@ workdir = "G:\\mzkit\\src\\mzmath\\TargetedMetabolomics\\test\\PKanalysis";
 args <- commandArgs(trailingOnly = TRUE)
 summary_csv <- file.path(workdir, "pk_summary.csv")
 params_csv  <- file.path(workdir, "pk_parameters.csv") 
-out_dir     <- workdir
+out_dir     <- file.path( workdir,"figs")
+
+dir.create(out_dir);
 
 # ── Load packages (install if missing) ──
 required_pkgs <- c("ggplot2", "dplyr", "tidyr", "scales", "gridExtra")
