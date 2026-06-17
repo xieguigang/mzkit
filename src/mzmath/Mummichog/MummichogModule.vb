@@ -23,6 +23,8 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 
 ''' <summary>
 ''' KEGG代谢物数据模型
@@ -966,7 +968,7 @@ Public Class MummichogAnnotator
             If observedMz <= 0 Then Continue For
 
             ' 计算ppm容忍度对应的质量窗口
-            Dim toleranceDa As Double = MathUtils.PpmToDa(observedMz, _params.PpmTolerance)
+            Dim toleranceDa As Double = PPMmethod.ConvertPpmToMassAccuracy(observedMz, _params.PpmTolerance)
             Dim mzMin As Double = observedMz - toleranceDa
             Dim mzMax As Double = observedMz + toleranceDa
 
@@ -1186,7 +1188,7 @@ Public Class MummichogAnnotator
         ' --- BH-FDR校正 ---
         If results.Count > 0 Then
             Dim pVals As Double() = results.Select(Function(r) r.PValue).ToArray()
-            Dim fdrs As Double() = MathUtils.BHCorrection(pVals)
+            Dim fdrs As Double() = BHCorrection(pVals)
             For i As Integer = 0 To results.Count - 1
                 results(i).FDR = fdrs(i)
                 results(i).IsSignificant = fdrs(i) < _params.FdrCutoff
@@ -1462,7 +1464,7 @@ Public Class MummichogAnnotator
                                    targetMz As Double,
                                    ppmTolerance As Double) As xcms2
 
-        Dim toleranceDa As Double = MathUtils.PpmToDa(targetMz, ppmTolerance)
+        Dim toleranceDa As Double = PPMmethod.ConvertPpmToMassAccuracy(targetMz, ppmTolerance)
         Dim mzMin As Double = targetMz - toleranceDa
         Dim mzMax As Double = targetMz + toleranceDa
 
@@ -1474,7 +1476,7 @@ Public Class MummichogAnnotator
 
         For i As Integer = lowerIdx To upperIdx - 1
             If i < 0 OrElse i >= sortedPeaks.Count Then Continue For
-            Dim ppm As Double = Math.Abs(MathUtils.CalculatePpm(sortedPeaks(i).mz, targetMz))
+            Dim ppm As Double = Math.Abs(PPMmethod.PPM(sortedPeaks(i).mz, targetMz))
             If ppm < bestPpm Then
                 bestPpm = ppm
                 bestPeak = sortedPeaks(i)
@@ -1522,7 +1524,7 @@ Public Class MummichogAnnotator
             If controlValues.Count < 2 OrElse treatmentValues.Count < 2 Then
                 pValues(peak.ID) = 1.0
             Else
-                pValues(peak.ID) = MathUtils.WelchTTest(controlValues, treatmentValues)
+                pValues(peak.ID) = t.Test(controlValues, treatmentValues).Pvalue
             End If
         Next
 
