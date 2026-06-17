@@ -96,6 +96,7 @@ Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 ''' hypotheses directly from a LC-MS data table.
 ''' </summary>
 <Package("Mummichog")>
+<RTypeExport("mummichog_pars", GetType(MummichogParams))>
 Module Mummichog
 
     Sub Main()
@@ -429,13 +430,19 @@ Module Mummichog
         End Function
     End Class
 
+    <ExportAPI("kegg_background")>
+    <RApiReturn(GetType(MummichogAnnotator))>
+    Public Function CreateKEGGBackground(<RRawVectorArgument> metabolites As Object, <RRawVectorArgument> pathways As Object, Optional params As MummichogParams = Nothing, Optional env As Environment = Nothing) As Object
+
+    End Function
+
     ''' <summary>
     ''' create kegg pathway network graph background model
     ''' </summary>
     ''' <param name="maps">A collection of the kegg <see cref="Map"/> clr object</param>
     ''' <param name="reactions">A collection of the kegg <see cref="Reaction"/> clr object</param>
     ''' <returns></returns>
-    <ExportAPI("kegg_background")>
+    <ExportAPI("kegg_graph")>
     Public Function CreateKEGGBackground(maps As Map(), reactions As Reaction(), Optional alternative As Boolean = False) As list
         Dim subgraphs As NamedValue(Of NetworkGraph)()
         Dim networkIndex = reactions _
