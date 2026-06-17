@@ -22,9 +22,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.Statistics
-Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
+Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis.FishersExact
 Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
+Imports F = Microsoft.VisualBasic.Math.Statistics.Hypothesis.FishersExact.FishersExactTest
 
 ' ========================================================================
 ' Mummichog主注释器类
@@ -517,8 +517,16 @@ Public Class MummichogAnnotator
             ' 跳过没有显著匹配的通路
             If ki = 0 Then Continue For
 
+            ' 我们的差异基因列表中，属于目标代谢途径的基因的数量
+            Dim a% = ki
+            ' 在目标基因组中，属于当前的代谢途径中的基因的数量
+            Dim b% = K
+            ' 在我们的差异基因列表中，不属于当前的代谢途径的基因的数量
+            Dim c% = ni - a
+            ' 在目标基因组中，不属于当前的代谢途径中的基因的数量
+            Dim d% = N - b
             ' 超几何检验p值
-            Dim pValue As Double = FisherTest.HypergeometricPValue(N, K, ni, ki)
+            Dim pValue As FishersExactPvalues = F.FishersExact(a, b, c, d)
 
             ' 收集匹配详情
             Dim hitMatches As New List(Of MzMatch)()
@@ -539,7 +547,7 @@ Public Class MummichogAnnotator
                 .SignificantHits = ki,
                 .TotalSignificant = ni,
                 .TotalBackground = N,
-                .PValue = pValue,
+                .PValue = pValue.two_tail_pvalue,
                 .HitMatches = hitMatches
             }
             results.Add(result)
