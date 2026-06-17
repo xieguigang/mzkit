@@ -429,7 +429,7 @@ Module Mummichog
                             .ID = map.EntryId,
                             .Name = map.name,
                             .Description = map.description,
-                            .Metabolites = New HashSet(Of String)(map.GetMembers.Where(Function(id) id.IsPattern("C\d+{5}")))
+                            .Metabolites = New HashSet(Of String)(map.GetMembers.Where(Function(id) id.IsPattern("C\d{5}")))
                         }
                     End Function)
 

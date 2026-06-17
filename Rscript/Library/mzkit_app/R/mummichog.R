@@ -1,6 +1,6 @@
 const mummichog_anno = function(peaks, sampleinfo, libtype = [1,-1], kegg = list(
     compounds = GCModeller::kegg_compounds(rawList = TRUE, reference_set = FALSE),
-    pathways = GCModeller::kegg_maps()
+    pathways = GCModeller::load_kegg_maps()
 )) {
     imports "Mummichog" from "mzkit";
     imports "sampleInfo" from "phenotype_kit";
