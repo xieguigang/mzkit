@@ -77,13 +77,14 @@ Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices.XML
+Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
 Imports SMRUCC.genomics.Model.Network.KEGG
 Imports SMRUCC.genomics.Model.Network.KEGG.ReactionNetwork
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -187,63 +188,32 @@ Module Mummichog
     ''' <param name="background">
     ''' the enrichment and network topology graph mode list
     ''' </param>
-    ''' <param name="candidates">
-    ''' a set of m/z search result list based on the given background model
-    ''' </param>
-    ''' <param name="minhit"></param>
-    ''' <param name="permutation"></param>
-    ''' <param name="modelSize"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("peakList_annotation")>
     <RApiReturn("enrichment", "metabolites")>
-    Public Function PeakListAnnotation(background As list, candidates As MzSet(),
-                                       Optional minhit As Integer = 3,
-                                       Optional permutation As Integer = 100,
-                                       Optional modelSize As Integer = -1,
-                                       Optional pinned As String() = Nothing,
-                                       Optional ignore_topology As Boolean = False,
+    Public Function PeakListAnnotation(background As MummichogAnnotator,
+                                       <RRawVectorArgument> peaks As Object,
+                                       <RRawVectorArgument> sampleinfo As Object,
                                        Optional env As Environment = Nothing) As Object
 
-        Dim models As New List(Of NamedValue(Of NetworkGraph))
-        Dim graph As NamedValue(Of NetworkGraph)
-        Dim slot As list
-        Dim println As Action(Of Object) = env.WriteLineHandler
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of xcms2)(peaks, env, suppress:=True)
+        Dim sampleIds As pipeline = pipeline.TryCreatePipeline(Of SampleInfo)(sampleinfo, env, suppress:=True)
 
-        For Each name As String In background.getNames
-            slot = background.getByName(name)
-            graph = New NamedValue(Of NetworkGraph) With {
-                .Name = name,
-                .Description = slot.getValue({"desc", "description"}, env, "NA"),
-                .Value = slot.getValue(Of NetworkGraph)({"model", "background", "graph"}, env)
-            }
-
-            If graph.Value.vertex.Count > 0 Then
-                Call models.Add(graph)
-            End If
-        Next
-
-        If Not pinned.IsNullOrEmpty Then
-            Call println("a set of metabolites will pinned in the annotation loops:")
-            Call println(pinned)
+        If TypeOf peaks Is PeakSet Then
+            peaks = DirectCast(peaks, PeakSet).peaks
+        ElseIf pull.isError Then
+            Return pull.getError
         End If
 
-        Dim result As ActivityEnrichment()
+        Dim groups = DataGroup.CreateDataGroups(sampleIds.populates(Of SampleInfo)(env)).ToArray
+        Dim metabo = background.Annotate(pull.populates(Of xcms2)(env), groups).ToArray
+        Dim enrich = background.PathwayResults.ToArray
 
-        Call println($"Run mummichog algorithm with Monte-Carlo permutation in parallel with {VectorTask.n_threads} CPU threads!")
-        Call println($"evaluate for {candidates.Length} ion features,")
-        Call println($"based on {models.Count} biological context background model!")
-
-        'result = candidates.PeakListAnnotation(
-        '        background:=models,
-        '        minhit:=minhit,
-        '        permutation:=permutation,
-        '        modelSize:=modelSize,
-        '        pinned:=pinned,
-        '        ignoreTopology:=ignore_topology
-        '    )
-
-        Return result
+        Return New list(
+            slot("enrichment") = enrich,
+            slot("metabolites") = metabo
+        )
     End Function
 
     ''' <summary>
@@ -433,7 +403,37 @@ Module Mummichog
     <ExportAPI("kegg_background")>
     <RApiReturn(GetType(MummichogAnnotator))>
     Public Function CreateKEGGBackground(<RRawVectorArgument> metabolites As Object, <RRawVectorArgument> pathways As Object, Optional params As MummichogParams = Nothing, Optional env As Environment = Nothing) As Object
+        Dim pullMetab As pipeline = pipeline.TryCreatePipeline(Of Compound)(metabolites, env)
+        Dim pullMaps As pipeline = pipeline.TryCreatePipeline(Of Map)(pathways, env)
 
+        If pullMetab.isError Then
+            Return pullMetab.getError
+        ElseIf pullMaps.isError Then
+            Return pullMaps.getError
+        End If
+
+        Dim metabSet As IEnumerable(Of KEGGMetabolite) = pullMetab _
+            .populates(Of Compound)(env) _
+            .Select(Function(c)
+                        Return New KEGGMetabolite With {
+                            .CommonName = c.commonNames.DefaultFirst(c.formula),
+                            .ExactMass = c.exactMass,
+                            .Formula = c.formula,
+                            .Id = c.entry
+                        }
+                    End Function)
+        Dim mapSet As IEnumerable(Of KEGGPathway) = pullMaps _
+            .populates(Of Map)(env) _
+            .Select(Function(map)
+                        Return New KEGGPathway With {
+                            .ID = map.EntryId,
+                            .Name = map.name,
+                            .Description = map.description,
+                            .Metabolites = New HashSet(Of String)(map.GetMembers.Where(Function(id) id.IsPattern("C\d+{5}")))
+                        }
+                    End Function)
+
+        Return New MummichogAnnotator(metabSet, mapSet, params)
     End Function
 
     ''' <summary>
