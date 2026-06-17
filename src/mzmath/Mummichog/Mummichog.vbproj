@@ -15,6 +15,7 @@
 	  <OutputPath>../../../Rscript\Library\mzkit_app\assembly\</OutputPath>
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
 	  <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
+	  <UseApplicationFramework>True</UseApplicationFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
@@ -100,6 +101,10 @@
     <PackageReference Include="System.Composition" Version="10.0.9" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" />
     <PackageReference Include="System.Resources.Extensions" Version="10.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="obsoletes\" />
   </ItemGroup>
 
 </Project>
