@@ -1992,7 +1992,7 @@ Public Class KEGGDataLoader
             ' 解析通路列表 (分号分隔)
             If fields.Length >= 5 AndAlso Not String.IsNullOrEmpty(fields(4)) Then
                 Dim pathwayIds As String() = fields(4).Split(";"c)
-                For Each PID In pathwayIds
+                For Each PID As String In pathwayIds
                     Dim trimmed = PID.Trim()
                     If Not String.IsNullOrEmpty(trimmed) Then
                         met.Pathways.Add(trimmed)
@@ -2040,7 +2040,7 @@ Public Class KEGGDataLoader
             ' 解析代谢物列表
             If fields.Length >= 3 AndAlso Not String.IsNullOrEmpty(fields(2)) Then
                 Dim metIds As String() = fields(2).Split(";"c)
-                For Each Mid In metIds
+                For Each Mid As String In metIds
                     Dim trimmed = Mid.Trim()
                     If Not String.IsNullOrEmpty(trimmed) Then
                         pathway.Metabolites.Add(trimmed)
@@ -2053,144 +2053,9 @@ Public Class KEGGDataLoader
 
         Return pathways
     End Function
-
-    ''' <summary>
-    ''' 创建示例KEGG代谢物数据 (用于测试)
-    ''' </summary>
-    Public Shared Function CreateSampleMetabolites() As List(Of KEGGMetabolite)
-        Dim list As New List(Of KEGGMetabolite)()
-
-        ' 糖酵解通路代谢物
-        list.Add(New KEGGMetabolite With {.ID = "C00022", .Name = "Pyruvate", .Formula = "C3H4O3", .Pathways = New HashSet(Of String) From {"map00010", "map00020", "map00620"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00031", .Name = "Glucose", .Formula = "C6H12O6", .Pathways = New HashSet(Of String) From {"map00010", "map00052"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00036", .Name = "Oxaloacetate", .Formula = "C4H2O5", .Pathways = New HashSet(Of String) From {"map00010", "map00020"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00074", .Name = "Phosphoenolpyruvate", .Formula = "C3H2O6P", .Pathways = New HashSet(Of String) From {"map00010", "map00260"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00118", .Name = "Glycerol-3-phosphate", .Formula = "C3H7O6P", .Pathways = New HashSet(Of String) From {"map00010", "map00561"}})
-
-        ' TCA循环代谢物
-        list.Add(New KEGGMetabolite With {.ID = "C00024", .Name = "Succinyl-CoA", .Formula = "C25H35N7O19P3S", .Pathways = New HashSet(Of String) From {"map00020", "map00640"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00149", .Name = "Malate", .Formula = "C4H4O5", .Pathways = New HashSet(Of String) From {"map00020", "map00630"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00158", .Name = "Citrate", .Formula = "C6H8O7", .Pathways = New HashSet(Of String) From {"map00020", "map00220"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00311", .Name = "Isocitrate", .Formula = "C6H8O7", .Pathways = New HashSet(Of String) From {"map00020"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00042", .Name = "Succinate", .Formula = "C4H6O4", .Pathways = New HashSet(Of String) From {"map00020", "map00640"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00026", .Name = "2-Oxoglutarate", .Formula = "C5H4O5", .Pathways = New HashSet(Of String) From {"map00020", "map00250"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00122", .Name = "Fumarate", .Formula = "C4H2O4", .Pathways = New HashSet(Of String) From {"map00020", "map00640"}})
-
-        ' 氨基酸代谢
-        list.Add(New KEGGMetabolite With {.ID = "C00037", .Name = "Glycine", .Formula = "C2H5NO2", .Pathways = New HashSet(Of String) From {"map00260", "map00330"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00041", .Name = "Alanine", .Formula = "C3H7NO2", .Pathways = New HashSet(Of String) From {"map00250", "map00470"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00049", .Name = "L-Aspartate", .Formula = "C4H7NO4", .Pathways = New HashSet(Of String) From {"map00250", "map00270"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00062", .Name = "L-Arginine", .Formula = "C6H14N4O2", .Pathways = New HashSet(Of String) From {"map00220", "map00330"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00073", .Name = "L-Methionine", .Formula = "C5H11NO2S", .Pathways = New HashSet(Of String) From {"map00270", "map00410"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00079", .Name = "L-Phenylalanine", .Formula = "C9H11NO2", .Pathways = New HashSet(Of String) From {"map00360", "map00400"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00135", .Name = "L-Proline", .Formula = "C5H9NO2", .Pathways = New HashSet(Of String) From {"map00330", "map00410"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00152", .Name = "L-Asparagine", .Formula = "C4H8N2O3", .Pathways = New HashSet(Of String) From {"map00250", "map00270"}})
-
-        ' 脂质代谢
-        list.Add(New KEGGMetabolite With {.ID = "C00162", .Name = "Palmitic acid", .Formula = "C16H32O2", .Pathways = New HashSet(Of String) From {"map00061", "map01040"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00226", .Name = "Oleic acid", .Formula = "C18H34O2", .Pathways = New HashSet(Of String) From {"map01040"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00422", .Name = "Arachidonic acid", .Formula = "C20H32O2", .Pathways = New HashSet(Of String) From {"map00590", "map01040"}})
-
-        ' 核苷酸代谢
-        list.Add(New KEGGMetabolite With {.ID = "C00002", .Name = "ATP", .Formula = "C10H12N5O13P3", .Pathways = New HashSet(Of String) From {"map00010", "map00190", "map00230"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00003", .Name = "NAD+", .Formula = "C21H26N7O14P2", .Pathways = New HashSet(Of String) From {"map00010", "map00190"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00004", .Name = "NADH", .Formula = "C21H27N7O14P2", .Pathways = New HashSet(Of String) From {"map00010", "map00190"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00186", .Name = "AMP", .Formula = "C10H12N5O7P", .Pathways = New HashSet(Of String) From {"map00230", "map00190"}})
-
-        ' 计算精确分子量
-        For Each m In list
-            m.RecalculateMass()
-        Next
-
-        Return list
-    End Function
-
-    ''' <summary>
-    ''' 创建示例KEGG通路数据 (用于测试)
-    ''' </summary>
-    Public Shared Function CreateSamplePathways() As List(Of KEGGPathway)
-        Dim list As New List(Of KEGGPathway)()
-
-        list.Add(New KEGGPathway With {.ID = "map00010", .Name = "Glycolysis / Gluconeogenesis",
-            .Metabolites = New HashSet(Of String) From {"C00022", "C00031", "C00036", "C00074", "C00118", "C00002", "C00003", "C00004"}})
-        list.Add(New KEGGPathway With {.ID = "map00020", .Name = "TCA cycle",
-            .Metabolites = New HashSet(Of String) From {"C00022", "C00024", "C00036", "C00149", "C00158", "C00311", "C00042", "C00026", "C00122", "C00003", "C00004"}})
-        list.Add(New KEGGPathway With {.ID = "map00260", .Name = "Glycine, serine and threonine metabolism",
-            .Metabolites = New HashSet(Of String) From {"C00037", "C00074", "C00152"}})
-        list.Add(New KEGGPathway With {.ID = "map00250", .Name = "Alanine, aspartate and glutamate metabolism",
-            .Metabolites = New HashSet(Of String) From {"C00041", "C00049", "C00026", "C00152"}})
-        list.Add(New KEGGPathway With {.ID = "map00270", .Name = "Cysteine and methionine metabolism",
-            .Metabolites = New HashSet(Of String) From {"C00073", "C00049", "C00152"}})
-        list.Add(New KEGGPathway With {.ID = "map00330", .Name = "Arginine and proline metabolism",
-            .Metabolites = New HashSet(Of String) From {"C00062", "C00037", "C00135"}})
-        list.Add(New KEGGPathway With {.ID = "map01040", .Name = "Biosynthesis of unsaturated fatty acids",
-            .Metabolites = New HashSet(Of String) From {"C00162", "C00226", "C00422"}})
-        list.Add(New KEGGPathway With {.ID = "map00190", .Name = "Oxidative phosphorylation",
-            .Metabolites = New HashSet(Of String) From {"C00002", "C00003", "C00004", "C00186"}})
-        list.Add(New KEGGPathway With {.ID = "map00230", .Name = "Purine metabolism",
-            .Metabolites = New HashSet(Of String) From {"C00002", "C00186"}})
-
-        Return list
-    End Function
 End Class
 
 
-
-' ============================================================================
-' 使用示例 (取消注释后可直接运行测试)
-' ----------------------------------------------------------------------------
-'
-' Module MummichogExample
-'
-'     Sub Main()
-'         ' 1. 准备KEGG数据库 (使用示例数据, 实际应用中从文件加载)
-'         Dim metabolites = KEGGDataLoader.CreateSampleMetabolites()
-'         Dim pathways = KEGGDataLoader.CreateSamplePathways()
-'
-'         ' 2. 配置算法参数
-'         Dim params As New MummichogParams With {
-'             .PpmTolerance = 10.0,          ' ppm容忍度
-'             .PValueCutoff = 0.05,          ' 差异峰p值阈值
-'             .FdrCutoff = 0.2,              ' 通路FDR阈值
-'             .Mode = IonizationMode.Positive, ' 正离子模式
-'             .MaxCandidatesPerPeak = 3      ' 每峰最多3个候选
-'         }
-'
-'         ' 3. 创建注释器
-'         Dim annotator As New MummichogAnnotator(metabolites, pathways, params)
-'
-'         ' 4. 准备一级质谱峰表数据 (xcms2数组)
-'         Dim peaks As New List(Of xcms2)
-'         ' ... 从XCMS结果填充peaks ...
-'
-'         ' 5. 方式A: 提供预计算的p值
-'         Dim pValues As New Dictionary(Of String, Double)
-'         ' pValues("peak_id_1") = 0.001
-'         ' pValues("peak_id_2") = 0.045
-'         ' ...
-'         Dim results = annotator.Annotate(peaks, pValues)
-'
-'         ' 5. 方式B: 自动从样本分组计算p值
-'         ' Dim controlSamples = {"sample1", "sample2", "sample3"}
-'         ' Dim treatmentSamples = {"sample4", "sample5", "sample6"}
-'         ' Dim results = annotator.Annotate(peaks, controlSamples, treatmentSamples)
-'
-'         ' 6. 输出注释结果
-'         Dim dt = annotator.ResultsToDataTable(results)
-'         Console.WriteLine($"共 {results.Count} 条注释结果")
-'         For Each r In results.Take(10)
-'             Console.WriteLine(r.ToString())
-'         Next
-'
-'         ' 7. 输出通路富集结果
-'         Console.WriteLine(vbCrLf & "显著富集通路:")
-'         For Each pr In annotator.PathwayResults.Where(Function(p) p.IsSignificant)
-'             Console.WriteLine($"  {pr.Pathway.Name}: hits={pr.SignificantHits}, p={pr.PValue:G4}, fdr={pr.FDR:G4}")
-'         Next
-'     End Sub
-'
-' End Module
-'
 ' ============================================================================
 ' 算法原理说明
 ' ----------------------------------------------------------------------------

@@ -63,7 +63,7 @@ Imports System.ComponentModel
 Namespace Ms1.PrecursorType
 
     ''' <summary>
-    ''' Ion Modes, +/-
+    ''' Ionization Mode, +/-
     ''' </summary>
     ''' <remarks>
     ''' integer value is matched with the thermo fisher ms raw file reader
