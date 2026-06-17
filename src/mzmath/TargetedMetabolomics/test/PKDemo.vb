@@ -19,7 +19,7 @@ Module PKDemo
 
     Sub Main(args As String())
         ' ── 默认参数 ──
-        Dim jsonPath As String = "test_data.json"
+        Dim jsonPath As String = "G:\mzkit\src\mzmath\TargetedMetabolomics\PKanalysis\test_data.json"
         Dim dose As Double = 5000.0      ' µg/kg (5 mg/kg)
         Dim route As String = "SC"       ' 皮下给药
 
