@@ -44,7 +44,7 @@ Module MummichogExample
         ' Dim results = annotator.Annotate(peaks, controlSamples, treatmentSamples)
 
         ' 6. 输出注释结果
-        Dim dt = annotator.ResultsToDataTable(results)
+        Dim dt = MummichogAnnotator.ResultsToDataTable(results)
         Console.WriteLine($"共 {results.Count} 条注释结果")
         For Each r In results.Take(10)
             Console.WriteLine(r.ToString())
@@ -64,41 +64,41 @@ Module MummichogExample
         Dim list As New List(Of KEGGMetabolite)()
 
         ' 糖酵解通路代谢物
-        list.Add(New KEGGMetabolite With {.ID = "C00022", .Name = "Pyruvate", .Formula = "C3H4O3", .Pathways = New HashSet(Of String) From {"map00010", "map00020", "map00620"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00031", .Name = "Glucose", .Formula = "C6H12O6", .Pathways = New HashSet(Of String) From {"map00010", "map00052"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00036", .Name = "Oxaloacetate", .Formula = "C4H2O5", .Pathways = New HashSet(Of String) From {"map00010", "map00020"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00074", .Name = "Phosphoenolpyruvate", .Formula = "C3H2O6P", .Pathways = New HashSet(Of String) From {"map00010", "map00260"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00118", .Name = "Glycerol-3-phosphate", .Formula = "C3H7O6P", .Pathways = New HashSet(Of String) From {"map00010", "map00561"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00022", .CommonName = "Pyruvate", .Formula = "C3H4O3", .Pathways = New HashSet(Of String) From {"map00010", "map00020", "map00620"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00031", .CommonName = "Glucose", .Formula = "C6H12O6", .Pathways = New HashSet(Of String) From {"map00010", "map00052"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00036", .CommonName = "Oxaloacetate", .Formula = "C4H2O5", .Pathways = New HashSet(Of String) From {"map00010", "map00020"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00074", .CommonName = "Phosphoenolpyruvate", .Formula = "C3H2O6P", .Pathways = New HashSet(Of String) From {"map00010", "map00260"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00118", .CommonName = "Glycerol-3-phosphate", .Formula = "C3H7O6P", .Pathways = New HashSet(Of String) From {"map00010", "map00561"}})
 
         ' TCA循环代谢物
-        list.Add(New KEGGMetabolite With {.ID = "C00024", .Name = "Succinyl-CoA", .Formula = "C25H35N7O19P3S", .Pathways = New HashSet(Of String) From {"map00020", "map00640"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00149", .Name = "Malate", .Formula = "C4H4O5", .Pathways = New HashSet(Of String) From {"map00020", "map00630"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00158", .Name = "Citrate", .Formula = "C6H8O7", .Pathways = New HashSet(Of String) From {"map00020", "map00220"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00311", .Name = "Isocitrate", .Formula = "C6H8O7", .Pathways = New HashSet(Of String) From {"map00020"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00042", .Name = "Succinate", .Formula = "C4H6O4", .Pathways = New HashSet(Of String) From {"map00020", "map00640"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00026", .Name = "2-Oxoglutarate", .Formula = "C5H4O5", .Pathways = New HashSet(Of String) From {"map00020", "map00250"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00122", .Name = "Fumarate", .Formula = "C4H2O4", .Pathways = New HashSet(Of String) From {"map00020", "map00640"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00024", .CommonName = "Succinyl-CoA", .Formula = "C25H35N7O19P3S", .Pathways = New HashSet(Of String) From {"map00020", "map00640"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00149", .CommonName = "Malate", .Formula = "C4H4O5", .Pathways = New HashSet(Of String) From {"map00020", "map00630"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00158", .CommonName = "Citrate", .Formula = "C6H8O7", .Pathways = New HashSet(Of String) From {"map00020", "map00220"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00311", .CommonName = "Isocitrate", .Formula = "C6H8O7", .Pathways = New HashSet(Of String) From {"map00020"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00042", .CommonName = "Succinate", .Formula = "C4H6O4", .Pathways = New HashSet(Of String) From {"map00020", "map00640"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00026", .CommonName = "2-Oxoglutarate", .Formula = "C5H4O5", .Pathways = New HashSet(Of String) From {"map00020", "map00250"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00122", .CommonName = "Fumarate", .Formula = "C4H2O4", .Pathways = New HashSet(Of String) From {"map00020", "map00640"}})
 
         ' 氨基酸代谢
-        list.Add(New KEGGMetabolite With {.ID = "C00037", .Name = "Glycine", .Formula = "C2H5NO2", .Pathways = New HashSet(Of String) From {"map00260", "map00330"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00041", .Name = "Alanine", .Formula = "C3H7NO2", .Pathways = New HashSet(Of String) From {"map00250", "map00470"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00049", .Name = "L-Aspartate", .Formula = "C4H7NO4", .Pathways = New HashSet(Of String) From {"map00250", "map00270"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00062", .Name = "L-Arginine", .Formula = "C6H14N4O2", .Pathways = New HashSet(Of String) From {"map00220", "map00330"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00073", .Name = "L-Methionine", .Formula = "C5H11NO2S", .Pathways = New HashSet(Of String) From {"map00270", "map00410"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00079", .Name = "L-Phenylalanine", .Formula = "C9H11NO2", .Pathways = New HashSet(Of String) From {"map00360", "map00400"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00135", .Name = "L-Proline", .Formula = "C5H9NO2", .Pathways = New HashSet(Of String) From {"map00330", "map00410"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00152", .Name = "L-Asparagine", .Formula = "C4H8N2O3", .Pathways = New HashSet(Of String) From {"map00250", "map00270"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00037", .CommonName = "Glycine", .Formula = "C2H5NO2", .Pathways = New HashSet(Of String) From {"map00260", "map00330"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00041", .CommonName = "Alanine", .Formula = "C3H7NO2", .Pathways = New HashSet(Of String) From {"map00250", "map00470"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00049", .CommonName = "L-Aspartate", .Formula = "C4H7NO4", .Pathways = New HashSet(Of String) From {"map00250", "map00270"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00062", .CommonName = "L-Arginine", .Formula = "C6H14N4O2", .Pathways = New HashSet(Of String) From {"map00220", "map00330"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00073", .CommonName = "L-Methionine", .Formula = "C5H11NO2S", .Pathways = New HashSet(Of String) From {"map00270", "map00410"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00079", .CommonName = "L-Phenylalanine", .Formula = "C9H11NO2", .Pathways = New HashSet(Of String) From {"map00360", "map00400"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00135", .CommonName = "L-Proline", .Formula = "C5H9NO2", .Pathways = New HashSet(Of String) From {"map00330", "map00410"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00152", .CommonName = "L-Asparagine", .Formula = "C4H8N2O3", .Pathways = New HashSet(Of String) From {"map00250", "map00270"}})
 
         ' 脂质代谢
-        list.Add(New KEGGMetabolite With {.ID = "C00162", .Name = "Palmitic acid", .Formula = "C16H32O2", .Pathways = New HashSet(Of String) From {"map00061", "map01040"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00226", .Name = "Oleic acid", .Formula = "C18H34O2", .Pathways = New HashSet(Of String) From {"map01040"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00422", .Name = "Arachidonic acid", .Formula = "C20H32O2", .Pathways = New HashSet(Of String) From {"map00590", "map01040"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00162", .CommonName = "Palmitic acid", .Formula = "C16H32O2", .Pathways = New HashSet(Of String) From {"map00061", "map01040"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00226", .CommonName = "Oleic acid", .Formula = "C18H34O2", .Pathways = New HashSet(Of String) From {"map01040"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00422", .CommonName = "Arachidonic acid", .Formula = "C20H32O2", .Pathways = New HashSet(Of String) From {"map00590", "map01040"}})
 
         ' 核苷酸代谢
-        list.Add(New KEGGMetabolite With {.ID = "C00002", .Name = "ATP", .Formula = "C10H12N5O13P3", .Pathways = New HashSet(Of String) From {"map00010", "map00190", "map00230"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00003", .Name = "NAD+", .Formula = "C21H26N7O14P2", .Pathways = New HashSet(Of String) From {"map00010", "map00190"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00004", .Name = "NADH", .Formula = "C21H27N7O14P2", .Pathways = New HashSet(Of String) From {"map00010", "map00190"}})
-        list.Add(New KEGGMetabolite With {.ID = "C00186", .Name = "AMP", .Formula = "C10H12N5O7P", .Pathways = New HashSet(Of String) From {"map00230", "map00190"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00002", .CommonName = "ATP", .Formula = "C10H12N5O13P3", .Pathways = New HashSet(Of String) From {"map00010", "map00190", "map00230"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00003", .CommonName = "NAD+", .Formula = "C21H26N7O14P2", .Pathways = New HashSet(Of String) From {"map00010", "map00190"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00004", .CommonName = "NADH", .Formula = "C21H27N7O14P2", .Pathways = New HashSet(Of String) From {"map00010", "map00190"}})
+        list.Add(New KEGGMetabolite With {.Id = "C00186", .CommonName = "AMP", .Formula = "C10H12N5O7P", .Pathways = New HashSet(Of String) From {"map00230", "map00190"}})
 
         ' 计算精确分子量
         For Each m In list
