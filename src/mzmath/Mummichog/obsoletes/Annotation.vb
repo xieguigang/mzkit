@@ -146,47 +146,6 @@ Public Module Annotation
         Return scores.ToArray
     End Function
 
-    ''' <summary>
-    ''' Do ms1 peak list annotation based on the given biological context information
-    ''' </summary>
-    ''' <param name="candidates"></param>
-    ''' <param name="background"></param>
-    ''' <param name="minhit"></param>
-    ''' <param name="permutation"></param>
-    ''' <param name="modelSize"></param>
-    ''' <param name="pinned"></param>
-    ''' <param name="ignoreTopology"></param>
-    ''' <returns></returns>
-    ''' <remarks>
-    ''' this function is based on the Monte-Carlo method for run candidate search
-    ''' </remarks>
-    <Extension>
-    Public Function PeakListAnnotation(candidates As IEnumerable(Of MzSet),
-                                       background As IEnumerable(Of NamedValue(Of NetworkGraph)),
-                                       Optional minhit As Integer = 3,
-                                       Optional permutation As Integer = 100,
-                                       Optional modelSize As Integer = -1,
-                                       Optional pinned As String() = Nothing,
-                                       Optional ignoreTopology As Boolean = False,
-                                       Optional mutation_rate As Double = 0.3) As ActivityEnrichment()
-
-        Dim allsubgraph As NamedValue(Of NetworkGraph)() = background.ToArray
-
-        If modelSize <= 0 Then
-            modelSize = allsubgraph _
-                .Select(Function(g) g.Value.vertex) _
-                .IteratesALL _
-                .Select(Function(v) v.label) _
-                .Distinct _
-                .Count
-        End If
-
-        Dim monteCarlo As New MonteCarlo(allsubgraph, modelSize, pinned, ignoreTopology)
-        Dim result As ActivityEnrichment() = monteCarlo.Solve(candidates, permutation, mutation_rate)
-
-        Return result
-    End Function
-
     <Extension>
     Public Function Score(tmp1 As ActivityEnrichment(), Optional ignoreTopology As Boolean = False) As Double
         If ignoreTopology Then

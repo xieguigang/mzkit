@@ -15,18 +15,15 @@
 ' 依赖: 仅使用VB.NET基础数学函数 (System.Math)，无第三方库
 ' ============================================================================
 
-Imports System.Math
 Imports System.Data
-Imports System.Linq
-Imports System.Collections.Generic
-Imports System.Runtime.CompilerServices
+Imports System.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 Imports Microsoft.VisualBasic.Math.Statistics
-Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis.FishersExact
+Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 
 ''' <summary>
 ''' KEGG代谢物数据模型
@@ -52,12 +49,15 @@ Public Class KEGGMetabolite
     ''' 从分子式重新计算精确分子量 (当ExactMass不可靠时使用)
     ''' </summary>
     Public Function RecalculateMass() As Double
-        If String.IsNullOrEmpty(Formula) Then Return ExactMass
-        Dim mass = FormulaUtils.CalculateMonoisotopicMass(Formula)
-        If mass > 0 Then
-            ExactMass = mass
+        If String.IsNullOrEmpty(Formula) Then
+            Return ExactMass
+        Else
+            Dim mass = FormulaScanner.EvaluateExactMass(Formula)
+            If mass > 0 Then
+                ExactMass = mass
+            End If
+            Return ExactMass
         End If
-        Return ExactMass
     End Function
 
     Public Overrides Function ToString() As String
@@ -103,7 +103,7 @@ Public Class TheoreticalMz
     End Property
 
     Public Overrides Function ToString() As String
-        Return $"{Metabolite.ID} {Adduct.Name} m/z={Mz:F6}"
+        Return $"{Metabolite.ID} {Adduct.name} m/z={Mz:F6}"
     End Function
 End Class
 
@@ -132,7 +132,7 @@ Public Class MzMatch
     End Property
 
     Public Overrides Function ToString() As String
-        Return $"{Peak.ID} -> {Theoretical.Metabolite.ID} {Theoretical.Adduct.Name} ({PpmError:F2} ppm)"
+        Return $"{Peak.ID} -> {Theoretical.Metabolite.ID} {Theoretical.Adduct.name} ({PpmError:F2} ppm)"
     End Function
 End Class
 
@@ -242,7 +242,7 @@ Public Class AnnotationResult
     End Property
 
     Public Overrides Function ToString() As String
-        Return $"#{Rank} {Peak.mz:F4} -> {Metabolite.ID} {Metabolite.Name} [{Adduct.Name}] score={PriorityScore:F3} ({ConfidenceLevel})"
+        Return $"#{Rank} {Peak.mz:F4} -> {Metabolite.ID} {Metabolite.Name} [{Adduct.name}] score={PriorityScore:F3} ({ConfidenceLevel})"
     End Function
 End Class
 
@@ -291,51 +291,6 @@ End Class
 ''' </summary>
 Public Module FormulaUtils
 
-    ' --- 单同位素原子质量表 (Da) ---
-    ' 使用IUPAC推荐的单同位素质量
-    Private ReadOnly AtomicMasses As New Dictionary(Of String, Double)(StringComparer.OrdinalIgnoreCase) From
-    {
-        {"H", 1.00782503207},
-        {"C", 12.0},
-        {"N", 14.0030740048},
-        {"O", 15.99491461957},
-        {"F", 18.99840316273},
-        {"Na", 22.9897692809},
-        {"Mg", 23.9850417},
-        {"P", 30.97376163},
-        {"S", 31.972071},
-        {"Cl", 34.96885268},
-        {"K", 38.96370668},
-        {"Ca", 39.96259098},
-        {"Fe", 55.93493633},
-        {"Cu", 62.9295975},
-        {"Zn", 63.9291422},
-        {"Br", 78.9183371},
-        {"I", 126.904473},
-        {"Se", 79.9165213},
-        {"Mn", 54.9380451},
-        {"Co", 58.933195},
-        {"Mo", 97.905404},
-        {"B", 11.0093054},
-        {"Si", 27.9769265325},
-        {"As", 74.9215964},
-        {"Rb", 84.911789738},
-        {"Sr", 87.9056121},
-        {"Al", 25.98689186},
-        {"Li", 7.016003},
-        {"Ag", 106.9050916},
-        {"Cd", 113.9033585},
-        {"Ba", 137.9052472},
-        {"Cr", 51.94050623},
-        {"V", 50.9439595},
-        {"Ni", 57.9353429},
-        {"Sn", 119.901984},
-        {"Sb", 120.9038157},
-        {"Cs", 132.905429},
-        {"Hg", 201.970625},
-        {"Pb", 207.9766278}
-    }
-
     ' --- 同位素质量差 (相对于最丰富同位素) ---
     Public ReadOnly C13_DELTA As Double = 1.0033548378
     Public ReadOnly N15_DELTA As Double = 0.9970349
@@ -355,126 +310,6 @@ Public Module FormulaUtils
     Public ReadOnly H2_ABUNDANCE As Double = 0.000115
 
     ''' <summary>
-    ''' 解析分子式, 返回元素->原子数的字典
-    ''' <para>支持格式: C6H12O6, C10H15N1O2S1, 含括号的如C6H5(OH)2</para>
-    ''' </summary>
-    ''' <param name="formula">分子式字符串</param>
-    Public Function ParseFormula(formula As String) As Dictionary(Of String, Integer)
-        Dim result As New Dictionary(Of String, Integer)(StringComparer.OrdinalIgnoreCase)
-        If String.IsNullOrWhiteSpace(formula) Then Return result
-
-        ' 预处理: 去除空格和常见前缀
-        Dim cleanFormula As String = formula.Trim()
-        ' 去除可能的开头 "C" 前缀 (如某些KEGG格式)
-        ' 不去除, 因为C是碳元素
-
-        ' 处理括号: 展开括号内容
-        cleanFormula = ExpandParentheses(cleanFormula)
-
-        ' 使用正则匹配元素+数字
-        Dim pattern As String = "([A-Z][a-z]?)(\d*)"
-        Dim matches As System.Text.RegularExpressions.MatchCollection =
-            System.Text.RegularExpressions.Regex.Matches(cleanFormula, pattern)
-
-        For Each m As System.Text.RegularExpressions.Match In matches
-            Dim element As String = m.Groups(1).Value
-            Dim countStr As String = m.Groups(2).Value
-            Dim count As Integer = If(String.IsNullOrEmpty(countStr), 1, Integer.Parse(countStr))
-
-            If result.ContainsKey(element) Then
-                result(element) += count
-            Else
-                result(element) = count
-            End If
-        Next
-
-        Return result
-    End Function
-
-    ''' <summary>
-    ''' 展开分子式中的括号, 例如 C6H5(OH)2 -> C6H5O2H2
-    ''' </summary>
-    Private Function ExpandParentheses(formula As String) As String
-        Dim result As New System.Text.StringBuilder(formula.Length)
-        Dim stack As New Stack(Of Integer)()
-        Dim multipliers As New Stack(Of Integer)()
-        Dim i As Integer = 0
-
-        While i < formula.Length
-            Dim ch As Char = formula(i)
-            If ch = "("c Then
-                stack.Push(result.Length)
-                multipliers.Push(1)
-                i += 1
-            ElseIf ch = ")"c Then
-                i += 1
-                ' 读取括号后的倍数
-                Dim numStr As String = ""
-                While i < formula.Length AndAlso Char.IsDigit(formula(i))
-                    numStr &= formula(i)
-                    i += 1
-                End While
-                Dim mult As Integer = If(String.IsNullOrEmpty(numStr), 1, Integer.Parse(numStr))
-                ' 展开括号内容
-                Dim startPos As Integer = stack.Pop()
-                Dim content As String = result.ToString().Substring(startPos)
-                result.Remove(startPos, result.Length - startPos)
-                ' 将内容重复mult次
-                Dim parsed = ParseSimpleFormula(content)
-                For Each kvp In parsed
-                    result.Append(kvp.Key)
-                    If kvp.Value * mult > 1 Then result.Append(kvp.Value * mult)
-                Next
-            Else
-                result.Append(ch)
-                i += 1
-            End If
-        End While
-
-        Return result.ToString()
-    End Function
-
-    ''' <summary>
-    ''' 简单分子式解析 (不含括号)
-    ''' </summary>
-    Private Function ParseSimpleFormula(formula As String) As Dictionary(Of String, Integer)
-        Dim result As New Dictionary(Of String, Integer)(StringComparer.OrdinalIgnoreCase)
-        Dim pattern As String = "([A-Z][a-z]?)(\d*)"
-        Dim matches As System.Text.RegularExpressions.MatchCollection =
-            System.Text.RegularExpressions.Regex.Matches(formula, pattern)
-        For Each m As System.Text.RegularExpressions.Match In matches
-            Dim element As String = m.Groups(1).Value
-            Dim countStr As String = m.Groups(2).Value
-            Dim count As Integer = If(String.IsNullOrEmpty(countStr), 1, Integer.Parse(countStr))
-            If result.ContainsKey(element) Then
-                result(element) += count
-            Else
-                result(element) = count
-            End If
-        Next
-        Return result
-    End Function
-
-    ''' <summary>
-    ''' 根据分子式计算单同位素精确分子量
-    ''' </summary>
-    Public Function CalculateMonoisotopicMass(formula As String) As Double
-        Dim atoms = ParseFormula(formula)
-        If atoms.Count = 0 Then Return 0.0
-
-        Dim mass As Double = 0.0
-        For Each kvp In atoms
-            If AtomicMasses.ContainsKey(kvp.Key) Then
-                mass += AtomicMasses(kvp.Key) * kvp.Value
-            Else
-                ' 未知元素, 返回0表示无法计算
-                Return 0.0
-            End If
-        Next
-        Return mass
-    End Function
-
-    ''' <summary>
     ''' 预测同位素模式 (M+1, M+2相对于M的强度比)
     ''' <para>
     ''' 简化模型:
@@ -485,14 +320,14 @@ Public Module FormulaUtils
     ''' <param name="formula">分子式</param>
     ''' <returns>包含(M+1/M, M+2/M)强度比的数组</returns>
     Public Function PredictIsotopeRatios(formula As String) As Double()
-        Dim atoms = ParseFormula(formula)
-        Dim nC As Integer = If(atoms.ContainsKey("C"), atoms("C"), 0)
-        Dim nH As Integer = If(atoms.ContainsKey("H"), atoms("H"), 0)
-        Dim nN As Integer = If(atoms.ContainsKey("N"), atoms("N"), 0)
-        Dim nO As Integer = If(atoms.ContainsKey("O"), atoms("O"), 0)
-        Dim nS As Integer = If(atoms.ContainsKey("S"), atoms("S"), 0)
-        Dim nCl As Integer = If(atoms.ContainsKey("Cl"), atoms("Cl"), 0)
-        Dim nBr As Integer = If(atoms.ContainsKey("Br"), atoms("Br"), 0)
+        Dim atoms = FormulaScanner.ScanFormula(formula)
+        Dim nC As Integer = If(atoms.CheckElement("C"), atoms("C"), 0)
+        Dim nH As Integer = If(atoms.CheckElement("H"), atoms("H"), 0)
+        Dim nN As Integer = If(atoms.CheckElement("N"), atoms("N"), 0)
+        Dim nO As Integer = If(atoms.CheckElement("O"), atoms("O"), 0)
+        Dim nS As Integer = If(atoms.CheckElement("S"), atoms("S"), 0)
+        Dim nCl As Integer = If(atoms.CheckElement("Cl"), atoms("Cl"), 0)
+        Dim nBr As Integer = If(atoms.CheckElement("Br"), atoms("Br"), 0)
 
         ' M+1 相对强度 (相对于M峰=1.0)
         Dim m1 As Double = nC * C13_ABUNDANCE +
