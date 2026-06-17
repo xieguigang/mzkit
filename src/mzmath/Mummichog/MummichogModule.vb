@@ -22,6 +22,7 @@ Imports System.Collections.Generic
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 
 ''' <summary>
 ''' KEGG代谢物数据模型
@@ -978,7 +979,7 @@ Public Class MummichogAnnotator
                 If i < 0 OrElse i >= _theoreticalLibrary.Count Then Continue For
 
                 Dim theoretical = _theoreticalLibrary(i)
-                Dim ppmError As Double = MathUtils.CalculatePpm(observedMz, theoretical.Mz)
+                Dim ppmError As Double = PPMmethod.PPM(observedMz, theoretical.Mz)
 
                 ' 双重检查ppm容忍度
                 If Math.Abs(ppmError) <= _params.PpmTolerance Then
