@@ -108,12 +108,21 @@ Namespace Ms1
             Return ppmd
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetErrorDalton() As Double
-            Return sample_mz _
-                .Select(Function(mzi) ConvertPpmToMassAccuracy(mzi, DeltaTolerance)) _
-                .Average
+            Return Aggregate mzi As Double
+                   In sample_mz
+                   Into Average(ConvertPpmToMassAccuracy(mzi, DeltaTolerance))
         End Function
 
+        ''' <summary>
+        ''' 计算ppm容忍度对应的绝对质量窗口 (Da)
+        ''' </summary>
+        ''' <param name="exactMass"></param>
+        ''' <param name="ppm"></param>
+        ''' <returns>convert the ppm to da error</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ConvertPpmToMassAccuracy(exactMass As Double, ppm As Double) As Double
             Return ppm * exactMass / 1000000.0
         End Function
