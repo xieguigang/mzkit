@@ -193,6 +193,11 @@ declare namespace mzkit {
    */
    function ms1_xic_bins(files: any, mzdiff?: any, outputdir?: any, n_threads?: any): object;
    /**
+     * @param libtype default value Is ``[1, -1]``.
+     * @param kegg default value Is ``Call "list"("compounds" <- Call GCModeller::"kegg_compounds"("rawList" <- TRUE, "reference_set" <- FALSE), "pathways" <- Call GCModeller::"kegg_maps"())``.
+   */
+   function mummichog_anno(peaks: any, sampleinfo: any, libtype?: any, kegg?: any): object;
+   /**
    */
    function mz_bin_features(mzbins: any): object;
    /**
