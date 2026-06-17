@@ -101,14 +101,11 @@ Public Class MummichogAnnotator
     ''' <param name="metabolites">KEGG代谢物列表</param>
     ''' <param name="pathways">KEGG通路列表</param>
     ''' <param name="params">算法参数 (可选, 使用默认值)</param>
-    Public Sub New(metabolites As IEnumerable(Of KEGGMetabolite),
-                   pathways As IEnumerable(Of KEGGPathway),
-                   Optional params As MummichogParams = Nothing)
-
+    Public Sub New(metabolites As IEnumerable(Of KEGGMetabolite), pathways As IEnumerable(Of KEGGPathway), Optional params As MummichogParams = Nothing)
         _params = If(params, New MummichogParams())
-
         ' 构建代谢物字典
         _metabolites = New Dictionary(Of String, KEGGMetabolite)
+
         For Each m In metabolites
             If m.ExactMass <= 0 AndAlso Not String.IsNullOrEmpty(m.Formula) Then
                 m.RecalculateMass()
