@@ -109,8 +109,4 @@
     <PackageReference Include="System.Resources.Extensions" Version="10.0.9" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="obsoletes\" />
-  </ItemGroup>
-
 </Project>

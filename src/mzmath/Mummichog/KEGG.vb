@@ -40,6 +40,8 @@ Public Class KEGGPathway
     ''' <summary>通路名称</summary>
     Public Property Name As String
 
+    Public Property Description As String
+
     ''' <summary>该通路包含的所有代谢物ID集合</summary>
     Public Property Metabolites As New HashSet(Of String)
 
