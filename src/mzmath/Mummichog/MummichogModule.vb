@@ -626,6 +626,44 @@ End Module
 ' 实现完整的六步算法流程
 ' ========================================================================
 
+' ============================================================================
+' 算法原理说明
+' ----------------------------------------------------------------------------
+'
+' Mummichog算法 (Li et al., 2013, Nature Methods) 是一种基于代谢通路先验
+' 知识的代谢组学预注释方法。与传统"先注释后通路分析"的策略不同, Mummichog
+' 采用"先通路分析, 后代谢物注释"的反向策略:
+'
+' 1. [输入准备] 接收一级质谱峰表(m/z, rt, 样本强度)和统计p值
+'
+' 2. [理论库构建] 将KEGG代谢物与所有可能的加合物组合, 生成理论m/z库
+'    例如: 葡萄糖(M=180.0634) + [M+H]+ -> m/z = 181.0707
+'                   + [M+Na]+ -> m/z = 203.0526
+'                   + [M+K]+  -> m/z = 219.0265
+'
+' 3. [m/z匹配] 在ppm容忍度内, 将实验峰与理论m/z进行多对多模糊匹配
+'    一个实验峰可能对应多个代谢物候选, 一个代谢物也可能被多个峰检测到
+'
+' 4. [背景模型] 统计所有匹配中各加合物的出现频率, 构建经验背景分布
+'    用于后续评估加合物可能性 (常见加合物权重更高)
+'
+' 5. [通路富集] 对每条KEGG通路, 使用超几何检验评估显著差异峰是否富集
+'    H0: 显著峰中匹配到该通路的比例 = 背景中匹配到该通路的比例
+'    H1: 显著峰中匹配到该通路的比例 > 背景中匹配到该通路的比例
+'    使用BH-FDR校正控制错误发现率
+'
+' 6. [反向注释] 仅保留显著通路中的候选代谢物, 综合以下维度打分:
+'    - 通路富集得分: 该代谢物所在显著通路的 -log10(p) 之和
+'    - 加合物一致性: 同一代谢物检测到多个加合物则可信度更高
+'    - 同位素验证: 检测到M+1, M+2同位素峰且强度比符合理论预测
+'    - 质量精度: ppm误差越小得分越高
+'    最终按优先级得分降序排列, 输出预注释结果
+'
+' 优势: 无需MS/MS数据即可进行代谢物预注释, 适合大规模非靶向代谢组学
+' 局限: 预注释结果为putative级别, 需后续MS/MS标准品库搜索验证
+'
+' ============================================================================
+
 ''' <summary>
 ''' Mummichog预注释器
 ''' <para>
@@ -753,9 +791,7 @@ Public Class MummichogAnnotator
     ''' <param name="peaks">一级质谱离子峰数组 (xcms2)</param>
     ''' <param name="pValues">每个峰ID对应的差异表达p值</param>
     ''' <returns>按优先级得分降序排列的注释结果列表</returns>
-    Public Function Annotate(peaks As IEnumerable(Of xcms2),
-                              pValues As Dictionary(Of String, Double)) As List(Of AnnotationResult)
-
+    Public Function Annotate(peaks As IEnumerable(Of xcms2), pValues As Dictionary(Of String, Double)) As List(Of AnnotationResult)
         Dim peakList As List(Of xcms2) = peaks.ToList()
         If peakList.Count = 0 Then Return New List(Of AnnotationResult)
 
@@ -1436,91 +1472,51 @@ Public Class MummichogAnnotator
     ''' <summary>
     ''' 将注释结果导出为DataTable (便于显示和保存)
     ''' </summary>
-    Public Function ResultsToDataTable(results As List(Of AnnotationResult)) As DataTable
-        Dim dt As New DataTable()
-
-        dt.Columns.Add("Rank", GetType(Integer))
-        dt.Columns.Add("Peak_ID", GetType(String))
-        dt.Columns.Add("mz", GetType(Double))
-        dt.Columns.Add("rt", GetType(Double))
-        dt.Columns.Add("PValue", GetType(Double))
-        dt.Columns.Add("KEGG_ID", GetType(String))
-        dt.Columns.Add("Metabolite_Name", GetType(String))
-        dt.Columns.Add("Formula", GetType(String))
-        dt.Columns.Add("Adduct", GetType(String))
-        dt.Columns.Add("PpmError", GetType(Double))
-        dt.Columns.Add("SignificantPathways", GetType(String))
-        dt.Columns.Add("PathwayScore", GetType(Double))
-        dt.Columns.Add("AdductConsistencyScore", GetType(Double))
-        dt.Columns.Add("IsotopeScore", GetType(Double))
-        dt.Columns.Add("MassAccuracyScore", GetType(Double))
-        dt.Columns.Add("DetectedAdducts", GetType(String))
-        dt.Columns.Add("IsotopeDetails", GetType(String))
-        dt.Columns.Add("PriorityScore", GetType(Double))
-        dt.Columns.Add("ConfidenceLevel", GetType(String))
-
-        For Each r In results
-            Dim row As DataRow = dt.NewRow()
-            row("Rank") = r.Rank
-            row("Peak_ID") = r.Peak.ID
-            row("mz") = r.Peak.mz
-            row("rt") = r.Peak.rt
-            row("PValue") = r.PValue
-            row("KEGG_ID") = r.Metabolite.ID
-            row("Metabolite_Name") = r.Metabolite.Name
-            row("Formula") = If(r.Metabolite.Formula, "")
-            row("Adduct") = r.Adduct.Name
-            row("PpmError") = Math.Round(r.PpmError, 3)
-            row("SignificantPathways") = String.Join("; ", r.SignificantPathways.Select(Function(p) p.ID))
-            row("PathwayScore") = Math.Round(r.PathwayScore, 4)
-            row("AdductConsistencyScore") = Math.Round(r.AdductConsistencyScore, 4)
-            row("IsotopeScore") = Math.Round(r.IsotopeScore, 4)
-            row("MassAccuracyScore") = Math.Round(r.MassAccuracyScore, 4)
-            row("DetectedAdducts") = String.Join("; ", r.DetectedAdducts)
-            row("IsotopeDetails") = If(r.IsotopeDetails, "")
-            row("PriorityScore") = Math.Round(r.PriorityScore, 4)
-            row("ConfidenceLevel") = r.ConfidenceLevel
-            dt.Rows.Add(row)
+    Public Shared Iterator Function ResultsToDataTable(results As IEnumerable(Of AnnotationResult)) As IEnumerable(Of MetaboliteResult)
+        For Each r As AnnotationResult In results
+            Yield New MetaboliteResult With {
+                .Rank = r.Rank,
+                .Peak_ID = r.Peak.ID,
+                .mz = r.Peak.mz,
+                .rt = r.Peak.rt,
+                .PValue = r.PValue,
+                .KEGG_ID = r.Metabolite.ID,
+                .Metabolite_Name = r.Metabolite.Name,
+                .Formula = If(r.Metabolite.Formula, ""),
+                .Adduct = r.Adduct.name,
+                .PpmError = Math.Round(r.PpmError, 3),
+                .SignificantPathways = String.Join("; ", r.SignificantPathways.Select(Function(p) p.ID)),
+                .PathwayScore = Math.Round(r.PathwayScore, 4),
+                .AdductConsistencyScore = Math.Round(r.AdductConsistencyScore, 4),
+                .IsotopeScore = Math.Round(r.IsotopeScore, 4),
+                .MassAccuracyScore = Math.Round(r.MassAccuracyScore, 4),
+                .DetectedAdducts = String.Join("; ", r.DetectedAdducts),
+                .IsotopeDetails = If(r.IsotopeDetails, ""),
+                .PriorityScore = Math.Round(r.PriorityScore, 4),
+                .ConfidenceLevel = r.ConfidenceLevel
+            }
         Next
-
-        Return dt
     End Function
 
     ''' <summary>
     ''' 将通路富集结果导出为DataTable
     ''' </summary>
-    Public Function PathwayResultsToDataTable() As DataTable
-        Dim dt As New DataTable()
-
-        dt.Columns.Add("Pathway_ID", GetType(String))
-        dt.Columns.Add("Pathway_Name", GetType(String))
-        dt.Columns.Add("PathwaySize", GetType(Integer))
-        dt.Columns.Add("SignificantHits", GetType(Integer))
-        dt.Columns.Add("BackgroundHits", GetType(Integer))
-        dt.Columns.Add("TotalSignificant", GetType(Integer))
-        dt.Columns.Add("TotalBackground", GetType(Integer))
-        dt.Columns.Add("PValue", GetType(Double))
-        dt.Columns.Add("FDR", GetType(Double))
-        dt.Columns.Add("Score", GetType(Double))
-        dt.Columns.Add("IsSignificant", GetType(Boolean))
-
-        For Each r In _pathwayResults
-            Dim row As DataRow = dt.NewRow()
-            row("Pathway_ID") = r.Pathway.ID
-            row("Pathway_Name") = r.Pathway.Name
-            row("PathwaySize") = r.PathwaySize
-            row("SignificantHits") = r.SignificantHits
-            row("BackgroundHits") = r.BackgroundHits
-            row("TotalSignificant") = r.TotalSignificant
-            row("TotalBackground") = r.TotalBackground
-            row("PValue") = r.PValue
-            row("FDR") = r.FDR
-            row("Score") = Math.Round(r.Score, 4)
-            row("IsSignificant") = r.IsSignificant
-            dt.Rows.Add(row)
+    Public Iterator Function PathwayResultsToDataTable() As IEnumerable(Of PathwayEnrichment)
+        For Each r As PathwayEnrichmentResult In _pathwayResults
+            Yield New PathwayEnrichment With {
+                .Pathway_ID = r.Pathway.ID,
+                .Pathway_Name = r.Pathway.Name,
+                .PathwaySize = r.PathwaySize,
+                .SignificantHits = r.SignificantHits,
+                .BackgroundHits = r.BackgroundHits,
+                .TotalSignificant = r.TotalSignificant,
+                .TotalBackground = r.TotalBackground,
+                .PValue = r.PValue,
+                .FDR = r.FDR,
+                .Score = Math.Round(r.Score, 4),
+                .IsSignificant = r.IsSignificant
+            }
         Next
-
-        Return dt
     End Function
 
 End Class
@@ -1636,40 +1632,4 @@ Public Class KEGGDataLoader
 End Class
 
 
-' ============================================================================
-' 算法原理说明
-' ----------------------------------------------------------------------------
-'
-' Mummichog算法 (Li et al., 2013, Nature Methods) 是一种基于代谢通路先验
-' 知识的代谢组学预注释方法。与传统"先注释后通路分析"的策略不同, Mummichog
-' 采用"先通路分析, 后代谢物注释"的反向策略:
-'
-' 1. [输入准备] 接收一级质谱峰表(m/z, rt, 样本强度)和统计p值
-'
-' 2. [理论库构建] 将KEGG代谢物与所有可能的加合物组合, 生成理论m/z库
-'    例如: 葡萄糖(M=180.0634) + [M+H]+ -> m/z = 181.0707
-'                   + [M+Na]+ -> m/z = 203.0526
-'                   + [M+K]+  -> m/z = 219.0265
-'
-' 3. [m/z匹配] 在ppm容忍度内, 将实验峰与理论m/z进行多对多模糊匹配
-'    一个实验峰可能对应多个代谢物候选, 一个代谢物也可能被多个峰检测到
-'
-' 4. [背景模型] 统计所有匹配中各加合物的出现频率, 构建经验背景分布
-'    用于后续评估加合物可能性 (常见加合物权重更高)
-'
-' 5. [通路富集] 对每条KEGG通路, 使用超几何检验评估显著差异峰是否富集
-'    H0: 显著峰中匹配到该通路的比例 = 背景中匹配到该通路的比例
-'    H1: 显著峰中匹配到该通路的比例 > 背景中匹配到该通路的比例
-'    使用BH-FDR校正控制错误发现率
-'
-' 6. [反向注释] 仅保留显著通路中的候选代谢物, 综合以下维度打分:
-'    - 通路富集得分: 该代谢物所在显著通路的 -log10(p) 之和
-'    - 加合物一致性: 同一代谢物检测到多个加合物则可信度更高
-'    - 同位素验证: 检测到M+1, M+2同位素峰且强度比符合理论预测
-'    - 质量精度: ppm误差越小得分越高
-'    最终按优先级得分降序排列, 输出预注释结果
-'
-' 优势: 无需MS/MS数据即可进行代谢物预注释, 适合大规模非靶向代谢组学
-' 局限: 预注释结果为putative级别, 需后续MS/MS标准品库搜索验证
-'
-' ============================================================================
+
