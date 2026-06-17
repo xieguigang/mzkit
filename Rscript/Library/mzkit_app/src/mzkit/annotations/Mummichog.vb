@@ -102,6 +102,7 @@ Module Mummichog
     Sub Main()
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(PathwayEnrichmentResult()), AddressOf getResultTable)
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(PathwayEnrichment()), AddressOf castResultDataframe)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(MetaboliteResult()), AddressOf mzScore)
     End Sub
 
     <RGenericOverloads("as.data.frame")>
@@ -142,47 +143,34 @@ Module Mummichog
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("mzScore")>
-    Public Function mzScore(result As ActivityEnrichment(),
-                            Optional minHits As Integer = -1,
-                            Optional ignore_topology As Boolean = False) As dataframe
+    <RGenericOverloads("as.data.frame")>
+    Public Function mzScore(result As MetaboliteResult(), <RListObjectArgument> Optional args As list = Nothing, Optional env As Environment = Nothing) As dataframe
+        Dim scores As New dataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = result _
+                .Select(Function(a) a.Rank & "." & a.Peak_ID) _
+                .ToArray
+        }
 
-        Dim resultSet As ActivityEnrichment() = result _
-            .Where(Function(a) a.Input >= minHits) _
-            .ToArray
-        Dim allUnion As MzQuery() = resultSet _
-            .Select(Function(a) a.Hits.SafeQuery) _
-            .IteratesALL _
-            .GroupBy(Function(a) MzQuery.ReferenceKey(a)) _
-            .Select(Function(a) a.First) _
-            .ToArray
-        Dim scores As New dataframe With {.columns = New Dictionary(Of String, Array)}
-        Dim unionScore As New Dictionary(Of String, Double)
-
-        For Each a As MzQuery In allUnion
-            Call unionScore.Add(MzQuery.ReferenceKey(a), 0)
-        Next
-
-        For Each pathway As ActivityEnrichment In resultSet
-            Dim score As Double = If(ignore_topology, 1, pathway.Activity)
-
-            If pathway.Fisher.two_tail_pvalue < 1.0E-100 Then
-                score *= 100
-            Else
-                score *= -std.Log10(pathway.Fisher.two_tail_pvalue) + 1
-            End If
-
-            For Each hit In pathway.Hits.SafeQuery
-                unionScore(MzQuery.ReferenceKey(hit)) += score
-            Next
-        Next
-
-        Call scores.add("mz", allUnion.Select(Function(i) i.mz))
-        Call scores.add("mz_theoretical", allUnion.Select(Function(i) i.mz_ref))
-        Call scores.add("ppm", allUnion.Select(Function(i) i.ppm))
-        Call scores.add("unique_id", allUnion.Select(Function(i) i.unique_id))
-        Call scores.add("name", allUnion.Select(Function(i) i.name))
-        Call scores.add("precursor_type", allUnion.Select(Function(i) i.precursor_type))
-        Call scores.add("score", allUnion.Select(Function(a) unionScore(MzQuery.ReferenceKey(a))))
+        Call scores.add("Rank", From r As MetaboliteResult In result Select r.Rank)
+        Call scores.add("Peak_ID", From r As MetaboliteResult In result Select r.Peak_ID)
+        Call scores.add("m/z", From r As MetaboliteResult In result Select r.mz)
+        Call scores.add("rt", From r As MetaboliteResult In result Select r.rt)
+        Call scores.add("PValue", From r As MetaboliteResult In result Select r.PValue)
+        Call scores.add("KEGG_ID", From r As MetaboliteResult In result Select r.KEGG_ID)
+        Call scores.add("Metabolite_Name", From r As MetaboliteResult In result Select r.Metabolite_Name)
+        Call scores.add("Formula", From r As MetaboliteResult In result Select r.Formula)
+        Call scores.add("Adduct", From r As MetaboliteResult In result Select r.Adduct)
+        Call scores.add("PpmError", From r As MetaboliteResult In result Select r.PpmError)
+        Call scores.add("SignificantPathways", From r As MetaboliteResult In result Select r.SignificantPathways)
+        Call scores.add("PathwayScore", From r As MetaboliteResult In result Select r.PathwayScore)
+        Call scores.add("AdductConsistencyScore", From r As MetaboliteResult In result Select r.AdductConsistencyScore)
+        Call scores.add("IsotopeScore", From r As MetaboliteResult In result Select r.IsotopeScore)
+        Call scores.add("MassAccuracyScore", From r As MetaboliteResult In result Select r.MassAccuracyScore)
+        Call scores.add("DetectedAdducts", From r As MetaboliteResult In result Select r.DetectedAdducts)
+        Call scores.add("IsotopeDetails", From r As MetaboliteResult In result Select r.IsotopeDetails)
+        Call scores.add("PriorityScore", From r As MetaboliteResult In result Select r.PriorityScore)
+        Call scores.add("ConfidenceLevel", From r As MetaboliteResult In result Select r.ConfidenceLevel)
 
         Return scores
     End Function
