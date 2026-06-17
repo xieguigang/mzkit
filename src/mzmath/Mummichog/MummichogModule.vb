@@ -1140,7 +1140,7 @@ Public Class MummichogAnnotator
 
         ' --- 超几何检验 ---
         Dim N As Integer = backgroundPeakIds.Count  ' 背景总数
-        Dim n As Integer = significantPeakIds.Count ' 显著峰总数
+        Dim ni As Integer = significantPeakIds.Count ' 显著峰总数
 
         Dim results As New List(Of PathwayEnrichmentResult)()
 
@@ -1153,14 +1153,14 @@ Public Class MummichogAnnotator
                                   pathwayBackgroundHits(pathwayId).Count, 0)
 
             ' 该通路的显著匹配数
-            Dim k As Integer = If(pathwaySignificantHits.ContainsKey(pathwayId),
+            Dim ki As Integer = If(pathwaySignificantHits.ContainsKey(pathwayId),
                                   pathwaySignificantHits(pathwayId).Count, 0)
 
             ' 跳过没有显著匹配的通路
-            If K = 0 Then Continue For
+            If ki = 0 Then Continue For
 
             ' 超几何检验p值
-            Dim pValue As Double = FisherTest.HypergeometricPValue(N, K, N, K)
+            Dim pValue As Double = FisherTest.HypergeometricPValue(N, K, ni, ki)
 
             ' 收集匹配详情
             Dim hitMatches As New List(Of MzMatch)()
@@ -1178,8 +1178,8 @@ Public Class MummichogAnnotator
                 .Pathway = pathway,
                 .PathwaySize = pathway.Metabolites.Count,
                 .BackgroundHits = K,
-                .SignificantHits = K,
-                .TotalSignificant = N,
+                .SignificantHits = ki,
+                .TotalSignificant = ni,
                 .TotalBackground = N,
                 .PValue = pValue,
                 .HitMatches = hitMatches
