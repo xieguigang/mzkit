@@ -25,6 +25,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
+Imports Microsoft.VisualBasic.Math.Statistics
+Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis.FishersExact
 
 ''' <summary>
 ''' KEGG代谢物数据模型
@@ -1158,7 +1160,7 @@ Public Class MummichogAnnotator
             If K = 0 Then Continue For
 
             ' 超几何检验p值
-            Dim pValue As Double = MathUtils.HypergeometricPValue(N, K, N, K)
+            Dim pValue As Double = FisherTest.HypergeometricPValue(N, K, N, K)
 
             ' 收集匹配详情
             Dim hitMatches As New List(Of MzMatch)()
