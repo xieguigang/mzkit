@@ -1,0 +1,30 @@
+﻿Parameter,Value,Unit,Description
+Dose,5000,given,Administered dose
+Route,SC,,SC
+Cmax,13.75186667,conc,Maximum observed concentration (mean)
+Tmax,3,h,Time of Cmax
+Cmin,0.01984444444,conc,Minimum observed concentration
+Tmin,0,h,Time of Cmin
+Clast,0.2302333333,conc,Last measurable concentration
+Tlast,168,h,Time of last measurable concentration
+C0,0.01984444444,conc,Back-extrapolated concentration at t=0
+LambdaZ,0.02482069488,1/h,Terminal elimination rate constant
+HalfLife,27.9261795,h,Terminal elimination half-life
+RSquared,0.9991795598,,R-squared of terminal phase fit
+AdjRSquared,0.9991111898,,Adjusted R-squared
+NumTerminalPoints,14,,Points used in terminal fit
+TerminalPhaseStart,2,h,Start time of terminal phase
+AUC0_t,573.8836153,conc*h,AUC from 0 to last time (trapezoidal)
+AUC0_inf,583.159477,conc*h,AUC from 0 to infinity
+AUC0_inf_Extrap,9.275861713,conc*h,Extrapolated AUC portion
+AUC_Extrap_Pct,1.59062179,%,Extrapolated AUC percentage
+AUMC0_t,21505.91124,conc*h^2,AUMC from 0 to last time
+AUMC0_inf,23437.97083,conc*h^2,AUMC from 0 to infinity
+MRT,40.19135718,h,Mean residence time
+CL,8.573983957,vol/h,Clearance
+Vd,345.4369025,vol,Apparent volume of distribution (terminal)
+Vss,344.6000517,vol,Steady-state volume of distribution
+Ka,0,1/h,Absorption rate constant (residual method)
+AbsorptionHalfLife,0,h,Absorption half-life
+NumTimePoints,18,,Total time points
+NumReplicates,9,,Biological replicates per time point
