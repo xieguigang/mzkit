@@ -86,8 +86,8 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
-Imports std = System.Math
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
+Imports std = System.Math
 
 ''' <summary>
 ''' Mummichog searches for enrichment patterns on metabolic network, 
@@ -98,26 +98,37 @@ Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Module Mummichog
 
     Sub Main()
-        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(ActivityEnrichment()), AddressOf getResultTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(PathwayEnrichmentResult()), AddressOf getResultTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(PathwayEnrichment()), AddressOf castResultDataframe)
     End Sub
 
-    Private Function getResultTable(result As ActivityEnrichment(), args As list, env As Environment) As dataframe
-        Dim output As New dataframe With {
+    <RGenericOverloads("as.data.frame")>
+    Private Function castResultDataframe(result As PathwayEnrichment(), args As list, env As Environment) As dataframe
+        Dim df As New dataframe With {
             .columns = New Dictionary(Of String, Array),
             .rownames = result _
-                .Select(Function(i) i.Name) _
+                .Select(Function(p) p.Pathway_ID) _
                 .ToArray
         }
 
-        Call output.add("description", result.Select(Function(i) i.Description))
-        Call output.add("Q", result.Select(Function(i) i.Q))
-        Call output.add("input_size", result.Select(Function(i) i.Input))
-        Call output.add("background_size", result.Select(Function(i) i.Background))
-        Call output.add("activity", result.Select(Function(i) i.Activity))
-        Call output.add("p-value", result.Select(Function(i) i.Fisher.two_tail_pvalue))
-        Call output.add("hits", result.Select(Function(i) i.Hits.JoinBy("; ")))
+        Call df.add("Pathway_ID", From p As PathwayEnrichment In result Select p.Pathway_ID)
+        Call df.add("Pathway_Name", From p As PathwayEnrichment In result Select p.Pathway_Name)
+        Call df.add("PathwaySize", From p As PathwayEnrichment In result Select p.PathwaySize)
+        Call df.add("SignificantHits", From p As PathwayEnrichment In result Select p.SignificantHits)
+        Call df.add("BackgroundHits", From p As PathwayEnrichment In result Select p.BackgroundHits)
+        Call df.add("TotalSignificant", From p As PathwayEnrichment In result Select p.TotalSignificant)
+        Call df.add("TotalBackground", From p As PathwayEnrichment In result Select p.TotalBackground)
+        Call df.add("PValue", From p As PathwayEnrichment In result Select p.PValue)
+        Call df.add("FDR", From p As PathwayEnrichment In result Select p.FDR)
+        Call df.add("Score", From p As PathwayEnrichment In result Select p.Score)
+        Call df.add("IsSignificant", From p As PathwayEnrichment In result Select p.IsSignificant)
 
-        Return output
+        Return df
+    End Function
+
+    <RGenericOverloads("as.data.frame")>
+    Private Function getResultTable(result As PathwayEnrichmentResult(), args As list, env As Environment) As dataframe
+        Return castResultDataframe(MummichogAnnotator.PathwayResultsToDataTable(result).ToArray, args, env)
     End Function
 
     ''' <summary>

@@ -16,6 +16,7 @@
 ' ============================================================================
 
 Imports System.Data
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
@@ -112,7 +113,7 @@ Public Class MummichogAnnotator
                 m.RecalculateMass()
             End If
             If m.ExactMass > 0 Then
-                _metabolites(m.ID) = m
+                _metabolites(m.Id) = m
             End If
         Next
 
@@ -386,7 +387,7 @@ Public Class MummichogAnnotator
         Dim totalMatches As Integer = 0
 
         For Each m In matches
-            Dim adductName As String = m.Theoretical.Adduct.Name
+            Dim adductName As String = m.Theoretical.Adduct.name
             If adductCounts.ContainsKey(adductName) Then
                 adductCounts(adductName) += 1
             Else
@@ -402,15 +403,15 @@ Public Class MummichogAnnotator
             ' 常见加合物给予基础权重, 防止罕见加合物频率过低
             Dim freq As Double = CDbl(kvp.Value) / CDbl(Math.Max(1, totalMatches))
             ' 平滑处理: 常见加合物至少0.1, 罕见加合物至少0.01
-            Dim isCommon As Boolean = _adducts.First(Function(a) a.Name = kvp.Key).IsCommon
+            Dim isCommon As Boolean = _adducts.First(Function(a) a.name = kvp.Key).IsCommon
             Dim minFreq As Double = If(isCommon, 0.1, 0.01)
             frequencies(kvp.Key) = Math.Max(freq, minFreq)
         Next
 
         ' 确保所有加合物都有频率值
         For Each adduct In _adducts
-            If Not frequencies.ContainsKey(adduct.Name) Then
-                frequencies(adduct.Name) = If(adduct.IsCommon, 0.1, 0.01)
+            If Not frequencies.ContainsKey(adduct.name) Then
+                frequencies(adduct.name) = If(adduct.IsCommon, 0.1, 0.01)
             End If
         Next
 
@@ -570,7 +571,7 @@ Public Class MummichogAnnotator
         ' metaboliteId -> List(Of MzMatch)
         Dim matchesByMetabolite As New Dictionary(Of String, List(Of MzMatch))
         For Each m In _allMatches
-            Dim metId As String = m.Theoretical.Metabolite.ID
+            Dim metId As String = m.Theoretical.Metabolite.Id
             If Not matchesByMetabolite.ContainsKey(metId) Then
                 matchesByMetabolite(metId) = New List(Of MzMatch)()
             End If
@@ -620,12 +621,12 @@ Public Class MummichogAnnotator
             Dim detectedAdducts As New List(Of String)()
             Dim adductScore As Double = 0.0
 
-            If matchesByMetabolite.ContainsKey(metabolite.ID) Then
-                Dim metMatches = matchesByMetabolite(metabolite.ID)
+            If matchesByMetabolite.ContainsKey(metabolite.Id) Then
+                Dim metMatches = matchesByMetabolite(metabolite.Id)
                 ' 收集该代谢物检测到的所有不同加合物
                 Dim adductSet As New HashSet(Of String)()
                 For Each mm In metMatches
-                    adductSet.Add(mm.Theoretical.Adduct.Name)
+                    adductSet.Add(mm.Theoretical.Adduct.name)
                 Next
                 detectedAdducts = adductSet.ToList()
 
@@ -637,8 +638,8 @@ Public Class MummichogAnnotator
 
                 ' 加合物频率加权 (常见加合物权重更高)
                 Dim freqWeight As Double = 1.0
-                If _adductFrequencies.ContainsKey(adduct.Name) Then
-                    freqWeight = _adductFrequencies(adduct.Name)
+                If _adductFrequencies.ContainsKey(adduct.name) Then
+                    freqWeight = _adductFrequencies(adduct.name)
                 End If
                 adductScore *= freqWeight
             End If
@@ -904,8 +905,17 @@ Public Class MummichogAnnotator
     ''' <summary>
     ''' 将通路富集结果导出为DataTable
     ''' </summary>
-    Public Iterator Function PathwayResultsToDataTable() As IEnumerable(Of PathwayEnrichment)
-        For Each r As PathwayEnrichmentResult In _pathwayResults
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function PathwayResultsToDataTable() As IEnumerable(Of PathwayEnrichment)
+        Return PathwayResultsToDataTable(_pathwayResults)
+    End Function
+
+    ''' <summary>
+    ''' 将通路富集结果导出为DataTable
+    ''' </summary>
+    Public Shared Iterator Function PathwayResultsToDataTable(pathwayResults As IEnumerable(Of PathwayEnrichmentResult)) As IEnumerable(Of PathwayEnrichment)
+        For Each r As PathwayEnrichmentResult In pathwayResults
             Yield New PathwayEnrichment With {
                 .Pathway_ID = r.Pathway.ID,
                 .Pathway_Name = r.Pathway.Name,
