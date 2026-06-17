@@ -3,16 +3,9 @@
 .SH NAME
 peakList_annotation \- do ms1 peaks annotation
 .SH SYNOPSIS
-\fIpeakList_annotation(\fBbackground\fR as list, 
-\fBcandidates\fR as <generic> MzSet[], 
-\fBminhit\fR as integer = 3, 
-\fBpermutation\fR as integer = 100, 
-\fBmodelSize\fR as integer = -1, 
-\fBpinned\fR as string = \fB<NULL>\fR, 
-\fBignore_topology\fR as boolean = FALSE, 
-\fBga\fR as boolean = FALSE, 
-\fBpop_size\fR as integer = 100, 
-\fBmutation_rate\fR as double = 0.3, 
+\fIpeakList_annotation(\fBbackground\fR as <generic> MummichogAnnotator, 
+\fBpeaks\fR as any, 
+\fBsampleinfo\fR as any, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -25,20 +18,6 @@ do ms1 peaks annotation
 \fBbackground\fB \fR\- 
  the enrichment and network topology graph mode list
 . 
-.PP
-.PP
-\fBcandidates\fB \fR\- 
- a set of m/z search result list based on the given background model
-. 
-.PP
-.PP
-\fBminhit\fB \fR\- -. 
-.PP
-.PP
-\fBpermutation\fB \fR\- -. 
-.PP
-.PP
-\fBmodelSize\fB \fR\- -. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 

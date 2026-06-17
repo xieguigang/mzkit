@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.BioDeep.MSEngine.Mummichog.MummichogAnnotator</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>MummichogAnnotator {BioNovoGene.BioDeep.MSEngine.Mummichog}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>MummichogAnnotator</h2>
+
+        <h3>Description</h3>
+
+        <p>Mummichog预注释器
+ 
+ 基于KEGG通路先验知识, 在无MS/MS数据的情况下,
+ 仅利用一级质谱m/z和统计p值进行代谢物预注释
+ 
+ 核心思想: "先通路分析, 后代谢物注释" (Guilt-by-association)</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.BioDeep.MSEngine.Mummichog
+export class MummichogAnnotator {
+   # 获取加合物频率背景模型 (步骤4完成后可用)
+   AdductFrequencies: list;
+   # 获取所有匹配结果 (步骤3完成后可用)
+   AllMatches: <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/Mummichog/MzMatch.html">iterates(MzMatch)</a>;
+   # 获取/设置算法参数
+   Parameters: <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/Mummichog/MummichogParams.html">MummichogParams</a>;
+   # 获取通路富集分析结果 (步骤5完成后可用)
+   PathwayResults: <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/Mummichog/PathwayEnrichmentResult.html">iterates(PathwayEnrichmentResult)</a>;
+   # 获取理论m/z库 (步骤2完成后可用)
+   TheoreticalLibrary: <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/Mummichog/TheoreticalMz.html">iterates(TheoreticalMz)</a>;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>AdductFrequencies</code>: list</li>
+<li>use by <i>property</i> member <code>AllMatches</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/Mummichog/MzMatch.html">iterates(MzMatch)</a></li>
+<li>use by <i>property</i> member <code>Parameters</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/Mummichog/MummichogParams.html">MummichogParams</a></li>
+<li>use by <i>property</i> member <code>PathwayResults</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/Mummichog/PathwayEnrichmentResult.html">iterates(PathwayEnrichmentResult)</a></li>
+<li>use by <i>property</i> member <code>TheoreticalLibrary</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/Mummichog/TheoreticalMz.html">iterates(TheoreticalMz)</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

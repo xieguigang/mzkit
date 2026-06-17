@@ -27,15 +27,7 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>peakList_annotation</strong>(<i>background</i>, <i>candidates</i>,
-    <i>minhit</i> = <span style='color: green;'>3</span>,
-    <i>permutation</i> = <span style='color: green;'>100</span>,
-    <i>modelSize</i> = <span style='color: green;'>-1</span>,
-    <i>pinned</i> = <span style='color: blue !important;'>NULL</span>,
-    <i>ignore.topology</i> = <span style='color: blue !important;'>FALSE</span>,
-    <i>ga</i> = <span style='color: blue !important;'>FALSE</span>,
-    <i>pop.size</i> = <span style='color: green;'>100</span>,
-    <i>mutation.rate</i> = <span style='color: green;'>0.3</span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>peakList_annotation</strong>(<i>background</i>, <i>peaks</i>, <i>sampleinfo</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -43,23 +35,7 @@
         <table>
             
 <dt>background</dt>
-<dd><p>the enrichment and network topology graph mode list. [as list]</p></dd>
-
-
-<dt>candidates</dt>
-<dd><p>a set of m/z search result list based on the given background model. [as <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/Mummichog/MzSet.html">MzSet</a>]</p></dd>
-
-
-<dt>minhit</dt>
-<dd><p>[as integer]</p></dd>
-
-
-<dt>permutation</dt>
-<dd><p>[as integer]</p></dd>
-
-
-<dt>modelSize</dt>
-<dd><p>[as integer]</p></dd>
+<dd><p>the enrichment and network topology graph mode list. [as <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/Mummichog/MummichogAnnotator.html">MummichogAnnotator</a>]</p></dd>
 
 
 <dt>env</dt>
@@ -78,7 +54,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/Mummichog/ActivityEnrichment.html">ActivityEnrichment</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/Mummichog/ActivityEnrichment.html">ActivityEnrichment</a></li></ul>
+        this function returns data object of type list. the list data also has some specificied data fields: <code>list(enrichment, metabolites)</code>.<h4>clr value class</h4><ul><li>list</li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

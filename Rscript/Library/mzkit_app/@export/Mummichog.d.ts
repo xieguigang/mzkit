@@ -52,24 +52,34 @@ declare namespace Mummichog {
     * create kegg pathway network graph background model
     * 
     * 
+     * @param params 
+     * + default value Is ``null``.
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function kegg_background(metabolites: any, pathways: any, params?: object, env?: object): object;
+   /**
+    * create kegg pathway network graph background model
+    * 
+    * 
      * @param maps A collection of the kegg @``T:SMRUCC.genomics.Assembly.KEGG.WebServices.XML.Map`` clr object
      * @param reactions A collection of the kegg @``T:SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Reaction`` clr object
      * @param alternative 
      * + default value Is ``false``.
    */
-   function kegg_background(maps: object, reactions: object, alternative?: boolean): object;
+   function kegg_graph(maps: object, reactions: object, alternative?: boolean): object;
    /**
     * export of the annotation score result table
     * 
     * 
      * @param result the annotation result which is generated from the 
      *  ``peakList_annotation`` function.
-     * @param minHits 
-     * + default value Is ``-1``.
-     * @param ignore_topology 
-     * + default value Is ``false``.
+     * @param args 
+     * + default value Is ``null``.
+     * @param env 
+     * + default value Is ``null``.
    */
-   function mzScore(result: object, minHits?: object, ignore_topology?: boolean): object;
+   function mzScore(result: object, args?: object, env?: object): object;
    /**
     * ### do ms1 peaks annotation
     *  
@@ -77,31 +87,11 @@ declare namespace Mummichog {
     * 
     * 
      * @param background the enrichment and network topology graph mode list
-     * @param candidates a set of m/z search result list based on the given background model
-     * @param minhit -
-     * 
-     * + default value Is ``3``.
-     * @param permutation -
-     * 
-     * + default value Is ``100``.
-     * @param modelSize -
-     * 
-     * + default value Is ``-1``.
-     * @param pinned 
-     * + default value Is ``null``.
-     * @param ignore_topology 
-     * + default value Is ``false``.
-     * @param ga 
-     * + default value Is ``false``.
-     * @param pop_size 
-     * + default value Is ``100``.
-     * @param mutation_rate 
-     * + default value Is ``0.3``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function peakList_annotation(background: object, candidates: object, minhit?: object, permutation?: object, modelSize?: object, pinned?: string, ignore_topology?: boolean, ga?: boolean, pop_size?: object, mutation_rate?: number, env?: object): object;
+   function peakList_annotation(background: object, peaks: any, sampleinfo: any, env?: object): object;
    /**
     * Matches all of the annotation hits candidates from a given of the mass peak list
     * 

@@ -1,12 +1,11 @@
 .\" man page create by R# package system.
-.TH MUMMICHOG 1 2000-1月 "kegg_background" "kegg_background"
+.TH MUMMICHOG 1 2000-1月 "kegg_graph" "kegg_graph"
 .SH NAME
-kegg_background \- create kegg pathway network graph background model
+kegg_graph \- create kegg pathway network graph background model
 .SH SYNOPSIS
-\fIkegg_background(\fBmetabolites\fR as any, 
-\fBpathways\fR as any, 
-\fBparams\fR as <generic> MummichogParams = \fB<NULL>\fR, 
-[\fB<Environment>\fR]);\fR
+\fIkegg_graph(\fBmaps\fR as <generic> Map[], 
+\fBreactions\fR as <generic> Reaction[], 
+\fBalternative\fR as boolean = FALSE);\fR
 .SH DESCRIPTION
 .PP
 create kegg pathway network graph background model
