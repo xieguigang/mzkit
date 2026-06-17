@@ -115,10 +115,20 @@ Public Class MummichogAnnotator
             End If
         Next
 
+        Dim missingRefs = _metabolites.Values.All(Function(c) c.Pathways Is Nothing OrElse c.Pathways.Count = 0)
+
         ' 构建通路字典
         _pathways = New Dictionary(Of String, KEGGPathway)
         For Each p As KEGGPathway In pathways
             _pathways(p.ID) = p
+
+            If missingRefs Then
+                For Each id As String In p.Metabolites.AsEnumerable
+                    If _metabolites.ContainsKey(id) Then
+                        Call _metabolites(id).Pathways.Add(p.ID)
+                    End If
+                Next
+            End If
         Next
 
         ' 获取加合物规则

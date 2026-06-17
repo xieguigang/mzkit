@@ -104,6 +104,13 @@ Module Mummichog
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(PathwayEnrichmentResult()), AddressOf getResultTable)
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(PathwayEnrichment()), AddressOf castResultDataframe)
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(MetaboliteResult()), AddressOf mzScore)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(
+            type:=GetType(AnnotationResult()),
+            handler:=Function(data, args, env)
+                         Dim table = MummichogAnnotator.ResultsToDataTable(DirectCast(data, AnnotationResult())).ToArray
+                         Dim cast = mzScore(table, args, env)
+                         Return cast
+                     End Function)
     End Sub
 
     <RGenericOverloads("as.data.frame")>
