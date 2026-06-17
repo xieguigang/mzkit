@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module testTablkeReader
 
-    Sub Main()
+    Sub Main4()
         Dim table = "E:\biodeep\metauhealth\mzkit-desktop\demo\demo_test20241125\903医院初始数据示例.csv".LoadCsv(Of ScalarPeakReport)
         Dim samples As DataFile() = ScalarPeakReport.ExtractSampleData(table).ToArray
 

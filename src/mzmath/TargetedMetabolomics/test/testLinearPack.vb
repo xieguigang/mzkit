@@ -58,7 +58,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Data
 
 Module testLinearPack
 
-    Sub Main()
+    Sub Main2()
         Dim pack = LinearPack.OpenFile("C:\Users\Administrator\Documents\mzkit\linears\metacardio.linearPack")
 
         Pause()

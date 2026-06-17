@@ -7,10 +7,9 @@
 ' 依赖: .NET Framework 4.8 (仅使用基础数学函数，无第三方库)
 ' ════════════════════════════════════════════════════════════════════
 
-Imports System.Collections.Generic
 Imports System.Globalization
 Imports System.IO
-Imports System.Linq
+Imports std = System.Math
 
 Namespace PKAnalysis
 
@@ -222,7 +221,7 @@ Namespace PKAnalysis
 
             If pk.LambdaZ > 0 Then
                 ' t½ = ln2 / λz
-                pk.HalfLife = Math.Log(2) / pk.LambdaZ
+                pk.HalfLife = std.Log(2) / pk.LambdaZ
 
                 ' AUC(0-∞) = AUC(0-t) + Clast/λz
                 pk.AUC0_inf_Extrap = pk.Clast / pk.LambdaZ
@@ -257,12 +256,12 @@ Namespace PKAnalysis
             ' ════════════════════════════════════════════════
             If route.ToUpper() = "IV" AndAlso nTimes >= 2 AndAlso
                meanConcs(0) > 0 AndAlso meanConcs(1) > 0 AndAlso times(0) >= 0 Then
-                Dim logC0 As Double = Math.Log(meanConcs(0))
-                Dim logC1 As Double = Math.Log(meanConcs(1))
+                Dim logC0 As Double = std.Log(meanConcs(0))
+                Dim logC1 As Double = std.Log(meanConcs(1))
                 Dim dt01 As Double = times(1) - times(0)
-                If Math.Abs(dt01) > 1e-12 Then
+                If std.Abs(dt01) > 0.000000000001 Then
                     Dim slope As Double = (logC1 - logC0) / dt01
-                    pk.C0 = Math.Exp(logC0 - slope * times(0))
+                    pk.C0 = std.Exp(logC0 - slope * times(0))
                 Else
                     pk.C0 = meanConcs(0)
                 End If
@@ -277,7 +276,7 @@ Namespace PKAnalysis
                 Dim kaVal = EstimateKa(times, meanConcs, pk.LambdaZ, pk.Tmax)
                 If kaVal > 0 Then
                     pk.Ka = kaVal
-                    pk.AbsorptionHalfLife = Math.Log(2) / kaVal
+                    pk.AbsorptionHalfLife = std.Log(2) / kaVal
                 End If
             End If
 
@@ -314,8 +313,7 @@ Namespace PKAnalysis
         ''' 对 ln(C) vs t 做线性回归，选择调整 R² 最高的窗口。
         ''' 要求斜率为负（浓度递减）。
         ''' </summary>
-        Private Function FitTerminalPhase(times As Double(), concs As Double(), lastIdx As Integer) As
-            (LambdaZ As Double, RSquared As Double, AdjRSquared As Double, NumPoints As Integer, StartTime As Double)
+        Private Function FitTerminalPhase(times As Double(), concs As Double(), lastIdx As Integer) As (LambdaZ As Double, RSquared As Double, AdjRSquared As Double, NumPoints As Integer, StartTime As Double)
 
             ' 收集末端浓度 > 0 的点（从后往前）
             Dim termTimes As New List(Of Double)()
@@ -345,7 +343,7 @@ Namespace PKAnalysis
                 Dim ys(nPts - 1) As Double
                 For j = 0 To nPts - 1
                     xs(j) = termTimes(j)
-                    ys(j) = Math.Log(termConcs(j))
+                    ys(j) = std.Log(termConcs(j))
                 Next
 
                 ' 线性回归: y = a + b·x,  b = -λz
@@ -358,7 +356,7 @@ Namespace PKAnalysis
                     sumX2 += xs(j) * xs(j)
                 Next
                 Dim denom = n * sumX2 - sumX * sumX
-                If Math.Abs(denom) < 1e-30 Then Continue For
+                If std.Abs(denom) < 1.0E-30 Then Continue For
 
                 Dim b = (n * sumXY - sumX * sumY) / denom
                 Dim a = (sumY - b * sumX) / n
@@ -398,13 +396,13 @@ Namespace PKAnalysis
                                     lambdaZ As Double, tmax As Double) As Double
             ' 末端相拟合: ln(C) = a - λz·t → C_ext = exp(a - λz·t)
             ' 取末端 3 个点拟合截距 a
-            Dim nEnd As Integer = Math.Min(3, times.Length)
+            Dim nEnd As Integer = std.Min(3, times.Length)
             Dim aIntercept As Double = 0
             Dim count As Integer = 0
             Dim sumLogC = 0.0, sumT = 0.0
             For i = times.Length - nEnd To times.Length - 1
                 If concs(i) > 0 Then
-                    sumLogC += Math.Log(concs(i))
+                    sumLogC += std.Log(concs(i))
                     sumT += times(i)
                     count += 1
                 End If
@@ -419,11 +417,11 @@ Namespace PKAnalysis
             Dim resVals As New List(Of Double)()
             For i = 0 To times.Length - 1
                 If times(i) > 0 AndAlso times(i) <= tmax AndAlso concs(i) > 0 Then
-                    Dim cExt = Math.Exp(aIntercept - lambdaZ * times(i))
+                    Dim cExt = std.Exp(aIntercept - lambdaZ * times(i))
                     Dim residual = concs(i) - cExt
                     If residual > 0 Then
                         resTimes.Add(times(i))
-                        resVals.Add(Math.Log(residual))
+                        resVals.Add(std.Log(residual))
                     End If
                 End If
             Next
@@ -440,7 +438,7 @@ Namespace PKAnalysis
                 sx2 += resTimes(i) * resTimes(i)
             Next
             Dim denom = n * sx2 - sx * sx
-            If Math.Abs(denom) < 1e-30 Then Return 0
+            If std.Abs(denom) < 1.0E-30 Then Return 0
             Dim slope = (n * sxy - sx * sy) / denom
 
             ' 斜率应为负
@@ -466,8 +464,8 @@ Namespace PKAnalysis
 
                 If s.N > 1 Then
                     Dim sumSq = d.Quantify.Sum(Function(v) (v - s.Mean) * (v - s.Mean))
-                    s.SD = Math.Sqrt(sumSq / (s.N - 1))
-                    s.SEM = s.SD / Math.Sqrt(s.N)
+                    s.SD = std.Sqrt(sumSq / (s.N - 1))
+                    s.SEM = s.SD / std.Sqrt(s.N)
                 Else
                     s.SD = 0.0
                     s.SEM = 0.0

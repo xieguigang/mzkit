@@ -73,7 +73,7 @@ Module testGCMS
         Pause()
     End Sub
 
-    Sub Main()
+    Sub Main1()
         Call GCMS2()
         Call unitConvertTest()
 
