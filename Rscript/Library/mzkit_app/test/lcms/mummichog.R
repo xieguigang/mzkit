@@ -7,3 +7,5 @@ let [enrichment, metabolites] = mummichog_anno(peaks = data, sampleinfo = sample
 print(enrichment);
 print(metabolites);
 
+write.csv(enrichment, file = "Z:/test_kegg_pathway.csv");
+write.csv(metabolites, file = "Z:/test_anno.csv");
