@@ -15,11 +15,13 @@
 #   pk_combined.pdf/png       — All panels combined
 # ════════════════════════════════════════════════════════════════════
 
+workdir = "G:\\mzkit\\src\\mzmath\\TargetedMetabolomics\\test\\PKanalysis";
+
 # ── Parse arguments ──
 args <- commandArgs(trailingOnly = TRUE)
-summary_csv <- if (length(args) >= 1) args[1] else "pk_summary.csv"
-params_csv  <- if (length(args) >= 2) args[2] else "pk_parameters.csv"
-out_dir     <- if (length(args) >= 3) args[3] else "."
+summary_csv <- file.path(workdir, "pk_summary.csv")
+params_csv  <- file.path(workdir, "pk_parameters.csv") 
+out_dir     <- workdir
 
 # ── Load packages (install if missing) ──
 required_pkgs <- c("ggplot2", "dplyr", "tidyr", "scales", "gridExtra")
