@@ -207,7 +207,8 @@ Module Mummichog
         End If
 
         Dim groups = DataGroup.CreateDataGroups(sampleIds.populates(Of SampleInfo)(env)).ToArray
-        Dim metabo = background.Annotate(pull.populates(Of xcms2)(env), groups).ToArray
+        Dim peaktable = pull.populates(Of xcms2)(env).ToArray
+        Dim metabo = background.Annotate(peaktable, groups).ToArray
         Dim enrich = background.PathwayResults.ToArray
 
         Return New list(
