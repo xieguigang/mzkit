@@ -20,6 +20,8 @@ Imports System.Data
 Imports System.Linq
 Imports System.Collections.Generic
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 
 ''' <summary>
 ''' KEGG代谢物数据模型
@@ -96,7 +98,7 @@ Public Class AdductRule
     Public Property Multiplier As Integer = 1
 
     ''' <summary>电离模式</summary>
-    Public Property Mode As IonizationMode
+    Public Property Mode As IonModes
 
     ''' <summary>是否为常见加合物 (用于背景模型加权)</summary>
     Public Property IsCommon As Boolean = True
@@ -291,7 +293,7 @@ Public Class MummichogParams
     Public Property FdrCutoff As Double = 0.2
 
     ''' <summary>电离模式, 默认正离子</summary>
-    Public Property Mode As IonizationMode = IonizationMode.Positive
+    Public Property Mode As IonModes = IonModes.Positive
 
     ''' <summary>同位素搜索m/z窗口 (ppm), 默认5.0</summary>
     Public Property IsotopePpmTolerance As Double = 10.0
@@ -914,54 +916,54 @@ Public Module AdductDefinitions
         ' 主要加合物 (常见, 高权重)
         adducts.Add(New AdductRule With {
             .Name = "[M+H]+", .Charge = 1, .MassAddition = PROTON_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Positive, .IsCommon = True})
+            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = True})
 
         adducts.Add(New AdductRule With {
             .Name = "[M+Na]+", .Charge = 1, .MassAddition = SODIUM_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Positive, .IsCommon = True})
+            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = True})
 
         adducts.Add(New AdductRule With {
             .Name = "[M+NH4]+", .Charge = 1, .MassAddition = AMMONIUM_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Positive, .IsCommon = True})
+            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = True})
 
         adducts.Add(New AdductRule With {
             .Name = "[M+K]+", .Charge = 1, .MassAddition = POTASSIUM_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Positive, .IsCommon = True})
+            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = True})
 
         ' 中性丢失加合物
         adducts.Add(New AdductRule With {
             .Name = "[M+H-H2O]+", .Charge = 1, .MassAddition = PROTON_MASS - WATER_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Positive, .IsCommon = False})
+            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = False})
 
         adducts.Add(New AdductRule With {
             .Name = "[M+H-NH3]+", .Charge = 1, .MassAddition = PROTON_MASS - NH3_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Positive, .IsCommon = False})
+            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = False})
 
         adducts.Add(New AdductRule With {
             .Name = "[M+H-CO2]+", .Charge = 1, .MassAddition = PROTON_MASS - CO2_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Positive, .IsCommon = False})
+            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = False})
 
         adducts.Add(New AdductRule With {
             .Name = "[M+H-2H2O]+", .Charge = 1, .MassAddition = PROTON_MASS - 2 * WATER_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Positive, .IsCommon = False})
+            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = False})
 
         ' 二聚体加合物
         adducts.Add(New AdductRule With {
             .Name = "[2M+H]+", .Charge = 1, .MassAddition = PROTON_MASS,
-            .Multiplier = 2, .Mode = IonizationMode.Positive, .IsCommon = False})
+            .Multiplier = 2, .Mode = IonModes.Positive, .IsCommon = False})
 
         adducts.Add(New AdductRule With {
             .Name = "[2M+Na]+", .Charge = 1, .MassAddition = SODIUM_MASS,
-            .Multiplier = 2, .Mode = IonizationMode.Positive, .IsCommon = False})
+            .Multiplier = 2, .Mode = IonModes.Positive, .IsCommon = False})
 
         ' 多电荷加合物
         adducts.Add(New AdductRule With {
             .Name = "[M+2H]2+", .Charge = 2, .MassAddition = 2 * PROTON_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Positive, .IsCommon = False})
+            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = False})
 
         adducts.Add(New AdductRule With {
             .Name = "[M+H+Na]2+", .Charge = 2, .MassAddition = PROTON_MASS + SODIUM_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Positive, .IsCommon = False})
+            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = False})
 
         Return adducts
     End Function
@@ -979,52 +981,52 @@ Public Module AdductDefinitions
         ' 主要加合物
         adducts.Add(New AdductRule With {
             .Name = "[M-H]-", .Charge = -1, .MassAddition = -PROTON_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Negative, .IsCommon = True})
+            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = True})
 
         adducts.Add(New AdductRule With {
             .Name = "[M+Cl]-", .Charge = -1, .MassAddition = CHLORIDE_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Negative, .IsCommon = True})
+            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = True})
 
         ' 中性丢失
         adducts.Add(New AdductRule With {
             .Name = "[M-H-H2O]-", .Charge = -1, .MassAddition = -PROTON_MASS - WATER_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Negative, .IsCommon = False})
+            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = False})
 
         adducts.Add(New AdductRule With {
             .Name = "[M-H-CO2]-", .Charge = -1, .MassAddition = -PROTON_MASS - CO2_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Negative, .IsCommon = False})
+            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = False})
 
         adducts.Add(New AdductRule With {
             .Name = "[M-H-NH3]-", .Charge = -1, .MassAddition = -PROTON_MASS - NH3_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Negative, .IsCommon = False})
+            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = False})
 
         ' 取代加合物
         adducts.Add(New AdductRule With {
             .Name = "[M+Na-2H]-", .Charge = -1, .MassAddition = SODIUM_MASS - 2 * PROTON_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Negative, .IsCommon = False})
+            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = False})
 
         adducts.Add(New AdductRule With {
             .Name = "[M+K-2H]-", .Charge = -1, .MassAddition = POTASSIUM_MASS - 2 * PROTON_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Negative, .IsCommon = False})
+            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = False})
 
         ' 二聚体
         adducts.Add(New AdductRule With {
             .Name = "[2M-H]-", .Charge = -1, .MassAddition = -PROTON_MASS,
-            .Multiplier = 2, .Mode = IonizationMode.Negative, .IsCommon = False})
+            .Multiplier = 2, .Mode = IonModes.Negative, .IsCommon = False})
 
         ' 加合酸根
         adducts.Add(New AdductRule With {
             .Name = "[M-HCOO]-", .Charge = -1, .MassAddition = HCOOH_MASS - PROTON_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Negative, .IsCommon = False})
+            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = False})
 
         adducts.Add(New AdductRule With {
             .Name = "[M-CH3COO]-", .Charge = -1, .MassAddition = CH3COOH_MASS - PROTON_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Negative, .IsCommon = False})
+            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = False})
 
         ' 多电荷
         adducts.Add(New AdductRule With {
             .Name = "[M-2H]2-", .Charge = -2, .MassAddition = -2 * PROTON_MASS,
-            .Multiplier = 1, .Mode = IonizationMode.Negative, .IsCommon = False})
+            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = False})
 
         Return adducts
     End Function
@@ -1032,8 +1034,8 @@ Public Module AdductDefinitions
     ''' <summary>
     ''' 根据电离模式获取对应的加合物列表
     ''' </summary>
-    Public Function GetAdducts(mode As IonizationMode) As List(Of AdductRule)
-        If mode = IonizationMode.Positive Then
+    Public Function GetAdducts(mode As IonModes) As List(Of AdductRule)
+        If mode = IonModes.Positive Then
             Return GetPositiveAdducts()
         Else
             Return GetNegativeAdducts()
@@ -1097,7 +1099,7 @@ Public Class MummichogAnnotator
 
         ' 构建通路字典
         _pathways = New Dictionary(Of String, KEGGPathway)
-        For Each p In pathways
+        For Each p As KEGGPathway In pathways
             _pathways(p.ID) = p
         Next
 
@@ -1182,7 +1184,7 @@ Public Class MummichogAnnotator
         ' ========== 步骤1: 输入数据准备 ==========
         ' 为每个峰附加p值 (默认1.0表示不显著)
         Dim peakPValues As New Dictionary(Of String, Double)
-        For Each p In peakList
+        For Each p As xcms2 In peakList
             Dim pval As Double = 1.0
             If pValues IsNot Nothing AndAlso pValues.ContainsKey(p.ID) Then
                 pval = pValues(p.ID)
@@ -1405,7 +1407,7 @@ Public Class MummichogAnnotator
     ''' <summary>
     ''' 执行通路富集分析
     ''' <para>
-    ''' 1. 筛选显著差异峰 (p值 < 阈值) 作为input list
+    ''' 1. 筛选显著差异峰 (p值 &lt; 阈值) 作为input list
     ''' 2. 对每条KEGG通路, 计算显著峰中匹配到该通路的数量
     ''' 3. 使用超几何检验计算p值
     ''' 4. BH-FDR校正
@@ -1416,7 +1418,7 @@ Public Class MummichogAnnotator
 
         ' --- 筛选显著峰 ---
         Dim significantPeakIds As New HashSet(Of String)
-        For Each p In peaks
+        For Each p As xcms2 In peaks
             Dim pval As Double = If(peakPValues.ContainsKey(p.ID), peakPValues(p.ID), 1.0)
             If pval < _params.PValueCutoff Then
                 significantPeakIds.Add(p.ID)
@@ -1565,7 +1567,7 @@ Public Class MummichogAnnotator
 
         ' --- 峰强度查找 (用于同位素强度比较) ---
         Dim peakIntensityLookup As New Dictionary(Of String, Double)
-        For Each p In peakList
+        For Each p As xcms2 In peakList
             ' 使用所有样本的平均强度作为峰强度估计
             Dim avgIntensity As Double = 0.0
             If p.Properties IsNot Nothing AndAlso p.Properties.Count > 0 Then
