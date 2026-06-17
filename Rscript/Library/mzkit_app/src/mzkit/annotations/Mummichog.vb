@@ -89,7 +89,6 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
-Imports std = System.Math
 
 ''' <summary>
 ''' Mummichog searches for enrichment patterns on metabolic network, 
@@ -144,7 +143,11 @@ Module Mummichog
     ''' <returns></returns>
     <ExportAPI("mzScore")>
     <RGenericOverloads("as.data.frame")>
-    Public Function mzScore(result As MetaboliteResult(), <RListObjectArgument> Optional args As list = Nothing, Optional env As Environment = Nothing) As dataframe
+    Public Function mzScore(result As MetaboliteResult(),
+                            <RListObjectArgument>
+                            Optional args As list = Nothing,
+                            Optional env As Environment = Nothing) As dataframe
+
         Dim scores As New dataframe With {
             .columns = New Dictionary(Of String, Array),
             .rownames = result _
@@ -192,7 +195,7 @@ Module Mummichog
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("peakList_annotation")>
-    <RApiReturn(GetType(ActivityEnrichment))>
+    <RApiReturn("enrichment", "metabolites")>
     Public Function PeakListAnnotation(background As list, candidates As MzSet(),
                                        Optional minhit As Integer = 3,
                                        Optional permutation As Integer = 100,
