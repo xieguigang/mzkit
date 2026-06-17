@@ -69,6 +69,8 @@ Namespace Ms1.PrecursorType
 
     ''' <summary>
     ''' m/z calculator for a given ion precursor type
+    ''' 
+    ''' <para>计算公式: mz = (M * Multiplier + MassAddition) / |Charge|</para>
     ''' </summary>
     ''' <remarks>
     ''' this precursor adduct data model could be used for construct 
@@ -78,17 +80,27 @@ Namespace Ms1.PrecursorType
 
         Const ElectronMassInDalton = 0.0005485799
 
+        ''' <summary>加合物名称, 例如 [M+H]+, [M-H]-</summary>
         Public Property name As String
+
         ''' <summary>
         ''' 电荷量的符号无所谓,计算出来的m/z结果值总是正数
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 电荷数 (正为正离子, 负为负离子)
+        ''' </remarks>
         Public Property charge As Integer
+
+        ''' <summary>分子倍数, 1=单体, 2=二聚体</summary>
         Public Property M As Integer
 
         ''' <summary>
         ''' 是可能会出现负数的加和结果，例如[M-H2O]的adducts为-18
         ''' </summary>
+        ''' <remarks>
+        ''' the mass addition value, 质量增加值 (Da), 包含所有质子/钠/钾等的加减
+        ''' </remarks>
         Public Property adducts As Double
         ''' <summary>
         ''' only one of the char +/-
@@ -98,6 +110,9 @@ Namespace Ms1.PrecursorType
         ''' equals to the <see cref="IonModes"/>
         ''' </remarks>
         Public Property mode As Char
+
+        ''' <summary>是否为常见加合物 (用于背景模型加权)</summary>
+        Public Property IsCommon As Boolean = True
 
         Public ReadOnly Property IsEmpty As Boolean
             Get
@@ -141,8 +156,8 @@ Namespace Ms1.PrecursorType
         ''' <summary>
         ''' 通过所给定的精确分子质量计算出``m/z``
         ''' </summary>
-        ''' <param name="mass#"></param>
-        ''' <returns></returns>
+        ''' <param name="mass">the exact mass value</param>
+        ''' <returns>计算给定代谢物在此加合物下的理论m/z</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CalcMZ(mass#) As Double
             Return AdductMZ(mass, adducts, charge, IonMode:=If(mode = "+"c, IonModes.Positive, IonModes.Negative), M:=M)

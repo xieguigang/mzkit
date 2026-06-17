@@ -85,43 +85,6 @@ Public Class KEGGPathway
 End Class
 
 ''' <summary>
-''' 加合物规则定义
-''' <para>计算公式: mz = (M * Multiplier + MassAddition) / |Charge|</para>
-''' </summary>
-Public Class AdductRule
-
-    ''' <summary>加合物名称, 例如 [M+H]+, [M-H]-</summary>
-    Public Property Name As String
-
-    ''' <summary>电荷数 (正为正离子, 负为负离子)</summary>
-    Public Property Charge As Integer
-
-    ''' <summary>质量增加值 (Da), 包含所有质子/钠/钾等的加减</summary>
-    Public Property MassAddition As Double
-
-    ''' <summary>分子倍数, 1=单体, 2=二聚体</summary>
-    Public Property Multiplier As Integer = 1
-
-    ''' <summary>电离模式</summary>
-    Public Property Mode As IonModes
-
-    ''' <summary>是否为常见加合物 (用于背景模型加权)</summary>
-    Public Property IsCommon As Boolean = True
-
-    ''' <summary>
-    ''' 计算给定代谢物在此加合物下的理论m/z
-    ''' </summary>
-    ''' <param name="metaboliteMass">代谢物精确分子量</param>
-    Public Function CalculateMz(metaboliteMass As Double) As Double
-        Return (metaboliteMass * Multiplier + MassAddition) / Math.Abs(Charge)
-    End Function
-
-    Public Overrides Function ToString() As String
-        Return Name
-    End Function
-End Class
-
-''' <summary>
 ''' 理论m/z条目 (代谢物 + 加合物的组合)
 ''' </summary>
 Public Class TheoreticalMz
@@ -130,12 +93,12 @@ Public Class TheoreticalMz
     Public Property Metabolite As KEGGMetabolite
 
     ''' <summary>对应的加合物规则</summary>
-    Public Property Adduct As AdductRule
+    Public Property Adduct As MzCalculator
 
     ''' <summary>理论m/z值</summary>
     Public ReadOnly Property Mz As Double
         Get
-            Return Adduct.CalculateMz(Metabolite.ExactMass)
+            Return Adduct.CalcMZ(Metabolite.ExactMass)
         End Get
     End Property
 
@@ -236,7 +199,7 @@ Public Class AnnotationResult
     Public Property Metabolite As KEGGMetabolite
 
     ''' <summary>推断的加合物类型</summary>
-    Public Property Adduct As AdductRule
+    Public Property Adduct As MzCalculator
 
     ''' <summary>质量误差 (ppm)</summary>
     Public Property PpmError As Double
@@ -592,62 +555,26 @@ Public Module AdductDefinitions
     '''       [2M+H]+, [2M+Na]+, [M+2H]2+
     ''' </para>
     ''' </summary>
-    Public Function GetPositiveAdducts() As List(Of AdductRule)
-        Dim adducts As New List(Of AdductRule)
-
+    Public Iterator Function GetPositiveAdducts() As IEnumerable(Of MzCalculator)
         ' 主要加合物 (常见, 高权重)
-        adducts.Add(New AdductRule With {
-            .Name = "[M+H]+", .Charge = 1, .MassAddition = PROTON_MASS,
-            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = True})
-
-        adducts.Add(New AdductRule With {
-            .Name = "[M+Na]+", .Charge = 1, .MassAddition = SODIUM_MASS,
-            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = True})
-
-        adducts.Add(New AdductRule With {
-            .Name = "[M+NH4]+", .Charge = 1, .MassAddition = AMMONIUM_MASS,
-            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = True})
-
-        adducts.Add(New AdductRule With {
-            .Name = "[M+K]+", .Charge = 1, .MassAddition = POTASSIUM_MASS,
-            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = True})
+        Yield New MzCalculator With {.name = "[M+H]+", .charge = 1, .adducts = PROTON_MASS, .M = 1, .mode = "+"c, .IsCommon = True}
+        Yield New MzCalculator With {.name = "[M+Na]+", .charge = 1, .adducts = SODIUM_MASS, .M = 1, .mode = "+"c, .IsCommon = True}
+        Yield New MzCalculator With {.name = "[M+NH4]+", .charge = 1, .adducts = AMMONIUM_MASS, .M = 1, .mode = "+"c, .IsCommon = True}
+        Yield New MzCalculator With {.name = "[M+K]+", .charge = 1, .adducts = POTASSIUM_MASS, .M = 1, .mode = "+"c, .IsCommon = True}
 
         ' 中性丢失加合物
-        adducts.Add(New AdductRule With {
-            .Name = "[M+H-H2O]+", .Charge = 1, .MassAddition = PROTON_MASS - WATER_MASS,
-            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = False})
-
-        adducts.Add(New AdductRule With {
-            .Name = "[M+H-NH3]+", .Charge = 1, .MassAddition = PROTON_MASS - NH3_MASS,
-            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = False})
-
-        adducts.Add(New AdductRule With {
-            .Name = "[M+H-CO2]+", .Charge = 1, .MassAddition = PROTON_MASS - CO2_MASS,
-            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = False})
-
-        adducts.Add(New AdductRule With {
-            .Name = "[M+H-2H2O]+", .Charge = 1, .MassAddition = PROTON_MASS - 2 * WATER_MASS,
-            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = False})
+        Yield New MzCalculator With {.name = "[M+H-H2O]+", .charge = 1, .adducts = PROTON_MASS - WATER_MASS, .M = 1, .mode = "+"c, .IsCommon = False}
+        Yield New MzCalculator With {.name = "[M+H-NH3]+", .charge = 1, .adducts = PROTON_MASS - NH3_MASS, .M = 1, .mode = "+"c, .IsCommon = False}
+        Yield New MzCalculator With {.name = "[M+H-CO2]+", .charge = 1, .adducts = PROTON_MASS - CO2_MASS, .M = 1, .mode = "+"c, .IsCommon = False}
+        Yield New MzCalculator With {.name = "[M+H-2H2O]+", .charge = 1, .adducts = PROTON_MASS - 2 * WATER_MASS, .M = 1, .mode = "+"c, .IsCommon = False}
 
         ' 二聚体加合物
-        adducts.Add(New AdductRule With {
-            .Name = "[2M+H]+", .Charge = 1, .MassAddition = PROTON_MASS,
-            .Multiplier = 2, .Mode = IonModes.Positive, .IsCommon = False})
-
-        adducts.Add(New AdductRule With {
-            .Name = "[2M+Na]+", .Charge = 1, .MassAddition = SODIUM_MASS,
-            .Multiplier = 2, .Mode = IonModes.Positive, .IsCommon = False})
+        Yield New MzCalculator With {.name = "[2M+H]+", .charge = 1, .adducts = PROTON_MASS, .M = 2, .mode = "+"c, .IsCommon = False}
+        Yield New MzCalculator With {.name = "[2M+Na]+", .charge = 1, .adducts = SODIUM_MASS, .M = 2, .mode = "+"c, .IsCommon = False}
 
         ' 多电荷加合物
-        adducts.Add(New AdductRule With {
-            .Name = "[M+2H]2+", .Charge = 2, .MassAddition = 2 * PROTON_MASS,
-            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = False})
-
-        adducts.Add(New AdductRule With {
-            .Name = "[M+H+Na]2+", .Charge = 2, .MassAddition = PROTON_MASS + SODIUM_MASS,
-            .Multiplier = 1, .Mode = IonModes.Positive, .IsCommon = False})
-
-        Return adducts
+        Yield New MzCalculator With {.name = "[M+2H]2+", .charge = 2, .adducts = 2 * PROTON_MASS, .M = 1, .mode = "+"c, .IsCommon = False}
+        Yield New MzCalculator With {.name = "[M+H+Na]2+", .charge = 2, .adducts = PROTON_MASS + SODIUM_MASS, .M = 1, .mode = "+"c, .IsCommon = False}
     End Function
 
     ''' <summary>
@@ -657,70 +584,39 @@ Public Module AdductDefinitions
     '''       [M+Na-2H]-, [M+K-2H]-, [2M-H]-, [M-HCOO]-, [M-CH3COO]-
     ''' </para>
     ''' </summary>
-    Public Function GetNegativeAdducts() As List(Of AdductRule)
-        Dim adducts As New List(Of AdductRule)
-
+    Public Iterator Function GetNegativeAdducts() As IEnumerable(Of MzCalculator)
         ' 主要加合物
-        adducts.Add(New AdductRule With {
-            .Name = "[M-H]-", .Charge = -1, .MassAddition = -PROTON_MASS,
-            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = True})
-
-        adducts.Add(New AdductRule With {
-            .Name = "[M+Cl]-", .Charge = -1, .MassAddition = CHLORIDE_MASS,
-            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = True})
+        Yield New MzCalculator With {.name = "[M-H]-", .charge = -1, .adducts = -PROTON_MASS, .M = 1, .mode = "-"c, .IsCommon = True}
+        Yield New MzCalculator With {.name = "[M+Cl]-", .charge = -1, .adducts = CHLORIDE_MASS, .M = 1, .mode = "-"c, .IsCommon = True}
 
         ' 中性丢失
-        adducts.Add(New AdductRule With {
-            .Name = "[M-H-H2O]-", .Charge = -1, .MassAddition = -PROTON_MASS - WATER_MASS,
-            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = False})
-
-        adducts.Add(New AdductRule With {
-            .Name = "[M-H-CO2]-", .Charge = -1, .MassAddition = -PROTON_MASS - CO2_MASS,
-            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = False})
-
-        adducts.Add(New AdductRule With {
-            .Name = "[M-H-NH3]-", .Charge = -1, .MassAddition = -PROTON_MASS - NH3_MASS,
-            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = False})
+        Yield New MzCalculator With {.name = "[M-H-H2O]-", .charge = -1, .adducts = -PROTON_MASS - WATER_MASS, .M = 1, .mode = "-"c, .IsCommon = False}
+        Yield New MzCalculator With {.name = "[M-H-CO2]-", .charge = -1, .adducts = -PROTON_MASS - CO2_MASS, .M = 1, .mode = "-"c, .IsCommon = False}
+        Yield New MzCalculator With {.name = "[M-H-NH3]-", .charge = -1, .adducts = -PROTON_MASS - NH3_MASS, .M = 1, .mode = "-"c, .IsCommon = False}
 
         ' 取代加合物
-        adducts.Add(New AdductRule With {
-            .Name = "[M+Na-2H]-", .Charge = -1, .MassAddition = SODIUM_MASS - 2 * PROTON_MASS,
-            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = False})
-
-        adducts.Add(New AdductRule With {
-            .Name = "[M+K-2H]-", .Charge = -1, .MassAddition = POTASSIUM_MASS - 2 * PROTON_MASS,
-            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = False})
+        Yield New MzCalculator With {.name = "[M+Na-2H]-", .charge = -1, .adducts = SODIUM_MASS - 2 * PROTON_MASS, .M = 1, .mode = "-"c, .IsCommon = False}
+        Yield New MzCalculator With {.name = "[M+K-2H]-", .charge = -1, .adducts = POTASSIUM_MASS - 2 * PROTON_MASS, .M = 1, .mode = "-"c, .IsCommon = False}
 
         ' 二聚体
-        adducts.Add(New AdductRule With {
-            .Name = "[2M-H]-", .Charge = -1, .MassAddition = -PROTON_MASS,
-            .Multiplier = 2, .Mode = IonModes.Negative, .IsCommon = False})
+        Yield New MzCalculator With {.name = "[2M-H]-", .charge = -1, .adducts = -PROTON_MASS, .M = 2, .mode = "-"c, .IsCommon = False}
 
         ' 加合酸根
-        adducts.Add(New AdductRule With {
-            .Name = "[M-HCOO]-", .Charge = -1, .MassAddition = HCOOH_MASS - PROTON_MASS,
-            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = False})
-
-        adducts.Add(New AdductRule With {
-            .Name = "[M-CH3COO]-", .Charge = -1, .MassAddition = CH3COOH_MASS - PROTON_MASS,
-            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = False})
+        Yield New MzCalculator With {.name = "[M-HCOO]-", .charge = -1, .adducts = HCOOH_MASS - PROTON_MASS, .M = 1, .mode = "-"c, .IsCommon = False}
+        Yield New MzCalculator With {.name = "[M-CH3COO]-", .charge = -1, .adducts = CH3COOH_MASS - PROTON_MASS, .M = 1, .mode = "-"c, .IsCommon = False}
 
         ' 多电荷
-        adducts.Add(New AdductRule With {
-            .Name = "[M-2H]2-", .Charge = -2, .MassAddition = -2 * PROTON_MASS,
-            .Multiplier = 1, .Mode = IonModes.Negative, .IsCommon = False})
-
-        Return adducts
+        Yield New MzCalculator With {.name = "[M-2H]2-", .charge = -2, .adducts = -2 * PROTON_MASS, .M = 1, .mode = "-"c, .IsCommon = False}
     End Function
 
     ''' <summary>
     ''' 根据电离模式获取对应的加合物列表
     ''' </summary>
-    Public Function GetAdducts(mode As IonModes) As List(Of AdductRule)
+    Public Function GetAdducts(mode As IonModes) As MzCalculator()
         If mode = IonModes.Positive Then
-            Return GetPositiveAdducts()
+            Return GetPositiveAdducts().ToArray
         Else
-            Return GetNegativeAdducts()
+            Return GetNegativeAdducts().ToArray
         End If
     End Function
 End Module
@@ -745,7 +641,7 @@ Public Class MummichogAnnotator
     ' --- KEGG数据库 ---
     Private _metabolites As New Dictionary(Of String, KEGGMetabolite)
     Private _pathways As New Dictionary(Of String, KEGGPathway)
-    Private _adducts As New List(Of AdductRule)
+    Private _adducts As MzCalculator()
 
     ' --- 算法参数 ---
     Private _params As MummichogParams
@@ -1377,7 +1273,7 @@ Public Class MummichogAnnotator
     ''' </summary>
     Private Function ValidateIsotopePattern(peak As xcms2,
                                              metabolite As KEGGMetabolite,
-                                             adduct As AdductRule,
+                                             adduct As MzCalculator,
                                              sortedPeaks As List(Of xcms2),
                                              peakMzArray As Double(),
                                              peakIntensityLookup As Dictionary(Of String, Double)) As Tuple(Of Double, String)
@@ -1393,8 +1289,8 @@ Public Class MummichogAnnotator
         ' 理论M+1, M+2的m/z (考虑加合物和电荷)
         ' 对于单电荷: M+1的m/z = 原m/z + 13C_delta / |charge|
         ' 对于多电荷: 每个电荷位置都可能有13C, 所以delta = 13C_delta / |charge|
-        Dim charge As Integer = Math.Abs(adduct.Charge)
-        Dim monoMz As Double = adduct.CalculateMz(metabolite.ExactMass)
+        Dim charge As Integer = Math.Abs(adduct.charge)
+        Dim monoMz As Double = adduct.CalcMZ(metabolite.ExactMass)
 
         Dim m1Mz As Double = monoMz + FormulaUtils.C13_DELTA / charge
         Dim m2Mz As Double = monoMz + 2 * FormulaUtils.C13_DELTA / charge
