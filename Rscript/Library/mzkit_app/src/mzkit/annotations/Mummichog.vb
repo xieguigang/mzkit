@@ -63,6 +63,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
@@ -81,6 +82,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices.XML
+Imports SMRUCC.genomics.Model.Network.KEGG
 Imports SMRUCC.genomics.Model.Network.KEGG.ReactionNetwork
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -271,7 +273,7 @@ Module Mummichog
         If msData Is Nothing Then
             Return RInternal.debug.stop("the given ms compound annotation repository can not be nothing!", env)
         ElseIf msData.GetType.ImplementInterface(Of IMzQuery) Then
-            Return DirectCast(msData, IMzQuery).GetCandidateSet(peaks:=mz).ToArray
+            Return MzSet.GetCandidateSet(DirectCast(msData, IMzQuery), peaks:=mz).ToArray
         Else
             Return Message.InCompatibleType(GetType(IMzQuery), msData.GetType, env)
         End If
@@ -377,6 +379,36 @@ Module Mummichog
         }
     End Function
 
+    ''' <summary>
+    ''' Create a graph model for run Mummichog annotation without 
+    ''' any network topology information
+    ''' </summary>
+    ''' <param name="cluster">
+    ''' One of the cluster inside a gsea <see cref="Background"/> model
+    ''' </param>
+    ''' <returns>
+    ''' just create a graph with node set, no edges
+    ''' </returns>
+    <Extension>
+    Public Function SingularGraph(cluster As Cluster) As NetworkGraph
+        Dim g As New NetworkGraph
+        Dim uniqs As IEnumerable(Of BackgroundGene) = cluster.members _
+        .GroupBy(Function(a) a.accessionID) _
+        .Select(Function(d) d.First)
+        Dim metadata As NodeData
+
+        For Each member As BackgroundGene In uniqs
+            metadata = New NodeData With {
+            .label = member.name,
+            .origID = member.accessionID
+        }
+            g.CreateNode(member.accessionID, metadata)
+        Next
+
+        ' just create a graph with node set, no edges
+        Return g
+    End Function
+
     Friend Class MetabolicNetworkGraph : Inherits MapGraphPopulator
 
         ReadOnly reactions As ReactionTable()
@@ -423,9 +455,9 @@ Module Mummichog
                           End Function)
 
         If alternative Then
-            subgraphs = maps.CreateBackground(New MetabolicNetworkGraph(networkIndex.Values)).ToArray
+            subgraphs = GraphBackground.CreateBackground(maps, New MetabolicNetworkGraph(networkIndex.Values)).ToArray
         Else
-            subgraphs = maps.CreateBackground(networkIndex).ToArray
+            subgraphs = GraphBackground.CreateBackground(maps, networkIndex).ToArray
         End If
 
         Dim graphSet As New list With {
