@@ -2,11 +2,13 @@
 .SH NAME
 align_peaktable \- align_peaktable(
     <i>peaks.dir</i> = <span style='color: brown;'><strong>'./peaks'</strong></span>,
-    <i>mzdiff</i> = <span style='color: green;'>0.01</span>)
+    <i>mzdiff</i> = <span style='color: green;'>0.01</span>,
+    <i>method</i> = <span style='color: brown;'><strong>'LOESS'</strong></span>)
 .SH SYNOPSIS
 \fIalign_peaktable(
     <i>peaks.dir</i> = <span style='color: brown;'><strong>'./peaks'</strong></span>,
-    <i>mzdiff</i> = <span style='color: green;'>0.01</span>)\fR
+    <i>mzdiff</i> = <span style='color: green;'>0.01</span>,
+    <i>method</i> = <span style='color: brown;'><strong>'LOESS'</strong></span>)\fR
 .SH OPTIONS
 .PP
 \fBpeaks.dir\fB \fR\- './peaks'. 
@@ -14,9 +16,12 @@ align_peaktable \- align_peaktable(
 .PP
 \fBmzdiff\fB \fR\- 0.01. 
 .PP
+.PP
+\fBmethod\fB \fR\- 'LOESS'. 
+.PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.align_peaktable at ms1_peaktable.R:line 74
+SMRUCC/R#.declare_function.align_peaktable at ms1_peaktable.R:line 78
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang, MIT Licensed 2026

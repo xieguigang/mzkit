@@ -48,6 +48,7 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.01, xic
                                         gaussian_convergence = 0.000001,
                                         recalculate_snr = TRUE
                                    ),
+                                   method = "LOESS",
                                    filename = "peaktable.csv") {
                                     
     const xic_cache = `${outputdir}/XIC_data`;
@@ -104,7 +105,8 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.01, xic
         mzdiff = mzdiff,
         peak.width = peak.width, 
         n_threads = n_threads,
-        tmp_out = file.path(outputdir, "peaksdata")
+        tmp_out = file.path(outputdir, "peaksdata"),
+        method = method
     );
     let rt_shifts = attr(peaktable, "rt.shift");
 

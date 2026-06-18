@@ -39,6 +39,7 @@ const ms1_peaktable = function(files, mzbins, mzdiff = 0.01,
             recalculate_snr = TRUE
         ), 
         simple = TRUE,
+        method = "LOESS",
         n_threads = 32, 
         tmp_out = "./tmp") {
 
@@ -68,10 +69,13 @@ const ms1_peaktable = function(files, mzbins, mzdiff = 0.01,
     };
     # ------------------------ END Parallel --------------------------------
 
-    align_peaktable(peaks_dir = file.path(tmp_out, "peaks"), mzdiff =  mzdiff); 
+    align_peaktable(peaks_dir = file.path(tmp_out, "peaks"),
+        mzdiff =  mzdiff, 
+        method = method 
+    ); 
 }
 
-const align_peaktable = function(peaks_dir = "./peaks", mzdiff = 0.01) {
+const align_peaktable = function(peaks_dir = "./peaks", mzdiff = 0.01, method = "LOESS") {
     let peaksdata = list.files(peaks_dir, pattern = "*.dat");
 
     peaksdata = as.list(peaksdata, names = basename(peaksdata));
@@ -97,7 +101,7 @@ const align_peaktable = function(peaks_dir = "./peaks", mzdiff = 0.01) {
         native_alignment = FALSE,
         aggregate = "Sum",
         tolerance_mode = "Da",
-        method = "Obiwarp",
+        method = method,
         loess_span = 0.75,
         loess_degree = 2,
         reference_sample = "",
