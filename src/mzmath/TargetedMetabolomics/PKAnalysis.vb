@@ -9,6 +9,7 @@
 
 Imports System.Globalization
 Imports System.IO
+Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports std = System.Math
 
 Namespace PKAnalysis
@@ -460,7 +461,7 @@ Namespace PKAnalysis
                 s.Mean = d.Quantify.Average()
                 s.Min = d.Quantify.Min()
                 s.Max = d.Quantify.Max()
-                s.Median = Median(d.Quantify)
+                s.Median = d.Quantify.Median
 
                 If s.N > 1 Then
                     Dim sumSq = d.Quantify.Sum(Function(v) (v - s.Mean) * (v - s.Mean))
@@ -473,18 +474,6 @@ Namespace PKAnalysis
                 result.Add(s)
             Next
             Return result
-        End Function
-
-        ''' <summary>计算中位数</summary>
-        Private Function Median(arr As Double()) As Double
-            Dim sorted = arr.OrderBy(Function(v) v).ToArray()
-            Dim n = sorted.Length
-            If n = 0 Then Return 0
-            If n Mod 2 = 0 Then
-                Return (sorted(n \ 2 - 1) + sorted(n \ 2)) / 2.0
-            Else
-                Return sorted(n \ 2)
-            End If
         End Function
 
         ' ════════════════════════════════════════════════════════════════════
