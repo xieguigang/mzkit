@@ -74,6 +74,7 @@ Public Class zzz
         Call mzDeco.Main()
         Call GCMSLinear.Main()
         Call Linears.Main()
+        Call PKAnalysis.Main()
 
         REnv.Internal.Object.Converts.makeDataframe.addHandler(GetType(ROI()), AddressOf ROISummary)
     End Sub

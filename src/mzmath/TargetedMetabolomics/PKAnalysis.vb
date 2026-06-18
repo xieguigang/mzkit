@@ -521,6 +521,41 @@ Namespace PKAnalysis
         ''' <summary>
         ''' 导出 NCA 参数 CSV（供 R 表格图用）
         ''' </summary>
+        Public Iterator Function NCAParametersTable(pk As PKParameters) As IEnumerable(Of NCAParameters)
+            Yield New NCAParameters("Dose", pk.Dose, "given", "Administered dose")
+            Yield New NCAParameters("Route", 0, "", pk.Route)
+            Yield New NCAParameters("Cmax", pk.Cmax, "conc", "Maximum observed concentration (mean)")
+            Yield New NCAParameters("Tmax", pk.Tmax, "h", "Time of Cmax")
+            Yield New NCAParameters("Cmin", pk.Cmin, "conc", "Minimum observed concentration")
+            Yield New NCAParameters("Tmin", pk.Tmin, "h", "Time of Cmin")
+            Yield New NCAParameters("Clast", pk.Clast, "conc", "Last measurable concentration")
+            Yield New NCAParameters("Tlast", pk.Tlast, "h", "Time of last measurable concentration")
+            Yield New NCAParameters("C0", pk.C0, "conc", "Back-extrapolated concentration at t=0")
+            Yield New NCAParameters("LambdaZ", pk.LambdaZ, "1/h", "Terminal elimination rate constant")
+            Yield New NCAParameters("HalfLife", pk.HalfLife, "h", "Terminal elimination half-life")
+            Yield New NCAParameters("RSquared", pk.RSquared, "", "R-squared of terminal phase fit")
+            Yield New NCAParameters("AdjRSquared", pk.AdjRSquared, "", "Adjusted R-squared")
+            Yield New NCAParameters("NumTerminalPoints", pk.NumTerminalPoints, "", "Points used in terminal fit")
+            Yield New NCAParameters("TerminalPhaseStart", pk.TerminalPhaseStart, "h", "Start time of terminal phase")
+            Yield New NCAParameters("AUC0_t", pk.AUC0_t, "conc*h", "AUC from 0 to last time (trapezoidal)")
+            Yield New NCAParameters("AUC0_inf", pk.AUC0_inf, "conc*h", "AUC from 0 to infinity")
+            Yield New NCAParameters("AUC0_inf_Extrap", pk.AUC0_inf_Extrap, "conc*h", "Extrapolated AUC portion")
+            Yield New NCAParameters("AUC_Extrap_Pct", pk.AUC_Extrap_Pct, "%", "Extrapolated AUC percentage")
+            Yield New NCAParameters("AUMC0_t", pk.AUMC0_t, "conc*h^2", "AUMC from 0 to last time")
+            Yield New NCAParameters("AUMC0_inf", pk.AUMC0_inf, "conc*h^2", "AUMC from 0 to infinity")
+            Yield New NCAParameters("MRT", pk.MRT, "h", "Mean residence time")
+            Yield New NCAParameters("CL", pk.CL, "vol/h", "Clearance")
+            Yield New NCAParameters("Vd", pk.Vd, "vol", "Apparent volume of distribution (terminal)")
+            Yield New NCAParameters("Vss", pk.Vss, "vol", "Steady-state volume of distribution")
+            Yield New NCAParameters("Ka", pk.Ka, "1/h", "Absorption rate constant (residual method)")
+            Yield New NCAParameters("AbsorptionHalfLife", pk.AbsorptionHalfLife, "h", "Absorption half-life")
+            Yield New NCAParameters("NumTimePoints", pk.NumTimePoints, "", "Total time points")
+            Yield New NCAParameters("NumReplicates", pk.NumReplicates, "", "Biological replicates per time point")
+        End Function
+
+        ''' <summary>
+        ''' 导出 NCA 参数 CSV（供 R 表格图用）
+        ''' </summary>
         Public Sub ExportParametersCSV(pk As PKParameters, filePath As String)
             Using writer As New StreamWriter(filePath, False, System.Text.Encoding.UTF8)
                 writer.WriteLine("Parameter,Value,Unit,Description")
@@ -573,4 +608,21 @@ Namespace PKAnalysis
 
     End Module
 
+    Public Class NCAParameters
+        Public Property Parameter As String
+        Public Property Value As String
+        Public Property Unit As String
+        Public Property Description As String
+
+        Sub New()
+        End Sub
+
+        Sub New(Parameter As String, Value As String, Unit As String, Description As String)
+            Me.Parameter = Parameter
+            Me.Value = Value
+            Me.Unit = Unit
+            Me.Description = Description
+        End Sub
+
+    End Class
 End Namespace
