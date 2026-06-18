@@ -1170,11 +1170,14 @@ extract_ms1:
             Return rtwin.TryCast(Of Message)
         End If
 
-        Return {x}.DecoMzGroups(peakwidth:=rtwin,
-                                sn:=snr_threshold,
-                                source:=filename,
-                                interpolate:=interpolate,
-                                joint:=joint).ToArray
+        Return New MzGroup() {x}.DecoMzGroups(
+                peakwidth:=rtwin,
+                sn:=snr_threshold,
+                source:=filename,
+                interpolate:=interpolate,
+                joint:=joint) _
+            .Where(Function(p) (Not p.area.IsNaNImaginary) AndAlso p.area > 0) _
+            .ToArray
     End Function
 
     ''' <summary>
