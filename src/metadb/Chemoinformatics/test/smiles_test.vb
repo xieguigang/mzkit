@@ -5,8 +5,10 @@ Module smiles_test
     Sub Main()
         For Each str As String In {"c1ccccc1", "c1ccccc1C", "C1=CC=CC=C1", "c1ccc2ccccc2c1", "C%12", "[NH3+]"}
             Dim g = ChemicalFormula.ParseGraph(str)
+            Dim f = g.GetFormula(canonical:=True)
+            Dim mass As String = f.ExactMass
 
-            Call Console.WriteLine(g.ToString)
+            Call Console.WriteLine($"{f.ToString}{vbTab}{mass}")
         Next
 
 
