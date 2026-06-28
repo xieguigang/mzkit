@@ -63,13 +63,13 @@ Public Module GraphBuilder
     ''' <param name="spectrum">输入谱图</param>
     ''' <param name="options">构建选项</param>
     ''' <returns>图数据</returns>
-    Public Function BuildGraph(spectrum As Spectrum, Optional options As GraphBuildOptions = Nothing) As GraphData
+    Public Function BuildGraph(spectrum As PeakMs2, Optional options As GraphBuildOptions = Nothing) As GraphData
         If options Is Nothing Then
             options = New GraphBuildOptions()
         End If
 
         Dim graph As New GraphData()
-        graph.SpectrumTitle = spectrum.Title
+        graph.SpectrumTitle = spectrum.lib_guid
 
         ' ========================================================
         ' 步骤1: 预处理峰列表
@@ -90,8 +90,8 @@ Public Module GraphBuilder
         Dim parentNode As New GraphNode()
         parentNode.Id = 0
         parentNode.Type = NodeType.ParentIon
-        parentNode.Mz = spectrum.PepMass
-        parentNode.Intensity = If(spectrum.PepIntensity > 0, spectrum.PepIntensity, spectrum.BasePeakIntensity)
+        parentNode.Mz = spectrum.mz
+        parentNode.Intensity = If(spectrum.intensity > 0, spectrum.intensity, spectrum.BasePeakIntensity)
         parentNode.NormalizedIntensity = If(options.LogIntensity,
                                              std.Log(parentNode.Intensity + 1),
                                             1.0)  ' 母离子归一化强度设为1.0
@@ -105,12 +105,12 @@ Public Module GraphBuilder
             Dim node As New GraphNode()
             node.Id = i + 1
             node.Type = NodeType.Fragment
-            node.Mz = peak.Mz
-            node.Intensity = peak.Intensity
+            node.Mz = peak.mz
+            node.Intensity = peak.intensity
             node.NormalizedIntensity = normalizedIntensities(i)
 
             ' 匹配特征离子
-            Dim bestMatch = FindBestFeatureIonMatch(peak.Mz, options.MassTolerance)
+            Dim bestMatch = FindBestFeatureIonMatch(peak.mz, options.MassTolerance)
             If bestMatch IsNot Nothing Then
                 node.FeatureIonName = bestMatch.Value.Key
                 node.FeatureIonIndex = featureIonList.FindIndex(Function(x) x.Key = bestMatch.Value.Key)
@@ -158,11 +158,11 @@ Public Module GraphBuilder
         graph.Metadata("num_edges") = graph.NumEdges
         graph.Metadata("num_node_features") = graph.NumNodeFeatures
         graph.Metadata("num_edge_features") = graph.NumEdgeFeatures
-        graph.Metadata("pepmass") = spectrum.PepMass
-        graph.Metadata("charge") = spectrum.Charge
+        graph.Metadata("pepmass") = spectrum.mz
+        graph.Metadata("charge") = spectrum.charge
         graph.Metadata("num_fragment_peaks") = processedPeaks.Count
         graph.Metadata("mass_tolerance") = options.MassTolerance
-        graph.Metadata("title") = spectrum.Title
+        graph.Metadata("title") = spectrum.lib_guid
 
         Return graph
     End Function
@@ -170,12 +170,12 @@ Public Module GraphBuilder
     ' ========================================================
     ' 峰预处理
     ' ========================================================
-    Private Function PreprocessPeaks(spectrum As Spectrum, options As GraphBuildOptions) As List(Of ms2)
-        Dim peaks As New List(Of ms2)(spectrum.Peaks)
+    Private Function PreprocessPeaks(spectrum As PeakMs2, options As GraphBuildOptions) As List(Of ms2)
+        Dim peaks As New List(Of ms2)(spectrum.mzInto)
 
         ' 过滤母离子附近的峰
         If options.FilterPrecursorPeak Then
-            peaks = peaks.Where(Function(p) std.Abs(p.mz - spectrum.PepMass) > options.PrecursorFilterWindow).ToList()
+            peaks = peaks.Where(Function(p) std.Abs(p.mz - spectrum.mz) > options.PrecursorFilterWindow).ToList()
         End If
 
         ' 过滤低强度峰
@@ -197,7 +197,7 @@ Public Module GraphBuilder
     ' ========================================================
     ' 强度归一化
     ' ========================================================
-    Private Function NormalizeIntensities(peaks As List(Of ms2), spectrum As Spectrum, options As GraphBuildOptions) As Double()
+    Private Function NormalizeIntensities(peaks As List(Of ms2), spectrum As PeakMs2, options As GraphBuildOptions) As Double()
         If peaks.Count = 0 Then
             Return New Double(-1) {}
         End If
@@ -260,7 +260,7 @@ Public Module GraphBuilder
     ' ========================================================
     ' 构建母离子-碎片边 (基于中性丢失)
     ' ========================================================
-    Private Sub BuildParentFragmentEdges(graph As GraphData, spectrum As Spectrum,
+    Private Sub BuildParentFragmentEdges(graph As GraphData, spectrum As PeakMs2,
                                          options As GraphBuildOptions, edgeTypeList As List(Of String))
         Dim parentNode = graph.Nodes(0)
         Dim edgeTypeListRef = edgeTypeList
@@ -268,7 +268,7 @@ Public Module GraphBuilder
         For i = 1 To graph.Nodes.Count - 1
             Dim fragNode = graph.Nodes(i)
             ' 中性丢失 = 母离子m/z - 碎片m/z
-            Dim neutralLoss = spectrum.PepMass - fragNode.Mz
+            Dim neutralLoss = spectrum.mz - fragNode.Mz
 
             ' 只考虑正的中性丢失 (碎片应该比母离子轻)
             If neutralLoss <= 0 Then Continue For
@@ -400,8 +400,8 @@ Public Module GraphBuilder
     ' ========================================================
     Private Function ComputeLogIntensityRatio(intensityA As Double, intensityB As Double) As Double
         ' 避免log(0)
-        Dim a = If(intensityA > 0, intensityA, 1e-10)
-        Dim b = If(intensityB > 0, intensityB, 1e-10)
+        Dim a = If(intensityA > 0, intensityA, 0.0000000001)
+        Dim b = If(intensityB > 0, intensityB, 0.0000000001)
         Return std.Log(a / b)
     End Function
 

@@ -6,6 +6,7 @@
 ' ============================================================================
 
 Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Insilicon
 
 Module Program
@@ -75,7 +76,7 @@ Module Program
 
         ' 解析MGF文件
         Console.WriteLine($"[1/4] 解析MGF文件: {inputPath}")
-        Dim spectra = MgfParser.ParseMGF(inputPath)
+        Dim spectra = MgfReader.ReadIons(inputPath).IonPeaks.ToArray
         Console.WriteLine($"      共解析 {spectra.Count} 个谱图")
 
         If spectra.Count = 0 Then

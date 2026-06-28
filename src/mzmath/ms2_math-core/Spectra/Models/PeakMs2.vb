@@ -121,7 +121,7 @@ Namespace Spectra
         ''' </summary>
         ''' <returns></returns>
         Public Property intensity As Double Implements IMs1Scan.intensity
-
+        Public Property charge As Integer
         ''' <summary>
         ''' 原始数据文件名
         ''' </summary>
@@ -153,6 +153,16 @@ Namespace Spectra
         ''' </summary>
         ''' <returns></returns>
         Public Property meta As Dictionary(Of String, String)
+
+        Public ReadOnly Property BasePeakIntensity As Double
+            Get
+                Dim maxI = 0.0
+                For Each p In mzInto
+                    If p.intensity > maxI Then maxI = p.intensity
+                Next
+                Return maxI
+            End Get
+        End Property
 
         ''' <summary>
         ''' 获取得到二级碎片的响应强度值的和,这个响应强度值是和其对应的一级母离子的响应强度值是呈正相关的

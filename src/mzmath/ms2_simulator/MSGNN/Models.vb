@@ -4,36 +4,6 @@
 ' 数据结构定义：质谱峰、谱图、图节点、图边、图数据
 ' ============================================================================
 
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-
-''' <summary>
-''' 质谱图 (来自MGF文件的一条记录)
-''' </summary>
-Public Class Spectrum
-    Public Property Title As String = ""
-    Public Property PepMass As Double = 0.0
-    Public Property PepIntensity As Double = 0.0
-    Public Property Charge As Integer = 1
-    Public Property MsLevel As Integer = 2
-    Public Property RetentionTime As Double = 0.0
-    Public Property Peaks As New List(Of ms2)()
-    Public Property Metadata As New Dictionary(Of String, String)()
-
-    Public ReadOnly Property BasePeakIntensity As Double
-        Get
-            Dim maxI = 0.0
-            For Each p In Peaks
-                If p.intensity > maxI Then maxI = p.intensity
-            Next
-            Return maxI
-        End Get
-    End Property
-
-    Public Overrides Function ToString() As String
-        Return $"Spectrum '{Title}', PepMass={PepMass:F4}, Charge={Charge}+, Peaks={Peaks.Count}"
-    End Function
-End Class
-
 ''' <summary>
 ''' 图节点类型枚举
 ''' </summary>

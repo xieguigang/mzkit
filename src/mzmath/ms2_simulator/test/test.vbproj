@@ -18,6 +18,7 @@
     <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\assembly\assembly\assembly-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj" />
     <ProjectReference Include="..\..\..\metadb\SMILES\SMILES.NET5.vbproj" />
