@@ -5,8 +5,8 @@
 ' 读取MS/MS二级质谱图数据
 ' ============================================================================
 
-Imports System.Collections.Generic
 Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Public Module MgfParser
 
@@ -107,7 +107,7 @@ Public Module MgfParser
             If peakParts.Length >= 2 Then
                 Dim mz As Double, intensity As Double
                 If Double.TryParse(peakParts(0), mz) AndAlso Double.TryParse(peakParts(1), intensity) Then
-                    currentSpectrum.Peaks.Add(New Peak(mz, intensity))
+                    currentSpectrum.Peaks.Add(New ms2(mz, intensity))
                 End If
             End If
         Next

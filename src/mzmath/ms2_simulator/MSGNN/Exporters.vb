@@ -4,7 +4,6 @@
 ' 图数据导出器：JSON格式和PyG格式
 ' ============================================================================
 
-Imports System.Collections.Generic
 Imports System.IO
 Imports System.Text
 

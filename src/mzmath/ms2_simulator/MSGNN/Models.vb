@@ -4,24 +4,7 @@
 ' 数据结构定义：质谱峰、谱图、图节点、图边、图数据
 ' ============================================================================
 
-Imports System.Collections.Generic
-
-''' <summary>
-''' 质谱峰
-''' </summary>
-Public Class Peak
-    Public Property Mz As Double
-    Public Property Intensity As Double
-
-    Public Sub New(mz As Double, intensity As Double)
-        Me.Mz = mz
-        Me.Intensity = intensity
-    End Sub
-
-    Public Overrides Function ToString() As String
-        Return $"m/z={Mz:F4}, I={Intensity:F1}"
-    End Function
-End Class
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 ''' <summary>
 ''' 质谱图 (来自MGF文件的一条记录)
@@ -33,14 +16,14 @@ Public Class Spectrum
     Public Property Charge As Integer = 1
     Public Property MsLevel As Integer = 2
     Public Property RetentionTime As Double = 0.0
-    Public Property Peaks As New List(Of Peak)()
+    Public Property Peaks As New List(Of ms2)()
     Public Property Metadata As New Dictionary(Of String, String)()
 
     Public ReadOnly Property BasePeakIntensity As Double
         Get
             Dim maxI = 0.0
             For Each p In Peaks
-                If p.Intensity > maxI Then maxI = p.Intensity
+                If p.intensity > maxI Then maxI = p.intensity
             Next
             Return maxI
         End Get

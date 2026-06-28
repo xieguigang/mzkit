@@ -5,8 +5,8 @@
 ' 将MS/MS谱图转换为GNN训练用的网络图数据
 ' ============================================================================
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports std = System.Math
-Imports System.Linq
 
 Public Module GraphBuilder
 
@@ -170,26 +170,26 @@ Public Module GraphBuilder
     ' ========================================================
     ' 峰预处理
     ' ========================================================
-    Private Function PreprocessPeaks(spectrum As Spectrum, options As GraphBuildOptions) As List(Of Peak)
-        Dim peaks As New List(Of Peak)(spectrum.Peaks)
+    Private Function PreprocessPeaks(spectrum As Spectrum, options As GraphBuildOptions) As List(Of ms2)
+        Dim peaks As New List(Of ms2)(spectrum.Peaks)
 
         ' 过滤母离子附近的峰
         If options.FilterPrecursorPeak Then
-            peaks = peaks.Where(Function(p) std.Abs(p.Mz - spectrum.PepMass) > options.PrecursorFilterWindow).ToList()
+            peaks = peaks.Where(Function(p) std.Abs(p.mz - spectrum.PepMass) > options.PrecursorFilterWindow).ToList()
         End If
 
         ' 过滤低强度峰
         If options.MinIntensityThreshold > 0 Then
-            peaks = peaks.Where(Function(p) p.Intensity >= options.MinIntensityThreshold).ToList()
+            peaks = peaks.Where(Function(p) p.intensity >= options.MinIntensityThreshold).ToList()
         End If
 
         ' 按强度排序，取Top N
         If options.MaxPeaks > 0 AndAlso peaks.Count > options.MaxPeaks Then
-            peaks = peaks.OrderByDescending(Function(p) p.Intensity).Take(options.MaxPeaks).ToList()
+            peaks = peaks.OrderByDescending(Function(p) p.intensity).Take(options.MaxPeaks).ToList()
         End If
 
         ' 按m/z排序
-        peaks = peaks.OrderBy(Function(p) p.Mz).ToList()
+        peaks = peaks.OrderBy(Function(p) p.mz).ToList()
 
         Return peaks
     End Function
@@ -197,8 +197,7 @@ Public Module GraphBuilder
     ' ========================================================
     ' 强度归一化
     ' ========================================================
-    Private Function NormalizeIntensities(peaks As List(Of Peak), spectrum As Spectrum,
-                                          options As GraphBuildOptions) As Double()
+    Private Function NormalizeIntensities(peaks As List(Of ms2), spectrum As Spectrum, options As GraphBuildOptions) As Double()
         If peaks.Count = 0 Then
             Return New Double(-1) {}
         End If
@@ -209,19 +208,19 @@ Public Module GraphBuilder
             Case "base_peak"
                 Dim basePeak = If(spectrum.BasePeakIntensity > 0, spectrum.BasePeakIntensity, 1.0)
                 For i = 0 To peaks.Count - 1
-                    normalized(i) = peaks(i).Intensity / basePeak
+                    normalized(i) = peaks(i).intensity / basePeak
                 Next
 
             Case "total_ion"
-                Dim totalIon = peaks.Sum(Function(p) p.Intensity)
+                Dim totalIon = peaks.Sum(Function(p) p.intensity)
                 If totalIon = 0 Then totalIon = 1.0
                 For i = 0 To peaks.Count - 1
-                    normalized(i) = peaks(i).Intensity / totalIon
+                    normalized(i) = peaks(i).intensity / totalIon
                 Next
 
             Case Else
                 For i = 0 To peaks.Count - 1
-                    normalized(i) = peaks(i).Intensity
+                    normalized(i) = peaks(i).intensity
                 Next
         End Select
 
