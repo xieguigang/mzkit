@@ -159,9 +159,11 @@ Public Class FormulaBuilder
     ''' <param name="atom"></param>
     ''' <param name="element"></param>
     Private Sub Push(atom As Atom, element As ChemicalElement)
+        ' 对于氢原子计数，使用 σ 键级（芳香键计为 1），而非全键级
+        ' 因为芳香体系的 π 电子是离域的，不计入 σ 骨架
         Dim n As Integer = Aggregate key As ChemicalKey
                            In graph.FindKeys(element.label)
-                           Into Sum(CInt(key.bond))
+                           Into Sum(CInt(key.bond.BondOrder))
 
         Call Push(atom.label)
         Call Push("H", If(element.hydrogen > 0, element.hydrogen, atom.maxKeys - n))

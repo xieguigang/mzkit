@@ -58,6 +58,7 @@
 #End Region
 
 Imports System.ComponentModel
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF.Models
 
 ''' <summary>
@@ -76,3 +77,27 @@ Public Enum Bonds As Byte
     <Description("#")> triple = BoundTypes.Triple
     <Description(":")> aromatic = BoundTypes.Aromatic
 End Enum
+
+''' <summary>
+''' Helper functions for chemical bond type operations.
+''' </summary>
+Public Module BondUtils
+
+    ''' <summary>
+    ''' Returns the bond order (number of shared electron pairs) as a Double.
+    ''' single=1, double=2, triple=3, aromatic=1.5
+    ''' </summary>
+    ''' <param name="bond">The bond type enum value.</param>
+    ''' <returns>Bond order as Double.</returns>
+    <Extension>
+    Public Function BondOrder(bond As Bonds) As Double
+        Select Case bond
+            Case Bonds.single : Return 1.0
+            Case Bonds.double : Return 2.0
+            Case Bonds.triple : Return 3.0
+            Case Bonds.aromatic : Return 1.5
+            Case Else : Return 0.0
+        End Select
+    End Function
+
+End Module

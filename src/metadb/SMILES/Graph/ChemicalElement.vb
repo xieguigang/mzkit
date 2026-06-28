@@ -172,11 +172,16 @@ Public Class ChemicalElement : Inherits Node
     Public Shared Sub SetAtomGroups(formula As ChemicalFormula)
         ' build connection edges
         For Each atom As ChemicalElement In formula.vertex
+            Dim connections = GetConnection(formula, atom).ToArray
+            ' 计算键级总和（考虑单/双/三/芳香键的不同贡献）
+            Dim keySum As Integer = CInt(Aggregate link In connections Into Sum(link.keys.BondOrder))
+            ' 实际连接的邻居原子数
+            Dim nConnections As Integer = connections.Length
+
             Call SetAtomGroups(
                 atom:=atom,
-                keys:=Aggregate link
-                      In GetConnection(formula, atom)
-                      Into Sum(link.keys)
+                keys:=keySum,
+                nConnections:=nConnections
             )
         Next
     End Sub
@@ -188,9 +193,17 @@ Public Class ChemicalElement : Inherits Node
         atom.hydrogen = nH
     End Sub
 
-    Private Shared Sub CarbonGroup(ByRef atom As ChemicalElement, keys As Integer)
+    Private Shared Sub CarbonGroup(ByRef atom As ChemicalElement, keys As Integer, nConnections As Integer)
         If atom.aromatic Then
-            atom.setAtomLabel("-CH-", 1)
+            ' 芳香碳的氢原子数取决于实际邻居数：
+            ' 2个邻居（如苯环普通碳）→ 1个H
+            ' 3个邻居（如取代苯环碳或稠环桥头碳）→ 0个H
+            Select Case nConnections
+                Case 2 : atom.setAtomLabel("-CH-", 1)
+                Case 3 : atom.group = "C"        ' 取代位或桥头碳，无氢
+                Case 1 : atom.setAtomLabel("-CH2-", 2)  ' 边缘情况
+                Case Else : atom.setAtomLabel("-CH-", 1)
+            End Select
         Else
             Select Case keys
                 Case 1 : atom.setAtomLabel("-CH3", 3)
@@ -202,7 +215,7 @@ Public Class ChemicalElement : Inherits Node
         End If
     End Sub
 
-    Private Shared Sub OxygenGroup(ByRef atom As ChemicalElement, keys As Integer)
+    Private Shared Sub OxygenGroup(ByRef atom As ChemicalElement, keys As Integer, nConnections As Integer)
         If atom.aromatic Then
             atom.setAtomLabel("-O-", 0)
         Else
@@ -224,7 +237,7 @@ Public Class ChemicalElement : Inherits Node
         End If
     End Sub
 
-    Private Shared Sub NitrogenGroup(ByRef atom As ChemicalElement, keys As Integer)
+    Private Shared Sub NitrogenGroup(ByRef atom As ChemicalElement, keys As Integer, nConnections As Integer)
         Dim n As Integer
 
         ' N -3
@@ -267,12 +280,13 @@ Public Class ChemicalElement : Inherits Node
     ''' Set atom group label based on the chemical keys
     ''' </summary>
     ''' <param name="atom"></param>
-    ''' <param name="keys"></param>
-    Private Shared Sub SetAtomGroups(atom As ChemicalElement, keys As Integer)
+    ''' <param name="keys">Bond order sum (weighted by bond type)</param>
+    ''' <param name="nConnections">Number of connected neighbor atoms</param>
+    Private Shared Sub SetAtomGroups(atom As ChemicalElement, keys As Integer, nConnections As Integer)
         Select Case atom.elementName
-            Case "C" : Call CarbonGroup(atom, keys)
-            Case "O" : Call OxygenGroup(atom, keys)
-            Case "N" : Call NitrogenGroup(atom, keys)
+            Case "C" : Call CarbonGroup(atom, keys, nConnections)
+            Case "O" : Call OxygenGroup(atom, keys, nConnections)
+            Case "N" : Call NitrogenGroup(atom, keys, nConnections)
 
             Case Else
                 Dim key As String = atom.elementName

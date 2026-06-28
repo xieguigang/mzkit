@@ -264,27 +264,39 @@ Namespace Language
                         tmpStr = tmpStr.Replace(charge, "")
                     End If
 
+                    ' 先收集括号内所有元素 token，统一设置后 yield
+                    ' 此模式也便于后续扩展（如读取 ] 后的环编号数字）
+                    Dim elementTokens As New List(Of Token)
                     Dim tmp As String = ""
 
-                    For Each c In tmpStr
-                        If Char.IsUpper(c) Then
+                    For Each ch As Char In tmpStr
+                        If Char.IsUpper(ch) Then
                             If tmp.Length > 0 Then
-                                Dim ion = MeasureElement(tmp)
-                                ion.charge = chargeVal
-                                Yield ion
+                                Dim ionTok = MeasureElement(tmp)
+                                ionTok.charge = chargeVal
+                                elementTokens.Add(ionTok)
                             End If
 
-                            tmp = c
+                            tmp = ch
                         Else
-                            tmp = tmp & c
+                            tmp = tmp & ch
                         End If
                     Next
 
                     If tmp.Length > 0 Then
-                        Dim ion = MeasureElement(tmp)
-                        ion.charge = chargeVal
-                        Yield ion
+                        Dim ionTok = MeasureElement(tmp)
+                        ionTok.charge = chargeVal
+                        elementTokens.Add(ionTok)
                     End If
+
+                    ' NOTE: 环编号数字出现在 ] 之后（如 [NH3+]1）当前无法在这里读取，
+                    ' 因为 Scanner 是逐字符扫描的迭代器模式，提前从 SMILES 读取数字
+                    ' 会导致主循环字符指针错位。此边缘情况需要未来更深入的 Scanner 重构。
+                    ' 目前这类 SMILES 中的环编号会丢失，产生 ElementTypes.None token。
+
+                    For Each t As Token In elementTokens
+                        Yield t
+                    Next
 
                     Return
                 ElseIf c = "["c Then
@@ -319,12 +331,19 @@ Namespace Language
                 ' [H]
                 str = str.GetStackValue("[", "]")
             End If
-            If str.IsPattern("[A-Za-z]+\d+") Then
-                ' removes number
+            If str.IsPattern("[A-Za-z]+%\d{2,}") Then
+                ' SMILES % prefix for ring numbers > 9, e.g. C%12
+                ring = Integer.Parse(str.Match("%\d+").Substring(1))
+                str = str.Match("[a-zA-Z]+")
+            ElseIf str.IsPattern("[A-Za-z]+\d+") Then
+                ' ring number 1-9 attached directly, e.g. C1
                 ring = Integer.Parse(str.Match("\d+"))
                 str = str.Match("[a-zA-Z]+")
             ElseIf str.IsPattern("\d+[A-Za-z]+") Then
-                ' 0C unsure how to parse it
+                ' ring number preceding atom, e.g. 1C
+                ' capture the ring number for potential use
+                Dim ringStr As String = str.Match("\d+")
+                ring = Integer.Parse(ringStr)
                 str = str.Match("[a-zA-Z]+")
             End If
 

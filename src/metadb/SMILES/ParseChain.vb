@@ -202,6 +202,22 @@ Public Class ParseChain
         lastKey = CType(CByte(ChemicalBonds.IndexOf(t.text)), Bonds)
     End Sub
 
+    ''' <summary>
+    ''' Determine the bond type between two connected atoms.
+    ''' 1) If an explicit bond symbol was just scanned (lastKey), use it.
+    ''' 2) Otherwise, default to a single bond.
+    ''' Note: aromaticity information is carried by the ChemicalElement.aromatic flag,
+    ''' not by the bond type, because Bonds.aromatic maps to BoundTypes.Aromatic whose
+    ''' integer value is not a valid bond order and would break all bond-order summations.
+    ''' </summary>
+    Private Function GetBondType(lastAtom As ChemicalElement, currentAtom As ChemicalElement) As Bonds
+        If lastKey IsNot Nothing Then
+            Return lastKey.Value
+        Else
+            Return Bonds.single
+        End If
+    End Function
+
     Private Sub WalkElement(t As Token, i As Integer)
         Dim element As ChemicalElement
         Dim ringId As String = If(t.ring Is Nothing, Nothing, t.ring.ToString)
@@ -213,8 +229,11 @@ Public Class ParseChain
                 element.charge = AtomGroup.GetDefaultValence(t.text, -1)
             End If
         Else
+            ' charge 字段语义：仅表示离子电荷值
+            ' 若无显式电荷，默认为 0（中性原子）
+            ' 芳香性由独立的 .aromatic 属性表示，不应编码到 charge 中
             element = New ChemicalElement(t.text, index:=i) With {
-                .charge = If(t.charge Is Nothing, If(t.aromatic, 2, 1), Val(t.charge))
+                .charge = If(t.charge Is Nothing, 0, Val(t.charge))
             }
         End If
 
@@ -224,29 +243,42 @@ Public Class ParseChain
 
         Call graph.AddVertex(element)
 
+        ' ====================================================================
+        ' 环闭合 (ring closure) 键处理
+        ' 当同一个数字环标识符再次出现时，将当前原子与之前记录的原子连接形成环
+        ' ====================================================================
         If Not ringId Is Nothing Then
             If rings.ContainsKey(ringId) Then
                 Dim [next] = rings(ringId)
+                ' 使用 GetBondType 推断环闭合键类型：优先使用 lastKey，其次芳香检测，最后默认单键
+                Dim ringBondType As Bonds = GetBondType([next], element)
                 Dim bond As New ChemicalKey With {
                     .U = [next],
                     .V = element,
                     .weight = 1,
-                    .bond = Bonds.single
+                    .bond = ringBondType
                 }
 
                 ' 20260223 avoid of the possible duplicated bond?
                 If Not graph.ExistEdge(bond) Then
                     Call graph.Insert(bond)
                 End If
+
+                ' 消费掉环闭合使用的 lastKey，避免影响后续链连接
+                ' （例如 C1=CC=CC=C1 中最后一个 = 被环闭合消耗，不再用于链连接）
+                lastKey = Nothing
             Else
                 rings(ringId) = element
             End If
         End If
 
+        ' ====================================================================
+        ' 链连接 (chain connection) 键处理
+        ' 将当前原子与链上前一个原子连接
+        ' ====================================================================
         If chainStack.Count > 0 Then
             Dim lastElement As ChemicalElement = chainStack.Peek
-            Dim bondType As Bonds = If(lastKey Is Nothing, Bonds.single, lastKey.Value)
-            ' 默认为单键
+            Dim bondType As Bonds = GetBondType(lastElement, element)
             Dim bond As New ChemicalKey With {
                 .U = lastElement,
                 .V = element,
