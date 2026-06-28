@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.9.34714.143
+# Visual Studio Version 18
+VisualStudioVersion = 18.7.11919.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "ms2_simulator.NET5", "ms2_simulator\ms2_simulator.NET5.vbproj", "{6DEEB540-A156-4A77-96FF-6AD19E237791}"
 EndProject
