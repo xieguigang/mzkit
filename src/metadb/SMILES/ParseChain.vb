@@ -66,6 +66,9 @@ Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
+''' <summary>
+''' the SMILES graph parser
+''' </summary>
 Public Class ParseChain
 
     ReadOnly graph As New ChemicalFormula
@@ -100,7 +103,7 @@ Public Class ParseChain
     End Sub
 
     ''' <summary>
-    ''' 
+    ''' Parse the given SMILES string as molecule graph object
     ''' </summary>
     ''' <param name="SMILES"></param>
     ''' <param name="strict"></param>
@@ -114,6 +117,8 @@ Public Class ParseChain
         ' A.B
         ' A and B are the independent parts
         ' the input smiles string needs split these independent parts at first
+        ' CCC.CCO.OCC(O)COP(O)(O)=O
+        ' CCC + CCO + OCC(O)COP(O)(O)=O
 
         Try
             For Each part As String In SMILES.Split("."c)

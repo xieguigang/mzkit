@@ -63,9 +63,18 @@ Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace Language
 
+    ''' <summary>
+    ''' smiles language tokenlicer
+    ''' </summary>
     Public Class Scanner
 
+        ''' <summary>
+        ''' the string char pointer of the smiles string input
+        ''' </summary>
         Dim SMILES As CharPtr
+        ''' <summary>
+        ''' current token buffer
+        ''' </summary>
         Dim buf As New CharBuffer
         Dim openIonStack As Boolean = False
 
