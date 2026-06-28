@@ -66,7 +66,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module graph_test
 
-    Sub Main()
+    Sub Main1()
         Dim data As New List(Of ClusterEntity)
 
         data.Add(New ClusterEntity("leucine", vectorBuilder("CC(C)C[C@H](N)C(O)=O")))

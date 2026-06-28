@@ -63,7 +63,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES
 
 Module annotation_test
 
-    Sub Main()
+    Sub Main1()
         Call annotation_test()
     End Sub
 
