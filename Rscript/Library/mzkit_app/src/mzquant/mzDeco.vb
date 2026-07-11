@@ -791,27 +791,37 @@ Module mzDeco
     Public Function filter_noise_spectrum(<RRawVectorArgument> ions As Object, peaktable As PeakSet,
                                           Optional mzdiff As Double = 0.1,
                                           Optional rt_win As Double = 30,
+                                          Optional strict_filter As Boolean = True,
                                           Optional env As Environment = Nothing) As Object
 
         Dim filterData As New List(Of PeakMs2)
         Dim noiseData As New List(Of PeakMs2)
-        Dim pull As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ions, env)
+        Dim pull As PipeIterator(Of PeakMs2) = pipeline.Stream(Of PeakMs2)(ions, env)
 
         If pull.isError Then
             Return pull.getError
         End If
 
-        ' scan all ms2 level spectrum
-        For Each ion As PeakMs2 In pull.populates(Of PeakMs2)(env)
-            ' find ms1 peak with ms2 precursor mz and rt matches 
-            ' with given mzdiff and rt window size tolerance 
-            If peaktable.FindIonSet(ion.mz, ion.rt, mzdiff, rt_win).Any Then
-                Call filterData.Add(ion)
+        If peaktable Is Nothing Then
+            ' no filter
+            If strict_filter Then
+                Return RInternal.debug.stop("no peaktable data!", env)
             Else
-                ' this ms2 spectrum has no ms1 peak parent ion?
-                Call noiseData.Add(ion)
+                filterData = New List(Of PeakMs2)(pull)
             End If
-        Next
+        Else
+            ' scan all ms2 level spectrum
+            For Each ion As PeakMs2 In pull
+                ' find ms1 peak with ms2 precursor mz and rt matches 
+                ' with given mzdiff and rt window size tolerance 
+                If peaktable.FindIonSet(ion.mz, ion.rt, mzdiff, rt_win).Any Then
+                    Call filterData.Add(ion)
+                Else
+                    ' this ms2 spectrum has no ms1 peak parent ion?
+                    Call noiseData.Add(ion)
+                End If
+            Next
+        End If
 
         Return New vec(filterData.ToArray, RType.GetRSharpType(GetType(PeakMs2))) _
             .setAttribute("noise", noiseData.ToArray)
