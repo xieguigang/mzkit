@@ -66,6 +66,8 @@ declare namespace mzDeco {
      * @param rt_win the rt window size for matches the rt. should be in data unit seconds.
      * 
      * + default value Is ``30``.
+     * @param strict_filter 
+     * + default value Is ``true``.
      * @param env 
      * + default value Is ``null``.
      * @return return a vector of clean spectrum object that could find any peak in ms1 table.
@@ -75,7 +77,7 @@ declare namespace mzDeco {
      *  the return value is a vector of @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2`` object, and the noise
      *  spectrum data is set to the attribute named "noise" of the return value.
    */
-   function filter_noise_spectrum(ions: any, peaktable: object, mzdiff?: number, rt_win?: number, env?: object): object;
+   function filter_noise_spectrum(ions: any, peaktable: object, mzdiff?: number, rt_win?: number, strict_filter?: boolean, env?: object): object;
    module find_peaks {
       /**
         * @param peak_width default value Is ``[3,30]``.
