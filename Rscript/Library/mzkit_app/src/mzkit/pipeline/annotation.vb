@@ -153,6 +153,7 @@ Module library
 
         Call report.add("mz", From ai As AlignmentOutput In aligns Select ai.query.mz)
         Call report.add("rt", From ai As AlignmentOutput In aligns Select ai.query.scan_time)
+        Call report.add("intensity", From ai As AlignmentOutput In aligns Select ai.query.intensity)
         Call report.add("alignment", From ai As AlignmentOutput In aligns Select ai.alignment_str)
 
         Return report
