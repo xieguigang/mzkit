@@ -1396,6 +1396,28 @@ extract_ms1:
         End If
     End Function
 
+    <ExportAPI("extract_targeted_peaks")>
+    <RApiReturn(GetType(PeakSet))>
+    Public Function extract_targeted_peaks(<RRawVectorArgument> samples As Object, peaks As dataframe, Optional env As Environment = Nothing) As Object
+        Dim data = getSamplePeaksInternal(samples, env)
+
+        If data Like GetType(Message) Then
+            Return data.TryCast(Of Message)
+        End If
+
+        Dim mz As Double() = CLRVector.asNumeric(peaks!mz)
+        Dim rt As Double() = CLRVector.asNumeric(peaks!rt)
+        Dim rtmin As Double() = CLRVector.asNumeric(peaks!rtmin)
+        Dim rtmax As Double() = CLRVector.asNumeric(peaks!rtmax)
+        Dim peaktable As xcms2() = New xcms2(peaks.nrows - 1) {}
+
+        For i As Integer = 0 To peaktable.Length - 1
+
+        Next
+
+        Return New PeakSet With {.peaks = peaktable}
+    End Function
+
     Private Function getSamplePeaksInternal(samples As Object, env As Environment) As [Variant](Of Message, NamedCollection(Of PeakFeature)())
         Dim sampleData As NamedCollection(Of PeakFeature)() = Nothing
 
