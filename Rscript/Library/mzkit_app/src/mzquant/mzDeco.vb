@@ -79,6 +79,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
@@ -1398,7 +1399,10 @@ extract_ms1:
 
     <ExportAPI("extract_targeted_peaks")>
     <RApiReturn(GetType(PeakSet))>
-    Public Function extract_targeted_peaks(<RRawVectorArgument> samples As Object, peaks As dataframe, Optional env As Environment = Nothing) As Object
+    Public Function extract_targeted_peaks(<RRawVectorArgument> samples As Object, peaks As dataframe,
+                                           Optional aggrate As Aggregates = Aggregates.Mean,
+                                           Optional env As Environment = Nothing) As Object
+
         Dim data = getSamplePeaksInternal(samples, env)
 
         If data Like GetType(Message) Then
@@ -1409,10 +1413,49 @@ extract_ms1:
         Dim rt As Double() = CLRVector.asNumeric(peaks!rt)
         Dim rtmin As Double() = CLRVector.asNumeric(peaks!rtmin)
         Dim rtmax As Double() = CLRVector.asNumeric(peaks!rtmax)
+        Dim xcms_id As String() = CLRVector.asCharacter(peaks!xcms_id)
         Dim peaktable As xcms2() = New xcms2(peaks.nrows - 1) {}
+        Dim indexPeaks = data.TryCast(Of NamedCollection(Of PeakFeature)()) _
+            .Select(Function(a)
+                        Dim index As New BlockSearchFunction(Of PeakFeature)(a.value, Function(i) i.mz, tolerance:=0.5, fuzzy:=True)
+                        Return (a.name, index)
+                    End Function) _
+            .ToArray
+        Dim f = aggrate.GetAggregateFunction
 
         For i As Integer = 0 To peaktable.Length - 1
+            Dim areas As New Dictionary(Of String, Double)
+            Dim mzlist As New List(Of Double)
+            Dim rt1 As Double = rtmin(i)
+            Dim rt2 As Double = rtmax(i)
 
+            For Each sample In indexPeaks
+                Dim ions = sample.index _
+                    .Search(New PeakFeature With {.mz = mz(i)}, tolerance:=0.01) _
+                    .Where(Function(a) a.rt >= rt1 AndAlso a.rt <= rt2) _
+                    .ToArray
+
+                Call mzlist.AddRange(From a As PeakFeature
+                                     In ions
+                                     Let mzi As Double = a.mz
+                                     Select mzi)
+                If ions.Any Then
+                    areas(sample.name) = f(From a As PeakFeature In ions Select a.area)
+                End If
+            Next
+
+            peaktable(i) = New xcms2 With {
+                .ID = xcms_id(i),
+                .into = areas.Values.Sum,
+                .groups = areas.Where(Function(a) a.Value > 0).Count,
+                .Properties = areas,
+                .rt = rt(i),
+                .rtmin = rtmin(i),
+                .rtmax = rtmax(i),
+                .mz = mzlist.Average,
+                .mzmin = mzlist.Min,
+                .mzmax = mzlist.Max
+            }
         Next
 
         Return New PeakSet With {.peaks = peaktable}
