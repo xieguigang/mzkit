@@ -42,33 +42,14 @@ const ms1_peaktable = function(files, mzbins, mzdiff = 0.01,
         method = "LOESS",
         n_threads = 32, 
         tmp_out = "./tmp") {
-
-    let xic_args = as.list(args);
-
-    message("inspect of the parameter:");
-    str(args);
-
-    mzbins = mzkit::mz_bin_features(mzbins);
     
-    # ------------------------ RUN Parallel --------------------------------
-    Parallel::parallel(raw_path = files, n_threads = n_threads, 
-                ignoreError = FALSE, 
-                debug = FALSE,
-                log_tmp = `${tmp_out}/.local_debug/`,
-                compress = FALSE) {
-                    
-        require(mzkit);
-
-        mzkit::deconv_xicfile(
-            path = unlist(raw_path), 
-            mzbins = NULL, 
-            args = xic_args, 
-            tmp_out = tmp_out,
-            simple = simple
-        );
-    };
-    # ------------------------ END Parallel --------------------------------
-
+    # extract peaks data from the XIC data
+    files |> make_peak_samples(args = args, 
+        simple = simple,                                   
+        n_threads = n_threads, 
+        tmp_out = tmp_out)
+    ;
+    # make assemble of the sample peak files as peaktable
     align_peaktable(peaks_dir = file.path(tmp_out, "peaks"),
         mzdiff =  mzdiff, 
         method = method 

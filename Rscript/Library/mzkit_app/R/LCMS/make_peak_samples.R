@@ -27,6 +27,7 @@ const make_peak_samples = function(files, args = list(
                                    simple = TRUE,                                   
                                    n_threads = 32, 
                                    tmp_out = "./tmp") {
+                                    
     let xic_args = as.list(args);
 
     message("inspect of the parameter:");
