@@ -1545,7 +1545,7 @@ extract_ms1:
         If TypeOf samples Is list Then
             Dim ls = DirectCast(samples, list).AsGeneric(Of PeakFeature())(env)
 
-            If ls.All(Function(a) a.Value Is Nothing) Then
+            If ls Is Nothing OrElse ls.All(Function(a) a.Value Is Nothing) Then
             Else
                 sampleData = ls _
                     .Select(Function(a) New NamedCollection(Of PeakFeature)(a.Key, a.Value)) _
