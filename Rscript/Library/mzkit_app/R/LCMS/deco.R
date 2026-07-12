@@ -49,6 +49,7 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.01, xic
                                         recalculate_snr = TRUE
                                    ),
                                    method = "LOESS",
+                                   dia_workflow = FALSE,
                                    filename = "peaktable.csv") {
                                     
     const xic_cache = `${outputdir}/XIC_data`;
@@ -94,72 +95,79 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.01, xic
         }
     };    
 
-    # the bin object just a dataframe object that with 
-    # two data column:
-    #
-    # 1. mz
-    # 2. into
-    #
-    let peaktable = ms1_peaktable(xic_files, bins, 
-        args = args, 
-        mzdiff = mzdiff,
-        peak.width = peak.width, 
-        n_threads = n_threads,
-        tmp_out = file.path(outputdir, "peaksdata"),
-        method = method
-    );
-    let rt_shifts = attr(peaktable, "rt.shift");
-
-    # group by rt
-    # peaktable <- rt_groups(peaktable,
-    #     dt = 3,
-    #     ppm = 20) |> top_peaks(n = top_n )
-    # ;
-
-    write.csv(peaktable, file = `${outputdir}/${filename}`, 
-        row.names = TRUE);
-    write.csv(rt_shifts, file = `${outputdir}/rt_shifts.csv`, 
-        row.names = TRUE);
-
-    let peaksarea = as.data.frame(peaktable, peaks_area = TRUE); 
-
-    peaksarea <- apply(peaksarea, margin = "row", FUN = sum);
-
-    print("sum peak area for each peak features:");
-    print(peaksarea);
-
-    if (length(peaktable) > 0) {
-        let peakmeta = data.frame(
-            mz = [peaktable]::mz, mzmin = [peaktable]::mzmin, mzmax = [peaktable]::mzmax,
-            rt = [peaktable]::rt, rtmin = [peaktable]::rtmin, rtmax = [peaktable]::rtmax,
-            RI = [peaktable]::RI,
-            npeaks = [peaktable]::npeaks,
-            into = peaksarea,
-            row.names = [peaktable]::ID
+    if (dia_workflow) {
+        xic_files |> make_peak_samples(args = args, 
+                    simple = TRUE,                                   
+                    n_threads = n_threads, 
+                    tmp_out = file.path(outputdir, "peaksdata"));
+    } else {
+        # the bin object just a dataframe object that with 
+        # two data column:
+        #
+        # 1. mz
+        # 2. into
+        #
+        let peaktable = ms1_peaktable(xic_files, bins, 
+            args = args, 
+            mzdiff = mzdiff,
+            peak.width = peak.width, 
+            n_threads = n_threads,
+            tmp_out = file.path(outputdir, "peaksdata"),
+            method = method
         );
+        let rt_shifts = attr(peaktable, "rt.shift");
 
-        print("view of the lcms peaks ROI metadata:");
-        print(peakmeta, max.print = 6);
+        # group by rt
+        # peaktable <- rt_groups(peaktable,
+        #     dt = 3,
+        #     ppm = 20) |> top_peaks(n = top_n )
+        # ;
 
-        write.csv(peakmeta, file = `${outputdir}/peakmeta.csv`, 
+        write.csv(peaktable, file = `${outputdir}/${filename}`, 
+            row.names = TRUE);
+        write.csv(rt_shifts, file = `${outputdir}/rt_shifts.csv`, 
             row.names = TRUE);
 
-        if (length(rt_shifts) > 1) {
-            bitmap(file = file.path(outputdir, "rt_shifts.png"), size = [4000, 2700], padding = [50 650 200 200]) {
-                plot(rt_shifts, res = 1000, grid.fill = "white");
-            }
-            pdf(file = file.path(outputdir, "rt_shifts.pdf"), size = [4000, 2700], padding = [50 650 200 200]) {
-                plot(rt_shifts, res = 1000, grid.fill = "white");
-            }
-        }
+        let peaksarea = as.data.frame(peaktable, peaks_area = TRUE); 
 
-        bitmap(file = file.path(outputdir, "peakset.png")) {
-            plot(as.peak_set(peakmeta), scatter = TRUE, 
-                dimension = "npeaks");
-        }
-        pdf(file = file.path(outputdir, "peakset.pdf")) {
-            plot(as.peak_set(peakmeta), scatter = TRUE, 
-                dimension = "npeaks");
+        peaksarea <- apply(peaksarea, margin = "row", FUN = sum);
+
+        print("sum peak area for each peak features:");
+        print(peaksarea);
+
+        if (length(peaktable) > 0) {
+            let peakmeta = data.frame(
+                mz = [peaktable]::mz, mzmin = [peaktable]::mzmin, mzmax = [peaktable]::mzmax,
+                rt = [peaktable]::rt, rtmin = [peaktable]::rtmin, rtmax = [peaktable]::rtmax,
+                RI = [peaktable]::RI,
+                npeaks = [peaktable]::npeaks,
+                into = peaksarea,
+                row.names = [peaktable]::ID
+            );
+
+            print("view of the lcms peaks ROI metadata:");
+            print(peakmeta, max.print = 6);
+
+            write.csv(peakmeta, file = `${outputdir}/peakmeta.csv`, 
+                row.names = TRUE);
+
+            if (length(rt_shifts) > 1) {
+                bitmap(file = file.path(outputdir, "rt_shifts.png"), size = [4000, 2700], padding = [50 650 200 200]) {
+                    plot(rt_shifts, res = 1000, grid.fill = "white");
+                }
+                pdf(file = file.path(outputdir, "rt_shifts.pdf"), size = [4000, 2700], padding = [50 650 200 200]) {
+                    plot(rt_shifts, res = 1000, grid.fill = "white");
+                }
+            }
+
+            bitmap(file = file.path(outputdir, "peakset.png")) {
+                plot(as.peak_set(peakmeta), scatter = TRUE, 
+                    dimension = "npeaks");
+            }
+            pdf(file = file.path(outputdir, "peakset.pdf")) {
+                plot(as.peak_set(peakmeta), scatter = TRUE, 
+                    dimension = "npeaks");
+            }
         }
     }
 
