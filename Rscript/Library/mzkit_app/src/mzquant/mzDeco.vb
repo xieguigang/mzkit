@@ -1431,7 +1431,7 @@ extract_ms1:
 
             For Each sample In indexPeaks
                 Dim ions = sample.index _
-                    .Search(New PeakFeature With {.mz = mz(i)}, tolerance:=0.01) _
+                    .Search(New PeakFeature With {.mz = mz(i)}, tolerance:=0.05) _
                     .Where(Function(a) a.rt >= rt1 AndAlso a.rt <= rt2) _
                     .ToArray
 
@@ -1452,9 +1452,9 @@ extract_ms1:
                 .rt = rt(i),
                 .rtmin = rtmin(i),
                 .rtmax = rtmax(i),
-                .mz = mzlist.Average,
-                .mzmin = mzlist.Min,
-                .mzmax = mzlist.Max
+                .mz = If(.groups = 0, mz(i), mzlist.Average),
+                .mzmin = If(.groups = 0, mz(i), mzlist.Min),
+                .mzmax = If(.groups = 0, mz(i), mzlist.Max)
             }
         Next
 
