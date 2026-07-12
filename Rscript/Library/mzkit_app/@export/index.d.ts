@@ -147,6 +147,35 @@ declare namespace mzkit {
    */
    function make_peak_alignment(peakfiles: any, max_rtwin?: any, mzdiff?: any): object;
    /**
+     * @param args default value Is ``Call "list"("peak_method" <- "CentWave",
+     *       "snr_threshold" <- 3,
+     *       "window_half_width" <- 5,
+     *       "min_peak_width" <- 3,
+     *       "max_peak_width" <- 30,
+     *       "min_peak_height" <- 0,
+     *       "centWave_min_scale" <- 1,
+     *       "centWave_max_scale" <- 20,
+     *       "centWave_scale_step" <- 1,
+     *       "centWave_max_gap" <- 2,
+     *       "matched_filter_sigma" <- 3,
+     *       "matched_filter_truncate_width" <- 4,
+     *       "derivative_smooth_window" <- 3,
+     *       "derivative_threshold_factor" <- 0.01,
+     *       "noise_segment_count" <- 20,
+     *       "peak_merge_distance" <- 1,
+     *       "area_method" <- "BaselineCorrected",
+     *       "baseline_method" <- "Linear",
+     *       "baseline_percentile" <- 10,
+     *       "local_minimum_boundary_points" <- 5,
+     *       "gaussian_max_iterations" <- 100,
+     *       "gaussian_convergence" <- 1E-06,
+     *       "recalculate_snr" <- TRUE)``.
+     * @param simple default value Is ``true``.
+     * @param n_threads default value Is ``32``.
+     * @param tmp_out default value Is ``./tmp``.
+   */
+   function make_peak_samples(files: any, args?: any, simple?: any, n_threads?: any, tmp_out?: any): object;
+   /**
      * @param topics default value Is ``null``.
    */
    function mesh_model(topics?: any): object;
@@ -281,9 +310,10 @@ declare namespace mzkit {
         *       "gaussian_convergence" <- 1E-06,
         *       "recalculate_snr" <- TRUE)``.
         * @param method default value Is ``LOESS``.
+        * @param dia_workflow default value Is ``false``.
         * @param filename default value Is ``peaktable.csv``.
       */
-      function Deconvolution(rawdata: any, outputdir?: any, mzdiff?: any, xic_mzdiff?: any, peak.width?: any, n_threads?: any, top_n?: any, args?: any, method?: any, filename?: any): object;
+      function Deconvolution(rawdata: any, outputdir?: any, mzdiff?: any, xic_mzdiff?: any, peak.width?: any, n_threads?: any, top_n?: any, args?: any, method?: any, dia_workflow?: any, filename?: any): object;
    }
    /**
      * @param kind default value Is ``ppm``.
