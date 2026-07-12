@@ -74,33 +74,28 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.01, xic
         outputdir = xic_cache, 
         n_threads = 8);
     
-    # get xic file path list
-    const xic_files = list.files(xic_cache, pattern = "*.xic");
-    const ion_features_csv = file.path(outputdir, "mzbins.csv");
+    if (!dia_workflow) {
+        # get xic file path list
+        const xic_files = list.files(xic_cache, pattern = "*.xic");
+        const ion_features_csv = file.path(outputdir, "mzbins.csv");
 
-    # and then extract the ion features from the input xic files
-    const bins = {
-        if (file.exists(ion_features_csv)) {
-            read.csv(ion_features_csv, row.names = NULL, check.names = FALSE);
-        } else {
-            print("start to extract the ion features from the XIC pool...");
-            # extract ion features and dump as table
-            let massSet = xic_files 
-            |> ms1_mz_bins()
-            ;
+        # and then extract the ion features from the input xic files
+        const bins = {
+            if (file.exists(ion_features_csv)) {
+                read.csv(ion_features_csv, row.names = NULL, check.names = FALSE);
+            } else {
+                print("start to extract the ion features from the XIC pool...");
+                # extract ion features and dump as table
+                let massSet = xic_files 
+                |> ms1_mz_bins()
+                ;
 
-            massSet |> write.csv(file = ion_features_csv, 
-                row.names = FALSE);
-            massSet;
-        }
-    };    
+                massSet |> write.csv(file = ion_features_csv, 
+                    row.names = FALSE);
+                massSet;
+            }
+        };    
 
-    if (dia_workflow) {
-        xic_files |> make_peak_samples(args = args, 
-                    simple = TRUE,                                   
-                    n_threads = n_threads, 
-                    tmp_out = file.path(outputdir, "peaksdata"));
-    } else {
         # the bin object just a dataframe object that with 
         # two data column:
         #
