@@ -33,6 +33,7 @@ Extract peak and signal data from rawdata
 + [read.rt_shifts](mzDeco/read.rt_shifts.1) 
 + [write.peaks](mzDeco/write.peaks.1) write peak debug data
 + [read.peakFeatures](mzDeco/read.peakFeatures.1) read the peak feature table data
++ [extract_targeted_peaks](mzDeco/extract_targeted_peaks.1) 
 + [peak_alignment](mzDeco/peak_alignment.1) Do COW peak alignment and export peaktable
 + [RI_batch_join](mzDeco/RI_batch_join.1) make peaktable join of two batch data via (mz,RI)
 + [mz.groups](mzDeco/mz.groups.1) do ``m/z`` grouping under the given tolerance

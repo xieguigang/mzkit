@@ -52,6 +52,11 @@ declare namespace mzDeco {
       function peak_set(x: any, env?: object): object;
    }
    /**
+     * @param aggrate default value Is ``null``.
+     * @param env default value Is ``null``.
+   */
+   function extract_targeted_peaks(samples: any, peaks: object, aggrate?: object, env?: object): object;
+   /**
     * make filter of the noise spectrum data
     * 
     * > this function will filter the noise spectrum data from the given 
