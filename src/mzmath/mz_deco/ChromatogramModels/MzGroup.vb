@@ -63,6 +63,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 
 ''' <summary>
@@ -72,7 +73,7 @@ Imports Microsoft.VisualBasic.Math.SignalProcessing
 ''' A collection of the <see cref="ChromatogramTick"/> data that 
 ''' tagged with a numeric m/z value.
 ''' </remarks>
-Public Class MzGroup
+Public Class MzGroup : Implements Enumeration(Of ChromatogramTick)
 
     ''' <summary>
     ''' target ion m/z
@@ -182,4 +183,9 @@ Public Class MzGroup
         }
     End Function
 
+    Private Iterator Function GenericEnumerator() As IEnumerator(Of ChromatogramTick) Implements Enumeration(Of ChromatogramTick).GenericEnumerator
+        For Each tick As ChromatogramTick In XIC
+            Yield tick
+        Next
+    End Function
 End Class

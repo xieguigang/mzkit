@@ -67,6 +67,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
@@ -1403,27 +1404,106 @@ extract_ms1:
                                            Optional aggrate As Aggregates = Aggregates.Mean,
                                            Optional env As Environment = Nothing) As Object
 
-        Dim data = getSamplePeaksInternal(samples, env)
-
-        If data Like GetType(Message) Then
-            Return data.TryCast(Of Message)
-        End If
-
         Dim mz As Double() = CLRVector.asNumeric(peaks!mz)
         Dim rt As Double() = CLRVector.asNumeric(peaks!rt)
         Dim rtmin As Double() = CLRVector.asNumeric(peaks!rtmin)
         Dim rtmax As Double() = CLRVector.asNumeric(peaks!rtmax)
         Dim xcms_id As String() = CLRVector.asCharacter(peaks!xcms_id)
-        Dim peaktable As xcms2() = New xcms2(peaks.nrows - 1) {}
-        Dim indexPeaks = data.TryCast(Of NamedCollection(Of PeakFeature)()) _
+        Dim peaktable As xcms2()
+        Dim data = getSamplePeaksInternal(samples, env)
+        Dim f As Func(Of IEnumerable(Of Double), Double) = aggrate.GetAggregateFunction
+
+        If data Like GetType(Message) Then
+            If TypeOf samples Is list Then
+                Dim ls = DirectCast(samples, list).AsGeneric(Of MzGroup())(env)
+
+                If ls.All(Function(a) a.Value Is Nothing) Then
+                    Return data.TryCast(Of Message)
+                End If
+
+                peaktable = ls _
+                    .Select(Function(t)
+                                Return New NamedCollection(Of MzGroup)(t.Key, t.Value)
+                            End Function).ToArray _
+                    .TableFromXICData(f, mz, rt, rtmin, rtmax, xcms_id) _
+                    .ToArray
+            Else
+                Return data.TryCast(Of Message)
+            End If
+        Else
+            peaktable = data.TryCast(Of NamedCollection(Of PeakFeature)()) _
+                .TableFromPeakFeatures(f, mz, rt, rtmin, rtmax, xcms_id) _
+                .ToArray
+        End If
+
+        Return New PeakSet With {.peaks = peaktable}
+    End Function
+
+    <Extension>
+    Private Iterator Function TableFromXICData(data As NamedCollection(Of MzGroup)(), f As Func(Of IEnumerable(Of Double), Double),
+                                               mz As Double(),
+                                               rt As Double(),
+                                               rtmin As Double(),
+                                               rtmax As Double(),
+                                               xcms_id As String()) As IEnumerable(Of xcms2)
+
+        For i As Integer = 0 To xcms_id.Length - 1
+            Dim areas As New Dictionary(Of String, Double)
+            Dim mzlist As New List(Of Double)
+            Dim rt1 As Double = rtmin(i)
+            Dim rt2 As Double = rtmax(i)
+            Dim mzi As Double = mz(i)
+
+            For Each sample In data
+                Dim ions = sample.Where(Function(a) PPMmethod.PPM(a.mz, mzi) <= 15).ToArray
+
+                Call mzlist.AddRange(From a As MzGroup
+                                     In ions
+                                     Let mzx As Double = a.mz
+                                     Select mzx)
+                If ions.Any Then
+                    Dim ticks As ChromatogramTick() = ions _
+                        .SelectMany(Function(a)
+                                        Return a.AsEnumerable.Where(Function(t) t.Time >= rt1 AndAlso t.Time <= rt2)
+                                    End Function) _
+                        .ToArray
+
+                    If ticks.Any Then
+                        areas(sample.name) = f(From a As ChromatogramTick In ticks Select a.Intensity)
+                    End If
+                End If
+            Next
+
+            Yield New xcms2 With {
+                .ID = xcms_id(i),
+                .into = areas.Values.Sum,
+                .groups = areas.Where(Function(a) a.Value > 0).Count,
+                .Properties = areas,
+                .rt = rt(i),
+                .rtmin = rtmin(i),
+                .rtmax = rtmax(i),
+                .mz = If(.groups = 0, mz(i), mzlist.Average),
+                .mzmin = If(.groups = 0, mz(i), mzlist.Min),
+                .mzmax = If(.groups = 0, mz(i), mzlist.Max)
+            }
+        Next
+    End Function
+
+    <Extension>
+    Private Iterator Function TableFromPeakFeatures(data As NamedCollection(Of PeakFeature)(), f As Func(Of IEnumerable(Of Double), Double),
+                                                    mz As Double(),
+                                                    rt As Double(),
+                                                    rtmin As Double(),
+                                                    rtmax As Double(),
+                                                    xcms_id As String()) As IEnumerable(Of xcms2)
+        Dim indexPeaks = data _
             .Select(Function(a)
                         Dim index As New BlockSearchFunction(Of PeakFeature)(a.value, Function(i) i.mz, tolerance:=0.5, fuzzy:=True)
                         Return (a.name, index)
                     End Function) _
             .ToArray
-        Dim f = aggrate.GetAggregateFunction
 
-        For i As Integer = 0 To peaktable.Length - 1
+        For i As Integer = 0 To xcms_id.Length - 1
             Dim areas As New Dictionary(Of String, Double)
             Dim mzlist As New List(Of Double)
             Dim rt1 As Double = rtmin(i)
@@ -1444,7 +1524,7 @@ extract_ms1:
                 End If
             Next
 
-            peaktable(i) = New xcms2 With {
+            Yield New xcms2 With {
                 .ID = xcms_id(i),
                 .into = areas.Values.Sum,
                 .groups = areas.Where(Function(a) a.Value > 0).Count,
@@ -1457,8 +1537,6 @@ extract_ms1:
                 .mzmax = If(.groups = 0, mz(i), mzlist.Max)
             }
         Next
-
-        Return New PeakSet With {.peaks = peaktable}
     End Function
 
     Private Function getSamplePeaksInternal(samples As Object, env As Environment) As [Variant](Of Message, NamedCollection(Of PeakFeature)())
