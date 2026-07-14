@@ -1447,7 +1447,9 @@ extract_ms1:
                                                rtmax As Double(),
                                                xcms_id As String()) As IEnumerable(Of xcms2)
 
-        For i As Integer = 0 To xcms_id.Length - 1
+        Call VBDebugger.EchoLine("find targetted data from XIC.")
+
+        For Each i As Integer In TqdmWrapper.Range(0, xcms_id.Length)
             Dim areas As New Dictionary(Of String, Double)
             Dim mzlist As New List(Of Double)
             Dim rt1 As Double = rtmin(i)
