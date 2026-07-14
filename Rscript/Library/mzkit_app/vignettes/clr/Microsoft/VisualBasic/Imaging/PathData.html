@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Microsoft.VisualBasic.Imaging.Font</title>
+    <title>Microsoft.VisualBasic.Imaging.PathData</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>Font {Microsoft.VisualBasic.Imaging}</td>
+                <td>PathData {Microsoft.VisualBasic.Imaging}</td>
                 <td style="text-align: right;">.NET clr documentation</td>
             </tr>
         </table>
 
-        <h2>Font</h2>
+        <h2>PathData</h2>
 
         <h3>Description</h3>
 
@@ -29,21 +29,12 @@
         <pre>
             <code id="clr_ts">
 # namespace Microsoft.VisualBasic.Imaging
-export class Font {
-   # Gets a value indicating whether this font is bold.
-   Bold: boolean;
-   Height: double;
-   # Gets a value indicating whether this font is italic.
-   Italic: boolean;
-   Name: string;
-   Size: double;
-   SizeInPoints: double;
-   # Gets a value indicating whether this font is struck out.
-   Strikeout: boolean;
-   Style: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/FontStyle.html">FontStyle</a>;
-   # Gets a value indicating whether this font is underlined.
-   Underline: boolean;
-   Unit: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/GraphicsUnit.html">GraphicsUnit</a>;
+export class PathData {
+   # Gets or sets an array of PointF structures that represent the points through which the path is constructed.
+   Points: <a href="/vignettes/clr/System/Drawing/PointF.html">PointF[]</a>;
+   # Gets or sets the types of the corresponding points in the path. 
+   #  0=Start, 1=Line, 3=Bezier/Bezier3, 0x80=CloseSubpath flag
+   Types: <a href="/vignettes/clr/System/Byte.html">Byte[]</a>;
 }
 </code>
         </pre>
@@ -51,8 +42,8 @@ export class Font {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>use by <i>property</i> member <code>Style</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/FontStyle.html">FontStyle</a></li>
-<li>use by <i>property</i> member <code>Unit</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/GraphicsUnit.html">GraphicsUnit</a></li>
+<li>use by <i>property</i> member <code>Points</code>: <a href="/vignettes/clr/System/Drawing/PointF.html">PointF</a></li>
+<li>use by <i>property</i> member <code>Types</code>: <a href="/vignettes/clr/System/Byte.html">Byte</a></li>
 </ol>
 
 

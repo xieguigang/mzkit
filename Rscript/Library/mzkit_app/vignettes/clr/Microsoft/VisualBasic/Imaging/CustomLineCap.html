@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        <p>Encapsulates a custom user-defined line cap.</p>
 
         <h3>Declare</h3>        
 
@@ -30,13 +30,32 @@
             <code id="clr_ts">
 # namespace Microsoft.VisualBasic.Imaging
 export class CustomLineCap {
+   # Gets or sets the line cap used at the base of the cap.
+   BaseCap: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/LineCap.html">LineCap</a>;
+   # Gets or sets the distance between the cap and the line.
+   BaseInset: double;
+   # Gets or sets the path used to fill the interior of the cap.
+   FillPath: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/GraphicsPath.html">GraphicsPath</a>;
+   # Gets or sets the scale factor for the height of the line cap.
+   HeightScale: double;
+   # Gets or sets the line cap used at the stroke inset from the end of a line.
+   StrokeJoin: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/LineJoin.html">LineJoin</a>;
+   # Gets or sets the path used to draw the outline of the cap.
+   StrokePath: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/GraphicsPath.html">GraphicsPath</a>;
+   # Gets or sets the scale factor for the width of the line cap.
+   WidthScale: double;
 }
 </code>
         </pre>
 
         <h3>.NET clr type reference tree</h3>
 
-        this clr type has no other .net clr type reference.
+        <ol>
+<li>use by <i>property</i> member <code>BaseCap</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/LineCap.html">LineCap</a></li>
+<li>use by <i>property</i> member <code>FillPath</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/GraphicsPath.html">GraphicsPath</a></li>
+<li>use by <i>property</i> member <code>StrokeJoin</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/LineJoin.html">LineJoin</a></li>
+<li>use by <i>property</i> member <code>StrokePath</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/GraphicsPath.html">GraphicsPath</a></li>
+</ol>
 
 
         <hr />
