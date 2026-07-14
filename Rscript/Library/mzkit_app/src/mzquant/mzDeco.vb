@@ -1421,12 +1421,14 @@ extract_ms1:
                     Return data.TryCast(Of Message)
                 End If
 
-                peaktable = ls _
+                Dim task As New TableFromXICData(mz, rt, rtmin, rtmax, xcms_id, workers:=8)
+                task.f = f
+                task.data = ls _
                     .Select(Function(t)
                                 Return New NamedCollection(Of MzGroup)(t.Key, t.Value)
-                            End Function).ToArray _
-                    .TableFromXICData(f, mz, rt, rtmin, rtmax, xcms_id) _
-                    .ToArray
+                            End Function).ToArray
+                task.Run()
+                peaktable = task.result
             Else
                 Return data.TryCast(Of Message)
             End If
@@ -1439,57 +1441,81 @@ extract_ms1:
         Return New PeakSet With {.peaks = peaktable}
     End Function
 
-    <Extension>
-    Private Iterator Function TableFromXICData(data As NamedCollection(Of MzGroup)(), f As Func(Of IEnumerable(Of Double), Double),
-                                               mz As Double(),
-                                               rt As Double(),
-                                               rtmin As Double(),
-                                               rtmax As Double(),
-                                               xcms_id As String()) As IEnumerable(Of xcms2)
+    Private Class TableFromXICData : Inherits VectorTask
 
-        Call VBDebugger.EchoLine("find targetted data from XIC.")
+        ReadOnly mz As Double()
+        ReadOnly rt As Double()
+        ReadOnly rtmin As Double()
+        ReadOnly rtmax As Double()
+        ReadOnly xcms_id As String()
 
-        For Each i As Integer In TqdmWrapper.Range(0, xcms_id.Length)
-            Dim areas As New Dictionary(Of String, Double)
-            Dim mzlist As New List(Of Double)
-            Dim rt1 As Double = rtmin(i)
-            Dim rt2 As Double = rtmax(i)
-            Dim mzi As Double = mz(i)
+        Public data As NamedCollection(Of MzGroup)()
+        Public f As Func(Of IEnumerable(Of Double), Double)
+        Public result As xcms2()
 
-            For Each sample In data
-                Dim ions = sample.Where(Function(a) PPMmethod.PPM(a.mz, mzi) <= 15).ToArray
+        Public Sub New(mz As Double(),
+                       rt As Double(),
+                       rtmin As Double(),
+                       rtmax As Double(),
+                       xcms_id As String(),
+                       Optional verbose As Boolean = False,
+                       Optional workers As Integer? = Nothing)
 
-                Call mzlist.AddRange(From a As MzGroup
-                                     In ions
-                                     Let mzx As Double = a.mz
-                                     Select mzx)
-                If ions.Any Then
-                    Dim ticks As ChromatogramTick() = ions _
-                        .SelectMany(Function(a)
-                                        Return a.AsEnumerable.Where(Function(t) t.Time >= rt1 AndAlso t.Time <= rt2)
-                                    End Function) _
-                        .ToArray
+            Call MyBase.New(xcms_id.Length, verbose, workers)
+            Call VBDebugger.EchoLine("find targetted data from XIC.")
 
-                    If ticks.Any Then
-                        areas(sample.name) = f(From a As ChromatogramTick In ticks Select a.Intensity)
+            Me.mz = mz
+            Me.rt = rt
+            Me.rtmin = rtmin
+            Me.rtmax = rtmax
+            Me.xcms_id = xcms_id
+
+            result = New xcms2(xcms_id.Length - 1) {}
+        End Sub
+
+        Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+            For i As Integer = start To ends
+                Dim areas As New Dictionary(Of String, Double)
+                Dim mzlist As New List(Of Double)
+                Dim rt1 As Double = rtmin(i)
+                Dim rt2 As Double = rtmax(i)
+                Dim mzi As Double = mz(i)
+
+                For Each sample In data
+                    Dim ions = sample.Where(Function(a) PPMmethod.PPM(a.mz, mzi) <= 15).ToArray
+
+                    Call mzlist.AddRange(From a As MzGroup
+                                         In ions
+                                         Let mzx As Double = a.mz
+                                         Select mzx)
+                    If ions.Any Then
+                        Dim ticks As ChromatogramTick() = ions _
+                            .SelectMany(Function(a)
+                                            Return a.AsEnumerable.Where(Function(t) t.Time >= rt1 AndAlso t.Time <= rt2)
+                                        End Function) _
+                            .ToArray
+
+                        If ticks.Any Then
+                            areas(sample.name) = f(From a As ChromatogramTick In ticks Select a.Intensity)
+                        End If
                     End If
-                End If
-            Next
+                Next
 
-            Yield New xcms2 With {
-                .ID = xcms_id(i),
-                .into = areas.Values.Sum,
-                .groups = areas.Where(Function(a) a.Value > 0).Count,
-                .Properties = areas,
-                .rt = rt(i),
-                .rtmin = rtmin(i),
-                .rtmax = rtmax(i),
-                .mz = If(.groups = 0, mz(i), mzlist.Average),
-                .mzmin = If(.groups = 0, mz(i), mzlist.Min),
-                .mzmax = If(.groups = 0, mz(i), mzlist.Max)
-            }
-        Next
-    End Function
+                result(i) = New xcms2 With {
+                    .ID = xcms_id(i),
+                    .into = areas.Values.Sum,
+                    .groups = areas.Where(Function(a) a.Value > 0).Count,
+                    .Properties = areas,
+                    .rt = rt(i),
+                    .rtmin = rtmin(i),
+                    .rtmax = rtmax(i),
+                    .mz = If(.groups = 0, mz(i), mzlist.Average),
+                    .mzmin = If(.groups = 0, mz(i), mzlist.Min),
+                    .mzmax = If(.groups = 0, mz(i), mzlist.Max)
+                }
+            Next
+        End Sub
+    End Class
 
     <Extension>
     Private Iterator Function TableFromPeakFeatures(data As NamedCollection(Of PeakFeature)(), f As Func(Of IEnumerable(Of Double), Double),
