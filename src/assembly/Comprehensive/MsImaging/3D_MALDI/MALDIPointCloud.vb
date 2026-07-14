@@ -103,7 +103,7 @@ Namespace MsImaging.MALDI_3D
             Call saveCache(xml, cachefile)
 
             Using file As Stream = ply.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
-                Return SimplePlyWriter.WriteAsciiText(ReadPointCloud(cachefile), file, colors)
+                Return PlyWriter.WriteAsciiText(ReadPointCloud(cachefile), file, colors)
             End Using
         End Function
 
