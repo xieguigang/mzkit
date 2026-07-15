@@ -1,66 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::4df165bb17a6727c43ff210acc406b2a, Rscript\Library\mzkit_app\src\mzquant\mzDeco.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1530
-    '    Code Lines: 1013 (66.21%)
-    ' Comment Lines: 357 (23.33%)
-    '    - Xml Docs: 87.96%
-    ' 
-    '   Blank Lines: 160 (10.46%)
-    '     File Size: 65.33 KB
+' Summaries:
 
 
-    ' Module mzDeco
-    ' 
-    '     Function: adjust_to_seconds, convertDataframeToXcmsPeaks, create_peakset, Deconv, dumpPeaks
-    '               expression, filter_noise_spectrum, get_ionPeak, getIonPeak, ms1Scans
-    '               mz_deco, mz_groups, peakAlignment, peaksetMatrix, peaksSetMatrix
-    '               peakSubset, peaktable, pull_xic, read_rtshifts, readPeakData
-    '               readPeaktable, readSamples, readXcmsFeaturePeaks, readXcmsPeaks, readXcmsTableFile
-    '               readXIC, RI_batch_join, RI_calc, RI_reference, rt_groups_merge
-    '               to_matrix, writePeaktable, writeSamples, writeXcmsPeaktable, writeXIC
-    '               writeXIC1, xcms_peak, xic_deco, xic_dtw_list, xic_matrix_list
-    '               XICpool_func
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1530
+'    Code Lines: 1013 (66.21%)
+' Comment Lines: 357 (23.33%)
+'    - Xml Docs: 87.96%
+' 
+'   Blank Lines: 160 (10.46%)
+'     File Size: 65.33 KB
+
+
+' Module mzDeco
+' 
+'     Function: adjust_to_seconds, convertDataframeToXcmsPeaks, create_peakset, Deconv, dumpPeaks
+'               expression, filter_noise_spectrum, get_ionPeak, getIonPeak, ms1Scans
+'               mz_deco, mz_groups, peakAlignment, peaksetMatrix, peaksSetMatrix
+'               peakSubset, peaktable, pull_xic, read_rtshifts, readPeakData
+'               readPeaktable, readSamples, readXcmsFeaturePeaks, readXcmsPeaks, readXcmsTableFile
+'               readXIC, RI_batch_join, RI_calc, RI_reference, rt_groups_merge
+'               to_matrix, writePeaktable, writeSamples, writeXcmsPeaktable, writeXIC
+'               writeXIC1, xcms_peak, xic_deco, xic_dtw_list, xic_matrix_list
+'               XICpool_func
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -89,6 +89,7 @@ Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.Expressions
@@ -1453,6 +1454,8 @@ extract_ms1:
         Public f As Func(Of IEnumerable(Of Double), Double)
         Public result As xcms2()
 
+        Public ms1ppm As Double = 15
+
         Public Sub New(mz As Double(),
                        rt As Double(),
                        rtmin As Double(),
@@ -1484,8 +1487,8 @@ extract_ms1:
                 Dim rt2 As Double = rtmax(i)
                 Dim mzi As Double = mz(i)
 
-                For Each sample In data
-                    Dim ions = sample.Where(Function(a) PPMmethod.PPM(a.mz, mzi) <= 15).ToArray
+                For Each sample As NamedCollection(Of MzGroup) In data
+                    Dim ions = sample.Where(Function(a) PPMmethod.PPM(a.mz, mzi) <= ms1ppm).ToArray
 
                     Call mzlist.AddRange(From a As MzGroup
                                          In ions
@@ -1504,6 +1507,8 @@ extract_ms1:
                     End If
                 Next
 
+                Dim mzDist As New SampleDistribution(mzlist, estimateQuantile:=False)
+
                 buffer(i - start) = New xcms2 With {
                     .ID = xcms_id(i),
                     .into = areas.Values.Sum,
@@ -1512,9 +1517,9 @@ extract_ms1:
                     .rt = rt(i),
                     .rtmin = rtmin(i),
                     .rtmax = rtmax(i),
-                    .mz = If(.groups = 0, mz(i), mzlist.Average),
-                    .mzmin = If(.groups = 0, mz(i), mzlist.Min),
-                    .mzmax = If(.groups = 0, mz(i), mzlist.Max)
+                    .mz = If(.groups = 0, mz(i), mzDist.average),
+                    .mzmin = If(.groups = 0, mz(i), mzDist.min),
+                    .mzmax = If(.groups = 0, mz(i), mzDist.max)
                 }
             Next
 
@@ -1544,8 +1549,8 @@ extract_ms1:
             Dim rt1 As Double = rtmin(i)
             Dim rt2 As Double = rtmax(i)
 
-            For Each sample In indexPeaks
-                Dim ions = sample.index _
+            For Each Sample In indexPeaks
+                Dim ions = Sample.index _
                     .Search(New PeakFeature With {.mz = mz(i)}, tolerance:=0.05) _
                     .Where(Function(a) a.rt >= rt1 AndAlso a.rt <= rt2) _
                     .ToArray
@@ -1555,7 +1560,7 @@ extract_ms1:
                                      Let mzi As Double = a.mz
                                      Select mzi)
                 If ions.Any Then
-                    areas(sample.name) = f(From a As PeakFeature In ions Select a.area)
+                    areas(Sample.name) = f(From a As PeakFeature In ions Select a.area)
                 End If
             Next
 
