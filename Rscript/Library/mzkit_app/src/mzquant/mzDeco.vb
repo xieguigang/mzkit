@@ -1549,8 +1549,8 @@ extract_ms1:
             Dim rt1 As Double = rtmin(i)
             Dim rt2 As Double = rtmax(i)
 
-            For Each Sample In indexPeaks
-                Dim ions = Sample.index _
+            For Each sample As (name As String, index As BlockSearchFunction(Of PeakFeature)) In indexPeaks
+                Dim ions = sample.index _
                     .Search(New PeakFeature With {.mz = mz(i)}, tolerance:=0.05) _
                     .Where(Function(a) a.rt >= rt1 AndAlso a.rt <= rt2) _
                     .ToArray
@@ -1560,9 +1560,11 @@ extract_ms1:
                                      Let mzi As Double = a.mz
                                      Select mzi)
                 If ions.Any Then
-                    areas(Sample.name) = f(From a As PeakFeature In ions Select a.area)
+                    areas(sample.name) = f(From a As PeakFeature In ions Select a.area)
                 End If
             Next
+
+            Dim mzDist As New SampleDistribution(mzlist, estimateQuantile:=False)
 
             Yield New xcms2 With {
                 .ID = xcms_id(i),
@@ -1572,9 +1574,9 @@ extract_ms1:
                 .rt = rt(i),
                 .rtmin = rtmin(i),
                 .rtmax = rtmax(i),
-                .mz = If(.groups = 0, mz(i), mzlist.Average),
-                .mzmin = If(.groups = 0, mz(i), mzlist.Min),
-                .mzmax = If(.groups = 0, mz(i), mzlist.Max)
+                .mz = If(.groups = 0, mz(i), mzDist.average),
+                .mzmin = If(.groups = 0, mz(i), mzDist.min),
+                .mzmax = If(.groups = 0, mz(i), mzDist.max)
             }
         Next
     End Function
