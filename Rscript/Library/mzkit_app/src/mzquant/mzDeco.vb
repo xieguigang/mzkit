@@ -1474,6 +1474,9 @@ extract_ms1:
         End Sub
 
         Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+            Dim len As Integer = ends - start + 1
+            Dim buffer As xcms2() = New xcms2(len - 1) {}
+
             For i As Integer = start To ends
                 Dim areas As New Dictionary(Of String, Double)
                 Dim mzlist As New List(Of Double)
@@ -1501,7 +1504,7 @@ extract_ms1:
                     End If
                 Next
 
-                result(i) = New xcms2 With {
+                buffer(i - start) = New xcms2 With {
                     .ID = xcms_id(i),
                     .into = areas.Values.Sum,
                     .groups = areas.Where(Function(a) a.Value > 0).Count,
@@ -1514,6 +1517,10 @@ extract_ms1:
                     .mzmax = If(.groups = 0, mz(i), mzlist.Max)
                 }
             Next
+
+            SyncLock result
+                Call Array.ConstrainedCopy(buffer, Scan0, result, start, len)
+            End SyncLock
         End Sub
     End Class
 
