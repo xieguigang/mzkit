@@ -164,3 +164,14 @@ Public Class AnnotationResult
         Return $"#{Rank} {Peak.mz:F4} -> {Metabolite.Id} {Metabolite.CommonName} [{Adduct.name}] score={PriorityScore:F3} ({ConfidenceLevel})"
     End Function
 End Class
+
+Public Class ActivityEnrichment
+    Public Property Name As Object()
+    Public Property Description As Object
+    Public Property Q As Object
+    Public Property Input As Object
+    Public Property Background As Object
+    Public Property Activity As Object
+    Public Property Fisher As Object
+    Public Property Hits As IEnumerable(Of Object)
+End Class

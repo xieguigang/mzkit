@@ -408,9 +408,21 @@ Module Mummichog
         End Function
     End Class
 
+    ''' <summary>
+    ''' Create mummichog annotation engine
+    ''' </summary>
+    ''' <param name="metabolites"></param>
+    ''' <param name="pathways"></param>
+    ''' <param name="params"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("kegg_background")>
     <RApiReturn(GetType(MummichogAnnotator))>
-    Public Function CreateKEGGBackground(<RRawVectorArgument> metabolites As Object, <RRawVectorArgument> pathways As Object, Optional params As MummichogParams = Nothing, Optional env As Environment = Nothing) As Object
+    Public Function CreateKEGGBackground(<RRawVectorArgument> metabolites As Object,
+                                         <RRawVectorArgument> pathways As Object,
+                                         Optional params As MummichogParams = Nothing,
+                                         Optional env As Environment = Nothing) As Object
+
         Dim pullMetab As pipeline = pipeline.TryCreatePipeline(Of Compound)(metabolites, env)
         Dim pullMaps As pipeline = pipeline.TryCreatePipeline(Of Map)(pathways, env)
 

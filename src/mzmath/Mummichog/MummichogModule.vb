@@ -453,9 +453,7 @@ Public Class MummichogAnnotator
     ''' 4. BH-FDR校正
     ''' </para>
     ''' </summary>
-    Private Function PerformPathwayEnrichment(peaks As List(Of xcms2),
-                                                peakPValues As Dictionary(Of String, Double)) As List(Of PathwayEnrichmentResult)
-
+    Private Function PerformPathwayEnrichment(peaks As List(Of xcms2), peakPValues As Dictionary(Of String, Double)) As List(Of PathwayEnrichmentResult)
         ' --- 筛选显著峰 ---
         Dim significantPeakIds As New HashSet(Of String)
         For Each p As xcms2 In peaks
