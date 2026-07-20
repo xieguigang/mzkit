@@ -49,21 +49,23 @@ declare namespace Mummichog {
    */
    function group_peaks(peaktable: any, adducts?: any, isotopic_max?: object, mzdiff?: number, delta_rt?: number, env?: object): any;
    /**
-    * create kegg pathway network graph background model
+    * Create mummichog annotation engine
     * 
     * 
-     * @param params 
+     * @param metabolites -
+     * @param pathways -
+     * @param params -
+     * 
      * + default value Is ``null``.
-     * @param env 
+     * @param env -
+     * 
      * + default value Is ``null``.
    */
    function kegg_background(metabolites: any, pathways: any, params?: object, env?: object): object;
    /**
-    * create kegg pathway network graph background model
+    * Create mummichog annotation engine
     * 
     * 
-     * @param maps A collection of the kegg @``T:SMRUCC.genomics.Assembly.KEGG.WebServices.XML.Map`` clr object
-     * @param reactions A collection of the kegg @``T:SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Reaction`` clr object
      * @param alternative 
      * + default value Is ``false``.
    */
