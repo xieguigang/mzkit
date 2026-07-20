@@ -67,6 +67,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.BioDeep.MSEngine.Mummichog
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -89,6 +90,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
@@ -407,6 +409,55 @@ Module Mummichog
             Return reactions.BuildModel(compounds, enzymaticRelated:=False, ignoresCommonList:=False, enzymeBridged:=True)
         End Function
     End Class
+
+    ''' <summary>
+    ''' Create mummichog annotation engine from a metabolite background table
+    ''' </summary>
+    ''' <param name="metab"></param>
+    ''' <param name="name"></param>
+    ''' <param name="formula"></param>
+    ''' <param name="pathway"></param>
+    ''' <param name="params"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("fromDataframe")>
+    <RApiReturn(GetType(MummichogAnnotator))>
+    Public Function backgroundFromDataframe(metab As dataframe,
+                                            Optional name As String = "name",
+                                            Optional formula As String = "formula",
+                                            Optional pathway As String = "pathway",
+                                            Optional params As MummichogParams = Nothing,
+                                            Optional env As Environment = Nothing) As Object
+
+        Dim name_vec As String() = CLRVector.asCharacter(metab(name))
+        Dim formula_vec As String() = CLRVector.asCharacter(metab(formula))
+        Dim pathway_vec As String() = CLRVector.asCharacter(metab(pathway))
+        Dim id_vec As String() = metab.rownames
+        Dim metabset As IEnumerable(Of KEGGMetabolite) = id_vec _
+            .Select(Function(id, i)
+                        Return New KEGGMetabolite With {
+                            .Id = id,
+                            .CommonName = name_vec(i),
+                            .Formula = formula_vec(i),
+                            .ExactMass = FormulaScanner.EvaluateExactMass(.Formula)
+                        }
+                    End Function)
+        Dim pathwaySet As IEnumerable(Of KEGGPathway) = pathway_vec _
+            .SelectMany(Function(pathway_name, i)
+                            Return pathway_name.StringSplit(";\s+").Select(Function(pwy) (pwy, id_vec(i)))
+                        End Function) _
+            .GroupBy(Function(p) p.pwy) _
+            .Select(Function(p)
+                        Return New KEGGPathway With {
+                            .ID = p.Key,
+                            .Name = p.Key,
+                            .Description = p.Key,
+                            .Metabolites = New HashSet(Of String)(From t In p Select t.Item2)
+                        }
+                    End Function)
+
+        Return New MummichogAnnotator(metabset, pathwaySet, params)
+    End Function
 
     ''' <summary>
     ''' Create mummichog annotation engine
