@@ -140,10 +140,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Buffers" Version="4.6.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\Trinity\Trinity.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\word2vec\word2vec.vbproj" />

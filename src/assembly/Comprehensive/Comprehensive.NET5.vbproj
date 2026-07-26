@@ -178,10 +178,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="System.Buffers" Version="4.6.1" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Reference Include="ThermoFisher.CommonCore.BackgroundSubtraction">
 	    <HintPath>..\..\..\ThermoFisher\Libs\netstandard2.0\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
 	  </Reference>
