@@ -101,58 +101,59 @@ Public Module MSImagingReader
     ''' <param name="h5"></param>
     ''' <returns></returns>
     Public Function ReadmsiPLData(h5 As String) As mzPack
-        Dim fileId As Long = H5F.open(h5, H5F.ACC_RDONLY)
-        Dim mzArray = ReadData.Read_dataset(fileId, "/mzArray") _
-            .GetSingles _
-            .Select(Function(s) CDbl(s)) _
-            .ToArray
-        Dim xLocation = ReadData.Read_dataset(fileId, "/xLocation").GetDoubles.ToArray
-        Dim yLocation = ReadData.Read_dataset(fileId, "/yLocation").GetDoubles.ToArray
-        Dim split_size As Integer = xLocation.Length
-        'Dim intos As Double()() = ReadData.Read_chunkset(fileId, "/Data") _
-        '    .Select(Function(chk) ReadData.GetDoubles(chk).ToArray) _
+        'Dim fileId As Long = H5F.open(h5, H5F.ACC_RDONLY)
+        'Dim mzArray = ReadData.Read_dataset(fileId, "/mzArray") _
+        '    .GetSingles _
+        '    .Select(Function(s) CDbl(s)) _
         '    .ToArray
-        Dim intos As Double()() = ReadData.Read_dataset(fileId, "/Data") _
-            .GetDoubles() _
-            .Split(split_size) _
-            .ToArray
-        Dim ms1 As New List(Of ScanMS1)
+        'Dim xLocation = ReadData.Read_dataset(fileId, "/xLocation").GetDoubles.ToArray
+        'Dim yLocation = ReadData.Read_dataset(fileId, "/yLocation").GetDoubles.ToArray
+        'Dim split_size As Integer = xLocation.Length
+        ''Dim intos As Double()() = ReadData.Read_chunkset(fileId, "/Data") _
+        ''    .Select(Function(chk) ReadData.GetDoubles(chk).ToArray) _
+        ''    .ToArray
+        'Dim intos As Double()() = ReadData.Read_dataset(fileId, "/Data") _
+        '    .GetDoubles() _
+        '    .Split(split_size) _
+        '    .ToArray
+        'Dim ms1 As New List(Of ScanMS1)
 
-        For i As Integer = 0 To xLocation.Length - 1
-            Dim x As Integer = xLocation(i)
-            Dim y As Integer = yLocation(i)
-            Dim offset As Integer = i
-            Dim ms As ms2() = intos _
-                .Select(Function(vi, j)
-                            Return New ms2 With {.mz = mzArray(j), .intensity = vi(offset)}
-                        End Function) _
-                .Where(Function(j) j.intensity > 0) _
-                .ToArray
-            Dim v As Double() = ms.Select(Function(mzi) mzi.intensity).ToArray
+        'For i As Integer = 0 To xLocation.Length - 1
+        '    Dim x As Integer = xLocation(i)
+        '    Dim y As Integer = yLocation(i)
+        '    Dim offset As Integer = i
+        '    Dim ms As ms2() = intos _
+        '        .Select(Function(vi, j)
+        '                    Return New ms2 With {.mz = mzArray(j), .intensity = vi(offset)}
+        '                End Function) _
+        '        .Where(Function(j) j.intensity > 0) _
+        '        .ToArray
+        '    Dim v As Double() = ms.Select(Function(mzi) mzi.intensity).ToArray
 
-            If v.Length = 0 Then
-                Continue For
-            End If
+        '    If v.Length = 0 Then
+        '        Continue For
+        '    End If
 
-            Call ms1.Add(New ScanMS1 With {
-                .BPC = v.Max,
-                .into = v,
-                .meta = New Dictionary(Of String, String) From {
-                    {"x", x}, {"y", y}
-                },
-                .mz = ms.Select(Function(mzi) mzi.mz).ToArray,
-                .products = {},
-                .rt = i,
-                .TIC = v.Sum,
-                .scan_id = $"[MS1][{i + 1}][{x},{y}] {ms.Length} ions, BPC={ .BPC.ToString("G3")}, total_ions={ .TIC.ToString("G3")}, basepeak_m/z={ .mz(which.Max(v))}"
-            })
-        Next
+        '    Call ms1.Add(New ScanMS1 With {
+        '        .BPC = v.Max,
+        '        .into = v,
+        '        .meta = New Dictionary(Of String, String) From {
+        '            {"x", x}, {"y", y}
+        '        },
+        '        .mz = ms.Select(Function(mzi) mzi.mz).ToArray,
+        '        .products = {},
+        '        .rt = i,
+        '        .TIC = v.Sum,
+        '        .scan_id = $"[MS1][{i + 1}][{x},{y}] {ms.Length} ions, BPC={ .BPC.ToString("G3")}, total_ions={ .TIC.ToString("G3")}, basepeak_m/z={ .mz(which.Max(v))}"
+        '    })
+        'Next
 
-        Return New mzPack With {
-            .Application = FileApplicationClass.MSImaging,
-            .metadata = New Dictionary(Of String, String),
-            .source = h5.FileName,
-            .MS = ms1.ToArray
-        }
+        'Return New mzPack With {
+        '    .Application = FileApplicationClass.MSImaging,
+        '    .metadata = New Dictionary(Of String, String),
+        '    .source = h5.FileName,
+        '    .MS = ms1.ToArray
+        '}
+        Throw New NotImplementedException
     End Function
 End Module
