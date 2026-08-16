@@ -22,8 +22,15 @@
 
         <h3>Description</h3>
 
-        <p>+ 积分方法太敏感了，可能会对ROI以及峰型要求非常高
- + 净峰法简单相加会比较鲁棒一些</p>
+        <ul>
+<li><p>积分方法太敏感了，可能会对ROI以及峰型要求非常高</li>
+</ul>
+
+
+
+<ul>
+<li><p>净峰法简单相加会比较鲁棒一些</li>
+</ul>
 
         <h3>Declare</h3>        
 
@@ -37,8 +44,7 @@ export class PeakAreaMethods extends <a href="/vignettes/clr/System/Enum.html">E
    # 使用积分器来进行峰面积的计算
    Integrator: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/PeakAreaMethods.html">PeakAreaMethods</a> = 1;
 
-   # No peak finding, sum all chromatogram ticks signal intensity directly.
-   #  基线非常低（接近于零）的时候可以使用
+   # No peak finding, sum all chromatogram ticks signal intensity directly. 基线非常低（接近于零）的时候可以使用
    SumAll: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/PeakAreaMethods.html">PeakAreaMethods</a> = 2;
 
    # 如果色谱柱的压力非常大，出峰非常的集中，可以直接使用最大的峰高度来近似为峰面积

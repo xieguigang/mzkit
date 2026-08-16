@@ -25,6 +25,28 @@ declare namespace Mummichog {
    */
    function createMzset(query: object, tolerance?: any, env?: object): object;
    /**
+    * Create mummichog annotation engine from a metabolite background table
+    * 
+    * 
+     * @param metab -
+     * @param name -
+     * 
+     * + default value Is ``'name'``.
+     * @param formula -
+     * 
+     * + default value Is ``'formula'``.
+     * @param pathway -
+     * 
+     * + default value Is ``'pathway'``.
+     * @param params -
+     * 
+     * + default value Is ``null``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function fromDataframe(metab: object, name?: string, formula?: string, pathway?: string, params?: object, env?: object): object;
+   /**
     * cast background models for ``peakList_annotation`` analysis based on
     *  a given gsea background model object, this conversion will loose
     *  all of the network topology information

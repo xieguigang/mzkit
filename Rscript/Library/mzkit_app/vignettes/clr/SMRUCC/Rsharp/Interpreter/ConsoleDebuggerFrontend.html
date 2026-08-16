@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMRUCC.Rsharp.Interpreter.ConsoleDebuggerFrontend</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>ConsoleDebuggerFrontend {SMRUCC.Rsharp.Interpreter}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>ConsoleDebuggerFrontend</h2>
+
+        <h3>Description</h3>
+
+        <p>调试器的控制台交互前端
+
+<p>这个类型是 <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebuggerContext.html">DebuggerContext</a> 之上的一个默认的交互实现, 其通过订阅 @<code>E:SMRUCC.Rsharp.Interpreter.DebuggerContext.OnBreakpointHit</code> 事件的方式 来与调试器的内核进行交互. 因为调试器的内核之中并不包含任何的 控制台相关的代码, 所以GUI的宿主程序也可以采用完全相同的方式来 实现自己的调试界面
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace SMRUCC.Rsharp.Interpreter
+export class ConsoleDebuggerFrontend {
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        this clr type has no other .net clr type reference.
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

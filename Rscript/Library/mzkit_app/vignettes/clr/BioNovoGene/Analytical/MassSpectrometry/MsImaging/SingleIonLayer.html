@@ -22,8 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>a collection of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">PixelData</a> spots, the spot pixel
- data was used to the spatial heatmap rendering.</p>
+        <p>a collection of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">PixelData</a> spots, the spot pixel data was used to the spatial heatmap rendering.
 
         <h3>Declare</h3>        
 
@@ -31,13 +30,11 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.MsImaging
 export class SingleIonLayer {
-   # the canvas size of the MSI plot output, it indicates the max scan x and 
-   #  max scan y of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">MSILayer</a> heatmap.
+   # the canvas size of the MSI plot output, it indicates the max scan x and max scan y of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">MSILayer</a> heatmap.
    DimensionSize: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a>;
    # check if the spot data has multiple sample label data tags
    hasMultipleSamples: boolean;
-   # check is there some missing spot data inside the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">MSILayer</a> by 
-   #  simply measuring the collection size.
+   # check is there some missing spot data inside the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">MSILayer</a> by simply measuring the collection size.
    hasZeroPixels: boolean;
    # the layer tag label, usually be a single ion m/z value.
    IonMz: string;
@@ -47,8 +44,7 @@ export class SingleIonLayer {
    MSILayer: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">PixelData[]</a>;
    # get the sample tags of the spatial spots
    sampleTags: string;
-   # count the number of the pixel spots in current metabolite 
-   #  ion ms-imaging layer.
+   # count the number of the pixel spots in current metabolite ion ms-imaging layer.
    size: integer;
 }
 </code>

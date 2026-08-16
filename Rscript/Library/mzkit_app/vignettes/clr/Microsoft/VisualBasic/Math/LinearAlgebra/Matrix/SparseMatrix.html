@@ -31,6 +31,8 @@
 # namespace Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 export class SparseMatrix {
    ColumnDimension: integer;
+   # 非零元素个数（即内部字典存储的 (row, col, value) 三元组数量）。
+   nnz: integer;
    RowDimension: integer;
 }
 </code>

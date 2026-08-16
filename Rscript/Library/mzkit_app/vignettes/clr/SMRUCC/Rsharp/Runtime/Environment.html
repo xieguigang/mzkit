@@ -22,9 +22,9 @@
 
         <h3>Description</h3>
 
-        <p>A <code>R#</code> scripting runtime context.</p>
+        <p>A <code>R#</code> scripting runtime context.
 
-<p>(在一个环境对象容器之中，所有的对象都是以变量来表示的)</p>
+<p>(在一个环境对象容器之中，所有的对象都是以变量来表示的)
 
         <h3>Declare</h3>        
 
@@ -32,6 +32,8 @@
             <code id="clr_ts">
 # namespace SMRUCC.Rsharp.Runtime
 export class Environment {
+   # the debugger context object for the current R# interpreter runtime
+   debugger: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebuggerContext.html">DebuggerContext</a>;
    # 导入的函数列表
    funcSymbols: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/SymbolSet.html">SymbolSet</a>;
    # the global environment
@@ -56,6 +58,7 @@ export class Environment {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
+<li>use by <i>property</i> member <code>debugger</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebuggerContext.html">DebuggerContext</a></li>
 <li>use by <i>property</i> member <code>funcSymbols</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/SymbolSet.html">SymbolSet</a></li>
 <li>use by <i>property</i> member <code>last</code>: <i>any</i> kind</li>
 <li>use by <i>property</i> member <code>messages</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/Message.html">iterates(Message)</a></li>

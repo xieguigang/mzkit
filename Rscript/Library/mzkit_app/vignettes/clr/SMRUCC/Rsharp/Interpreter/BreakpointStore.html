@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMRUCC.Rsharp.Interpreter.BreakpointStore</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>BreakpointStore {SMRUCC.Rsharp.Interpreter}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>BreakpointStore</h2>
+
+        <h3>Description</h3>
+
+        <p>断点的集合管理器
+
+<p>对外是以<code>文件名+行号</code>的方式来进行断点的增删查改操作的, 而在内部则是使用经过规范化处理之后的<code>文件名:行号</code>字符串 作为键名来建立索引字典, 使得在程序执行的热点循环之中能够以 O(1) 的时间复杂度来完成断点的命中判断.
+
+<p>这里之所以不直接使用 @<code>M:SMRUCC.Rsharp.Interpreter.ExecuteEngine.Expression.GetBreakPointHashCode</code> 所返回的哈希码来做索引, 是因为该哈希码的计算逻辑位于外部的 sciBASIC 程序集之中, 其具体的哈希算法对于本项目而言是不透明的, 无法保证由用户所输入的<code>文件名+行号</code>能够反推出完全一致的哈希码
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace SMRUCC.Rsharp.Interpreter
+export class BreakpointStore {
+   # 当前所注册的断点的总数量
+   count: integer;
+   # 当前是否没有注册任何的断点?
+   isEmpty: boolean;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        this clr type has no other .net clr type reference.
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

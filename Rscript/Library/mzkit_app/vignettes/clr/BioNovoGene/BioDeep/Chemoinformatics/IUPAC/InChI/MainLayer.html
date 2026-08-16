@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>主层（main layer）：以<code>1</code>表示</p>
+        <p>主层（main layer）：以<code>1</code>表示
 
         <h3>Declare</h3>        
 
@@ -32,12 +32,9 @@
 export class MainLayer extends <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/Layer.html">Layer</a> {
    # Chemical formula (no prefix). This is the only sublayer that must occur in every InChI.
    Formula: string;
-   # Hydrogen atoms (prefix: "h"). Describes how many hydrogen atoms are connected to each of 
-   #  the other atoms.
+   # Hydrogen atoms (prefix: "h"). Describes how many hydrogen atoms are connected to each of the other atoms.
    Hydrogen: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/InchiAtom.html">InchiAtom[]</a>;
-   # Atom connections (prefix: "c"). The atoms in the chemical formula (except for hydrogens) 
-   #  are numbered in sequence; this sublayer describes which atoms are connected by bonds to 
-   #  which other ones.
+   # Atom connections (prefix: "c"). The atoms in the chemical formula (except for hydrogens) are numbered in sequence; this sublayer describes which atoms are connected by bonds to which other ones.
    Struct: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/InchiInput.html">InchiInput</a>;
 }
 </code>

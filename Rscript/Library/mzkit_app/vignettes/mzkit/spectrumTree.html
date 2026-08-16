@@ -66,33 +66,44 @@ table caption {font-size:14px;font-weight:bolder;}
                                <br /><br /><span style="color: green;">#' Provides R language interface for mass spectrometry data processing and metabolite annotation using spectrum tree-based reference libraries.</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "spectrumTree"</span><span style="color: blue;"> from</span><span style="color: brown"> "mzkit"</span>;
                            </code>
     </p>
-    <p><p>Provides R language interface for mass spectrometry data processing and metabolite annotation using spectrum tree-based reference libraries.</p></p>
+    <p><p>Provides R language interface for mass spectrometry data processing and metabolite annotation using spectrum tree-based reference libraries.</p>
     <blockquote>
       <p style="font-style: italic; font-size: 0.9em;">
                            <p>This module enables cross-language interoperability between VB.NET mass spectrometry algorithms and R scripting environments.
- 
- Key features include:
- 
- 1. Reference library management (Pack/Binary/Tree formats)
- 2. Spectrum similarity searches with multiple algorithms
- 3. Metabolite annotation pipeline integration
- 4. Library compression and optimization
- 5. Test dataset generation
- 6. Embedding generation for machine learning applications
- 
- Supported data types:
- 
- - mzPack containers
- - PeakMs2 spectra
- - LibraryMatrix objects
- - BioDeep metabolite metadata
- 
- Search algorithms implemented:
- 
- - Cosine similarity (dot product)
- - Jaccard index
- - Entropy-based scoring
- - Forward/reverse match validation</p>
+
+<p>Key features include:
+
+
+<ol>
+<li><p>Reference library management (Pack/Binary/Tree formats)</li>
+<li><p>Spectrum similarity searches with multiple algorithms</li>
+<li><p>Metabolite annotation pipeline integration</li>
+<li><p>Library compression and optimization</li>
+<li><p>Test dataset generation</li>
+<li><p>Embedding generation for machine learning applications</li>
+</ol>
+
+
+<p>Supported data types:
+
+
+<ul>
+<li><p>mzPack containers</li>
+<li><p>PeakMs2 spectra</li>
+<li><p>LibraryMatrix objects</li>
+<li><p>BioDeep metabolite metadata</li>
+</ul>
+
+
+<p>Search algorithms implemented:
+
+
+<ul>
+<li><p>Cosine similarity (dot product)</li>
+<li><p>Jaccard index</li>
+<li><p>Entropy-based scoring</li>
+<li><p>Forward/reverse match validation</li>
+</ul>
                            </p>
     </blockquote>
     <div id="main-wrapper">
@@ -108,19 +119,19 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="new">
     <a href="./spectrumTree/new.html">new</a>
   </td>
-  <td><p>Creates a new reference spectrum database file for storing spectral data.</p></td>
+  <td><p>Creates a new reference spectrum database file for storing spectral data.</td>
 </tr>
 <tr>
   <td id="get_testSample">
     <a href="./spectrumTree/get_testSample.html">get_testSample</a>
   </td>
-  <td><p>Extract the test sample data for run evaluation of the annotation workflow</p></td>
+  <td><p>Extract the test sample data for run evaluation of the annotation workflow</td>
 </tr>
 <tr>
   <td id="readpack">
     <a href="./spectrumTree/readpack.html">readpack</a>
   </td>
-  <td><p>open the spectrum pack reference database file</p></td>
+  <td><p>open the spectrum pack reference database file</td>
 </tr>
 <tr>
   <td id="open">
@@ -128,81 +139,79 @@ table caption {font-size:14px;font-weight:bolder;}
   </td>
   <td><h3>open the spectrum reference database</h3>
 
-<p>open the reference spectrum database file and 
- then create a host to run spectrum cluster 
- search</p></td>
+<p>open the reference spectrum database file and then create a host to run spectrum cluster search</td>
 </tr>
 <tr>
   <td id="discard_precursor_filter">
     <a href="./spectrumTree/discard_precursor_filter.html">discard_precursor_filter</a>
   </td>
-  <td><p>set @<code>P:BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query.Ms2Search.discardPrecursorFilter</code> to value true, and make cache of the spectrum data</p></td>
+  <td><p>set @<code>P:BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query.Ms2Search.discardPrecursorFilter</code> to value true, and make cache of the spectrum data</td>
 </tr>
 <tr>
   <td id="export_spectrum">
     <a href="./spectrumTree/export_spectrum.html">export_spectrum</a>
   </td>
-  <td><p>export all reference spectrum from the given library object</p></td>
+  <td><p>export all reference spectrum from the given library object</td>
 </tr>
 <tr>
   <td id="dotcutoff">
     <a href="./spectrumTree/dotcutoff.html">dotcutoff</a>
   </td>
-  <td><p>set dot cutoff parameter for the cos score similarity algorithm</p></td>
+  <td><p>set dot cutoff parameter for the cos score similarity algorithm</td>
 </tr>
 <tr>
   <td id="parallel">
     <a href="./spectrumTree/parallel.html">parallel</a>
   </td>
-  <td><p>Enables or disables parallel processing for spectral searches.</p></td>
+  <td><p>Enables or disables parallel processing for spectral searches.</td>
 </tr>
 <tr>
   <td id="jaccardSet">
     <a href="./spectrumTree/jaccardSet.html">jaccardSet</a>
   </td>
-  <td><p>construct a fragment set library for run spectrum search in jaccard index matches method</p></td>
+  <td><p>construct a fragment set library for run spectrum search in jaccard index matches method</td>
 </tr>
 <tr>
   <td id="top_candidates">
     <a href="./spectrumTree/top_candidates.html">top_candidates</a>
   </td>
-  <td><p>Retrieves the top candidate matches from a metabolite library search.</p></td>
+  <td><p>Retrieves the top candidate matches from a metabolite library search.</td>
 </tr>
 <tr>
   <td id="candidate_ids">
     <a href="./spectrumTree/candidate_ids.html">candidate_ids</a>
   </td>
-  <td><p>Extract all reference id from a set of spectrum annotation candidate result</p></td>
+  <td><p>Extract all reference id from a set of spectrum annotation candidate result</td>
 </tr>
 <tr>
   <td id="as.annotation_result">
     <a href="./spectrumTree/as.annotation_result.html">as.annotation_result</a>
   </td>
-  <td><p>Create metabolite annotation result dataset for a set of the spectrum annotation candidates result.</p></td>
+  <td><p>Create metabolite annotation result dataset for a set of the spectrum annotation candidates result.</td>
 </tr>
 <tr>
   <td id="query">
     <a href="./spectrumTree/query.html">query</a>
   </td>
-  <td><p>do spectrum family alignment via cos similarity</p></td>
+  <td><p>do spectrum family alignment via cos similarity</td>
 </tr>
 <tr>
   <td id="addBucket">
     <a href="./spectrumTree/addBucket.html">addBucket</a>
   </td>
-  <td><p>push the reference spectrum data into the spectrum reference tree library</p></td>
+  <td><p>push the reference spectrum data into the spectrum reference tree library</td>
 </tr>
 <tr>
   <td id="compress">
     <a href="./spectrumTree/compress.html">compress</a>
   </td>
-  <td><p>Compresses and optimizes a spectrum library, removing redundant entries.</p></td>
+  <td><p>Compresses and optimizes a spectrum library, removing redundant entries.</td>
 </tr>
 <tr>
   <td id="embedding">
     <a href="./spectrumTree/embedding.html">embedding</a>
   </td>
-  <td><p>Generates vector embeddings for spectral data (e.g., for machine learning).</p></td>
+  <td><p>Generates vector embeddings for spectral data (e.g., for machine learning).</td>
 </tr></tbody>
       </table>
     </div>

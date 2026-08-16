@@ -22,9 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>The entry point data of the commands in the command line which was original loaded 
- from the source meta data in the compiled target.
- (命令行命令的执行入口点)</p>
+        <p>The entry point data of the commands in the command line which was original loaded from the source meta data in the compiled target. (命令行命令的执行入口点)
 
         <h3>Declare</h3>        
 
@@ -41,9 +39,7 @@ export class APIEntryPoint extends <a href="/vignettes/clr/Microsoft/VisualBasic
    # The shared method did not requires of the object instance.(这个方法是否为实例方法)
    IsInstanceMethod: boolean;
    Name: string;
-   # If the target invoked <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/Reflection/EntryPoints/APIEntryPoint.html">APIEntryPoint</a>.<a href="/vignettes/clr/System/Reflection/MethodInfo.html">EntryPoint</a>[method delegate] is a instance method, 
-   #  then this property value should be the target object instance which has the method delegate.
-   #  (假若目标方法不是共享的方法，则必须要使用本对象来进行Invoke的调用)
+   # If the target invoked <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/Reflection/EntryPoints/APIEntryPoint.html">APIEntryPoint</a>.<a href="/vignettes/clr/System/Reflection/MethodInfo.html">EntryPoint</a>[method delegate] is a instance method, then this property value should be the target object instance which has the method delegate. (假若目标方法不是共享的方法，则必须要使用本对象来进行Invoke的调用)
    target: <i>any</i> kind;
    Usage: string;
 }

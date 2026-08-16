@@ -22,10 +22,9 @@
 
         <h3>Description</h3>
 
-        <p>Spectrum data in vector model</p>
+        <p>Spectrum data in vector model
 
-<p>if the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakList.html">PeakList</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/MRM.html">MRM</a> data is not empty, then it means current spectrum
- peaks data is the data for MRM targetted analysis</p>
+<p>if the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakList.html">PeakList</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/MRM.html">MRM</a> data is not empty, then it means current spectrum peaks data is the data for MRM targetted analysis
 
         <h3>Declare</h3>        
 
@@ -33,17 +32,14 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 export class PeakList {
-   # the signal intensity strength 
-   #  value of the corresponding ion 
-   #  fragment mass data.
+   # the signal intensity strength value of the corresponding ion fragment mass data.
    into: double;
    # the peak annotation of the corresponding ion peak data
    metadata: string;
    MRM: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/MRM.html">MRM[]</a>;
    # the ion fragment mass list
    mz: double;
-   # gets the number of the ion fragments 
-   #  in current peak list object data.
+   # gets the number of the ion fragments in current peak list object data.
    size: integer;
 }
 </code>

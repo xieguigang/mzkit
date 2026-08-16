@@ -22,9 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>In order to insure efficient storage, two different 
- formats of the binary data are defined: continuous 
- and processed.</p>
+        <p>In order to insure efficient storage, two different formats of the binary data are defined: continuous and processed.
 
         <h3>Declare</h3>        
 
@@ -32,15 +30,10 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 export class Format extends <a href="/vignettes/clr/System/Enum.html">Enum</a> {
-   # Continuous type means that each spectrum of an image has the 
-   #  same m/z values. As a result the m/z array is only saved once 
-   #  directly behind the UUID of the file and the intensity arrays 
-   #  of the spectra are following.
+   # Continuous type means that each spectrum of an image has the same m/z values. As a result the m/z array is only saved once directly behind the UUID of the file and the intensity arrays of the spectra are following.
    Continuous: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/Format.html">Format</a> = 0;
 
-   # At the processed type every spectrum has its own m/z array. 
-   #  So it is necessary to save both – the m/z array and the 
-   #  corresponding intensity array – per spectrum.
+   # At the processed type every spectrum has its own m/z array. So it is necessary to save both – the m/z array and the corresponding intensity array – per spectrum.
    Processed: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/Format.html">Format</a> = 1;
 
 }

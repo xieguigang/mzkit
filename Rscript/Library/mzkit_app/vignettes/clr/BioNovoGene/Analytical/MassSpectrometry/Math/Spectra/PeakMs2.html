@@ -22,10 +22,9 @@
 
         <h3>Description</h3>
 
-        <p>将mzXML文件之中的每一个ms2 scan转换而来</p>
+        <p>将mzXML文件之中的每一个ms2 scan转换而来
 
-<p>A union data model of the ms1 annotation data 
- associated with the ms2 peak scan data.</p>
+<p>A union data model of the ms1 annotation data associated with the ms2 peak scan data.
 
         <h3>Declare</h3>        
 
@@ -49,8 +48,7 @@ export class PeakMs2 {
    meta: list;
    # 获取得到二级碎片的响应强度值的和,这个响应强度值是和其对应的一级母离子的响应强度值是呈正相关的
    Ms2Intensity: double;
-   # The precursor <code>m/z</code> value.
-   #  (一级母离子的<code>m/z</code>)
+   # The precursor <code>m/z</code> value. (一级母离子的<code>m/z</code>)
    mz: double;
    # 二级碎片信息
    mzInto: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2[]</a>;

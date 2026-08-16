@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>一个一级或者二级的扫描结果数据的模型</p>
+        <p>一个一级或者二级的扫描结果数据的模型
 
         <h3>Declare</h3>        
 
@@ -33,12 +33,30 @@ export class scan {
    basePeakIntensity: double;
    basePeakMz: double;
    # <code>profile</code> and <code>centroid</code> in Mass Spectrometry?
-   #  
-   #  1. Profile means the continuous wave form in a mass spectrum.
-   #    + Number of data points Is large.
-   #  2. Centroid means the peaks in a profile data Is changed to bars.
-   #    + location of the bar Is center of the profile peak.
-   #    + height of the bar Is area of the profile peak.
+   # 
+   # 
+   # <ol>
+   # <li>Profile means the continuous wave form in a mass spectrum.</li>
+   # </ol>
+   # 
+   # 
+   # 
+   # <ul>
+   # <li>Number of data points Is large.</li>
+   # </ul>
+   # 
+   # 
+   # 
+   # <ol start="2">
+   # <li>Centroid means the peaks in a profile data Is changed to bars.</li>
+   # </ol>
+   # 
+   # 
+   # 
+   # <ul>
+   # <li>location of the bar Is center of the profile peak.</li>
+   # <li>height of the bar Is area of the profile peak.</li>
+   # </ul>
    centroided: string;
    collisionEnergy: string;
    highMz: double;

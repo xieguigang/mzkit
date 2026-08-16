@@ -22,9 +22,9 @@
 
         <h3>Description</h3>
 
-        <p>The linear model of the targeted metabolism model data.</p>
+        <p>The linear model of the targeted metabolism model data.
 
-<p>(标准曲线模型)</p>
+<p>(标准曲线模型)
 
         <h3>Declare</h3>        
 
@@ -44,8 +44,7 @@ export class StandardCurve {
    name: string;
    points: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/Linear/ReferencePoint.html">ReferencePoint[]</a>;
    range: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>;
-   # This linear model is required calibration by internal standards or not?
-   #  (在进行线性回归计算的时候是否需要内标校正？)
+   # This linear model is required calibration by internal standards or not? (在进行线性回归计算的时候是否需要内标校正？)
    requireISCalibration: boolean;
    # the weight expression string of the linear regression
    weight: string;

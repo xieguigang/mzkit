@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>An expressin for create a new symbol inside the runtime environment</p>
+        <p>An expressin for create a new symbol inside the runtime environment
 
         <h3>Declare</h3>        
 
@@ -36,8 +36,7 @@ export class DeclareNewSymbol extends <a href="/vignettes/clr/SMRUCC/Rsharp/Inte
    isCallable: boolean;
    # does current symbol declaration contains multiple symbol targets?
    isTuple: boolean;
-   # tuple names.
-   #  (对于tuple语法，会存在多个变量)
+   # tuple names. (对于tuple语法，会存在多个变量)
    names: <a href="/vignettes/clr/System/Collections/Generic/IReadOnlyCollection`1.html">IReadOnlyCollection`1</a>;
    stackFrame: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame</a>;
    # the size of the symbol names

@@ -24,47 +24,76 @@
 
         <h3>Layers of the identifier</h3>
 
-<p><code>{InChI version}</code></p>
+<p><code>{InChI version}</code>
 
-<p>#### 1. Main Layer (M): 
- + <code>/{formula}</code> 
- + <code>/c{connections}</code>
- + <code>/h{H_atoms}</code></p>
+<h4>1. Main Layer (M):</h4>
 
-<p>#### 2. Charge Layer 
- + <code>/q{charge}</code> 
- + <code>/p{protons}</code></p>
 
-<p>#### 3. Stereo Layer 
- + <code>/b{stereo:dbond}</code> 
- + <code>/t{stereo:sp3}</code> 
- + <code>/m{stereo:sp3:inverted}</code> 
- + <code>/s{stereo:type (1=abs, 2=rel, 3=rac)}</code></p>
+<ul>
+<li><p><code>/{formula}</code></li>
+<li><p><code>/c{connections}</code></li>
+<li><p><code>/h{H_atoms}</code></li>
+</ul>
 
-<p>#### 4. Isotopic Layer (MI): 
- + <code>/i{isotopicatoms}*</code> 
- + <code>/h{isotopic:exchangeable_H}</code> 
- + <code>/b{isotopic:stereo:dbond}</code> 
- + <code>/t{isotopic:stereo:sp3}</code> 
- + <code>/m{isotopic:stereo:sp3:inverted}</code> 
- + <code>/s{isotopic:stereo:type (1=abs, 2=rel, 3=rac)}</code></p>
 
-<p>#### 5. Fixed H Layer (F): 
- + <code>/f{fixed_Hformula}*</code> 
- + <code>/h{fixed_H:H_fixed}</code> 
- + <code>/q{fixed_H:charge}</code> 
- + <code>/b{fixed_H:stereo:dbond}</code> 
- + <code>/t{fixed_H:stereo:sp3}</code> 
- + <code>/m{fixed_H:stereo:sp3:inverted}</code> 
- + <code>/s{fixed_H:stereo:type (1=abs, 2=rel, 3=rac)}</code></p>
+<h4>2. Charge Layer</h4>
 
-<p>### (6.) Fixed/Isotopic Combination (FI) 
- + <code>/i{fixed_H:isotopic:atoms}*</code> 
- + <code>/b{fixed_H:isotopic:stereo:dbond}</code> 
- + <code>/t{fixed_H:isotopic:stereo:sp3}</code> 
- + <code>/m{fixed_H:isotopic:stereo:sp3:inverted}</code> 
- + <code>/s{fixed_H:isotopic:stereo:type (1=abs, 2=rel, 3=rac)}</code> 
- + <code>/o{transposition}</code></p>
+
+<ul>
+<li><p><code>/q{charge}</code></li>
+<li><p><code>/p{protons}</code></li>
+</ul>
+
+
+<h4>3. Stereo Layer</h4>
+
+
+<ul>
+<li><p><code>/b{stereo:dbond}</code></li>
+<li><p><code>/t{stereo:sp3}</code></li>
+<li><p><code>/m{stereo:sp3:inverted}</code></li>
+<li><p><code>/s{stereo:type (1=abs, 2=rel, 3=rac)}</code></li>
+</ul>
+
+
+<h4>4. Isotopic Layer (MI):</h4>
+
+
+<ul>
+<li><p><code>/i{isotopicatoms}*</code></li>
+<li><p><code>/h{isotopic:exchangeable_H}</code></li>
+<li><p><code>/b{isotopic:stereo:dbond}</code></li>
+<li><p><code>/t{isotopic:stereo:sp3}</code></li>
+<li><p><code>/m{isotopic:stereo:sp3:inverted}</code></li>
+<li><p><code>/s{isotopic:stereo:type (1=abs, 2=rel, 3=rac)}</code></li>
+</ul>
+
+
+<h4>5. Fixed H Layer (F):</h4>
+
+
+<ul>
+<li><p><code>/f{fixed_Hformula}*</code></li>
+<li><p><code>/h{fixed_H:H_fixed}</code></li>
+<li><p><code>/q{fixed_H:charge}</code></li>
+<li><p><code>/b{fixed_H:stereo:dbond}</code></li>
+<li><p><code>/t{fixed_H:stereo:sp3}</code></li>
+<li><p><code>/m{fixed_H:stereo:sp3:inverted}</code></li>
+<li><p><code>/s{fixed_H:stereo:type (1=abs, 2=rel, 3=rac)}</code></li>
+</ul>
+
+
+<h3>(6.) Fixed/Isotopic Combination (FI)</h3>
+
+
+<ul>
+<li><p><code>/i{fixed_H:isotopic:atoms}*</code></li>
+<li><p><code>/b{fixed_H:isotopic:stereo:dbond}</code></li>
+<li><p><code>/t{fixed_H:isotopic:stereo:sp3}</code></li>
+<li><p><code>/m{fixed_H:isotopic:stereo:sp3:inverted}</code></li>
+<li><p><code>/s{fixed_H:isotopic:stereo:type (1=abs, 2=rel, 3=rac)}</code></li>
+<li><p><code>/o{transposition}</code></li>
+</ul>
 
         <h3>Declare</h3>        
 
