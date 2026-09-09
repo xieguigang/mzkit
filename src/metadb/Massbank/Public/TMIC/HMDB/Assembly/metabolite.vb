@@ -113,7 +113,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.Linq
-Imports SMRUCC.genomics.ComponentModel
+Imports SMRUCC.genomics.ComponentModel.Chemical
 Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
 
 Namespace TMIC.HMDB
