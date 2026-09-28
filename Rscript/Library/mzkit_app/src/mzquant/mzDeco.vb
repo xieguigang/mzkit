@@ -67,7 +67,6 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
@@ -89,7 +88,7 @@ Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Distributions.Summary
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.Expressions
@@ -735,7 +734,7 @@ Module mzDeco
             .rt = rt,
             .rtmax = rt_range.Max,
             .rtmin = rt_range.Min,
-            .Properties = samples.AsGeneric(Of Double)(env)
+            .Properties = samples.asGeneric(Of Double)(env)
         }
     End Function
 
@@ -1017,7 +1016,7 @@ Module mzDeco
         Dim C_atoms As Dictionary(Of String, Integer) = Nothing
 
         If Not C Is Nothing Then
-            C_atoms = C.AsGeneric(Of Integer)(env)
+            C_atoms = C.asGeneric(Of Integer)(env)
         End If
 
         Return peakdata.ConvertRI(refer_points, C_atoms, map_RI_id, rawfile)
@@ -1102,7 +1101,7 @@ Module mzDeco
         ElseIf TypeOf ms1 Is list Then
             ' 2. processing for a set of the xic data
             Dim ls_xic = DirectCast(ms1, list) _
-                .AsGeneric(Of MzGroup)(env) _
+                .asGeneric(Of MzGroup)(env) _
                 .Select(Function(a) New NamedValue(Of MzGroup)(a.Key, a.Value)) _
                 .ToArray
 
@@ -1416,7 +1415,7 @@ extract_ms1:
 
         If data Like GetType(Message) Then
             If TypeOf samples Is list Then
-                Dim ls = DirectCast(samples, list).AsGeneric(Of MzGroup())(env)
+                Dim ls = DirectCast(samples, list).asGeneric(Of MzGroup())(env)
 
                 If ls.All(Function(a) a.Value Is Nothing) Then
                     Return data.TryCast(Of Message)
@@ -1585,7 +1584,7 @@ extract_ms1:
         Dim sampleData As NamedCollection(Of PeakFeature)() = Nothing
 
         If TypeOf samples Is list Then
-            Dim ls = DirectCast(samples, list).AsGeneric(Of PeakFeature())(env)
+            Dim ls = DirectCast(samples, list).asGeneric(Of PeakFeature())(env)
 
             If ls Is Nothing OrElse ls.All(Function(a) a.Value Is Nothing) Then
             Else
