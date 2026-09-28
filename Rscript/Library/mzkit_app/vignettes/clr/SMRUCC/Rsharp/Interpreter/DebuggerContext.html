@@ -22,11 +22,11 @@
 
         <h3>Description</h3>
 
-        <p>调试器状态管理类
+        <p>调试器状态管理类</p>
 
-<p>这个类型是整个调试器的核心, 其内部不包含任何的控制台交互代码, 控制台的交互逻辑位于 <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ConsoleDebuggerFrontend.html">ConsoleDebuggerFrontend</a> 之中, 使得GUI宿主程序能够通过订阅 @<code>E:SMRUCC.Rsharp.Interpreter.DebuggerContext.OnBreakpointHit</code> 事件 并且调用 @<code>M:SMRUCC.Rsharp.Interpreter.DebuggerContext.Resume(SMRUCC.Rsharp.Interpreter.DebugAction)</code> 函数的方式来复用同一套调试器内核.
+<p>这个类型是整个调试器的核心, 其内部不包含任何的控制台交互代码, 控制台的交互逻辑位于 <a href="cref:T:SMRUCC.Rsharp.Interpreter.ConsoleDebuggerFrontend">ConsoleDebuggerFrontend</a> 之中, 使得GUI宿主程序能够通过订阅 <a href="cref:E:SMRUCC.Rsharp.Interpreter.DebuggerContext.OnBreakpointHit">DebuggerContext.OnBreakpointHit</a> 事件 并且调用 <a href="cref:M:SMRUCC.Rsharp.Interpreter.DebuggerContext.Resume(SMRUCC.Rsharp.Interpreter.DebugAction)">DebuggerContext.Resume()</a> 函数的方式来复用同一套调试器内核.</p>
 
-<p>在整个环境链之上, 所有的 <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a> 对象都是共享 同一个 <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebuggerContext.html">DebuggerContext</a> 实例的, 请参见 <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a> 的构造函数之中的相关实现
+<p>在整个环境链之上, 所有的 <a href="cref:T:SMRUCC.Rsharp.Runtime.Environment">Environment</a> 对象都是共享 同一个 <a href="cref:T:SMRUCC.Rsharp.Interpreter.DebuggerContext">DebuggerContext</a> 实例的, 请参见 <a href="cref:T:SMRUCC.Rsharp.Runtime.Environment">Environment</a> 的构造函数之中的相关实现</p>
 
         <h3>Declare</h3>        
 

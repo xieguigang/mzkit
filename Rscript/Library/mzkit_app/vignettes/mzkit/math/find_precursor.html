@@ -38,15 +38,15 @@
         <table>
             
 <dt>mass</dt>
-<dd><p>[as double]</p></dd>
+<dd><p>the exact mass value. [as double]</p></dd>
 
 
 <dt>mz</dt>
-<dd><p>[as double]</p></dd>
+<dd><p>the m/z value from the ion, usually be the mz value from the xcms peaktable. [as double]</p></dd>
 
 
 <dt>libtype</dt>
-<dd><p></p></dd>
+<dd><p>the ion mode polarity value of the adducts for matches, value could be an integer value [1,-1]. and also this parameter value could be a set of the precursor adducts type character vector for do the data matches job.</p></dd>
 
 
 <dt>da</dt>
@@ -65,15 +65,15 @@
 
         <h3>Value</h3>
 
-        <p>a matched adducts result, for no matched data, a details error message will be returns. generally, the result tuple list contains the slot data:
+        <p>a matched adducts result, for no matched data, a details error message will be returns. generally, the result tuple list contains the slot data:</p>
 
 
 <ol>
-<li><p>precursor_type: the result adducts type that could be used for matches the given mass and mz value</li>
-<li><p>error: the mass error in unit delta dalton between the given mz and the theoretical m/z value that evaluated from the given mass and the matched adducts type.</li>
-<li><p>theoretical: the theoretical m/z value that evaluated from the given mass and the matched adducts type.</li>
-<li><p>ppm: the mass ppm error between the given mz and the theoretical m/z value that evaluated from the given mass and the matched adducts type.</li>
-<li><p>message: usually be the error message.</li>
+<li>precursor_type: the result adducts type that could be used for matches the given mass and mz value</li>
+<li>error: the mass error in unit delta dalton between the given mz and the theoretical m/z value that evaluated from the given mass and the matched adducts type.</li>
+<li>theoretical: the theoretical m/z value that evaluated from the given mass and the matched adducts type.</li>
+<li>ppm: the mass ppm error between the given mz and the theoretical m/z value that evaluated from the given mass and the matched adducts type.</li>
+<li>message: usually be the error message.</li>
 </ol> the list data also has some specificied data fields: <code>list(precursor_type, error, theoretical, ppm, message)</code>.<h4>clr value class</h4><ul><li>list</li></ul>
 
         <h3 style="display: none;">Examples</h3>

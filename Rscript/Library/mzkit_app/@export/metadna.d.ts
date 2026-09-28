@@ -44,7 +44,7 @@ declare namespace metadna {
        * create seeds from mgf file data
        * 
        * 
-        * @param seeds A set of the mzkit @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2`` clr object that could 
+        * @param seeds A set of the mzkit [PeakMs2](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2) clr object that could 
         *  be used for the seeds for run the metadna annotation.
         * @param env -
         * 
@@ -56,7 +56,7 @@ declare namespace metadna {
        * 
        * 
         * @param metaDNA -
-        * @param result a collection of the @``T:BioNovoGene.BioDeep.MetaDNA.Infer.CandidateInfer``.
+        * @param result a collection of the [CandidateInfer](cref:T:BioNovoGene.BioDeep.MetaDNA.Infer.CandidateInfer).
         * @param unique -
         * 
         * + default value Is ``false``.
@@ -66,7 +66,7 @@ declare namespace metadna {
         * @param env -
         * 
         * + default value Is ``null``.
-        * @return A collection of the @``T:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult`` data objects that could be
+        * @return A collection of the [MetaDNAResult](cref:T:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult) data objects that could be
         *  used for represented as the result table.
       */
       function table(metaDNA: object, result: any, unique?: boolean, cutoff?: number, env?: object): object;
@@ -115,8 +115,8 @@ declare namespace metadna {
        * 
        * 
         * @param metadna -
-        * @param kegg should be a collection of the @``T:SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound`` data,
-        *  or a general @``T:BioNovoGene.BioDeep.MetaDNA.CompoundSolver``.
+        * @param kegg should be a collection of the [Compound](cref:T:SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound) data,
+        *  or a general [CompoundSolver](cref:T:BioNovoGene.BioDeep.MetaDNA.CompoundSolver).
         * @param env -
         * 
         * + default value Is ``null``.
@@ -127,7 +127,7 @@ declare namespace metadna {
        * 
        * 
         * @param metadna -
-        * @param links should be a collection of the @``T:SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass`` data
+        * @param links should be a collection of the [ReactionClass](cref:T:SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass) data
         * @param env -
         * 
         * + default value Is ``null``.
@@ -138,7 +138,7 @@ declare namespace metadna {
        * 
        * 
         * @param metadna -
-        * @param obo raw data for build @``T:BioNovoGene.BioDeep.MetaDNA.OntologyTree``.
+        * @param obo raw data for build [OntologyTree](cref:T:BioNovoGene.BioDeep.MetaDNA.OntologyTree).
         * @param env -
         * 
         * + default value Is ``null``.
@@ -237,8 +237,8 @@ declare namespace metadna {
        * get result alignments raw data for data plots.
        * 
        * 
-        * @param DIAinfer the result candidates of clr data type in mzkit: @``T:BioNovoGene.BioDeep.MetaDNA.Infer.CandidateInfer``
-        * @param table the @``T:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult`` data table
+        * @param DIAinfer the result candidates of clr data type in mzkit: [CandidateInfer](cref:T:BioNovoGene.BioDeep.MetaDNA.Infer.CandidateInfer)
+        * @param table the [MetaDNAResult](cref:T:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult) data table
         * @param env -
         * 
         * + default value Is ``null``.

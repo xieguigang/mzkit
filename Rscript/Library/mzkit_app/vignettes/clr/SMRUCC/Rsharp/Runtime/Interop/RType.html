@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>The type wrapper for .NET type to R# language runtime
+        <p>The type wrapper for .NET type to R# language runtime</p>
 
         <h3>Declare</h3>        
 
@@ -30,18 +30,18 @@
             <code id="clr_ts">
 # namespace SMRUCC.Rsharp.Runtime.Interop
 export class RType {
-   # the raw CLR <a href="/vignettes/clr/System/Type.html">Type</a>.<a href="#">FullName</a>
+   # the raw CLR <a href="cref:P:System.Type.FullName">Type.FullName</a>
    fullName: string;
    getCount: <a href="/vignettes/clr/System/Reflection/PropertyInfo.html">PropertyInfo</a>;
    getItem: <a href="/vignettes/clr/System/Reflection/PropertyInfo.html">PropertyInfo</a>;
-   # implements interface of <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/DataSourceModel/IDynamicsObject.html">IDynamicsObject</a>?
+   # implements interface of <a href="cref:T:Microsoft.VisualBasic.ComponentModel.DataSourceModel.IDynamicsObject">IDynamicsObject</a>?
    haveDynamicsProperty: boolean;
-   # check of current type information is clr <i>any</i> kind type?
+   # check of current type information is clr <a href="cref:T:System.Object">Object</a> type?
    is_any: boolean;
    is_numeric: boolean;
    isArray: boolean;
    isCollection: boolean;
-   # is an <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a> object?
+   # is an <a href="cref:T:SMRUCC.Rsharp.Runtime.Environment">Environment</a> object?
    isEnvironment: boolean;
    # Is dictionary of string and value types?
    isGenericListObject: boolean;

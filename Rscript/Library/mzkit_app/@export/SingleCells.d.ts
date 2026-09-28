@@ -25,7 +25,7 @@ declare namespace SingleCells {
        * 
        * 
         * @param x -
-        * @param scaler A R# @``T:SMRUCC.Rsharp.Runtime.Components.Interface.RFunction`` for apply the scale transform.
+        * @param scaler A R# [RFunction](cref:T:SMRUCC.Rsharp.Runtime.Components.Interface.RFunction) for apply the scale transform.
         * @param env -
         * 
         * + default value Is ``null``.
@@ -40,7 +40,7 @@ declare namespace SingleCells {
         * @param x -
         * @param single_cell 
         * + default value Is ``false``.
-        * @return the gcmodeller expression matrix object, each @``T:SMRUCC.genomics.Analysis.HTS.DataFrame.DataFrameRow`` element inside the 
+        * @return the gcmodeller expression matrix object, each [DataFrameRow](cref:T:SMRUCC.genomics.Analysis.HTS.DataFrame.DataFrameRow) element inside the 
         *  generated matrix object is the expression vector of all metabolite ion features. which means
         *  the matrix format from this function outputs should be:
         *  
@@ -80,8 +80,8 @@ declare namespace SingleCells {
     * export single cell expression matrix from the raw data scans
     * 
     * 
-     * @param raw the raw data for make epxression matrix, could be a mzkit @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack`` object, 
-     *  or a tuple list of the msdata @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix``
+     * @param raw the raw data for make epxression matrix, could be a mzkit [mzPack](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack) object, 
+     *  or a tuple list of the msdata [LibraryMatrix](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix)
      * @param mzdiff -
      * 
      * + default value Is ``0.005``.
@@ -127,7 +127,7 @@ declare namespace SingleCells {
     * 
     * > implements the ``as.data.frame`` function
     * 
-     * @param x should be a rawdata object in general type: @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix``.
+     * @param x should be a rawdata object in general type: [MzMatrix](cref:T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix).
      * @param args -
      * @param env -
      * 
@@ -152,7 +152,7 @@ declare namespace SingleCells {
         *  2. featureSize: the number of the ion features in the raw data file
         *  3. ionSet: a numeric vector of the ion features m/z value.
         *  4. spots: the number of the spots that read from the rawdata matrix file
-        *  5. reader: the rawdata @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.File.MatrixReader``
+        *  5. reader: the rawdata [MatrixReader](cref:T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.File.MatrixReader)
       */
       function matrix(file: any, env?: object): object;
    }
@@ -175,7 +175,7 @@ declare namespace SingleCells {
     * do statistics of the single cell metabolomics ions features
     * 
     * 
-     * @param raw the @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack`` rawdata object, or a single cells matrix object
+     * @param raw the [mzPack](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack) rawdata object, or a single cells matrix object
      * @param da -
      * 
      * + default value Is ``0.01``.
@@ -233,7 +233,7 @@ declare namespace SingleCells {
        * write the single cell ion feature data matrix
        * 
        * 
-        * @param x the expression @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix`` object.
+        * @param x the expression [MzMatrix](cref:T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix) object.
         * @param file -
         * @param write_label 
         * + default value Is ``false``.

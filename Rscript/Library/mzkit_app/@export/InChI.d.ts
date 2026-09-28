@@ -65,7 +65,7 @@ declare namespace InChI {
     * >  
     * >  Here's an example of an InChI string broken down into its components:
     * >  
-    * >  ```
+    * > ```
     * >  InChI=1S/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-1/h1-11H/t2-6+/m1/s1
     * >  ```
     * >  

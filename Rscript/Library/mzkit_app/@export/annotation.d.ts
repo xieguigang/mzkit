@@ -256,7 +256,7 @@ declare namespace annotation {
    /**
     * 
     * 
-     * @param candidates should be a collection of the @``T:BioNovoGene.BioDeep.MSEngine.AnnotationData`1`` object
+     * @param candidates should be a collection of the [AnnotationData](cref:T:BioNovoGene.BioDeep.MSEngine.AnnotationData%601) object
      * @param env -
      * 
      * + default value Is ``null``.

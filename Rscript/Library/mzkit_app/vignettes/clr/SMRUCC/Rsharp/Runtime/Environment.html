@@ -22,9 +22,9 @@
 
         <h3>Description</h3>
 
-        <p>A <code>R#</code> scripting runtime context.
+        <p>A <code>R#</code> scripting runtime context.</p>
 
-<p>(在一个环境对象容器之中，所有的对象都是以变量来表示的)
+<p>(在一个环境对象容器之中，所有的对象都是以变量来表示的)</p>
 
         <h3>Declare</h3>        
 
@@ -41,7 +41,7 @@ export class Environment {
    # It is the top level global environment?
    isGlobal: boolean;
    isLINQContext: boolean;
-   # get value of the special last variable in R# <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>
+   # get value of the special last variable in R# <a href="cref:T:SMRUCC.Rsharp.Runtime.Environment">Environment</a>
    last: <i>any</i> kind;
    # 主要是存储警告消息
    messages: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/Message.html">iterates(Message)</a>;
@@ -49,7 +49,7 @@ export class Environment {
    parent: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>;
    # The name of this current stack closure.(R function name, closure id, etc)
    stackFrame: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame</a>;
-   # @<code>M:SMRUCC.Rsharp.Runtime.Internal.debug.getEnvironmentStack(SMRUCC.Rsharp.Runtime.Environment)</code>
+   # <a href="cref:M:SMRUCC.Rsharp.Runtime.Internal.debug.getEnvironmentStack(SMRUCC.Rsharp.Runtime.Environment)">debug.getEnvironmentStack()</a>
    stackTrace: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame[]</a>;
 }
 </code>

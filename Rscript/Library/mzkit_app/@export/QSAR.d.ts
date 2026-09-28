@@ -98,8 +98,8 @@ declare namespace QSAR {
     *  structural features.
     * 
     * 
-     * @param struct the molecule structure data, could be @``T:BioNovoGene.BioDeep.Chemoinformatics.SDF.Models.Structure`` object which is parsed from the sdf file, or
-     *  the @``T:BioNovoGene.BioDeep.Chemoinformatics.SMILES.ChemicalFormula`` graph object which is parsed from the smiles string.
+     * @param struct the molecule structure data, could be [Structure](cref:T:BioNovoGene.BioDeep.Chemoinformatics.SDF.Models.Structure) object which is parsed from the sdf file, or
+     *  the [ChemicalFormula](cref:T:BioNovoGene.BioDeep.Chemoinformatics.SMILES.ChemicalFormula) graph object which is parsed from the smiles string.
      * @param radius the radius size for evaluate the morgan fingerprint
      * 
      * + default value Is ``3``.

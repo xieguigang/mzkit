@@ -14,7 +14,7 @@ declare namespace MRMLinear {
        * Convert any compatibale type as the ion pairs data object for MRM target selected.
        * 
        * 
-        * @param mz should be a set of the @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL.MSLIon`` object data.
+        * @param mz should be a set of the [MSLIon](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL.MSLIon) object data.
         * @param env -
         * 
         * + default value Is ``null``.
@@ -29,7 +29,7 @@ declare namespace MRMLinear {
        * 
        * 
         * @param mzML the file path to a mzML raw data file.
-        * @param ionpairs metabolite targets, value could be a vector of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models.IonPair`` or vector of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models.IsomerismIonPairs`` clr object.
+        * @param ionpairs metabolite targets, value could be a vector of the [IonPair](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models.IonPair) or vector of the [IsomerismIonPairs](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models.IsomerismIonPairs) clr object.
         * @param tolerance 
         * + default value Is ``'ppm:20'``.
         * @param env 
@@ -132,8 +132,8 @@ declare namespace MRMLinear {
     * 
     * 
      * @param json_str -
-     * @param parse_single this function will try to parse the given json string as @``T:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.MRMArguments`` if **`parse_single`** is set to true,
-     *  otherwise a set of the ion parameters @``T:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.MRMArgumentSet`` will be parsed if **`parse_single`** is set to false.
+     * @param parse_single this function will try to parse the given json string as [MRMArguments](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.MRMArguments) if **parse_single** is set to true,
+     *  otherwise a set of the ion parameters [MRMArgumentSet](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.MRM.MRMArgumentSet) will be parsed if **parse_single** is set to false.
      * 
      * + default value Is ``true``.
    */
@@ -224,7 +224,7 @@ declare namespace MRMLinear {
        * Extract the peak area data from the given xic data object.
        *  
        *  This function is used to extract the peak area data from the given xic data object, 
-       *  which is usually a result of the @``M:mzkit.MRMkit.ExtractIonData(System.String,System.Double,System.Double,System.Object,SMRUCC.Rsharp.Runtime.Environment)`` function.
+       *  which is usually a result of the [MRMkit.ExtractIonData()](cref:M:mzkit.MRMkit.ExtractIonData(System.String,System.Double,System.Double,System.Object,SMRUCC.Rsharp.Runtime.Environment)) function.
        * 
        * 
         * @param xic -
@@ -232,7 +232,7 @@ declare namespace MRMLinear {
         * @param env -
         * 
         * + default value Is ``null``.
-        * @return A vector of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.IonTPA`` mzkit clr object, and the ``rtshifts`` tuple
+        * @return A vector of the [IonTPA](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.IonTPA) mzkit clr object, and the ``rtshifts`` tuple
         *  list data is tagged inside this vector attributes data.
       */
       function peakarea(xic: any, args: object, env?: object): object;

@@ -46,8 +46,8 @@ declare namespace GCxGC {
     * make 2d peak detection and extract the related peak feature ROI set
     * 
     * 
-     * @param raw the GCxGC rawdata set, should be one encoded GCxGC @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack`` rawdata object, 
-     *  or a deconded GCxGC @``T:BioNovoGene.Analytical.MassSpectrometry.GCxGC.DimensionalSpectrum`` dimension 1 rawdata.
+     * @param raw the GCxGC rawdata set, should be one encoded GCxGC [mzPack](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack) rawdata object, 
+     *  or a deconded GCxGC [DimensionalSpectrum](cref:T:BioNovoGene.Analytical.MassSpectrometry.GCxGC.DimensionalSpectrum) dimension 1 rawdata.
      * @param rt_win 
      * + default value Is ``[3,8]``.
      * @param env 
@@ -65,7 +65,7 @@ declare namespace GCxGC {
      * 
      * + default value Is ``NaN``.
      * @param mzdiff the mz tolerance error for match the intensity data for
-     *  extract XIC data if the **`mz`** is not 
+     *  extract XIC data if the **mz** is not 
      *  ``NA`` value.
      * 
      * + default value Is ``'ppm:30'``.

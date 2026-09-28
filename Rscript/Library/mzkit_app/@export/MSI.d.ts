@@ -29,7 +29,7 @@ declare namespace MSI {
         *  data if this parameter leaves blank(or NULL) by default.
         * 
         * + default value Is ``null``.
-        * @param strict if the input ``**`dims`**`` produce invalid dimension size
+        * @param strict if the input ``**dims**`` produce invalid dimension size
         *  value, example as dimension size is equals to ZERO [0,0], then in strict 
         *  mode, the dimension value will be evaluated from the input raw data
         *  automatically for ensure that the dimension size of the generated layer 
@@ -56,7 +56,7 @@ declare namespace MSI {
        * 
        * 
         * @param x the matrix object
-        * @param mzdiff the mass tolerance error in @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.DAmethod``
+        * @param mzdiff the mass tolerance error in [DAmethod](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.DAmethod)
         * 
         * + default value Is ``0.01``.
         * @param dims the dimension size of the ms-imaging spatial data
@@ -78,10 +78,10 @@ declare namespace MSI {
      * + default value Is ``false``.
      * @return A x axis correction function wrapper, the clr object type of this 
      *  function return value is determined based on the flag parameter
-     *  **`hasMs2`**:
+     *  **hasMs2**:
      *  
-     *  1. for has ms2 data inside your ms-imaging rawdata, a @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging.ScanMs2Correction`` object should be used,
-     *  2. for has no ms2 data, a @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging.ScanTimeCorrection`` object is used 
+     *  1. for has ms2 data inside your ms-imaging rawdata, a [ScanMs2Correction](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging.ScanMs2Correction) object should be used,
+     *  2. for has no ms2 data, a [ScanTimeCorrection](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging.ScanTimeCorrection) object is used 
      *     for run x axis correction based on the average rt diff.
    */
    function correction(totalTime: number, pixels: object, hasMs2?: boolean): object;
@@ -205,8 +205,8 @@ declare namespace MSI {
      * + default value Is ``null``.
      * @param y 
      * + default value Is ``null``.
-     * @param as_vector returns the raw vector of @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.iPixelIntensity`` if set this
-     *  parameter value to value TRUE, or its wrapper object @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.MSISummary`` 
+     * @param as_vector returns the raw vector of [iPixelIntensity](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.iPixelIntensity) if set this
+     *  parameter value to value TRUE, or its wrapper object [MSISummary](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.MSISummary) 
      *  if set this parameter value to FALSE by default.
      * 
      * + default value Is ``false``.
@@ -231,10 +231,10 @@ declare namespace MSI {
         * + default value Is ``null``.
         * @return this function returns a tuple list object that contains 2 slot elements inside:
         *  
-        *  1. scans: is the [x,y] spatial scans data: @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ScanData``.
+        *  1. scans: is the [x,y] spatial scans data: [ScanData](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ScanData).
         *  2. ibd: is the binary data reader wrapper object for the corresponding 
-        *        ``ibd`` file of the given input imzML file: @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ibdReader``.
-        *  3. metadata: get file @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.imzMLMetadata`` from the imzML header.
+        *        ``ibd`` file of the given input imzML file: [ibdReader](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ibdReader).
+        *  3. metadata: get file [imzMLMetadata](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.imzMLMetadata) from the imzML header.
       */
       function imzML(file: string, env?: object): object;
    }
@@ -266,7 +266,7 @@ declare namespace MSI {
     * 
      * @param raw -
      * @param topN select top N ion feature in each spot and then union the ion features as 
-     *  the features set, this parameter only works when the **`ionSet`** 
+     *  the features set, this parameter only works when the **ionSet** 
      *  parameter is empty or null.
      * 
      * + default value Is ``3``.
@@ -380,7 +380,7 @@ declare namespace MSI {
      * 
      * + default value Is ``null``.
      * @return This function returns a logical value TRUE if the 
-     *  given **`file`** stream buffer is not missing,
+     *  given **file** stream buffer is not missing,
      *  otherwise the matrix object itself will be returns from 
      *  the function.
    */
@@ -408,7 +408,7 @@ declare namespace MSI {
     * 
      * @param x -
      * @param layer the layer type for create the raster object, this parameter only works 
-     *  for when the data type of **`x`** is @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.MSISummary``.
+     *  for when the data type of **x** is [MSISummary](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.MSISummary).
      * 
      * + default value Is ``null``.
      * @param env -
@@ -426,7 +426,7 @@ declare namespace MSI {
       function imzml_metadata(imzML: string): object;
    }
    /**
-    * re-located of the sample of the ms-imaging for a location which is evaluated by the given **`padding`**.
+    * re-located of the sample of the ms-imaging for a location which is evaluated by the given **padding**.
     * 
     * 
      * @param x -
@@ -469,9 +469,9 @@ declare namespace MSI {
     * >  conditions.
     * 
      * @param x The target ion layer to run expression bootstraping, it could be
-     *  @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer``, or the @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix`` data matrix for 
+     *  [SingleIonLayer](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer), or the [MzMatrix](cref:T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix) data matrix for 
      *  extract the sample dataframe.
-     * @param tissue A collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion`` object.
+     * @param tissue A collection of the [TissueRegion](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion) object.
      * 
      * + default value Is ``null``.
      * @param n Get n sample points for each tissue region
@@ -489,17 +489,17 @@ declare namespace MSI {
      * @param env 
      * + default value Is ``null``.
      * @return For a single ion data layer, this function generates A tuple list object that contains 
-     *  the expression data for each @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion``:
+     *  the expression data for each [TissueRegion](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion):
      *  
      *  1. the tuple key is the label of the tissue region data,
      *  2. the tuple value is the numeric expression vector that sampling from 
      *     the corrisponding tissue region, the vector size is equals to the 
      *     parameter ``n``.
      *     
-     *  For a raw spatial data matrix @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix`` object, a tuple list object that
+     *  For a raw spatial data matrix [MzMatrix](cref:T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix) object, a tuple list object that
      *  contains two elements will be generats:
      *  
-     *  1. sampleinfo - a collection of the gcmodeller @``T:SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner.SampleInfo`` for mark the sample spatial source
+     *  1. sampleinfo - a collection of the gcmodeller [SampleInfo](cref:T:SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner.SampleInfo) for mark the sample spatial source
      *  2. data - a dataframe that contains the bootstrapping expression data, ion features in rows
      *            and spatial features sample in columns.
    */
@@ -511,7 +511,7 @@ declare namespace MSI {
      * @param m a dataframe object that contains the spot expression data. 
      *  should be in format of: spot in column and ion features in rows.
      * @param factor the size of this numeric vector should be equals to the 
-     *  ncol of the given dataframe input **`m`**.
+     *  ncol of the given dataframe input **m**.
      * @param bpc scle by bpc or scale by tic?
      * 
      * + default value Is ``false``.
@@ -574,7 +574,7 @@ declare namespace MSI {
      * 
      * + default value Is ``5``.
      * @return A collection of the ms-imaging mzpack object that split from multiple 
-     *  parts based on the input **`raw`** data mzpack inputs.
+     *  parts based on the input **raw** data mzpack inputs.
    */
    function splice(raw: object, partition?: object): object;
    module write {

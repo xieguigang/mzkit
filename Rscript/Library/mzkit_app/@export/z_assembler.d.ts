@@ -15,7 +15,7 @@ declare namespace z_assembler {
     *  this function assembling a collection of the 2D layer in z-axis
     *  order for construct a new 3D volume data.
     * 
-    * > a @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix`` object will be packed as the 3D volumn result.
+    * > a [MzMatrix](cref:T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix) object will be packed as the 3D volumn result.
     * 
      * @param env -
      * 
@@ -35,9 +35,9 @@ declare namespace z_assembler {
    /**
     * create a simple 3d volume model for mzkit workbench
     * 
-    * > this function works for combine a collection of the 2D layer as the 3d volume @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix`` data
+    * > this function works for combine a collection of the 2D layer as the 3d volume [MzMatrix](cref:T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix) data
     * 
-     * @param layers should be a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer``. 
+     * @param layers should be a collection of the [SingleIonLayer](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer). 
      *  the layer elements in this collection should be already been re-ordered by 
      *  the z-axis!
      * @param dump -

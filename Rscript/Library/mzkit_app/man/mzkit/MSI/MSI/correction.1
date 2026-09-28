@@ -24,10 +24,10 @@ calculate the X axis scale
 .PP
 A x axis correction function wrapper, the clr object type of this 
  function return value is determined based on the flag parameter
- **`hasMs2`**:
+ **hasMs2**:
  
- 1. for has ms2 data inside your ms-imaging rawdata, a @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging.ScanMs2Correction\fR object should be used,
- 2. for has no ms2 data, a @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging.ScanTimeCorrection\fR object is used 
+ 1. for has ms2 data inside your ms-imaging rawdata, a [ScanMs2Correction](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging.ScanMs2Correction) object should be used,
+ 2. for has no ms2 data, a [ScanTimeCorrection](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging.ScanTimeCorrection) object is used 
     for run x axis correction based on the average rt diff.
 .PP
 .SH EXAMPLES

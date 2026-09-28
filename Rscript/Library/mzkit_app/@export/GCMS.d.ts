@@ -78,8 +78,8 @@ declare namespace GCMS {
     * do peak detection for gc-ms rawdata
     * 
     * 
-     * @param raw the input gcms rawdata, could be @``T:BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.Raw`` for 
-     *  targetted data and @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack`` for un-targetted gc-ms rawdata.
+     * @param raw the input gcms rawdata, could be [Raw](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.Raw) for 
+     *  targetted data and [mzPack](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack) for un-targetted gc-ms rawdata.
      * @param peakwidth -
      * 
      * + default value Is ``'3,20'``.

@@ -83,7 +83,7 @@ declare namespace TissueMorphology {
     * 
     * 
      * @param mapping -
-     * @return A tuple list of the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.SpatialMapping`` object
+     * @return A tuple list of the [SpatialMapping](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.SpatialMapping) object
    */
    function splitMapping(mapping: object): object;
    /**
@@ -108,7 +108,7 @@ declare namespace TissueMorphology {
      * @param y -
      * @param labels -
      * @param colorSet the color set schema name or a list of color data 
-     *  which can be mapping to the given **`labels`** 
+     *  which can be mapping to the given **labels** 
      *  list.
      * 
      * + default value Is ``'Paper'``.

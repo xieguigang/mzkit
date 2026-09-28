@@ -187,7 +187,7 @@ declare namespace spectrumPool {
      * @param env -
      * 
      * + default value Is ``null``.
-     * @return A collection of the mzkit @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2`` clr object
+     * @return A collection of the mzkit [PeakMs2](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2) clr object
      *  which has the lib guid data assigned.
    */
    function set_conservedGuid(spectral: any, prefix?: string, env?: object): any;

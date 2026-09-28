@@ -14,7 +14,7 @@ declare namespace metadb {
       /**
        * Construct a basic metabolite annotation data collection
        * 
-       * > the exact mass will be evaluated based on the input **`formula`** data.
+       * > the exact mass will be evaluated based on the input **formula** data.
        * 
         * @param env -
         * 
@@ -42,7 +42,7 @@ declare namespace metadb {
      * 
      * + default value Is ``false``.
      * @param excludes reverse the logical of select the annotation result 
-     *  based on the given **`id`** set.
+     *  based on the given **id** set.
      * 
      * + default value Is ``false``.
      * @param env -
@@ -54,7 +54,7 @@ declare namespace metadb {
     * get metabolite annotation metadata by a set of given unique reference id
     * 
     * 
-     * @param engine A local annotation repository object that should implements of the @``T:BioNovoGene.BioDeep.MSEngine.IMetaDb`` interface.
+     * @param engine A local annotation repository object that should implements of the [IMetaDb](cref:T:BioNovoGene.BioDeep.MSEngine.IMetaDb) interface.
      * @param uniqueId a set of the unique reference id
      * @param env -
      * 
@@ -122,7 +122,7 @@ declare namespace metadb {
        * 
        * 
         * @param massSet -
-        * @param type the clr type description string of the elements in the given **`massSet`** collection
+        * @param type the clr type description string of the elements in the given **massSet** collection
         * @param tolerance -
         * 
         * + default value Is ``'da:0.01'``.
@@ -151,13 +151,13 @@ declare namespace metadb {
     * get duplictaed raw annotation results.
     * 
     * 
-     * @param engine the ms1 search engine which implements the clr interface @``T:BioNovoGene.BioDeep.MSEngine.IMzQuery``
+     * @param engine the ms1 search engine which implements the clr interface [IMzQuery](cref:T:BioNovoGene.BioDeep.MSEngine.IMzQuery)
      * @param mz a m/z numeric vector or a object list that 
      *  contains the data mapping of unique id to 
      *  m/z value.
      * @param unique 
      * + default value Is ``false``.
-     * @param uniqueByScore only works when **`unique`** parameter
+     * @param uniqueByScore only works when **unique** parameter
      *  value is set to value TRUE.
      * 
      * + default value Is ``false``.
@@ -201,7 +201,7 @@ declare namespace metadb {
    */
    function queryByMass(search: object, mass: number): any;
    /**
-    * Found the best matched mz value with the target **`exactMass`**
+    * Found the best matched mz value with the target **exactMass**
     * 
     * 
      * @param mz -
@@ -212,7 +212,7 @@ declare namespace metadb {
      * + default value Is ``'da:0.005'``.
      * @param env 
      * + default value Is ``null``.
-     * @return function returns a evaluated mz under the specific **`adducts`** value
+     * @return function returns a evaluated mz under the specific **adducts** value
      *  and it also the min mass tolerance, if no result has mass tolerance less then the 
      *  given threshold value, then this function returns nothing
    */
@@ -232,7 +232,7 @@ declare namespace metadb {
      * @param uniqueByScore 
      * + default value Is ``false``.
      * @param scoreFactors the reference name this score data must be 
-     *  generated via the @``M:BioNovoGene.BioDeep.MSEngine.MzQuery.ReferenceKey(BioNovoGene.BioDeep.MSEngine.MzQuery,System.String)`` 
+     *  generated via the [MzQuery.ReferenceKey()](cref:M:BioNovoGene.BioDeep.MSEngine.MzQuery.ReferenceKey(BioNovoGene.BioDeep.MSEngine.MzQuery,System.String)) 
      *  function.
      * 
      * + default value Is ``null``.
@@ -252,7 +252,7 @@ declare namespace metadb {
    /**
     * verify that the given cas registry number is correct or not
     * 
-    * > based on the @``M:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference.CASNumber.Verify(System.String)`` clr function.
+    * > based on the [CASNumber.Verify()](cref:M:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.CrossReference.CASNumber.Verify(System.String)) clr function.
     * 
      * @param num -
      * @param env -

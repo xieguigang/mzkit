@@ -18,12 +18,12 @@ make expression bootstrapping of the spatial data
 .SH OPTIONS
 .PP
 \fBx\fB \fR\- The target ion layer to run expression bootstraping, it could be
- @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer\fR, or the @\fBT:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix\fR data matrix for 
+ [SingleIonLayer](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer), or the [MzMatrix](cref:T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix) data matrix for 
  extract the sample dataframe.
 . 
 .PP
 .PP
-\fBtissue\fB \fR\- A collection of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion\fR object.. 
+\fBtissue\fB \fR\- A collection of the [TissueRegion](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion) object.. 
 .PP
 .PP
 \fBn\fB \fR\- Get n sample points for each tissue region. 
@@ -34,17 +34,17 @@ make expression bootstrapping of the spatial data
 .SH VALUE
 .PP
 For a single ion data layer, this function generates A tuple list object that contains 
- the expression data for each @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion\fR:
+ the expression data for each [TissueRegion](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion):
  
  1. the tuple key is the label of the tissue region data,
  2. the tuple value is the numeric expression vector that sampling from 
     the corrisponding tissue region, the vector size is equals to the 
     parameter \fBn\fR.
     
- For a raw spatial data matrix @\fBT:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix\fR object, a tuple list object that
+ For a raw spatial data matrix [MzMatrix](cref:T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix) object, a tuple list object that
  contains two elements will be generats:
  
- 1. sampleinfo - a collection of the gcmodeller @\fBT:SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner.SampleInfo\fR for mark the sample spatial source
+ 1. sampleinfo - a collection of the gcmodeller [SampleInfo](cref:T:SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner.SampleInfo) for mark the sample spatial source
  2. data - a dataframe that contains the bootstrapping expression data, ion features in rows
            and spatial features sample in columns.
 .PP

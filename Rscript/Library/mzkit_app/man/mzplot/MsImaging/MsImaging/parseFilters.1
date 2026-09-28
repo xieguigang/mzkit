@@ -12,7 +12,13 @@ Converts R raw vector input into a raster processing pipeline configuration
 .PP
 \fBfilters\fB \fR\- 
  R-side input vector containing filter definitions. Accepts:
- Character vector of filter expressionsList of filter specification stringsOther R vector types convertible via CLRVector.asCharacter. 
+ 
+- Character vector of filter expressions
+- List of filter specification strings
+- Other R vector types convertible via CLRVector.asCharacter
+
+
+. 
 .PP
 .SH VALUE
 .PP
@@ -21,9 +27,13 @@ A parsed RasterPipeline object configured with the input filter sequence
 .SH DETAILS
 .PP
 This method handles R-to-CLR type conversion and is primarily used for:
- Interop with R# environmentsParsing pipeline configurations from script parameters
  
- The @\fBM:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.RasterPipeline.Parse(System.Collections.Generic.IEnumerable{System.String})\fR method implements the actual
+- Interop with R# environments
+- Parsing pipeline configurations from script parameters
+
+
+ 
+ The [RasterPipeline.Parse()](cref:M:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.RasterPipeline.Parse(System.Collections.Generic.IEnumerable{System.String})) method implements the actual
  filter syntax interpretation and validation.
 .PP
 .SH SEE ALSO

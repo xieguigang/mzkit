@@ -22,7 +22,7 @@ declare namespace mzweb {
         *     the difference of two adjacent scan time.
         *  3. imzml: [MS-Imaging] the pixel spot scan metadata collection for
         *     read ms data from the ibd file, the corresponding assembly object should
-        *     be a @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ibdReader`` object
+        *     be a [ibdReader](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ibdReader) object
         *  4. dims: [MS-Imaging] the canvas dimension size value for the ms-imaging
         *     heatmap rendering
         * 
@@ -95,7 +95,7 @@ declare namespace mzweb {
     * get a overview ms1 spectrum data from the mzpack raw data
     * 
     * 
-     * @param mzpack usually be the @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack`` rawdata object, or a general @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix`` object.
+     * @param mzpack usually be the [mzPack](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack) rawdata object, or a general [MzMatrix](cref:T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix) object.
      * @param tolerance The mass tolerance error
      * 
      * + default value Is ``'da:0.001'``.
@@ -190,7 +190,7 @@ declare namespace mzweb {
        * 
        * 
         * @param file the file path to the xml rawdata file
-        * @param prefer the prefer file format used when the given **`file`** its extension
+        * @param prefer the prefer file format used when the given **file** its extension
         *  suffix name is ``XML``. value of this parameter could be imzml/mzml/mzxml
         * 
         * + default value Is ``null``.
@@ -263,13 +263,13 @@ declare namespace mzweb {
    /**
     * set thumbnail image to the raw data file
     * 
-    * > the parameter value of the **`thumb`** lambda
-    * >  function will be **`mzpack`** parameter value
+    * > the parameter value of the **thumb** lambda
+    * >  function will be **mzpack** parameter value
     * >  input
     * 
      * @param mzpack -
      * @param thumb Thumbnail image object data can be a gdi+ image or 
-     *  bitmap or a gdi+ canvas object in type @``T:Microsoft.VisualBasic.Imaging.Driver.ImageData``.
+     *  bitmap or a gdi+ canvas object in type [ImageData](cref:T:Microsoft.VisualBasic.Imaging.Driver.ImageData).
      *  And also this parameter could be a lambda function that
      *  could be used for invoke and generates the image data.
      * @param env 

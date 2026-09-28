@@ -35,16 +35,30 @@
         <table>
             
 <dt>filters</dt>
-<dd><p></p></dd>
+<dd><p>R-side input vector containing filter definitions. Accepts:</p>
+
+
+<ul>
+<li>Character vector of filter expressions</li>
+<li>List of filter specification strings</li>
+<li>Other R vector types convertible via CLRVector.asCharacter</li>
+</p></dd>
 
         </table>
 
 
         <h3 style="display: block;">Details</h3>
 
-        <p>This method handles R-to-CLR type conversion and is primarily used for: Interop with R# environmentsParsing pipeline configurations from script parameters
+        <p>This method handles R-to-CLR type conversion and is primarily used for:</p>
 
-<p>The @<code>M:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.RasterPipeline.Parse(System.Collections.Generic.IEnumerable{System.String})</code> method implements the actual filter syntax interpretation and validation.
+
+<ul>
+<li>Interop with R# environments</li>
+<li>Parsing pipeline configurations from script parameters</li>
+</ul>
+
+
+<p>The <a href="cref:M:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.RasterPipeline.Parse(System.Collections.Generic.IEnumerable{System.String})">RasterPipeline.Parse()</a> method implements the actual filter syntax interpretation and validation.</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -52,7 +66,7 @@
 
         <h3>Value</h3>
 
-        <p>A parsed RasterPipeline object configured with the input filter sequence<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/Blender/Scaler/RasterPipeline.html">RasterPipeline</a></li></ul>
+        <p>A parsed RasterPipeline object configured with the input filter sequence</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/Blender/Scaler/RasterPipeline.html">RasterPipeline</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

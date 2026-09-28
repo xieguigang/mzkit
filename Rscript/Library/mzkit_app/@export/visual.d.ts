@@ -89,7 +89,7 @@ declare namespace visual {
        * 
        * 
         * @param s A string data that represents the spectrum alignment details.
-        * @return A collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml.SSM2MatrixFragment`` matrix data
+        * @return A collection of the [SSM2MatrixFragment](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml.SSM2MatrixFragment) matrix data
       */
       function spectrum_alignment(s: string): object;
    }
@@ -98,7 +98,7 @@ declare namespace visual {
        * visual of the UV spectrum
        * 
        * 
-        * @param timeSignals should be a collection of the signal data: @``T:Microsoft.VisualBasic.Math.SignalProcessing.GeneralSignal``
+        * @param timeSignals should be a collection of the signal data: [GeneralSignal](cref:T:Microsoft.VisualBasic.Math.SignalProcessing.GeneralSignal)
         * @param is_spectrum -
         * 
         * + default value Is ``false``.

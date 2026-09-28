@@ -28,7 +28,7 @@ declare namespace MsImaging {
    module as {
       /**
        * extract the pixel [x,y] information for all of
-       *  the points in the target **`layer`**
+       *  the points in the target **layer**
        * 
        * 
         * @param layer -
@@ -60,17 +60,17 @@ declare namespace MsImaging {
     * 
      * @return A raster filter pipeline that consist with modules with orders:
      *  
-     *  1. @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.DenoiseScaler``
-     *  2. @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.TrIQScaler``
-     *  3. @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.KNNScaler``
-     *  4. @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.SoftenScaler``
+     *  1. [DenoiseScaler](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.DenoiseScaler)
+     *  2. [TrIQScaler](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.TrIQScaler)
+     *  3. [KNNScaler](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.KNNScaler)
+     *  4. [SoftenScaler](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.SoftenScaler)
    */
    function defaultFilter(): object;
    /**
     * Extract a spectrum matrix object from MSI data by a given set of m/z values
     * 
     * 
-     * @param viewer A ms-imaging @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Drawer`` canvas object, which contains the ms-imaging rawdata.
+     * @param viewer A ms-imaging [Drawer](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Drawer) canvas object, which contains the ms-imaging rawdata.
      * @param mz A numeric vector that used as the ion m/z value for extract the imaging layer data from the drawer canvas.
      * @param tolerance the mass tolerance error
      * 
@@ -116,8 +116,8 @@ declare namespace MsImaging {
     * load the raw pixels data from imzML file
     * 
     * 
-     * @param imzML the ms-imaging rawdata source, could be a rawdata rendering wrapper @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Drawer``,
-     *  or a indexed @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache.XICReader`` for specific ions collection.
+     * @param imzML the ms-imaging rawdata source, could be a rawdata rendering wrapper [Drawer](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Drawer),
+     *  or a indexed [XICReader](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache.XICReader) for specific ions collection.
      * @param mz a collection of ion m/z value for rendering on one image
      * @param tolerance m/z tolerance error for get layer data
      * 
@@ -202,7 +202,7 @@ declare namespace MsImaging {
      *  
      *  1. mz: the ion mz vector
      *  2. density: the average spatial density of current ion mz layer
-     *  3. layer: a mzkit clr @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer`` object that could be used for ms-imaging visualization
+     *  3. layer: a mzkit clr [SingleIonLayer](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer) object that could be used for ms-imaging visualization
    */
    function MeasureMSIions(raw: object, gridSize?: object, mzdiff?: any, keepsLayer?: boolean, densityCut?: number, qcut?: number, intoCut?: number, env?: object): number|object;
    /**
@@ -281,13 +281,20 @@ declare namespace MsImaging {
     * Converts R raw vector input into a raster processing pipeline configuration
     * 
     * > This method handles R-to-CLR type conversion and is primarily used for:
-    * >  Interop with R# environmentsParsing pipeline configurations from script parameters
     * >  
-    * >  The @``M:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.RasterPipeline.Parse(System.Collections.Generic.IEnumerable{System.String})`` method implements the actual
+    * > - Interop with R# environments
+    * > - Parsing pipeline configurations from script parameters
+    * > 
+    * > 
+    * >  
+    * >  The [RasterPipeline.Parse()](cref:M:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.RasterPipeline.Parse(System.Collections.Generic.IEnumerable{System.String})) method implements the actual
     * >  filter syntax interpretation and validation.
     * 
      * @param filters R-side input vector containing filter definitions. Accepts:
-     *  Character vector of filter expressionsList of filter specification stringsOther R vector types convertible via CLRVector.asCharacter
+     *  
+     * - Character vector of filter expressions
+     * - List of filter specification strings
+     * - Other R vector types convertible via CLRVector.asCharacter
      * @return A parsed RasterPipeline object configured with the input filter sequence
    */
    function parseFilters(filters: any): object;
@@ -320,13 +327,13 @@ declare namespace MsImaging {
     * MS-imaging of the MSI summary data result.
     * 
     * 
-     * @param data 1. @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.MSISummary``
-     *  2. @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer``
+     * @param data 1. [MSISummary](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.MSISummary)
+     *  2. [SingleIonLayer](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer)
      * @param intensity -
      * 
      * + default value Is ``null``.
      * @param colorSet a enum flag value for rendering the spatial heatmap colors,
-     *  all flags see the clr enum: @``T:Microsoft.VisualBasic.Imaging.Drawing2D.Colors.ScalerPalette``
+     *  all flags see the clr enum: [ScalerPalette](cref:T:Microsoft.VisualBasic.Imaging.Drawing2D.Colors.ScalerPalette)
      * 
      * + default value Is ``'viridis:turbo'``.
      * @param defaultFill the color value for the spots which those intensity value is missing(ZERO or NaN)
@@ -343,8 +350,8 @@ declare namespace MsImaging {
      * 
      * + default value Is ``null``.
      * @param size do size overrides, default parameter value nothing means the
-     *  size is evaluated based on the dimension **`dims`** 
-     *  of the ms-imaging raw data and the **`pixelSize`**
+     *  size is evaluated based on the dimension **dims** 
+     *  of the ms-imaging raw data and the **pixelSize**
      * 
      * + default value Is ``null``.
      * @param colorLevels 
@@ -415,7 +422,7 @@ declare namespace MsImaging {
     * 
     * 
      * @param layer A ms-imaging render layer object that contains a collection of the spatial spot data.
-     * @param segments A collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion`` data, the tissue region label 
+     * @param segments A collection of the [TissueRegion](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion) data, the tissue region label 
      *  string value will be assigned to the corresponding spatial spot its sample tag value.
      * @param env -
      * 
@@ -426,7 +433,7 @@ declare namespace MsImaging {
     * Contrast optimization of mass spectrometry imaging(MSI) data
     *  visualization by threshold intensity quantization (TrIQ)
     * 
-    * > this function works based on the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.TrIQThreshold`` clr module
+    * > this function works based on the [TrIQThreshold](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.TrIQThreshold) clr module
     * 
      * @param data A ms-imaging ion layer data or a numeric vector of the intensity data.
      * @param q cutoff threshold of the intensity numeric vector
@@ -446,7 +453,7 @@ declare namespace MsImaging {
     * > this function will load entire MSI matrix raw data into memory.
     * 
      * @param file *.imzML;*.mzPack
-     * @param memoryIndex read mzpack in-memory rawdata via the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader.MemoryIndexReader`` instead of un-indexed reader @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader.ReadRawPack``.
+     * @param memoryIndex read mzpack in-memory rawdata via the [MemoryIndexReader](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader.MemoryIndexReader) instead of un-indexed reader [ReadRawPack](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader.ReadRawPack).
      * 
      * + default value Is ``false``.
      * @param env 

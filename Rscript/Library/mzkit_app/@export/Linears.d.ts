@@ -81,7 +81,7 @@ declare namespace Linears {
         * @param ionsRaw A list of ions ChromatogramTick data for run ion data plots.
         *  the list data structure in format looks like:
         *  
-        *  ```
+        * ```
         *  { 
         *     ion_id1 {
         *         sample1: ChromatogramTick[],

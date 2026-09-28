@@ -30,12 +30,12 @@ declare namespace tissue {
    /**
     * generates heatmap value
     *  
-    *  convert a specific @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.HEMap.Layers`` channel inside the tissue 
+    *  convert a specific [Layers](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.HEMap.Layers) channel inside the tissue 
     *  image scanning result as spatial heatmap matrix data.
     * 
     * 
      * @param tissue -
-     * @param heatmap the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.HEMap.Layers`` channel scan for the target colors 
+     * @param heatmap the [Layers](cref:T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.HEMap.Layers) channel scan for the target colors 
      *  for heatmap rendering.
      * 
      * + default value Is ``null``.

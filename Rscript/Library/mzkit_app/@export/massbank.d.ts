@@ -46,7 +46,7 @@ declare namespace massbank {
     * extract the chebi annotation data from the chebi ontology data
     * 
     * 
-     * @param chebi the chebi ontology data, in clr type: @``T:SMRUCC.genomics.foundation.OBO_Foundry.IO.Models.OBOFile``
+     * @param chebi the chebi ontology data, in clr type: [OBOFile](cref:T:SMRUCC.genomics.foundation.OBO_Foundry.IO.Models.OBOFile)
    */
    function extract_chebi_compounds(chebi: object): object;
    /**
@@ -57,7 +57,7 @@ declare namespace massbank {
      * @param env -
      * 
      * + default value Is ``null``.
-     * @return a tuple list of the @``T:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaInfo`` data. andalso an attribute with name ``mapping`` is tagged
+     * @return a tuple list of the [MetaInfo](cref:T:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaInfo) data. andalso an attribute with name ``mapping`` is tagged
      *  with the result tuple list that contains mapping from the spectrum id to the metabolite unique 
      *  reference id.
    */
@@ -94,8 +94,8 @@ declare namespace massbank {
     * 
     * 
      * @param spec should be a mass spectrum object with ion polarity data tagged. 
-     *  the mass spectrum object could be the MONA @``T:BioNovoGene.BioDeep.Chemistry.SpectraSection``, @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType.IonModes`` enum value,
-     *  precursor type @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType.MzCalculator`` object, @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2`` mass spectrum object.
+     *  the mass spectrum object could be the MONA [SpectraSection](cref:T:BioNovoGene.BioDeep.Chemistry.SpectraSection), [IonModes](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType.IonModes) enum value,
+     *  precursor type [MzCalculator](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType.MzCalculator) object, [PeakMs2](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2) mass spectrum object.
    */
    function is_positive(spec: any): boolean;
    module lipid {
@@ -342,7 +342,7 @@ declare namespace massbank {
        * 
        * > save the lipidmaps data object into file in messagepack format
        * 
-        * @param lipidmaps A collection of the lipidmaps metabolite @``T:BioNovoGene.BioDeep.Chemistry.LipidMaps.MetaData``
+        * @param lipidmaps A collection of the lipidmaps metabolite [MetaData](cref:T:BioNovoGene.BioDeep.Chemistry.LipidMaps.MetaData)
         * @param file -
         * @param env -
         * 
@@ -353,7 +353,7 @@ declare namespace massbank {
        * write the metabolite annotation data collection as messagepack
        * 
        * 
-        * @param metadb should be a collection of the mzkit metabolite annotation model @``T:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib``.
+        * @param metadb should be a collection of the mzkit metabolite annotation model [MetaLib](cref:T:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib).
         * @param file the file to the target messagepack file
         * @param env -
         * 

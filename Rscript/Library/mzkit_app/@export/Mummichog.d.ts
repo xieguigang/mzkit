@@ -121,7 +121,7 @@ declare namespace Mummichog {
     * 
     * 
      * @param mz A numeric vector, the given mass peak list for run candidate search.
-     * @param msData the @``T:BioNovoGene.BioDeep.MSEngine.IMzQuery`` annotation engine, should has the 
+     * @param msData the [IMzQuery](cref:T:BioNovoGene.BioDeep.MSEngine.IMzQuery) annotation engine, should has the 
      *  interface function for query annotation candidates by the
      *  given m/z mass value.
      * @param env -

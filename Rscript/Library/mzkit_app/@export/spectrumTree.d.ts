@@ -101,7 +101,7 @@ declare namespace spectrumTree {
    */
    function compress(spectrumLib: object, file: any, metadb: object, nspec?: object, xrefDb?: string, test?: object, env?: object): any;
    /**
-    * set @``P:BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query.Ms2Search.discardPrecursorFilter`` to value true, and make cache of the spectrum data
+    * set [Ms2Search.discardPrecursorFilter](cref:P:BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query.Ms2Search.discardPrecursorFilter) to value true, and make cache of the spectrum data
     * 
     * 
      * @param pack -
@@ -121,7 +121,7 @@ declare namespace spectrumTree {
     * 
      * @param x Input spectra (mzPack, PeakMs2 array, or mzPack list).
      * @param mslevel MS level for spectra extraction (1 or 2). 
-     *  only works when the input dataset is @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack``
+     *  only works when the input dataset is [mzPack](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack)
      * 
      * + default value Is ``2``.
      * @param env The R environment for error handling.
@@ -221,13 +221,13 @@ declare namespace spectrumTree {
      * 
      * + default value Is ``null``.
      * @return the reference library object in different search mode, all library object 
-     *  is inherits based on the @``T:BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query.Ms2Search`` object.
+     *  is inherits based on the [Ms2Search](cref:T:BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query.Ms2Search) object.
    */
    function open(file: any, dotcutoff?: number, adducts?: any, target_uuid?: any, env?: object): object|object;
    /**
     * Enables or disables parallel processing for spectral searches.
     * 
-    * > this function only works for the @``T:BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib.PackAlignment`` method.
+    * > this function only works for the [PackAlignment](cref:T:BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib.PackAlignment) method.
     * 
      * @param search The PackAlignment object to configure.
      * @param enable TRUE to enable parallel processing, FALSE otherwise.
@@ -254,7 +254,7 @@ declare namespace spectrumTree {
      * 
      * + default value Is ``null``.
      * @return function returns nothing means no query hits or the 
-     *  given input query sample data **`x`**
+     *  given input query sample data **x**
    */
    function query(tree: object, x: any, maxdepth?: object, treeSearch?: boolean, top_hits?: object, env?: object): object;
    /**

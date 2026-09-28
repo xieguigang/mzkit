@@ -52,7 +52,7 @@ declare namespace hmdb_kit {
     * 
     * 
      * @param metabolite the HMDB metabolite data
-     * @return A character vector that contains the @``T:BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.taxonomy`` information from the @``T:BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.metabolite``
+     * @return A character vector that contains the [taxonomy](cref:T:BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.taxonomy) information from the [metabolite](cref:T:BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.metabolite)
    */
    function chemical_taxonomy(metabolite: object): string;
    module export {
@@ -60,7 +60,7 @@ declare namespace hmdb_kit {
        * save the hmdb database as a csv table file
        * 
        * 
-        * @param hmdb A collection of the HMDB @``T:BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.metabolite``.
+        * @param hmdb A collection of the HMDB [metabolite](cref:T:BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.metabolite).
         * @param file this function will returns a huge metabolite table
         *  if this parameter value default null
         * 
@@ -68,9 +68,9 @@ declare namespace hmdb_kit {
         * @param env -
         * 
         * + default value Is ``null``.
-        * @return this function returns the data depends of the **`file`** parameter is
+        * @return this function returns the data depends of the **file** parameter is
         *  existsed or not: for ``file`` parameter has been omit, then a vector of the hmdb 
-        *  @``T:BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.MetaDb`` clr object will be returns, otherwise a logical value for indicates 
+        *  [MetaDb](cref:T:BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.MetaDb) clr object will be returns, otherwise a logical value for indicates 
         *  the write table file success or not will be returns.
       */
       function hmdb_table(hmdb: object, file?: any, env?: object): boolean|object;
@@ -94,7 +94,7 @@ declare namespace hmdb_kit {
        * 
        * 
         * @param xml the file path of the hmdb metabolite database xml file
-        * @param convert_std convert the metabolite annotation data as the mzkit standard metabolite annotation data model(@``T:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib``)?
+        * @param convert_std convert the metabolite annotation data as the mzkit standard metabolite annotation data model([MetaLib](cref:T:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib))?
         * 
         * + default value Is ``false``.
         * @param tqdm 

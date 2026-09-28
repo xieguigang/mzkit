@@ -22,11 +22,11 @@
 
         <h3>Description</h3>
 
-        <p>断点的集合管理器
+        <p>断点的集合管理器</p>
 
-<p>对外是以<code>文件名+行号</code>的方式来进行断点的增删查改操作的, 而在内部则是使用经过规范化处理之后的<code>文件名:行号</code>字符串 作为键名来建立索引字典, 使得在程序执行的热点循环之中能够以 O(1) 的时间复杂度来完成断点的命中判断.
+<p>对外是以<code>文件名+行号</code>的方式来进行断点的增删查改操作的, 而在内部则是使用经过规范化处理之后的<code>文件名:行号</code>字符串 作为键名来建立索引字典, 使得在程序执行的热点循环之中能够以 O(1) 的时间复杂度来完成断点的命中判断.</p>
 
-<p>这里之所以不直接使用 @<code>M:SMRUCC.Rsharp.Interpreter.ExecuteEngine.Expression.GetBreakPointHashCode</code> 所返回的哈希码来做索引, 是因为该哈希码的计算逻辑位于外部的 sciBASIC 程序集之中, 其具体的哈希算法对于本项目而言是不透明的, 无法保证由用户所输入的<code>文件名+行号</code>能够反推出完全一致的哈希码
+<p>这里之所以不直接使用 <a href="cref:M:SMRUCC.Rsharp.Interpreter.ExecuteEngine.Expression.GetBreakPointHashCode">Expression.GetBreakPointHashCode()</a> 所返回的哈希码来做索引, 是因为该哈希码的计算逻辑位于外部的 sciBASIC 程序集之中, 其具体的哈希算法对于本项目而言是不透明的, 无法保证由用户所输入的<code>文件名+行号</code>能够反推出完全一致的哈希码</p>
 
         <h3>Declare</h3>        
 

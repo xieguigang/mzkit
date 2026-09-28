@@ -95,7 +95,7 @@ declare namespace chromatogram {
     * Convert chromatogram tick point data to a chromatogram object
     * 
     * 
-     * @param ticks A vector of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick`` object or a dataframe object.
+     * @param ticks A vector of the [ChromatogramTick](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick) object or a dataframe object.
      *  
      *  If the data input is a dataframe object, then the data fields is
      *  required for create the chromatogram object:

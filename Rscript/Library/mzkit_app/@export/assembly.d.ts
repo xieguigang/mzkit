@@ -39,7 +39,7 @@ declare namespace assembly {
        * this function ensure that the output result of the any input ion objects is peakms2 data type.
        * 
        * 
-        * @param ions a vector of mgf @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF.Ions`` from the ``read.mgf`` function or other data source.
+        * @param ions a vector of mgf [Ions](cref:T:BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF.Ions) from the ``read.mgf`` function or other data source.
         * @param lazy 
         * + default value Is ``true``.
         * @param env -

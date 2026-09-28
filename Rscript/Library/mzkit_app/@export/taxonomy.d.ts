@@ -24,7 +24,7 @@ declare namespace taxonomy {
     * 
      * @param x a collection of the spectrum sample data, should be a tuple list 
      *  object that contains multiple sample data to build tree. each slot value in this 
-     *  tuple list should be a vector of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2`` spectrum data.
+     *  tuple list should be a vector of the [PeakMs2](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2) spectrum data.
      * @param mzdiff -
      * 
      * + default value Is ``0.3``.

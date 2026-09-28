@@ -168,7 +168,7 @@ declare namespace pubchem_kit {
         *  2. disease: a list of the related disease with the compound
         *  3. compounds: the co-occurance compound data
         *  
-        *  all of the slot data is a collection of the mzkit pubchem @``T:BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Graph.MeshGraph`` 
+        *  all of the slot data is a collection of the mzkit pubchem [MeshGraph](cref:T:BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Graph.MeshGraph) 
         *  clr object.
       */
       function knowlegde_graph(cid: string, cache?: any, env?: object): object;
@@ -222,8 +222,8 @@ declare namespace pubchem_kit {
         * @param convert_std convert to a unify metabolite data model inside mzkit?
         * 
         * + default value Is ``false``.
-        * @return A collection of the pubchem query summary @``T:BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Web.QueryXml`` object
-        *  (or @``T:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib`` data model if the parameter **`convert_std`** 
+        * @return A collection of the pubchem query summary [QueryXml](cref:T:BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Web.QueryXml) object
+        *  (or [MetaLib](cref:T:BioNovoGene.BioDeep.Chemoinformatics.Metabolite.MetaLib) data model if the parameter **convert_std** 
         *  has been set to ``true``) that parsed from download result file.
       */
       function webquery(file: string, convert_std?: boolean): object;
@@ -233,7 +233,7 @@ declare namespace pubchem_kit {
     * 
     * 
      * @param repo a directory path to the local pubchem repository
-     * @return a collection of the pubchem @``T:BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.PugViewRecord`` data, which could be converted 
+     * @return a collection of the pubchem [PugViewRecord](cref:T:BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.PugViewRecord) data, which could be converted 
      *  to the mzkit internal metabolite metadata annotation model via the function 
      *  ``metadata.pugView``.
    */

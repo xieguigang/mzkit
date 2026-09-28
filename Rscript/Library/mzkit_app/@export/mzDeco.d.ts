@@ -42,8 +42,8 @@ declare namespace mzDeco {
        * 
         * @param x should be a data collection of the peaks data, value could be:
         *  
-        *  1. a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2`` ROI peaks data
-        *  2. an actual @``T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakSet`` object, then this function will make value copy of this object
+        *  1. a collection of the [xcms2](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2) ROI peaks data
+        *  2. an actual [PeakSet](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakSet) object, then this function will make value copy of this object
         *  3. a dataframe object that contains the peaks data for make the data conversion
         * @param env -
         * 
@@ -63,7 +63,7 @@ declare namespace mzDeco {
     * >  msn level spectrum data collection
     * 
      * @param ions a collection of the msn level spectrum data
-     * @param peaktable the peaktable object, is a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2`` object.
+     * @param peaktable the peaktable object, is a collection of the [xcms2](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2) object.
      * @param mzdiff the mass tolerance error in data unit delta dalton, 
      *  apply for matches between the peaktable precursor m/z and the given ion mz value.
      * 
@@ -79,7 +79,7 @@ declare namespace mzDeco {
      *  additionally, the noise spectrum data will be set to the attribute named "noise" 
      *  of the return vector value.
      *  
-     *  the return value is a vector of @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2`` object, and the noise
+     *  the return value is a vector of [PeakMs2](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2) object, and the noise
      *  spectrum data is set to the attribute named "noise" of the return value.
    */
    function filter_noise_spectrum(ions: any, peaktable: object, mzdiff?: number, rt_win?: number, strict_filter?: boolean, env?: object): object;
@@ -98,7 +98,7 @@ declare namespace mzDeco {
     * helper function for find ms1 peaks based on the given mz/rt tuple data
     * 
     * 
-     * @param peaktable the peaktable object, is a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2`` object.
+     * @param peaktable the peaktable object, is a collection of the [xcms2](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2) object.
      * @param mz target ion m/z
      * @param rt target ion rt in seconds.
      * @param mzdiff the mass tolerance error in data unit delta dalton, 
@@ -202,11 +202,11 @@ declare namespace mzDeco {
      * @param env 
      * + default value Is ``null``.
      * @return a vector of the peak deconvolution data,
-     *  in format of xcms peak table liked or mzkit @``T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakFeature``
+     *  in format of xcms peak table liked or mzkit [PeakFeature](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakFeature)
      *  data object.
      *  
      *  the result data vector may contains the rt shift data result, where you can get this shift
-     *  value via the ``rt.shift`` attribute name, rt shift data model is clr type: @``T:BioNovoGene.Analytical.MassSpectrometry.Math.RtShift``.
+     *  value via the ``rt.shift`` attribute name, rt shift data model is clr type: [RtShift](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.RtShift).
    */
    function mz_deco(ms1: any, tolerance?: any, baseline?: number, peak_width?: any, joint?: boolean, parallel?: boolean, dtw?: boolean, feature?: any, rawfile?: string, sn_threshold?: number, env?: object): object|object;
    /**
@@ -219,9 +219,9 @@ declare namespace mzDeco {
     * 
     * 
      * @param samples should be a set of samples file data, which could be extract from the ``mz_deco`` function.
-     *  usaully be a list of the mzkit @``T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakFeature`` set list data, example as:
+     *  usaully be a list of the mzkit [PeakFeature](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakFeature) set list data, example as:
      *  
-     *  ```r
+     * ```r
      *  list(
      *      sample1 = c(peak1, peak2, peak3, ...),
      *      sample2 = c(peak1, peak2, peak3, ...),
@@ -278,7 +278,7 @@ declare namespace mzDeco {
     * 
     * 
      * @param peaktable A xcms liked peaktable object, is a collection 
-     *  of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2`` peak feature data.
+     *  of the [xcms2](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2) peak feature data.
      * @param sampleNames A character vector of the sample names for make 
      *  the peaktable projection.
      * @param env 
@@ -292,9 +292,9 @@ declare namespace mzDeco {
     *  this function is debug used only
     * 
     * 
-     * @param pool should be type of @``T:BioNovoGene.Analytical.MassSpectrometry.Math.XICPool`` or peak collection @``T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakSet`` object.
+     * @param pool should be type of [XICPool](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.XICPool) or peak collection [PeakSet](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakSet) object.
      * @param mz the ion feature m/z value
-     * @param dtw this parameter will not working when the data pool type is clr type @``T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakSet``
+     * @param dtw this parameter will not working when the data pool type is clr type [PeakSet](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakSet)
      * 
      * + default value Is ``true``.
      * @param mzdiff -
@@ -345,7 +345,7 @@ declare namespace mzDeco {
         * + default value Is ``false``.
         * @param env 
         * + default value Is ``null``.
-        * @return A collection set of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2`` peak features data object
+        * @return A collection set of the [xcms2](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2) peak features data object
       */
       function xcms_peaks(file: any, tsv?: boolean, general_method?: boolean, make_unique?: boolean, env?: object): object;
    }
@@ -371,7 +371,7 @@ declare namespace mzDeco {
     * 
     * 
      * @param peakdata should be a collection of the peak data from a single sample file.
-     * @param RI should be a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.RIRefer`` data.
+     * @param RI should be a collection of the [RIRefer](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.RIRefer) data.
      * 
      * + default value Is ``null``.
      * @param ppm 

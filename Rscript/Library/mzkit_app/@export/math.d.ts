@@ -92,7 +92,7 @@ declare namespace math {
         * @param env -
         * 
         * + default value Is ``null``.
-        * @return a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml.AlignmentOutput`` from the pairwise alignment between the query and reference.
+        * @return a collection of the [AlignmentOutput](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml.AlignmentOutput) from the pairwise alignment between the query and reference.
       */
       function pairwise(query: any, ref: any, tolerance?: any, intocutoff?: number, env?: object): object;
    }
@@ -110,7 +110,7 @@ declare namespace math {
      * @param mz a single ion m/z value.
      * @param mode the ion polarity mode ``+/-`` for evaluate all kind of 
      *  precursor type under the specific polarity mode, or a vector of the 
-     *  @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType.MzCalculator`` precursor type model which is generates from 
+     *  [MzCalculator](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType.MzCalculator) precursor type model which is generates from 
      *  the ``math::precursor_types`` function.
      * 
      * + default value Is ``'+'``.
@@ -158,7 +158,7 @@ declare namespace math {
      *  function ``mz_index``.
      * @param env 
      * + default value Is ``null``.
-     * @return the returns value of this function is based on the input **`ms`** data:
+     * @return the returns value of this function is based on the input **ms** data:
      *  
      *  1. for a single msdata object, then this function just returns a intensity numeric vector
      *  2. for a collection of the msdata object, then this function will returns a
@@ -268,7 +268,7 @@ declare namespace math {
     * normalized the peak intensity data, do [0,1] scaled.
     * 
     * 
-     * @param msdata Should be a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix`` object.
+     * @param msdata Should be a collection of the [LibraryMatrix](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix) object.
      * @param sum the intensity normalization method to be used in this function, 
      *  set this parameter value to TRUE means use the total ion 
      *  normalization method, and the default value FALSE means used 
@@ -279,7 +279,7 @@ declare namespace math {
      * @param env -
      * 
      * + default value Is ``null``.
-     * @return A collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix`` 
+     * @return A collection of the [LibraryMatrix](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix) 
      *  object with the intensity value for each ms2 peak normalized.
    */
    function norm_msdata(msdata: any, sum?: boolean, env?: object): object;
@@ -447,8 +447,8 @@ declare namespace math {
         * @param gt_score -
         * 
         * + default value Is ``0.6``.
-        * @param score_aggregate A @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.ScoreAggregates`` method, should be a function in clr delegate 
-        *  liked: ``@``T:System.Func`3````.
+        * @param score_aggregate A [ScoreAggregates](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.ScoreAggregates) method, should be a function in clr delegate 
+        *  liked: ``[Func](cref:T:System.Func%603)``.
         * 
         * + default value Is ``null``.
         * @param env 
@@ -500,7 +500,7 @@ declare namespace math {
      * @param env 
      * + default value Is ``null``.
      * @return the value clr type of this function is determine based on 
-     *  the **`method`** parameter value.
+     *  the **method** parameter value.
    */
    function tolerance(threshold: number, method?: any, env?: object): object|object;
    /**

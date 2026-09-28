@@ -44,7 +44,7 @@ declare namespace UVSpectroscopy {
        * write UV signal data into a text file or netCDF4 data file
        * 
        * 
-        * @param signals a vector or pipeline of @``T:Microsoft.VisualBasic.Math.SignalProcessing.GeneralSignal``
+        * @param signals a vector or pipeline of [GeneralSignal](cref:T:Microsoft.VisualBasic.Math.SignalProcessing.GeneralSignal)
         * @param file the file path of the data file that will be write signal data to it.
         * @param enable_CDFextension only available for sciBASIC.NET product when this option is set to ``TRUE``. not supports for the 
         *  standard netcdf library on linux platform or other cdf file reader software like NASA Panoply, etc.

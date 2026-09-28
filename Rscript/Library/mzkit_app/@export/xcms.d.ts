@@ -66,7 +66,7 @@ declare namespace xcms {
     * 
      * @param peaktable -
      * @param id should be a character vector of the ion reference id
-     * @param annotation should be a collection of the metabolite annotation model @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations.MetID``, 
+     * @param annotation should be a collection of the metabolite annotation model [MetID](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations.MetID), 
      *  size of this collection should be equals to the size of the given id vector.
      * @param env -
      * 

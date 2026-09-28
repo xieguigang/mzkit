@@ -35,13 +35,13 @@
         <table>
             
 <dt>x</dt>
-<dd><p>should be a data collection of the peaks data, value could be:
+<dd><p>should be a data collection of the peaks data, value could be:</p>
 
 
 <ol>
-<li><p>a collection of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a> ROI peaks data</li>
-<li><p>an actual <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a> object, then this function will make value copy of this object</li>
-<li><p>a dataframe object that contains the peaks data for make the data conversion</li>
+<li>a collection of the <a href="cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2">xcms2</a> ROI peaks data</li>
+<li>an actual <a href="cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakSet">PeakSet</a> object, then this function will make value copy of this object</li>
+<li>a dataframe object that contains the peaks data for make the data conversion</li>
 </p></dd>
 
 
@@ -53,14 +53,14 @@
 
         <h3 style="display: block;">Details</h3>
 
-        <p>for make data object conversion from a R# runtime dataframe object, that these data fields is required for creates the xcms peaks object:
+        <p>for make data object conversion from a R# runtime dataframe object, that these data fields is required for creates the xcms peaks object:</p>
 
 
 <ol>
-<li><p>mz, mzmin, mzmax: the ion m/z value of the xcms peak</li>
-<li><p>rt, rtmin, rtmax: the ion retention time of the xcms peak data, should be in time unit seconds</li>
-<li><p>RI: the ion retention index value that evaluated based on the RT value</li>
-<li><p>all of the other data fields in the dataframe will be treated as the sample peak area data.</li>
+<li>mz, mzmin, mzmax: the ion m/z value of the xcms peak</li>
+<li>rt, rtmin, rtmax: the ion retention time of the xcms peak data, should be in time unit seconds</li>
+<li>RI: the ion retention index value that evaluated based on the RT value</li>
+<li>all of the other data fields in the dataframe will be treated as the sample peak area data.</li>
 </ol>
 
         <h3 style="display: block">Authors</h3>

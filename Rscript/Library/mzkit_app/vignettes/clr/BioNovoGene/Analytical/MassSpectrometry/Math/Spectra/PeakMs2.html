@@ -22,9 +22,9 @@
 
         <h3>Description</h3>
 
-        <p>将mzXML文件之中的每一个ms2 scan转换而来
+        <p>将mzXML文件之中的每一个ms2 scan转换而来</p>
 
-<p>A union data model of the ms1 annotation data associated with the ms2 peak scan data.
+<p>A union data model of the ms1 annotation data associated with the ms2 peak scan data.</p>
 
         <h3>Declare</h3>        
 
@@ -42,7 +42,7 @@ export class PeakMs2 {
    fragments: integer;
    # 一级母离子的响应强度
    intensity: double;
-   # A unique variable name, meaning could be different with .
+   # A unique variable name, meaning could be different with <a href="cref:P:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix.name">LibraryMatrix.name</a>.
    lib_guid: string;
    # the associated meta/properties about this spectrum data object.
    meta: list;
@@ -52,7 +52,7 @@ export class PeakMs2 {
    mz: double;
    # 二级碎片信息
    mzInto: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2[]</a>;
-   # adducts type of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a>.<a href="#">mz</a> value.
+   # adducts type of the <a href="cref:P:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2.mz">PeakMs2.mz</a> value.
    precursor_type: string;
    # 一级母离子的出峰时间
    rt: double;

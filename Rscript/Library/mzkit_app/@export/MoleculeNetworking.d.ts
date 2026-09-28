@@ -102,7 +102,7 @@ declare namespace MoleculeNetworking {
    /**
     * create representative spectrum data
     * 
-    * > @``P:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2.collisionEnergy`` is tagged as the cluster size
+    * > [PeakMs2.collisionEnergy](cref:P:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2.collisionEnergy) is tagged as the cluster size
     * 
      * @param mzdiff -
      * 
@@ -159,9 +159,9 @@ declare namespace MoleculeNetworking {
      * @param env -
      * 
      * + default value Is ``null``.
-     * @return the value type of this function is affects by the **`wrap_peaks`** parameter:
+     * @return the value type of this function is affects by the **wrap_peaks** parameter:
      *  
-     *  1. for wrap_peaks is set to false by default, a vector of the raw @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.MoleculeNetworking.NetworkingNode`` 
+     *  1. for wrap_peaks is set to false by default, a vector of the raw [NetworkingNode](cref:T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.MoleculeNetworking.NetworkingNode) 
      *     which is extract from the cluster data will be returns
      *  2. otherwise the spectrum peaks data will be returns if the parameter 
      *     value is set to value true.
