@@ -58,6 +58,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.SQLSchema
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Tables
