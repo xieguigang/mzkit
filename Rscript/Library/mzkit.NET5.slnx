@@ -33,7 +33,9 @@
       <BuildType Solution="mzkit_win32|*" Project="Release" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Release" />
       <BuildType Solution="PlantMAT|*" Project="Release" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
@@ -51,7 +53,9 @@
       <BuildType Solution="mzkit_win32|*" Project="Rsharp_app_release" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Rsharp_app_release" />
-      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
       <BuildType Solution="PlantMAT|*" Project="Rsharp_app_release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -97,7 +101,10 @@
       <BuildType Solution="mzkit_win32|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="Debug" />
+      <BuildType Solution="nuget_release|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
@@ -169,7 +176,9 @@
       <BuildType Solution="mzkit_win32|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="Debug" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
@@ -314,7 +323,9 @@
       <BuildType Solution="mzkit_win32|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="Debug" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
@@ -328,7 +339,9 @@
       <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
       <BuildType Solution="MetaCardio|*" Project="mzkit" />
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
-      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="nuget_release|Any CPU" Project="NPSearch" />
+      <BuildType Solution="nuget_release|ARM32" Project="NPSearch" />
+      <BuildType Solution="nuget_release|x86" Project="NPSearch" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -443,7 +456,9 @@
       <BuildType Solution="mzkit_win32|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="Debug" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -642,7 +657,9 @@
       <BuildType Solution="MetaCardio|*" Project="mzkit" />
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
       <BuildType Solution="mzkit_win32|*" Project="mzkit" />
-      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="nuget_release|Any CPU" Project="NPSearch" />
+      <BuildType Solution="nuget_release|ARM32" Project="NPSearch" />
+      <BuildType Solution="nuget_release|x86" Project="NPSearch" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -830,7 +847,9 @@
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
       <BuildType Solution="mzkit|*" Project="mzkit_win32" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -846,7 +865,9 @@
       <BuildType Solution="mzkit|x64" Project="mzkit_win32" />
       <BuildType Solution="mzkit|x86" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -864,7 +885,9 @@
       <BuildType Solution="mzkit|x64" Project="Rsharp_app_release" />
       <BuildType Solution="mzkit|x86" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Release" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -878,7 +901,9 @@
       <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Release" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|ARM32" Project="ARM32" />
       <Platform Solution="*|x64" Project="x64" />
@@ -892,7 +917,9 @@
       <BuildType Solution="mzkit|Any CPU" Project="Debug" />
       <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
       <BuildType Solution="NPSearch|x64" Project="Release" />
-      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="nuget_release|Any CPU" Project="NPSearch" />
+      <BuildType Solution="nuget_release|ARM32" Project="NPSearch" />
+      <BuildType Solution="nuget_release|x86" Project="NPSearch" />
       <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
       <BuildType Solution="PlantMAT|ARM32" Project="NPSearch" />
       <BuildType Solution="PlantMAT|x64" Project="Debug" />
@@ -911,7 +938,9 @@
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
       <BuildType Solution="mzkit|*" Project="mzkit_win32" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -929,7 +958,9 @@
       <BuildType Solution="mzkit|x64" Project="mzkit_win32" />
       <BuildType Solution="mzkit|x86" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -945,7 +976,9 @@
       <BuildType Solution="mzkit_win32|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -962,7 +995,9 @@
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
       <BuildType Solution="mzkit_win32|*" Project="mzkit" />
       <BuildType Solution="mzkit|x64" Project="mzkit_win32" />
-      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="nuget_release|Any CPU" Project="NPSearch" />
+      <BuildType Solution="nuget_release|ARM32" Project="NPSearch" />
+      <BuildType Solution="nuget_release|x86" Project="NPSearch" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -978,7 +1013,9 @@
       <BuildType Solution="mzkit|x64" Project="mzkit_win32" />
       <BuildType Solution="mzkit|x86" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -994,7 +1031,9 @@
       <BuildType Solution="mzkit_win32|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -1009,7 +1048,9 @@
       <BuildType Solution="mzkit_win32|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -1024,7 +1065,9 @@
       <BuildType Solution="mzkit_win32|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -1039,7 +1082,9 @@
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
       <BuildType Solution="mzkit|*" Project="mzkit_win32" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -1056,7 +1101,9 @@
       <BuildType Solution="mzkit|x64" Project="mzkit_win32" />
       <BuildType Solution="mzkit|x86" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Release" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|ARM32" Project="ARM32" />
       <Platform Solution="*|x64" Project="x64" />
@@ -1069,7 +1116,9 @@
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
       <BuildType Solution="mzkit|*" Project="mzkit_win32" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -1081,7 +1130,9 @@
       <BuildType Solution="MetaCardio|*" Project="mzkit" />
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
       <BuildType Solution="mzkit_win32|*" Project="mzkit" />
-      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="nuget_release|Any CPU" Project="NPSearch" />
+      <BuildType Solution="nuget_release|ARM32" Project="NPSearch" />
+      <BuildType Solution="nuget_release|x86" Project="NPSearch" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -1104,7 +1155,9 @@
       <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
@@ -1131,13 +1184,16 @@
       <BuildType Solution="mzkit_win32|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="Debug" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
       <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
       <Platform Solution="Debug|x64" Project="x64" />
       <Platform Solution="MEMI-Desktop|x64" Project="x64" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
       <Platform Solution="Rsharp_app_release|x64" Project="x64" />
     </Project>
     <Project Path="../../src/visualize/plot/MsPlot.NET5.vbproj">
@@ -1152,7 +1208,9 @@
       <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
       <BuildType Solution="NPSearch|x64" Project="Release" />
       <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
-      <BuildType Solution="nuget_release|*" Project="mzkit" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit" />
       <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
       <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
       <BuildType Solution="PlantMAT|x64" Project="Debug" />
@@ -1179,7 +1237,9 @@
       <BuildType Solution="MetaCardio|*" Project="mzkit" />
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
       <BuildType Solution="mzkit|Any CPU" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="nuget_release|Any CPU" Project="NPSearch" />
+      <BuildType Solution="nuget_release|ARM32" Project="NPSearch" />
+      <BuildType Solution="nuget_release|x86" Project="NPSearch" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -1190,7 +1250,9 @@
       <BuildType Solution="gcmodeller_desktop|*" Project="mzkit_win32" />
       <BuildType Solution="MetaCardio|*" Project="LipidSearch" />
       <BuildType Solution="mzkit_UnixDocker|*" Project="Rsharp_app_release" />
-      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="../../src/assembly/Comprehensive/Comprehensive.NET5.vbproj">
@@ -1204,7 +1266,9 @@
       <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
       <BuildType Solution="NPSearch|x64" Project="Release" />
       <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
-      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Release" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -1217,7 +1281,9 @@
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
       <BuildType Solution="mzkit_win32|*" Project="mzkit" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="../../src/assembly/mzPackExtensions/mzPackExtensions.NET5.vbproj">
@@ -1232,7 +1298,9 @@
       <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
       <BuildType Solution="NPSearch|x64" Project="Debug" />
       <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
-      <BuildType Solution="nuget_release|*" Project="PlantMAT" />
+      <BuildType Solution="nuget_release|Any CPU" Project="PlantMAT" />
+      <BuildType Solution="nuget_release|ARM32" Project="PlantMAT" />
+      <BuildType Solution="nuget_release|x86" Project="PlantMAT" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -1245,7 +1313,9 @@
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
       <BuildType Solution="mzkit_win32|*" Project="mzkit" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="../../src/assembly/ProteoWizard.Interop/ProteoWizard.Interop.NET5.vbproj">
@@ -1261,7 +1331,10 @@
       <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
       <BuildType Solution="NPSearch|x64" Project="Release" />
       <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
-      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|x86" Project="Release" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -1279,7 +1352,9 @@
       <BuildType Solution="mzkit_win32|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="nuget_release|Any CPU" Project="NPSearch" />
+      <BuildType Solution="nuget_release|ARM32" Project="NPSearch" />
+      <BuildType Solution="nuget_release|x86" Project="NPSearch" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
@@ -1302,7 +1377,9 @@
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
       <BuildType Solution="mzkit|*" Project="mzkit_win32" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Release" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
@@ -1317,7 +1394,9 @@
       <BuildType Solution="MetaCardio|*" Project="LipidSearch" />
       <BuildType Solution="mzkit_UnixDocker|*" Project="Rsharp_app_release" />
       <BuildType Solution="mzkit_win32|*" Project="Rsharp_app_release" />
-      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
   </Folder>
@@ -1333,13 +1412,16 @@
       <BuildType Solution="mzkit_win32|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="Debug" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
       <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
       <Platform Solution="Debug|x64" Project="x64" />
       <Platform Solution="MEMI-Desktop|x64" Project="x64" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
       <Platform Solution="Rsharp_app_release|x64" Project="x64" />
     </Project>
     <Project Path="../../src/mzmath/SingleCells/SingleCells.vbproj">
@@ -1358,7 +1440,6 @@
       <BuildType Solution="NPSearch|*" Project="Debug" />
       <BuildType Solution="nuget_release|Any CPU" Project="LipidSearch" />
       <BuildType Solution="nuget_release|ARM32" Project="LipidSearch" />
-      <BuildType Solution="nuget_release|x64" Project="Release" />
       <BuildType Solution="nuget_release|x86" Project="LipidSearch" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
@@ -1383,13 +1464,16 @@
       <BuildType Solution="mzkit_win32|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="Debug" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
       <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
       <Platform Solution="Debug|x64" Project="x64" />
       <Platform Solution="MEMI-Desktop|x64" Project="x64" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
       <Platform Solution="Rsharp_app_release|x64" Project="x64" />
     </Project>
     <Project Path="../../src/visualize/MsImaging/MsImaging.NET5.vbproj">
@@ -1404,7 +1488,9 @@
       <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
       <BuildType Solution="NPSearch|x64" Project="Release" />
       <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
-      <BuildType Solution="nuget_release|*" Project="mzkit" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit" />
       <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
       <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
       <BuildType Solution="PlantMAT|x64" Project="Debug" />
@@ -1434,7 +1520,6 @@
       <BuildType Solution="NPSearch|*" Project="Debug" />
       <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
       <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
-      <BuildType Solution="nuget_release|x64" Project="Release" />
       <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
@@ -1468,7 +1553,6 @@
       <BuildType Solution="NPSearch|*" Project="Debug" />
       <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
       <BuildType Solution="nuget_release|ARM32" Project="Rsharp_app_release" />
-      <BuildType Solution="nuget_release|x64" Project="Release" />
       <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
@@ -1493,7 +1577,9 @@
       <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|ARM32" Project="ARM32" />
       <Platform Solution="*|x64" Project="x64" />
@@ -1509,7 +1595,9 @@
       <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|ARM32" Project="ARM32" />
       <Platform Solution="*|x64" Project="x64" />
@@ -1537,7 +1625,6 @@
       <BuildType Solution="NPSearch|*" Project="Debug" />
       <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
       <BuildType Solution="nuget_release|ARM32" Project="Release" />
-      <BuildType Solution="nuget_release|x64" Project="Release" />
       <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
@@ -1566,7 +1653,9 @@
       <BuildType Solution="MetaCardio|*" Project="mzkit" />
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="../../src/mzmath/Mummichog/Mummichog.vbproj">
@@ -1580,7 +1669,9 @@
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
       <BuildType Solution="mzkit|*" Project="mzkit_win32" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Release" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|ARM32" Project="ARM32" />
       <Platform Solution="*|x64" Project="x64" />
@@ -1597,7 +1688,9 @@
       <BuildType Solution="mzkit_win32|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Release" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
@@ -1617,7 +1710,9 @@
       <BuildType Solution="MetaCardio|*" Project="mzkit" />
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
       <BuildType Solution="mzkit|Any CPU" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="nuget_release|Any CPU" Project="NPSearch" />
+      <BuildType Solution="nuget_release|ARM32" Project="NPSearch" />
+      <BuildType Solution="nuget_release|x86" Project="NPSearch" />
       <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
       <BuildType Solution="PlantMAT|x64" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
@@ -1630,7 +1725,9 @@
       <BuildType Solution="gcmodeller_desktop|*" Project="Rsharp_app_release" />
       <BuildType Solution="MetaCardio|*" Project="mzkit" />
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
-      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="nuget_release|Any CPU" Project="NPSearch" />
+      <BuildType Solution="nuget_release|ARM32" Project="NPSearch" />
+      <BuildType Solution="nuget_release|x86" Project="NPSearch" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="../../src/metadb/Massbank/massbank.NET5.vbproj">
@@ -1640,7 +1737,9 @@
       <BuildType Solution="gcmodeller_desktop|*" Project="Rsharp_app_release" />
       <BuildType Solution="MetaCardio|*" Project="mzkit" />
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
-      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="nuget_release|Any CPU" Project="NPSearch" />
+      <BuildType Solution="nuget_release|ARM32" Project="NPSearch" />
+      <BuildType Solution="nuget_release|x86" Project="NPSearch" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -1656,7 +1755,9 @@
       <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
       <BuildType Solution="NPSearch|x64" Project="Release" />
       <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
-      <BuildType Solution="nuget_release|*" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
       <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
       <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
       <BuildType Solution="PlantMAT|x64" Project="Debug" />
@@ -1672,7 +1773,9 @@
       <BuildType Solution="MetaCardio|*" Project="mzkit" />
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
       <BuildType Solution="mzkit_win32|*" Project="mzkit" />
-      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="nuget_release|Any CPU" Project="NPSearch" />
+      <BuildType Solution="nuget_release|ARM32" Project="NPSearch" />
+      <BuildType Solution="nuget_release|x86" Project="NPSearch" />
       <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
       <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
       <BuildType Solution="PlantMAT|x64" Project="Debug" />
@@ -1687,7 +1790,9 @@
       <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
       <BuildType Solution="MetaCardio|*" Project="mzkit" />
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
-      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="nuget_release|Any CPU" Project="NPSearch" />
+      <BuildType Solution="nuget_release|ARM32" Project="NPSearch" />
+      <BuildType Solution="nuget_release|x86" Project="NPSearch" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -1707,7 +1812,9 @@
       <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
@@ -1739,7 +1846,6 @@
       <BuildType Solution="NPSearch|*" Project="Debug" />
       <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
       <BuildType Solution="nuget_release|ARM32" Project="Rsharp_app_release" />
-      <BuildType Solution="nuget_release|x64" Project="Release" />
       <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
@@ -1767,7 +1873,9 @@
       <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
       <BuildType Solution="NPSearch|x64" Project="Release" />
       <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
-      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Release" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -1783,7 +1891,9 @@
       <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
       <BuildType Solution="NPSearch|x64" Project="Release" />
       <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
-      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Release" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -1796,7 +1906,9 @@
       <BuildType Solution="MetaCardio|*" Project="mzkit" />
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="../../src/visualize/SDF.Extensions/SDF.Extensions.NET5.vbproj">
@@ -1812,7 +1924,9 @@
       <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
       <BuildType Solution="NPSearch|x64" Project="Release" />
       <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
-      <BuildType Solution="nuget_release|*" Project="mzkit" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit" />
       <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
       <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
       <BuildType Solution="PlantMAT|x64" Project="Debug" />
@@ -1836,7 +1950,9 @@
       <BuildType Solution="MetaCardio|*" Project="mzkit" />
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
       <BuildType Solution="mzkit_win32|*" Project="mzkit" />
-      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="nuget_release|Any CPU" Project="NPSearch" />
+      <BuildType Solution="nuget_release|ARM32" Project="NPSearch" />
+      <BuildType Solution="nuget_release|x86" Project="NPSearch" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <Platform Solution="Biodeep|x64" Project="x64" />
       <Platform Solution="CFD_win32|x64" Project="x64" />
@@ -1865,7 +1981,9 @@
       <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
       <BuildType Solution="NPSearch|x64" Project="Release" />
       <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
-      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Release" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -1881,7 +1999,9 @@
       <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
       <BuildType Solution="NPSearch|x64" Project="Release" />
       <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
-      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Release" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -1899,7 +2019,9 @@
       <BuildType Solution="mzkit_win32|*" Project="Debug" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="Debug" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
       <BuildType Solution="PlantMAT|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
       <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
@@ -1916,7 +2038,9 @@
       <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
       <BuildType Solution="mzkit_win32|*" Project="mzkit" />
       <BuildType Solution="mzkit|Any CPU" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="nuget_release|Any CPU" Project="NPSearch" />
+      <BuildType Solution="nuget_release|ARM32" Project="NPSearch" />
+      <BuildType Solution="nuget_release|x86" Project="NPSearch" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="../../../GCModeller/src/R-sharp/studio/R-terminal/R-cmd.NET5.vbproj">
@@ -1933,7 +2057,9 @@
       <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
       <BuildType Solution="NPSearch|x64" Project="Debug" />
       <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
-      <BuildType Solution="nuget_release|*" Project="CFD_win32" />
+      <BuildType Solution="nuget_release|Any CPU" Project="CFD_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="CFD_win32" />
+      <BuildType Solution="nuget_release|x86" Project="CFD_win32" />
       <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
       <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
       <BuildType Solution="PlantMAT|x64" Project="Debug" />
@@ -1986,7 +2112,10 @@
     <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
     <BuildType Solution="NPSearch|x64" Project="Release" />
     <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
-    <BuildType Solution="nuget_release|*" Project="Release" />
+    <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+    <BuildType Solution="nuget_release|ARM32" Project="Release" />
+    <BuildType Solution="nuget_release|x64" Project="Rsharp_app_release" />
+    <BuildType Solution="nuget_release|x86" Project="Release" />
     <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
     <Platform Solution="*|x64" Project="x64" />
   </Project>
