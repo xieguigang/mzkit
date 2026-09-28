@@ -6,7 +6,7 @@
     <UseApplicationFramework>True</UseApplicationFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Lipidomics Annotation Workflow</Title>
-    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;nuget_release</Configurations>
     <Description>Lipidomics annotation code module port from MS-DIAL</Description>
     <Copyright>MS-DIAL; PANOMIX</Copyright>
     <IncludeSymbols>True</IncludeSymbols>
@@ -19,6 +19,8 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
+    <Version>1.0.9767.32135</Version>
+    <AssemblyVersion>1.0.9767.32135</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -185,6 +187,11 @@
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DebugType>full</DebugType>
     <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../../Rscript/Library/mzkit_app/assembly/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

@@ -4,7 +4,7 @@
     <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.SpectrumTree</RootNamespace>
     <TargetFrameworks>net10.0</TargetFrameworks>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;LipidSearch;mzkit_win32;Rsharp_app_release</Configurations>
+    <Configurations>Debug;Release;LipidSearch;mzkit_win32;Rsharp_app_release;nuget_release</Configurations>
     <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.SpectrumTree</AssemblyName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Spectrum tree reference library</Title>
@@ -19,6 +19,8 @@
     <Description>Spectrum tree reference library for run metabolite annotation workflow</Description>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
+    <Version>1.0.9767.32135</Version>
+    <AssemblyVersion>1.0.9767.32135</AssemblyVersion>
   
  
   </PropertyGroup>
@@ -187,6 +189,11 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|x64'">
     <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../../Rscript/Library/mzkit_app/assembly/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

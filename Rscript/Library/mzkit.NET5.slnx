@@ -1,0 +1,2019 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Biodeep" />
+    <BuildType Name="CFD_win32" />
+    <BuildType Name="Debug" />
+    <BuildType Name="Docker" />
+    <BuildType Name="gcmodeller_desktop" />
+    <BuildType Name="LipidSearch" />
+    <BuildType Name="MEMI-Desktop" />
+    <BuildType Name="MetaCardio" />
+    <BuildType Name="mzkit" />
+    <BuildType Name="mzkit_UnixDocker" />
+    <BuildType Name="mzkit_win32" />
+    <BuildType Name="NPSearch" />
+    <BuildType Name="nuget_release" />
+    <BuildType Name="PlantMAT" />
+    <BuildType Name="Release" />
+    <BuildType Name="Rsharp_app_release" />
+    <Platform Name="Any CPU" />
+    <Platform Name="ARM32" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/framework/">
+    <Project Path="../../../Erica/src/SingleCell/SingleExpression/SingleExpression.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Release" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Release" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Release" />
+      <BuildType Solution="mzkit_win32|*" Project="Release" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="PlantMAT|*" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../Erica/src/STRaid/STRaid.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Release" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="LipidSearch|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/Darwinism/src/data/BucketDb/BucketDb.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Release" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="LipidSearch|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/Darwinism/src/data/CDF.PInvoke/CDF.PInvoke.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Release" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="LipidSearch|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ/LINQ.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="CFD_win32|x86" Project="x86" />
+      <Platform Solution="Docker|x86" Project="x86" />
+      <Platform Solution="MEMI-Desktop|x86" Project="x86" />
+      <Platform Solution="nuget_release|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Folder Name="/framework/data/">
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData/binarydata-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="mzkit" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="mzkit" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data/BinaryData/DataStorage/datastorage-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="LipidSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="LipidSearch|x64" Project="Debug" />
+      <BuildType Solution="LipidSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|Any CPU" Project="nuget_release" />
+      <BuildType Solution="MEMI-Desktop|ARM32" Project="nuget_release" />
+      <BuildType Solution="MEMI-Desktop|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|x86" Project="nuget_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data/BinaryData/Feather/FeatherFormat.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|x64" Project="nuget_release" />
+      <BuildType Solution="MEMI-Desktop|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5/HDF5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDSPack/HDSPack.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data/BinaryData/msgpack/msgpack-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="mzkit" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="PlantMAT" />
+      <BuildType Solution="Biodeep|x86" Project="mzkit" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF/netCDF.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data/BinaryData/SQLite3/SQLite3.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="mzkit" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="mzkit" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/framework/graphics/">
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots-statistics/plots_extensions-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|Any CPU" Project="nuget_release" />
+      <BuildType Solution="MEMI-Desktop|ARM32" Project="nuget_release" />
+      <BuildType Solution="MEMI-Desktop|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|x86" Project="nuget_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots/plots-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|Any CPU" Project="nuget_release" />
+      <BuildType Solution="MEMI-Desktop|ARM32" Project="nuget_release" />
+      <BuildType Solution="MEMI-Desktop|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|x86" Project="nuget_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/gr/Drawing-net4.8/Drawing-net4.8.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/gr/Landscape/Landscape.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging/imaging.NET5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="mzkit" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="mzkit" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="mzkit" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="mzkit" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/mime/text%html/html_netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="mzkit" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="mzkit" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="mzkit" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="mzkit" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/framework/math/">
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data/Trinity/Trinity.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/btree-netcore5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|*" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="nuget_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DensityQuery/DensityQuery.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/hierarchical-clustering/hctree.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="nuget_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping/Bootstrapping.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning/machine_learning-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA/ANOVA.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|*" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|*" Project="nuget_release" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings/linear-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|Any CPU" Project="nuget_release" />
+      <BuildType Solution="MEMI-Desktop|ARM32" Project="nuget_release" />
+      <BuildType Solution="MEMI-Desktop|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|x86" Project="nuget_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame/dataframeUtils-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|Any CPU" Project="nuget_release" />
+      <BuildType Solution="MEMI-Desktop|ARM32" Project="nuget_release" />
+      <BuildType Solution="MEMI-Desktop|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|x86" Project="nuget_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics/stats-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|Any CPU" Project="nuget_release" />
+      <BuildType Solution="MEMI-Desktop|ARM32" Project="nuget_release" />
+      <BuildType Solution="MEMI-Desktop|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|x86" Project="nuget_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="MEMI-Desktop|x86" Project="x86" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ODE/odes-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|Any CPU" Project="nuget_release" />
+      <BuildType Solution="MEMI-Desktop|ARM32" Project="nuget_release" />
+      <BuildType Solution="MEMI-Desktop|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|x86" Project="nuget_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Randomizer/randomizer-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="LipidSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="LipidSearch|x64" Project="Debug" />
+      <BuildType Solution="LipidSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|*" Project="nuget_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/Signal.IO/signal_io-netcore5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="mzkit_win32" />
+      <BuildType Solution="MEMI-Desktop|*" Project="nuget_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="PlantMAT" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Release" />
+      <BuildType Solution="MEMI-Desktop|*" Project="nuget_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/nlp/NLP/NLP.NET.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Release" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="nuget_release" />
+      <BuildType Solution="LipidSearch|*" Project="nuget_release" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="nuget_release" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/nlp/word2vec/word2vec.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Release" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="LipidSearch" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="gcmodeller_desktop" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Folder Name="/framework/mime/">
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Docker" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|*" Project="mzkit_win32" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/mime/application%rdf+xml/rdf_xml-netcore5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="gcmodeller_desktop" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Release" />
+      <BuildType Solution="MetaCardio|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel/xlsx-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/mime/application%xml/xml-netcore5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|*" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/framework/network_graph/">
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="mzkit" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="mzkit" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="mzkit" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="mzkit" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="MEMI-Desktop|x86" Project="x86" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network/network_graph-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="mzkit" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="mzkit" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="mzkit" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="mzkit" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Network.IO.Extensions/network_io-netcore5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout/network_layout.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer/networkVisualizer.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="nuget_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/runtime/sciBASIC#/gr/physics/physics-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="mzkit" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="mzkit" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|x64" Project="nuget_release" />
+      <BuildType Solution="MEMI-Desktop|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="mzkit" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="mzkit" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/gcmodeller/">
+    <Project Path="../../../GCModeller/src/GCModeller/analysis/HTS_matrix/HTS_matrix-netcore5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|*" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/GCModeller/annotations/GSEA/FisherCore/Fisher.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Release" />
+      <BuildType Solution="MetaCardio|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/GCModeller/annotations/GSEA/GSEA/gsea-netcore5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/GCModeller/core/Bio.Annotation/annotation.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|ARM32" Project="ARM32" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/GCModeller/core/Bio.Assembly/biocore-netcore5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="NPSearch" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
+      <BuildType Solution="NPSearch|x64" Project="Release" />
+      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="NPSearch" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="NPSearch" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/GCModeller/core/Bio.InteractionModel/InteractionModel.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|*" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/GCModeller/data/GO_gene-ontology/GeneOntology/go_owl-netcore5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="mzkit_win32" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/GCModeller/data/Rhea/Rhea.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/GCModeller/data/SABIO-RK/SABIO-RK.NET.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="CFD_win32|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="CFD_win32|x64" Project="gcmodeller_desktop" />
+      <BuildType Solution="CFD_win32|x86" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|x64" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/GCModeller/foundation/OBO_Foundry/obo_foundry-netcore5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Release" />
+      <BuildType Solution="MetaCardio|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/GCModeller/models/Networks/KEGG/KEGGNetwork.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/GCModeller/models/SBML/Biopax/biopax-netcore5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="mzkit_win32" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/GCModeller/models/SBML/SBML/sbml-netcore5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/interops/visualize/Cytoscape/Cytoscape/Cytoscape.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|*" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/repository/Bio.Repository/repository.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|ARM32" Project="ARM32" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/workbench/modules/ExperimentDesigner/designer-netcore5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|*" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/workbench/modules/Knowledge_base/ncbi_kb/ncbi_kb.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/mzkit.dll/">
+    <Project Path="../../src/assembly/LoadR.NET5/LoadR.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|Any CPU" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|ARM32" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="gcmodeller_desktop|x86" Project="Release" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|x64" Project="Release" />
+      <BuildType Solution="MetaCardio|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <Platform Solution="CFD_win32|x64" Project="x64" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Docker|x64" Project="x64" />
+      <Platform Solution="gcmodeller_desktop|x64" Project="x64" />
+      <Platform Solution="MEMI-Desktop|x64" Project="x64" />
+      <Platform Solution="MetaCardio|x64" Project="x64" />
+      <Platform Solution="mzkit_win32|x64" Project="x64" />
+      <Platform Solution="mzkit|x64" Project="x64" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
+      <Platform Solution="Rsharp_app_release|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/visualize/ComprehensiveMsPlot/ComprehensiveMsPlot.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="MEMI-Desktop|x64" Project="x64" />
+      <Platform Solution="Rsharp_app_release|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/visualize/plot/MsPlot.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Release" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|*" Project="mzkit" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/mzkit.dll/assembly/">
+    <Project Path="../../src/assembly/assembly/assembly-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="mzkit" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="mzkit" />
+      <BuildType Solution="CFD_win32|Any CPU" Project="Release" />
+      <BuildType Solution="CFD_win32|ARM32" Project="Release" />
+      <BuildType Solution="CFD_win32|x64" Project="PlantMAT" />
+      <BuildType Solution="CFD_win32|x86" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="gcmodeller_desktop|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="gcmodeller_desktop|x64" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/assembly/BrukerDataReader/BrukerDataReader.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Release" />
+      <BuildType Solution="CFD_win32|*" Project="LipidSearch" />
+      <BuildType Solution="Docker|*" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="mzkit_win32" />
+      <BuildType Solution="MetaCardio|*" Project="LipidSearch" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/assembly/Comprehensive/Comprehensive.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="PlantMAT" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Release" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/assembly/mzPack/mzpack.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/assembly/mzPackExtensions/mzPackExtensions.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="PlantMAT" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|*" Project="PlantMAT" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/assembly/NMRFidTool/NMRFidTool.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/assembly/ProteoWizard.Interop/ProteoWizard.Interop.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="PlantMAT" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Release" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/assembly/SignalReader/SignalReader.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|Any CPU" Project="LipidSearch" />
+      <BuildType Solution="CFD_win32|ARM32" Project="LipidSearch" />
+      <BuildType Solution="CFD_win32|x64" Project="Release" />
+      <BuildType Solution="CFD_win32|x86" Project="LipidSearch" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <Platform Solution="CFD_win32|x64" Project="x64" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Docker|x64" Project="x64" />
+      <Platform Solution="MEMI-Desktop|x64" Project="x64" />
+      <Platform Solution="mzkit|x64" Project="x64" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
+      <Platform Solution="Rsharp_app_release|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/assembly/SpectrumTree/spectrumTree.NETCore5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|*" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/assembly/ThermoRawFileReader/MSFileReader.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Release" />
+      <BuildType Solution="CFD_win32|*" Project="LipidSearch" />
+      <BuildType Solution="Docker|*" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="LipidSearch" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/mzkit.dll/comprehensive/">
+    <Project Path="../../src/mzmath/GCxGC/GCxGC.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="MEMI-Desktop|x64" Project="x64" />
+      <Platform Solution="Rsharp_app_release|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/mzmath/SingleCells/SingleCells.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|Any CPU" Project="LipidSearch" />
+      <BuildType Solution="CFD_win32|ARM32" Project="LipidSearch" />
+      <BuildType Solution="CFD_win32|x64" Project="Release" />
+      <BuildType Solution="CFD_win32|x86" Project="LipidSearch" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="LipidSearch" />
+      <BuildType Solution="nuget_release|ARM32" Project="LipidSearch" />
+      <BuildType Solution="nuget_release|x64" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="LipidSearch" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <Platform Solution="CFD_win32|x64" Project="x64" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Docker|x64" Project="x64" />
+      <Platform Solution="MEMI-Desktop|x64" Project="x64" />
+      <Platform Solution="mzkit|x64" Project="x64" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
+      <Platform Solution="Rsharp_app_release|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/mzmath/SpatialMath/SpatialMath.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="MEMI-Desktop|x64" Project="x64" />
+      <Platform Solution="Rsharp_app_release|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/visualize/MsImaging/MsImaging.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Release" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|*" Project="mzkit" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/visualize/TissueMorphology/TissueMorphology.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="CFD_win32|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="CFD_win32|x64" Project="Release" />
+      <BuildType Solution="CFD_win32|x86" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="gcmodeller_desktop|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="gcmodeller_desktop|x64" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x64" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <Platform Solution="CFD_win32|x64" Project="x64" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Docker|x64" Project="x64" />
+      <Platform Solution="gcmodeller_desktop|x64" Project="x64" />
+      <Platform Solution="MEMI-Desktop|x64" Project="x64" />
+      <Platform Solution="mzkit|x64" Project="x64" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
+      <Platform Solution="Rsharp_app_release|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/mzkit.dll/DIA/">
+    <Project Path="../../src/metadb/Lipidomics/Lipidomics.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|x64" Project="Release" />
+      <BuildType Solution="CFD_win32|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|x64" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <Platform Solution="CFD_win32|x64" Project="x64" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Docker|x64" Project="x64" />
+      <Platform Solution="MEMI-Desktop|x64" Project="x64" />
+      <Platform Solution="mzkit|x64" Project="x64" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
+      <Platform Solution="Rsharp_app_release|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/metadna/metaDNA/metaDNA.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Release" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|ARM32" Project="ARM32" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/metadna/MetaDNA_visual/metaDNA_visual.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Release" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|ARM32" Project="ARM32" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/mzmath/MoleculeNetworking/MoleculeNetworking.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="CFD_win32|ARM32" Project="Release" />
+      <BuildType Solution="CFD_win32|x64" Project="Release" />
+      <BuildType Solution="CFD_win32|x86" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="gcmodeller_desktop|ARM32" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|x64" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x64" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <Platform Solution="CFD_win32|ARM32" Project="ARM32" />
+      <Platform Solution="CFD_win32|x64" Project="x64" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Docker|ARM32" Project="ARM32" />
+      <Platform Solution="Docker|x64" Project="x64" />
+      <Platform Solution="gcmodeller_desktop|ARM32" Project="ARM32" />
+      <Platform Solution="gcmodeller_desktop|x64" Project="x64" />
+      <Platform Solution="MEMI-Desktop|ARM32" Project="ARM32" />
+      <Platform Solution="MEMI-Desktop|x64" Project="x64" />
+      <Platform Solution="mzkit|x64" Project="x64" />
+      <Platform Solution="nuget_release|ARM32" Project="ARM32" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
+      <Platform Solution="Rsharp_app_release|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/mzmath/ms2_simulator/ms2_simulator.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/mzmath/Mummichog/Mummichog.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|*" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|ARM32" Project="ARM32" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/mzmath/Oligonucleotide_MS/Oligonucleotide_MS.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/mzkit.dll/info/">
+    <Project Path="../../src/metadb/Chemoinformatics/chemoinformatics-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="mzkit" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="PlantMAT" />
+      <BuildType Solution="Biodeep|x86" Project="mzkit" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/metadb/FormulaSearch.Extensions/FormulaSearch.Extensions.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/metadb/Massbank/massbank.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/metadb/MoNA/MoNA.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Release" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Release" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|*" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/metadb/SMILES/SMILES.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="NPSearch" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/metadb/XrefEngine/XrefEngine.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/mzmath/MSEngine/MSEngine.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|Any CPU" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|ARM32" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="gcmodeller_desktop|x86" Project="Release" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|x64" Project="Release" />
+      <BuildType Solution="MetaCardio|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <Platform Solution="CFD_win32|x64" Project="x64" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Docker|x64" Project="x64" />
+      <Platform Solution="gcmodeller_desktop|x64" Project="x64" />
+      <Platform Solution="MEMI-Desktop|x64" Project="x64" />
+      <Platform Solution="MetaCardio|x64" Project="x64" />
+      <Platform Solution="mzkit_win32|x64" Project="x64" />
+      <Platform Solution="mzkit|x64" Project="x64" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
+      <Platform Solution="Rsharp_app_release|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/mzmath/MSFinder/MSFinder.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|x64" Project="Release" />
+      <BuildType Solution="CFD_win32|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|x64" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <Platform Solution="CFD_win32|x64" Project="x64" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Docker|x64" Project="x64" />
+      <Platform Solution="MEMI-Desktop|x64" Project="x64" />
+      <Platform Solution="mzkit|x64" Project="x64" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
+      <Platform Solution="Rsharp_app_release|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/mzkit.dll/KCF/">
+    <Project Path="../../src/visualize/KCF/KCF.Graph/KCF_graph.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="PlantMAT" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Release" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/visualize/KCF/KCF.IO/KCF_IO.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="PlantMAT" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Release" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/visualize/KCF/KCFDraw/KCFDraw.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/visualize/SDF.Extensions/SDF.Extensions.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Release" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Release" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|*" Project="mzkit" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/mzkit.dll/math/">
+    <Project Path="../../src/mzmath/ms2_math-core/mzmath-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="PlantMAT" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|Any CPU" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|ARM32" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="gcmodeller_desktop|x86" Project="Release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <Platform Solution="Biodeep|x64" Project="x64" />
+      <Platform Solution="CFD_win32|x64" Project="x64" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Docker|x64" Project="x64" />
+      <Platform Solution="gcmodeller_desktop|x64" Project="x64" />
+      <Platform Solution="LipidSearch|x64" Project="x64" />
+      <Platform Solution="MEMI-Desktop|x64" Project="x64" />
+      <Platform Solution="MetaCardio|x64" Project="x64" />
+      <Platform Solution="mzkit_UnixDocker|x64" Project="x64" />
+      <Platform Solution="mzkit_win32|x64" Project="x64" />
+      <Platform Solution="mzkit|x64" Project="x64" />
+      <Platform Solution="NPSearch|x64" Project="x64" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
+      <Platform Solution="PlantMAT|x64" Project="x64" />
+      <Platform Solution="Rsharp_app_release|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/mzmath/mz_deco/deconv.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="PlantMAT" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Release" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../src/mzmath/TargetedMetabolomics/Targetted.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="PlantMAT" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Release" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/renv/">
+    <Project Path="../../../GCModeller/src/R-sharp/Library/shares/graphics.common_runtime/R_graphics.common_runtime.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Release" />
+      <BuildType Solution="MetaCardio|*" Project="Debug" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|ARM32" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/R-sharp/R#/Rsharp-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="mzkit" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="mzkit" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="NPSearch" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/R-sharp/studio/R-terminal/R-cmd.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="LipidSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="LipidSearch|x64" Project="Debug" />
+      <BuildType Solution="LipidSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|*" Project="CFD_win32" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../GCModeller/src/R-sharp/studio/RData/RData.NET5.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+      <BuildType Solution="MetaCardio|*" Project="mzkit" />
+      <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/shares/">
+    <Project Path="../../../GCModeller/src/R-sharp/Library/shares/JsonHelper/JsonHelper.shproj" />
+    <Project Path="../../../GCModeller/src/R-sharp/Library/shares/R_graphic.interop/R_graphic.interop.shproj" />
+    <Project Path="mzkit_app/src/mzkit.interopArguments/mzkit.interopArguments.shproj" />
+  </Folder>
+  <Project Path="mzkit_app/src/mzDIA/mzDIA.vbproj">
+    <BuildType Solution="Biodeep|*" Project="Debug" />
+    <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+    <BuildType Solution="Docker|*" Project="Debug" />
+    <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+    <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+    <BuildType Solution="MetaCardio|*" Project="mzkit" />
+    <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+    <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+    <BuildType Solution="NPSearch|*" Project="Debug" />
+    <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="mzkit_app/src/mzkit/mzkit.vbproj">
+    <BuildType Solution="Biodeep|*" Project="Rsharp_app_release" />
+    <BuildType Solution="CFD_win32|*" Project="Release" />
+    <BuildType Solution="Docker|*" Project="Debug" />
+    <BuildType Solution="gcmodeller_desktop|*" Project="PlantMAT" />
+    <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+    <BuildType Solution="MetaCardio|*" Project="mzkit" />
+    <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+    <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+    <BuildType Solution="NPSearch|Any CPU" Project="Release" />
+    <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+    <BuildType Solution="NPSearch|x64" Project="Release" />
+    <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+    <BuildType Solution="nuget_release|*" Project="Release" />
+    <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="mzkit_app/src/mzplot/mzplot.vbproj">
+    <BuildType Solution="Biodeep|*" Project="Debug" />
+    <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+    <BuildType Solution="Docker|*" Project="Debug" />
+    <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+    <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+    <BuildType Solution="MetaCardio|*" Project="mzkit" />
+    <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+    <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+    <BuildType Solution="NPSearch|*" Project="Debug" />
+    <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="mzkit_app/src/mzquant/mz_quantify.vbproj">
+    <BuildType Solution="Biodeep|*" Project="Debug" />
+    <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+    <BuildType Solution="Docker|*" Project="Debug" />
+    <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+    <BuildType Solution="MEMI-Desktop|*" Project="Rsharp_app_release" />
+    <BuildType Solution="MetaCardio|*" Project="mzkit" />
+    <BuildType Solution="mzkit_UnixDocker|*" Project="mzkit" />
+    <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+    <BuildType Solution="NPSearch|*" Project="Debug" />
+    <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+</Solution>

@@ -5,7 +5,7 @@
     <TargetFrameworks>net10.0</TargetFrameworks>
     <AssemblyName>BioNovoGene.BioDeep.Chemoinformatics</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;LipidSearch;mzkit;NPSearch;Rsharp_app_release;PlantMAT;mzkit_win32;Desktop;MEMI-Desktop</Configurations>
+    <Configurations>Debug;Release;LipidSearch;mzkit;NPSearch;Rsharp_app_release;PlantMAT;mzkit_win32;Desktop;MEMI-Desktop;nuget_release</Configurations>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -15,6 +15,8 @@
 	  <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 	  <UseApplicationFramework>True</UseApplicationFramework>
 	  <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
+    <Version>1.0.9767.32135</Version>
+    <AssemblyVersion>1.0.9767.32135</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -811,6 +813,11 @@
     <Optimize>False</Optimize>
     <DebugType>portable</DebugType>
     <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../../Rscript/Library/mzkit_app/assembly/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

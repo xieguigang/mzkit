@@ -6,7 +6,7 @@
     <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.SpatialMath</AssemblyName>
     <UseApplicationFramework>True</UseApplicationFramework>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;Rsharp_app_release;MEMI-Desktop</Configurations>
+    <Configurations>Debug;Release;Rsharp_app_release;MEMI-Desktop;nuget_release</Configurations>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyTitle>Spatial omics data math algorithm module</AssemblyTitle>
@@ -16,6 +16,8 @@
     <Company>PANOMIX</Company>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
+    <Version>1.0.9767.32135</Version>
+    <AssemblyVersion>1.0.9767.32135</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows|AnyCPU'">
@@ -142,6 +144,11 @@
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DebugType>full</DebugType>
     <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../../Rscript/Library/mzkit_app/assembly/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

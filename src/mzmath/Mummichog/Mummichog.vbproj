@@ -4,7 +4,7 @@
     <RootNamespace>BioNovoGene.BioDeep.MSEngine.Mummichog</RootNamespace>
     <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
     <Platforms>AnyCPU;ARM32;x64</Platforms>
-    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;nuget_release</Configurations>
     <AssemblyName>BioNovoGene.BioDeep.MSEngine.Mummichog</AssemblyName>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -16,6 +16,8 @@
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
 	  <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
 	  <UseApplicationFramework>True</UseApplicationFramework>
+    <Version>1.0.9767.32135</Version>
+    <AssemblyVersion>1.0.9767.32135</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
@@ -68,6 +70,11 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0|x64'">
     <DocumentationFile>BioNovoGene.BioDeep.MSEngine.Mummichog.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../../Rscript/Library/mzkit_app/assembly/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

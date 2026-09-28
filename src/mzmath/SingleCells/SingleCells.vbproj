@@ -5,7 +5,7 @@
     <TargetFrameworks>net10.0</TargetFrameworks>
 	  <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.SingleCells</AssemblyName>
 	  <Platforms>AnyCPU;x64</Platforms>
-	  <Configurations>Debug;Release;LipidSearch;mzkit;Rsharp_app_release;MEMI-Desktop</Configurations>
+	  <Configurations>Debug;Release;LipidSearch;mzkit;Rsharp_app_release;MEMI-Desktop;nuget_release</Configurations>
 	
 
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -20,6 +20,8 @@
 	  <Product>MZKit</Product>
 	  <PackageIcon>Flask.png</PackageIcon>
 	  <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
+	  <Version>1.0.9767.32135</Version>
+	  <AssemblyVersion>1.0.9767.32135</AssemblyVersion>
 
   </PropertyGroup>
 
@@ -219,6 +221,11 @@
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DebugType>full</DebugType>
     <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+	  <PlatformTarget>x64</PlatformTarget>
+	  <OutputPath>../../../Rscript/Library/mzkit_app/assembly/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,7 +5,7 @@
     <TargetFrameworks>net10.0</TargetFrameworks>
     <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Assembly</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release;mzkit_win32;MEMI-Desktop</Configurations>
+    <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release;mzkit_win32;MEMI-Desktop;nuget_release</Configurations>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>BioNovoGene</Company>
     <Product>BioDeep</Product>
@@ -19,6 +19,8 @@
 	  <OutputPath>../../../Rscript\Library\mzkit_app\assembly\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
+    <Version>1.0.9767.32135</Version>
+    <AssemblyVersion>1.0.9767.32135</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -148,6 +150,11 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|x64'">
     <OutputPath>../../../Rscript\Library\mzkit_app\assembly\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../../Rscript/Library/mzkit_app/assembly/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

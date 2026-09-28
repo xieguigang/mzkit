@@ -5,7 +5,7 @@
     <TargetFrameworks>net10.0</TargetFrameworks>
 		<AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive</AssemblyName>
 		<Platforms>AnyCPU;x64</Platforms>
-		<Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release;mzkit_win32;MEMI-Desktop</Configurations>
+		<Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release;mzkit_win32;MEMI-Desktop;nuget_release</Configurations>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>xieguigang</Authors>
 		<Company>BioNovoGene</Company>
@@ -19,6 +19,8 @@
 		<UseApplicationFramework>True</UseApplicationFramework>
 		<Title>Comprehensive Mass Spectrum Tools</Title>
 		<PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
+		<Version>1.0.9767.32135</Version>
+		<AssemblyVersion>1.0.9767.32135</AssemblyVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -129,6 +131,11 @@
 		<DefineDebug>false</DefineDebug>
 		<DefineTrace>true</DefineTrace>
 		<DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+		<PlatformTarget>x64</PlatformTarget>
+		<OutputPath>../../../Rscript/Library/mzkit_app/assembly/</OutputPath>
 	</PropertyGroup>
 
 	<ItemGroup>
