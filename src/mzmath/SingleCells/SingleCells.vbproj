@@ -16,7 +16,10 @@
 	  <UseApplicationFramework>True</UseApplicationFramework>
 	  <AssemblyTitle>SingleCell Expression Matrix Builder</AssemblyTitle>
 	  <Authors>xieguigang@metabolomics.ac.cn</Authors>
-	  <Title>Single Cells Expression Matrix Builder</Title>
+	  <Title>Single-Cell MS Expression Matrix Builder</Title>
+	  <Description>Single-cell mass spectrometry (scMS) expression matrix infrastructure: converts single-cell MS raw data (pixel/cell ion profiles) into a deconvoluted m/z x cell intensity matrix, performs per-feature ion statistics (TrIQ clipping, feature stats) and provides a lazy binary matrix file format with spatial index and spot streaming.</Description>
+	  <PackageTags>mzkit, single-cell, scms, expression-matrix, deconvolution, binary-matrix, ion-statistics, feature-extraction</PackageTags>
+	  <ReleaseNotes>Single-cell mass spectrometry expression matrix builder for mzkit: converts single-cell MS raw pixel and cell ion profiles into deconvoluted m/z x cell intensity matrices; computes per-feature ion statistics over the matrix including TrIQ clipping; and provides a lazy binary matrix file format with spatial indexing and spot streaming for scMS data.</ReleaseNotes>
 	  <Product>MZKit</Product>
 	  <PackageIcon>Flask.png</PackageIcon>
 	  <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>

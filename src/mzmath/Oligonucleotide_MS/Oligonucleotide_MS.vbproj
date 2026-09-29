@@ -11,6 +11,10 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;nuget_release</Configurations>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <Title>Oligonucleotide Mass Spectrometry Toolkit</Title>
+    <Description>Oligonucleotide mass spectrometry toolkit: theoretical in-silico digestion of nucleotide sequences with mass calculation, infers oligonucleotide base composition from measured mass, matches MS2 fragment spectra against predicted b/w/a/z-ion series and performs UV/chromatogram mapping annotation.</Description>
+    <PackageTags>mzkit, oligonucleotide, nucleotide, ms2-matching, sequence, digestion, uv-annotation, mass-calculator</PackageTags>
+    <ReleaseNotes>Oligonucleotide MS toolkit for mzkit: performs theoretical in-silico digestion of nucleotide sequences with mass calculation and peak ID assignment; infers oligonucleotide base composition from measured masses; matches MS2 fragment spectra against predicted b/w/a/z-ion series following the Handbook of Analysis of Oligonucleotides reference; and annotates oligonucleotide peaks via UV and chromatogram mapping.</ReleaseNotes>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
     <Version>1.0.9767.32135</Version>

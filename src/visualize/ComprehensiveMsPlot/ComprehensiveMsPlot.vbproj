@@ -7,6 +7,10 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;mzkit;Rsharp_app_release;MEMI-Desktop;nuget_release</Configurations>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <Title>GCxGC Data Plotting</Title>
+    <Description>GCxGC (two-dimensional comprehensive gas chromatography) plotting library: renders TIC data as 2D heat maps, 3D peak plots and GCxGC heat maps with signal cutting and filling of pixel matrix heat maps, built on the shared Plot graphics framework.</Description>
+    <PackageTags>mzkit, gcxgc, mass-spectrometry, heatmap, tic, 2d-plot, visualization, metabolomics</PackageTags>
+    <ReleaseNotes>GCxGC plotting library for mzkit: renders two-dimensional GCxGC total ion current data as 2D heat maps, 3D peak plots and GCxGC heat maps; supports signal cutting and filling of pixel matrix heat maps; built on the shared Plot graphics framework.</ReleaseNotes>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageIcon>Flask.png</PackageIcon>

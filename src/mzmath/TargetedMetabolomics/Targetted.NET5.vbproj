@@ -14,6 +14,10 @@
     <PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
+    <Title>Targeted Metabolomics Quantification</Title>
+    <Description>Targeted metabolomics quantification framework covering three workflows: linear standard-curve quantification with internal/external standards, MRM ion-pair quantification with RT alignment and isomer handling, and GC-MS scan/SIM ion extraction with vendor raw readers; also includes pharmacokinetics (PK) analysis and TPA content reporting.</Description>
+    <PackageTags>mzkit, targeted-metabolomics, mrm, standard-curve, quantification, internal-standard, gcms, pharmacokinetics</PackageTags>
+    <ReleaseNotes>Targeted metabolomics quantification framework for mzkit: linear standard-curve quantification with external and internal standards, peak-area integration, ion TPA computation and CDF persistence; MRM ion-pair library extraction from mzML/WIFF with RT alignment, standard curves and isomer ion-pair handling; GC-MS scan/SIM ion extraction with vendor CDF and mzML raw readers (Agilent, Bruker, Finnigan, Shimadzu); plus PK (pharmacokinetics) analysis and TPA content reporting.</ReleaseNotes>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>

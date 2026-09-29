@@ -8,6 +8,10 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;MEMI-Desktop;nuget_release</Configurations>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <Title>MS Imaging Spatial Math</Title>
+    <Description>Math and statistics layer for mass spectrometry imaging (MSI): computes per-ion feature statistics across an MSI slide, builds statistics analysis packs and matrices for ion imaging with hypothesis testing, and models spatial pixel data for ion map and heatmap rendering.</Description>
+    <PackageTags>mzkit, msi, ms-imaging, spatial, ion-map, heatmap, pixel, statistics</PackageTags>
+    <ReleaseNotes>Spatial math library for mass spectrometry imaging: computes per-ion feature statistics across an MSI slide; builds statistics analysis packs and matrices for ion imaging with hypothesis testing; and models spatial pixel data implementing raster and heatmap pixel interfaces for ion map rendering.</ReleaseNotes>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyTitle>Spatial omics data math algorithm module</AssemblyTitle>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
