@@ -23,11 +23,13 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <Title>MS-Imaging data visualization</Title>
+    <Title>MS-Imaging Engine</Title>
     <Authors>xieguigang</Authors>
     <Company>BioNovoGene</Company>
     <Product>MZKit</Product>
-    <Description>Make ms-imaging heatmap data visualization of the sample data</Description>
+    <Description>Mass spectrometry imaging (MSI) engine: reads imzML/ibd/mzPack pixel data, builds single-ion layers and renders spatial ion heat maps with intensity scalers (quantile, TrIQ, log, power, KNN interpolation, denoise), RGB/CMYK composition blenders, XIC indexed caches and region/z-stack analysis.</Description>
+    <PackageTags>mzkit, msi, mass-spectrometry-imaging, imzml, heatmap, ion-image, blender, interpolation, spatial-rendering</PackageTags>
+    <ReleaseNotes>Mass spectrometry imaging engine for mzkit: reads imzML, ibd and mzPack pixel data; builds single-ion layers and renders spatial ion heat maps with intensity scalers including quantile, TrIQ, log and power transforms plus KNN interpolation and denoising; composes RGB/CMYK blender images; provides XIC indexed caches; and supports region and z-stack (ZAssembler) analysis.</ReleaseNotes>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/xieguigang/mzkit.git</RepositoryUrl>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>

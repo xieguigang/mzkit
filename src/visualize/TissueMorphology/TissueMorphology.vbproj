@@ -5,6 +5,10 @@
     <TargetFrameworks>net10.0</TargetFrameworks>
 	  <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology</AssemblyName>
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+	  <Title>Tissue Morphology Analysis</Title>
+	  <Description>Tissue morphology analysis for mass spectrometry imaging: spatial mapping between MSI data and tissue features, H&amp;E-stain histology image spatial registration and heat-map analysis, plus scatter and embedding renderings for spatial spots (UMAP, Phenograph, tissue regions) and CDF exports.</Description>
+	  <PackageTags>mzkit, tissue-morphology, he-stain, histology, spatial-registration, msi, umap, phenograph, cell-analysis</PackageTags>
+	  <ReleaseNotes>Tissue morphology analysis library for mzkit: performs spatial mapping between MSI data and tissue features; registers H&amp;E-stain histology images with cell-level heat-map scan layers; renders spatial spots as scatter and embedding plots including UMAP points, Phenograph spots and tissue regions; and exports spot data as CDF.</ReleaseNotes>
 	  <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	  <PackageLicenseFile>LICENSE</PackageLicenseFile>

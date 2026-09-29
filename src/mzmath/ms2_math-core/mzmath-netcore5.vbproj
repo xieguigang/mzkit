@@ -22,6 +22,7 @@
 	  <Description>The core mass spectrometry math kernel of the mzkit toolbox: peak list models and centroiding, MS/MS spectral alignment (cosine, entropy similarity, Jaccard) with global alignment matrices, SPLASH spectrum identifiers, spectrum tree clustering, adduct ion type parsing, m/z calculation and mass tolerance (ppm) models, plus chromatogram data models.</Description>
 	  <Copyright>mzkit</Copyright>
 	  <PackageTags>mzkit, mass-spectrometry, spectra, cosine-similarity, spectral-entropy, ms2-alignment, adduct, ppm-tolerance, splash</PackageTags>
+	  <ReleaseNotes>Core MS math kernel of the mzkit toolbox: peak list models with centroiding, m/z grouping and indexing, in-source fragment checking; MS/MS spectral alignment with cosine, entropy-similarity and Jaccard scores plus global alignment matrices; SPLASH spectrum identifiers and spectrum tree clustering; adduct ion type parsing and m/z calculation; mass tolerance (ppm) and mass window models; chromatogram tick/ROI data models; and binary/XML spectrum serialization encoders.</ReleaseNotes>
 	  <IncludeSymbols>True</IncludeSymbols>
 	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	  <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>

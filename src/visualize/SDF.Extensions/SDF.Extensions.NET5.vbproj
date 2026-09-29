@@ -8,6 +8,10 @@
     <Configurations>Debug;Release;LipidSearch;mzkit;Rsharp_app_release;nuget_release</Configurations>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
+    <Title>SDF/SMILES to KCF Converters</Title>
+    <Description>Conversion extension library that turns chemical structure representations into KEGG KCF models: converts 3D mol/SDF structures (atoms and stereo bounds with KEGG atom type assignment) and SMILES formula graphs into KCF models.</Description>
+    <PackageTags>mzkit, sdf, smiles, kcf, kegg, chemoinformatics, converter, molecular-structure</PackageTags>
+    <ReleaseNotes>Chemical structure conversion extensions for mzkit: converts 3D mol/SDF structures with atoms and stereo bounds into KEGG KCF models with KEGG atom type assignment; converts SMILES formula graphs into KCF models for KEGG-based chemical structure analysis and visualization.</ReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.9767.32135</Version>
     <AssemblyVersion>1.0.9767.32135</AssemblyVersion>

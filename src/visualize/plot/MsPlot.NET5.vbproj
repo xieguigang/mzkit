@@ -8,6 +8,10 @@
     <Configurations>Debug;Release;LipidSearch;mzkit;Rsharp_app_release;MEMI-Desktop;nuget_release</Configurations>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
+    <Title>Core MS Plotting Library</Title>
+    <Description>Core mass spectrometry plotting library: mass spectra mirror plots, peak tables and assignments, mass window and XIC plots, scatter and contour plots, standard curves, UV signals, chromatogram plots (TIC, peak, 3D scan, contour) and NMR spectra plots, built on the shared Plot graphics framework.</Description>
+    <PackageTags>mzkit, mass-spectrometry, spectra-plot, chromatogram, tic, xic, nmr, peak-annotation, visualization</PackageTags>
+    <ReleaseNotes>Core MS plotting library for mzkit: renders mass spectra mirror plots with peak annotations and peak tables; mass window and XIC plots; scatter, contour and standard curve plots; UV signal and chromatogram plots including TIC, chromatogram peaks, 3D scans and contours; and NMR spectra plots (FID and frequency domain), all extending the shared Plot graphics framework.</ReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
