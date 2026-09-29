@@ -25,6 +25,7 @@
     <RepositoryUrl>https://github.com/xieguigang/mzkit</RepositoryUrl>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
