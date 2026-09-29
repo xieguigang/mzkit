@@ -5,7 +5,7 @@
     <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
     <AssemblyName>BioNovoGene.BioDeep.Chemistry.Massbank.KNApSAcK</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;NPSearch;PlantMAT;Rsharp_app_release</Configurations>
+    <Configurations>Debug;Release;NPSearch;PlantMAT;Rsharp_app_release;nuget_release</Configurations>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -15,6 +15,8 @@
     <Description>Client library for the KNApSAcK natural product and metabolite database: web queries for species-metabolite relations and compound information, plus local data models that parse KNApSAcK detail pages into reference entries with CAS, SMILES, InChIKey, exact mass and glycosyl composition.</Description>
     <PackageTags>mzkit, knapsack, natural-product, metabolite-database, species-metabolite, glycoside, plant-metabolomics, web-query</PackageTags>
     <ReleaseNotes>KNApSAcK database client library for mzkit: queries the KNApSAcK natural product database over the web for species-metabolite relations and compound information; parses KNApSAcK detail pages into structured reference entries carrying CAS numbers, SMILES, InChIKey, exact mass and glycosyl composition for metabolite annotation workflows.</ReleaseNotes>
+    <Version>1.0.9768.41283</Version>
+    <AssemblyVersion>1.0.9768.41283</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -89,6 +91,11 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

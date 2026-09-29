@@ -22,8 +22,8 @@
 		<PackageTags>mzkit, gcxgc, mass-spectrometry-imaging, maldi, single-cell, peak-matrix, gcms, mzwork</PackageTags>
 		<ReleaseNotes>Comprehensive MS data tools for mzkit: demodulation of modulated 1D GC-MS raw data into 2D chromatogram mesh grids with GCxGC peak detection; MSI raw data workload processing including peak matrix building, spatial slider merging and scan-time/MS2 corrections; 3D MALDI point cloud handling; single-cell raw data packing; and MZWork workspace (GCMS/MSI project) import and export.</ReleaseNotes>
 		<PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
-		<Version>1.0.9767.32135</Version>
-		<AssemblyVersion>1.0.9767.32135</AssemblyVersion>
+		<Version>1.0.9768.41283</Version>
+		<AssemblyVersion>1.0.9768.41283</AssemblyVersion>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
 
@@ -139,7 +139,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
 		<PlatformTarget>x64</PlatformTarget>
-		<OutputPath>../../../Rscript/Library/mzkit_app/assembly/</OutputPath>
+		<OutputPath>../../../.nuget/</OutputPath>
 	</PropertyGroup>
 
 	<ItemGroup>

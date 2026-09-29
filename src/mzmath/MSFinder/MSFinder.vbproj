@@ -16,8 +16,8 @@
     <ReleaseNotes>Molecular formula finder (MS-DIAL MS-FINDER port) for mzkit: generates candidate elemental formulas from precursor m/z with isotope and adduct handling; assigns fragment ions to candidate formulas; queries existing formula databases in EFD format; scores formula candidates; annotates precursor ions for feature tables; and includes a formula string parser plus derivatization formula support.</ReleaseNotes>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
-    <Version>1.0.9767.32135</Version>
-    <AssemblyVersion>1.0.9767.32135</AssemblyVersion>
+    <Version>1.0.9768.41283</Version>
+    <AssemblyVersion>1.0.9768.41283</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">
@@ -232,7 +232,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>../../../Rscript/Library/mzkit_app/assembly/</OutputPath>
+    <OutputPath>../../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

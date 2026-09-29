@@ -20,9 +20,9 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>mzkit, mzpack, binary-format, streaming, mzml-converter, gcms, archive, chromatogram</PackageTags>
     <ReleaseNotes>mzPack binary data format library: reads and writes the unified mzPack packed storage for MS1/MS2 scans, chromatograms, metadata and thumbnails; supports both the classic v1.0 format and the streaming v2.0 mzStream writer; converts mzML, mzXML, netCDF and GCMS raw data into mzPack; and provides MZWork (.mzWork) archive save and parse support.</ReleaseNotes>
-    <AssemblyVersion>2.33.9767.32135</AssemblyVersion>
+    <AssemblyVersion>2.33.9768.41283</AssemblyVersion>
     <Deterministic>false</Deterministic>
-    <Version>2.33.9767.32135</Version>
+    <Version>2.33.9768.41283</Version>
     <Copyright>gg.xie@bionovogene.com</Copyright>
     <RepositoryUrl>https://github.com/xieguigang/mzkit</RepositoryUrl>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
@@ -125,7 +125,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>../../../Rscript/Library/mzkit_app/assembly/</OutputPath>
+    <OutputPath>../../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

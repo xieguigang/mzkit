@@ -20,8 +20,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
-    <Version>1.0.9767.32135</Version>
-    <AssemblyVersion>1.0.9767.32135</AssemblyVersion>
+    <Version>1.0.9768.41283</Version>
+    <AssemblyVersion>1.0.9768.41283</AssemblyVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
@@ -150,7 +150,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>../../../Rscript/Library/mzkit_app/assembly/</OutputPath>
+    <OutputPath>../../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

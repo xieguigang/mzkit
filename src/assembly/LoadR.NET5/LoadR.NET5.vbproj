@@ -17,8 +17,8 @@
     <PackageTags>mzkit, rdata, xcms, r-interop, ms1-search, chromatogram, spatial-matrix, metabolomics</PackageTags>
     <ReleaseNotes>R interoperability library for mzkit: loads native R RData files such as XCMS peak tables and MS/MS peak lists into .NET MS data objects; provides MS1 annotation feature search over vectors, lists and tables; chromatogram overlap comparison for retention-time alignment checks; and spatial matrix (MSI) readers with data indexing and projection.</ReleaseNotes>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
-    <Version>1.0.9767.32135</Version>
-    <AssemblyVersion>1.0.9767.32135</AssemblyVersion>
+    <Version>1.0.9768.41283</Version>
+    <AssemblyVersion>1.0.9768.41283</AssemblyVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
@@ -56,7 +56,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>../../../Rscript/Library/mzkit_app/assembly/</OutputPath>
+    <OutputPath>../../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

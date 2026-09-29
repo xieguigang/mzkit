@@ -17,8 +17,8 @@
     <ReleaseNotes>Oligonucleotide MS toolkit for mzkit: performs theoretical in-silico digestion of nucleotide sequences with mass calculation and peak ID assignment; infers oligonucleotide base composition from measured masses; matches MS2 fragment spectra against predicted b/w/a/z-ion series following the Handbook of Analysis of Oligonucleotides reference; and annotates oligonucleotide peaks via UV and chromatogram mapping.</ReleaseNotes>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
-    <Version>1.0.9767.32135</Version>
-    <AssemblyVersion>1.0.9767.32135</AssemblyVersion>
+    <Version>1.0.9768.41283</Version>
+    <AssemblyVersion>1.0.9768.41283</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -57,7 +57,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>../../../Rscript/Library/mzkit_app/assembly/</OutputPath>
+    <OutputPath>../../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
