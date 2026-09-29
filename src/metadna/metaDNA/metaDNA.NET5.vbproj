@@ -11,8 +11,10 @@
     <PackageIconUrl />
 	  <OutputPath>../../../Rscript\Library\mzkit_app\assembly\</OutputPath>
 	  <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
-	  <Title>Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics</Title>
-	  <Description>Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics</Description>
+	  <Title>MetaDNA Network-based Metabolite Annotation</Title>
+	  <Description>Implementation of the MetaDNA algorithm for untargeted metabolomics: network-based recursive metabolite annotation for unknown HRMS features, combining MS1 precursor search, DIA MS/MS spectral matching against KEGG compound libraries, iterative KEGG reaction network inference and m/z-set enrichment analysis (GSEA-style).</Description>
+	  <PackageTags>mzkit, metadna, metabolite-annotation, kegg, network-inference, unknown-metabolites, gsea-enrichment, diasearch</PackageTags>
+	  <ReleaseNotes>MetaDNA algorithm implementation for untargeted metabolomics: annotates unknown HRMS features by combining MS1 precursor search (adducts and ppm tolerance), DIA MS/MS spectral matching against KEGG compound libraries, and iterative network inference where annotated seed metabolites propagate annotations to unknowns via KEGG reaction network alignment; also provides MS joint-connection m/z-set enrichment analysis (GSEA-style) over KEGG pathway and compound clusters.</ReleaseNotes>
 	  <Company>ZhuLab</Company>
 	  <Authors>gg.xie@bionovogene.com</Authors>
 	  <Product>MZKit</Product>

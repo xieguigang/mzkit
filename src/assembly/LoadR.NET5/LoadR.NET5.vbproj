@@ -12,8 +12,10 @@
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
-    <Title>Interop between R/R# and mzkit</Title>
-    <Description>Interop between R/R# and mzkit</Description>
+    <Title>R Data Interop for mzkit</Title>
+    <Description>Load native R data files (RData) produced by R metabolomics packages such as XCMS into .NET mass spectrometry data objects: MS/MS peak lists, product ion matrices and XCMS peak tables. Includes MS1 annotation feature search helpers (vector/list/table search), chromatogram overlap comparison and spatial matrix (MSI) readers with indexing and projection.</Description>
+    <PackageTags>mzkit, rdata, xcms, r-interop, ms1-search, chromatogram, spatial-matrix, metabolomics</PackageTags>
+    <ReleaseNotes>R interoperability library for mzkit: loads native R RData files such as XCMS peak tables and MS/MS peak lists into .NET MS data objects; provides MS1 annotation feature search over vectors, lists and tables; chromatogram overlap comparison for retention-time alignment checks; and spatial matrix (MSI) readers with data indexing and projection.</ReleaseNotes>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
     <Version>1.0.9767.32135</Version>
     <AssemblyVersion>1.0.9767.32135</AssemblyVersion>

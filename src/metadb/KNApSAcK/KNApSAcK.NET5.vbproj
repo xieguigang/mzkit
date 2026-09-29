@@ -11,6 +11,10 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <UseApplicationFramework>True</UseApplicationFramework>
+    <Title>KNApSAcK Metabolite Database Client</Title>
+    <Description>Client library for the KNApSAcK natural product and metabolite database: web queries for species-metabolite relations and compound information, plus local data models that parse KNApSAcK detail pages into reference entries with CAS, SMILES, InChIKey, exact mass and glycosyl composition.</Description>
+    <PackageTags>mzkit, knapsack, natural-product, metabolite-database, species-metabolite, glycoside, plant-metabolomics, web-query</PackageTags>
+    <ReleaseNotes>KNApSAcK database client library for mzkit: queries the KNApSAcK natural product database over the web for species-metabolite relations and compound information; parses KNApSAcK detail pages into structured reference entries carrying CAS numbers, SMILES, InChIKey, exact mass and glycosyl composition for metabolite annotation workflows.</ReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

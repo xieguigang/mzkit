@@ -10,6 +10,10 @@
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <Title>MetaDNA Network Visualization</Title>
+    <Description>Visualization companion for MetaDNA annotation results: renders MetaDNA reaction and compound network graphs to an image canvas using a pre-computed force-directed layout, and models KEGG reaction classes (from-to pairs, categories, R numbers) as graph edge metadata.</Description>
+    <PackageTags>mzkit, metadna, visualization, network-graph, kegg-reaction, force-layout, network-drawing, metabolomics</PackageTags>
+    <ReleaseNotes>MetaDNA visualization library: draws MetaDNA reaction and compound network graphs onto an image canvas from a pre-computed force-directed layout; models KEGG reaction classes (from/to compound pairs, reaction category and R numbers) as graph edge metadata for network rendering.</ReleaseNotes>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
     <Version>1.0.9767.32135</Version>
     <AssemblyVersion>1.0.9767.32135</AssemblyVersion>

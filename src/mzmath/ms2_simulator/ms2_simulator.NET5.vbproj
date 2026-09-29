@@ -14,6 +14,10 @@
     <PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
+    <Title>In-silico MS2 Spectrum Simulator</Title>
+    <Description>In-silico MS2 spectrum simulation from chemical structures: parses SMILES into a molecular graph and bond model, applies fragmentation mechanics to predict fragment peaks, annotates spectra with substructure/fragment assignments, and provides a MSGNN molecular graph module and peptide in-silico mass support.</Description>
+    <PackageTags>mzkit, in-silico, ms2-simulation, smiles, molecular-graph, fragmentation, machine-learning, chemoinformatics</PackageTags>
+    <ReleaseNotes>In-silico MS2 spectrum simulator for mzkit: parses SMILES into molecular graphs and bond models; applies molecular fragmentation mechanics to predict MS2 fragment peaks; annotates spectra with substructure and fragment assignments; includes the MSGNN graph module (graph builder, exporters and node/edge models) for MS2-derived molecular graph learning; and supports peptide in-silico mass calculation.</ReleaseNotes>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>

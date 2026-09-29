@@ -8,6 +8,10 @@
     <Configurations>Debug;Release;LipidSearch;mzkit;NPSearch;Rsharp_app_release;PlantMAT;mzkit_win32;MEMI-Desktop;nuget_release</Configurations>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
+    <Title>Formula Search Extensions</Title>
+    <Description>Extension algorithms layered on the molecular formula search engine: precursor ion search and adduct ranking (positive/negative ion mode scoring), MS/MS peak annotation against candidate formulas, isotopic pattern alignment for formula candidate scoring, structure validation and SMILES-to-network-graph conversion.</Description>
+    <PackageTags>mzkit, formula-search, adducts, precursor-ion, msms, peak-annotation, isotopic-pattern, metabolomics</PackageTags>
+    <ReleaseNotes>Formula search extension algorithms for mzkit: ranks adduct ions and scores precursor ion candidates in positive and negative ion modes; annotates MS/MS peaks against candidate molecular formulas; aligns isotopic patterns for formula candidate scoring; validates compound structures; models precursor ion composition; and converts SMILES into network graph models.</ReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>

@@ -13,6 +13,10 @@
     <PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
+    <Title>MS Data Assembly Framework</Title>
+    <Description>A vendor-neutral mass spectrometry data assembly framework that provides a unified reader layer over open data formats (mzML, mzXML, imzML, nmrML, MGF/MSP/MSL ASCII spectra) and defines the in-memory unified MS scan data model shared by all vendor raw file readers in mzkit.</Description>
+    <PackageTags>mzkit, mass-spectrometry, mzml, mzxml, imzml, nmrml, mgf, msp, spectra-reader</PackageTags>
+    <ReleaseNotes>The core data assembly framework of the mzkit toolbox: format-agnostic unified readers for mzML, mzXML, imzML and nmrML markup data; base64-encoded binary markup data access with fast XML seek indexing; MGF, MSP, MSL and MSN ASCII spectra readers and writers; and the unified in-memory MS scan data model used by all vendor raw file readers.</ReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

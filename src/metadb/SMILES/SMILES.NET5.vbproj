@@ -8,6 +8,10 @@
     <Configurations>Debug;Release;LipidSearch;mzkit;NPSearch;Rsharp_app_release;MEMI-Desktop;nuget_release</Configurations>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
+    <Title>SMILES Parser and Chemical Graph Tools</Title>
+    <Description>SMILES cheminformatics utilities: a recursive-descent SMILES parser that builds an internal chemical graph from tokens, atoms and bonds, with converters exporting the graph to Chemical Markup Language (CML) XML, 2D layout generation and formula/atom-group building.</Description>
+    <PackageTags>mzkit, smiles, parser, cml, chemical-graph, molecular-structure, 2d-layout, chemoinformatics</PackageTags>
+    <ReleaseNotes>SMILES cheminformatics toolkit for mzkit: recursive-descent SMILES parser that walks tokens, atoms and bonds to build an internal chemical graph; exports the graph to Chemical Markup Language (CML) XML; generates 2D molecular layouts; and builds molecular formulas and atom groups from parsed structures.</ReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>

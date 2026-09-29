@@ -4,7 +4,7 @@
     <RootNamespace>BioNovoGene.BioDeep.MSEngine</RootNamespace>
     <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
     <AssemblyName>BioNovoGene.BioDeep.MSEngine</AssemblyName>
-    <Description>MS engine for run metabolite annotation</Description>
+    <Description>Reference spectrum library search and metabolite annotation engine: mass-search index over a reference database pool, MS/MS scan matching with match score results, spectrum pre-processing handlers, proteomics peptide reference spectra and an AnnotationPack result workspace with report rendering.</Description>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;MEMI-Desktop;nuget_release</Configurations>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -14,10 +14,11 @@
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
     <RepositoryType>git</RepositoryType>
-    <PackageTags>mzkit</PackageTags>
+    <PackageTags>mzkit, spectral-library, msms-search, compound-annotation, mass-search, reference-spectra, peptide, annotation-pack</PackageTags>
 	  <OutputPath>../../../Rscript\Library\mzkit_app\assembly\</OutputPath>
 	  <UseApplicationFramework>True</UseApplicationFramework>
-	  <Title>Reference spectrum search</Title>
+	  <Title>Reference Spectrum Search Engine</Title>
+	  <ReleaseNotes>Reference spectrum search engine for metabolite annotation: builds mass-search indexes (m/z index keys over a reference database pool); matches MS/MS scans against reference spectra with scored match results; applies spectrum pre-processing handlers; provides proteomics modules for peptide reference spectra (sequence-to-spectrum, modifications); and manages AnnotationPack result workspaces with save/read and report rendering.</ReleaseNotes>
 	  <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
     <Version>1.0.9767.32135</Version>
     <AssemblyVersion>1.0.9767.32135</AssemblyVersion>

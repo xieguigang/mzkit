@@ -15,9 +15,11 @@
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Description>mzPack raw data file from mzkit library.</Description>
+    <Title>mzPack Binary Data Format</Title>
+    <Description>The mzPack binary file format library of the mzkit toolbox: a unified packed storage for MS1/MS2 scans, chromatograms, metadata and thumbnails, with v1.0 and streaming v2.0 readers and writers, conversion from mzML/mzXML/CDF and GCMS raw data, and MZWork (.mzWork) archive save/parse.</Description>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>mzkit, mzpack</PackageTags>
+    <PackageTags>mzkit, mzpack, binary-format, streaming, mzml-converter, gcms, archive, chromatogram</PackageTags>
+    <ReleaseNotes>mzPack binary data format library: reads and writes the unified mzPack packed storage for MS1/MS2 scans, chromatograms, metadata and thumbnails; supports both the classic v1.0 format and the streaming v2.0 mzStream writer; converts mzML, mzXML, netCDF and GCMS raw data into mzPack; and provides MZWork (.mzWork) archive save and parse support.</ReleaseNotes>
     <AssemblyVersion>2.33.9767.32135</AssemblyVersion>
     <Deterministic>false</Deterministic>
     <Version>2.33.9767.32135</Version>

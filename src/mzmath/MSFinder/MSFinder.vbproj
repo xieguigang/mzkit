@@ -4,14 +4,16 @@
     <RootNamespace>BioNovoGene.BioDeep.MSFinder</RootNamespace>
     <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>MS-DIAL MSFinder</Title>
+    <Title>Molecular Formula Finder (MS-FINDER)</Title>
     <AssemblyName>BioNovoGene.BioDeep.$(MSBuildProjectName)</AssemblyName>
     <UseApplicationFramework>True</UseApplicationFramework>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;MEMI-Desktop;nuget_release</Configurations>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <Description>Algorithm module code for make formula annotations</Description>
+    <Description>VB.NET port of the MS-DIAL MS-FINDER molecular formula finder: generates candidate elemental formulas for a precursor m/z with isotope and adduct handling, assigns fragment ions to candidate formulas, queries existing formula databases (EFD), scores candidates and annotates precursor ions for feature tables.</Description>
+    <PackageTags>mzkit, formula-finder, ms-dial, ms-finder, elemental-composition, fragment-assignment, isotope, precursor-annotation</PackageTags>
+    <ReleaseNotes>Molecular formula finder (MS-DIAL MS-FINDER port) for mzkit: generates candidate elemental formulas from precursor m/z with isotope and adduct handling; assigns fragment ions to candidate formulas; queries existing formula databases in EFD format; scores formula candidates; annotates precursor ions for feature tables; and includes a formula string parser plus derivatization formula support.</ReleaseNotes>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
     <Version>1.0.9767.32135</Version>

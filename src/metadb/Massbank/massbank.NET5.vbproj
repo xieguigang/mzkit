@@ -9,6 +9,10 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
+    <Title>MassBank Database Utilities</Title>
+    <Description>Utilities for the MassBank spectral database workflow: extracts chemical structures (2D/3D mol blocks) and metadata annotations (PubChem, ChEBI, HMDB, KEGG links) from SDF records, and computes database coverage statistics of annotated compound ID lists against KEGG pathway maps and the HMDB database.</Description>
+    <PackageTags>mzkit, massbank, sdf, pubchem, chebi, kegg-pathway, hmdb, coverage-statistics</PackageTags>
+    <ReleaseNotes>MassBank database utilities for mzkit: extracts 2D and 3D mol structure blocks and cross-reference annotations (PubChem, ChEBI, HMDB, KEGG) from MassBank SDF records; computes database coverage statistics of annotated compound ID lists against KEGG pathway maps and the HMDB XML database for annotation completeness evaluation.</ReleaseNotes>
 	  <OutputPath>../../../Rscript\Library\mzkit_app\assembly\</OutputPath>
 	  <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 	  <UseApplicationFramework>True</UseApplicationFramework>

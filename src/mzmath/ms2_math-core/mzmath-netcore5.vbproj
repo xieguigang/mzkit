@@ -18,10 +18,10 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 	  <OutputPath>../../../Rscript\Library\mzkit_app\assembly\</OutputPath>
 	  <UseApplicationFramework>True</UseApplicationFramework>
-	  <Title>MZKit spectrum math provider</Title>
-	  <Description>a basic spectrum math algorithm and abstract data model provider module for mzkit</Description>
+	  <Title>MS2 Math Core Library</Title>
+	  <Description>The core mass spectrometry math kernel of the mzkit toolbox: peak list models and centroiding, MS/MS spectral alignment (cosine, entropy similarity, Jaccard) with global alignment matrices, SPLASH spectrum identifiers, spectrum tree clustering, adduct ion type parsing, m/z calculation and mass tolerance (ppm) models, plus chromatogram data models.</Description>
 	  <Copyright>mzkit</Copyright>
-	  <PackageTags>mzkit</PackageTags>
+	  <PackageTags>mzkit, mass-spectrometry, spectra, cosine-similarity, spectral-entropy, ms2-alignment, adduct, ppm-tolerance, splash</PackageTags>
 	  <IncludeSymbols>True</IncludeSymbols>
 	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	  <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>

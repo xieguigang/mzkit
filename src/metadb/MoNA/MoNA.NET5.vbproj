@@ -8,6 +8,10 @@
     <Configurations>Debug;Release;LipidSearch;mzkit;Rsharp_app_release;mzkit_win32;nuget_release</Configurations>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
+    <Title>MoNA Spectral Data Reader</Title>
+    <Description>Reader library for MassBank of North America (MoNA) spectral data files: parses the text sections format into spectra records carrying MS level, library type, cross-references and metabolite annotation metadata, with union/reader-view abstractions for streaming multiple records.</Description>
+    <PackageTags>mzkit, mona, mass-spectra, spectral-database, msms, metabolite-annotation, cross-reference, tandem-ms</PackageTags>
+    <ReleaseNotes>MoNA (MassBank of North America) spectral data reader for mzkit: parses the MoNA text section file format into structured spectra records including MS level, library type, cross-references and metabolite annotation metadata; provides union reader and reader-view abstractions for streaming large spectral database files.</ReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
       <OutputPath>../../../Rscript\Library\mzkit_app\assembly\</OutputPath>
       <PackageLicenseFile>LICENSE</PackageLicenseFile>

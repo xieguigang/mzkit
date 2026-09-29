@@ -8,6 +8,10 @@
     <Configurations>Debug;Release;LipidSearch;mzkit;NPSearch;Rsharp_app_release;PlantMAT;mzkit_win32;Desktop;MEMI-Desktop;nuget_release</Configurations>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
+    <Title>Chemoinformatics Molecular Descriptors</Title>
+    <Description>Chemoinformatics library providing a rich data model for computed and predicted molecular properties: exact mass, LogP, TPSA, hydrogen bond donors/acceptors, collision cross-section (CCS) per ion species, boiling point, stereochemistry counts and more, with binary serialization support and HTML formula rendering helpers.</Description>
+    <PackageTags>mzkit, chemoinformatics, molecular-descriptors, ccs, exact-mass, logp, metabolite, formula</PackageTags>
+    <ReleaseNotes>Chemoinformatics molecular descriptor library for mzkit: models computed and predicted molecular properties including exact mass, LogP, TPSA, hydrogen bond donors and acceptors, ion-specific collision cross-section (CCS), boiling point and stereochemistry counts; supports binary serialization of descriptor records and renders molecular formulas as HTML with subscript formatting.</ReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>

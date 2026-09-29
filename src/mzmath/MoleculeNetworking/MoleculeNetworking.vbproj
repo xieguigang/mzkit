@@ -12,7 +12,9 @@
 	  <Authors>xieguigang &lt;gg.xie@bionovogene.com&gt;</Authors>
 	  <Company>PANOMIX</Company>
 	  <UseApplicationFramework>True</UseApplicationFramework>
-	  <Description>Molecular Networking Generator for library data inference</Description>
+	  <Description>Molecular networking for untargeted MS/MS metabolomics: builds spectrum clustering trees via binary clustering and spectral similarity scoring, renders global molecular network graphs, manages persistent spectrum pools with DIA inference, consensus fragment evaluation and Word2Vec-style ion embedding of spectra.</Description>
+	  <PackageTags>mzkit, molecular-networking, msms, spectral-clustering, spectrum-pool, dia, consensus-spectrum, embedding</PackageTags>
+	  <ReleaseNotes>Molecular networking library for untargeted MS/MS metabolomics: builds spectrum clustering trees via binary clustering and spectral similarity scoring; renders global molecular network graphs; provides persistent spectrum pools over local, HTTP and REST file systems with metadata pools and DIA spectrum inference inside clusters; aligns samples to peak tables via spectrum grids with Pearson correlation; computes consensus fragments; and embeds spectra with Word2Vec-style ion embeddings.</ReleaseNotes>
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
 	  <PackageIcon>Flask.png</PackageIcon>
 	  <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>

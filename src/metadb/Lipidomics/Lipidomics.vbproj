@@ -5,9 +5,11 @@
     <TargetFrameworks>net10.0</TargetFrameworks>
     <UseApplicationFramework>True</UseApplicationFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>Lipidomics Annotation Workflow</Title>
+    <Title>Lipidomics Annotation Engine</Title>
     <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;nuget_release</Configurations>
-    <Description>Lipidomics annotation code module port from MS-DIAL</Description>
+    <Description>Comprehensive lipidomics annotation engine ported from MS-DIAL: generates lipid chain combinations at molecular-species and sn-position levels, simulates MS/MS spectra including OAD and oxidized lipid fragment peaks, builds shorthand notation, maps lipid classes via LbmClass and integrates Lipoquality database access.</Description>
+    <PackageTags>mzkit, lipidomics, lipid-annotation, msms-simulation, fragment-peaks, shorthand-notation, lipoquality, oxidized-lipids</PackageTags>
+    <ReleaseNotes>Lipidomics annotation engine (MS-DIAL port) for mzkit: generates chain combination variants for lipid species at molecular-species and sn-position levels; simulates MS/MS fragment spectra including OAD spectra and oxidized lipids; handles double-bond and oxidation indeterminate states; builds shorthand notation; maps hundreds of lipid classes via LbmClass; and integrates Lipoquality database access with SMILES/InChIKey generation.</ReleaseNotes>
     <Copyright>MS-DIAL; PANOMIX</Copyright>
     <IncludeSymbols>True</IncludeSymbols>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>

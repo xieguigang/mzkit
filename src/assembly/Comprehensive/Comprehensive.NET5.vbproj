@@ -17,7 +17,10 @@
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<UseApplicationFramework>True</UseApplicationFramework>
-		<Title>Comprehensive Mass Spectrum Tools</Title>
+		<Title>Comprehensive MS Data Tools</Title>
+		<Description>Comprehensive mass spectrometry data processing tools for two-dimensional GCxGC chromatography, mass spectrometry imaging (MSI) raw workloads and MALDI 3D point clouds: 2D peak detection, peak matrix building, spatial slider merging, scan-time and MS2 corrections, single-cell raw packing, and MZWork (GCMS/MSI project) workspace import and export.</Description>
+		<PackageTags>mzkit, gcxgc, mass-spectrometry-imaging, maldi, single-cell, peak-matrix, gcms, mzwork</PackageTags>
+		<ReleaseNotes>Comprehensive MS data tools for mzkit: demodulation of modulated 1D GC-MS raw data into 2D chromatogram mesh grids with GCxGC peak detection; MSI raw data workload processing including peak matrix building, spatial slider merging and scan-time/MS2 corrections; 3D MALDI point cloud handling; single-cell raw data packing; and MZWork workspace (GCMS/MSI project) import and export.</ReleaseNotes>
 		<PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
 		<Version>1.0.9767.32135</Version>
 		<AssemblyVersion>1.0.9767.32135</AssemblyVersion>

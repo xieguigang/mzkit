@@ -14,7 +14,10 @@
     <PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
-    <Title>Chromatogram Math</Title>
+    <Title>LC-MS Deconvolution and Peak Table Pipeline</Title>
+    <Description>Comprehensive LC-MS deconvolution and peak table pipeline: XIC building and peak deconvolution, chromatographic peak finding with baseline/noise estimation and centWave, RT peak alignment across samples (DirectMatch, DTW, LOESS, Obiwarp, density grouping), MaxLFQ label-free quantification and post-quantification preprocessing (normalization, imputation, batch correction).</Description>
+    <PackageTags>mzkit, deconvolution, peak-alignment, obiwarp, centwave, maxlfq, normalization, batch-correction, xcms</PackageTags>
+    <ReleaseNotes>LC-MS deconvolution and quantification pipeline for mzkit: builds XICs and deconvolutes peaks into Xcms peak tables; detects chromatographic peaks with baseline and noise estimation, quality evaluation, centWave and peak area integration; aligns retention times across samples via DirectMatch, DTW, LOESS, Obiwarp and density grouping; quantifies with MaxLFQ label-free quantification; and applies post-quantification preprocessing including normalization, missing-value imputation and batch correction; also supports GC-MS deconvolution and UV/PDA signals.</ReleaseNotes>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
     <Version>1.0.9767.32135</Version>

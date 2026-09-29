@@ -15,6 +15,10 @@
     <PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
+    <Title>Thermo RAW File Reader</Title>
+    <Description>.NET reader for Thermo Fisher RAW mass spectrometry files built on the Xcalibur MSFileReader COM API: reads scan information, profile and centroid peak data, label (ion annotation) data, MRM information, instrument/device metadata and tune method objects.</Description>
+    <PackageTags>mzkit, thermo, xcalibur, msfilereader, raw-file, mass-spectrometry, mrm, centroid, lcms</PackageTags>
+    <ReleaseNotes>Thermo RAW file reader library for mzkit: opens Thermo Fisher RAW files through the Xcalibur MSFileReader COM API; reads scan information with profile and centroid peak data; retrieves label (ion annotation) data and MRM information; and exposes instrument/device metadata, raw file info and tune method objects.</ReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <UseApplicationFramework>True</UseApplicationFramework>

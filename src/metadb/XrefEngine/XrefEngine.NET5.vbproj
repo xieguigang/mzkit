@@ -10,7 +10,10 @@
     <PackageIconUrl />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
-    <Title>Annotation data repository and workspace file</Title>
+    <Title>Annotation Xref Engine and Workspace</Title>
+    <Description>Metabolite annotation cross-reference engine: manages a local HDSPack binary repository of annotation records with offset-indexed metadata and database xref lookup (MessagePack serialization), plus ChemOnt/ClassyFire chemical classification support for filling compound ontology classes in annotation workspaces.</Description>
+    <PackageTags>mzkit, cross-reference, xref, annotation-engine, classyfire, chemont, compound-classification, hdspack</PackageTags>
+    <ReleaseNotes>Annotation cross-reference engine for mzkit: manages local HDSPack binary repositories of metabolite annotation records with offset-indexed lookup of metadata and database xrefs using MessagePack serialization; supports ChemOnt/ClassyFire chemical classification for filling compound ontology classes across annotation workspace peak tables, XIC caches and library hits.</ReleaseNotes>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
     <Version>1.0.9767.32135</Version>
     <AssemblyVersion>1.0.9767.32135</AssemblyVersion>

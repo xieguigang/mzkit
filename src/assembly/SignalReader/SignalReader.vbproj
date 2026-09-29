@@ -13,6 +13,10 @@
 	  <PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
 	  <PackageIcon>Flask.png</PackageIcon>
 	  <PackageIconUrl />
+	  <Title>Chromatogram and UV/Raman Signal Reader</Title>
+	  <Description>Signal reader for non-MS channels in mzML/mzXML data: extracts TIC/BPC and ion chromatograms, UV spectroscopy scans (electromagnetic radiation spectra and time signals) and Raman spectroscopy signals from base64-encoded mzML nodes.</Description>
+	  <PackageTags>mzkit, chromatogram, tic, bpc, uv-spectroscopy, raman, signal-reader, mzml</PackageTags>
+	  <ReleaseNotes>Signal reader library for mzkit: extracts TIC/BPC and targeted ion chromatograms from mzML and mzXML data; reads UV spectroscopy scans including electromagnetic radiation spectra and time-domain signals; and parses Raman spectroscopy signals stored in base64-encoded mzML markup nodes.</ReleaseNotes>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	  <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

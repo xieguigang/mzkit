@@ -15,6 +15,10 @@
 		<PackageIcon>Flask.png</PackageIcon>
 		<PackageIconUrl />
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+		<Title>Vendor Raw Stream Extensions for mzPack</Title>
+		<Description>Extension layer bridging vendor raw data streams into mzPack: loads Thermo XRaw and Sciex WIFF streams as mzPack scan streams, decodes MRM/SIR transitions with mzML conversion, exports netCDF (ToCDF), writes MSI imzML data and packages MS imaging raw data as MSIRawPack.</Description>
+		<PackageTags>mzkit, mzpack, thermo, sciex-wiff, mrm, netcdf, imzml, ms-imaging</PackageTags>
+		<ReleaseNotes>Vendor raw stream extension library for mzPack: loads Thermo XRaw and Sciex WIFF raw streams as mzPack scan streams for unified processing; decodes MRM/SIR transitions and converts them to mzML; exports scan data to netCDF; writes imzML for MS imaging exports; and packages MS imaging raw pixel data as MSIRawPack.</ReleaseNotes>
 		<PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
 		<Version>1.0.9767.32135</Version>
 		<AssemblyVersion>1.0.9767.32135</AssemblyVersion>

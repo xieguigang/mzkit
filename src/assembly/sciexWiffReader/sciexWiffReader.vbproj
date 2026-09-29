@@ -7,6 +7,10 @@
     <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader</RootNamespace>
     <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader</AssemblyName>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Title>Sciex WIFF Raw Data Reader</Title>
+    <Description>Reader for Sciex WIFF raw data files built on the vendor Clearcore/WiffFileReader interop layer: enumerates samples and experiments, retrieves profile and centroid spectra by scan number or retention time, and provides full-scan and MRM scan access for LC-MS data processing.</Description>
+    <PackageTags>mzkit, sciex, wiff, raw-file, mass-spectrometry, mrm, centroid, lcms</PackageTags>
+    <ReleaseNotes>Sciex WIFF raw file reader library for mzkit: opens WIFF raw files through the vendor WiffFileReader interop layer; enumerates samples and experiments; retrieves profile and centroid spectra by scan number or by retention time; and exposes full-scan and MRM scan access for downstream LC-MS data processing.</ReleaseNotes>
 </PropertyGroup>
 
   <ItemGroup>

@@ -7,6 +7,10 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release;MEMI-Desktop;nuget_release</Configurations>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <Title>NMR FID Processing Toolkit</Title>
+    <Description>NMR free induction decay (FID) processing toolkit: reads Bruker, JEOL and Varian NMR acquisition data (acqus/pdata) and produces 1D NMR spectra via apodization (exponential, gaussian, sine, TRAF, zero-fill), baseline correction (Golotvin-Williams), FFT and phase correction.</Description>
+    <PackageTags>mzkit, nmr, fid, fourier-transform, apodization, phase-correction, baseline-correction, spectroscopy</PackageTags>
+    <ReleaseNotes>NMR FID processing toolkit for mzkit: reads Bruker, JEOL and Varian acqus/pdata FID acquisition data; applies apodization window functions (exponential, gaussian, sine, TRAF, zero-filling); performs Golotvin-Williams baseline correction; and applies FFT with DSP phase correction to produce processed 1D NMR spectra.</ReleaseNotes>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageIcon>Flask.png</PackageIcon>

@@ -7,6 +7,10 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;mzkit;Rsharp_app_release;MEMI-Desktop;nuget_release</Configurations>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <Title>GCxGC 2D Chromatography Math</Title>
+    <Description>Two-dimensional GCxGC (comprehensive two-dimensional gas chromatography) math library: demodulates modulated 1D GC-MS raw data into a 2D chromatogram mesh grid based on the modulation period, performs 2D peak detection on the mesh and handles 1D GC-MS EI peak models.</Description>
+    <PackageTags>mzkit, gcxgc, gc-ms, two-dimensional-chromatography, demodulation, peak-detection, chromatogram</PackageTags>
+    <ReleaseNotes>GCxGC math library for mzkit: demodulates modulated 1D GC-MS raw data into 2D chromatogram mesh grids using the modulation period; performs 2D peak detection over the demodulated chromatogram mesh; and provides 1D GC-MS EI peak models for comprehensive two-dimensional gas chromatography data processing.</ReleaseNotes>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageIcon>Flask.png</PackageIcon>

@@ -13,6 +13,10 @@
     <PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
+    <Title>Bruker MS Data Reader</Title>
+    <Description>Vendor raw data file reader for Bruker mass spectrometry instruments: XMass FID/pdata acquisition files, Bruker raw binary scan data with acquisition parameter parsing and Fourier transform, flexImaging MCF/sqlite spectrum containers and SCiLS Lab pack files.</Description>
+    <PackageTags>mzkit, bruker, xmass, fid, fleximaging, scils, mass-spectrometry, ms-imaging, data-reader</PackageTags>
+    <ReleaseNotes>Bruker raw data reader library for mzkit: reads XMass FID and pdata acquisition files, decodes Bruker raw binary scan data with acquisition parameter parsing and Fourier transform, opens flexImaging MCF/sqlite spectrum containers, and supports SCiLS Lab pack files for MS imaging workloads.</ReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>

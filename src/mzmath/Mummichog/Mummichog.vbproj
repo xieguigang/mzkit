@@ -12,6 +12,10 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
+    <Title>Mummichog Pathway Analysis</Title>
+    <Description>Implementation of the Mummichog pathway-first, annotation-second (guilt-by-association) strategy for LC-MS untargeted metabolomics: maps peak m/z features onto theoretical metabolite and adduct m/z sets, groups correlated/adduct/isotope peaks and performs KEGG pathway enrichment with permutation-based p-values.</Description>
+    <PackageTags>mzkit, mummichog, pathway-enrichment, untargeted-metabolomics, kegg, guilt-by-association, adduct, peak-annotation</PackageTags>
+    <ReleaseNotes>Mummichog pathway analysis for mzkit: implements the pathway-first, annotation-second (guilt-by-association) strategy for LC-MS untargeted metabolomics; maps peak m/z features onto theoretical metabolite and adduct m/z sets; groups correlated, adduct and isotope peaks; and performs KEGG pathway enrichment with permutation-based p-values to pre-annotate metabolites without requiring full compound identification.</ReleaseNotes>
 	  <OutputPath>../../../Rscript\Library\mzkit_app\assembly\</OutputPath>
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
 	  <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
