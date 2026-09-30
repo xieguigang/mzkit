@@ -169,7 +169,7 @@ Namespace MarkupData.mzML
                 Return {}
             End If
 
-            Dim relInto As Vector = intensity / intensity.MaxElement
+            Dim relInto As Vector = intensity / intensity.Max
             Dim matrix As ms2() = CInt(defaultArrayLength) _
                 .Sequence _
                 .Select(Function(i)
