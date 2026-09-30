@@ -172,7 +172,7 @@ Public Class DIADecompose
                     .lib_guid = specPool(j).lib_guid & $"_decompose_{i + 1}"
                 }
 
-                sum = Add.f64_op_add_f64(sum, (intensity / intensity.Max).Array)
+                sum = Add.f64_op_add_f64(sum, (intensity / intensity.MaxElement).Array)
 
                 Call decomposer.Add(spectral)
             Next

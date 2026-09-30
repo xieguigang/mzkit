@@ -239,7 +239,7 @@ Namespace Spectra
                 Dim q As Vector = query.AlignMatrix(ref, tolerance Or ppm20).Shadows!intensity
                 Dim s As Vector = ref.Shadows!intensity
 
-                Return SSM(q / q.Max, s / s.Max)
+                Return SSM(q / q.MaxElement, s / s.MaxElement)
             End If
         End Function
 
