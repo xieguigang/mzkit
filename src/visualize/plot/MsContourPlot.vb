@@ -55,7 +55,7 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.Plots.Canvas
 Imports Microsoft.VisualBasic.Imaging.Driver
 
 Public Module MsContourPlot

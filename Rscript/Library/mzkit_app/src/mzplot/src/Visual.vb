@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::ff8259f168987fd6f79c592d766bda1d, Rscript\Library\mzkit_app\src\mzplot\Visual.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 963
-    '    Code Lines: 748 (77.67%)
-    ' Comment Lines: 127 (13.19%)
-    '    - Xml Docs: 92.91%
-    ' 
-    '   Blank Lines: 88 (9.14%)
-    '     File Size: 44.16 KB
+' Summaries:
 
 
-    ' Module Visual
-    ' 
-    '     Function: assembleOverlaps, ParseSpectrumAlignment, plotAlignments, plotChromatogram, PlotGCxGCHeatMap
-    '               plotGCxGCTic2D, plotMolecularNetworkingHistogram, plotMRM, plotMS, plotOverlaps
-    '               plotPeaktable, plotRawChromatogram, PlotRawScatter, plotRtShifts, plotSignal
-    '               plotSignal2, plotTIC, plotTIC2, PlotUVSignals, Snapshot3D
-    '               SpectrumPlot, XicScatterDensity
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 963
+'    Code Lines: 748 (77.67%)
+' Comment Lines: 127 (13.19%)
+'    - Xml Docs: 92.91%
+' 
+'   Blank Lines: 88 (9.14%)
+'     File Size: 44.16 KB
+
+
+' Module Visual
+' 
+'     Function: assembleOverlaps, ParseSpectrumAlignment, plotAlignments, plotChromatogram, PlotGCxGCHeatMap
+'               plotGCxGCTic2D, plotMolecularNetworkingHistogram, plotMRM, plotMS, plotOverlaps
+'               plotPeaktable, plotRawChromatogram, PlotRawScatter, plotRtShifts, plotSignal
+'               plotSignal2, plotTIC, plotTIC2, PlotUVSignals, Snapshot3D
+'               SpectrumPlot, XicScatterDensity
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -80,11 +80,11 @@ Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Data.ChartPlots
-Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
+Imports Microsoft.VisualBasic.Data.Plots
+Imports Microsoft.VisualBasic.Data.Plots.Canvas
+Imports Microsoft.VisualBasic.Data.Plots.Legacy.BarPlot
+Imports Microsoft.VisualBasic.Data.Plots.Legacy.Plots
+Imports Microsoft.VisualBasic.Data.Plots.Plot3D.Legend
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -225,7 +225,7 @@ Module Visual
 
         If Not highlights_ion Is Nothing Then
             highlights = highlights_ion _
-                .AsGeneric(Of Double)(env) _
+                .asGeneric(Of Double)(env) _
                 .Select(Function(a)
                             Return New NamedValue(Of Double)(a.Key, a.Value)
                         End Function) _
@@ -751,7 +751,7 @@ Module Visual
 
                 XIC = New ChromatogramOverlap
 
-                For Each group In DirectCast(ms1_scans, list).AsGeneric(Of MzGroup)(env)
+                For Each group In DirectCast(ms1_scans, list).asGeneric(Of MzGroup)(env)
                     XIC(group.Key) = group.Value.CreateChromatogram
                 Next
             ElseIf TypeOf ms1_scans Is ChromatogramOverlap Then
@@ -879,7 +879,7 @@ Module Visual
                 If highlight_ion IsNot Nothing Then
                     If TypeOf highlight_ion Is list Then
                         highlights = DirectCast(highlight_ion, list) _
-                            .AsGeneric(Of Double)(env) _
+                            .asGeneric(Of Double)(env) _
                             .Select(Function(a)
                                         Return New NamedValue(Of Double)(a.Key, a.Value)
                                     End Function) _
