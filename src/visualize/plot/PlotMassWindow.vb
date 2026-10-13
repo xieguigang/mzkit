@@ -60,6 +60,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Data.Plots.Canvas
+Imports Microsoft.VisualBasic.Data.Plots.Legacy.Plots
 Imports Microsoft.VisualBasic.Data.Plots.Plot3D.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -142,7 +143,7 @@ Public Class PlotMassWindow : Inherits Plot
                         End Function) _
                 .ToArray
         }
-        Dim plot As New Plots.LinePlot2D(data:={histogram},
+        Dim plot As New LinePlot2D(data:={histogram},
                                          theme:=theme,
                                          fill:=False,
                                          interplot:=Splines.B_Spline) With {

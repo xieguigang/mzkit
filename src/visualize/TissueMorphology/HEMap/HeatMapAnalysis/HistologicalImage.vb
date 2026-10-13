@@ -60,6 +60,8 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Data.Plots
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
@@ -86,10 +88,38 @@ Namespace HEMap
                                 Optional scale As ScalerPalette = ScalerPalette.turbo,
                                 Optional mapLevels As Integer = 64) As GraphicsData
 
-            Return HE.Image2DMap(
-                scaleName:=scale.Description,
-                mapLevels:=mapLevels
-            )
+            If HE Is Nothing Then
+                Return Nothing
+            End If
+
+            ' sample the HE image into a regular grayscale scalar field; the new
+            ' ImageMapPlot engine consumes a Double(,) grid rather than an Image.
+            Dim buffer = BitmapBuffer.FromImage(HE)
+            Dim width = HE.Width
+            Dim height = HE.Height
+            Dim matrix(height - 1, width - 1) As Double
+
+            For iy = 0 To height - 1
+                For ix = 0 To width - 1
+                    Dim px = buffer.GetPixel(ix, iy)
+                    Dim gray = CDbl(px.R) * 0.299 + CDbl(px.G) * 0.587 + CDbl(px.B) * 0.114
+                    matrix(iy, ix) = System.Math.Round(gray / 255.0 * (mapLevels - 1))
+                Next
+            Next
+
+            Dim plotInternal = Sub(ByRef g As IGraphics, layout As GraphicsRegion)
+                                   Dim app As New ImageMapPlot(g, Nothing) With {
+                                       .Image = matrix,
+                                       .ColorMap = scale,
+                                       .MinValue = 0,
+                                       .MaxValue = mapLevels - 1,
+                                       .ShowColorLegend = True,
+                                       .ShowFrame = False
+                                   }
+                                   app.Plot()
+                               End Sub
+
+            Return g.GraphicsPlots(New System.Drawing.Size(width, height), "padding: 0px 0px 0px 0px", "white", plotInternal)
         End Function
 
         ''' <summary>

@@ -60,9 +60,14 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.Data.Plots.Canvas
+Imports Microsoft.VisualBasic.Data.Plots.Engine
 Imports Microsoft.VisualBasic.Data.Plots.Legacy.Plots
+Imports Microsoft.VisualBasic.Data.Plots.Statistics
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports System.Linq
 
 ''' <summary>
 ''' plot regression model of the MRM/SRM standard curves result
@@ -84,44 +89,61 @@ Public Module StandardCurvesPlot
                                    Optional showYFitPoints As Boolean = True,
                                    Optional reverse As Boolean = False) As GraphicsData
 
-        If model.requireISCalibration Then
-            ' 如果进行内标校正的话，则应该是[峰面积比, 浓度比]之间的线性关系
-            Return RegressionPlot.Plot(model.linear, xLabel:="(CIS/Cti u mol/L) ratio",
-                      yLabel:="Peak area ratio (AIS/Ati)",
-                      size:=size,
-                      predictedX:=samples,
-                      xAxisTickFormat:="F2",
-                      yAxisTickFormat:="F2",
-                      showErrorBand:=False,
-                      title:=name,
-                      margin:=margin,
-                      factorFormat:=factorFormat,
-                      pointLabelFontCSS:=sampleLabelFont,
-                      labelerIterations:=labelerIterations,
-                      gridFill:=gridFill,
-                      showLegend:=showLegend,
-                      showYFitPoints:=showYFitPoints,
-                      reverse:=reverse
-                )
+        Dim wh = size.Split(","c)
+        Dim width = CInt(Val(wh(0)))
+        Dim height = CInt(Val(wh(1)))
+
+        ' 观测点优先取自标准曲线自身的参考点；否则退回到传入的 samples 参数
+        Dim x As Double()
+        Dim y As Double()
+
+        If model.points IsNot Nothing AndAlso model.points.Any() Then
+            If model.requireISCalibration Then
+                x = model.points.Select(Function(p) p.cIS / p.Cti).ToArray
+                y = model.points.Select(Function(p) p.AIS / p.Ati).ToArray
+            Else
+                x = model.points.Select(Function(p) p.Cti).ToArray
+                y = model.points.Select(Function(p) p.Ati).ToArray
+            End If
+        ElseIf samples IsNot Nothing Then
+            Dim pts = samples.ToArray
+            x = pts.Select(Function(s) Val(s.Name)).ToArray
+            y = pts.Select(Function(s) s.Value).ToArray
         Else
-            ' 如果不做内标校正的话，则是直接[峰面积, 浓度]之间的线性关系了
-            Return RegressionPlot.Plot(model.linear, xLabel:="Cti u mol/L",
-                      yLabel:="Peak area(Ati)",
-                      size:=size,
-                      predictedX:=samples,
-                      xAxisTickFormat:="G2",
-                      yAxisTickFormat:="G2",
-                      showErrorBand:=False,
-                      title:=name,
-                      margin:=margin,
-                      factorFormat:=factorFormat,
-                      pointLabelFontCSS:=sampleLabelFont,
-                      labelerIterations:=labelerIterations,
-                      gridFill:=gridFill,
-                      showLegend:=showLegend,
-                      showYFitPoints:=showYFitPoints,
-                      reverse:=reverse
-                )
+            x = {}
+            y = {}
         End If
+
+        Dim yfit = x.Select(Function(xi) model.linear.GetY(xi)).ToArray
+
+        Dim fit As New RegressionFit With {
+            .X = x,
+            .Y = y,
+            .Yfit = yfit,
+            .EquationText = If(model.linear.Polynomial Is Nothing, "", model.linear.Polynomial.ToString)
+        }
+
+        Dim plotInternal = Sub(ByRef g As IGraphics, layout As GraphicsRegion)
+                               Dim app As New RegressionPlot(g, New PlotTheme(margin)) With {
+                                   .Fit = fit,
+                                   .ShowLegend = showLegend,
+                                   .ShowConfidenceBand = False,
+                                   .Title = name
+                               }
+
+                               If model.requireISCalibration Then
+                                   app.XLabel = "(CIS/Cti u mol/L) ratio"
+                                   app.YLabel = "Peak area ratio (AIS/Ati)"
+                               Else
+                                   app.XLabel = "Cti u mol/L"
+                                   app.YLabel = "Peak area(Ati)"
+                               End If
+
+                               app.Plot()
+                           End Sub
+
+        Dim dims = size.Split(","c)
+        Dim sz As New System.Drawing.Size(CInt(Val(dims(0))), CInt(Val(dims(1))))
+        Return g.GraphicsPlots(sz, margin, "white", plotInternal)
     End Function
 End Module

@@ -70,6 +70,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Data.Plots.Plot3D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
@@ -137,11 +138,19 @@ Public Class GCxGCTIC3DPeaks : Inherits Plot
 
         Call models.AddRange(mesh3D)
 
+        Dim t3d As New Plot3DTheme With {
+            .padding = theme.padding,
+            .background = theme.background,
+            .axisStroke = theme.axisStroke,
+            .axisLabelCSS = theme.axisLabelCSS,
+            .mainTextColor = theme.mainTextColor
+        }
+
         Call models.RenderAs3DChart(
             canvas:=g,
             camera:=camera,
             region:=canvas,
-            theme:=theme
+            theme:=t3d
         )
     End Sub
 

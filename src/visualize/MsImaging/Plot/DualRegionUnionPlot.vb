@@ -199,6 +199,78 @@ Public Class DualRegionUnionPlot : Inherits Plot
         Dim tickPen As Pen = css.GetPen(Stroke.TryParse(theme.legendTickAxisStroke))
         Dim axisPen As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
 
-        Call g.DrawDualColorBar(colorSet1, colorSet2, layout, intensityTicks, axisPen, tickPen, "Intensity", labelFont, tickFont, "G3")
+        Call DrawDualColorBar(g, colorSet1, colorSet2, layout, intensityTicks, axisPen, tickPen, "Intensity", labelFont, tickFont, "G3")
+    End Sub
+
+    ''' <summary>
+    ''' Draws two vertical color bars (colorSet1 on the left, colorSet2 on the
+    ''' right) inside <paramref name="layout"/>. This reimplements the former
+    ''' <c>IGraphics.DrawDualColorBar</c> extension that was removed during the
+    ''' DataPlot refactor.
+    ''' </summary>
+    Private Sub DrawDualColorBar(g As IGraphics,
+                                  colorSet1 As SolidBrush(),
+                                  colorSet2 As SolidBrush(),
+                                  layout As Rectangle,
+                                  intensityTicks As Double(),
+                                  axisPen As Pen,
+                                  tickPen As Pen,
+                                  title As String,
+                                  labelFont As Font,
+                                  tickFont As Font,
+                                  format As String)
+        If colorSet1 Is Nothing OrElse colorSet1.Length = 0 Then Return
+
+        Dim halfWidth = layout.Width \ 2
+        Dim barW = halfWidth - 4
+        Dim leftRect As New Rectangle(layout.X, layout.Y, barW, layout.Height)
+        Dim rightRect As New Rectangle(layout.X + halfWidth + 4, layout.Y, barW, layout.Height)
+
+        Call DrawColorBar(g, colorSet1, leftRect, intensityTicks, tickPen, tickFont, format, True)
+        Call DrawColorBar(g, colorSet2, rightRect, intensityTicks, tickPen, tickFont, format, False)
+
+        If Not String.IsNullOrEmpty(title) Then
+            Dim titleSize = g.MeasureString(title, labelFont)
+            Dim titlePt As New PointF(layout.X + (layout.Width - titleSize.Width) / 2.0F, layout.Y - titleSize.Height - 2.0F)
+            g.DrawString(title, labelFont, New SolidBrush(Color.Black), titlePt)
+        End If
+
+        g.DrawRectangle(axisPen, layout)
+    End Sub
+
+    Private Sub DrawColorBar(g As IGraphics,
+                              colors As SolidBrush(),
+                              rect As Rectangle,
+                              intensityTicks As Double(),
+                              tickPen As Pen,
+                              tickFont As Font,
+                              format As String,
+                              ticksOnLeft As Boolean)
+        Dim n = colors.Length
+        Dim segH = rect.Height / n
+
+        For i As Integer = 0 To n - 1
+            g.FillRectangle(colors(i), New Rectangle(rect.X, rect.Y + CInt(i * segH), rect.Width, CInt(segH) + 1))
+        Next
+
+        If intensityTicks IsNot Nothing AndAlso intensityTicks.Length > 0 Then
+            Dim tmin = intensityTicks.Min()
+            Dim tmax = intensityTicks.Max()
+            Dim span = tmax - tmin
+
+            For Each t In intensityTicks
+                Dim frac = If(span <= 0, 0.5, (t - tmin) / span)
+                Dim y = rect.Y + rect.Height * (1.0F - CSng(frac))
+                Dim label = t.ToString(format)
+                Dim sz = g.MeasureString(label, tickFont)
+                Dim x = If(ticksOnLeft, rect.X - sz.Width - 2.0F, rect.Right + 2.0F)
+                Dim pt As New PointF(x, y - sz.Height / 2.0F)
+                g.DrawString(label, tickFont, New SolidBrush(Color.Black), pt)
+
+                Dim tickFrom = New PointF(If(ticksOnLeft, rect.X - 4.0F, rect.Right), y)
+                Dim tickTo = New PointF(If(ticksOnLeft, rect.X, rect.Right + 4.0F), y)
+                g.DrawLine(tickPen, tickFrom, tickTo)
+            Next
+        End If
     End Sub
 End Class

@@ -61,10 +61,12 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.Plots
+Imports Microsoft.VisualBasic.Data.Plots.Basic
 Imports Microsoft.VisualBasic.Data.Plots.Canvas
 Imports Microsoft.VisualBasic.Data.Plots.Legacy.Plots
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.MarchingSquares
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
@@ -89,10 +91,17 @@ Public Class ScanContour : Inherits Plot
     End Sub
 
     ''' <summary>
-    ''' group by mz/rt
+    ''' group by mz/rt and resample the scattered (rt, mz, intensity) points
+    ''' onto a regular grid so the new ContourPlot can consume it as a Matrix.
     ''' </summary>
-    ''' <returns></returns>
-    Private Iterator Function CreateMatrix() As IEnumerable(Of MeasureData)
+    Private Function CreateMatrix() As Double(,)
+        Dim colCount = CInt(std.Round((rtRange.Max - rtRange.Min) / xsteps)) + 1
+        Dim rowCount = CInt(std.Round((mzRange.Max - mzRange.Min) / ysteps)) + 1
+        Dim matrix(rowCount - 1, colCount - 1) As Double
+
+        ' 先收集所有有效栅格点，并找出最小强度作为背景填充值
+        Dim points As New List(Of (col As Integer, row As Integer, z As Double))()
+        Dim zmin As Double = Double.MaxValue
         Dim rtLeft As Double = 0
         Dim mzLeft As Double = 0
         Dim mzi As Double
@@ -104,28 +113,31 @@ Public Class ScanContour : Inherits Plot
                 .ToArray
 
             If rtRow.Length = 0 Then
+                rtLeft = rt
                 Continue For
             End If
+
+            Dim col = CInt(std.Round((rt - rtRange.Min) / xsteps))
 
             For mz As Double = mzRange.Min To mzRange.Max Step ysteps
                 mzi = mz
 
-                With rtRow _
-                    .Where(Function(x)
-                               Return x.mz >= mzLeft AndAlso x.mz < mzi
-                           End Function) _
+                Dim bin = rtRow _
+                    .Where(Function(x) x.mz >= mzLeft AndAlso x.mz < mzi) _
                     .ToArray
 
-                    If .Length = 0 Then
-                        Yield New MeasureData(
-                            rt, mz,
-                            z:= .OrderByDescending(Function(x) x.intensity) _
-                                .First _
-                                .intensity _
-                                .DoCall(AddressOf std.Log10)
-                        )
-                    End If
-                End With
+                If bin.Length > 0 Then
+                    Dim z = bin _
+                        .OrderByDescending(Function(x) x.intensity) _
+                        .First _
+                        .intensity _
+                        .DoCall(AddressOf std.Log10)
+                    Dim row = CInt(std.Round((mz - mzRange.Min) / ysteps))
+
+                    points.Add((col, row, z))
+
+                    If z < zmin Then zmin = z
+                End If
 
                 mzLeft = mz
             Next
@@ -133,15 +145,47 @@ Public Class ScanContour : Inherits Plot
             mzLeft = 0
             rtLeft = rt
         Next
+
+        Dim background = If(zmin = Double.MaxValue, 0.0, zmin)
+
+        For r As Integer = 0 To rowCount - 1
+            For c As Integer = 0 To colCount - 1
+                matrix(r, c) = background
+            Next
+        Next
+
+        For Each p In points
+            matrix(p.row, p.col) = p.z
+        Next
+
+        Return matrix
     End Function
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-        Dim matrix As MeasureData() = CreateMatrix.ToArray
-        Dim app As New ContourPlot(matrix, False, theme) With {
-            .legendTitle = "Scale Intensity"
+        Dim matrix As Double(,) = CreateMatrix()
+        Dim colCount = matrix.GetLength(1)
+        Dim rowCount = matrix.GetLength(0)
+
+        Dim xRange(colCount - 1) As Double
+        Dim yRange(rowCount - 1) As Double
+
+        For c As Integer = 0 To colCount - 1
+            xRange(c) = rtRange.Min + c * xsteps
+        Next
+        For r As Integer = 0 To rowCount - 1
+            yRange(r) = mzRange.Min + r * ysteps
+        Next
+
+        Dim app As New ContourPlot(g, ThemeBridge.ToPlotTheme(theme)) With {
+            .Matrix = matrix,
+            .XRange = xRange,
+            .YRange = yRange,
+            .Mode = ContourPlot.ContourMode.Filled,
+            .ColorMap = ScalerPalette.viridis,
+            .ShowColorLegend = True
         }
 
-        Call app.Plot(g, canvas)
+        app.Plot()
     End Sub
 
     Public Overloads Shared Function Plot(data As IEnumerable(Of ms1_scan),
