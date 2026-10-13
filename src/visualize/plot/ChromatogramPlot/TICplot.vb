@@ -70,6 +70,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.Data.Plots.Canvas
+Imports Microsoft.VisualBasic.Data.Plots.Plot3D.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
@@ -303,8 +304,8 @@ Public Class TICplot : Inherits Plot
 
             legendList += New LegendObject With {
                 .title = line.name,
-                .Color = curvePen.Color.ToHtmlColor,
-                .FontStyle = theme.legendLabelCSS,
+                .color = curvePen.Color.ToHtmlColor,
+                .fontstyle = theme.legendLabelCSS,
                 .style = LegendStyles.Rectangle
             }
 
