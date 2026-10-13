@@ -65,7 +65,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Data.Plots.Legacy
+Imports Microsoft.VisualBasic.Data.Plots.Legacy.BarPlot.Histogram
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Distributions
@@ -115,7 +115,7 @@ Module MRMQCReport
         Dim RSD As Double
         Dim linear As StandardCurve
         Dim TOCData As New List(Of DataSet)
-        Dim image As System.Drawing.Image
+        Dim image As Microsoft.VisualBasic.Imaging.Image
         Dim title$
         Dim samples As NamedValue(Of Double)()
         Dim contents As New List(Of String)
@@ -198,11 +198,11 @@ Module MRMQCReport
         Dim rows As New List(Of String)
         Dim RSD#
         Dim RSD_steps = 0.1
-        Dim hist As System.Drawing.Image = RSD_dist _
+        Dim hist As Microsoft.VisualBasic.Imaging.Image = RSD_dist _
             .Hist([step]:=RSD_steps) _
             .HistogramPlot(serialsTitle:="QC RSD", xLabel:="RSD", yLabel:="Number of Metabolite") _
             .AsGDIImage
-        Dim histVariants As System.Drawing.Image = QC_variants _
+        Dim histVariants As Microsoft.VisualBasic.Imaging.Image = QC_variants _
             .Hist([step]:=RSD_steps) _
             .HistogramPlot(serialsTitle:="QC variants", xLabel:="Variants", yLabel:="Number of Sample") _
             .AsGDIImage
